@@ -1,0 +1,10 @@
+.graphic
+.item
+  .header.cf
+    %ul.cf
+      %li.team
+        =hb 'event.eventTypeString'
+
+  .content.cf
+    %p
+      {{{event.message}}}

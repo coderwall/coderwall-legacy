@@ -1,0 +1,44 @@
+-content_for :mixpanel do
+  =record_view_event('invitations')
+
+=content_for :body_id do
+  join-team
+
+%h1.big-title You've been recruited to join a team
+#invitations.panel.cf
+  -if !signed_in?
+    %p Before you can accept the invitation you need to create a coderwall account or sign in.
+    %ul.sign-btns
+      %li=link_to('Sign Up', signup_path, :class => 'join')
+      %li=link_to('Sign In', signin_path, :id => 'signin', :class => 'join')
+  -else
+    -if current_user.team
+      #currentteam
+        %h2==You are currently on team #{current_user.team.name}
+        %ul#teams
+          %li.team{:id => dom_id(current_user.team)}
+            .team-inside.cf
+              %h3=current_user.team.name
+              .members
+                -current_user.team.top_three_team_members.each do |member|
+                  =link_to(image_tag(member.thumbnail_url, :class => 'avatar', :alt => member.username), profile_path(member.username))
+                -if current_user.team.size > 3
+                  .size="+ #{current_user.team.size - 3}"
+              =link_to('Stay with this team', team_path(current_user.team, :flash => "Great, you're still on team #{current_user.team.name}"), :class => 'button stay')
+
+      .clear
+    %h2 Team invitations
+    %ul#teams
+      %li.team{:id => dom_id(@team)}
+        .team-inside.cf
+          %h3=@team.name
+          .members
+            -@team.top_three_team_members.each do |member|
+              =link_to(image_tag(member.thumbnail_url, :class => 'avatar', :alt => member.username), profile_path(member.username))
+            -if @team.size > 3
+              .size
+                ="+ #{@team.size - 3}"
+          -if current_user.belongs_to_team?(@team)
+            =link_to('Stay with this team', accept_team_path(@team, :r => params[:r]), :class => 'button stay')
+          -else
+            =link_to('Join this team', accept_team_path(@team, :r => params[:r]), :class => 'join')

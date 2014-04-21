@@ -1,0 +1,26 @@
+%section.panel.sign-up-panel
+  %header
+    %h1 Sign in
+  .inside-panel
+    %p Sign in with your GitHub, Twitter, or LinkedIn account below for easy access to your profile. (We never post without your permission.)
+    %ul.sign-up-buttons
+      %li
+        %a.button{:href => link_github_path, :rel => 'nofollow'}
+          .signin.github
+          Sign in via GitHub
+      %li
+        %a.button{:href => link_twitter_path, :rel => 'nofollow'}
+          .signin.twitter
+          Sign in via Twitter
+      %li
+        %a.button{:href => link_linkedin_path, :rel => 'nofollow'}
+          .signin.linkedin
+          Sign in via Linkedin
+
+    - unless Rails.env.production?
+      %a{href: link_developer_path, rel: 'nofollow'}
+        Sign in via local developer strategy (doesn't require an external account).
+
+%p.sign-up-terms
+  Need an account?
+  =link_to('Join coderwall', signup_path) + "."

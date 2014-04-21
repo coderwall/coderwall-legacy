@@ -1,0 +1,41 @@
+%section#members{:class => (@team.sorted_team_members.size < 6 ? "tabbed size-#{@team.sorted_team_members.size}" : '')}
+  -if can_edit?
+    -panel_form_for_section('#members', "Team Members", false) do |f|
+      %aside
+        .bigger-styling
+          %p
+            Email this private link to your colleagues so they can join this team
+            .link=invite_to_team_url
+          =mail_to('', 'Email Invite', :body => invite_to_team_url, :subject => "You've been invited to team #{@team.name}", :class => 'join-link track', 'data-action' => 'invite team members', 'data-from' => 'team members (edit mode)')
+      .form-inputs
+        =form_tag '' do
+          .filler
+        %fieldset
+          %ul.members-admin
+            -@team.sorted_team_members.each do |member|
+              %li{:id => dom_id(member)}
+                %p
+                  =member.display_name
+                %div
+                  %ul
+                    %li
+                      =link_to('edit bio', edit_user_path(member), :target => :new)
+                    %li
+                      =form_tag team_team_member_path(@team, member), :method => :delete, :remote => true do
+                        =submit_tag "Remove", :class => 'leave button', :remote => true, :confirm => 'Are you sure?'
+
+                  =users_image_tag(member)
+
+
+
+
+
+  / -cache ['v1', 'premium-team-members', @team, @team.size, :expires_in => 5.minutes] do
+  / Cache issue with this because members may update their profile and this wont be updated
+  %a.arrow.right{:href => '#next'}
+    %span
+      left
+  %a.arrow.left.disable{:href => '#previous'}
+    %span
+      right
+  %ul.members-list.cf=render :partial => 'member', :collection => @team.sorted_team_members

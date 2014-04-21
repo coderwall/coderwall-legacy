@@ -1,0 +1,30 @@
+#= require      ../vendor/ember
+#= require      ../vendor/ember-rest
+#= require      ../vendor/ember-routemanager
+#= require      ../vendor/sorted-array
+#= require_self
+
+window.Coderwall = Ember.Application.create()
+
+Coderwall.routeManager = Ember.RouteManager.create(
+  protips: Em.ViewState.create(
+    route: "p/t"
+    view: Coderwall.protipsView
+    index: Em.State.create(
+      route: ":tag"
+      enter: (stateManager, transition) ->
+        @_super stateManager, transition
+        params = stateManager.get("params")
+        tags = params
+        alert tags
+    )
+  )
+)
+
+Coderwall.displayError = (e) ->
+  if typeof e is "string"
+    alert e
+  else if typeof e is "object" and e.responseText isnt `undefined`
+    alert e.responseText
+  else
+    alert "An unexpected error occurred."

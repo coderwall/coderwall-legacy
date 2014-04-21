@@ -1,0 +1,29 @@
+development:
+  database: coderwall_development
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  password:
+  pool: 5
+  port: 5432
+  username: vagrant
+
+test:
+  adapter: postgresql
+  database: coderwall_test
+  encoding: unicode
+  host: localhost
+  password:
+  pool: 5
+  port: 5432
+  username: vagrant
+
+production:
+  adapter: postgresql
+  database: coderwall_production
+  encoding: unicode
+  host: localhost
+  password:
+  pool: 5
+  port: 5432
+  username: vagrant

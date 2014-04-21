@@ -1,0 +1,18 @@
+-team = team_card.is_a?(Team) ? team_card : Team::SearchWrapper.new(team_card)
+%li
+  - if team.hiring?
+    %a.hiring-ribbon{:href => friendly_team_path(team)}
+      %span Join Us
+  %header
+    %a.team-link{:href => friendly_team_path(team)}
+      .avatar=image_tag(team.avatar_url)
+      %h2=team.name
+      %h3=team.about
+  .content
+    %footer.cf
+      %h4.location=team.locations_message
+      -if team.size > 2
+        %span.more-members="+#{team.size - 2}"
+      %ul.members.cf
+        -team.top_two_team_members.each do |member|
+          %li=link_to(users_image_tag(member), profile_path(member.username), :title => member.display_name)

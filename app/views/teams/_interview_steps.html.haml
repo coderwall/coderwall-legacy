@@ -1,0 +1,30 @@
+%section#interview-steps.interview{:class => section_enabled_class(@team.has_interview_steps?)}
+  -if !@team.has_interview_steps?
+    -inactive_box('#interview-steps', 'Interviewing') do
+      Your team's typical interview steps and process.
+
+  -if can_edit?
+    -panel_form_for_section('#interview-steps', 'Interviewing') do |f|
+      %aside
+        -ideas_list do
+          %li Mention code challenges or other tests if you ask for them
+          %li Who on the team will applicants typically get to interact with during the interview process
+      .form-inputs
+        =link_to('Add Interview Step','#',:class=>'add-interview-step')
+        %ol.edit-interview-steps
+          -@team.interview_steps.each_with_index do |step, index|
+            %li.interview-step
+              %div
+                =text_area_tag('team[interview_steps][]', step)
+                =link_to('Remove', '#', :class => 'remove-interview-step')
+
+  %header.header
+    %h2.heading="Interviewing at #{@team.name}"
+  .inside
+    %ol.steps
+      -interview_steps_or_default(@team).each_with_index do |step, index|
+        %li
+          .number{:style => "background-color:#{@team.branding_hex_color}"}
+            %span=(index + 1)
+          .step-inside
+            =step

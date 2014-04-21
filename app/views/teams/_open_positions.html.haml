@@ -1,0 +1,50 @@
+%section#open-positions{:style => "background-color:#{@team.branding_hex_color}", :class => section_enabled_class(@team.has_open_positions?)}
+  -if !@team.has_open_positions?
+    -inactive_box('#open-positions', "Current Opportunities") do
+      =nil
+
+  -if can_edit?
+    -panel_form_for_section('#open-positions', 'What open positions do you currently have?') do |f|
+      %aside
+        -admin_hint do
+          Up to the latest four active positions will appear on your team profile.
+      .form-inputs
+        %fieldset
+          =f.label :featured_banner_image, 'Banner photo to appear on featured page'
+          =f.hidden_field :featured_banner_image
+          .preview
+            =image_tag(banner_image_or_default(@team))
+            =link_to('Choose Photo','#',:class=>'photo-chooser','data-input'=>'team_featured_banner_image','data-fit-w'=>961, 'data-fit-h'=>477)
+        %fieldset
+          =f.label :hiring_tagline, 'How are you changing the world? (tagline)'
+          =f.text_area :hiring_tagline
+        -if current_user.admin?
+          %fieldset
+            =f.label :link_to_careers_page
+            =f.text_field :link_to_careers_page
+        %fieldset
+          =link_to 'Add new position', new_team_opportunity_path(@team), :class => 'add-new-position'
+          -if @team.all_jobs.any?
+            %ul.admin-job-list
+              -@team.all_jobs.each_with_index do |job, index|
+                %li
+                  %ul
+                    %li.number= (index+1).ordinalize
+                    %li.title== #{job.title} (#{job.opportunity_type})
+                    %li.added
+                      added on
+                      = job.created_at.strftime('%m/%d/%y %I:%M%p')
+                    %ul.buttons
+                      %li.edit= link_to 'edit', edit_team_opportunity_path(@team, job)
+                      - activation = activate_or_deactivate(job)
+                      %li.deactivate= link_to '', send("#{activation}_team_opportunity_path",@team, job), :remote => true, :class => job_activation_css(job)
+
+
+  %header.header
+    %h2.heading{:style => "color:#{@team.branding_hex_color}"}=hiring_tagline_or_default(@team)
+  .job-area
+    %ul.cf{:class => "job-style-#{team_job_size(@team)}"}
+      -jobs_or_default(@team).each do |job|
+        =render :partial => 'teams/open_position', :locals => {:job => job}
+    -unless @team.link_to_careers_page.blank?
+      .outside-all-jobs=link_to('View all of our open opportunities', @team.link_to_careers_page, :class => 'all-jobs record-exit', :target => :new, 'data-target-type' => 'all-job-opportunities')

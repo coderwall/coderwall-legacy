@@ -1,0 +1,43 @@
+%section#favourite-benefits.cf{:style => "background-color:#{@team.branding_hex_color}", :class => section_enabled_class(@team.has_favourite_benefits?)}
+  -if !@team.has_favourite_benefits?
+    -inactive_box('#favourite-benefits', "Favorite Benefits") do
+      Unique benefits your entire team enjoys and values
+
+  -if can_edit?
+    -panel_form_for_section('#favourite-benefits', 'Favorite Benefits') do |f|
+      %aside
+        -admin_hint do
+          ==Up to 3 great benefits about working for #{@team.name}. Each needs a one to two sentence description. Titles are optional
+        -ideas_list do
+          %li Avoid listing the standard benefits found in most job postings like "health insurance" unless they are exceptionally superior.
+          %li Educational opportunities that demonstrate your team's values.
+          %li Unique amenities or team activities.
+
+      .form-inputs
+        %fieldset.benefit
+          =f.label :benefit_name_1,       :class => 'optional'
+          =f.text_field :benefit_name_1,  :class => 'optional'
+          =f.label :benefit_description_1
+          =f.text_area :benefit_description_1
+        %fieldset.benefit
+          =f.label :benefit_name_2,       :class => 'optional'
+          =f.text_field :benefit_name_2,  :class => 'optional'
+          =f.label :benefit_description_2
+          =f.text_area :benefit_description_2
+        %fieldset.benefit
+          =f.label :benefit_name_3,       :class => 'optional'
+          =f.text_field :benefit_name_3,  :class => 'optional'
+          =f.label :benefit_description_3
+          =f.text_area :benefit_description_3
+
+  =image_tag("premium-teams/our-favourite-benefits.png")
+  %ol
+    %li
+      %h3=@team.benefit_name_1
+      %p=@team.benefit_description_1
+    %li
+      %h3=@team.benefit_name_2
+      %p=@team.benefit_description_2
+    %li
+      %h3=@team.benefit_name_3
+      %p=@team.benefit_description_3

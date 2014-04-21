@@ -1,0 +1,46 @@
+-content_for :mixpanel do
+  = record_event('viewed', :what => 'analytics page', :team => @team.name)
+.analytics
+  %header
+    %h1
+      = @team.name
+      %span
+        ==Last #{@visitors.count} visitors
+  %table.analytics-table
+    %tr.top-list.cf
+      %td.user User details
+      %td.sections Sections explored
+      %td.time Time on page
+      %td.last-visit Time since last visit
+      %td.exited Exited to url
+    -@visitors.each do |visitor|
+      %tr.main-list.cf
+        %td.user
+          .avatar
+            -if visitor[:user].nil?
+              %img.profile-avatar
+            -else
+              =image_tag(users_image_path(visitor[:user]), :class => 'profile-avatar', :width => 80, :height => 80)
+          .details
+            %h3
+              -if visitor[:user].try(:username)
+                =link_to(visitor[:user].try(:username), "https://coderwall.com/#{visitor[:user].try(:username)}", :target => :visitor)
+              -else
+                Anonymous
+        %td.sections
+          %ul.explored
+            -@team.sections_up_to(visitor[:furthest_scrolled]).each do |section|
+              %li= section
+        %td.time
+          =distance_of_time_in_words(Time.now, Time.now + [(visitor[:time_spent].to_i/1000).seconds, 45].max, true)
+        %td.last-visit
+          == #{time_ago_in_words(Time.at visitor[:visited_at].to_i)} ago
+        %td.exited
+          -#-if highly_interested?(visitor, @team)
+          -#  .top-pick
+          -#    %span
+          -#      Top pick
+          .fix
+            -unless (visitor[:exit_url].nil? or visitor[:exit_url] == 'null')
+              =link_to visitor[:exit_url], visitor[:exit_url]
+

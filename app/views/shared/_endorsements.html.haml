@@ -1,0 +1,9 @@
+%h3.testimonials What hackers are saying about Coderwall:
+%ul
+  -user_endorsements.each do |user, endorsement|
+    -if user
+      %li
+        .avatar=avatar_image_tag(user)
+        .tweet
+          =="#{endorsement}" -
+          =link_to user.username, badge_path(:username => user.username), :target => :new

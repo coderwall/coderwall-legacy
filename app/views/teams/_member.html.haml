@@ -1,0 +1,11 @@
+-css_class = show_or_hide_member_class
+-cache ['v2', 'team-member', @team, member, team_banner_image_for(member), css_class] do
+  %li.member{:class => css_class}
+    %a.show-closeup{:href => profile_path(member.username), :class => add_active_class_to_first_member}
+      =users_team_image_tag(member)
+      %ul
+        %li=member.display_name
+        -unless member.title.blank?
+          %li=member.title
+
+    .hide.member_expanded=render partial: 'member_expanded', object: member, :locals => {:show_avatar => (@team.sorted_team_members.count == 1)}

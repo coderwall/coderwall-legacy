@@ -1,0 +1,14 @@
+-member = member_expanded
+.member-details
+  - if show_avatar
+    =link_to(users_image_tag(member), profile_path(member.username), :title => member.display_name, :class => "avatar")
+  %h3=member.display_name
+  %p{:class => member.about.blank? ?  "" : "about-text"}
+    =member.about
+
+  -unless member.team_responsibilities.blank?
+    %h4 What I work on
+    %p=member.team_responsibilities
+  =link_to('View Profile', profile_path(member.username), :class => 'view-profile record-exit', 'data-target-type' => 'team-member profile')
+.member-pic
+  =image_tag(team_banner_image_for(member))

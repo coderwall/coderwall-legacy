@@ -1,0 +1,44 @@
+{
+    "bio": "Global polyculturalist monoglot. Software monoculturalist polyglot. Misplacer of names, faces. Troublemaker at Coderwall.",
+    "stats": {
+        "attending_past": 1,
+        "attending_future": 0,
+        "speaking_past": 4,
+        "speaking_future": 0
+    },
+    "name": "Brian Guthrie",
+    "url": "http://lanyrd.com/profile/bguthrie/",
+    "ok": true,
+    "session_topics": [
+        {
+            "url": "http://lanyrd.com/topics/bundler/",
+            "num_sessions": 1,
+            "name": "Bundler",
+            "profile_url": "http://lanyrd.com/profile/bguthrie/on/bundler/"
+        },
+        {
+            "url": "http://lanyrd.com/topics/capistrano/",
+            "num_sessions": 1,
+            "name": "Capistrano",
+            "profile_url": "http://lanyrd.com/profile/bguthrie/on/capistrano/"
+        },
+        {
+            "url": "http://lanyrd.com/topics/continuous-delivery/",
+            "num_sessions": 2,
+            "name": "Continuous Delivery",
+            "profile_url": "http://lanyrd.com/profile/bguthrie/on/continuous-delivery/"
+        },
+        {
+            "url": "http://lanyrd.com/topics/continuous-integration/",
+            "num_sessions": 2,
+            "name": "Continuous Integration",
+            "profile_url": "http://lanyrd.com/profile/bguthrie/on/continuous-integration/"
+        },
+        {
+            "url": "http://lanyrd.com/topics/ruby/",
+            "num_sessions": 2,
+            "name": "Ruby",
+            "profile_url": "http://lanyrd.com/profile/bguthrie/on/ruby/"
+        }
+    ]
+}

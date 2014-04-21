@@ -1,0 +1,24 @@
+%section#office-images{:class => section_enabled_class(@team.has_office_images?)}
+  -if !@team.has_office_images?
+    -inactive_box('#office-images', "Workplace & Team Photos") do
+      =nil
+  -if can_edit?
+    -panel_form_for_section('#office-images', 'Workplace & Team Photos') do |f|
+      %aside
+        -admin_hint do
+          For best results, add photos in multiples of 3. Ideal is 9 or 12 photos.
+      .form-inputs
+        =link_to('Add Photo','#',:class=>'photos-chooser', 'data-fit-w' => 260)
+        %ul.edit-photos
+          -@team.office_photos.each do |photo|
+            %li.preview-photos
+              =image_tag(photo)
+              =hidden_field_tag('team[office_photos][]', photo)
+              =link_to('Remove', '#', :class => 'remove-photo')
+
+  %header.header
+    %h2.heading
+      Photos from the office
+  %ul.images.cf.auto-organize{'data-column-width' => 270, 'data-gutter-width' => 5}
+    -office_photos_or_default(@team).each do |photo|
+      %li=image_tag(photo)

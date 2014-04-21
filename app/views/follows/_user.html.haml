@@ -1,0 +1,27 @@
+-if show_owner_before_this_user?(user)
+  =render 'follows/user', :user => @user
+%li.cf{:class => (@user == user ? 'me' : '')}
+  .user
+    / .level
+    /   %p 8
+    %a.track{:href => profile_path(user.username), 'data-action' => 'view user profile', 'data-from' => 'connections (avatar)'}
+      =image_tag(users_image_path(user))
+    .user-details
+      %h2
+        %a.track{:href => profile_path(user.username), 'data-action' => 'view user profile', 'data-from' => 'connections (user name)'}
+          =user.display_name
+      -unless user.title.blank?
+        %h3=user.title
+  -if @user == user
+    %h4#thatsyou Thats you!
+  -elsif !user.team.nil?
+    .team
+      %a.track{:href => friendly_team_path(user.team), 'data-action' => 'view team', 'data-from' => 'connections (team avatar)'}
+        =image_tag(user.team.avatar_url)
+      .team-details
+        %h4
+          %a.track{:href => friendly_team_path(user.team), 'data-action' => 'view team', 'data-from' => 'connections (team name)'}
+            =user.team.name
+        -if user.team.hiring?
+          %a.hiring{:href => friendly_team_path(user.team)}
+            %span Join us

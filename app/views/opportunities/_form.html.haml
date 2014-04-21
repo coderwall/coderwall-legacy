@@ -1,0 +1,52 @@
+
+
+=form_for [@team, @job] do |j|
+  =render "shared/error_messages", :target => @job
+  =j.hidden_field :team_document_id
+  %fieldset
+    =j.label :name, 'Position Title'
+    =j.text_field :name
+  %fieldset
+    =j.label :opportunity_type, 'Type of position'
+    =j.select :opportunity_type, Opportunity::OPPORTUNITY_TYPES, :selected => "full-time"
+  %fieldset
+    =j.label :description, '1 sentence describing what the candidate will do (Role)'
+    =j.text_area :description
+  %fieldset
+    =j.label :tags, 'Primary skills the person will use. (comma separated)'
+    =j.text_field :tags, :value => params[:tags] || @job.tags.join(",")
+  %fieldset
+    -if @team.team_locations.any?
+      =j.label :location do
+        == Select one or more locations where the candidate must be located or #{link_to('add/manage team locations', edit_team_locations_path(@team))}
+      =j.select(:location, @team.cities+["anywhere"], {:selected => @job.locations}, {:multiple => true})
+    -else
+      =j.label :location, 'Specify the city/location where the candidate must be located'
+      =j.text_field :location
+
+  %fieldset
+    =j.label :link, 'Link to full job posting on your career site'
+    =j.text_field :link
+  %fieldset
+    =j.label :max_salary, "Maximum compensation/salary (remains private)"
+    =j.text_field :salary
+
+  %fieldset.apply-through
+    =j.label 'Apply through'
+    %ul
+      %li
+        =j.label :apply do
+          ==Coderwall #{link_to 'learn more', faq_path(:anchor => 'apply'), :target => :new}
+      %li
+        =j.radio_button :apply, true
+        ==Applicants mailed to #{@team.account.admin.email}
+    %ul
+      %li
+        =j.label "#{@team.name}'s website"
+      %li
+        =j.radio_button :apply, false
+
+
+  %fieldset.save-cancel
+    =j.submit 'Save'
+    =link_to('Cancel', :back)

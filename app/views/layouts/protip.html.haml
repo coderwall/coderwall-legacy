@@ -1,0 +1,48 @@
+!!! 5
+%html.no-js{lang: "en"}
+  %head
+    %link{rel: "shortcut icon", href: image_url('favicon.png'), type: 'image/x-icon'}
+    = stylesheet_link_tag 'application'
+    = render partial: 'shared/analytics'
+    = render partial: 'shared/mixpanel'
+    = yield :head
+    = csrf_meta_tag
+  %body.protip-single
+    = render partial: 'layouts/navigation'
+
+    .mobile-top
+      %a.new-logo{href: '/'}
+      %a.mobile-nav-btn#x-mobile-toggle
+
+      %nav.mobile-nav#x-mobile-menu
+        %ul
+          %li= link_to('Discover', root_path)
+          -if signed_in?
+            %li= link_to('Admin', admin_root_path) if is_admin?
+            %li= link_to('Feed', dashboard_path)
+            %li= link_to('Profile', badge_path(username: current_user.username), class: mywall_nav_class)
+
+          %li= link_to('Teams', teams_path, class: teams_nav_class)
+          %li= link_to('Jobs', jobs_path, class: jobs_nav_class)
+          -if signed_in?
+            %li= link_to('Settings', settings_path, class: settings_nav_class)
+            %li= link_to('Sign out', sign_out_path)
+          -else
+            %li= link_to('Sign In', signin_path, class: signin_nav_class)
+            %li= link_to('Sign Up', signin_path, class: signup_nav_class)
+    %canvas.blur{src: image_path(users_background_image)}
+    =yield
+
+    - unless is_admin?
+      :javascript
+        window.console.log = function(){}
+
+    = javascript_include_tag 'jquery'
+    = javascript_include_tag 'jquery_ujs'
+    = render partial: 'shared/mixpanel_properties'
+    = javascript_include_tag 'highlight/highlight.js'
+    = javascript_include_tag 'highlight/language.js'
+
+    = javascript_include_tag 'protips'
+
+    = yield :javascript

@@ -1,0 +1,8 @@
+Hey <%= @user.short_name %>
+
+<%= @follower.short_name.titleize %> followed you on Coderwall. Their follow has earned you 5 more cred points. You can check out your new fan's profile here <%= badge_url(@follower.username) %>
+
+Matt & the Coderwall team
+P.S. Make sure to follow us on twitter (@coderwall)
+
+<%= Notifier::SPAM_NOTICE %>

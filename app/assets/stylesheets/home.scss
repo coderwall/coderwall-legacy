@@ -1,0 +1,439 @@
+@import "base";
+@import "compass/css3/";
+
+body#home-template {
+
+  #connect, #share, #grow, #inspire {
+    padding-top: 320px;
+  }
+
+  .home-header-inside, .connect-inside, .share-inside, .grow-inside, .inspire-inside {
+    width: 940px;
+    padding: 0px 20px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: 3.5em;
+    color: #fff;
+    font-family: "MuseoSans-100";
+    text-align: center;
+    max-width: 656px;
+    padding-bottom: 20px;
+    margin: 0 auto 60px auto;
+
+    strong {
+      font-family: "MuseoSans-900";
+      font-weight: normal;
+    }
+
+  }
+
+  .find-out-more {
+    display: block;
+    width: 470px;
+    position: absolute;
+    bottom: -30px;
+    left: 260px;
+    height: 60px;
+    line-height: 60px;
+    background: #393939 image-url("home/down-arrow.png") no-repeat 94% 14px;
+    text-indent: 30px;
+    color: #fff;
+    font-family: "MuseoSans-900";
+    font-size: 1.8em;
+    text-transform: uppercase;
+    @include border-radius(6px);
+    @include transition-all;
+
+    /*
+            Disabled because it wasn't working locally
+            &:hover {
+                background: #5a5a5a image-url("home/down-arrow.png") no-repeat 94% 14px;
+              }*/
+  }
+
+  #home-header {
+    border-top: solid 15px #efefef;
+    height: 430px;
+    padding-top: 30px;
+    header {
+      margin-bottom: 70px;
+
+      .home-logo {
+        display: block;
+        width: 235px;
+        height: 33px;
+        background: image-url("home/home-logo.png") no-repeat;
+        float: left;
+
+        span {
+          display: none;
+        }
+      }
+
+      nav {
+
+        ul {
+          overflow: auto;
+          float: right;
+        }
+
+        li {
+          float: left;
+          margin-left: 20px;
+
+          a {
+            text-transform: uppercase;
+            color: #393939;
+            font-size: 1.4em;
+            font-family: "MuseoSans-500";
+            height: 23px;
+            line-height: 23px;
+            display: block;
+            padding-right: 30px;
+            @include transition-all;
+
+            &:hover {
+              color: #94d9ff;
+            }
+          }
+
+          .sign-in {
+            background: image-url("home/tick-icon.png") no-repeat bottom right;
+
+            &:hover {
+              background-position: top right;
+            }
+          }
+
+          .sign-up {
+            background: image-url("home/thumb-icon.png") no-repeat bottom right;
+
+            &:hover {
+              background-position: top right;
+            }
+          }
+
+        }
+      }
+    }
+
+    .home-header-inside {
+      height: 430px;
+      position: relative;
+
+      h1 {
+        font-size: 6em;
+        font-family: "MuseoSans-900";
+        letter-spacing: -1px;
+        text-align: center;
+        color: #393939;
+
+        .connect {
+          color: #FC7365;
+        }
+
+        .share {
+          color: #8BCCED;
+        }
+
+        .grow {
+          color: #8BC682;
+        }
+
+        .inspire {
+          color: #61A1AA;
+        }
+
+        a {
+          @include transition-all;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+
+  #connect {
+    background: #fc7365 image-url("home/dot-arrow.png") no-repeat center 50px;
+
+    .connect-inside {
+      position: relative;
+      padding: 0px 20px 60px 20px;
+
+      h2 {
+        border-bottom: solid 13px rgba(0, 0, 0, 0.2);
+      }
+
+      .types {
+        float: left;
+        width: 320px;
+
+        li {
+          margin-bottom: 75px;
+          padding-top: 40px;
+
+          &:last-child {
+            margin: 0;
+          }
+
+          h3 {
+            text-transform: uppercase;
+            color: #fff;
+            text-align: right;
+            font-family: "MuseoSans-900";
+            font-size: 3.6em;
+          }
+        }
+      }
+
+      .users {
+        float: right;
+        width: 560px;
+        //margin-bottom: 30px;
+
+        li {
+          overflow: auto;
+          //margin-bottom: 35px;
+        }
+
+        .user-image {
+          float: left;
+          position: relative;
+          width: 100px;
+          height: 100px;
+          @include border-radius(100px);
+          border: solid 5px #fff;
+
+          img {
+            width: 100px;
+            height: 100px;
+            @include border-radius(100px);
+          }
+
+          &:after {
+            content: " ";
+            width: 20px;
+            height: 40px;
+            background: image-url("home/tip.png") no-repeat bottom;
+            position: absolute;
+            top: 20px;
+            right: -20px;
+          }
+
+        }
+
+        .user-details {
+          float: left;
+          width: 340px;
+          margin-left: 40px;
+          padding-top: 30px;
+
+          h4 {
+            font-size: 2.1em;
+            color: #fff;
+            text-transform: capitalize;
+            font-family: "MuseoSans-100";
+            margin-bottom: 5px;
+          }
+
+          blockquote {
+            padding: 0;
+            margin: 0;
+            font-size: 1.5em;
+            color: #fff;
+            font-family: "MuseoSans-100";
+            line-height: 1.5em;
+            height: 100px;
+            overflow: hidden;
+          }
+        }
+
+      }
+
+    }
+  }
+
+  #share {
+    background: #8bcced image-url("home/dot-arrow.png") no-repeat center 50px;
+
+    .share-inside {
+      position: relative;
+      padding: 0px 20px 100px 20px;
+
+      h2 {
+        border-bottom: solid 13px rgba(0, 0, 0, 0.2);
+      }
+
+      .protip {
+        background: image-url("home/pro-tip-graphic.png") no-repeat top;
+        width: 940px;
+        height: 363px;
+        position: relative;
+
+        div {
+          position: absolute;
+
+          h3, a {
+            color: #fff;
+            text-transform: uppercase;
+            font-family: "MuseoSans-900";
+            text-align: center;
+            font-size: 2em;
+          }
+
+          a {
+            font-size: 2.6em;
+          }
+        }
+
+        .view-protips {
+          width: 252px;
+          top: 120px;
+          left: 360px;
+
+          a {
+            &:hover {
+              color: #6eaac9;
+            }
+
+            span {
+              font-size: 2em;
+            }
+          }
+        }
+
+        .tips {
+          top: 140px;
+          left: -40px;
+          width: 200px;
+        }
+
+        .links {
+          top: 110px;
+          right: 20px;
+        }
+
+        .images {
+          bottom: -35px;
+          left: 15px;
+        }
+
+        .code {
+          bottom: -40px;
+          right: -30px;
+        }
+      }
+    }
+  }
+
+  #grow {
+    background: #8BC682 image-url("home/dot-arrow.png") no-repeat center 50px;
+
+    .grow-inside {
+      position: relative;
+      padding: 0px 20px 90px 20px;
+
+      h2 {
+        border-bottom: solid 13px rgba(0, 0, 0, 0.2);
+      }
+
+      .level-up {
+        width: 836px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  #inspire {
+    background: #61a1aa image-url("home/dot-arrow.png") no-repeat center 50px;
+
+    .inspire-inside {
+      position: relative;
+      padding: 0px 20px 90px 20px;
+
+      h2 {
+        border-bottom: solid 13px rgba(0, 0, 0, 0.2);
+      }
+
+      .teams {
+        overflow: auto;
+        margin: 0 auto 20px auto;
+        width: 742px;
+
+        li {
+          float: left;
+          width: 173px;
+          margin-left: 16px;
+          background: #4c8d98;
+          @include border-radius(6px);
+          @include subtle-box-shadow-inset;
+
+          &:nth-child(4n+1) {
+            margin: 0;
+          }
+
+          a {
+            color: #fff;
+            font-size: 2em;
+            text-align: center;
+            padding: 20px 0;
+            display: block;
+            @include transition-all;
+
+            &:hover {
+              opacity: 0.5;
+            }
+
+            img {
+              width: 80px;
+              height: 80px;
+              @include border-radius(100px);
+              display: block;
+              margin: 0 auto 20px auto;
+            }
+          }
+        }
+      }
+
+      .view-team-leader-board {
+        display: block;
+        width: 742px;
+        height: 93px;
+        background: image-url("home/view-team-leader-board.png") no-repeat;
+        @include transition-all;
+        margin: 0 auto 20px auto;
+
+        span {
+          display: none;
+        }
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .big-sign-up {
+        display: block;
+        background: #393939;
+        width: 670px;
+        margin: 70px auto 0 auto;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: #fff;
+        font-family: "MuseoSans-900";
+        font-size: 2.8em;
+        text-transform: uppercase;
+        @include border-radius(6px);
+        @include transition-all;
+
+        &:hover {
+          background: #5a5a5a;
+        }
+      }
+    }
+  }
+}

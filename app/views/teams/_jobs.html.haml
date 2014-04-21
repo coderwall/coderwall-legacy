@@ -1,0 +1,91 @@
+%section.jobs-top#jobs
+  -@job ||= default_job
+  %article.job-panel{:class => section_enabled_class(@team.has_open_positions?)}
+
+    -if !@team.has_open_positions?
+      -inactive_box('#jobs', "Current Opportunities") do
+        =nil
+
+    -if can_edit?
+      -panel_form_for_section('#jobs', 'What open positions do you currently have?') do |f|
+        %aside
+          -admin_hint do
+            Up to the latest four active positions will appear on your team profile.
+        .form-inputs
+          =hidden_field_tag :job_id, (params[:job_id] || @job.try(:public_id))
+          %fieldset
+            =f.label :featured_banner_image, 'Banner photo to appear on featured page'
+            =f.hidden_field :featured_banner_image
+            .preview
+              =image_tag(banner_image_or_default(@team))
+              =link_to('Choose Photo','#',:class=>'photo-chooser','data-input'=>'team_featured_banner_image','data-fit-w'=>961, 'data-fit-h'=>477)
+          %fieldset
+            =f.label :hiring_tagline, 'How are you changing the world? (tagline)'
+            =f.text_area :hiring_tagline
+          -if current_user.admin?
+            %fieldset
+              =f.label :link_to_careers_page
+              =f.text_field :link_to_careers_page
+          %fieldset
+            =link_to 'Add new position', new_team_opportunity_path(@team), :class => 'add-new-position'
+            -if @team.all_jobs.any?
+              %ul.admin-job-list
+                -@team.all_jobs.each_with_index do |job, index|
+                  %li
+                    %ul
+                      %li.number= (index+1).ordinalize
+                      %li.title== #{job.title} (#{job.opportunity_type})
+                      %li.added
+                        added on
+                        = job.created_at.strftime('%m/%d/%y %I:%M%p')
+                      %ul.buttons
+                        %li.edit= link_to 'edit', edit_team_opportunity_path(@team, job)
+                        - activation = activate_or_deactivate(job)
+                        %li.deactivate= link_to '', send("#{activation}_team_opportunity_path",@team, job), :remote => true, :class => job_activation_css(job)
+
+    -unless @job.nil?
+      %header.job-panel-header.cf
+        %h1.job-title=@job.title
+
+      .content.cf
+        %h4.contract= @job.opportunity_type
+        %p.job-text= @job.description
+        %ul.skills.cf
+          -@job.tags.each do |tag|
+            %li=tag
+        %ul.locations.cf
+          -@job.locations.each do |location|
+            %li= location
+        - unless @other_jobs.blank?
+          .opportunities
+            %h3==Other opportunities at #{@team.name}
+            %ul.jobs.cf
+              - @other_jobs.each do |opportunity|
+                %li
+                  %a{:href => job_path(:slug => opportunity.team.slug, :job_id => opportunity.public_id), 'data-action' => 'view job', 'data-from' => 'team page', 'data-properties' => {:team => opportunity.team.name, :public_id => opportunity.public_id}.to_json}
+                    = opportunity.title
+      %footer.job-panel-footer.cf
+        -if signed_in? && @job.accepts_applications?
+          .apply-section.application.hide
+            - if current_user.has_resume?
+              %p.status Upload your resume and click send to apply privately
+              = link_to current_user.resume_url[current_user.resume_url.rindex('/')+1..-1], current_user.resume_url, :target => "_blank"
+              = link_to 'change', change_resume_path, :class => 'change'
+            - else
+              %p.status Upload your resume and click send to apply privately
+              = form_for current_user, :html => {:multipart => true, :class => "resume"}, :remote => true do |u|
+                =u.file_field :resume, :class => 'track btn upload', 'data-action' => 'upload resume', 'data-from' => 'job application'
+                =u.hidden_field :auto_upload, :value => true
+            =link_to('', apply_url(@job), :method => :post, :remote => true, :class => "track btn send #{application_status_css(@job)}", 'data-action' => 'apply for job', 'data-from' => 'job on team page')
+        -if @job.accepts_applications?
+          -if signed_in?
+            =link_to('', '#apply', :class => 'track apply record-exit', 'data-opportunity-visit-path' => job_visited(@job), 'data-target-type' => 'job-opportunity', 'data-action' => 'view job application', 'data-from' => 'job on team page')
+          -else
+            =link_to('', signin_path(:return_to => team_job_path(@job.team)), :class => 'track apply noauth record-exit', 'data-opportunity-visit-path' => job_visited(@job), 'data-target-type' => 'job-opportunity', 'data-action' => 'view job application', 'data-from' => 'job on team page')
+        - else
+          =link_to('Learn More', @job.link, :target => :new, :class => 'track record-exit learn-more', 'data-opportunity-visit-path' => job_visited(@job), 'data-target-type' => 'job-opportunity', 'data-action' => 'view external job', 'data-from' => 'job on teams page (learn more)')
+        %a.other-jobs{:href => jobs_path}
+          View other amazing jobs
+  .learn-more-about
+    %p== Learn more about #{@team.name}
+

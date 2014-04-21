@@ -1,0 +1,33 @@
+-content_for :javascript do
+  -#%script="logUsage('viewed', 'amazing teams');"
+  =javascript_include_tag 'ember/teams'
+
+-content_for :mixpanel do
+  =record_view_event('teams page')
+
+=content_for :body_id do
+  featured-team-grid
+
+.second-level-header.cf
+  / %h1 Amazing Teams
+  %form.network-search{:name => "form"}
+    %input{:type => 'text', :placeholder => 'search teams', :id => "teams-search"}
+    %input{:type => "submit", :class => "submit", :value => " "}
+  %ul
+    %li=link_to("Hiring", teams_path, :class => featured_teams_css_class)
+    %li=link_to('Leaderboard', leaderboard_path, :class => leaderboard_css_class)
+
+#search-results
+  =link_to(message_to_create_ehanced_team, employers_path, :class => 'feature-signup track', 'data-action' => 'upgrade team', 'data-from' => 'teams page') unless message_to_create_ehanced_team.nil?
+
+  -#%a.teams-filter{:href => '/'}
+  -#  %h1
+  -#    Teams in
+  -#    %span
+  -#      San Francisco
+
+  %ul.featured-team-list.cf
+    =render collection: @featured_teams, partial: 'featured_team'
+
+  %ul.featured-team-list.normal-view-three.cf
+    =render collection: @teams, partial: 'team_card' unless @teams.blank?

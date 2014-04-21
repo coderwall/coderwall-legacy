@@ -1,0 +1,18 @@
+Good news friend, your Coderwall is up! Don't worry, that feeling of excitement and exhilaration is normal. Your profile looks pretty sweet, go check it out here: <%= badge_url(@user.username) %>
+
+
+Here is how you can get started:
+<% if @user.on_team? %>
+    * Invite others to team <%= @user.team.name %>. Share this private link with your coworkers so they can join your team: <%= invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token)) %>
+<% else %>
+    * Reserve your company's team page. Invite at least 3 coworkers to have your team show up on the leaderboard: <%= leaderboard_url %>
+<% end %>
+* Check out the trending pro tips and share your own. <%= link_to('trending', 'https://coderwall.com/trending') %>
+* Display your achievements on your personal website or blog using our javascript badge: <%= api_url %>
+
+We're always looking for new ways to make Coderwall an awesome home for developers and designers. If you have any questions or ideas, drop us a line at support@coderwall.com.
+
+Matt & the Coderwall team
+P.S. Make sure to follow us on twitter (@coderwall)
+
+<%= Notifier::SPAM_NOTICE %>

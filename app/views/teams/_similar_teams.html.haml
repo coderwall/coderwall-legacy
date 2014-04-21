@@ -1,0 +1,15 @@
+.team-results
+  -unless @teams.blank?
+    %h3 We found some matching teams.
+    %ul.results-list
+      - @teams.each do |team|
+        %li.cf
+          .team-avatar
+            =image_tag(team.avatar_url)
+          %h4= link_to team.name, teamname_path(:slug => team.slug), :target => :new
+          = link_to 'Select', teams_path(Team.new, :slug=> team.slug, :selected => true), :remote => true, :method => :post, :class => "select"
+
+- unless exact_team_exists?(@teams, @team)
+  .just-create-team
+    %h3 None of the above are my team
+    = link_to "Create team #{@team.name}", teams_path(@team, :team => {:name => @team.name}, :selected => false), :remote => true, :method => :post, :class => "create-team"

@@ -1,0 +1,21 @@
+%header.cf.second-level-header
+  -#%input.network-search(type='text' value='search networks')
+  / %h1
+  - unless network.nil?
+    %h1.underline-test{:style => "border-color:##{color_signature(network.slug)}"}
+      = network.name
+  - else
+    %h1
+      Networks
+  /   All Networks
+  %ul.second-level-toplinks
+    %li
+      %a{:href => networks_path, :class => networks_nav_class(:index)}
+        All networks
+    %li
+      %a{:href => signed_in? ? user_networks_path(current_user.username) : signup_path, :class => networks_nav_class(:user)}
+        %span
+          My networks
+    -#%li
+    -#  %a{:href => featured_networks_path, :class => networks_nav_class(:featured)}
+    -#    Featured

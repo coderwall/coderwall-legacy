@@ -1,0 +1,6 @@
+=render 'teams/team_nav'
+
+-if @teams.empty?
+  %h2#noteams==You're not following any teams but you really should. #{link_to('Follow a few teams that inspire you', leaderboard_path)}.
+-else
+  %ul#teams=render @teams

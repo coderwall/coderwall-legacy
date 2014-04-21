@@ -1,0 +1,29 @@
+%section#big-quote.cf{:class => section_enabled_class(@team.has_big_quote?)}
+  -if !@team.has_big_quote?
+    -inactive_box('#big-quote', "Accomplishments & Collaboration") do
+      Share an interesting or inspirational quote from your team
+  -if can_edit?
+    -panel_form_for_section('#big-quote', 'Accomplishments & Collaboration') do |f|
+      %aside
+        -admin_hint do
+          Quotes from a team member about an accomplishment of the team and a personal photos of individuals or team members collaborating.
+          -if @team.premium?
+            You can also add a video (i.e. youtube/vimeo URL) about your team or products
+      .form-inputs
+        %fieldset
+          =f.label :big_quote, 'Quote'
+          =f.text_area :big_quote
+        %fieldset
+          =f.hidden_field :big_image
+          .preview
+            =image_tag(@team.big_image) unless @team.big_image.blank?
+            =link_to('Choose Photo','#',:class=>'photo-chooser','data-input'=>'team_big_image','data-fit-w'=>961, 'data-fit-h'=>477)
+        %fieldset
+          =f.label :video, 'Video'
+          =f.text_field :youtube_url
+  .inside
+    %blockquote
+      %span
+        &quot;
+      %p=big_quote_or_default(@team)
+    =image_tag(big_image_or_default(@team))

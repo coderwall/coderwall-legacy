@@ -1,0 +1,61 @@
+=content_for :body_id do
+  network
+
+-content_for :javascript do
+  =javascript_include_tag 'connections.js'
+  -#-if is_viewing_followers?
+  -#  %script="logUsage('viewed', 'followers');"
+  -#-else
+  -#  %script="logUsage('viewed', 'following');"
+
+#network-header.cf
+  %ul
+    %li
+      %a{:href => followers_path, :class => network_active_css_class(:followers)}
+        %h1 Followers
+    %li
+      %a{:href => following_path, :class => network_active_css_class(:following)}
+        %h1 Following
+  / %a#backup.back-up.hide{:href => '#network-header'}
+  /   Back up
+
+.network-panel.cf
+  %ul.network-list.cf
+    -if @network.empty?
+      -if is_viewing_followers?
+        %li.no-followers
+          %h1 What! No followers?
+          %p
+            Fortunately this is very fixable. Why not
+            =share_profile('let your friends know', @user)
+            about the awesome existence of your coderwall on Twitter.
+            -if current_user.team
+              You can also invite more of your colleagues to team
+              =current_user.team.name
+              by sharing this invite link with them:
+              %br
+              =mail_to('', invite_to_team_url(current_user.team), :body => invite_to_team_url(current_user.team), :subject => "You've been invited to team #{current_user.team.name}", :class => 'join-link')
+              %br
+              They'll be indebted to your thoughtfulness and surely follow you for it.
+            -else
+              You can also
+              =link_to('create a team', new_team_path)
+              and really easily invite your colleagues to it. They'll be indebted to your thoughtfulness and surely follow you back for it.
+      -else
+        %li.no-followers
+          %h1 Sadly you follow no one
+          %p
+            But good news, you can fix this sooo easily. Why not
+            =link_to 'view the trending pro tips', protips_path
+            to find some fellow like minded hackers.
+            -if current_user.team
+              You can also
+              =link_to "follow others on team #{current_user.team.name}.", friendly_team_path(current_user.team)
+            -else
+              You can also
+              =link_to('create a team', new_team_path)
+              and really easily invite your colleagues to it and follow them.
+
+    -else
+      =render :partial => 'follows/user', :collection => @network
+  .more=link_to_next_page @network, 'More', remote: true

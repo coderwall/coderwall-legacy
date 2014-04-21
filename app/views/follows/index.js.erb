@@ -1,0 +1,2 @@
+$('ul.network-list').append("<%=escape_javascript(render(:partial => 'follows/user', :collection => @network))%>");
+$('.more').html("<%=escape_javascript(link_to_next_page(@network, 'More', remote: true))%>");

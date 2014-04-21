@@ -1,0 +1,52 @@
+.intro
+  - if @team.can_upgrade?
+    %h2.plans-heading Select a plan and enter payment details to get started
+  - unless flash[:error].blank?
+    %span.error#error
+      -flash[:error].split("\n").each do |error|
+        = error
+        %br
+  %ul.plans
+    - if @team.can_upgrade?
+      - if @team.is_member?(current_user)
+        %li.plan.free.selected.cf
+          %span $0
+          .details
+            %h3 Free
+            %h4.desc Great team page, no jobs &nbsp;
+          %a.select{ href: team_path(@team.id), 'data-plan-name' => 'Free', 'data-plan-desc' => 'Great team page, no jobs' }
+            Select plan
+
+      %li.plan.selected.monthly.cf
+        %span= "$#{monthly_plan_price(plan)}"
+        .details
+          %h3 Monthly
+          %h4.desc
+            = "#{@team.number_of_jobs_to_show} jobs per month, anytime"
+        = form_for account, url: team_account_path(@team.id, account), html: { class: 'sign-up-form', id: 'new_monthly_account' } do |f|
+          = f.hidden_field :team_path, value: teamname_path(@team.slug)
+          = f.hidden_field :account_path, value: team_account_path(@team.id, account)
+          = f.hidden_field :stripe_card_token, value: nil, class: :x_stripe_card_token_value
+          = f.hidden_field :chosen_plan, value: Plan.enhanced_team_page_monthly.try(:public_id)
+          %a.select.selectPlan{ href: '#monthly', 'data-plan-name' => 'Monthly', 'data-price' => '9900', 'data-form'=> '#new_monthly_account', 'data-plan-desc' => "#{@team.number_of_jobs_to_show} jobs per month, anytime" }
+            Select plan
+
+      %li.plan.visitor-analytics.selected.cf
+        %span= "$#{Plan.enhanced_team_page_analytics.try(:price)}"
+        .details
+          %h3 Analytics
+          %h4.desc 4 jobs per month + visitor analytics
+        = form_for account, url: team_account_path(@team.id, account), html: { class: 'sign-up-form', id: 'new_analytics_account' } do |f|
+          = f.hidden_field :team_path, value: teamname_path(@team.slug)
+          = f.hidden_field :account_path, value: team_account_path(@team.id, account)
+          = f.hidden_field :stripe_card_token, value: nil, class: :x_stripe_card_token_value
+          = f.hidden_field :chosen_plan, value: Plan.enhanced_team_page_analytics.try(:public_id)
+          %a.select.selectPlan{ href: '#analytics', 'data-plan-name' => 'Analytics', 'data-price' => '19900', 'data-form'=>'#new_analytics_account', 'data-plan-desc' => '4 jobs per month + visitor analytics' }
+            Select plan
+
+    - unless @team.is_member?(current_user)
+      %li.plan.free.selected.cf{ 'data-no-cc' => 'true', 'data-plan-id' => Plan.enhanced_team_page_free.try(:public_id) }
+        %span
+        .details
+          %h4== I work at #{@team.name} and just want to join the team.
+        = link_to 'Request to join team', join_team_path(@team.id), method: :post, class: 'select'

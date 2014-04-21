@@ -1,0 +1,50 @@
+%section#why-work.cf{:class => section_enabled_class(@team.has_why_work?)}
+  -if !@team.has_why_work?
+    -inactive_box('#why-work', "Why #{@team.name}") do
+      Why everyone wants to join your team.
+  -if can_edit?
+    -panel_form_for_section('#why-work', "Why #{@team.name}") do |f|
+      %aside
+        -admin_hint do
+          ="What makes #{@team.name} unique and why should everyone want to work here?"
+      .form-inputs
+        %fieldset
+          =f.label :reason_name_1, 'First reason name', :class => 'optional'
+          =f.text_field :reason_name_1,                 :class => 'optional'
+          =f.label :reason_description_1, 'Describe'
+          =f.text_area :reason_description_1
+        %fieldset
+          =f.label :reason_name_2, 'Second reason name', :class => 'optional'
+          =f.text_field :reason_name_2,                 :class => 'optional'
+          =f.label :reason_description_2, 'Describe'
+          =f.text_area :reason_description_2
+        %fieldset
+          =f.label :reason_name_3, 'Third reason name', :class => 'optional'
+          =f.text_field :reason_name_3,                 :class => 'optional'
+          =f.label :reason_description_3, 'Describe'
+          =f.text_area :reason_description_3
+
+        %fieldset
+          =f.hidden_field :why_work_image
+          .preview
+            =image_tag(@team.why_work_image) unless @team.why_work_image.blank?
+            =link_to('Choose Photo','#',:class=>'photo-chooser','data-input'=>'team_why_work_image','data-fit-w'=>493, 'data-fit-h'=>325)
+  %header.header
+    %h2.heading="Why work for #{@team.name}?"
+  .img{:style => "border:10px solid #{@team.branding_hex_color}"}
+    =image_tag(why_work_image_or_default(@team))
+  %ol.reasons
+    %li
+      .number.one{:style => "background-color:#{@team.branding_hex_color}"}
+      %h3=reason_name_1_or_default(@team)
+      %p=reason_description_1_or_default(@team)
+    -unless @team.reason_description_2.blank?
+      %li
+        .number.two{:style => "background-color:#{@team.branding_hex_color}"}
+        %h3=@team.reason_name_2
+        %p=@team.reason_description_2
+    -unless @team.reason_description_3.blank?
+      %li
+        .number.three{:style => "background-color:#{@team.branding_hex_color}"}
+        %h3=@team.reason_name_3
+        %p=@team.reason_description_3

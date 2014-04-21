@@ -1,0 +1,10 @@
+$('#dimmer').css('display', 'none').css('z-index', -1000);
+$('<%=params[:section_id]%>').replaceWith('<%=escape_javascript(render(:partial => partialify_html_section_id(params[:section_id])))%>');
+<% if params[:section_id] == '#office-images' %>
+autoOrganizePhotos();
+<% end %>
+<% if @team.has_specified_enough_info? %>
+$('.add-job.disable').removeClass('disable').attr('href', '<%= add_job_path(@team) %>');
+<% else %>
+$('.add-job').addClass('disable').attr('href', '<%= add_job_path(@team) %>');
+<% end %>

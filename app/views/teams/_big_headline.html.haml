@@ -1,0 +1,14 @@
+%section#big-headline{:style => "background-color:#{@team.branding_hex_color}", :class => section_enabled_class(@team.has_big_headline?)}
+  -if !@team.has_big_headline?
+    -inactive_box('#big-headline', "Team Values") do
+      ==What is the hallmark of engineering at #{@team.name}
+  -if can_edit?
+    -panel_form_for_section('#big-headline', "Team Values") do |f|
+      %aside
+        -admin_hint do
+          ="Describe your engineering philosophy and the hallmarks of development at #{@team.name}"
+      .form-inputs
+        %fieldset
+          =f.label :headline, "1 or 2 sentences."
+          =f.text_area :headline
+  %h2.headline=headline_or_default(@team)

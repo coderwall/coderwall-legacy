@@ -1,0 +1,69 @@
+@import "base";
+@import "compass/css3/";
+
+.navbar {
+  .navbar-inner {
+    background-color: #333333;
+    .navbar-search {
+      margin-left: 0px !important;
+      margin-top: 10px;
+
+      .input-prepend {
+        @clear-fix ;
+        height: 40px;
+        padding-left: 0;
+        margin-left: 0;
+
+        .add-on {
+          padding: 0;
+        }
+        .search-query {
+          width: 318px;
+          margin-left: -3px;
+        }
+
+        .search-icon {
+          height: 36px;
+          vertical-align: bottom;
+          border: 1px solid black;
+        }
+
+      }
+
+    }
+
+    .country-nav {
+      padding-left: 0;
+      margin: 0 !important;
+
+      .dropdown-menu {
+        li {
+          &.country-choice {
+            margin-left: 0;
+          }
+          .country-name {
+            font-weight: bold;
+            width: 80%;
+            display: inline-block;
+          }
+          .country-flag {
+            width: 20%;
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    h5 {
+      &.subscript {
+        margin-left: 40px;
+        margin-bottom: 0;
+      }
+    }
+    #worldmap {
+      margin-left: 0;
+      min-width: 100px;
+      min-height: 40px;
+    }
+  }
+}

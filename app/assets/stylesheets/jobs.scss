@@ -1,0 +1,411 @@
+@import "base";
+
+.tee-ribbon {
+  width: 42px;
+  height: 76px;
+  display: block;
+  background: image-url("relic-present.png") no-repeat;
+  position: absolute;
+  top: 0px;
+  right: 50px;
+}
+
+.relic-bar {
+  background: $dark-grey image-url("relic-bg.jpg") repeat;
+  color: #fff;
+  margin-top: 30px;
+  margin-bottom: 60px;
+
+  .inside {
+    height: 210px;
+    padding: 60px 15px;
+    width: 870px;
+    margin: 0 auto;
+    background: image-url("relic-tee.png") no-repeat right 102px;
+  }
+
+  h1 {
+    font-size: 2.2em;
+    text-transform: uppercase;
+    font-family: "MuseoSans-700";
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    color: rgba(#fff, 0.8);
+    width: 450px;
+    font-size: 1.4em;
+    line-height: 1.3em;
+    margin-bottom: 1.5em;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    li {
+      color: rgba(#fff, 0.8);
+      font-size: 1.4em;
+    }
+  }
+
+  .test-drive {
+    font-family: "MuseoSans-500";
+    font-size: 1.4em;
+    letter-spacing: 0.2em;
+    padding: 0.8em;
+    @include border-radius(4px);
+    display: block;
+    background: $light-blue;
+    width: 310px;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+
+    &:hover {
+      background: $green;
+    }
+  }
+}
+
+.new-more {
+  width: 210px;
+  margin: 0 auto;
+
+  @include new-more;
+
+}
+
+.jobs-map {
+  h1 {
+    color: $mid-blue-grey;
+    font-size: 1.6em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  ul {
+    margin-bottom: 20px;
+    li {
+      margin-bottom: 5px;
+      a {
+        color: $dark-grey;
+        font-size: 1.3em;
+        &:hover {
+          color: $light-blue;
+        }
+      }
+    }
+  }
+}
+
+body#jobs {
+
+  #dimmer {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 226px;
+    position: absolute;
+    top: 100px;
+    left: 0;
+  }
+
+  .inside-main-content {
+    width: 960px;
+    margin: 0 auto;
+    padding: 0px 20px 70px 20px;
+    position: relative;
+    z-index: 500;
+  }
+
+  .jobs-top {
+    height: 226px;
+    background: $dark-grey image-url("jobs/jobs-header.jpg") no-repeat top center;
+    color: #fff;
+
+    a {
+      color: #fff;
+    }
+
+    .inside {
+      height: 226px;
+      width: 940px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+
+      .filter-outside {
+        float: left;
+        margin-top: 65px;
+
+        .filter {
+          position: relative;
+          display: inline-block;
+          background: image-url("jobs/filter-hint.png") no-repeat right center;
+          padding-right: 30px;
+          max-width: 440px;
+
+          &:hover {
+            opacity: 0.6;
+          }
+
+          h1 {
+            font-size: 3.7em;
+            font-family: "MuseoSans-100";
+            @include ellipsis;
+
+            span {
+              font-family: "MuseoSans-300";
+            }
+          }
+        }
+        //filter
+
+        .location-drop-down {
+
+          //display: none;
+
+          position: absolute;
+          z-index: 1000;
+          background: #fff;
+          width: 175px;
+          left: 223px;
+          top: 120px;
+          @include border-radius(4px);
+          border: solid 1px #e1e1e1;
+          -webkit-box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.1);
+
+          li {
+            border-top: #e1e1e1 solid 1px;
+
+            &:first-child {
+              border: 0;
+            }
+
+            &:last-child {
+              a.worldwide {
+                color: black;
+              }
+            }
+
+            a {
+              font-family: "MuseoSans-500";
+              display: block;
+              font-size: 1.3em;
+              color: #8B8B8B;
+              height: 40px;
+              line-height: 40px;
+              padding: 0 20px;
+              @include ellipsis;
+
+              &:hover {
+                color: $dark-grey;
+                background: #f2f2f2;
+              }
+
+            }
+            //a
+          }
+          //li
+        }
+        //location drop down
+
+      }
+      //filter-outside
+
+      .top-box {
+        position: absolute;
+        top: 31px;
+        right: 20px;
+        width: 431px;
+
+        .post-box {
+          margin-bottom: 18px;
+        }
+
+        .post-text {
+          float: left;
+          font-family: "nothing_you_could_doregular";
+          line-height: 37px;
+          color: #fff;
+          color: rgba(225, 225, 225, 0.9);
+        }
+
+        .post-job {
+          @include cleaner-text;
+          float: right;
+          display: block;
+          height: 35px;
+          line-height: 35px;
+          width: 178px;
+          text-align: center;
+          font-size: 1.4em;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.6);
+          @include border-radius(4px);
+
+          -webkit-box-shadow: inset 0px 1px 0px 0px rgba(225, 225, 225, 0.2), 0px 2px 1px 0px rgba(0, 0, 0, 0.2);
+
+          box-shadow: inset 0px 1px 0px 0px rgba(225, 225, 225, 0.2), 0px 2px 1px 0px rgba(0, 0, 0, 0.2);
+
+          background: #3f98dc; /* Old browsers */
+          background: -moz-linear-gradient(top, #3f98dc 0%, #3286c5 100%); /* FF3.6+ */
+          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3f98dc), color-stop(100%, #3286c5)); /* Chrome,Safari4+ */
+          background: -webkit-linear-gradient(top, #3f98dc 0%, #3286c5 100%); /* Chrome10+,Safari5.1+ */
+          background: -o-linear-gradient(top, #3f98dc 0%, #3286c5 100%); /* Opera 11.10+ */
+          background: -ms-linear-gradient(top, #3f98dc 0%, #3286c5 100%); /* IE10+ */
+          background: linear-gradient(to bottom, #3f98dc 0%, #3286c5 100%); /* W3C */
+
+          &:hover {
+            background: #3f98dc;
+          }
+        }
+
+        .blurb {
+          background: rgba(0, 0, 0, 0.1);
+          border: solid 1px rgba(0, 0, 0, 0.05);
+          padding: 10px 20px;
+          @include border-radius(4px);
+          font-family: "MuseoSans-100";
+
+          p {
+            text-align: right;
+            line-height: 1.4em;
+          }
+        }
+      }
+      //top-box
+    }
+    // inside
+  }
+  // top-jobs
+
+  .jobs {
+    margin-top: -50px;
+
+    li {
+      margin-bottom: 15px;
+      background: #fff;
+      @include border-radius(4px);
+      @include subtle-box-shadow;
+      overflow: hidden;
+
+      &:last-child {
+        margin-bottom: 30px;
+      }
+
+      .job {
+        @include paper-panel;
+        padding: 20px 40px;
+        min-height: 87px;
+        width: 575px;
+        float: left;
+        border-right: solid 1px #eaeaea;
+
+        h2 {
+          font-size: 1.8em;
+          color: $dark-grey;
+          margin-bottom: 6px;
+          @include transition-all;
+        }
+
+        h3 {
+          font-size: 1.2em;
+          color: $light-blue;
+          text-transform: uppercase;
+          margin-bottom: 6px;
+        }
+
+        p {
+          font-size: 1.4em;
+          line-height: 1.6em;
+          color: $dark-grey;
+
+          //for long text, hmmm
+          overflow: hidden;
+          max-height: 48px;
+        }
+
+        &:hover {
+          h2 {
+            color: $light-blue;
+          }
+        }
+
+      }
+      //job section
+
+      .team {
+        padding: 30px 40px 20px 40px;
+        width: 204px;
+        float: left;
+
+        .details {
+          width: 150px;
+          float: left;
+          // @include ellipsis;
+
+          .team-name {
+            display: block;
+            color: $dark-grey;
+            margin-bottom: 5px;
+
+            &:hover {
+              color: $light-blue;
+            }
+
+            h4 {
+              font-family: "MuseoSans-500";
+              text-transform: capitalize;
+              font-size: 1.4em;
+              @include ellipsis;
+            }
+          }
+
+          .location {
+            text-transform: uppercase;
+            font-family: "MuseoSans-500";
+            color: #818181;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            @include ellipsis;
+          }
+
+          .tag-line {
+            font-family: "MuseoSans-300";
+            color: #818181;
+            font-size: 1.2em;
+            line-height: 1.4em;
+            margin-bottom: 5px;
+            width: 200px;
+            @include ellipsis;
+          }
+
+        }
+
+        .team-avatar {
+          float: right;
+          width: 31px;
+          height: 31px;
+
+          &:hover {
+            opacity: 0.5;
+          }
+
+          img {
+            width: 31px;
+            height: 31px;
+            @include border-radius(4px);
+          }
+        }
+      }
+      //team section
+
+    }
+    //each job post
+
+  }
+
+}
+
+// body#jobs

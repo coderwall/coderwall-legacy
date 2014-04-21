@@ -1,0 +1,1 @@
+MultiJson.engine = :oj

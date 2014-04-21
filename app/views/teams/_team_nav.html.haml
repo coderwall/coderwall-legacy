@@ -1,0 +1,22 @@
+=content_for :javascript do
+  =javascript_include_tag 'teams.js'
+
+#teamnote
+  %p
+    How does your company compare to some of the best teams of open source engineers?
+  .center
+    -options = {'data-category' => 'click', 'data-action' => 'build_team', :class => 'button'}
+    -if signed_in? && current_user.belongs_to_team?
+      =link_to("Invite team members",  edit_team_path(current_user.team), options)
+    -elsif signed_in?
+      =link_to("Get your team's index score", new_team_path, options)
+    -else
+      =link_to("Get your team's index score", signup_path, options)
+
+%h2.headline Team Leaderboard
+.barnav
+  %ul
+    %li=link_to('Coderwall Index',leaderboard_path, :class => top_teams_css_class )
+    -if signed_in?
+      %li=link_to('Following', followed_teams_path, :class => followed_teams_css_class)
+.clear

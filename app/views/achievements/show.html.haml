@@ -1,0 +1,40 @@
+-content_for :page_title do
+  =unlocked_badge_title
+
+-content_for :mixpanel do
+  =record_event('viewed achievement', :viewing_self => viewing_self?, :achievement => @badge.display_name)
+
+=content_for :head do
+  %meta{:name => 'twitter:card',        :content => 'summary' }
+  %meta{:name => 'twitter:site',        :content => '@coderwall' }
+  %meta{:name => 'twitter:title',       :content => unlocked_badge_title }
+  %meta{:name => 'twitter:description', :content => unlocked_badge_message }
+  %meta{:name => 'twitter:image',       :content => asset_path(@badge.image_path) }
+  %meta{:name => 'twitter:url',         :content => user_achievement_url(username: @user.username, id: @badge) }
+
+.achievement-unlocked
+  .tip-content
+    %h1 Achievement Unlocked
+    #award=image_tag(@badge.image_path)
+    %h2=@badge.display_name
+    -if viewing_self?
+      #plaque
+        %p
+          ="Congrats, you leveled up! You've unlocked the #{@badge.display_name} achievement for #{@badge.for}"
+          ==#{@badge.friendly_percent_earned} of developers on Coderwall have earned this.
+      .clear.center
+        #getyourachievements
+          =custom_tweet_button 'Share on Twitter', {:text => "Achievement Unlocked: #{@badge.display_name}", :via => 'coderwall'}, {:class => 'clickme first track', 'data-action' => 'share achievement', 'data-from' => 'achievement', 'data-properties' => {'achievement' => @badge.display_name}.to_json, :action => 'unlocked_achievement'}
+          .see-all
+            -if @badge.next
+              =link_to 'See Next Achievement', user_achievement_path(:username=>@user.username,:id=>@badge.next)
+            -else
+              =link_to 'View your profile', badge_path(:username => @user.username)
+    -else
+      #plaque
+        %p=unlocked_badge_message
+        =link_to "See #{@user.display_name}'s other achievements", badge_path(:username => @user.username), :class => 'seeprofile track', 'data-action' => 'view user achievements', 'data-from' => 'achievement', 'data-properties' => {'achievement' =>  @badge.display_name}.to_json
+        .clear
+      .clear.center
+        #getyourachievements=link_to 'See Your Achievements', signup_path, :class => 'clickme track','data-action' => 'view own achievements', 'data-from' => 'achievement', 'data-properties' => {'achievement' =>  @badge.display_name}.to_json
+        .see-all=link_to("View #{@user.display_name}'s profile", badge_path(:username => @user.username), 'data-action' => 'view user profile', 'data-from' => 'achievement', 'data-properties' => {'achievement' =>  @badge.display_name}.to_json)

@@ -1,0 +1,1186 @@
+@import "base";
+@import "compass/css3/";
+
+#product-description {
+
+  * {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .main-content {
+    background: #d3d3d3 image-url("premium-team-description/dot-bg.jpg") repeat;
+    padding: 0 0 5% 0;
+  }
+
+  #footer {
+    min-width: 100%;
+    max-width: 1140px !important;
+    .inside-footer {
+      max-width: 1140px;
+    }
+  }
+
+  .wrapper {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding-bottom: 5%;
+    background: #fff;
+  }
+
+  .masthead {
+    padding: 5% 7%;
+
+    .desc-logo {
+      float: left;
+
+      img {
+        width: 227px;
+      }
+
+      span {
+        display: none;
+      }
+    }
+
+    h2 {
+      float: right;
+      font-size: 1.8em;
+      text-transform: uppercase;
+      color: $light-blue;
+      margin-top: 1%;
+      font-family: "MuseoSans-300";
+    }
+  }
+
+  .title {
+    background: $light-blue;
+    padding: 3.5% 12%;
+
+    h1 {
+      color: #fff;
+      font-family: "MuseoSans-100";
+      font-size: 3em;
+      line-height: 1.6em;
+      text-align: center;
+    }
+  }
+
+  .packages {
+    background: $light-blue;
+    padding-bottom: 3.5%;
+
+    > ul {
+      text-align: center;
+      padding: 0 6%;
+
+      .center {
+        margin: 0 4%;
+      }
+
+      .selected {
+        footer {
+          a {
+            background: $light-blue;
+            color: #fff;
+            border: solid 1px #2871ac;
+          }
+        }
+      }
+
+      > li {
+        display: inline-block;
+        background: #fff;
+        @include border-radius(4px);
+        width: 30%;
+        vertical-align: top;
+        overflow: hidden;
+        -webkit-box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.2);
+
+        footer {
+          padding: 6%;
+
+          a {
+            display: block;
+            font-family: "MuseoSans-500";
+            font-size: 1.6em;
+            @include border-radius(4px);
+            text-transform: uppercase;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: #757575;
+            background: #ffffff; /* Old browsers */
+            background: -moz-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #f5f5f5)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* IE10+ */
+            background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%); /* W3C */
+            border: solid 1px #e6e6e6;
+
+            &:hover {
+              opacity: 0.5;
+            }
+          }
+        }
+
+        ul {
+
+          li {
+            text-align: left;
+            font-size: 1.3em;
+            background: image-url("premium-team-description/tick.png") no-repeat 5% 50%;
+            border-bottom: dashed 1px #eaeaea;
+            padding: 4% 12% 4% 16%;
+
+            &:nth-child(odd) {
+              background: #f5f5f5 image-url("premium-team-description/tick.png") no-repeat 5% 50%;
+            }
+
+            a {
+              color: $light-blue;
+            }
+          }
+        }
+      }
+
+    }
+
+    h2 {
+      text-transform: uppercase;
+      font-family: "MuseoSans-700";
+      font-size: 1.6em;
+      padding: 6% 0;
+      letter-spacing: 0.2em;
+      border-bottom: solid 1px #eaeaea;
+      background: $dark-grey;
+      color: #fff;
+    }
+
+    h3 {
+      font-size: 3em;
+      color: $light-blue;
+      padding: 4% 0;
+      //border-bottom: solid 1px #eaeaea;
+      @include ts-bottom-white;
+
+      span {
+        font-size: 0.5em;
+        text-transform: uppercase;
+      }
+    }
+
+    .free h3 {
+      color: $red;
+      background: #f7dede;
+    }
+
+    .monthly h3 {
+      color: $green;
+      background: #e1f1d1;
+    }
+
+    .one-off h3 {
+      background: #d8e8f5;
+    }
+  }
+
+  .feature {
+    background: #eee image-url("premium-team-description/feature-image3.jpg") no-repeat 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    //padding: 0 7%;
+
+    .intro {
+      float: left;
+      width: 50%;
+      min-height: 450px;
+      padding: 5% 7%;
+      //max-width: 474px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+
+      .error {
+        font-size: 1.4em;
+        background: $red;
+        color: #fff;
+        padding: 1%;
+        text-align: center;
+        display: block;
+        width: 50%;
+        margin: 0 auto 3% auto;
+      }
+
+      .errors {
+        width: 90%;
+        background: $red;
+        overflow: auto;
+        padding: 2% 4%;
+        margin-bottom: 4%;
+        @include border-radius(4px);
+
+        li {
+          font-size: 1.3em;
+        }
+
+        h4 {
+          text-transform: none;
+        }
+      }
+
+      h2 {
+        font-family: "MuseoSans-300";
+        font-size: 2.4em;
+        margin-bottom: 5%;
+      }
+
+      p {
+        font-size: 1.4em;
+        line-height: 1.8em;
+        margin-bottom: 5%;
+      }
+
+      #post-a-job, #create-team {
+        label {
+          font-size: 1.3em;
+          margin-bottom: 2%;
+          display: block;
+        }
+
+        input[type=text], input[type=submit], textarea, .button-link {
+          width: 90%;
+          height: 45px;
+          //padding: 2% 20px;
+          margin-bottom: 5%;
+          font-size: 1.2em;
+          display: block;
+          //text-transform: uppercase;
+          font-family: "MuseoSans-500";
+          border: 0;
+          color: #555;
+          @include border-radius(4px);
+        }
+
+        input[type=text], textarea {
+          //padding-left: 5%;
+          text-indent: 25px;
+          //background: #000;
+          -webkit-box-shadow: inset 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0px 3px 1px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+          height: 150px;
+          line-height: normal;
+          padding-top: 20px;
+          padding-left: 35px;
+          padding-right: 35px;
+          text-indent: 0;
+        }
+
+        #post-a-job .save input, #create-team .save input {
+          width: 90%;
+        }
+
+        .email-address {
+          background: #fff image-url("premium-team-description/email.png") no-repeat 10px 48%;
+          background-size: 14px 13px;
+        }
+
+        .company-name {
+          background: #fff image-url("premium-team-description/flag.png") no-repeat 10px 48%;
+          background-size: 14px 13px;
+        }
+
+        input[type=submit] {
+          color: #fff;
+          text-align: center;
+          background: $light-blue;
+          font-size: 1.5em;
+          width: 90%;
+          //text-transform: capitalize;
+
+          &:hover {
+            background: $green;
+          }
+        }
+      }
+      //post-a-job & create-a-team
+    }
+    //intro
+  }
+  //feature
+
+  .payment {
+    background-image: none;
+
+    .intro {
+      width: 100%;
+
+      .plans-heading {
+        font-size: 1.8em;
+        text-align: center;
+        width: 70%;
+        margin: 0 auto 3% auto;
+
+        &:before, &:after {
+          content: " ";
+          float: left;
+          width: 100px;
+          height: 2px;
+          background: rgba(225, 225, 225, 0.2);
+          margin-top: 8px;
+        }
+
+        &:before {
+          float: left;
+        }
+
+        &:after {
+          float: right;
+        }
+      }
+
+      .plans {
+        width: 100%;
+        //display: inline-block;
+        //float: left;
+        margin-bottom: 10px;
+        overflow: auto;
+
+        li {
+          background: #fff;
+          @include border-radius(4px);
+          color: $dark-grey;
+          margin-left: 4%;
+          padding: 3%;
+          opacity: 0.8;
+          float: left;
+          width: 30.6%;
+
+          &:first-child {
+            margin-left: 0;
+          }
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+        .monthly {
+          span {
+            color: $green;
+            background: #e1f1d1;
+          }
+        }
+
+        .single, .visitor-analytics {
+          span {
+            color: $light-blue;
+            background: #d8e8f5;
+          }
+        }
+
+        .free {
+          span {
+            color: $red;
+            background: #f7dede;
+          }
+        }
+
+        span {
+          font-size: 1.4em;
+          display: inline-block;
+          width: 46px;
+          height: 46px;
+          line-height: 46px;
+          text-align: center;
+          @include border-radius(50%);
+          vertical-align: top;
+          font-family: "MuseoSans-500";
+          margin-bottom: 5%;
+        }
+
+        .details {
+          display: inline-block;
+          padding: 0 4%;
+          vertical-align: middle;
+          //min-width: 210px;
+          width: 77%;
+          margin-bottom: 10%;
+
+          h3, h4 {
+            font-size: 1.4em;
+          }
+
+          h3 {
+            text-transform: uppercase;
+            font-family: "MuseoSans-700";
+            margin-bottom: 2%;
+          }
+
+          h4 {
+            text-transform: none;
+            color: #5f5f5f;
+            font-family: "MuseoSans-500";
+          }
+        }
+
+        .selected {
+          opacity: 1.0;
+        }
+        .select {
+          //vertical-align: center;
+          //margin-top: 6px;
+          display: block;
+          background: $light-blue;
+          color: #fff;
+          text-align: center;
+          font-size: 1.4em;
+          padding: 4% 6%;
+          @include border-radius(4px);
+
+          &:hover {
+            background: $green;
+          }
+        }
+        //
+        //              li:last-child {
+        //                  background: none;
+        //                  text-align: center;
+        //                  color: #fff;
+        //                  opacity: 1;
+        //
+        //                  a {
+        //                      color: $light-blue;
+        //                      text-decoration: underline;
+        //                  }
+        //              }
+
+      }
+      //plans
+    }
+    //intro
+  }
+  //payment
+
+  .find-team {
+    background-image: none;
+
+    .intro {
+      width: 100%;
+
+      .team-form {
+        width: 42%;
+        float: left;
+      }
+      .results {
+        width: 56%;
+        padding-left: 10%;
+        float: right;
+        background: image-url("team/circle-arrow.png") no-repeat left center;
+        color: $dark-grey;
+
+        h3 {
+          font-size: 1.5em;
+          font-family: "MuseoSans-500";
+          color: #606060;
+          margin-bottom: 5%;
+        }
+
+        .team-results {
+          background: #f8f8f8;
+          @include border-radius-top(6px);
+          padding: 6% 8%;
+          border-bottom: solid 1px #e4e4e4;
+
+          .results-list {
+
+            li {
+              margin-bottom: 3%;
+            }
+
+            .team-avatar {
+              display: inline-block;
+              img {
+                width: 32px;
+                height: 32px;
+                @include border-radius(4px);
+              }
+            }
+
+            h4 {
+              display: inline-block;
+              vertical-align: top;
+              padding: 2% 4% 0 4%;
+              text-transform: none;
+              font-size: 1.4em;
+              font-family: "MuseoSans-300";
+            }
+
+            .select {
+              margin-top: 6px;
+              display: inline-block;
+              float: right;
+              background: $light-blue;
+              color: #fff;
+              text-align: center;
+              font-size: 1.4em;
+              padding: 2% 3%;
+              @include border-radius(4px);
+
+              &:hover {
+                background: $green;
+              }
+            }
+            //select
+
+          }
+          //results-list
+        }
+        //team-results
+
+        .just-create-team {
+          background: #eee;
+          @include border-radius-bottom(4px);
+          padding: 6% 8%;
+          border-top: 1px solid #fff;
+
+          .create-team {
+            display: block;
+            padding: 4%;
+            margin-top: 6px;
+            background: $green;
+            color: #fff;
+            text-align: center;
+            font-size: 1.6em;
+            @include border-radius(4px);
+
+            &:hover {
+              background: $light-blue;
+            }
+          }
+        }
+        //just-create-team
+      }
+      //results
+
+    }
+    //intro
+  }
+  //find-team
+
+  .card-section {
+    //background: rgba(0, 0, 0, 0.8);
+    //display: inline-block;
+    float: right;
+    width: 47%;
+    //margin: auto 25%;
+    //clear: both !important
+    margin-bottom: 5%;
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      margin: 4% 0;
+      font-size: 3em;
+      font-family: "MuseoSans-100";
+    }
+  }
+
+  .sign-up-form {
+    //margin: 0 auto;
+    //max-width: 620px;
+
+  }
+
+  .steps {
+    padding-top: 5%;
+
+    .img {
+      width: 59%;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      //max-width: 568px;
+    }
+
+    .text {
+      width: 38%;
+      padding-top: 15%;
+
+      p {
+        line-height: 1.6em;
+      }
+      h3 {
+        margin-bottom: 1em;
+        font-size: 1.8em;
+      }
+    }
+
+    .step-one, .step-two, .step-three {
+      padding: 0 7%;
+      margin-bottom: 5%;
+    }
+
+    .step-one, .step-three {
+      background: image-url("premium-team-description/circle-line.png") no-repeat 27% 20%, image-url("premium-team-description/grad.png") repeat-x 0% 115%;
+
+      .img {
+        float: right;
+      }
+      .text {
+        float: left;
+        padding-right: 2%;
+      }
+    }
+
+    .step-two {
+      background: image-url("premium-team-description/circle-line2.png") no-repeat 80% 20%, image-url("premium-team-description/grad.png") repeat-x 0% 115%;
+
+      .img {
+        float: left;
+      }
+      .text {
+        float: right;
+        padding-left: 2%;
+        text-align: right;
+      }
+    }
+  }
+
+  .big-button {
+    color: #fff;
+    text-align: center;
+    background: $light-blue;
+    font-size: 1.8em;
+    width: 60%;
+    margin: 0 auto;
+    text-transform: capitalize;
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    @include border-radius(4px);
+
+    &:hover {
+      background: $green;
+    }
+
+    &:visited {
+      color: #fff;
+    }
+  }
+
+  .faq {
+    padding: 4% 10%;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 4%;
+      font-size: 3em;
+      font-family: "MuseoSans-100";
+    }
+
+    ul {
+      li {
+        text-align: center;
+        font-size: 1.6em;
+        margin-bottom: 1%;
+
+        &:nth-child(odd) {
+          color: $light-blue;
+          font-family: "MuseoSans-500";
+        }
+
+        &:nth-child(even) {
+          margin-bottom: 4%;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .credit-card {
+    background: #f1f0f5;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+    -webkit-box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.2);
+    padding: 4% 0 7% 0;
+    //margin-bottom: 6%;
+    text-transform: uppercase;
+  }
+
+  .card-btm {
+    padding: 5% 7% 0 5%;
+    overflow: auto;
+    #stripe_error {
+      color: $red;
+      font-size: 1.4em;
+    }
+  }
+
+  .purchase {
+    color: #fff;
+    text-align: center;
+    background: $light-blue;
+    font-size: 1.8em;
+    width: 60%;
+    margin: 0 auto;
+    text-transform: capitalize;
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    @include border-radius(4px);
+    border: 0;
+
+    &:hover {
+      background: $green;
+    }
+
+    .processing {
+      background: $light-grey;
+    }
+  }
+
+  .credit-card {
+    h3 {
+      background: $light-blue;
+      color: #fff;
+      height: 50px;
+      line-height: 50px;
+      padding-left: 7%;
+      font-weight: 700;
+      font-size: 2em;
+      letter-spacing: 0.2em;
+    }
+    label {
+      color: #676767;
+      font-size: 1.4em;
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type=text] {
+      padding: 15px;
+      border: 0;
+      color: $red;
+      font-size: 1.3em;
+    }
+  }
+
+  .card-number input[type=text] {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .expiration {
+    float: left;
+  }
+
+  .cvc {
+    float: right;
+  }
+
+  .expiration input[type=text], .cvc input[type=text] {
+    width: 75px;
+    text-align: center;
+  }
+
+  .expiration input[type=text] {
+    margin-right: 15px;
+  }
+
+  .sign-up-form input[type=submit] {
+    background: $light-blue;
+    border: 0;
+    display: block;
+    width: 100%;
+    height: 80px;
+    margin-bottom: 7%;
+    margin-top: 6%;
+    font-weight: 700;
+    color: #fff;
+    font-size: 2em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-bottom: 4px solid #000;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .small-print {
+    font-size: 1.4em;
+    text-align: center;
+    color: #8f2e03;
+  }
+
+  //thank you section
+  .thankyou {
+    padding: 0 7%;
+
+    h1 {
+      font-size: 1.6em;
+      text-align: center;
+      margin-bottom: 7%;
+      padding: 7% 0;
+      border-top: 3px #eaeaea solid;
+      border-bottom: 3px #eaeaea solid;
+    }
+
+    .big-button {
+      width: 50%;
+    }
+  }
+
+  //signup
+  .sign-up {
+    background: #eaeaea;
+    .intro {
+      margin: 0 auto;
+      float: none;
+
+      label {
+        display: block;
+        font-size: 1.2em;
+        margin-bottom: 3%;
+      }
+
+      small {
+        font-size: 1.1em;
+      }
+
+      input[type=text] {
+        text-indent: 15px;
+      }
+
+      // .short-number {
+      // 	width: 30% !important;
+      // }
+    }
+  }
+
+  //media queries
+  @media screen and (max-width: 1076px) {
+
+    .payment {
+      .intro {
+        .plans-heading {
+          width: 100%;
+
+          &:before, &:after {
+            display: none;
+          }
+        }
+      }
+      //intro
+    }
+    //payment
+  }
+
+  @media screen and (max-width: 768px) {
+
+    .find-team {
+      background-image: none;
+
+      .intro {
+        width: 100%;
+
+        .team-form {
+          width: 100%;
+          float: none;
+          margin-bottom: 5%;
+        }
+        .results {
+          width: 100%;
+          padding-left: 0;
+          float: none;
+          background: none;
+        }
+
+      }
+      //intro
+    }
+    //find-team
+
+    .payment {
+      .intro {
+
+        .plans {
+          li {
+            width: 100%;
+            float: none;
+            margin: 0;
+            margin-bottom: 5%;
+          }
+        }
+
+        .plans, .card-section {
+          width: 80%;
+          margin: 0 auto;
+          float: none;
+        }
+
+        .card-section {
+          margin-bottom: 5%;
+        }
+
+      }
+      //intro
+    }
+    //payment
+
+    .step-one, .step-two, .step-three {
+      background: none !important;
+      .text {
+        padding-top: 5%;
+      }
+    }
+
+    .packages {
+      > ul {
+        padding: 0 7%;
+
+        .center {
+          margin: 0;
+          margin-bottom: 4%;
+        }
+
+        li {
+          width: 80%;
+          margin-bottom: 4%;
+
+          ul {
+            //padding: 4% 4% 0 4%;
+            li {
+              width: 100%;
+              margin: 0;
+            }
+          }
+        }
+      }
+      h2 {
+        padding: 4% 0;
+      }
+
+      h3 {
+        padding: 3% 0;
+      }
+    }
+
+    .feature {
+      .intro {
+        width: 100%;
+      }
+    }
+
+    .masthead {
+      .desc-logo {
+        float: none;
+        display: block;
+        margin: 0 auto 10px auto;
+        width: 220px;
+        img {
+          width: 220px;
+        }
+      }
+
+      h2 {
+        clear: both;
+        width: 100%;
+        text-align: center;
+        font-size: 1.8em;
+      }
+    }
+
+    #footer {
+      .inside-footer {
+        #tweetbtn {
+          float: none;
+          display: block;
+          margin-bottom: 15px;
+        }
+        #footer-nav {
+          .footer-links {
+            li {
+              margin: 0 15px 5px 0;
+              margin-left: 0;
+              //background: #000;
+            }
+          }
+        }
+      }
+    }
+
+  }
+  //768
+
+  @media screen and (max-width: 400px) {
+
+    .payment {
+      .intro {
+
+        .plans, .card-section {
+          width: 100%;
+        }
+
+        .plans {
+          li {
+            padding: 5% 6%;
+          }
+
+          .select {
+            width: 100%;
+          }
+
+          .details {
+            width: 70%;
+          }
+        }
+
+      }
+      //intro
+    }
+    //payment
+
+    .step-one, .step-two, .step-three {
+      .img {
+        width: 100%;
+      }
+      .text {
+        width: 100%;
+      }
+    }
+
+    .packages {
+      > ul {
+        li {
+          width: 100%;
+        }
+      }
+    }
+
+    .masthead {
+      .desc-logo {
+        width: 180px;
+        img {
+          width: 180px;
+        }
+      }
+
+      h2 {
+        font-size: 1.4em;
+      }
+    }
+
+    .title {
+      h1 {
+        color: #fff;
+        font-family: "MuseoSans-100";
+        font-size: 2em;
+        line-height: 1.6em;
+        text-align: center;
+      }
+    }
+
+    .card-section, .faq {
+      h2 {
+        font-size: 2em;
+      }
+    }
+
+    .feature {
+      //padding: 0 5%;
+      .intro {
+        //padding: 5% 7%;
+        h2 {
+          font-size: 1.8em;
+        }
+        p {
+          line-height: 1.6em;
+        }
+
+        #post-a-job, #create-team {
+          input[type=text], input[type=submit] {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .sign-up-form input[type=submit] {
+      font-size: 1.4em;
+    }
+
+  }
+  //400
+
+  .sign-up-buttons {
+    li {
+      margin-bottom: 25px;
+      //@include blue-btn;
+      font-size: 1.3em;
+      background: $light-blue;
+      @include border-radius(6px);
+      @include transition-all;
+      height: 58px;
+      line-height: 58px;
+      //text-align: left;
+
+      &:hover {
+        opacity: 0.8;
+      }
+      a {
+        color: #fff;
+        text-transform: capitalize;
+        font-size: 1.2em;
+        display: block;
+        text-align: center;
+        position: relative;
+
+        div {
+          height: 58px;
+          width: 46px;
+          //float: left;
+          position: absolute;
+          top: 2%;
+          left: 8%;
+          //margin: 0 20px 0 20%;
+          background: image-url("sign-up-sprite.png") no-repeat bottom left;
+        }
+
+        .twitter {
+          background-position: 0px -58px;
+        }
+
+        .github {
+          background-position: top left;
+        }
+      }
+    }
+  }
+  //sign-up buttons
+
+}
+
+//body end

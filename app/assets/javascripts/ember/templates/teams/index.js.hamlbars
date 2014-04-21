@@ -1,0 +1,5 @@
+%table.table.table-striped
+  %tbody
+  =hb 'each teams' do
+    %tr
+      =hb 'view Coderwall.ShowTeamView', :teamBinding => 'this'

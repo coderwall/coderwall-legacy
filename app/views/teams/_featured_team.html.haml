@@ -1,0 +1,34 @@
+-cache ['v2', 'featured', featured_team.slug, featured_team.updated_at, featured_team.admin?(current_user)] do
+  %li
+    -if featured_team.hiring?
+      %a.hiring-ribbon{:href => friendly_team_path(featured_team)}
+        %span Join Us
+    %header
+      %a.team-link{:href => friendly_team_path(featured_team)}
+        .avatar=image_tag(featured_team.avatar_url)
+        %h2=featured_team.name
+        %h3=featured_team.hiring_tagline
+    .image
+      %a{:href => friendly_team_path(featured_team)}
+        - featured_banner = banner_image_or_default(featured_team)
+        =image_tag(featured_banner)
+        -if featured_banner == default_featured_banner and featured_team.admin?(current_user)
+          .overlay-message You need to set a banner image for your team in the edit jobs section
+    .content
+      -if !featured_team.highlight_tags.blank?
+        %ul.tags.cf
+          -featured_team.highlight_tags.split(',').each do |tag|
+            %li=tag.strip
+      -if !featured_team.active_jobs.blank?
+        .opportunities
+          %h3 Open opportunities
+          %ul.jobs.cf
+            -featured_team.active_job_titles.each do |job_title|
+              %li=link_to(job_title, friendly_team_path(featured_team) + '#open-positions')
+      %footer.cf
+        %h4.location=featured_team.locations_message
+        -if featured_team.size > 3
+          %span.more-members="+#{featured_team.size - 3}"
+        %ul.members.cf
+          -featured_team.top_three_team_members.each do |member|
+            %li=link_to(users_image_tag(member), profile_path(member.username), :title => member.display_name, :class => "record-exit", 'data-target-type' => 'team-member')

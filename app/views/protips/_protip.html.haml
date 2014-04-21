@@ -1,0 +1,139 @@
+.inside.cf.x-protip-pane
+  //.blur-screen
+  .tip-container.cf.x-protip-content.protip-single#x-protip{:class => mode}
+    %aside.tip-sidebar
+      .user-box
+        %a.avatar{:href => profile_path(protip.user.username), 'data-action' => 'view user profile', 'data-from' => 'protip author avatar on top', 'data-properties' => {'mode' => mode}.to_json}
+          =image_tag(users_image_path(protip.user), :class => 'avatar')
+
+        %ul.user-team
+          %li.user
+            by
+            %a.track{:href => profile_path(protip.user.username), 'data-action' => 'view user profile', 'data-from' => 'protip author name on top', 'data-properties' => {'mode' => mode}.to_json}
+              = protip.user.display_name
+          - unless protip.team.nil?
+            %li.team
+              of
+              %a.track{:href => teamname_path(protip.team.slug), 'data-action' => 'view team', 'data-from' => 'protip author teamname on top', 'data-properties' => {'mode' => mode}.to_json}
+                = protip.team.name
+
+        %p.bio
+          =protip.user.about
+
+        %ul.side-bar-list
+
+          %li.username
+            %a.name.track{:href => profile_path(protip.user.username), 'data-action' => 'view user profile', 'data-from' => 'protip author name(follow)', 'data-properties' => {'mode' => mode}.to_json}=protip.user.username
+            =link_to '', follow_user_path(protip.user.username), :class => "follow", :remote => true, :method => :post, :rel => "nofollow", :'data-follow-type' => 'Users', :'data-value' => "#{protip.user.username}"
+          - unless protip.team.nil?
+            %li.teamname
+              %a.name.track{:href => teamname_path(protip.team.slug), 'data-action' => 'view team', 'data-from' => 'protip teamname(follow)', 'data-properties' => {'mode' => mode}.to_json}=protip.team.name
+              =link_to '', follow_team_path(protip.team.slug), :class => "follow", :remote => true, :method => :post, :rel => "nofollow", :'data-follow-type' => 'Teams', :'data-value' => "#{protip.team.slug}"
+
+      .side-btm
+        -unless protip.networks.blank?
+          %h3 Networks
+          %ul.side-bar-list.side-bar-networks
+            - protip_networks(protip).each do |name|
+              -slug = Network.slugify(name)
+              %li{:style => "border-color:##{color_signature(slug)}"}
+                %a.name{:href => network_path(:id => slug)}= name
+                =link_to '', leave_network_path(:id => slug), :class => "follow #{slug}", :remote => true, :method => :post, :rel => "nofollow", :'data-follow-type' => 'Networks', :'data-value' => "#{slug}"
+
+        -unless mode == 'preview'
+          -if protip_owner?(protip, current_user) || is_admin?
+            %ul.admin-links
+              %li
+                = link_to 'Edit protip', edit_protip_path(protip.public_id), :class => 'edit', :rel => 'nofollow'
+              %li
+                = link_to('Delete protip ', protip_path(protip.public_id), :method => :delete, :class => 'delete-tip del', :rel => 'nofollow', :title => 'remove protip', :confirm => "Are you sure you permanently want to remove this pro tip?")
+
+          - if is_admin?
+            %ul.admin-links
+              %li
+                =link_to '', flag_protip_path(protip), :method => :post, :remote => true, :class => (protip.flagged? ? 'flagged' : "") + " flag"
+              %li
+                =link_to '', queue_protip_path(protip, :queue => 'hackernews'), :method => :post, :remote => true, :class => (protip.queued_for?(:hackernews) ? 'queued' : "") + " queue"
+              %li
+                =link_to '', feature_protip_path(protip), :method => :post, :remote => true, :class => (protip.featured? ? 'featured' : "") + " feature"
+              %li
+                %p.reviewed
+                  =protip_reviewer(protip)
+          - else
+            %ul.admin-links
+              %li
+                = link_to '', report_inappropriate_protip_path(protip), method: :post, remote: true, class: (cookies["report_inappropriate-#{protip.public_id}"] ? 'user-flagged' : '') + ' user-flag'
+
+          -if defined?(:job) && !job.nil?
+            %h3 Featured team
+            - adjective = ["is amazing", "is awesome", "has a great engineering team"].sample
+            =link_to teamname_path(job.team.slug), :class => 'team-box', 'data-action' => 'view team jobs', 'data-from' => 'job on protip', 'data-properties' => {"author's team" => protip.user.belongs_to_team?(job.team), 'adjective' => adjective, 'mode' => mode}.to_json do
+              .image-top
+                =image_tag(featured_team_banner(job.team))
+              .content
+                -#-team_member = protip.user.belongs_to_team?(job.team) ? protip.user : job.team.top_team_member
+                .avatar
+                  =image_tag(job.team.avatar_url)
+                %h4= job.team.name
+
+                %p
+                  ==Calling all #{job.title.pluralize}. #{job.team.name} #{adjective} and is hiring!
+            %a.feature-jobs.track{:href => employers_path, 'data-action' => 'upgrade team', 'data-from' => 'protip page'}
+              feature your jobs here
+
+    %article.tip-panel{:id => protip.public_id}
+      -ab_test(TWITTER_SHARE_TEST, 'left', 'right') do |direction|
+        =share_on_twitter(protip, 'share-this-tip direction')
+      -#%a.share-this-tip{:href => '/'}
+      -#  Share this
+      =upvote_link(protip, "upvote")
+      %header.tip-header
+        %h1.tip-title
+          -if mode == 'popup'
+            %a.track{:href => protip_path(protip), 'data-action' => 'view protip', 'data-from' => 'popup protip title'}=sanitize(protip.title)
+          -else
+            = sanitize(protip.title)
+        - if is_admin? || protip_owner?(protip, current_user) || protip.total_views > 100
+          %p.views
+            %span
+              = protip.total_views
+            views
+        %ul#tags.cf
+          - protip.topics.each do |tag|
+            %li
+              %a{:href => "/p/t/#{tag.parameterize}"}=tag
+              - if is_admin?
+                =link_to 'delete', delete_tag_protip_path(protip.public_id, CGI.escape(tag)), :method => :post, :class => "delete"
+
+        - if is_admin?
+          %ul.admin-tag-links.cf
+            %li=link_to 'flag', flag_protip_path(protip), :method => :post, :remote => true, :class => (protip.flagged? ? 'flagged' : "") + " flag"
+            %li=link_to 'feature', feature_protip_path(protip), :method => :post, :remote => true, :class => (protip.featured? ? 'featured' : "") + " feature"
+            %li=link_to('delete', protip_path(protip.public_id), :method => :delete, :class => 'delete-tip del', :rel => 'nofollow', :title => 'remove protip', :confirm => "Are you sure you permanently want to remove this pro tip?")
+
+        //.tip-body.tip-content
+      %div.tip-content
+        =raw sanitize(protip.to_html)
+
+    -if include_comments
+      %section.comments
+        %h2.comments-header Comments
+        %ul.comment-list
+          = render protip.comments
+
+        = render 'comments/add_comment'
+
+    -if defined?(:job) && !job.nil?
+      .mobile-job
+        - adjective = ["is amazing", "is awesome", "has a great engineering team"].sample
+        =link_to teamname_path(job.team.slug), :class => 'team-box', 'data-action' => 'view team jobs', 'data-from' => 'job on protip', 'data-properties' => {"author's team" => protip.user.belongs_to_team?(job.team), 'adjective' => adjective, 'mode' => mode}.to_json do
+          .image-top
+            =image_tag(featured_team_banner(job.team))
+          .content
+            -#-team_member = protip.user.belongs_to_team?(job.team) ? protip.user : job.team.top_team_member
+            .avatar
+              =image_tag(job.team.avatar_url)
+            %h4= job.team.name
+
+            %p
+              ==Calling all #{job.title.pluralize}. #{job.team.name} #{adjective} and is hiring!

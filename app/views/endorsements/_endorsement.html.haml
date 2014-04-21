@@ -1,0 +1,9 @@
+.endorsement
+  =avatar_image_tag(endorsement.endorser)
+  =link_to(endorsement.endorser.display_name, badge_path(:username => endorsement.endorser.username))
+  endorsed your
+  %strong=endorsement.specialty
+  skills
+  =distance_of_time_in_words_to_now(endorsement.created_at)
+  ago
+.clear

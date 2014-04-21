@@ -1,0 +1,3 @@
+$('#search-results > ul.featured-team-list:not(.normal-view-three)').hide();
+$('#search-results > ul.featured-team-list.normal-view-three').empty();
+$('#search-results > ul.featured-team-list.normal-view-three').append('<%= escape_javascript(render collection: @teams, partial: 'team_card') %>');

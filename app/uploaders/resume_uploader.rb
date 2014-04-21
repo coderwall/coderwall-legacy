@@ -1,0 +1,2 @@
+class ResumeUploader < CoderwallUploader
+end

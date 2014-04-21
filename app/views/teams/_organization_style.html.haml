@@ -1,0 +1,31 @@
+%section#organization-style.cf{:style => "border-right: solid 8px #{@team.branding_hex_color}", :class => section_enabled_class(@team.has_organization_style?)}
+  -if !@team.has_organization_style?
+    -inactive_box('#organization-style', "Approach or Process") do
+      How does the organization run? What values help you accomplish your goals?
+
+  -if can_edit?
+    -panel_form_for_section('#organization-style', 'Approach or Process') do |f|
+      %aside
+        -admin_hint do
+          How does the organization run? What values help you accomplish your goals?
+        -ideas_list do
+          %li Something unique about the development process and/or management style.
+          %li Highlight aspects of the team culture that help people accomplish great things.
+      .form-inputs
+        %fieldset
+          =f.label :organization_way_name, 'Title', :class => 'optional', :placeholder => "The #{@team.name} Way"
+          =f.text_field :organization_way_name
+        %fieldset
+          =f.label :organization_way, 'Message'
+          =f.text_area :organization_way
+        %fieldset
+          =f.hidden_field :organization_way_photo
+          .preview
+            =image_tag(@team.organization_way_photo) unless @team.organization_way_photo.blank?
+            =link_to('Choose Photo','#',:class=>'photo-chooser','data-input'=>'team_organization_way_photo','data-fit-w'=>479, 'data-fit-h'=>321)
+
+  .img
+    =image_tag(organization_way_photo_or_default(@team))
+  .text
+    %h3{:style => "color:#{@team.branding_hex_color}"}=organization_way_name_or_default(@team)
+    %p{:style => "color:#{@team.branding_hex_color}"}=organization_way_or_default(@team)

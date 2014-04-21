@@ -1,0 +1,1249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tumblr version="1.0">
+  <tumblelog name="thechangelog" timezone="US/Central" cname="thechangelog.com"
+             title="The Changelog - Open Source moves fast. Keep up.">&lt;h3&gt;Episode 0.6.0 - Fog and The Cloud with
+    Wesley Beary&lt;/h3&gt;&#13;
+    &lt;p&gt;Wynn sat down with Wesley Beary from Engine Yard to talk about the Fog project and the Cloud, live from Red
+    Dirt Ruby Conf.&lt;/p&gt;&#13;
+    &lt;a class='goto-episode' href="/latest"&gt;Go to episode&lt;/a&gt;</tumblelog>
+  <posts start="0" total="190">
+    <post id="5833848411" url="http://thechangelog.com/post/5833848411"
+          url-with-slug="http://thechangelog.com/post/5833848411/leaflet-leaflet-is-a-modern-javascript-library-for-inter"
+          type="link" date-gmt="2011-05-25 15:00:53 GMT" date="Wed, 25 May 2011 10:00:53" unix-timestamp="1306335653"
+          format="markdown" reblog-key="GDThe1ZJ" slug="leaflet-leaflet-is-a-modern-javascript-library-for-inter">
+      <link-text>Leaflet: JavaScript library for mobile and web open mapping</link-text>
+      <link-url>http://github.com/CloudMade/Leaflet</link-url>
+      <link-description>&lt;p&gt;While Google has done much to advance the art and science of maps on
+        the web and mobile devices, there is still room for innovation on a
+        number of fronts. &lt;a href="http://www.openstreetmap.org/"&gt;OpenStreetMap&lt;/a&gt;, for
+        instance brings the power of social curation (read: wiki) to maps.&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://github.com/CloudMade/Leaflet"&gt;Leaflet&lt;/a&gt; from
+        &lt;a href="http://cloudmade.com/"&gt;CloudMade&lt;/a&gt; aims to create an elegant, open
+        JavaScript API for mapping for both the web and mobile devices.
+        Supporting OpenStreetMap, Bing, and
+        &lt;a href="http://en.wikipedia.org/wiki/Web_Map_Service"&gt;WMS&lt;/a&gt;, Leaflet offers a
+        unified API across a number of providers.&lt;/p&gt;
+
+        &lt;p&gt;&lt;img src="http://cl.ly/1g1j0B3L142S2P2C0I1G/Screen_shot_2011-05-25_at_9.51.11_AM.png"
+        alt="screencap"/&gt;&lt;/p&gt;
+
+        &lt;p&gt;In addition to standard mapping features such as tile layers, polylins,
+        polygons, circles, markers, poups, image overlays, and pan/zoom/move
+        controls, one of Leaflet&amp;#8217;s killer features is its pure CSS3 popups.&lt;/p&gt;
+
+        &lt;p&gt;While powerful, the Leaflet API is also quite simple:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;// initialize the map on the "map" div with a given center and zoom
+        var map = new L.Map('map', {
+        center: new L.LatLng(51.505, -0.09),
+        zoom: 13
+        });
+
+        // create a CloudMade tile layer
+        var cloudmadeUrl =
+        'http://{s}.tile.cloudmade.com/YOUR-API-KEY/997/256/{z}/{x}/{y}.png',
+        cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18});
+
+        // add the CloudMade layer to the map
+        map.addLayer(cloudmade);
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Project creator &lt;a href="http://agafonkin.com/en"&gt;Vladimir Agafonkin&lt;/a&gt; also notes
+        that the project makes use of CSS3&amp;#160;3D Transforms and Transitions &amp;#8220;to be smooth
+        and efficient on mobile platforms.&amp;#8221;&lt;/p&gt;
+
+        &lt;p&gt;Be sure and check out the great &lt;a href="http://leaflet.cloudmade.com/"&gt;web
+        site&lt;/a&gt; for advanced usage and examples as
+        well.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/CloudMade/Leaflet"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>maps</tag>
+      <tag>web</tag>
+      <tag>javascript</tag>
+      <tag>mobile</tag>
+      <tag>JavaScript</tag>
+    </post>
+    <post id="5768094437" url="http://thechangelog.com/post/5768094437"
+          url-with-slug="http://thechangelog.com/post/5768094437/restsharp-simple-rest-and-http-api-client-for-net"
+          type="link" date-gmt="2011-05-23 15:10:44 GMT" date="Mon, 23 May 2011 10:10:44" unix-timestamp="1306163444"
+          format="markdown" reblog-key="Vn0aKUhy" slug="restsharp-simple-rest-and-http-api-client-for-net">
+      <link-text>RestSharp: Simple REST and HTTP API Client for .NET</link-text>
+      <link-url>http://github.com/johnsheehan/RestSharp</link-url>
+      <link-description>&lt;p&gt;I&amp;#8217;m a big fan of making &lt;a
+        href="http://www.slideshare.net/pengwynn/json-and-the-apinauts"&gt;idiomatic language bindings for APIs&lt;/a&gt;.
+        Making common tasks such as URI generation, transport, authentication, and payload parsing configurable options
+        and providing a higher-level API lets application developers focus on the business domain instead of low-level
+        networking.&lt;/p&gt;
+
+        &lt;p&gt;.NET developers looking to write API wrappers without starting from
+        scratch should check out &lt;a href="http://restsharp.org"&gt;RestSharp&lt;/a&gt; from &lt;a
+        href="http://twitter.com/johnsheehan"&gt;John Sheehan&lt;/a&gt;. Similar to Ruby&amp;#8217;s &lt;a
+        href="http://github.com/jnunemaker/httparty"&gt;HTTParty&lt;/a&gt; and others, RestSharp provides a number of
+        features to make writing wrappers for REST web services a snap, including:&lt;/p&gt;
+
+        &lt;ul&gt;&lt;li&gt;Automatic XML and JSON parsing including Fuzzy element name matching (&amp;#8220;product_id&amp;#8221;
+        in XML/JSON will match C# property named &amp;#8216;ProductId&amp;#8217;)&lt;/li&gt;
+        &lt;li&gt;Support for GET, POST, PUT, HEAD, OPTIONS, DELETE&lt;/li&gt;
+        &lt;li&gt;oAuth 1, oAuth 2, Basic, NTLM and Parameter-based Authentication&lt;/li&gt;
+        &lt;li&gt;Multi-part form/file uploads&lt;/li&gt;
+        &lt;li&gt;Custom serialization and deserialization via ISerializer and
+        IDeserializer&lt;/li&gt;
+        &lt;li&gt;Both sync and async requests&lt;/li&gt;
+        &lt;/ul&gt;&lt;h3&gt;Example&lt;/h3&gt;
+
+        &lt;p&gt;Here&amp;#8217;s a quick example of making a simple request for XML from an API using Basic Auth:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;var client = new RestClient();
+        client.BaseUrl = "http://twitter.com";
+        client.Authenticator = new HttpBasicAuthenticator("username", "password");
+
+        var request = new RestRequest();
+        request.Resource = "statuses/friends_timeline.xml";
+
+        RestResponse response = client.Execute(request);
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;In addition to using the built-in &lt;a
+        href="https://github.com/johnsheehan/RestSharp/wiki/Authenticators"&gt;Authenticators&lt;/a&gt;,
+        you&amp;#8217;re free to create your own:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;var client = new RestClient("http://example.com");
+        client.Authenticator = new SimpleAuthenticator("username", "foo", "password", "bar");
+
+        var request = new RestRequest("resource", Method.GET);
+        client.Execute(request);
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Perhaps most impressive is RestSharp&amp;#8217;s support for a number of environments including .NET
+        3.5+, Silverlight 4, Windows Phone 7, Mono, and MonoTouch. Be sure and check out the &lt;a
+        href="https://github.com/johnsheehan/RestSharp"&gt;project readme&lt;/a&gt; for advanced usage and tips on
+        contributing.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/johnsheehan/RestSharp"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>.net</tag>
+      <tag>csharp</tag>
+      <tag>REST</tag>
+      <tag>API</tag>
+      <tag>C</tag>
+    </post>
+    <post id="5666652108" url="http://thechangelog.com/post/5666652108"
+          url-with-slug="http://thechangelog.com/post/5666652108/scrollability-native-scrolling-for-the-mobile-web"
+          type="link" date-gmt="2011-05-20 13:43:00 GMT" date="Fri, 20 May 2011 08:43:00" unix-timestamp="1305898980"
+          format="markdown" reblog-key="dzoiQmIQ" slug="scrollability-native-scrolling-for-the-mobile-web">
+      <link-text>scrollability: Native scrolling for the mobile web</link-text>
+      <link-url>http://github.com/joehewitt/scrollability</link-url>
+      <link-description>&lt;p&gt;Perhaps even more than advanced features like GPS, camera access, contacts, and
+        App stores, the lack of viewport-aware &lt;code&gt;position:fixed&lt;/code&gt; is what drives
+        many apps to be developed as a native experience.&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://joehewitt.com/"&gt;Joe Hewitt&lt;/a&gt; who brought us
+        &lt;a href="http://getfirebug.com"&gt;Firebug&lt;/a&gt; and the Facebook iPhone app has
+        released &lt;a href="http://github.com/joehewitt/scrollability"&gt;Scrollability&lt;/a&gt;, a
+        single script with no external dependencies that allows developers to
+        achieve near-native feeling scrolling, just by adding a few CSS classes
+        to their markup. In just a few hours of its release, the project has over 250 watchers on GitHub.&lt;/p&gt;
+
+        &lt;p&gt;Joe includes a simple &lt;a href="http://joehewitt.github.com/scrollability/example1.html"&gt;demo&lt;/a&gt;
+        for iOS devices that demonstrates super smooth scrolling as well as fixed header and footer elements.&lt;/p&gt;
+
+        &lt;p&gt;&lt;img src="http://cl.ly/2C0T2w3i412Z3h2B0r1D/Cloud2go_May_20_2011_8_32_AM.png" alt="Screencap"/&gt;&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/joehewitt/scrollability"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>iphone</tag>
+      <tag>ios</tag>
+      <tag>css</tag>
+      <tag>javascript</tag>
+      <tag>web</tag>
+      <tag>mobile</tag>
+      <tag>JavaScript</tag>
+    </post>
+    <post id="5653080827" url="http://thechangelog.com/post/5653080827"
+          url-with-slug="http://thechangelog.com/post/5653080827/littleworkers-petite-python-command-runners"
+          type="link" date-gmt="2011-05-20 00:17:12 GMT" date="Thu, 19 May 2011 19:17:12" unix-timestamp="1305850632"
+          format="markdown" reblog-key="hhaAmg5X" slug="littleworkers-petite-python-command-runners">
+      <link-text>Littleworkers: Petite Python Command Runners</link-text>
+      <link-url>https://github.com/toastdriven/littleworkers</link-url>
+      <link-description>&lt;p&gt;Daniel Lindsley, of
+        &lt;a href="https://github.com/toastdriven/django-haystack"&gt;django-haystack&lt;/a&gt;,
+        &lt;a href="https://github.com/toastdriven/django-tastypie"&gt;django-tastypie&lt;/a&gt;, and
+        &lt;a href="(https://github.com/toastdriven/itty)"&gt;itty&lt;/a&gt; fame, just launched a
+        small but useful project.&lt;/p&gt;
+
+        &lt;p&gt;&lt;strong&gt;&lt;a href="https://github.com/toastdriven/littleworkers"&gt;Littleworkers&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+        &lt;p&gt;This extremely minimal Python module allows you to set a list of command
+        strings to be executed by the system, and it eats through them in a process pool.&lt;/p&gt;
+
+        &lt;p&gt;&lt;strong&gt;Example usage:&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;from littleworkers import Pool
+
+        # Define your commands.
+        commands = [
+        'ls -al',
+        'cd /tmp &amp;amp;&amp;amp; mkdir foo',
+        'date',
+        'echo "Hello There."',
+        'sleep 2 &amp;amp;&amp;amp; echo "Done."'
+        ]
+
+        # Setup a pool. Since I have two cores, I'll use two workers.
+        lil = Pool(workers=2)
+
+        # Run!
+        lil.run(commands)
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Simple. Pythonic.&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>python</tag>
+    </post>
+    <post id="5571960742" url="http://thechangelog.com/post/5571960742"
+          url-with-slug="http://thechangelog.com/post/5571960742/async-js-asynchronous-control-flow-in-node-js-and-the"
+          type="link" date-gmt="2011-05-17 08:59:00 GMT" date="Tue, 17 May 2011 03:59:00" unix-timestamp="1305622740"
+          format="markdown" reblog-key="ab57tizz" slug="async-js-asynchronous-control-flow-in-node-js-and-the">
+      <link-text>async.js - asynchronous control flow in node.js and the browser</link-text>
+      <link-url>https://github.com/caolan/async</link-url>
+      <link-description>&lt;p&gt;&lt;a href="https://github.com/caolan/async"&gt;async.js&lt;/a&gt;, written by &lt;a
+        href="https://github.com/caolan/"&gt;Caolan McMahon&lt;/a&gt;, is a fresh take on asynchronous control flow for
+        node.js and the browser. It offers a simple API for executing some of the more difficult asynchronous control
+        flow patterns which can cause even the most seasoned JavaScript developer to give up in an asynchronous rage.&lt;/p&gt;
+
+        &lt;p&gt;async.js provides around 20 functions that include several async functional methods (map, reduce,
+        filter, forEach, …) as well as common patterns for control flow (parallel, series, waterfall, whilst, queue,
+        until, …). All these functions assume you follow the JavaScript convention of providing a single callback as the
+        last argument of your async function.&lt;/p&gt;
+
+        &lt;p&gt;Here is a simple example of using some of the basic asynchronous iterators. There are a lot more
+        examples on the &lt;a href="https://github.com/caolan/async"&gt;Github page&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;var async = require('async'),
+        fs = require('fs');
+
+
+        var files = ['file1.txt', 'file2.txt', 'file3.txt'];
+
+        var writeFile = function(file, callback) {
+        console.log('Attempting to write file ' + file);
+        fs.writeFile(file, 'foo', callback);
+        };
+
+        // Writes files in parallel
+        async.forEach(files, writeFile, function(err){
+        if (err) {
+        console.log(err);
+        return;
+        }
+        console.log('all operations complete without any errors');
+        });
+
+        // Writes files in series
+        async.forEachSeries(files, writeFile, function(err){
+        if (err) {
+        console.log(err);
+        return;
+        }
+        console.log('all operations complete without any errors');
+        });
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;This is a contrived example, but it is paramount to understanding the power of the &lt;a
+        href="https://github.com/caolan/async"&gt;async.js&lt;/a&gt; library. Without the async.js library or a similar
+        control flow library, you might get stuck writing brittle code with &lt;em&gt;lots&lt;/em&gt; of nested
+        callbacks.&lt;/p&gt;</link-description>
+      <tag>github</tag>
+    </post>
+    <post id="5452652236" url="http://thechangelog.com/post/5452652236"
+          url-with-slug="http://thechangelog.com/post/5452652236/hooray-oh-my-zsh-has-been-updated" type="link"
+          date-gmt="2011-05-13 16:30:28 GMT" date="Fri, 13 May 2011 11:30:28" unix-timestamp="1305304228"
+          format="markdown" reblog-key="on0HdZuF" slug="hooray-oh-my-zsh-has-been-updated">
+      <link-text>Hooray! Oh My Zsh has been updated.</link-text>
+      <link-url>https://github.com/robbyrussell/oh-my-zsh</link-url>
+      <link-description>&lt;p&gt;Yup, this is sexy and smart. Great work &lt;a href="https://github.com/robbyrussell"&gt;Robby
+        Russell&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;For the &lt;a href="https://github.com/robbyrussell/oh-my-zsh"&gt;Oh My Zsh&lt;/a&gt; users out there,
+        my guess is when you opened Terminal or iTerm2 today you were greeted with a request to update Oh My Zsh.&lt;/p&gt;
+
+        &lt;p&gt;Call me a noob, but I think this is awesome.&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;Last login: Fri May 13 07:41:18 on console
+        [Oh My Zsh] Would you like to check for updates?
+        Type Y to update oh-my-zsh: Y
+        Upgrading Oh My Zsh
+        remote: Counting objects: 62, done.
+        remote: Compressing objects: 100% (44/44), done.
+        remote: Total 46 (delta 27), reused 11 (delta 1)
+        Unpacking objects: 100% (46/46), done.
+        From git://github.com/robbyrussell/oh-my-zsh
+        * branch master -&amp;gt; FETCH_HEAD
+        Updating 0365ef0..7c3d12c
+        Fast-forward
+        lib/git.zsh | 2 +-
+        lib/key-bindings.zsh | 5 ++++
+        .../apache2-macports/apache2-macports.plugin.zsh | 6 +++++
+        plugins/compleat/compleat.plugin.zsh | 22 ++++++++++++++++++++
+        themes/jispwoso.zsh-theme | 4 +++
+        themes/jtriley.zsh-theme | 2 +-
+        6 files changed, 39 insertions(+), 2 deletions(-)
+        create mode 100644 plugins/apache2-macports/apache2-macports.plugin.zsh
+        create mode 100644 plugins/compleat/compleat.plugin.zsh
+        create mode 100644 themes/jispwoso.zsh-theme
+        __ __
+        ____ / /_ ____ ___ __ __ ____ _____/ /_
+        / __ \/ __ \ / __ `__ \/ / / / /_ / / ___/ __ \
+        / /_/ / / / / / / / / / / /_/ / / /_(__ ) / / /
+        \____/_/ /_/ /_/ /_/ /_/\__, / /___/____/_/ /_/
+        /____/
+        Hooray! Oh My Zsh has been updated and/or is at the current version.
+        Any new updates will be reflected when you start your next terminal session.
+        To keep up on the latest, be sure to follow Oh My Zsh on twitter: &lt;a href="http://twitter.com/ohmyzsh"&gt;http://twitter.com/ohmyzsh&lt;/a&gt;
+        &lt;/code&gt;&lt;/pre&gt;</link-description>
+      <tag>github</tag>
+      <tag>zsh</tag>
+      <tag>terminal</tag>
+    </post>
+    <post id="5405166786" url="http://thechangelog.com/post/5405166786"
+          url-with-slug="http://thechangelog.com/post/5405166786/dnode-language-agnostic-asynchronous-object-oriented"
+          type="link" date-gmt="2011-05-12 00:02:49 GMT" date="Wed, 11 May 2011 19:02:49" unix-timestamp="1305158569"
+          format="markdown" reblog-key="xL4EHTql" slug="dnode-language-agnostic-asynchronous-object-oriented">
+      <link-text>dnode - language agnostic asynchronous object-oriented RPC system built on socket.io</link-text>
+      <link-url>https://github.com/substack/dnode</link-url>
+      <link-description>&lt;p&gt;&lt;a href="http://github.com/SubStack/dnode"&gt;dnode&lt;/a&gt;, a mindbendingly
+        simple library written by &lt;a href="http://substack.net"&gt;SubStack&lt;/a&gt;, builds on top of &lt;a
+        href="http://socket.io"&gt;socket.io&lt;/a&gt; to enable language agnostic asynchronous messaging by exposing
+        methods and making them transparently callable between nodes.&lt;/p&gt;
+
+        &lt;p&gt;This approach allows for bidirectional, asynchronous, and symmetric communication between dnodes that
+        can be implemented in: Node.js, Browser-side JavaScript, Ruby, Perl, Java, and soon to be Python.&lt;/p&gt;
+
+        &lt;p&gt;This means you can start up a dnode server or client anywhere, in any language, and start quickly
+        communicating asynchronously between each node.&lt;/p&gt;
+
+        &lt;p&gt;Here is an example of a simple dnode ruby server / client&lt;/p&gt;
+
+        &lt;p&gt;dnode server:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;require ‘rubygems’
+        require ‘dnode’
+
+        DNode.new({
+        :f =&amp;gt; proc { |x,cb| cb.call(x + 1337) }
+        }).listen(5050)
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;dnode client:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;require ‘rubygems’
+        require ‘dnode’
+
+        DNode.new({}).connect(5050) do |remote|
+        remote.f(30000, proc { |x| puts “x=&amp;lt;#{x}&amp;gt;” })
+        end
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;&lt;a href="http://github.com/substack/dnode"&gt;&lt;a href="http://github.com/substack/dnode"&gt;http://github.com/substack/dnode&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://github.com/substack/dnode-perl"&gt;&lt;a
+        href="http://github.com/substack/dnode-perl"&gt;http://github.com/substack/dnode-perl&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://github.com/substack/dnode-ruby"&gt;&lt;a
+        href="http://github.com/substack/dnode-ruby"&gt;http://github.com/substack/dnode-ruby&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://github.com/aslakhellesoy/dnode-java"&gt;&lt;a
+        href="http://github.com/aslakhellesoy/dnode-java"&gt;http://github.com/aslakhellesoy/dnode-java&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://github.com/jesusabdullah/dnode-python"&gt;&lt;a
+        href="http://github.com/jesusabdullah/dnode-python"&gt;http://github.com/jesusabdullah/dnode-python&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</link-description>
+      <tag>github</tag>
+    </post>
+    <post id="5367356233" url="http://thechangelog.com/post/5367356233"
+          url-with-slug="http://thechangelog.com/post/5367356233/you-yes-you-should-contribute-to-open-source"
+          type="regular" date-gmt="2011-05-10 19:46:00 GMT" date="Tue, 10 May 2011 14:46:00" unix-timestamp="1305056760"
+          format="markdown" reblog-key="6Vm2xVuQ" slug="you-yes-you-should-contribute-to-open-source">
+      <regular-title>You (yes, you!) should contribute to open source</regular-title>
+      <regular-body>&lt;p&gt;If you read this blog, you obviously care about open source. If you&amp;#8217;ve never &lt;em&gt;contributed&lt;/em&gt;
+        to an open source project, though, you might have some cold feet about it. So, inspired by the &lt;a
+        href="http://blog.segment7.net/2011/05/09/ruby-1-9-3-documentation-challenge"&gt;Ruby 1.9.3 Documentation
+        Challenge&lt;/a&gt;, I wrote up a post for my blog about &lt;a
+        href="http://blog.steveklabnik.com/contributing-to-rubys-documentation"&gt;how to contribute documentation to
+        Ruby&lt;/a&gt;. I got some feedback like this:&lt;/p&gt;
+
+        &lt;p&gt;&lt;!-- http://twitter.com/#!/chrisbaglieri/status/68003125000290304 --&gt; &lt;style type="text/css"&gt;.bbpBox68003125000290304
+        {background:url(http://a0.twimg.com/profile_background_images/172362705/3345597487_5eb3f978f1.jpg)
+        #3b3a30;padding:20px;} p.bbpTweet{background:#fff;padding:10px 12px 10px
+        12px;margin:0;min-height:48px;color:#000;font-size:18px&amp;#160;!important;line-height:22px;-moz-border-radius:5px;-webkit-border-radius:5px}
+        p.bbpTweet
+        span.metadata{display:block;width:100%;clear:both;margin-top:8px;padding-top:12px;height:40px;border-top:1px
+        solid #fff;border-top:1px solid #e6e6e6} p.bbpTweet span.metadata span.author{line-height:19px} p.bbpTweet
+        span.metadata span.author img{float:left;margin:0&amp;#160;7px 0&amp;#160;0px;width:38px;height:38px} p.bbpTweet
+        a:hover{text-decoration:underline}p.bbpTweet span.timestamp{font-size:12px;display:block}&lt;/style&gt;&lt;/p&gt;
+
+        &lt;div class="bbpBox68003125000290304"&gt;&lt;p class="bbpTweet"&gt;@&lt;a class="tweet-url username"
+        href="http://twitter.com/steveklabnik" rel="nofollow"&gt;steveklabnik&lt;/a&gt; Hey this is awesome. It&amp;#8217;s
+        time for me to solider up and pitch in. Thanks for the added incentive!&lt;span class="timestamp"&gt;&lt;a
+        title="Tue May 10 17:23:03 +0000 2011" href="http://twitter.com/#!/chrisbaglieri/status/68003125000290304"&gt;less
+        than a minute ago&lt;/a&gt; via web &lt;a href="http://twitter.com/intent/favorite?tweet_id=68003125000290304"&gt;&lt;img
+        src="http://si0.twimg.com/images/dev/cms/intents/icons/favorite.png"/&gt; Favorite&lt;/a&gt; &lt;a
+        href="http://twitter.com/intent/retweet?tweet_id=68003125000290304"&gt;&lt;img
+        src="http://si0.twimg.com/images/dev/cms/intents/icons/retweet.png"/&gt; Retweet&lt;/a&gt; &lt;a
+        href="http://twitter.com/intent/tweet?in_reply_to=68003125000290304"&gt;&lt;img
+        src="http://si0.twimg.com/images/dev/cms/intents/icons/reply.png"/&gt; Reply&lt;/a&gt;&lt;/span&gt;&lt;span
+        class="metadata"&gt;&lt;span class="author"&gt;&lt;a href="http://twitter.com/chrisbaglieri"&gt;&lt;img
+        src="http://a1.twimg.com/profile_images/558593994/IMG_6162-a_normal.JPG"/&gt;&lt;/a&gt;&lt;strong&gt;&lt;a
+        href="http://twitter.com/chrisbaglieri"&gt;Chris Baglieri&lt;/a&gt;&lt;/strong&gt;&lt;br/&gt;chrisbaglieri&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;
+
+        &lt;!-- end of tweet --&gt;
+
+        &lt;p&gt;so I figured something more general might encourage you to get involved with whatever open source
+        project you&amp;#8217;re using, even if it&amp;#8217;s not in Ruby. Every project can use a hand, especially the
+        small ones.&lt;/p&gt;
+
+        &lt;h3&gt;A small aside about getting cold feet.&lt;/h3&gt;
+
+        &lt;p&gt;If you&amp;#8217;re not contributing because you think you&amp;#8217;re not ready, don&amp;#8217;t
+        worry about it! I know that this is easier said that done, but really, you&amp;#8217;re ready. A friend of mine
+        &lt;a href="http://brandonhays.com/blog/2011/05/03/why-i-still-dont-contribute-to-open-source/"&gt;posted an
+        article about why he doesn&amp;#8217;t contribute&lt;/a&gt;, and I&amp;#8217;m sure that many people share these
+        kinds of fears. &lt;a href="http://brandonhays.com/blog/2011/05/04/please-watch-this-video/"&gt;Greg Brown
+        responded&lt;/a&gt; and addressed some of his concerns, but most of the people I&amp;#8217;ve talked to object
+        for two basic reasons:&lt;/p&gt;
+
+        &lt;ul&gt;&lt;li&gt;It&amp;#8217;s too hard.&lt;/li&gt;
+        &lt;li&gt;I&amp;#8217;m not good enough to contribute.&lt;/li&gt;
+        &lt;li&gt;I don&amp;#8217;t have the time.&lt;/li&gt;
+        &lt;/ul&gt;&lt;p&gt;Let&amp;#8217;s talk about each of these, in reverse order. It&amp;#8217;s true, you may
+        have a busy life. I don&amp;#8217;t know your personal schedule. But I&amp;#8217;m sure you could find a spare
+        hour or two, maybe on a weekend? That&amp;#8217;s all it takes to get started. Most projects are built on the
+        backs of a thousand tiny commits. You don&amp;#8217;t need to make a large contribution, even small ones are
+        valuable.&lt;/p&gt;
+
+        &lt;p&gt;If you have fears about the quality of your code, well, the only way you&amp;#8217;ll get better is
+        with practice. So fire up that editor, and submit a patch! Generally, if something isn&amp;#8217;t quite right
+        about your submission, there&amp;#8217;ll be a discussion about it on GitHub, and everyone learns. Take &lt;a
+        href="https://github.com/hotsh/rstat.us/pull/332"&gt;this pull request&lt;/a&gt;, for example. Colin originally
+        submitted a patch that linked to the wrong URL, wilkie mentioned this, and Colin updated his code. It&amp;#8217;s
+        going to get merged as soon as I stop writing posts for the Changelog. :) But, this is generally what happens if
+        your first submission is a bit off the mark. Don&amp;#8217;t be scared! This is how we all learned, from each
+        other.&lt;/p&gt;
+
+        &lt;p&gt;The &amp;#8220;It&amp;#8217;s too hard&amp;#8221; complaint usually comes out of &amp;#8220;I&amp;#8217;m
+        not good enough.&amp;#8221; But it can also happen if you try to contribute to a large project, where there are
+        a lot of rules. Contribution guidelines, code coverage requirements, updating AUTHORS and CHANGELOG files&amp;#8230;
+        big projects need to have process to manage the large number of contributors, but this can certainly create a
+        barrier to entry for newcomers. If process intimidates you, I have a suggestion: start small! Smaller projects
+        often have little to no process whatsoever. Plus, you&amp;#8217;ll make someone feel incredibly good. Think
+        about it: Python receives a bunch of patches every day, but if you had a little tool you wrote up on GitHub, and
+        all of a sudden you got an email, &amp;#8220;Hey, someone has a patch for you,&amp;#8221; I bet you&amp;#8217;d
+        feel pretty good about it!&lt;/p&gt;
+
+        &lt;h3&gt;The absolute basics&lt;/h3&gt;
+
+        &lt;p&gt;When contributing to an open source project on GitHub, there&amp;#8217;s a very basic workflow that
+        almost every project follows. Three steps: Fork, commit, pull request.&lt;/p&gt;
+
+        &lt;p&gt;GitHub makes the fork step really easy. Just click on the &amp;#8216;fork&amp;#8217; button found on
+        any project page. Let&amp;#8217;s use Ruby as an example. The project page is &lt;a
+        href="https://github.com/ruby/ruby"&gt;here&lt;/a&gt;. You can see the fork button on the upper right. It looks
+        like this:&lt;/p&gt;
+
+        &lt;p&gt;&lt;img src="http://help.github.com/images/bootcamp/bootcamp_3_fork.jpg" alt="fork button"/&gt;&lt;/p&gt;
+
+        &lt;p&gt;Click that, and you&amp;#8217;ll see some &amp;#8216;hardcore forking action,&amp;#8217; and then you&amp;#8217;ll
+        be at your own fork! This is your own version of your project, and it appears on your GitHub page. For example,
+        &lt;a href="https://github.com/steveklabnik/ruby"&gt;here&amp;#8217;s my fork of Ruby&lt;/a&gt;. You&amp;#8217;ll
+        see a URL on that page, and that lets you clone the project down.&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$ git clone git@github.com:steveklabnik/ruby.git
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;This creates a &amp;#8216;ruby&amp;#8217; directory with all of the code in it. Next, let&amp;#8217;s
+        add a remote for upstream, so we can keep track of changes they make:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$ cd ruby
+        $ git remote add upstream &lt;a href="https://github.com/ruby/ruby.git"&gt;https://github.com/ruby/ruby.git&lt;/a&gt;
+        $ git fetch upstream
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Now at any time, we can grab all of the changes the main Ruby repository by doing a rebase:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$ git rebase upstream/master
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;A small note: ruby still uses both &lt;code&gt;svn&lt;/code&gt; as well as &lt;code&gt;git&lt;/code&gt;,
+        so they call the master branch trunk. If you&amp;#8217;re doing this for ruby, you&amp;#8217;ll need &lt;code&gt;git
+        rebase upstream/trunk&lt;/code&gt;.&lt;/p&gt;
+
+        &lt;p&gt;Now that you&amp;#8217;ve cloned, you can do you work! I like to work in feature branches, as it makes
+        things nice and clean, and I can work on two features at once.&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$ git checkout -b feature/super-cool-feature
+        $ vim something
+        $ git add something
+        $ git commit -m "Fixed something in something"
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Once you&amp;#8217;ve got some commits that fix your problem, push them up to GitHub:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$ git push origin feature/super-cool-feature
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;And then you click the pull request button:&lt;/p&gt;
+
+        &lt;p&gt;&lt;img
+        src="http://3.bp.blogspot.com/_9BSWFzzwekI/S4hgxKyUYWI/AAAAAAAAAB8/pkreZr2aWPk/s320/GitHub-Pull-Request.png"
+        alt="github pull reuqest"/&gt;&lt;/p&gt;
+
+        &lt;p&gt;Select your branch, change the description of you want, and you&amp;#8217;re good to go! The maintainer
+        of the project will look it over, you might end up with a discussion, and you&amp;#8217;ll soon get something
+        accepted in somewhere!&lt;/p&gt;
+
+        &lt;h3&gt;What should I contribute to?&lt;/h3&gt;
+
+        &lt;p&gt;The best way to contribute is to help out with a project that you actually use. That way you&amp;#8217;ll
+        get to take advantage of the fruits of your labors. You&amp;#8217;ll be more motivated, you already understand
+        the project and what it does, and that&amp;#8217;ll make it easier on you.&lt;/p&gt;
+
+        &lt;p&gt;If you don&amp;#8217;t want to or can&amp;#8217;t figure out how to work on something you use, the next
+        best way is to start using some new software! Keep reading the Changelog and pick a project that looks
+        interesting, use it for a few weeks, and then contribute!&lt;/p&gt;
+
+        &lt;h3&gt;We&amp;#8217;re all in this together.&lt;/h3&gt;
+
+        &lt;p&gt;I hope this encourages you to get your hands dirty, roll up your sleeves, and contribute. Even the
+        smallest patch has worth, so please, make some time out in your schedule, pick a project, and give it a shot.
+        You might just find yourself hooked.&lt;/p&gt;</regular-body>
+      <tag>open source</tag>
+      <tag>github</tag>
+    </post>
+    <post id="5353597406" url="http://thechangelog.com/post/5353597406"
+          url-with-slug="http://thechangelog.com/post/5353597406/cdnjs-an-open-source-peer-reviewed-cdn-script"
+          type="link" date-gmt="2011-05-10 04:58:00 GMT" date="Mon, 09 May 2011 23:58:00" unix-timestamp="1305003480"
+          format="markdown" reblog-key="DwObbIS4" slug="cdnjs-an-open-source-peer-reviewed-cdn-script">
+      <link-text>cdnJS: An open source peer reviewed CDN script repository</link-text>
+      <link-url>https://github.com/cdnjs/cdnjs</link-url>
+      <link-description>&lt;p&gt;&lt;a href="http://cdnjs.com/"&gt;&lt;img src="http://cl.ly/6dEt/cdnjs.png"/&gt;&lt;/a&gt;&lt;/p&gt;
+
+        &lt;p&gt;Everyone loves &lt;a href="http://code.google.com/apis/libraries/devguide.html"&gt;Google&amp;#8217;s
+        CDN&lt;/a&gt;, right? Microsoft even has their own buzz word compliant CDN, &lt;a
+        href="http://www.asp.net/ajaxlibrary/cdn.ashx"&gt;Microsoft Ajax Content Delivery Network&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;They both do a great job of giving your applications high speed global access to a growing list of the
+        most popular, open-source JavaScript libraries, right?&lt;/p&gt;
+
+        &lt;h3&gt;So what&amp;#8217;s the problem?&lt;/h3&gt;
+
+        &lt;p&gt;The problem is, they only host what &amp;#8220;they feel&amp;#8221; are the most popular libraries. We
+        think that sucks (for us).&lt;/p&gt;
+
+        &lt;h3&gt;cdnJS to the rescue&lt;/h3&gt;
+
+        &lt;p&gt;cdnJS is an open source peer reviewed CDN script repository that democratizes the inclusion of the
+        scripts in its CDN.&lt;/p&gt;
+
+        &lt;p&gt;&lt;em&gt;Want your script included?&lt;/em&gt; &lt;strong&gt;It&amp;#8217;s too easy!&lt;/strong&gt;&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="https://github.com/cdnjs/cdnjs"&gt;Fork the repository&lt;/a&gt;, add your file (following
+        the conventions of the repository of course) and send a pull request. Boom.&lt;/p&gt;
+
+        &lt;h3&gt;Why use it?&lt;/h3&gt;
+
+        &lt;ul&gt;&lt;li&gt;cdnJS uses &lt;a href="http://aws.amazon.com/cloudfront/"&gt;Amazon Cloudfront&lt;/a&gt;
+        (that means things load fast)&lt;/li&gt;
+        &lt;li&gt;cdnJS uses &lt;a href="http://aws.amazon.com/route53/"&gt;Amazon Route 53&lt;/a&gt; for DNS (also
+        fast)&lt;/li&gt;
+        &lt;li&gt;cdnJS follows &lt;a href="http://developer.yahoo.com/performance/rules.html"&gt;best practices&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;Oh, and it&amp;#8217;s &lt;em&gt;free&lt;/em&gt; and &lt;em&gt;open source&lt;/em&gt;!&lt;/li&gt;
+        &lt;/ul&gt;&lt;p&gt;[&lt;a href="https://github.com/cdnjs/cdnjs"&gt;Source on GitHub&lt;/a&gt;] [&lt;a
+        href="http://cdnjs.com/"&gt;Homepage&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>CDN</tag>
+      <tag>javascript</tag>
+    </post>
+    <post id="5218061891" url="http://thechangelog.com/post/5218061891"
+          url-with-slug="http://thechangelog.com/post/5218061891/large-hadron-migrator-online-schema-change-tool"
+          type="link" date-gmt="2011-05-05 14:00:22 GMT" date="Thu, 05 May 2011 09:00:22" unix-timestamp="1304604022"
+          format="markdown" reblog-key="stlFRuni" slug="large-hadron-migrator-online-schema-change-tool">
+      <link-text>Large Hadron Migrator: Update huge SQL tables without going offline</link-text>
+      <link-url>http://github.com/soundcloud/large-hadron-migrator</link-url>
+      <link-description>&lt;p&gt;With all the &lt;a href="http://thechangelog.com/search/nosql"&gt;NoSQL hotness&lt;/a&gt;
+        out
+        there, believe it or not, some people are still using relational
+        databases. (I know, right?).&lt;/p&gt;
+
+        &lt;p&gt;When it comes to dealing with schema changes, the Active Record
+        Migrations in Rails make schema changes so easy, developers often take
+        them for granted. However, for extremely large sets of data, running an
+        &lt;code&gt;ALTER TABLE&lt;/code&gt; might mean taking your database offline for hours. After
+        considering &lt;a href="http://code.google.com/p/openarkkit/"&gt;other&lt;/a&gt; &lt;a
+        href="http://www.facebook.com/note.php?note_id=430801045932"&gt;projects&lt;/a&gt; &lt;a
+        href="https://twitter.com/#!/purzelrakete"&gt;Rany
+        Keddo&lt;/a&gt; and the smart folks at
+        &lt;a href="http://soundcloud.com"&gt;Soundcloud&lt;/a&gt; developed their own solution.&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://github.com/soundcloud/large-hadron-migrator"&gt;Large Hadron
+        Migrator&lt;/a&gt;, named for
+        &lt;a href="http://en.wikipedia.org/wiki/Large_Hadron_Collider"&gt;CERN&amp;#8217;s high energy particle
+        accelerator&lt;/a&gt;,
+        uses a combination of copy table, triggers, and a journal table to move
+        data bit by bit into a new table while capturing everything still coming
+        into the source table in the live application.&lt;/p&gt;
+
+        &lt;h3&gt;Usage&lt;/h3&gt;
+
+        &lt;p&gt;To install, configure the gem in your &lt;code&gt;Gemfile&lt;/code&gt;:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;gem 'large-hadron-migrator'
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;&amp;#8230; and run &lt;code&gt;bundle install&lt;/code&gt;.&lt;/p&gt;
+
+        &lt;p&gt;Next, write your migration as you normally would, using the
+        &lt;code&gt;LargeHadronMigration&lt;/code&gt; class instead:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;class AddIndexToEmails &amp;lt; LargeHadronMigration
+        def self.up
+        large_hadron_migrate :emails, :wait =&amp;gt; 0.2 do |table_name|
+        execute %Q{
+        alter table %s
+        add index index_emails_on_hashed_address (hashed_address)
+        } % table_name
+        end
+        end
+        end
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Be sure to check out the &lt;a href="http://github.com/soundcloud/large-hadron-migrator"&gt;project
+        repo&lt;/a&gt; or &lt;a href="http://backstage.soundcloud.com/2011/05/introducing-the-large-hadron-migrator-3/"&gt;blog
+        post&lt;/a&gt; for advanced
+        usage and caveats.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/soundcloud/large-hadron-migrator"&gt;Source on GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>ruby</tag>
+      <tag>data</tag>
+      <tag>active-record</tag>
+      <tag>Ruby</tag>
+    </post>
+    <post id="5011508954" url="http://thechangelog.com/post/5011508954"
+          url-with-slug="http://thechangelog.com/post/5011508954/cloudist-cloudist-is-a-simple-highly-scalable-job-queue"
+          type="link" date-gmt="2011-04-28 13:21:54 GMT" date="Thu, 28 Apr 2011 08:21:54" unix-timestamp="1303996914"
+          format="markdown" reblog-key="Z1Rp9fz6" slug="cloudist-cloudist-is-a-simple-highly-scalable-job-queue">
+      <link-text>Cloudist: Simple, scalable job queue for Ruby powered by AMQP and Event Machine</link-text>
+      <link-url>http://github.com/ivanvanderbyl/cloudist</link-url>
+      <link-description>&lt;p&gt;Rubyists seeking to move processing to the background have long relied
+        on projects like &lt;a href="https://github.com/collectiveidea/delayed_job"&gt;Delayed
+        Job&lt;/a&gt; and
+        &lt;a href="https://github.com/defunkt/resque"&gt;Resque&lt;/a&gt;. Now, &lt;a
+        href="http://twitter.com/IvanVanderbyl"&gt;Ivan
+        Vanderbyl&lt;/a&gt; offers another option.
+        &lt;a href="https://github.com/ivanvanderbyl/cloudist"&gt;Cloudist&lt;/a&gt; is powered by
+        &lt;a href="http://amqp.org"&gt;AMQP&lt;/a&gt; and EventMachine and aims to provide a simple
+        yet highly scalable job queue for Ruby apps.&lt;/p&gt;
+
+        &lt;p&gt;Cloudist workers can be in the form of a block:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;Cloudist.start {
+        log.info("Started Worker")
+
+        job('make.sandwich') {
+        log.info("JOB (#{id}) Make sandwich with #{data[:bread]} bread")
+
+        job.started!
+
+        (1..20).each do |i|
+        job.progress(i * 5)
+        sleep(1)
+
+        raise ArgumentError, "NOT GOOD!" if i == 4
+        end
+        job.finished!
+        }
+
+        }
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;&amp;#8230; or a Ruby class:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;class SandwichWorker &amp;lt; Cloudist::Worker
+        def process
+        log.info("Processing queue: #{queue.name}")
+        log.info(data.inspect)
+
+        job.started!
+        (1..5).each do |i|
+        job.progress(i * 20)
+        # sleep(1)
+
+        # raise ArgumentError, "NOT GOOD!" if i == 4
+        end
+        job.finished!
+        end
+        end
+
+        Cloudist.signal_trap!
+
+        Cloudist.start(:heartbeat =&amp;gt; 10, :logging =&amp;gt; false) {
+        Cloudist.handle('make.sandwich').with(SandwichWorker)
+        }
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;For usage, configuration, and more examples, check out the &lt;a
+        href="https://github.com/ivanvanderbyl/cloudist"&gt;project repo
+        on GitHub&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/ivanvanderbyl/cloudist"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>queue</tag>
+      <tag>AMQP</tag>
+      <tag>ruby</tag>
+      <tag>event-machine</tag>
+      <tag>Ruby</tag>
+    </post>
+    <post id="4963233763" url="http://thechangelog.com/post/4963233763"
+          url-with-slug="http://thechangelog.com/post/4963233763/capsule-realtime-web-app-framework-for-backbone-socket-i"
+          type="link" date-gmt="2011-04-26 20:00:00 GMT" date="Tue, 26 Apr 2011 15:00:00" unix-timestamp="1303848000"
+          format="markdown" reblog-key="FLU7OIL5" slug="capsule-realtime-web-app-framework-for-backbone-socket-i">
+      <link-text>Capsule: Realtime web app framework for Backbone, Socket.io and Node.js</link-text>
+      <link-url>http://github.com/andyet/capsule</link-url>
+      <link-description>&lt;p&gt;The adoption of &lt;a
+        href="http://thechangelog.com/post/1306791328/backbone-give-your-js-app-some-backbone-with-models-view"&gt;Backbone.js&lt;/a&gt;
+        seems to be heating up. Last week we brought you
+        &lt;a href="http://thechangelog.com/post/4719798357/capt-command-line-tool-for-creating-backbone-js-applicat"&gt;Capt&lt;/a&gt;,
+        a command line tool for creating Backbone projects. This week, we
+        introduce &lt;a href="http://github.com/andyet/capsule"&gt;Capsule&lt;/a&gt; from
+        &lt;a href="http://thechangelog.com/post/3028809528/happy-js-form-ishappy-lightweight-extensible-form-valida"&gt;Happy.js&lt;/a&gt;
+        creator &lt;a href="http://twitter.com/HenrikJoreteg"&gt;Henrik Joreteg&lt;/a&gt;. Capsule aims
+        to let you share view and model code across client and server, with
+        realtime view updates powered by
+        &lt;a href="http://thechangelog.com/post/927103350/episode-0-3-1-websockets"&gt;Socket.io&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;Capsule extends &lt;code&gt;Backbone.Model&lt;/code&gt; and &lt;code&gt;Backbone.View&lt;/code&gt; with
+        &lt;code&gt;Capsule.Model&lt;/code&gt; and &lt;code&gt;Capsule.View&lt;/code&gt; respectively:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;exports.AppModel = Capsule.Model.extend({
+        type: 'app',
+        initialize: function (spec) {
+        this.register();
+        this.addChildCollection('members', exports.Members);
+        this.addChildModel('activityLog', exports.ActivityLogPage);
+        }
+        });
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Check the &lt;a href="http://github.com/andyet/capsule#README"&gt;README&lt;/a&gt; for server
+        and client-side setups and other usage.&lt;/p&gt;
+
+        &lt;h4&gt;Caveats and contributing&lt;/h4&gt;
+
+        &lt;p&gt;It should be noted that Capsule currently assumes you want to use
+        &lt;a href="http://icanhazjs.com/"&gt;ICanHaz.js&lt;/a&gt; and Mustache as your templating layer. If you have
+        other
+        tastes, perhaps you could &lt;a href="http://github.com/andyet/capsule"&gt;fork the
+        project&lt;/a&gt; and contribute?&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/andyet/capsule"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>node.js</tag>
+      <tag>backbone</tag>
+      <tag>socket.io</tag>
+      <tag>JavaScript</tag>
+    </post>
+    <post id="4926466447" url="http://thechangelog.com/post/4926466447"
+          url-with-slug="http://thechangelog.com/post/4926466447/sass-sass-makes-css-fun-again" type="link"
+          date-gmt="2011-04-25 13:51:00 GMT" date="Mon, 25 Apr 2011 08:51:00" unix-timestamp="1303739460"
+          format="markdown" reblog-key="ZLcJqeDe" slug="sass-sass-makes-css-fun-again">
+      <link-text>Sass 3.1 released, now with functions, lists, and @media bubbling</link-text>
+      <link-url>http://github.com/nex3/sass</link-url>
+      <link-description>&lt;p&gt;Sass continues to provide innovative new ways to DRY up our CSS. Version
+        &lt;a href="https://github.com/nex3/sass/blob/master/doc-src/SASS_CHANGELOG.md"&gt;3.1 is
+        out&lt;/a&gt; and offers many new language features, compilation performance improvements, and some new command
+        line options.&lt;/p&gt;
+
+        &lt;h3&gt;Sass, extend thyself with Sass-based functions&lt;/h3&gt;
+
+        &lt;p&gt;Rubyists have long had the ability to extend Sass, but now anyone can
+        create powerful functions using only Sass:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$grid-width: 40px;
+        $gutter-width: 10px;
+
+        @function grid-width($n) {
+        @return $n * $grid-width + ($n - 1) * $gutter-width;
+        }
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;h3&gt;Lists&lt;/h3&gt;
+
+        &lt;p&gt;Sass now includes some handy functions to work with lists introduced in
+        version 3.0 including &lt;code&gt;nth&lt;/code&gt;, &lt;code&gt;append&lt;/code&gt;, &lt;code&gt;join&lt;/code&gt;,
+        and &lt;code&gt;length&lt;/code&gt;:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$ sass -i
+        &amp;gt;&amp;gt; nth(1px 2px 10px, 2)
+        2px
+        &amp;gt;&amp;gt; append(1px 2px, 5px)
+        (1px 2px 5px)
+        &amp;gt;&amp;gt; length(5px 10px)
+        2
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;There is also a new &lt;code&gt;@each&lt;/code&gt; directive to iterate over lists:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;@each $animal in puma, sea-slug, egret, salamander {
+        .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+        }
+        }
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;h3&gt;New command line utility and breaking changes&lt;/h3&gt;
+
+        &lt;p&gt;Sass 3.1 brings changes to command line tools and some breaking changes:&lt;/p&gt;
+
+        &lt;ul&gt;&lt;li&gt;There is a new &lt;code&gt;scss&lt;/code&gt; command line utility to compile stylesheets,
+        defaulting to the SCSS syntax.&lt;/li&gt;
+        &lt;li&gt;&lt;code&gt;@import&lt;/code&gt; used with a path without a file extension will now throw
+        an error&lt;/li&gt;
+        &lt;li&gt;Old-style &lt;code&gt;!&lt;/code&gt; variable support has been removed&lt;/li&gt;
+        &lt;li&gt;The &lt;code&gt;css2sass&lt;/code&gt; command line utility has been removed in favor of
+        &lt;code&gt;sass-convert&lt;/code&gt;.&lt;/li&gt;
+        &lt;/ul&gt;&lt;p&gt;Check out the
+        &lt;a href="https://github.com/nex3/sass/blob/master/doc-src/SASS_CHANGELOG.md"&gt;Changelog&lt;/a&gt;
+        for complete release details. For a deeper look at Sass and Compass, check out our upcoming book &lt;a
+        href="http://wynn.fm/sass-meap"&gt;&lt;em&gt;Sass and Compass in Action&lt;/em&gt;&lt;/a&gt; from Manning, now
+        in &lt;a href="http://wynn.fm/sass-meap"&gt;early access&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/nex3/sass"&gt;Source on GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>css</tag>
+      <tag>design</tag>
+      <tag>releases</tag>
+      <tag>sass</tag>
+      <tag>Ruby</tag>
+    </post>
+    <post id="4914956307" url="http://thechangelog.com/post/4914956307"
+          url-with-slug="http://thechangelog.com/post/4914956307/rel-arel-ported-to-node-js-with-some-changes"
+          type="link" date-gmt="2011-04-25 02:13:07 GMT" date="Sun, 24 Apr 2011 21:13:07" unix-timestamp="1303697587"
+          format="markdown" reblog-key="xoXDKfJv" slug="rel-arel-ported-to-node-js-with-some-changes">
+      <link-text>rel: Arel-inspired SQL query builder for Node.js</link-text>
+      <link-url>http://github.com/cjwoodward/rel</link-url>
+      <link-description>&lt;p&gt;Arguably, &lt;a href="https://github.com/rails/arel"&gt;Arel&lt;/a&gt; was one of the
+        biggest
+        new features introduced in Rails 3. Arel simplifies building complex SQL
+        statements using idiomatic Ruby.&lt;/p&gt;
+
+        &lt;p&gt;With &lt;a href="http://cjwoodward.github.com/rel/"&gt;Rel&lt;/a&gt;, &lt;a
+        href="https://twitter.com/#!/cjwoodward"&gt;Carl Woodward&lt;/a&gt; brings the power of Arel to Node.js. Written
+        in
+        &lt;a href="http://thechangelog.com/user/849754840/episode-0-2-9-coffeescript-with-jeremy-ashkenas"&gt;CoffeeScript&lt;/a&gt;,
+        Rel makes quick work of building SQL statements for a variety of relational databases.&lt;/p&gt;
+
+        &lt;h3&gt;Installation&lt;/h3&gt;
+
+        &lt;p&gt;Rel can be installed via &lt;a href="http://npmjs.org"&gt;npm&lt;/a&gt;:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;npm install rel
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;We can then begin building a query:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;users = new Rel.Table 'users'
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;If we want all users in our CMS we could use the &lt;code&gt;star&lt;/code&gt; method:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;users.project(Rel.star()).toSql()
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Rel really shines, however, when using several chained operators,
+        including joins:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;users.join(photos).on(users.column('id').eq(photos.column('user_id')))
+        # =&amp;gt; SELECT * FROM users INNER JOIN photos ON users.id = photos.user_id
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;For a complete list of features, check out the very readable
+        &lt;a href="http://vowsjs.org/"&gt;Vows&lt;/a&gt;-based
+        &lt;a href="https://github.com/cjwoodward/rel/tree/master/vows"&gt;specs&lt;/a&gt; in the repo on GitHub.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/cjwoodward/rel"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>active-record</tag>
+      <tag>node</tag>
+      <tag>sql</tag>
+      <tag>CoffeeScript</tag>
+    </post>
+    <post id="4817056457" url="http://thechangelog.com/post/4817056457"
+          url-with-slug="http://thechangelog.com/post/4817056457/rails-javascript-bdd-testing" type="link"
+          date-gmt="2011-04-21 22:10:13 GMT" date="Thu, 21 Apr 2011 17:10:13" unix-timestamp="1303423813"
+          format="markdown" reblog-key="BENMTCs0" slug="rails-javascript-bdd-testing">
+      <link-text>Summer Breeze: creates dynamic Rails fixtures for Jasmine tests</link-text>
+      <link-url>http://github.com/noelrappin/summer_breeze</link-url>
+      <link-description>&lt;p&gt;On stage at &lt;a href="http://reddirtrubyconference.com"&gt;Red Dirt Ruby
+        Conference&lt;/a&gt;, &lt;a href="http://twitter.com/noelrap"&gt;Noel
+        Rappin&lt;/a&gt; has released &lt;a href="http://github.com/noelrappin/summer_breeze"&gt;Summer
+        Breeze&lt;/a&gt;, a gem that makes
+        working with Jasmine in Rails a bit easier. Summer Breeze dynamically
+        creates Rails fixtures for your
+        &lt;a href="http://pivotal.github.com/jasmine/"&gt;Jasmine&lt;/a&gt; tests.&lt;/p&gt;
+
+        &lt;h3&gt;Installation and usage&lt;/h3&gt;
+
+        &lt;p&gt;To install via RubyGems:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;gem install summer_breeze
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;&amp;#8230; and run the bundled generator:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;rails generate summer_breeze:install
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Now you can define you fixtures in the generated initializer:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;fixture "PostsController##index.body_container"
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;You then have several options for telling Jasmine about your new
+        fixture:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;sb.loadFixture(fixture_name)
+        sb.findSelector(fixture_name, selector)
+        sb.readFixture(fixture_name)
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;A sample test might look like:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;it("hides text when asked", function() {
+        $form_container = sb.findSelector('login', '.form_container');
+        toggle_handlers.init();
+        $hide_link = $form_container.find(".toggle_link");
+        expect($hide_link).not.toHaveClass("hidden");
+        $hide_link.click();
+        expect($hide_link).toHaveClass("hidden");
+        });
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Be sure and check the
+        &lt;a href="http://github.com/noelrappin/summer_breeze#readme"&gt;Readme&lt;/a&gt; for advanced
+        usage and limitations.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/noelrappin/summer_breeze"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>javascript</tag>
+      <tag>rails</tag>
+      <tag>gems</tag>
+      <tag>testing</tag>
+      <tag>Ruby</tag>
+    </post>
+    <post id="4719798357" url="http://thechangelog.com/post/4719798357"
+          url-with-slug="http://thechangelog.com/post/4719798357/capt-command-line-tool-for-creating-backbone-js-applicat"
+          type="link" date-gmt="2011-04-18 15:23:45 GMT" date="Mon, 18 Apr 2011 10:23:45" unix-timestamp="1303140225"
+          format="markdown" reblog-key="DyW5JdAd" slug="capt-command-line-tool-for-creating-backbone-js-applicat">
+      <link-text>capt: Command line tool for creating Backbone.js apps</link-text>
+      <link-url>http://github.com/bnolan/capt</link-url>
+      <link-description>&lt;p&gt;If you set out to use &lt;a
+        href="http://thechangelog.com/post/1306791328/backbone-give-your-js-app-some-backbone-with-models-view"&gt;Backbone.js&lt;/a&gt;
+        for a client-centric application, one
+        thing you might miss coming from a server-side MVC framework is some
+        basic file structure, dependency managment, and generator support. To solve this problem &lt;a
+        href="https://twitter.com/bnolan"&gt;Ben
+        Nolan&lt;/a&gt; has created &lt;a href="http://github.com/bnolan/capt"&gt;Capt&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;Capt is aimed at developers building single page, stand alone
+        applications as well as server-backed applications using Node.js,
+        bundling the following projects and languages:&lt;/p&gt;
+
+        &lt;h4&gt;Languages&lt;/h4&gt;
+
+        &lt;ul&gt;&lt;li&gt;Coffeescript&lt;/li&gt;
+        &lt;li&gt;JavaScript&lt;/li&gt;
+        &lt;li&gt;SCSS&lt;/li&gt;
+        &lt;li&gt;LESS&lt;/li&gt;
+        &lt;/ul&gt;&lt;h4&gt;Testing frameworks&lt;/h4&gt;
+
+        &lt;ul&gt;&lt;li&gt;Qunit&lt;/li&gt;
+        &lt;li&gt;Jasmine [planned]&lt;/li&gt;
+        &lt;/ul&gt;&lt;h4&gt;Libraries&lt;/h4&gt;
+
+        &lt;ul&gt;&lt;li&gt;jQuery&lt;/li&gt;
+        &lt;li&gt;Backbone.js&lt;/li&gt;
+        &lt;li&gt;Underscore.js&lt;/li&gt;
+        &lt;li&gt;json2.js&lt;/li&gt;
+        &lt;/ul&gt;&lt;h3&gt;Installation&lt;/h3&gt;
+
+        &lt;p&gt;You can grab Capt from &lt;a href="http://npmjs.org"&gt;npm&lt;/a&gt;&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;npm install capt
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;To check your installation and see usage help, just run &lt;code&gt;capt&lt;/code&gt; in your
+        terminal:&lt;/p&gt;
+
+        &lt;p&gt;Usage:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;capt new projectname
+        - create a new project
+
+        capt server
+        - serve the current project on port 3000
+
+        capt watch
+        - watch the current project and recompile as needed
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;There&amp;#8217;s also generators to create Backbone models and controllers:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;capt generate model &amp;lt;model name&amp;gt;
+
+        capt generate controller &amp;lt;controller name&amp;gt;
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Capt is still in alpha but is under active development. Got ideas? Why
+        not &lt;a href="http://github.com/bnolan/capt"&gt;contribute&lt;/a&gt;?&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/bnolan/capt"&gt;Source on GitHub&lt;/a&gt;] [&lt;a
+        href="http://bennolan.com/capt/"&gt;Web
+        site&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>coffeescript</tag>
+      <tag>html5</tag>
+      <tag>cli</tag>
+      <tag>javascript</tag>
+      <tag>node.js</tag>
+      <tag>CoffeeScript</tag>
+    </post>
+    <post id="4638016825" url="http://thechangelog.com/post/4638016825"
+          url-with-slug="http://thechangelog.com/post/4638016825/node-evented-i-o-for-v8-javascript" type="link"
+          date-gmt="2011-04-15 18:53:00 GMT" date="Fri, 15 Apr 2011 13:53:00" unix-timestamp="1302893580"
+          format="markdown" reblog-key="9HDvAUlU" slug="node-evented-i-o-for-v8-javascript">
+      <link-text>Node.js on your (jailbroken) iPhone</link-text>
+      <link-url>http://github.com/TooTallNate/node</link-url>
+      <link-description>&lt;p&gt;&lt;a href="http://github.com/TooTallNate"&gt;Nathan &amp;#8220;Too Tall&amp;#8221;
+        Rajlich&lt;/a&gt; has gotten
+        &lt;a href="https://tootallnate.net/nodejs-on-ios"&gt;Node.js to run his jailbroken iPhone 4&lt;/a&gt;. If you&amp;#8217;ve
+        got SSH access on a
+        jailbroken phone, simply extract the .deb package:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;dpkg -i node-v0.4.5-ios-arm-1.deb
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Now you can see if Node is running:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;$ node
+        &amp;gt; require('os').cpus()
+        [ { model: 'N90AP',
+        speed: 0,
+        times:
+        { user: 9209240,
+        nice: 0,
+        sys: 6997410,
+        idle: 255377220,
+        irq: 0 } } ]
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Nate has created &lt;a href="http://github.com/TooTallnate/node-iOS"&gt;node-iOS&lt;/a&gt; to
+        play with iOS-specific functionality with Node bindings:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;var iOS = require('iOS');
+
+        iOS.vibrate();
+        // Quick vibrate, like when you receive text message
+
+        if (iOS.compass.available) { // true if the iDevice has a digital
+        compass
+        iOS.compass.on('heading', function(heading) {
+        console.log(heading.magneticHeading); // Degrees relative to
+        magnetic north
+        });
+        }
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;Of course if you want to play with Node on mobile without
+        jailbreaking your phone, &lt;a href="https://developer.palm.com/index.php?id=2109&amp;amp;option=com_content&amp;amp;view=article"&gt;Node.js
+        powers the JavaScript services in
+        WebOS&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/TooTallNate/node-iOS"&gt;Source on GitHub&lt;/a&gt;] [&lt;a
+        href="https://tootallnate.net/nodejs-on-ios"&gt;Blog post&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>node</tag>
+      <tag>node.js</tag>
+      <tag>ios</tag>
+      <tag>javascript</tag>
+      <tag>jailbreaks</tag>
+      <tag>C</tag>
+    </post>
+    <post id="4632804482" url="http://thechangelog.com/post/4632804482"
+          url-with-slug="http://thechangelog.com/post/4632804482/adapt-adapt-js-serves-css-based-on-screen-width"
+          type="link" date-gmt="2011-04-15 13:44:31 GMT" date="Fri, 15 Apr 2011 08:44:31" unix-timestamp="1302875071"
+          format="markdown" reblog-key="Ga2l3gQ4" slug="adapt-adapt-js-serves-css-based-on-screen-width">
+      <link-text>Adapt.js: More efficient responsive design</link-text>
+      <link-url>http://github.com/nathansmith/adapt</link-url>
+      <link-description>&lt;p&gt;As the mobile space continues to grow, there has been a growing interest in &lt;a
+        href="http://www.smashingmagazine.com/2010/07/19/how-to-use-css3-media-queries-to-create-a-mobile-version-of-your-website/"&gt;Responsive
+        Web
+        Design&lt;/a&gt;,
+        making use of &lt;a href="http://www.w3.org/TR/css3-mediaqueries/"&gt;CSS media
+        queries&lt;/a&gt; to selectively target
+        device screen size and layout orientation in CSS stylesheets. But as
+        &lt;a href="http://twitter.com/grigs"&gt;Jason
+        Grigsby&lt;/a&gt; points out, &lt;a href="http://www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/"&gt;media
+        queries have
+        substantial
+        drawbacks&lt;/a&gt;. Since media queries only filter styles and (and related image assets) on the client, you
+        may end up pushing a lot of data down to the client that the user may never see. In mobile applications, this is
+        extremely costly.&lt;/p&gt;
+
+        &lt;p&gt;&lt;a href="http://twitter.com/nathansmith"&gt;Nathan Smith&lt;/a&gt;, JavaScript hacker and
+        creator of the &lt;a href="http://960.gs"&gt;960 Grid System&lt;/a&gt; has released
+        &lt;a href="http://adapt.960.gs"&gt;Adapt.js&lt;/a&gt;, a lightweight JavaScript library that
+        will let you specify a list of stylesheets and the screen sizes for
+        which they should be loaded:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;// Edit to suit your needs.
+        var ADAPT_CONFIG = {
+        // Where is your CSS?
+        path: 'assets/css/',
+
+        // false = Only run one time, when page first loads.
+        // true = Change for window resize or page tilt too.
+        dynamic: true,
+
+        // First range entry is the minimum.
+        // Last range entry is the maximum.
+        // Should have at least one "to" range.
+        range: [
+        '760px = mobile.css',
+        '760px to 960px = 720.css',
+        '960px to 1280px = 960.css',
+        '1280px to 1600px = 1200.css',
+        '1600px to 1920px = 1560.css',
+        '1920px = fluid.css'
+        ]
+        };
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;When your page loades, the appropriate layout is written to the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt;
+        of your document based on the screen width of the page. If you enable the
+        &lt;code&gt;dynamic&lt;/code&gt; setting, additional stylesheets will be fetched when the user
+        resizes the browser window or rotates their mobile device.&lt;/p&gt;
+
+        &lt;h4&gt;Silver bullet?&lt;/h4&gt;
+
+        &lt;p&gt;Nathan admits that every project is different and there are tradeoffs
+        between stylesheet size and extra network hops:&lt;/p&gt;
+
+        &lt;blockquote&gt;
+        &lt;p&gt;As with any area in which technological approaches are open for
+        debate, there is the danger of religious fanaticism, where we each
+        rally behind a respective method and defend it vehemently. I would
+        caution you to weigh the options, consider mobile users, and choose an
+        approach makes sense for you.&lt;/p&gt;
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/nathansmith/adapt"&gt;Source on GitHub&lt;/a&gt;] [&lt;a
+        href="http://adapt.960.gs"&gt;Web
+        site&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>css</tag>
+      <tag>javascript</tag>
+      <tag>media-queries</tag>
+    </post>
+    <post id="4608227295" url="http://thechangelog.com/post/4608227295"
+          url-with-slug="http://thechangelog.com/post/4608227295/raphters-a-web-framework-for-c" type="link"
+          date-gmt="2011-04-14 15:26:00 GMT" date="Thu, 14 Apr 2011 10:26:00" unix-timestamp="1302794760"
+          format="markdown" reblog-key="aT6TwdJN" slug="raphters-a-web-framework-for-c">
+      <link-text>Raphters: A web framework for C</link-text>
+      <link-url>http://github.com/DanielWaterworth/Raphters</link-url>
+      <link-description>&lt;p&gt;For those that thought C had been delegated to the internals of your
+        mobile devices or favorite database engine, &lt;a href="http://github.com/DanielWaterworth"&gt;Daniel
+        Waterworth&lt;/a&gt; wants to string you up by
+        the &lt;a href="http://github.com/DanielWaterworth/Raphters"&gt;Raphters&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;Raphters is a web framework written in C. Yes you heard that right, a
+        shiny new framework for the web written in everybody&amp;#8217;s favorite
+        close-to-the-metal programming language. The project gets its name from
+        RAPHT, a pattern that extends MVC that aims for greater security and
+        flexibility:&lt;/p&gt;
+
+        &lt;ul&gt;&lt;li&gt;&lt;em&gt;Resources&lt;/em&gt; include things served up to clients like a database or API.&lt;/li&gt;
+        &lt;li&gt;&lt;em&gt;Actions&lt;/em&gt; provide ways to interact with a Resource.&lt;/li&gt;
+        &lt;li&gt;&lt;em&gt;Processors&lt;/em&gt; transform data.&lt;/li&gt;
+        &lt;li&gt;&lt;em&gt;Handlers&lt;/em&gt; provide the entry point for a request.&lt;/li&gt;
+        &lt;li&gt;&lt;em&gt;Templates&lt;/em&gt; render data. &lt;/li&gt;
+        &lt;/ul&gt;&lt;p&gt;A simple Hello World example to demostrate the patter might look
+        something like:&lt;/p&gt;
+
+        &lt;pre&gt;&lt;code&gt;#include "raphters.h"
+
+        START_HANDLER (simple, GET, "simple", res, 0, matches) {
+        response_add_header(res, "content-type", "text/html");
+        response_write(res, "hello world");
+        } END_HANDLER
+
+        START_HANDLER (default_handler, GET, "", res, 0, matches) {
+        response_add_header(res, "content-type", "text/html");
+        response_write(res, "default page");
+        } END_HANDLER
+
+        int main() {
+        add_handler(simple);
+        add_handler(default_handler);
+        serve_forever();
+        return 0;
+        }
+        &lt;/code&gt;&lt;/pre&gt;
+
+        &lt;p&gt;If you&amp;#8217;re a C developer looking for speed (and security) you might give Raphters a
+        look for your next web project.&lt;/p&gt;
+
+        &lt;p&gt;[&lt;a href="http://github.com/DanielWaterworth/Raphters"&gt;Source on
+        GitHub&lt;/a&gt;]&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>c</tag>
+      <tag>web</tag>
+      <tag>frameworks</tag>
+      <tag>C</tag>
+    </post>
+    <post id="4504318741" url="http://thechangelog.com/post/4504318741"
+          url-with-slug="http://thechangelog.com/post/4504318741/ruby-metrics-it-pretty-much-explains-itself"
+          type="link" date-gmt="2011-04-10 21:06:00 GMT" date="Sun, 10 Apr 2011 16:06:00" unix-timestamp="1302469560"
+          format="markdown" reblog-key="LxGWVBxM" slug="ruby-metrics-it-pretty-much-explains-itself">
+      <link-text>ruby-metrics: it pretty much explains itself</link-text>
+      <link-url>https://github.com/johnewart/ruby-metrics</link-url>
+      <link-description>&lt;p&gt;One of the hottest talks at &lt;a
+        href="http://thechangelog.com/post/4481277637/codeconf-saturday-summary"&gt;day 1 of CodeConf&lt;/a&gt; was Coda
+        Hale&amp;#8217;s talk on metrics. At the end, he mentioned that while this was on the JVM, he&amp;#8217;d love
+        to see a similar package for Ruby.&lt;/p&gt;
+
+        &lt;p&gt;So, naturally, someone picked it up! There&amp;#8217;s going to be a port of this really cool library
+        over to Ruby, so check it out!&lt;/p&gt;
+
+        &lt;p&gt;As &lt;a href="https://github.com/johnewart"&gt;johnewart&lt;/a&gt; said in &lt;a
+        href="https://convore.com/"&gt;Convore&lt;/a&gt; a few minutes ago,&lt;/p&gt;
+
+        &lt;blockquote&gt;
+        &lt;p&gt;In talking with Coda last night I decided to start writing a Ruby version of metrics &amp;#8212; slowly
+        adding measurements but available on GH. I&amp;#8217;m adding gauges with callbacks at the moment.&lt;/p&gt;
+        &lt;/blockquote&gt;
+
+        &lt;p&gt;There&amp;#8217;s also a port of &lt;a href="https://github.com/twitter/ostrich"&gt;Ostrich&lt;/a&gt;,
+        a similar library, to Python, &lt;a href="https://github.com/wadey/python-ostrich"&gt;over here&lt;/a&gt;.&lt;/p&gt;</link-description>
+      <tag>github</tag>
+      <tag>ruby</tag>
+    </post>
+  </posts>
+</tumblr>

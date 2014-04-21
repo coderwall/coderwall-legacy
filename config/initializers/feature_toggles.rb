@@ -1,0 +1,3 @@
+module Feature
+
+end

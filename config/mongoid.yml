@@ -1,0 +1,14 @@
+development:
+  host: localhost
+  database: <%= ENV['MONGODB_DATABASE_NAME'] %>
+  # database: badgify_development
+
+test:
+  host: localhost
+  database: badgiy_test
+
+staging:
+  uri: <%= ENV['MONGOLAB_URI'] %>
+
+production:
+  uri: <%= ENV['MONGOLAB_URI'] %>

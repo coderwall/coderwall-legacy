@@ -1,0 +1,67 @@
+<% if ENABLE_TRACKING && !current_user.try(:admin?) %>
+    <%= javascript_include_tag "tracking" %>
+
+    <script type="text/javascript">
+
+        <% if !cookies[:identity].blank? %>
+        mixpanel.name_tag('<%= cookies[:identity] %>');
+        <% end %>
+
+        <% if !cookies[:trc].blank? %>
+        mixpanel.identify('<%= cookies[:trc] %>');
+        <% end %>
+
+        <% if signed_in? %>
+        mixpanel.register({'score': <%= current_user.score.round(-1) %>,
+                    'followers':<%= round(current_user.followers_count) %>,
+                    'achievements':<%= current_user.badges_count %>,
+                    'on team': <%= current_user.on_team? %>,
+                    'premium team': <%= (current_user.team && current_user.team.premium?) || false %>,
+                    'signed in': true,
+                    'member': true,
+                    'first visit': false,
+                    'visit frequency': "<%= current_user.visit_frequency %>"},
+                'all', 31);
+
+        mixpanel.people.set({
+            "$email": "<%= current_user.email %>",
+            "$created": "<%= current_user.created_at.to_formatted_s(:mixpanel) %>",
+            'achievements':<%= current_user.badges_count %>,
+            'followers':<%= round(current_user.followers_count) %>,
+            'username': "<%= current_user.username %>",
+            'name': "<%= current_user.display_name %>",
+            'country': "<%= current_user.country %>",
+            'team': "<%= current_user.team.try(:name) %>",
+            'premium team': <%= (current_user.team && current_user.team.premium?) || false %>,
+            'city': "<%= current_user.city %>",
+            'visit frequency': "<%= current_user.visit_frequency %>"
+        });
+
+        <%= yield(:mixpanel) %>
+        <% else %>
+        mixpanel.register({'signed in': false,
+            'member': <%= (cookies[:identity] && User.exists?(:username => cookies[:identity])) || false %>,
+            'first visit': <%= session[:new_visit] || false %>
+        }, 'all', 31);
+
+        <%= yield(:mixpanel) %>
+        <% end %>
+
+        (function () {
+            window._pa = window._pa || {};
+            var pa = document.createElement('script');
+            pa.type = 'text/javascript';
+            pa.async = true;
+            pa.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + "//tag.perfectaudience.com/serve/50775e2d30a1d50002000221.js";
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(pa, s);
+        })();
+        window.onerror = function (message, file, line) {
+            var prop = {}
+            prop.message = message;
+            prop.file = file;
+            prop.line = line;
+            mixpanel.track('error', prop);
+        }
+    </script>
+<% end %>

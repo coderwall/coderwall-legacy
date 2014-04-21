@@ -1,0 +1,4 @@
+$('#join_<%= params[:user_id] %>').remove();
+if ($('.requested-members ul').children().length == 0) {
+    $('.requested-members').remove();
+}

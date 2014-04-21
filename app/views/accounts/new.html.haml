@@ -1,0 +1,94 @@
+-content_for :head do
+  =stylesheet_link_tag 'product_description'
+  =tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY
+
+-content_for :javascript do
+  =javascript_include_tag "https://js.stripe.com/v1/", "application"
+  =javascript_include_tag 'accounts'
+
+.main-content
+  %section.wrapper
+    %header.masthead.cf
+      %a.desc-logo{:href => 'https://coderwall.com'}
+        %span Coderwall
+        =image_tag("premium-team-description/logo.png")
+      %h2 Enhanced team profile
+
+    %section.title#learnmore
+      %h1 Attract and hire top developers
+    %section.packages
+      %ul
+        - if @plan.nil?
+          %li.plan.free{'data-no-cc' => 'true', 'data-plan-id' => Plan.enhanced_team_page_free.try(:public_id)}
+            %h2 Basic
+            %h3 FREE
+            %ul
+              %li Beautiful, personally branded team page
+              %li Showcase your organization's culture
+              %li Highlight engineering challenges
+            %footer
+              %a{:href => '#'}
+                current plan
+        %li.plan.center.selected.monthly{'data-plan-id' => @plan || Plan.enhanced_team_page_monthly.try(:public_id)}
+          %h2 Monthly
+          %h3
+            ="$#{monthly_plan_price(@plan)}"
+            %span
+              ="a month"
+          %ul
+            %li Beautiful, personally branded team page
+            %li Showcase your organization's culture
+            %li Highlight engineering challenges
+            %li
+              Permanently featured on the
+              =link_to('hiring teams page', teams_path)
+            %li Permanently increase your reach and visibility with the hiring banner
+            %li Feature up to 4 jobs on your team profile, change at anytime with no additional cost
+
+          %footer
+            %a{:href => '#'}
+              select
+        - if @plan.nil?
+          %li.plan.one-off{'data-plan-id' => Plan.enhanced_team_page_one_time.try(:public_id)}
+            %h2 Single
+            %h3
+              ="$#{Plan.enhanced_team_page_one_time.try(:price)}"
+              %span a Job
+
+            %ul
+              %li Beautiful, personally branded team page
+              %li Showcase your organization's culture
+              %li Highlight engineering challenges
+              %li
+                Featured on the
+                =link_to('hiring teams page', teams_path)
+                for 30 days
+              %li Increase your reach and visibility with the hiring banner for 30 days
+              %li Post & feature 1 job on your team profile for 30 days
+            %footer
+              %a{:href => '#'}
+                select
+
+    %section.card-section.cf
+      =form_for @account, :url => team_account_path(@team, @account), :html => {:class => "sign-up-form", :id => 'new_account'} do |f|
+        .payment-details
+          %h2 Enter your payment details
+          =f.hidden_field :team_path, :value => teamname_path(@team.slug)
+          =f.hidden_field :account_path, :value => team_account_path(@team, @account)
+          =f.hidden_field :stripe_card_token, :value => nil, :class => 'stripe_card_token_value'
+          =f.hidden_field :chosen_plan, :value => @plan.try(:id) || Plan.enhanced_team_page_monthly.try(:public_id)
+          %fieldset.credit-card
+            %h3 Payment Details
+            .card-btm
+              #stripe_error
+              .card-number
+                %label{:for => "credit_card"} Long card number
+                =text_field_tag :card_number, nil, :placeholder => "XXXX XXXX XXXX XXXX"
+              .expiration
+                %label Expiration
+                =text_field_tag :card_month, nil,  :placeholder => "MM"
+                =text_field_tag :card_year, nil, :placeholder => "YY"
+              .cvc
+                %label CVC
+                =text_field_tag :card_code, nil, :placeholder => "XXX"
+        %input{:type => "submit", :id => "chosen-plan", :value => "Purchase " + purchased_plan(@plan)}/

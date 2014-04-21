@@ -1,0 +1,89 @@
+{
+    "scm"
+:
+    "hg",
+        "has_wiki"
+:
+    false,
+        "last_updated"
+:
+    "2012-08-02 07:38:32",
+        "creator"
+:
+    null,
+        "forks_count"
+:
+    0,
+        "created_on"
+:
+    "2011-10-01 12:11:21",
+        "owner"
+:
+    "jespern",
+        "logo"
+:
+    "https://dwz7u9t8u8usb.cloudfront.net/m/1994bc81118f/img/language-avatars/default_16.png",
+        "email_mailinglist"
+:
+    "",
+        "is_mq"
+:
+    false,
+        "size"
+:
+    544,
+        "read_only"
+:
+    false,
+        "fork_of"
+:
+    null,
+        "mq_of"
+:
+    null,
+        "followers_count"
+:
+    1,
+        "state"
+:
+    "available",
+        "utc_created_on"
+:
+    "2011-10-01 10:11:21+00:00",
+        "website"
+:
+    "",
+        "description"
+:
+    "par2cmdline compiled for ARM, drop-and-install for DroboFS",
+        "has_issues"
+:
+    false,
+        "is_fork"
+:
+    false,
+        "slug"
+:
+    "par2-drobofs",
+        "is_private"
+:
+    false,
+        "name"
+:
+    "par2-drobofs",
+        "language"
+:
+    "",
+        "utc_last_updated"
+:
+    "2012-08-02 05:38:32+00:00",
+        "email_writers"
+:
+    true,
+        "no_public_forks"
+:
+    false,
+        "resource_uri"
+:
+    "/1.0/repositories/jespern/par2-drobofs"
+}

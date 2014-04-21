@@ -1,0 +1,53 @@
+{
+    "name"
+:
+    "Matthew Deiters",
+        "company"
+:
+    null,
+        "avatar_url"
+:
+    "https://secure.gravatar.com/avatar/aacb7c97f7452b3ff11f67151469e3b0?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "location"
+:
+    "San Francisco",
+        "created_at"
+:
+    "2008-04-14T22:53:10Z",
+        "public_repos"
+:
+    18,
+        "blog"
+:
+    "http://www.theagiledeveloper.com",
+        "followers"
+:
+    19,
+        "url"
+:
+    "https://api.github.com/users/mdeiters",
+        "public_gists"
+:
+    31,
+        "id"
+:
+    7330,
+        "hireable"
+:
+    true,
+        "bio"
+:
+    "",
+        "login"
+:
+    "mdeiters",
+        "html_url"
+:
+    "https://github.com/mdeiters",
+        "following"
+:
+    27,
+        "email"
+:
+    "mdeiters at gmail.com"
+}

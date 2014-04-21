@@ -1,0 +1,5 @@
+Create Connection Service
+need to add vendor_person_id
+how will dotcom do authorization
+
++ migrating mgi data stories

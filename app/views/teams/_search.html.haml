@@ -1,0 +1,9 @@
+=render "shared/error_messages", :target => @team
+
+#create-team
+  =form_for @team, :html => {:multipart => true, :remote => true} do |f|
+    .setting
+      =f.label :name, "Team Name:"
+      =f.text_field :name
+    .save
+      %input.button{:type => "submit", :value => "Create/Lookup Team"}

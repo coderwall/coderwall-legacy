@@ -1,0 +1,17 @@
+%section#team-protips
+  %header.cf
+    %h2
+      Latest Protips from the
+      = @team.name
+      Team
+    -if @team.trending_protips(nil).count > 2
+      %a.view-more{:href => team_protips_path(@team.slug)}
+        View more protips
+
+  .inside.cf
+    -@team.trending_protips(2).each do |protip|
+      %article
+        =link_to protip.upvotes, upvote_protip_path(protip.public_id), :remote => true, :method => :post, :rel => "nofollow", :class => "upvote"
+        %h3
+          %a{:href => protip_path(protip.public_id)}
+            = protip.title

@@ -1,0 +1,11 @@
+= render 'shared/error_messages', target: @team
+.team-form
+  %h2 Your team name
+  #create-team
+    = form_for @team, remote: true do |f|
+      .setting
+        = f.text_field :name
+
+      -if @team.new_record?
+        .save
+          %input.button{ type: 'submit', value: 'Next' }

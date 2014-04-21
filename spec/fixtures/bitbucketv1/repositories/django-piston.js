@@ -1,0 +1,89 @@
+{
+    "scm"
+:
+    "hg",
+        "has_wiki"
+:
+    true,
+        "last_updated"
+:
+    "2012-10-22 20:44:46",
+        "creator"
+:
+    null,
+        "forks_count"
+:
+    243,
+        "created_on"
+:
+    "2009-04-19 22:19:07",
+        "owner"
+:
+    "jespern",
+        "logo"
+:
+    "https://dwz7u9t8u8usb.cloudfront.net/m/1994bc81118f/img/language-avatars/python_16.png",
+        "email_mailinglist"
+:
+    "",
+        "is_mq"
+:
+    false,
+        "size"
+:
+    480857,
+        "read_only"
+:
+    false,
+        "fork_of"
+:
+    null,
+        "mq_of"
+:
+    null,
+        "followers_count"
+:
+    1055,
+        "state"
+:
+    "available",
+        "utc_created_on"
+:
+    "2009-04-19 20:19:07+00:00",
+        "website"
+:
+    "http://bitbucket.org/jespern/",
+        "description"
+:
+    "Piston is a Django mini-framework creating APIs.",
+        "has_issues"
+:
+    true,
+        "is_fork"
+:
+    false,
+        "slug"
+:
+    "django-piston",
+        "is_private"
+:
+    false,
+        "name"
+:
+    "django-piston",
+        "language"
+:
+    "python",
+        "utc_last_updated"
+:
+    "2012-10-22 18:44:46+00:00",
+        "email_writers"
+:
+    true,
+        "no_public_forks"
+:
+    false,
+        "resource_uri"
+:
+    "/1.0/repositories/jespern/django-piston"
+}

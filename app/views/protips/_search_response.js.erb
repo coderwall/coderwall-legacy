@@ -1,0 +1,2 @@
+$('<%= search_target(append_to) %>').<%= search_results_replace_method %>("<%= escape_javascript(render :partial => "protips/grid", :locals => {:protips => @protips.respond_to?(:results) ? @protips.results : @protips, :collection => @protips, :hide_more => false, :section => params[:section], :width => (params[:width].try(:to_i) || 4), :mode => params[:mode], :opportunity => @job} ) %>")
+protipGrid.markUpvotes();

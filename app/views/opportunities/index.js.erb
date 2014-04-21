@@ -1,0 +1,6 @@
+$('ul.jobs').append("<%= escape_javascript(render @jobs) %>");
+if (<%= @jobs_left %> <= 20) {
+        $('.new-more').hide()
+        } else {
+        $('.new-more').attr('href', '<%= jobs_path(:location => params[:location].parameterize, :skill => params[:skill], :page => @page+1) %>')
+        }

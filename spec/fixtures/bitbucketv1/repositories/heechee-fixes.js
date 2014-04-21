@@ -1,0 +1,175 @@
+{
+    "scm"
+:
+    "hg",
+        "has_wiki"
+:
+    true,
+        "last_updated"
+:
+    "2011-09-17 05:12:25",
+        "creator"
+:
+    null,
+        "forks_count"
+:
+    0,
+        "created_on"
+:
+    "2010-04-14 15:23:16",
+        "owner"
+:
+    "jespern",
+        "logo"
+:
+    "https://dwz7u9t8u8usb.cloudfront.net/m/1994bc81118f/img/language-avatars/default_16.png",
+        "email_mailinglist"
+:
+    "",
+        "is_mq"
+:
+    false,
+        "size"
+:
+    173911,
+        "read_only"
+:
+    false,
+        "fork_of"
+:
+    {
+        "scm"
+    :
+        "hg",
+            "has_wiki"
+    :
+        true,
+            "last_updated"
+    :
+        "2011-09-17 05:12:25",
+            "creator"
+    :
+        null,
+            "created_on"
+    :
+        "2009-09-10 06:01:01",
+            "owner"
+    :
+        "andrewgodwin",
+            "logo"
+    :
+        "https://dwz7u9t8u8usb.cloudfront.net/m/1994bc81118f/img/language-avatars/default_16.png",
+            "email_mailinglist"
+    :
+        "",
+            "is_mq"
+    :
+        false,
+            "size"
+    :
+        179111,
+            "read_only"
+    :
+        false,
+            "fork_of"
+    :
+        null,
+            "mq_of"
+    :
+        null,
+            "followers_count"
+    :
+        30,
+            "state"
+    :
+        "available",
+            "utc_created_on"
+    :
+        "2009-09-10 04:01:01+00:00",
+            "website"
+    :
+        "",
+            "description"
+    :
+        "A DVCS -> SVN gateway attempt (i.e. expose mercurial/git repositories so SVN can check them out)",
+            "has_issues"
+    :
+        true,
+            "is_fork"
+    :
+        false,
+            "slug"
+    :
+        "heechee",
+            "is_private"
+    :
+        false,
+            "name"
+    :
+        "heechee",
+            "language"
+    :
+        "",
+            "utc_last_updated"
+    :
+        "2011-09-17 03:12:25+00:00",
+            "email_writers"
+    :
+        true,
+            "no_public_forks"
+    :
+        false,
+            "resource_uri"
+    :
+        "/1.0/repositories/andrewgodwin/heechee"
+    }
+,
+    "mq_of"
+:
+    null,
+        "followers_count"
+:
+    1,
+        "state"
+:
+    "available",
+        "utc_created_on"
+:
+    "2010-04-14 13:23:16+00:00",
+        "website"
+:
+    null,
+        "description"
+:
+    "Various fixes I've made.",
+        "has_issues"
+:
+    true,
+        "is_fork"
+:
+    true,
+        "slug"
+:
+    "heechee-fixes",
+        "is_private"
+:
+    false,
+        "name"
+:
+    "heechee-fixes",
+        "language"
+:
+    "",
+        "utc_last_updated"
+:
+    "2011-09-17 03:12:25+00:00",
+        "email_writers"
+:
+    true,
+        "no_public_forks"
+:
+    false,
+        "resource_uri"
+:
+    "/1.0/repositories/jespern/heechee-fixes"
+}

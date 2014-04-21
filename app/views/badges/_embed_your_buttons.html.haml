@@ -1,0 +1,50 @@
+#withcount
+  =radio_button_tag('embedBadge', 'withcount', checked = true, :class => 'track', 'data-action' => 'click embedded endorse', 'data-from' => 'embed endorse with count code')
+  =image_tag('example-endorse-button-withcount.png')
+
+#nocount
+  =radio_button_tag('embedBadge', 'nocount',   checked = false, :class => 'track', 'data-action' => 'click embedded endorse', 'data-from' => 'embed endorse no count code')
+  =image_tag('example-endorse-button.png')
+.clear
+
+.markdown.withcount
+  Embed this markdown in a github repo's README file
+  .code
+    =markdown_embed_code_with_count
+
+.textile.withcount
+  Embed this textile in a github repo's README file
+  .code
+    =textile_embed_code_with_count
+
+.html.withcount
+  Embed this html in your blog or website
+  .code
+    ="<a href='https://coderwall.com/#{current_user.username}'>"
+    %br
+    &nbsp;
+    &nbsp;
+    ="<img src='https://api.coderwall.com/#{current_user.username}/endorsecount.png' />"
+    %br
+    ="</a>"
+
+.markdown.nocount.hide
+  Embed this markdown in a github repo's README file
+  .code
+    =markdown_embed_code_no_count
+
+.textile.withcount.hide
+  Embed this textile in a github repo's README file
+  .code
+    =textile_embed_code_no_count
+
+.html.nocount.hide
+  Embed this html in your blog or website
+  .code
+    ="<a href='https://coderwall.com/#{current_user.username}'>"
+    %br
+    &nbsp;
+    &nbsp;
+    ="<img src='https://api.coderwall.com/#{current_user.username}/endorse.png' />"
+    %br
+    ="</a>"

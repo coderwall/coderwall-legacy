@@ -1,0 +1,4 @@
+#accept
+  %h1.center You've been invited to join a team
+  %h2.center= "#{@invitation.inviter.name} would like you to join the #{@invitation.team.name} team on Coderwall."
+  = render :partial => "sessions/signin", :locals => { :reason => "to accept this invitation" }

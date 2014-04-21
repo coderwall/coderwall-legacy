@@ -1,0 +1,36 @@
+%tr
+  %td.content-head{:style => "padding: 30px 60px;border-bottom: solid 1px #d4cfc4;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif'"}
+    %h1{:style => "-webkit-font-smoothing: antialiased;color: #393939;font-size: 26px;margin-bottom: 20px;text-align: center;margin: 0;line-height: 100%;font-size: 28px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      Good news friend, your Coderwall is up!
+
+%tr
+  %td.main-content-grey{:style => "padding: 30px 60px;background: #ece9e2;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      Don't worry, that feeling of excitement and exhilaration is normal. Your profile looks pretty sweet, go check it out
+      =link_to('here.', badge_url(@user.username), :style => "color: #3d8dcc;text-decoration: none;font-size: 14px;")
+      -if @user.badges.empty?
+        If you haven't received any achievements, check back later, we're always working on something new.
+
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      Let's get started:
+
+      %ol
+        -if @user.on_team?
+          -invite_to_team_url = invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token))
+          %li{:style => "font-size: 14px;line-height: 22px;"}
+            == Invite others to team #{@user.team.name}. Share this private link with your coworkers so they can join your team: #{link_to(invite_to_team_url, invite_to_team_url)}
+        -else
+          %li{:style => "font-size: 14px;line-height: 22px;"}
+            ="#{link_to("Reserve your company's team page", new_team_url, :style => "color: #3d8dcc;text-decoration: none;font-size: 14px;")}. Invite at least 3 coworkers to have your team show up on the #{link_to('leaderboard',leaderboard_url, :style => "color: #3d8dcc;text-decoration: none;font-size: 14px;")}.".html_safe
+
+        %li{:style => "font-size: 14px;line-height: 22px;"}
+          Check out the
+          =link_to('trending', 'https://coderwall.com/trending', :style => "color: #3d8dcc;text-decoration: none;font-size: 14px;")
+          pro tips and
+          =link_to('share your own', 'https://coderwall.com/p/new', :style => "color: #3d8dcc;text-decoration: none;font-size: 14px;")
+        %li{:style => "font-size: 14px;line-height: 22px;"}
+          ==Display your achievements on your personal website or blog using our #{link_to('badge widget', api_url, :style => "color: #3d8dcc;text-decoration: none;font-size: 14px;")}.
+
+    .divider{:style => "height: 10px;background: #dbd7cd;"}
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      We're always looking for new ways to make Coderwall an awesome home for developers and designers. If you have any questions or ideas, drop us a line at support@coderwall.com.

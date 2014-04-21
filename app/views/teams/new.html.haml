@@ -1,0 +1,14 @@
+- content_for :page_title do
+  coderwall : create team
+
+- content_for :mixpanel do
+  = record_view_event('new team page')
+
+= content_for :body_id do
+  team-settings
+
+#lflf
+  %h1.big-title Reserve Team Name
+  .panel.cf
+    .inside-panel-align-left
+      = render 'form', locals: { team: @team }

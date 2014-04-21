@@ -1,0 +1,57 @@
+{
+    "repository"
+:
+    {
+        "owner"
+    :
+        "madrobby",
+            "pushed_at"
+    :
+        "2009/01/11 02:16:53 -0800",
+            "has_downloads"
+    :
+        true,
+            "watchers"
+    :
+        93,
+            "forks"
+    :
+        6,
+            "description"
+    :
+        "Various bits and helpers for Prototype and scriptaculous, that might prove useful or not. :)",
+            "has_wiki"
+    :
+        true,
+            "fork"
+    :
+        false,
+            "size"
+    :
+        192,
+            "open_issues"
+    :
+        0,
+            "name"
+    :
+        "prototype_helpers",
+            "language"
+    :
+        "JavaScript",
+            "url"
+    :
+        "https://github.com/madrobby/prototype_helpers",
+            "private"
+    :
+        false,
+            "has_issues"
+    :
+        true,
+            "homepage"
+    :
+        "",
+            "created_at"
+    :
+        "2008/05/10 03:20:21 -0700"
+    }
+}

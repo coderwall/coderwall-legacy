@@ -1,0 +1,5 @@
+%li.cf
+  %span.letter
+    = alphabet.capitalize
+  - networks.each do |network|
+    = render :partial => 'network', :locals => {:network => network}

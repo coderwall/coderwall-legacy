@@ -1,0 +1,13 @@
+- protips = (protips || search_trending_protips_for_topic(topic, nil, 1,  4))
+%section.tips-section
+  %header.cf
+    %h2=link_to(title || topic, topic_protips_path(title || topic))
+    %ul.protip-options
+      %li
+        - if !(topic.is_a? Array and topic.size > 1)
+          = subscription_link(topic)
+
+        - if protips.count > 4
+          %li
+            %a.protip-more{:href => topic_protips_path(topic)} More protips
+  = render :partial => "grid", :locals => {:protips => protips.results, :collection => protips, :hide_more => true, :mode => 'fullpage'}

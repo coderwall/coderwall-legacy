@@ -1,0 +1,7 @@
+%table
+  %tr
+    %td=@type
+    -unless @url.nil?
+      %td=link_to @url, @url, :target => :traction
+    -unless @message.nil?
+      %td=@message

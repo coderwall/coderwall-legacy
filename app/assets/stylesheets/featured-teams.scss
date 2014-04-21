@@ -1,0 +1,370 @@
+@import "base";
+@import "compass/css3/";
+
+//featured teams grid
+#featured-team-grid {
+  .inside-main-content {
+    padding-top: 40px;
+  }
+
+  #search-results {
+    width: 960px;
+    margin: 0 auto;
+  }
+}
+
+// .feature-signup {
+// 	display: block;
+// 	text-align: center;
+// 	color: #6e8597;
+// 	font-size: 1.4em;
+// 	padding: 20px;
+// 	border-top: 2px solid #bfceda;
+// 	border-bottom: 2px solid #bfceda;
+// 	margin-bottom: 30px;
+// 	@include ts-bottom-white;
+// 	
+// 	&:hover {
+// 		//opacity: 0.7;
+// 		color: $light-blue;
+// 	}
+// }
+
+.feature-signup {
+  display: block;
+  text-align: center;
+  color: #fff;
+  font-size: 1.4em;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 40px;
+  position: relative;
+  @include text-shadow-one-px;
+
+  background: #6c6e7a; /* Old browsers */
+  background: -moz-linear-gradient(top, #6c6e7a 0%, #6c6e7a 47%, #626470 47%, #626470 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6c6e7a), color-stop(47%, #6c6e7a), color-stop(47%, #626470), color-stop(100%, #626470)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #6c6e7a 0%, #6c6e7a 47%, #626470 47%, #626470 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #6c6e7a 0%, #6c6e7a 47%, #626470 47%, #626470 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #6c6e7a 0%, #6c6e7a 47%, #626470 47%, #626470 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #6c6e7a 0%, #6c6e7a 47%, #626470 47%, #626470 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6c6e7a', endColorstr='#626470', GradientType=0); /* IE6-9 */
+
+  &:before, &:after {
+    content: " ";
+    display: block;
+    background: image-url("team/ribbon-end.png") no-repeat;
+    width: 57px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+  }
+
+  &:before {
+    background-position: left;
+    left: 0px;
+  }
+
+  &:after {
+    background-position: right;
+    right: 0px;
+  }
+
+  &:hover {
+    //opacity: 0.7;
+    //color: $light-blue;
+    color: #8e9098;
+  }
+}
+
+.teams-filter {
+  text-align: center;
+  //position: relative;
+  display: block;
+  //background: image-url("jobs/filter-hint.png") no-repeat right center;
+  //padding-right: 30px;
+  color: #5e5e5e;
+  margin-bottom: 50px;
+
+  h1 {
+    font-size: 3em;
+    font-family: "MuseoSans-100";
+
+    span {
+      font-family: "MuseoSans-300";
+      border-bottom: solid 1px $light-blue-grey;
+    }
+  }
+
+  &:hover {
+    span {
+      opacity: 0.6;
+    }
+  }
+
+}
+
+//team-filter
+
+.featured-team-list {
+
+  > li {
+    //float: left;
+    display: inline-block;
+    vertical-align: top;
+    width: 450px;
+    margin-left: 32px;
+    margin-bottom: 30px;
+    background: #fff;
+    border: 1px solid #c1ccd4;
+    position: relative;
+    @include border-radius(4px);
+
+    &:nth-child(odd) {
+      margin-left: 0;
+    }
+
+    .team-link {
+      display: block;
+      padding: 20px;
+      height: 40px;
+      @include transition-all;
+      @include border-radius-top(4px);
+
+      &:hover {
+        background: #eaeaea;
+      }
+    }
+
+    .hiring-ribbon {
+      position: absolute;
+      z-index: 100;
+      width: 76px;
+      height: 77px;
+      top: -6px;
+      right: -5px;
+      background: image-url("team/hiring.png") no-repeat;
+
+      span {
+        display: none;
+      }
+    }
+
+    header {
+      border-bottom: solid 1px #eaeaea;
+
+      .avatar {
+        float: left;
+        margin-right: 15px;
+
+        img {
+          display: block;
+          width: 39px;
+          height: 39px;
+          @include border-radius(4px);
+        }
+      }
+
+      h2 {
+        font-size: 1.8em;
+        margin-bottom: 3px;
+        color: $dark-grey;
+        @include ellipsis;
+      }
+
+      h3 {
+        font-size: 1.3em;
+        color: #5d5d5d;
+        @include ellipsis;
+      }
+    }
+
+    .image {
+      height: 150px !important;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+
+      .overlay-message {
+        color: $dark-grey;
+        font-size: 1.3em;
+        padding: 0 20px;
+        bottom: 40px;
+        position: relative;
+        text-align: center;
+
+        &:hover {
+          color: $light-blue;
+        }
+      }
+    }
+
+    .content {
+      padding: 20px;
+      @include paper-panel;
+      @include border-radius-bottom(4px);
+
+      .tags {
+        padding-bottom: 10px;
+
+        li {
+          color: #fff;
+          font-size: 1.1em;
+          text-transform: uppercase;
+          font-family: "MuseoSans-500";
+          padding: 6px 8px;
+          background: $light-blue;
+          float: left;
+          margin-right: 10px;
+          margin-bottom: 10px;
+          background: image-url("team/wavey-bg.jpg") repeat;
+          -webkit-box-shadow: 0px 1px 0px 0px rgba(36, 96, 144, 0.4);
+          box-shadow: 0px 1px 0px 0px rgba(36, 96, 144, 0.4);
+          text-shadow: 0px -1px 0px #17598e;
+          filter: dropshadow(color=#17598e, offx=0, offy=-1);
+          @include border-radius(4px);
+        }
+      }
+    }
+
+    .opportunities {
+      border-top: solid 1px #eaeaea;
+      padding: 20px 0 15px 0;
+
+      h3 {
+        display: block;
+        background: image-url("team/case.png") no-repeat left;
+        line-height: 21px;
+        height: 17px;
+        padding-left: 25px;
+        font-family: "MuseoSans-700";
+        font-size: 1.1em;
+        text-transform: uppercase;
+        color: #5d5d5d;
+        margin-bottom: 10px;
+      }
+
+      li {
+        float: left;
+        font-size: 1.2em;
+        margin: 0 15px 5px 0;
+        padding-left: 15px;
+        background: image-url("team/bullet.jpg") no-repeat left;
+
+        a {
+          color: #5d5d5d;
+          &:hover {
+            color: $light-blue;
+          }
+        }
+      }
+    }
+
+    footer {
+      border-top: solid 1px #eaeaea;
+      padding-top: 20px;
+
+      .location {
+        float: left;
+        width: 200px;
+        background: image-url("team/pin.png") no-repeat left;
+        padding-left: 25px;
+        font-family: "MuseoSans-700";
+        font-size: 1.1em;
+        line-height: 23px;
+        text-transform: uppercase;
+        color: #5d5d5d;
+        @include ellipsis;
+      }
+
+      .more-members {
+        float: right;
+        width: 24px;
+        height: 24px;
+        line-height: 26px;
+        text-align: center;
+        border: 1px solid #eaeaea;
+        background: #eaeaea;
+        @include border-radius(4px);
+      }
+
+      .members {
+        float: right;
+        margin-right: 10px;
+
+        li {
+          float: left;
+          margin-left: 10px;
+          a {
+            display: block;
+            width: 26px;
+            height: 26px;
+            overflow: hidden;
+            @include border-radius(4px);
+
+            &:hover {
+              opacity: 0.5;
+            }
+
+            img {
+              width: 26px;
+              height: 26px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.normal-view-two {
+  .content {
+    footer {
+      padding: 0;
+      border: 0;
+    }
+  }
+}
+
+.normal-view-three {
+
+  > li {
+    width: 294px;
+
+    //reset margins
+    margin: 0;
+    &:nth-child(odd) {
+      margin-left: 20px;
+    }
+    //
+
+    margin-left: 20px;
+    margin-bottom: 20px;
+
+    &:nth-child(3n+1) {
+      margin-left: 0;
+    }
+
+    header {
+      h2 {
+        font-size: 1.6em;
+      }
+      h3 {
+        font-size: 1.2em;
+      }
+    }
+  }
+
+  .content {
+    footer {
+      padding: 0;
+      border: 0;
+      .location {
+        width: 120px;
+        padding-left: 20px;
+        font-size: 1em;
+      }
+    }
+  }
+}

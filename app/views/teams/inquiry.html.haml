@@ -1,0 +1,17 @@
+-content_for :mixpanel do
+  =record_event('completed product description request')
+
+-content_for :page_title do
+  We'll contact you shortly
+
+.main-content
+  %section.wrapper
+    %header.masthead.cf
+      %a.desc-logo{:href => 'https://coderwall.com'}
+        %span Coderwall
+        =image_tag("premium-team-description/logo.png")
+      %h2 Enhanced team profile
+
+    %section.thankyou
+      %h1 Thanks for your interest. We'll be contacting you shortly about creating an enhanced team page on Coderwall.
+      =link_to('Back to teams', teams_path, :class => 'big-button')

@@ -1,0 +1,2629 @@
+@import "base";
+@import "compass/css3/";
+
+$branding: #555;
+
+.reduced-header {
+  /* This is used when a member views an enhanced team profile*/
+  margin-top: -35px;
+}
+
+// This is the style for making the job box stick to the top of the page
+body#signed-out {
+  .inside-main-content {
+    padding: 28px 0 50px 0;
+    width: 960px;
+  }
+}
+
+.incomplete-alert {
+  background: #db5750 image-url("triangle-white.png") no-repeat 20px center;
+  color: #fff;
+  margin: -35px 0 20px 0;
+  padding: 20px 20px 20px 60px;
+  @include border-radius(4px);
+
+  p {
+    font-size: 1.4em;
+  }
+}
+
+.jobs-top {
+  background: image-url("team/struts.png") no-repeat top center;
+  padding-top: 40px;
+  margin-top: -30px;
+  margin-bottom: 10px;
+
+  .learn-more-about {
+    height: 23px;
+    padding: 35px 0;
+    background: image-url("team/middle-dots.png") no-repeat top center;
+
+    p {
+      font-size: 1.3em;
+      letter-spacing: 0.1em;
+      text-align: center;
+      text-transform: uppercase;
+      font-family: "MuseoSans-500";
+      color: $mid-blue-grey;
+    }
+  }
+
+  //learn-more
+  .job-panel {
+    background: #fff;
+    @include border-radius(6px);
+    //overflow: hidden;
+    width: 740px;
+    margin: 0 auto 15px auto;
+    position: relative;
+
+    .job-panel-header {
+      @include paper-panel;
+      padding: 20px 30px;
+      border-bottom: solid 1px #eaeaea;
+
+      .job-title {
+        font-size: 2.4em;
+        float: left;
+        @include ellipsis;
+        width: 489px;
+      }
+      //job-title
+
+    }
+    //job-panel-header
+
+    .apply-section {
+      background: #eaeaea;
+      padding: 20px 30px;
+      margin-bottom: 10px;
+      .status {
+        margin-bottom: 10px;
+      }
+      //status
+
+      .btn {
+        padding: 8px 20px;
+        display: inline-block;
+        background: $light-blue;
+        @include border-radius(4px);
+        color: #fff;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: "MuseoSans-500";
+        font-size: 1.2em;
+        letter-spacing: 0.2em;
+
+        &.upload {
+          margin-right: 15px;
+          background: #9b9b9b;
+          width: 280px;
+        }
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+      //btn
+
+      .send-application {
+        margin-top: 10px;
+        &:after {
+          content: "Send application"
+        }
+
+        &.applied {
+          &:after {
+            content: "Already applied"
+          }
+        }
+      }
+    }
+    //apply-section
+
+    .content {
+      padding: 20px 30px 5px 30px;
+
+      .contract {
+        color: $light-blue;
+        font-size: 1.2em;
+        margin-bottom: 15px;
+      }
+
+      .job-text {
+        margin-bottom: 15px;
+      }
+
+      .skills {
+        margin-bottom: 15px;
+        li {
+          float: left;
+          background: #e2e2e2;
+          @include border-radius(4px);
+          font-size: 1.2em;
+          margin-right: 10px;
+          margin-bottom: 5px;
+          padding: 6px 12px;
+        }
+      }
+      //skills
+
+      .locations {
+        li {
+          color: $mid-blue-grey;
+          float: left;
+          text-transform: uppercase;
+          font-family: "MuseoSans-700";
+          margin-right: 10px;
+          margin-bottom: 15px;
+          background: image-url("team/pin.png") no-repeat left;
+          line-height: 19px;
+          padding-left: 20px;
+        }
+      }
+      //locations
+
+      .opportunities {
+        //width: 330px;
+        //float: left;
+        padding-bottom: 10px;
+
+        h3 {
+          display: block;
+          background: image-url("team/case.png") no-repeat left;
+          line-height: 21px;
+          height: 17px;
+          padding-left: 25px;
+          font-family: "MuseoSans-700";
+          font-size: 1.1em;
+          text-transform: uppercase;
+          color: #5d5d5d;
+          margin-bottom: 10px;
+        }
+
+        li {
+          float: left;
+          font-size: 1.2em;
+          margin: 0 15px 5px 0;
+          padding-left: 15px;
+          background: image-url("team/bullet.jpg") no-repeat left;
+
+          a {
+            color: #5d5d5d;
+            &:hover {
+              color: $light-blue;
+            }
+          }
+        }
+      }
+    }
+    //content
+
+    .job-panel-footer {
+      border-top: solid 1px #eaeaea;
+      padding: 20px 30px;
+
+      .other-jobs {
+        text-align: center;
+        font-size: 1.3em;
+        margin: 0 auto;
+        display: block;
+        color: $light-blue;
+        text-decoration: underline;
+      }
+
+      .apply {
+        &:after {
+          content: "Apply";
+        }
+
+        &.hide-application {
+          background: #9b9b9b;
+          &:after {
+            content: "Hide Application";
+          }
+        }
+      }
+      .apply, .learn-more {
+        //float: right;
+        margin: 0 auto 15px auto;
+        background: $light-blue;
+        display: block;
+        width: 320px;
+        padding: 12px;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 1.8em;
+        letter-spacing: 0.3em;
+        text-align: center;
+        @include border-radius(4px);
+
+        &:hover {
+          background: $green;
+        }
+      }
+
+      .btn {
+        background: #ffffff; /* Old browsers */
+        background: -moz-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #f5f5f5)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%); /* W3C */
+        border: solid 1px #e6e6e6;
+        display: block;
+        font-size: 1.4em;
+        width: 280px;
+        padding: 8px 8px;
+        @include border-radius(4px);
+        color: $dark-grey;
+
+        &:hover {
+          color: $light-blue;
+          //opacity: 0.5;
+        }
+
+        .arrow {
+          content: " ";
+          display: block;
+          background: image-url("team/job-arrows.png") no-repeat bottom;
+          width: 10px;
+          height: 16px;
+        }
+
+        .link {
+          width: 250px;
+          @include ellipsis;
+        }
+
+        &.prev {
+          float: left;
+          .link {
+            float: right;
+          }
+          .arrow {
+            float: left;
+          }
+        }
+
+        &.next {
+          float: right;
+          .arrow {
+            background-position: top;
+            float: right;
+          }
+          .link {
+            float: left;
+          }
+        }
+
+      }
+      //btn
+    }
+    //job-panel-footer
+  }
+  //job-panel
+
+}
+
+//job-top
+
+.requested-members {
+  margin-bottom: 30px;
+
+  h3 {
+    color: $mid-blue-grey;
+    @include ts-bottom-white;
+    font-size: 1.6em;
+    margin-bottom: 15px;
+  }
+}
+
+.requested-members-list {
+  li {
+    padding: 10px;
+    @include border-radius(6px);
+    background: $light-blue-grey;
+    float: left;
+    border: solid #99b1c3 1px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    //width: 288px;
+
+    &:nth-child(3n+1) {
+      margin-left: 0;
+    }
+  }
+
+  .member {
+    color: #fff;
+    font-size: 1.5em;
+    display: inline-block;
+    //float: left;
+    vertical-align: middle;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+    margin-right: 15px;
+    height: 30px;
+    line-height: 30px;
+    width: 165px;
+    @include ellipsis;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      @include border-radius(8px);
+      border: solid 1px #99b1c3;
+      //display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+  }
+
+  .action {
+    padding: 8px;
+    @include border-radius(4px);
+    color: #fff;
+    font-size: 1em;
+    display: inline-block;
+    text-transform: uppercase;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .accept {
+    background: $green;
+    margin-right: 5px;
+  }
+
+  .deny {
+    background: $red;
+  }
+}
+
+.admin-bar {
+  background: #fff;
+  @include border-radius-bottom(6px);
+  border: solid 1px #d9d9d9;
+  border-top: 0;
+  margin-top: -70px;
+  margin-bottom: 30px;
+
+  .rank {
+    float: left;
+    padding: 25px 20px 20px 20px;
+
+    a {
+      color: #a1a1a1;
+      font-size: 1.4em;
+      display: block;
+      font-family: "MuseoSans-500";
+      &:hover {
+        color: $light-blue;
+      }
+
+      span {
+        font-size: 1.4em;
+      }
+    }
+  }
+
+  .alert {
+    float: left;
+    border-left: solid 1px #ececec;
+    padding: 28px 20px 20px 20px;
+    color: #db5750;
+    /*background: image-url("triangle-red.png") no-repeat 23px 20px;*/
+    width: 440px;
+    min-height: 24px;
+
+    p {
+      line-height: 20px;
+    }
+  }
+
+  .actions {
+    float: right;
+    padding: 20px;
+    border-left: solid 1px #ececec;
+    min-height: 32px;
+
+    a {
+      display: inline-block;
+      font-family: "MuseoSans-500";
+      font-size: 1.3em;
+      @include border-radius(4px);
+      //width: 75px;
+      padding: 0 12px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      color: #757575;
+
+      &:hover {
+        opacity: 0.5;
+      }
+
+      &.disable {
+        opacity: 0.5;
+      }
+    }
+
+    .edit {
+      background: #ffffff; /* Old browsers */
+      background: -moz-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #f5f5f5)); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top, #ffffff 0%, #f5f5f5 100%); /* IE10+ */
+      background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0); /* IE6-9 */
+
+      border: solid 1px #e6e6e6;
+      margin-right: 10px;
+    }
+
+    .add-job {
+      background: $light-blue;
+      color: #fff;
+      border: solid 1px #3880b9;
+    }
+
+    .done {
+      background: #79c839;
+      color: #fff;
+      border: solid 1px #6cb72f;
+      margin-right: 10px;
+
+    }
+
+  }
+}
+
+.join-us-banner {
+  background: image-url("premium-teams/banner-dots.png") 0px 8px repeat-x, image-url("premium-teams/banner-dots.png") 0px 50px repeat-x, #343131;
+  padding-top: 18px;
+  height: 40px;
+  width: 1000px;
+  margin-left: -20px;
+  position: relative;
+  color: #fff;
+
+  &:before {
+    content: " ";
+    width: 0;
+    height: 0;
+    border-top: 20px solid #000;
+    border-left: 20px solid transparent;
+    bottom: -20px;
+    left: 0px;
+    position: absolute;
+  }
+
+  &:after {
+    content: " ";
+    width: 0;
+    height: 0;
+    border-top: 20px solid #000;
+    border-right: 20px solid transparent;
+    bottom: -20px;
+    right: 0px;
+    position: absolute;
+  }
+
+  p {
+    margin-left: 90px;
+    padding-left: 35px;
+    font-size: 1.4em;
+    /*width: 350px;*/
+    margin: 0 auto;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  span {
+    background: image-url("white-case.png") no-repeat top;
+    width: 16px;
+    height: 13px;
+    margin-right: 10px;
+    display: inline-block;
+  }
+
+  .view-jobs {
+    background: #000;
+    color: #fff;
+    @include border-radius(4px);
+    display: inline-block;
+    padding: 6px 12px;
+    margin-left: 15px;
+    font-size: 0.8em;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+#prem-team {
+  .inside-main-content {
+    padding: 70px 0px;
+    width: 960px;
+  }
+}
+
+.page {
+  background: #fff;
+
+  section {
+    position: relative;
+  }
+}
+
+.page-footer {
+  height: 20px;
+  padding: 20px 70px;
+  border-top: 1px solid #eaeaea;
+
+  .watermark {
+    font-size: 2em;
+    text-align: right;
+    color: #c6c6c6;
+  }
+}
+
+.legend {
+  position: fixed;
+  top: 140px;
+  right: 0px;
+  z-index: 200;
+  @include transition-all;
+
+  li {
+    margin-bottom: 10px;
+    background: rgba(133, 167, 194, 0.8);
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -webkit-box-shadow: inset 0px 1px 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0px 1px 1px 1px rgba(255, 255, 255, 0.2);
+    border-top: solid 1px rgba(0, 0, 0, 0.018);
+
+    &:hover {
+      background: rgba(133, 167, 194, 1);
+    }
+
+    a {
+      display: block;
+      color: #fff;
+      font-size: 1.3em;
+      width: 100px;
+      padding: 8px 6px 8px 36px;
+      text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    // .join-us {
+    // 	background: $branding image-url("premium-teams/cog.png") no-repeat 10px 10px;
+    // }
+  }
+
+  .open-opportunities {
+    a {
+      background: image-url("premium-teams/lil-case.png") no-repeat 10px 7px;
+    }
+  }
+
+  .team-visitors {
+    a {
+      background: image-url("premium-teams/visitors.png") no-repeat 10px 7px;
+    }
+  }
+}
+
+@media screen and (max-width: 1240px) {
+
+  .legend {
+    right: -108px;
+
+    &:hover {
+      right: 0px;
+    }
+  }
+
+}
+
+//team header
+.team-header {
+  background: $branding image-url("premium-teams/pattern.png") repeat;
+  height: 105px;
+  padding: 35px 70px 0 70px;
+
+  .team-logo {
+    float: left;
+    padding-top: 30px;
+    margin-top: -35px;
+    width: 88px;
+    height: 80px;
+    background: #fff;
+    -webkit-box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.1);
+
+    img {
+      display: block;
+      @include border-radius(6px);
+      width: 65px;
+      height: 65px;
+      margin: 0 auto;
+    }
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 3em;
+    float: left;
+    padding-left: 40px;
+    width: 480px;
+    @include ellipsis;
+  }
+
+  .follow-team {
+    &:after {
+      content: "Follow";
+    }
+
+    &:hover:after {
+      content: "Start following";
+    }
+
+    &.following:after {
+      content: "Following";
+    }
+
+    &.following:hover:after {
+      content: "Stop following";
+    }
+
+    color: #fff;
+    font-size: 1.4em;
+    text-transform: uppercase;
+    float: right;
+    display: block;
+    background: rgba(0, 0, 0, 0.2);
+    @include border-radius(4px);
+    width: 180px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    font-family: "MuseoSans-500";
+    margin-top: 10px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .connections {
+    float: left;
+    padding-left: 40px;
+    padding-top: 10px;
+
+    li {
+      margin-right: 10px;
+      float: left;
+    }
+
+    a {
+      display: block;
+      height: 29px;
+      width: 29px;
+      font-size: 0;
+      text-indent: -9999px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.2) image-url("team/team-links.png") no-repeat top left;
+      @include border-radius(4px);
+    }
+
+    .url {
+      background-position: 0px 0px;
+    }
+
+    .twitter {
+      background-position: -28px 0px;
+    }
+
+    .facebook {
+      background-position: -58px 0px;
+    }
+
+    .github {
+      background-position: -88px 0px;
+    }
+  }
+  //connections
+
+}
+
+//team header
+
+//team details
+#team-details {
+  position: relative;
+  padding: 40px 70px 0 70px;
+  margin-bottom: 40px;
+
+  .edit-connections {
+    img {
+      display: block;
+    }
+
+    input[type=file] {
+      padding: 10px;
+    }
+  }
+  .switch-section {
+    //min-height: 136px;
+    padding-bottom: 10px;
+    //width: 560px;
+    //float: right;
+    border-bottom: solid 5px #e5e5e5;
+
+    p {
+      font-size: 1.7em;
+      line-height: 24px;
+      color: $branding;
+    }
+  }
+
+  //  .connections {
+  //      float: left;
+  //      width: 210px;
+  //
+  //      li {
+  //          margin-bottom: 10px;
+  //          border-bottom: solid 1px #e5e5e5;
+  //      }
+  //
+  //      a {
+  //          display: block;
+  //          height: 19px;
+  //          font-size: 1.3em;
+  //          color: $dark-grey;
+  //          font-family: "MuseoSans-500";
+  //          margin-bottom: 10px;
+  //          padding-left: 40px;
+  //          background: image-url("premium-teams/icons.png") no-repeat top left;
+  //      }
+  //
+  //      .url {
+  //          background-position: 0px -57px;
+  //      }
+  //
+  //      .twitter {
+  //          background-position: 0px 0px;
+  //      }
+  //
+  //      .facebook {
+  //          background-position: 0px -19px;
+  //      }
+  //
+  //      .github {
+  //          background-position: 0px -38px;
+  //      }
+  //  }//connections
+}
+
+//team members
+#members {
+  padding: 0px 32px 0px 70px;
+  margin-bottom: 30px;
+  position: relative;
+
+  .arrow {
+    display: block;
+    height: 21px;
+    width: 21px;
+    background: image-url("premium-teams/arrows.png") no-repeat bottom;
+    position: absolute;
+    opacity: 0.5;
+    @include transition-all;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    span {
+      display: none;
+    }
+  }
+
+  .left {
+    left: 25px;
+    top: 50px;
+    background-position: top;
+  }
+
+  .right {
+    right: 25px;
+    top: 50px;
+  }
+
+  .disable {
+    display: none;
+  }
+}
+
+.members-list {
+  //width: 100px;
+  //overflow: hidden;
+
+  > li {
+    float: left;
+    width: 105px;
+    margin-right: 37px;
+    position: relative;
+
+    &:hover {
+      img {
+        border-color: #363639;
+      }
+    }
+
+    .active {
+      img {
+        border-color: #363639;
+        opacity: 1;
+        -webkit-filter: grayscale(0%);
+      }
+
+      &:before {
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 12px solid $dark-grey;
+        content: " ";
+        position: absolute;
+        bottom: -30px;
+        left: 35px;
+      }
+    }
+
+    img {
+      opacity: 0.5;
+      width: 95px;
+      height: 95px;
+      border: solid 7px #fff;
+      -webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+      @include border-radius(4px);
+      -webkit-filter: grayscale(100%);
+    }
+
+    ul {
+      height: 49px;
+      li {
+        font-size: 1.2em;
+        text-align: center;
+        color: $dark-grey;
+        margin-bottom: 3px;
+        font-family: "MuseoSans-500";
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+//less than 6 members
+.tabbed {
+  padding: 0 !important;
+  margin: 0 !important;
+
+  .members-list {
+    background: rgb(16, 16, 16); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(16, 16, 16, 1)), color-stop(5%, rgba(28, 28, 30, 1)), color-stop(7%, rgba(31, 31, 33, 1)), color-stop(100%, rgba(31, 31, 33, 1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* IE10+ */
+    background: linear-gradient(to right, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#101010', endColorstr='#1f1f21', GradientType=1); /* IE6-9 */
+
+    > li {
+      height: auto;
+      width: auto;
+      margin: 0;
+      padding: 0;
+
+      a {
+        display: block;
+        background: #363639;
+        margin: 0;
+        width: 154px;
+        height: 37px;
+        padding: 10px 0 0 12px;
+        line-height: 30px;
+
+        background: rgb(16, 16, 16); /* Old browsers */
+        background: -moz-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(16, 16, 16, 1)), color-stop(5%, rgba(28, 28, 30, 1)), color-stop(7%, rgba(31, 31, 33, 1)), color-stop(100%, rgba(31, 31, 33, 1))); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(left, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* IE10+ */
+        background: linear-gradient(to right, rgba(16, 16, 16, 1) 0%, rgba(28, 28, 30, 1) 5%, rgba(31, 31, 33, 1) 7%, rgba(31, 31, 33, 1) 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#101010', endColorstr='#1f1f21', GradientType=1); /* IE6-9 */
+      }
+
+      &:first-child {
+        a {
+          padding-left: 70px;
+        }
+      }
+
+      .active {
+        background: #363639 !important;
+
+        &:before {
+          display: none;
+        }
+      }
+
+      img {
+        width: 23px;
+        height: 23px;
+        border: 2px solid #eee;
+        float: left;
+        margin-right: 15px;
+      }
+
+      ul {
+        height: auto;
+        float: left;
+
+        li {
+          color: #fff;
+          width: 100px;
+          @include ellipsis;
+          text-align: left;
+
+          &:nth-child(2) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.size-5 {
+  .members-list {
+    > li {
+      &:last-child {
+        a {
+          width: 226px !important;
+        }
+      }
+    }
+  }
+}
+
+.size-1 {
+  display: none;
+}
+
+//about members
+.about-members {
+  background: #363639;
+  min-height: 313px;
+
+  .member-details {
+    float: left;
+    width: 332px;
+    padding: 40px 70px;
+    color: #fff;
+
+    h3 {
+      font-size: 1.6em;
+      font-family: "MuseoSans-500";
+      margin-bottom: 5px;
+    }
+
+    h4 {
+      font-size: 1.3em;
+      letter-spacing: 0.1em;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 1.5em;
+      line-height: 22px;
+      margin-bottom: 20px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .about-text {
+      border-bottom: 5px solid #2b2b2e;
+      padding-bottom: 10px;
+    }
+  }
+
+  .member-pic {
+    float: right;
+    width: 488px;
+    height: 313px;
+    //max-height: 350px;
+    overflow: hidden;
+    position: relative;
+
+    img {
+      //position: absolute;
+      width: 100%;
+      //z-index: 0;
+    }
+
+    .member-box {
+      position: absolute;
+      z-index: 100;
+      background: $branding;
+      top: 20px;
+      right: 0px;
+      width: 326px;
+      color: #fff;
+
+      .member-basics {
+        padding: 20px 70px 20px 40px;
+
+        h3 {
+          font-family: "MuseoSans-300";
+          font-size: 1.6em;
+          margin-bottom: 3px;
+        }
+
+        h4 {
+          font-size: 1.6em;
+          font-family: "MuseoSans-500";
+          text-transform: capitalize;
+          margin-bottom: 3px;
+        }
+
+        .view-profile {
+          display: block;
+          height: 19px;
+          line-height: 19px;
+          padding-left: 26px;
+          font-size: 1.3em;
+          color: #fff;
+          background: image-url("premium-teams/preview-icon.png") no-repeat left;
+        }
+      }
+
+      .member-stats {
+        padding: 20px 70px 20px 40px;
+        background: rgba(0, 0, 0, 0.1);
+
+        ul {
+          li {
+            display: block;
+            //width: 208px;
+            overflow: auto;
+            margin-bottom: 5px;
+            p {
+              float: left;
+              width: 160px;
+            }
+            span {
+              float: right;
+              font-size: 1.6em;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//member details
+
+.single-member {
+  .member-details {
+    h3 {
+      @include ellipsis;
+      font-size: 1.8em;
+      padding-top: 6px;
+      margin: 0;
+    }
+
+    .avatar {
+      float: left;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      img {
+        width: 29px;
+        height: 29px;
+        border: solid 2px #fff;
+        @include border-radius(4px);
+      }
+    }
+    //avatar
+
+    .about-text {
+      clear: both;
+      border-top: 5px solid #2b2b2e;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    //about-text
+
+    .view-profile {
+      display: block;
+      height: 19px;
+      line-height: 19px;
+      padding-left: 26px;
+      font-size: 1.3em;
+      color: #fff;
+      background: image-url("premium-teams/preview-icon.png") no-repeat left;
+    }
+    //view-profile
+
+  }
+  //member-details
+
+  .member-pic {
+
+  }
+  //member-pic
+}
+
+#big-headline {
+  background: $branding image-url("premium-teams/pattern.png") repeat;
+  padding: 50px 70px;
+
+  .headline {
+    color: #fff;
+    font-family: "MuseoSans-100";
+    font-size: 2.4em;
+    line-height: 34px;
+    text-align: center;
+  }
+}
+
+//big headline
+
+#big-quote {
+
+  //-webkit-filter: blur(2px);
+
+  height: 460px;
+
+  //opacity: 0.1;
+
+  // &:before {
+  // 	background: rgba(255, 255, 255, 0.8);
+  // 	content: " ";
+  // 	display: block;
+  // 	width: 100%;
+  // 	height: 100%;
+  // 	position: absolute;
+  // 	top: 0px;
+  // 	left: 0px;
+  // 	z-index: 1000;
+  // }
+
+  // &:after {
+  // 	content: "Activate section";
+  // 	display: block;
+  // 	width: 300px;
+  // 	height: 80px;
+  // 	line-height: 50px;
+  // 	background: $dark-grey;
+  // 	color: #fff;
+  // 	top: 200px;
+  // 	left: 300px;
+  // 	z-index: 1100;
+  // 	position: absolute;
+  // 	text-align: center;
+  // 	font-size: 1.4em;
+  // }
+
+  .inside {
+    height: 460px;
+    overflow: hidden;
+
+    blockquote {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 100;
+      top: 30px;
+      left: 30px;
+      color: #fff;
+      width: 324px;
+      min-height: 324px;
+      @include border-radius(50%);
+
+      p {
+        font-size: 1.8em;
+        line-height: 36px;
+        font-family: "MuseoSans-100";
+        text-align: center;
+        margin-top: 10%;
+        padding: 35px 50px;
+        background: image-url("premium-teams/quote.png") no-repeat center top;
+      }
+    }
+
+    img {
+      width: 100%;
+      //top: 0px;
+      //left: 0px;
+      //position: absolute;
+      //z-index: 0;
+    }
+  }
+
+}
+
+//big image
+
+#challenges {
+  padding: 30px 70px;
+
+  .box {
+    &.half {
+      width: 310px;
+    }
+    min-height: 195px;
+    padding-left: 100px;
+    position: relative;
+    float: left;
+    background: image-url("premium-teams/big-dots.png") repeat-y 34px 0px;
+
+    header {
+      height: 75px;
+      line-height: 75px;
+
+      h3 {
+        font-size: 2.2em;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 76px;
+      height: 75px;
+      //border: 4px solid #fff;
+      background: image-url("premium-teams/light-blub.png") no-repeat;
+    }
+
+    .blub {
+      background-position: 0px -75px;
+    }
+
+    p {
+      line-height: 22px;
+    }
+  }
+}
+
+#favourite-benefits {
+  background: $branding image-url("premium-teams/pattern.png") repeat;
+  padding: 30px 70px 30px 0px;
+  color: #fff;
+  position: relative;
+
+  img {
+    margin-top: 30px;
+    float: right;
+  }
+
+  ol {
+    background: image-url("premium-teams/1-2-3.png") no-repeat top left;
+    float: left;
+    min-height: 407px;
+    margin-left: 70px;
+
+    li {
+      width: 350px;
+      padding-left: 170px;
+      min-height: 111px;
+      margin-bottom: 20px;
+
+      &:first-child {
+        margin-top: 20px;
+      }
+
+    }
+
+    p {
+      font-size: 1.4em;
+      line-height: 22px;
+    }
+
+    h3 {
+      font-size: 1.6em;
+      margin-bottom: 5px;
+    }
+
+  }
+}
+
+#organization-style {
+  background: image-url("premium-teams/paper-texture.jpg") repeat;
+  border-right: solid 8px $branding;
+  //border-bottom: solid 2px #eaeaea;
+  -webkit-box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.1);
+
+  min-height: 318px;
+
+  //hack to get the left side to match the right sides height
+  //display: table;
+
+  // .img, .text {
+  // 	display:table-cell;
+  // 	width:50%;
+  // 	min-height:100%;
+  // 	vertical-align:top;
+  // }
+  //
+  // .img {
+  // 	background: $dark-grey;
+  // 	//position: relative;
+  //
+  // 	img {
+  // 		width: 100%;
+  // 		//height: 100%;
+  // 	}
+  // }
+  //
+  // .text {
+  // 	padding: 64px;
+  //
+  // 	h3 {
+  // 		font-family: "Georgia";
+  // 		font-style: italic;
+  // 		font-size: 2em;
+  // 		margin-bottom: 10px;
+  // 		color: $branding;
+  // 	}
+  //
+  // 	p {
+  // 		color: $branding;
+  // 		font-size: 1.4em;
+  // 		line-height: 22px;
+  //
+  // 		a {
+  // 			color: $dark-grey;
+  // 			text-decoration: underline;
+  // 		}
+  // 	}
+  // }
+
+  .img {
+    float: left;
+    width: 479px;
+    overflow: hidden;
+    max-height: 321px;
+    //min-height: 100%;
+    background: $dark-grey;
+
+    img {
+      width: 100%;
+      //height: 100%;
+      display: block;
+    }
+  }
+
+  .text {
+    width: 340px;
+    height: 100%;
+    padding: 64px;
+    float: right;
+    display: inline-block;
+
+    h3 {
+      font-family: "Georgia";
+      font-style: italic;
+      font-size: 2em;
+      margin-bottom: 10px;
+      color: $branding;
+    }
+
+    p {
+      color: $branding;
+      font-size: 1.4em;
+      line-height: 22px;
+    }
+  }
+}
+
+// half img
+
+#office-images {
+  border-bottom: solid 1px #eaeaea;
+
+  .header {
+    background: image-url("premium-teams/header-swirls.png") no-repeat center;
+    height: 120px;
+
+    .heading {
+      font-size: 2.4em;
+      text-align: center;
+      line-height: 120px;
+      font-family: "MuseoSans-300";
+    }
+  }
+
+  .images {
+    padding: 0px 70px 30px 70px;
+
+    li {
+      float: left;
+      width: 260px;
+      margin-top: 5px;
+      /*      height: 200px;*/
+      /*      margin: 0 0 20px 20px;*/
+      /*      margin:5px;*/
+      overflow: hidden;
+
+      &:nth-child(3n+1) {
+        margin-left: 0;
+      }
+
+    }
+  }
+}
+
+// .top-positions {
+// 	//padding-bottom: 40px;
+// 	background: #DBE4EB image-url("blue-texture-bg.jpg") repeat;
+//
+//
+// 	.application {
+// 		background: rgba(225, 225, 225, 0.2);
+// 		width: 430px !important;
+// 		margin: 25px 140px !important;
+// 		@include border-radius(6px);
+//
+// 		li {
+// 			a {
+// 				font-size: 0.8em !important;
+// 			}
+// 		}
+//
+// 		.resume {
+// 			width: 290px !important;
+// 			overflow: hidden;
+// 			a {
+// 				color: #fff;
+// 			}
+// 		}
+//
+// 	}
+//
+//
+// 	.other-opportunities {
+// 		color: #fff;
+// 		text-transform: none;
+// 		padding-top: 20px;
+// 		margin-bottom: 10px;
+// 	}
+//
+// 	.next-job, .previous-job {
+// 		a {
+// 			position: absolute;
+// 			top: 250px;
+// 			width: 34px;
+// 			height: 34px;
+// 			background: rgba(0,0,0,0.5) image-url("premium-teams/job-arrows.png") no-repeat right center;
+// 			@include border-radius(4px);
+// 			color: #fff;
+// 			display: block;
+// 			font-size: 0;
+//
+// 			&:hover {
+// 				opacity: 0.5;
+// 			}
+// 		}
+// 	}
+//
+// 	.next-job {
+// 		a {
+// 			right: 20px;
+// 		}
+// 	}
+//
+// 	.previous-job {
+// 		a {
+// 			left: 20px;
+// 			background-position: left center;
+// 		}
+// 	}
+//
+//
+// 	.other-jobs {
+// 		overflow: auto;
+// 		li {
+// 			float: left;
+// 			margin-right: 10px;
+// 			padding: 0 !important;
+//
+// 			a {
+// 				color: #fff;
+// 				font-size: 1.3em;
+// 				padding: 10px 16px;
+// 				background: rgba(0, 0, 0, 0.6);
+// 				display: inline-block;
+// 				@include border-radius(4px);
+//
+// 				&:hover {
+// 					opacity: 0.5;
+// 				}
+// 			}
+// 		}
+// 	}
+//
+// }
+
+#open-positions {
+  background: $branding image-url("premium-teams/pattern.png") repeat;
+  border-top: solid 1px #eaeaea;
+
+  .header {
+    padding: 0 70px;
+    height: 100px;
+    background: #fff image-url("premium-teams/were-hiring.png") no-repeat 70px 15px;
+
+    .heading {
+      line-height: 110px;
+      font-family: "MuseoSans-300";
+      font-size: 2.1em;
+      padding-left: 195px;
+      color: $branding;
+    }
+  }
+
+  .job-area {
+    padding: 30px 70px;
+    ul.other-jobs {
+      width: 100%;
+      li {
+        float: left;
+        padding: 5px 20px 5px 0;
+
+        a {
+          color: white;
+          font-size: 1.2em;
+        }
+      }
+    }
+  }
+
+  // .outside-all-jobs {
+  // 	border-top: dashed 2px rgba(0, 0, 0, 0.2);
+  // 	height: 20px;
+  // }
+
+  .all-jobs {
+    //background: rgba(0,0,0,0.3);
+    display: block;
+    @include border-radius(4px);
+    color: #fff;
+    font-size: 1.4em;
+    text-align: center;
+    padding: 15px;
+    //border: 1px solid rgba(255, 255, 255, 0.1);
+    border: dashed 2px rgba(255, 255, 255, 0.3);
+    text-align: center;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  .job-style-1, .job-style-2, .job-style-3, .job-style-4 {
+    //padding-left: 122px;
+
+    .location-learn-more {
+
+      ul {
+        li {
+          font-size: 1em !important;
+          padding: 5px 0 0 25px;
+          min-height: 18px;
+        }
+
+        li.location {
+          background: image-url("premium-teams/pin.png") no-repeat left;
+        }
+
+        li.learn-more {
+          background: image-url("premium-teams/learn-more-star.png") no-repeat left;
+          a {
+            color: #fff;
+
+            &:hover {
+              border-bottom: #fff 1px dashed;
+            }
+          }
+        }
+      }
+    }
+
+    .job {
+      color: #fff;
+      @include border-radius(4px);
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 15px;
+      padding: 30px;
+      position: relative;
+      float: left;
+
+      &:before {
+        content: " ";
+        display: block;
+        width: 96px;
+        height: 96px;
+        //background: image-url("premium-teams/job-arrow.png") no-repeat;
+        position: absolute;
+        top: 0px;
+        //left: -120px;
+      }
+
+      h3 {
+        font-size: 2.4em;
+        //width: 460px;
+        float: left;
+        margin-bottom: 10px;
+
+        span {
+          display: block;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+          padding-top: 5px;
+          font-size: 0.8em;
+          letter-spacing: 0.3em;
+        }
+      }
+
+      ul {
+        //width: 460px;
+        width: 100%;
+        float: left;
+        li {
+          font-size: 1.5em;
+          margin-bottom: 10px;
+          line-height: 1.6em;
+          padding-right: 30px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .skills {
+        li {
+          float: left;
+          background: rgba(0, 0, 0, 0.2);
+          padding: 3px 6px;
+          font-size: 0.8em;
+          margin-right: 6px;
+          margin-bottom: 5px;
+          @include border-radius(4px);
+        }
+      }
+
+      .salary {
+        float: right;
+      }
+
+      .application {
+        padding: 20px 20px;
+
+        form.resume {
+          display: inline-block;
+
+        }
+      }
+
+    }
+
+    .apply, .learn-more, .send-application {
+      font-family: "MuseoSans-500";
+      float: right;
+      display: block;
+      //margin: auto 30%;
+      margin-bottom: 15px;
+      width: 275px;
+      height: 40px;
+      line-height: 40px;
+      color: #fff;
+      font-size: 1.4em;
+      background: $branding;
+      //background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      @include border-radius(4px);
+      margin-top: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      -webkit-box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+
+    .send-application {
+      float: none;
+    }
+
+    //show and hide application panel
+    .application {
+      background: rgba(225, 225, 225, 0.2);
+      width: 430px !important;
+      margin: 25px 140px !important;
+      @include border-radius(6px);
+      overflow: auto;
+
+      li {
+        a {
+          font-size: 0.9em !important;
+        }
+      }
+
+      .resume {
+        width: 290px !important;
+        overflow: hidden;
+        a {
+          color: #fff;
+          &.change {
+            color: blue;
+          }
+        }
+      }
+
+    }
+    //application
+
+  }
+
+  .job-style-2, .job-style-3, .job-style-4 {
+    padding: 0;
+
+    //show and hide application panel
+    .application {
+      width: auto !important;
+      margin: 0 0 10px 0 !important;
+
+      .resume {
+        width: 170px !important;
+      }
+
+    }
+    //application
+
+    .apply, .learn-more, .send-application {
+      width: 100%;
+    }
+
+    .job {
+      float: left;
+      width: 40.6%;
+      margin-left: 30px;
+      //margin-bottom: 20px;
+
+      &:before {
+        display: none;
+      }
+
+      &:first-child {
+        margin: 0;
+      }
+
+      h3 {
+        font-size: 1.6em;
+        margin-bottom: 5px;
+        width: 100%;
+      }
+
+      ul {
+        width: 100%;
+        float: none;
+
+        li {
+          font-size: 1.4em;
+          line-height: 1.4em;
+          padding-right: 0;
+        }
+      }
+
+      .location-learn-more {
+        border-top: dashed 2px rgba(0, 0, 0, 0.2);
+        border-bottom: dashed 2px rgba(0, 0, 0, 0.2);
+        padding: 8px 0px;
+
+        ul {
+          float: none;
+        }
+
+      }
+
+      .apply {
+        display: block;
+        width: auto;
+        float: none;
+      }
+    }
+  }
+
+  .job-style-3 {
+
+    .job {
+      width: 23.5%;
+      //margin-bottom: 20px;
+
+      .skills {
+        li {
+          margin-bottom: 5px;
+        }
+      }
+
+      .learn-more, .apply {
+        width: 100%;
+      }
+
+    }
+  }
+
+  .job-style-4 {
+
+    .job {
+      width: 40.6%;
+      //margin-bottom: 20px;
+      //min-height: 100%;
+      //min-height: 100px;
+
+      //clear: both;
+      float: none;
+      display: inline-block;
+      vertical-align: top;
+
+      &:first-child {
+        margin-bottom: 20px;
+      }
+
+      &:nth-child(odd) {
+        margin-left: 0;
+      }
+
+    }
+  }
+}
+
+//jobs-div
+
+//jobs section
+
+#why-work {
+  background: image-url("premium-teams/paper-texture.jpg") repeat;
+  padding-bottom: 40px;
+
+  .header {
+    height: 100px;
+    border-bottom: solid 1px #eaeaea;
+
+    .heading {
+      line-height: 100px;
+      text-align: center;
+    }
+  }
+
+  .img {
+    float: right;
+    width: 300px;
+    height: 300px;
+    margin: 30px 70px 0 0;
+    overflow: hidden;
+    @include border-radius(300px);
+    border: 10px solid $branding;
+
+    img {
+      //width: 100%;
+      height: 100%;
+    }
+  }
+
+  .reasons {
+    margin: 30px 0 0 70px;
+    width: 440px;
+
+    h3 {
+      font-size: 1.8em;
+      margin-bottom: 5px;
+    }
+
+    li {
+      line-height: 22px;
+      //margin-bottom: 20px;
+      padding: 0 0 20px 90px;
+      position: relative;
+      background: image-url("premium-teams/dots.png") repeat-y 28px 0px;
+
+      &:last-child {
+        padding-bottom: 0;
+        background: 0;
+      }
+
+      .number {
+        position: absolute;
+        width: 58px;
+        height: 58px;
+        background: $branding image-url("premium-teams/paper-numbers.png") no-repeat top;
+        top: 0px;
+        left: 0px;
+      }
+
+      .two {
+        background-position: 0px -58px;
+      }
+
+      .three {
+        background-position: 0px -116px;
+      }
+    }
+  }
+}
+
+.location {
+  position: relative;
+
+  #location-map {
+    width: 100%;
+    min-height: 485px;
+    display: block;
+  }
+
+  .location-details {
+    color: #fff;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    z-index: 100;
+    width: 460px;
+    background: rgba(0, 0, 0, 0.7);
+
+    .poi {
+      //padding-top: 10px;
+
+      li {
+        background: image-url("premium-teams/poi.png") no-repeat top left;
+        padding-left: 30px;
+        font-size: 1.3em;
+        margin-bottom: 10px;
+        line-height: 22px;
+      }
+    }
+
+    .selected {
+      padding: 30px 30px 20px 30px;
+
+      h3 {
+        font-family: "Georgia";
+        font-style: italic;
+        font-size: 1.8em;
+        margin-bottom: 10px;
+      }
+
+      .address {
+        //margin-bottom: 5px;
+        font-family: "MuseoSans-500";
+      }
+
+      .description {
+        line-height: 22px;
+        margin-bottom: 10px;
+      }
+    }
+
+    .locations {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 30px;
+
+      li {
+        float: left;
+        margin: 0 10px 8px 0;
+
+        &:first-child {
+          //margin: 0;
+        }
+      }
+
+      a {
+        color: #fff;
+        font-size: 1.2em;
+        display: inline-block;
+        padding: 6px 12px;
+        background: #000;
+        @include border-radius(4px);
+      }
+    }
+  }
+}
+
+//location
+
+#featured-links {
+  background: image-url("premium-teams/wood.png") repeat;
+
+  .header {
+    height: 100px;
+    background: rgba(157, 83, 25, 0.16);
+
+    .heading {
+      line-height: 100px;
+      text-align: center;
+      color: #fff;
+      font-family: "MuseoSans-100";
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 2.6em;
+    }
+  }
+
+  .footer {
+    background: rgba(157, 83, 25, 0.16);
+    height: 30px;
+    border-top: solid 1px rgba(0, 0, 0, 0.02);
+  }
+
+  .inside {
+    -webkit-box-shadow: inset 0 2px 9px rgba(168, 91, 29, 0.43);
+    -moz-box-shadow: inset 0 2px 9px rgba(168, 91, 29, 0.43);
+    box-shadow: inset 0 2px 9px rgba(168, 91, 29, 0.43);
+  }
+
+  .the-books {
+    padding: 40px 70px 20px 70px;
+    text-align: center;
+
+    li {
+      margin-left: 19px;
+      margin-bottom: 20px;
+      width: 118px;
+      display: inline-block;
+
+      &:nth-child(6n+1) {
+        margin-left: 0;
+      }
+
+      img {
+        width: 100%;
+        -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+        -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+      }
+
+      a {
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
+
+#meet-us {
+  color: #fff;
+  padding: 30px 70px;
+  background: $branding;
+
+  header {
+    //height: 100px;
+
+    h2 {
+      //line-height: 100px;
+      font-family: "MuseoSans-100";
+      margin-bottom: 30px;
+      font-size: 3.6em;
+    }
+  }
+
+  .event {
+    background: rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    @include border-radius(4px);
+    padding: 20px 40px;
+
+    .left {
+      float: left;
+      width: 460px;
+    }
+
+    h3 {
+      font-family: "MuseoSans-300";
+      margin-bottom: 6px;
+      font-size: 1.8em;
+    }
+
+    li {
+      font-size: 1.4em;
+    }
+
+    .date {
+      float: right;
+      width: 77px;
+      height: 77px;
+      @include border-radius(100px);
+      background: $branding;
+
+      p {
+        padding-top: 15px;
+        font-size: 2.3em;
+        text-align: center;
+
+      }
+
+      span {
+        display: block;
+        font-size: 1.4em;
+        text-align: center;
+      }
+    }
+  }
+}
+
+//meet
+
+.interview {
+  border-top: solid 1px #eaeaea;
+  border-bottom: solid 1px #eaeaea;
+
+  .header {
+    height: 100px;
+    border-bottom: solid 1px #eaeaea;
+
+    .heading {
+      line-height: 100px;
+      text-align: center;
+      font-size: 2.2em;
+    }
+  }
+
+  .inside {
+    padding: 30px 70px 0px 70px;
+  }
+
+  .steps {
+    //padding-left: 100px;
+
+    li {
+      position: relative;
+      padding-bottom: 20px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .step-inside {
+        background: image-url("premium-teams/paper-texture.jpg") repeat;
+        border: solid 1px #eaeaea;
+        font-size: 1.6em;
+        width: 470px;
+        padding: 10px 25px;
+        min-height: 60px;
+        margin-left: 100px;
+        @include border-radius(6px);
+        -webkit-box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.05);
+        box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.05);
+      }
+
+      .number {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        display: block;
+        width: 60px;
+        height: 69px;
+        line-height: 72px;
+        font-size: 2.6em;
+        text-align: center;
+        font-family: "MuseoSans-900";
+        color: #fff;
+        background: $branding image-url("premium-teams/hex-number.png") no-repeat top;
+      }
+
+      &:nth-child(odd) {
+        background: image-url("premium-teams/interview-line.jpg") repeat-y 29px 0px, image-url("premium-teams/interview-line3.jpg") no-repeat 638px -50px;
+
+        &:last-child {
+          background: image-url("premium-teams/interview-line3.jpg") no-repeat 638px -50px;
+        }
+      }
+
+      &:nth-child(even) {
+        background: image-url("premium-teams/interview-line2.jpg") no-repeat 29px -50px, image-url("premium-teams/interview-line.jpg") repeat-y 789px 0px;;
+
+        .step-inside {
+          margin-left: 200px;
+          margin-right: 100px;
+        }
+
+        .number {
+          left: 760px;
+        }
+
+        &:last-child {
+          background: image-url("premium-teams/interview-line2.jpg") no-repeat 29px -50px;
+        }
+      }
+
+      &:first-child {
+        background: image-url("premium-teams/interview-line.jpg") repeat-y 29px 0px;
+      }
+
+      &:last-child {
+        padding-bottom: 50px;
+      }
+
+    }
+  }
+}
+
+//interview
+
+#video {
+  background: $branding;
+}
+
+#team-blog {
+
+  header {
+    padding: 30px 0;
+    border-bottom: 1px solid #eaeaea;
+
+    h2 {
+      text-align: center;
+    }
+  }
+
+  .inside {
+    //padding: 0px 70px 30px 70px;
+
+    article {
+      float: left;
+      width: 349px;
+      border-left: dotted 2px #eaeaea;
+      padding: 65px;
+      //margin-right: 30px;
+      position: relative;
+
+      &:first-child {
+        border: 0;
+        //padding-left: 0;
+      }
+
+      h3 {
+        margin-bottom: 10px;
+        font-size: 1.6em;
+        a {
+          color: $branding;
+        }
+      }
+
+      .date {
+        background: $branding;
+        padding-top: 15px;
+        width: 65px;
+        height: 50px;
+        right: 0px;
+        top: 0px;
+        color: #fff;
+        position: absolute;
+        text-align: center;
+
+        p {
+          font-size: 2.4em;
+          margin-bottom: 0px;
+        }
+
+        span {
+          font-size: 1.4em;
+          text-transform: uppercase;
+        }
+      }
+
+      p {
+        line-height: 22px;
+        margin-bottom: 20px;
+      }
+
+      .read-more {
+        font-size: 1.4em;
+        color: #fff;
+        display: inline-block;
+        padding: 8px 16px;
+        background: $branding;
+        @include border-radius(6px);
+      }
+    }
+  }
+
+}
+
+#team-protips {
+  border-bottom: solid 1px #eaeaea;
+
+  header {
+    padding: 30px 70px;
+    border-bottom: 1px solid #eaeaea;
+
+    h2 {
+      font-family: "MuseoSans-300";
+      text-align: center;
+      float: left;
+      font-size: 2em;
+      padding-top: 10px;
+    }
+
+    .view-more {
+      float: right;
+      background: $branding;
+      color: #fff;
+      font-size: 1.3em;
+      padding: 10px 20px;
+      @include border-radius(6px);
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .inside {
+
+    article {
+      float: left;
+      width: 349px;
+      border-left: dotted 2px #eaeaea;
+      padding: 65px;
+      //margin-right: 30px;
+      position: relative;
+      min-height: 110px;
+
+      &:first-child {
+        border: 0;
+        //padding-left: 0;
+      }
+
+      h3 {
+        margin-bottom: 10px;
+        font-size: 2em;
+        max-width: 290px;
+
+        a {
+          color: $branding;
+          display: block;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+
+      .upvote {
+        display: block;
+        width: 60px;
+        height: 42px;
+        padding-top: 38px;
+        background: image-url("protips/ribbon.png") no-repeat;
+        background-size: 60px 160px;
+        position: absolute;
+        top: 0px;
+        right: 25px;
+        font-size: 1.3em;
+        text-align: center;
+        color: white;
+      }
+    }
+  }
+}
+
+#stack {
+  background: $branding image-url("premium-teams/pattern.png") repeat;
+  border-top: solid 1px #eaeaea;
+
+  .header {
+    height: 100px;
+
+    .heading {
+      background: #fff;
+      line-height: 100px;
+      font-family: "MuseoSans-300";
+      font-size: 2.1em;
+      color: $branding;
+      text-align: center;
+    }
+  }
+
+  .inside {
+    padding: 30px 70px;
+  }
+
+  .stack-list {
+    background: image-url("premium-teams/big-dots.png") repeat-y center;
+
+    li {
+      display: inline-block;
+      vertical-align: top;
+      width: 320px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
+      font-size: 1.8em;
+      text-align: center;
+      position: relative;
+      @include border-radius(6px);
+      margin-bottom: 20px;
+
+      &:nth-child(even) {
+        margin-left: 96px;
+
+        &:before {
+          content: " ";
+          display: block;
+          position: absolute;
+          left: -16px;
+          top: 30%;
+          width: 0;
+          height: 0;
+          border-top: 10px solid transparent;
+          border-right: 16px solid rgba(0, 0, 0, 0.3);
+          border-bottom: 10px solid transparent;
+        }
+      }
+
+      &:nth-child(odd) {
+
+        &:before {
+          content: " ";
+          display: block;
+          position: absolute;
+          right: -16px;
+          top: 30%;
+          width: 0;
+          height: 0;
+          border-top: 10px solid transparent;
+          border-left: 16px solid rgba(0, 0, 0, 0.3);
+          border-bottom: 10px solid transparent;
+        }
+      }
+    }
+  }
+}
+
+.inactive {
+  //opacity: 0.2;
+  //border-top: 2px solid $dark-grey !important;
+  border: 0 !important;
+
+  .inactive-box {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    @include border-radius(6px);
+    z-index: 1000;
+    position: absolute;
+    top: 30%;
+    left: 33%;
+    width: 30%;
+    //margin: 22% 0 0 22%;
+    -webkit-box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+
+    box-shadow: 0px 1px 2px 2px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 1.3em;
+    }
+
+    a {
+      display: block;
+      background: $light-blue;
+      padding: 12px 24px;
+      color: #fff;
+      font-size: 1.6em;
+      @include border-radius(4px);
+      @include transition-all;
+
+      &:hover {
+        background: $green;
+      }
+    }
+  }
+
+  &:before {
+    //background: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.6);
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+    @include transition-all;
+    -webkit-box-shadow: inset 0px 0px 8px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 0px 8px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:hover {
+    &:before {
+      //background: rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  // &:before {
+  // 	background: rgba(0, 0, 0, 0.6);
+  // 	content: " ";
+  // 	display: block;
+  // 	width: 100%;
+  // 	height: 100%;
+  // 	position: absolute;
+  // 	top: 0px;
+  // 	left: 0px;
+  // 	z-index: 1000;
+  // 	@include transition-all;
+  // }
+  //
+  // &:hover {
+  // 	&:before {
+  // 		background: rgba(0, 0, 0, 0.3);
+  // 	}
+  // }
+}
+
+.inactive {
+  min-height: 350px;
+  //overflow: hidden;
+
+  .edit {
+    display: none;
+  }
+}
+
+//Premium teams admin
+@import "premium-team-admin";

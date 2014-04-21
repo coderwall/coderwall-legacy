@@ -1,0 +1,9 @@
+%tr
+  %td.main-content-grey{:style => "padding: 30px 60px; background:#ffffff;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+    %p{:style => "font-size: 16px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      Congrats
+      == #{@user.short_name},
+
+    %p{:style => "font-size: 14px; line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      You've earned a new badge for #{@message}
+      =link_to 'See Earned Badge', user_achievement_url(:username => @user.username, :id => @badge.id), {:style => "color: #3d8dcc;"}

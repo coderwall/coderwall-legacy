@@ -1,0 +1,10 @@
+-#-content_for :javascript do
+-#  %script="logUsage('viewed', 'protip topics');"
+
+= render :partial => "head", :locals => {:topic => []}
+%section.trending-topics
+  %header.cf
+    %h2 Trending Topics
+    %a.protip-more{:href => trending_topics_protips_path} More topics
+
+  = render :partial => "trending_topics", :locals => {:count => 12}

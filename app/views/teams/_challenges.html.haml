@@ -1,0 +1,28 @@
+%section#challenges.cf{:class => section_enabled_class(@team.has_challenges?)}
+  -if !@team.has_challenges?
+    -inactive_box('#challenges', "Challenges & Impact") do
+      Highlight interesting engineering or product challenges and the impact the right candidate will have.
+  -if can_edit?
+    -panel_form_for_section('#challenges', 'Challenges & Impact') do |f|
+      %aside
+        -admin_hint do
+          This is a great way to excite the developer about the things they'll learn and how they'll be challenged.
+      .form-inputs
+        %fieldset
+          =f.label     :our_challenge, 'What is the biggest challenge the team is working on?'
+          =f.text_area :our_challenge
+        %fieldset
+          =f.label      :your_impact, 'What impact would the individual have on the team or product?'
+          =f.text_area :your_impact
+
+  .box{:class => has_impact?(@team) ? 'half' : 'full'}
+    .icon{:style => "background-color:#{@team.branding_hex_color}"}
+    %header
+      %h3 Our challenge
+    %p=our_challenge_or_default(@team)
+  -if has_impact?(@team)
+    .box.half
+      .icon.blub{:style => "background-color:#{@team.branding_hex_color}"}
+      %header
+        %h3 Your impact
+      %p=your_impact_or_default(@team)

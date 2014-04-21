@@ -1,0 +1,1385 @@
+@import "base";
+@import "compass/css3/";
+
+//Pro tips grid
+body#protip-multiple {
+
+  h2 {
+    float: left;
+    margin-bottom: 30px;
+    color: $mid-blue-grey;
+
+    //color: #6E6F72;
+    font-size: 2em;
+    @include ts-bottom-white;
+
+    a {
+      color: $blue-grey;
+
+      &:hover {
+        opacity: 0.5;
+      }
+
+    }
+
+  }
+
+  .message {
+    padding-left: 25%;
+    font-size: 1.5em;
+    line-height: 30px;
+  }
+
+  #masthead {
+    //background: $blue-grey;
+  }
+
+  #main-content {
+    //background: #e3eaed;
+  }
+
+  .inside-main-content {
+    padding: 40px 20px 70px 20px;
+  }
+
+  #search {
+    display: none;
+    //opacity: 0;
+  }
+
+  #open-search {
+    display: block;
+    opacity: 1;
+    //@include transition(all 10s ease-in);
+  }
+
+  .search-container {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    background: rgba(78, 79, 83, 0.98);
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+
+    .inside-search-container {
+      width: 940px;
+      padding: 120px 20px;
+      position: relative;
+      margin: 0 auto;
+
+      .search-header {
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        color: #fff;
+        float: left;
+        @include ts-top-black;
+        font-size: 3em;
+      }
+
+      .close-search {
+        float: right;
+        font-size: 1.6em;
+        color: #fff;
+        text-transform: uppercase;
+        background: image-url("protips/close-icon.png") no-repeat right;
+        padding-right: 50px;
+        height: 33px;
+        line-height: 33px;
+        @include ts-top-black;
+        @include transition-all;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+
+      input[type=text] {
+        height: 107px;
+        width: 100%;
+        padding: 20px 0 30px 0;
+        font-size: 8em;
+        background: none;
+        border: 0;
+        border-bottom: 1px solid #fff;
+        border-top: 1px solid #fff;
+        color: #fff;
+
+        &:focus {
+          outline: none;
+        }
+      }
+
+      .error {
+        color: #fff;
+        font-size: 2em;
+      }
+
+      .tips-section {
+        background: none;
+      }
+
+      .protip-pagination {
+        color: #fff;
+        text-shadow: none;
+        background: none;
+        padding-right: 22px;
+      }
+    }
+  }
+}
+
+.protip-options {
+  overflow: auto;
+  float: right;
+
+  li {
+    margin-left: 25px;
+    float: left;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
+}
+
+.toplinks {
+  float: right;
+
+  li {
+    float: right;
+    margin-right: 20px;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  a {
+    background: image-url("protip-icons-big.png") no-repeat top right;
+    display: block;
+    height: 24px;
+    line-height: 24px;
+    padding-right: 35px;
+    color: $blue-grey;
+    text-transform: uppercase;
+    font-size: 1.6em;
+    @include ts-bottom-white;
+    font-family: "MuseoSans-500";
+    margin-top: 3px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .top-subscribe {
+    background-position: right bottom;
+  }
+
+  .share-a-tip {
+    background-position: right -96px;
+  }
+
+  .my-tips {
+    background-position: right -72px;
+  }
+
+}
+
+.topic-tag {
+  border-bottom: solid 2px;
+}
+
+.protip-more, .protip-subscription, .protip-pagination {
+  background: image-url("protips/sub-more-icon.png") no-repeat bottom right;
+  @include protip-sub-button;
+
+  &:hover {
+    opacity: 0.8;
+    text-shadow: none;
+  }
+}
+
+#more {
+  margin: 0 auto;
+  //width: 100px;
+  //padding-top: 20px;
+}
+
+.protip-pagination {
+  font-size: 1.8em;
+  line-height: 1.4em;
+}
+
+@mixin more-button {
+  @include more-button2;
+  @include border-radius(4px);
+  @include transition-all;
+  width: 100%;
+
+  &:hover {
+    background: #48494e;
+    color: #fff;
+  }
+}
+
+.four-cols-more {
+  //float: right;
+  //width: 100%;
+
+  #more a {
+    //@include more-button;
+  }
+}
+
+.three-cols-more {
+  float: right;
+  width: 700px;
+  @include ts-bottom-white;
+
+  #more a {
+    @include more-button;
+  }
+}
+
+.trending-topics {
+  overflow: auto;
+  padding-bottom: 30px;
+  margin-bottom: 50px;
+  background: image-url("protips/grid-hr.png") repeat-x bottom;
+
+  li {
+    float: left;
+    width: 214px;
+    margin-left: 20px;
+    background: #fff;
+    @include border-radius(3px);
+    @include transition-all;
+
+    &:first-child {
+      margin: 0;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    a {
+      display: block;
+      padding: 30px 20px;
+      color: $dark-grey;
+
+      &:hover {
+        color: $light-blue;
+      }
+
+      h3 {
+        font-size: 2.4em;
+      }
+    }
+  }
+}
+
+.topics-list {
+  margin-bottom: 15px;
+  overflow: auto;
+
+  h3 {
+    @include ellipsis;
+  }
+}
+
+.ellipsis {
+  //white-space: nowrap;
+  overflow: hidden;
+  //width: 250px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+}
+
+.tips-section {
+  padding-bottom: 30px;
+  margin-bottom: 50px;
+  background: image-url("protips/grid-hr.png") repeat-x bottom;
+}
+
+.list-of-tips {
+  //overflow: auto;
+  margin-bottom: 25px;
+
+  .ext-link {
+    background: #fff image-url("protips/link-icon.png") no-repeat 90% 90%;
+  }
+
+  > li {
+    float: left;
+    width: 178px;
+    height: 178px;
+    margin-left: 20px;
+    background: #fff;
+    background: rgba(255, 255, 255, 1);
+    @include border-radius(3px);
+    @include transition-all;
+    padding: 20px;
+    position: relative;
+    border: 1px solid #c1ccd4;
+
+    &:hover {
+      //opacity: 0.9;
+      //background: rgba(255, 255, 255, 0.9);
+      .delete-tip, .edit-tip {
+        display: block;
+      }
+    }
+
+    &:first-child {
+      margin: 0;
+    }
+
+    .featured {
+      position: relative;
+      top: -120px;
+      left: -10px;
+      height: 0px;
+      width: 200px;
+      display: inline;
+      overflow: hidden;
+      img {
+        opacity: 0.2;
+        width: 200px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    header {
+      position: relative;
+      margin-bottom: 15px;
+
+      .delete-tip {
+        display: none;
+        position: absolute;
+        top: -30px;
+        left: -30px;
+        background: #c7333a image-url("protips/delete-cross.png") no-repeat center;
+        border: solid 3px #fff;
+        width: 22px;
+        height: 22px;
+        @include border-radius(100px);
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        span {
+          display: none;
+        }
+      }
+
+      .small-upvote {
+        @include small-upvote;
+        position: absolute;
+        top: -20px;
+        right: 0px;
+        @include transition-all;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+
+      .tip-user {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        color: $light-blue;
+        font-size: 1.2em;
+        @include ellipsis;
+        width: 137px;
+
+        &:hover {
+          color: $dark-grey;
+        }
+      }
+
+      img {
+        width: 30px;
+        height: 30px;
+        @include border-radius(4px);
+        float: left;
+        margin-right: 10px;
+      }
+
+    }
+
+    .main-link {
+      display: block;
+      color: $dark-grey;
+      //@include transition-all;
+      margin-bottom: 20px;
+
+      h3 {
+        height: 90px;
+        overflow: hidden;
+        //white-space: nowrap;
+        //text-overflow: ellipsis;
+        font-size: 1.8em;
+        //margin-bottom: 15px;
+      }
+
+      &:visited {
+        color: #9da4a8;
+      }
+
+      &:hover {
+        color: $light-blue;
+      }
+    }
+
+    footer {
+      .comments {
+        display: none;
+        //display: block;
+        float: left;
+        height: 12px;
+        line-height: 12px;
+        padding: 2px 5px 2px 20px;
+        background: image-url("protips/small-bubble.png") no-repeat 2px 3px;
+        border: solid 2px $really-light-grey;
+        @include border-radius(3px);
+        margin-right: 10px;
+        color: $dark-grey;
+
+        &:hover {
+          color: $light-blue;
+        }
+      }
+
+      .tags {
+        float: left;
+        overflow: hidden;
+        height: 20px;
+        width: 90%;
+
+        li {
+          float: left;
+          margin-left: 5px;
+          line-height: 20px;
+
+          &:first-child {
+            margin: 0;
+          }
+
+          a {
+            color: $dark-grey;
+
+            &:hover {
+              color: $light-blue;
+            }
+          }
+        }
+      }
+
+      .edit-tip {
+        display: none;
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        background: #fff image-url("protips/edit-cog.png") no-repeat center;
+        width: 25px;
+        height: 25px;
+        @include border-radius(100px);
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.combined-networks {
+  padding: 10px 20px;
+  background: #fff;
+  @include border-radius(4px);
+  margin-bottom: 25px;
+  border: 1px solid #C9CFD1;
+
+  .close {
+    display: block;
+    float: right;
+    width: 10px;
+    height: 13px;
+    background: image-url("protips/cross.png") no-repeat bottom;
+
+    span {
+      display: none;
+    }
+  }
+
+  p {
+    float: left;
+    margin-right: 5px;
+  }
+
+  ul {
+    float: left;
+
+    li {
+      float: left;
+      margin-right: 5px;
+      font-size: 1.3em;
+    }
+  }
+}
+
+.about-networks {
+  float: right;
+  display: block;
+  padding: 5px 10px;
+  border: 1px solid #C9CFD1;
+  background: #E3EAED;
+  font-size: 1.3em;
+  color: $dark-grey;
+  @include border-radius(4px);
+}
+
+.list-of-members {
+  float: right;
+  width: 700px;
+
+  .more-members {
+    border-top: solid 2px $light-blue-grey;
+    border-bottom: solid 2px $light-blue-grey;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 1.4em;
+    color: $mid-blue-grey;
+  }
+
+  > li {
+    float: left;
+    width: 180px;
+    height: 110px;
+    margin: 0 0 20px 20px;
+    background: #fff;
+    @include border-radius(3px);
+    padding: 20px 20px 0 20px;
+    position: relative;
+
+    &:nth-child(3n+1) {
+      margin-left: 0;
+    }
+
+    .actions-list {
+
+      li {
+        float: left;
+        margin-right: 15px;
+      }
+
+      a {
+        height: 18px;
+        line-height: 22px;
+        font-size: 1.1em;
+        display: inline-block;
+        background: image-url("profile/activity-action-icons.png") no-repeat left top;
+        padding-left: 25px;
+        color: $dark-grey;
+        @include transition-all;
+        opacity: 0.5;
+
+        &:hover {
+          color: $dark-grey;
+          opacity: 1;
+        }
+      }
+
+      .view {
+        background-position: 0px 0px;
+      }
+
+      .write-tip {
+        background-position: 0px -18px;
+      }
+    }
+
+    .header {
+      height: 55px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: dashed 1px #eee;
+
+      .mayor-level {
+        position: absolute;
+        top: 0px;
+        right: 20px;
+        width: 24px;
+        height: 30px;
+        background: image-url("protips/mayor-ribbon.png") no-repeat;
+
+        span {
+          display: block;
+          text-align: center;
+          line-height: 24px;
+          font-size: 1em;
+          color: #fff;
+        }
+      }
+
+      //This class is for the 1st in the list to get the crown mayor ribbon
+      .the-mayor {
+        background: image-url("protips/mayor.png") no-repeat;
+      }
+
+      .user img {
+        width: 30px;
+        height: 30px;
+        @include border-radius(4px);
+        border: 2px solid #fff;
+        @include subtle-box-shadow;
+        float: left;
+        margin-right: 15px;
+      }
+
+      .details {
+        float: left;
+        width: 130px;
+
+        h2 {
+          font-size: 1.5em;
+          margin-bottom: 3px !important;
+          width: 80%;
+          @include ellipsis;
+
+          a {
+
+          }
+
+        }
+
+        ul {
+          clear: both;
+          @include ellipsis;
+        }
+
+        li {
+          font-size: 1.2em;
+          @include ellipsis;
+
+          a {
+            color: $light-blue;
+          }
+        }
+      }
+    }
+  }
+}
+
+//Protips Networks
+.network-toplinks {
+  float: right;
+  padding-top: 8px;
+  height: 53px;
+
+  li {
+    float: right;
+    margin-right: 20px;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  a {
+    height: 53px;
+    display: block;
+    color: $blue-grey;
+    text-transform: uppercase;
+    font-size: 1.6em;
+    @include ts-bottom-white;
+    font-family: "MuseoSans-500";
+    position: relative;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .current {
+    opacity: 1;
+    background: image-url("protips/nav-tip.png") no-repeat bottom;
+  }
+}
+
+// Before the sumbit btn
+// .network-search {
+// 	float: left;
+//   
+// 	input[type=text] {
+// 	  float: left;
+// 	  font-size: 1.3em;
+// 	  color: #a3a4a6;
+// 	  font-family: "MuseoSans-500";
+// 	  text-transform: uppercase;
+// 	  border: 0;
+// 	  @include border-radius(30px);
+// 	  height: 18px;
+// 	  line-height: 17px;
+// 	  width: 30px;
+// 	  padding: 6px 0;
+// 		text-indent: -100px;
+// 	  -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+// 	  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+// 	  background: #BACBD8 image-url("protips/mag.png") no-repeat 7px center;
+// 	  @include transition-all;
+// 	  vertical-align: middle;
+// 
+// 	  &:focus {
+// 	    width: 300px;
+// 	    border: 0;
+// 	    outline: none;
+// 			text-indent: 0px;
+// 			padding: 6px 20px 6px 40px;
+// 			background: #fff image-url("protips/mag.png") no-repeat 14px center;
+// 	  }
+// 	}
+// }
+
+.network-search {
+  float: left;
+
+  input[type=submit] {
+    // background: $light-blue-grey image-url("protips/mag.png") no-repeat center;
+    // height: 30px;
+    // width: 30px;
+    // 	  @include border-radius(30px);
+    // 	  border: 0;
+    //     outline: none;
+    // 	  -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    // 	  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+    // margin-left: -30px;
+    //
+    // &:hover {
+    // 	background-color: $light-blue;
+    // }
+
+    display: none;
+
+  }
+
+  input[type=text] {
+    float: left;
+    font-size: 1.3em;
+    color: #a3a4a6;
+    font-family: "MuseoSans-500";
+    //text-transform: uppercase;
+    border: 0;
+    @include border-radius(4px);
+    height: 21px;
+    line-height: 21px;
+    width: 150px;
+    padding: 6px 20px 6px 40px;
+    @include transition-all;
+    vertical-align: middle;
+    margin-right: 10px;
+    background: #fff image-url("protips/mag.png") no-repeat 5% 50%;
+    border: $light-blue-grey solid 1px;
+
+    &:focus {
+      background-color: #fbfbfb;
+      outline: none;
+    }
+  }
+
+}
+
+.networks-filter {
+  margin-bottom: 20px;
+  width: 774px;
+  @include ts-bottom-white;
+
+  li {
+    float: left;
+    margin-left: 20px;
+
+    &:first-child {
+      margin: 0;
+    }
+  }
+
+  .add-network {
+    float: right;
+  }
+
+  a {
+    text-transform: uppercase;
+    color: #a0a4a5;
+    font-family: "MuseoSans-500";
+    font-size: 1.4em;
+    line-height: 1.8em;
+    color: $mid-blue-grey;
+
+    &:hover {
+      color: $blue-grey;
+    }
+  }
+}
+
+.protips-sidebar {
+  width: 200px;
+  float: left;
+
+  .filter {
+    margin-bottom: 30px;
+    @include ts-bottom-white;
+
+    .active {
+      opacity: 1;
+      color: #48494E;
+      padding-left: 10px;
+      background: #E8EFF2;
+    }
+
+    li {
+      border-bottom: solid 1px $light-blue-grey;
+      position: relative;
+
+      &:first-child {
+        border-top: solid 1px $light-blue-grey;
+      }
+    }
+
+    a {
+      font-family: "MuseoSans-500";
+      color: $mid-blue-grey;
+      font-size: 1.4em;
+      display: block;
+      padding: 10px 0 10px;
+      @include transition-all;
+
+      &:hover {
+        color: $dark-grey;
+        background: #E8EFF2;
+        padding-left: 10px;
+      }
+    }
+
+    span {
+      //option1
+      //background: #c8d4d8;
+
+      //option2
+      color: #fff;
+      background: $light-blue;
+
+      position: absolute;
+      display: block;
+      top: 9px;
+      right: -5px;
+      width: 18px;
+      height: 18px;
+      line-height: 20px;
+      text-align: center;
+      @include border-radius(100px);
+      -webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .protip-actions {
+    margin-bottom: 30px;
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      font-size: 1.4em;
+      display: block;
+      height: 27px;
+      line-height: 29px;
+      color: #fff;
+      font-family: "MuseoSans-500";
+      text-transform: uppercase;
+      padding-left: 10px;
+      @include border-radius(3px);
+      -webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+      background: image-url("protips/action-icons.png") no-repeat;
+    }
+
+    .join {
+      background: $light-blue image-url("protips/action-icons.png") no-repeat right -106px;
+
+      &:hover {
+        background: #79c839 image-url("protips/action-icons.png") no-repeat top right;
+      }
+
+      &:after {
+        content: "Join";
+      }
+    }
+
+    // .join:after {
+    //   content: "Join";
+    // }
+
+    .member {
+      background: #79c839 image-url("protips/action-icons.png") no-repeat top right;
+      &:after {
+        content: "Member";
+      }
+
+      &:hover {
+        background: $light-blue image-url("protips/action-icons.png") no-repeat right -81px;
+
+        &:after {
+          content: "Leave";
+        }
+      }
+
+    }
+
+    .share {
+      color: $blue-grey;
+      background-color: $light-blue-grey;
+      background-position: right -27px;
+
+      &:hover {
+        background-color: $blue-grey;
+        background-position: right -54px;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.network-details {
+  margin-bottom: 30px;
+
+  h3 {
+    font-size: 1.4em;
+    border-bottom: #C8D4D8 solid 3px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: $mid-blue-grey;
+    @include ts-bottom-white;
+  }
+
+  textarea {
+    font-size: 1.4em;
+    width: 100%;
+  }
+  .update-tags {
+    width: 100%;
+    height: 30px;
+    @include border-radius(4px);
+    margin-top: 5px;
+  }
+  .tag-list {
+    li {
+      float: left;
+      margin: 0 5px 5px 0;
+
+      a {
+        font-size: 1.2em;
+        display: block;
+        background: #E8EFF2;
+        @include border-radius(4px);
+        padding: 6px 8px;
+        color: $mid-blue-grey;
+        border: 1px solid #C8D5DA;
+
+        &:hover {
+          background: $light-blue-grey;
+          color: $blue-grey;
+        }
+      }
+    }
+  }
+
+  .admin-tags {
+    padding-top: 20px;
+
+    textarea {
+      width: 178px;
+      padding: 10px;
+      border: 1px solid $light-blue-grey;
+      margin-bottom: 10px;
+      resize: vertical;
+      @include border-radius(4px);
+    }
+
+    input[type=submit] {
+      border: 0;
+      background: $light-blue;
+      @include border-radius(4px);
+      color: #fff;
+      font-size: 1.3em;
+    }
+  }
+
+}
+
+//network-details
+
+.side-box {
+  border: solid 1px #c8d5da;
+  @include border-radius(4px);
+  margin-bottom: 20px;
+  -webkit-box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+
+  > a {
+    width: 40px;
+    height: 38px;
+    float: right;
+  }
+
+  .side-box-header {
+    padding: 10px 45px 10px 15px;
+    background: $light-blue-grey;
+    //background: #fff;
+    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
+    border-bottom: solid 1px #eaeaea;
+    @include border-radius-top(4px);
+
+    h3 {
+      font-family: "MuseoSans-700";
+      font-size: 1.2em;
+      text-transform: uppercase;
+      color: #5D5D5D;
+    }
+  }
+
+  .expert {
+    background: $light-blue-grey image-url("protips/expert.png") no-repeat 93% top;
+  }
+
+  .mayor {
+    background: $light-blue-grey image-url("protips/mayor.png") no-repeat 93% top;
+  }
+
+  .inside {
+    padding: 10px 15px;
+    //@include paper-panel;
+    //@include side-box-grad;
+    background: #E8EFF2;
+    @include border-radius-bottom(4px);
+    //opacity: 0.5;
+
+    .resident-text {
+      padding-top: 10px;
+      clear: both;
+    }
+
+    .avatar img {
+      width: 30px;
+      height: 30px;
+      margin-right: 15px;
+      float: left;
+      @include border-radius(4px);
+    }
+
+    .details {
+      float: left;
+      width: 123px;
+
+      li {
+        @include ellipsis;
+
+        .users {
+          color: $light-blue;
+          font-size: 1.4em;
+        }
+
+        .tips {
+          font-size: 1.2em;
+          //color: $mid-blue-grey;
+          color: #5D5D5D;
+          //font-family: "MuseoSans-700";
+          //text-transform: uppercase;
+          font-size: 1.2em;
+        }
+      }
+
+    }
+
+  }
+}
+
+.threecols {
+  width: 700px;
+  float: right;
+
+  li {
+    &:nth-child(3n+1) {
+      margin-left: 0;
+    }
+  }
+}
+
+.networks-list {
+
+  > li {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    //background: image-url("protips/grid-hr.png") repeat-x bottom;
+    //position: relative;
+    border-bottom: solid 1px $light-blue-grey;
+  }
+
+  .no-networks {
+    width: 748px;
+    font-size: 1.4em;
+    background: #E8EFF2;
+    @include border-radius(4px);
+    padding: 12px;
+    color: #48494E;
+    border: 1px solid #C8D5DA;
+
+  }
+
+  .more-networks {
+    float: left;
+    width: 775px;
+    background: #BFCEDA;
+    color: #667d8d;
+    display: block;
+    padding: 10px 0;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.4em;
+    -webkit-box-shadow: inset 0px 1px 1px 0px rgba(105, 135, 156, 0.4);
+    box-shadow: inset 0px 1px 1px 0px rgba(105, 135, 156, 0.4);
+    @include border-radius(4px);
+    @include transition-all;
+
+    &:hover {
+      background: #667d8d;
+      color: #BFCEDA;
+    }
+  }
+
+  .network {
+    position: relative;
+    float: left;
+    width: 680px;
+    background: #fff;
+    @include border-radius(4px);
+    margin-bottom: 15px;
+    padding: 30px 40px;
+    -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+
+    .new {
+      position: absolute;
+      width: 76px;
+      height: 77px;
+      top: -6px;
+      right: -6px;
+      background: image-url("protips/new-ribbon.png") no-repeat;
+
+      span {
+        display: none;
+      }
+    }
+
+    //The border color
+    border-left: 14px solid #ffa95a;
+
+    .remove {
+      //float: right;
+      position: absolute;
+      top: -12px;
+      left: -63px;
+      background: $dark-grey image-url("cross-icon.png") no-repeat center;
+      width: 20px;
+      height: 20px;
+      display: block;
+      @include border-radius(3px);
+      //margin: -30px -40px;
+    }
+    .edit {
+
+    }
+    &:last-child {
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin: 0 !important;
+      width: 300px;
+      margin-right: 30px;
+
+      a {
+        display: block;
+        @include transition-all;
+        font-size: 1em;
+        font-family: "MuseoSans-500";
+
+      }
+    }
+
+    .tips {
+      background-position: top left;
+    }
+
+    .tags {
+      float: left;
+      max-width: 287px;
+      height: 28px;
+      overflow: hidden;
+
+      li {
+        float: left;
+        margin-left: 15px;
+        margin-bottom: 15px;
+        padding-top: 5px;
+
+        &:first-child {
+          margin: 0;
+        }
+      }
+
+      a {
+        font-size: 1.3em;
+        color: $mid-blue-grey;
+        background: image-url("team/bullet.jpg") no-repeat left;
+        padding-left: 15px;
+
+        &:hover {
+          color: $light-blue;
+        }
+      }
+    }
+
+    .tips-and-users {
+      float: left;
+      //margin-right: 100px;
+
+      li {
+        float: left;
+        margin-left: 20px;
+        width: 145px;
+
+        &:first-child {
+          margin: 0;
+        }
+
+        &:nth-child(2) {
+          width: 135px;
+        }
+
+        input[type=submit] {
+          width: 100%;
+        }
+      }
+
+      .users, .tips {
+        font-size: 1.4em;
+        color: $dark-grey;
+        display: inline-block;
+        background: image-url("protips/network-icons.png") no-repeat bottom left;
+        height: 25px;
+        line-height: 25px;
+        padding-left: 35px;
+        opacity: 0.6;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      .new {
+        float: right;
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        background: #62bee0;
+        line-height: 24px;
+        font-size: 1em;
+        text-align: center;
+        color: #fff;
+        @include border-radius(100px);
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .join-or-leave {
+      font-size: 1.4em;
+      float: right;
+      display: block;
+      text-align: center;
+      width: 80px;
+      height: 27px;
+      line-height: 27px;
+      color: #fff;
+      font-family: "MuseoSans-500";
+      @include border-radius(3px);
+      -webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+      @include transition-all;
+    }
+
+    .join {
+      background: $light-blue;
+
+      &:after {
+        content: "Join";
+      }
+
+      &:hover {
+        background: #79c839;
+      }
+    }
+
+    .member {
+      background: #79c839;
+      &:after {
+        content: "Member";
+      }
+
+      &:hover {
+        background: $light-blue;
+
+        &:after {
+          content: "Leave";
+        }
+      }
+    }
+  }
+
+  .letter {
+    font-size: 1.8em;
+    //position: absolute;
+    //top: 0px;
+    //right: 0px;
+    float: right;
+    color: $light-blue-grey;
+    border: 4px solid $light-blue-grey;
+    width: 38px;
+    height: 38px;
+    line-height: 42px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: "MuseoSans-700";
+    @include border-radius(100px);
+  }
+}

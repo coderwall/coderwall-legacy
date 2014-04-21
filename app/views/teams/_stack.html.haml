@@ -1,0 +1,22 @@
+%section#stack.cf{:class => section_enabled_class(@team.has_stack?), :style => "background-color:#{@team.branding_hex_color}"}
+  -if !@team.has_stack?
+    -inactive_box('#stack', "Technology Stack & Tools") do
+      Share your technology stack and great tools your team employs to build amazing things
+  -if can_edit?
+    -panel_form_for_section('#stack', 'Technology Stack & Tools') do |f|
+      %aside
+        -admin_hint do
+          Comma separated list of programming languages, databases, platforms, tools and techs your team employs
+      .form-inputs
+        %fieldset
+          =f.label :stack_list, 'Stack'
+          =f.text_area :stack_list
+
+  %header.header
+    %h2.heading{:style => "color:#{@team.branding_hex_color}"}
+      Our stack and technology
+  .inside
+    %ul.stack-list.cf
+      - stack_or_default(@team).each do |stack_item|
+        %li
+          = stack_item

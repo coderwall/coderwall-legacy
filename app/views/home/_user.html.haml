@@ -1,0 +1,7 @@
+%li.hide.track{:class => css_class}
+  %a{:href => profile_path(user.username), 'data-action' => 'view user profile', 'data-from' => 'home page (featured)'}
+    .user-image
+      =users_image_tag(user)
+    .user-details
+      %h4=user.display_name
+      %blockquote=user.about

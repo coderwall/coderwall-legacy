@@ -1,0 +1,16 @@
+-if invitation.valid?
+  -team = invitation.team
+  %li.team{:id => dom_id(team)}
+    %h3=team.name
+    -team.top_three_team_members.each do |member|
+      =link_to(users_image_tag(member), profile_path(member.username))
+    -if team.size > 3
+      .size
+        ="+ #{team.size - 3}"
+        %br
+        more
+    -if current_user.belongs_to_team?(team)
+      =link_to('Stay with this team', accept_team_path(team, :email => params[:email]), :class => 'button stay')
+    -else
+      =link_to('Join this team', accept_team_path(team, :email => params[:email]), :class => 'button')
+    .clear

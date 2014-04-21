@@ -1,0 +1,57 @@
+-cache ['v2', 'team-details', @team, is_admin?, can_edit?] do
+  %section#team-details.cf
+    -if can_edit?
+      -panel_form_for_section('#team-details', 'Team details') do |f|
+        %aside
+        .form-inputs
+          %fieldset.edit-connections
+            %ul
+              %li
+                =f.label :avatar, 'Team Logo'
+                =image_tag(@team.avatar_url)
+                =f.file_field :avatar
+                =f.hidden_field :avatar_cache
+              -if is_admin?
+                %li.name
+                  =f.label :name, 'Company Name'
+                  =f.text_field :name
+              %li.url
+                =f.label :website, 'Company URL'
+                =f.text_field :website
+              %li.twitter
+                =f.label :twitter, 'Company Twitter Handle'
+                =f.text_field :twitter
+              %li.github
+                =f.label :github_organization_name, 'Company GitHub Org'
+                %span https://github.com/
+                =f.text_field :github_organization_name
+              %li.facebook
+                =f.label :facebook, 'Facebook page'
+                %span https://www.facebook.com/
+                =f.text_field :facebook
+          %fieldset.edit-switch-section
+            =f.label :about, "1 or 2 sentences that #{@team.name} wants others to remember about what the team builds or how it impact the lives of others."
+            =f.text_area :about
+          %fieldset
+            =f.label :branding, 'Team color in hex (e.g. #343131).'
+            =f.text_field :branding
+            %span *Refresh page for changes to take effect
+          -if current_user.admin?
+            %fieldset
+              =f.label :preview_code
+              =f.text_field :preview_code
+            %fieldset
+              =f.label :highlight_tags, 'Team Highlights (comma seperated)'
+              =f.text_field :highlight_tags
+            %fieldset
+              =f.label :premium
+              =f.check_box :premium
+            %fieldset
+              =f.label :valid_jobs
+              =f.check_box :valid_jobs
+            %fieldset
+              =f.label :hide_from_featured
+              =f.check_box :hide_from_featured
+    - unless @team.about.blank?
+      .switch-section
+        %p{:style => "color:#{@team.branding_hex_color}"}=@team.about

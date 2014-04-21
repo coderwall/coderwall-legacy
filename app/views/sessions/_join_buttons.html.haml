@@ -1,0 +1,14 @@
+.join-panel.cf
+  - unless !defined?(message) || message.nil?
+    %p.join
+      = message
+  %ul.sign-btns
+    %li
+      %a.btn.twitter{:href => link_twitter_path, :rel => "nofollow"}
+        Twitter
+    %li
+      %a.btn.github{:href => link_github_path, :rel => "nofollow"}
+        Github
+    %li
+      %a.btn.linkedin{:href => link_linkedin_path, :rel => "nofollow"}
+        Linkedin

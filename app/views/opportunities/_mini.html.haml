@@ -1,0 +1,23 @@
+%li.two-cols.job
+  %header
+    %p.job Hiring
+    %a.feature-jobs.track{:href => employers_path, 'data-action' => 'upgrade team', 'data-from' => 'homepage page'}
+      Feature your jobs here
+
+
+  .content
+    %a.job-title{:href => opportunity.url}= opportunity.title
+    %p.job-exrp= truncate(opportunity.description, :length => 200)
+
+  .tip-image
+    .blur-image
+      =image_tag(featured_team_banner(opportunity.team))
+
+  %footer
+    %ul.author
+      %li.team
+        %a{:href => teamname_path(opportunity.team.slug)}= opportunity.team.name
+    %ul.avatars
+      %li.team
+        %a{:href => teamname_path(opportunity.team.slug)}
+          =image_tag(opportunity.team.avatar_url)

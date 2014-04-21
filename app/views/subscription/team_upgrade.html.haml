@@ -1,0 +1,21 @@
+%tr
+  %td.main-content-grey{:style => "padding: 30px 60px; background:#ffffff;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+    %p{:style => "font-size: 16px; font-family:'Helvetica Neue','Helvetica','Arial','sans-serif'; margin-bottom: 10px; font-weight: bold;"}
+      Welcome to Coderwall's premium services for teams.
+
+    %p{:style => "font-size: 14px; margin: 0; font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      =@user.team.name
+      has been upgraded to the
+      =@plan.name
+      plan and is ready to become a great engineering magnet.
+
+      =link_to 'Start posting your open positions.', new_team_opportunity_url(@user.team), {:style => "color: #3D8DCC;"}
+
+    %div{:style => "font-size: 14px; line-height: 22px; margin-bottom: 20px;"}
+
+    %p{:style => "font-size: 14px; margin: 0; font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      If you have any questions or concerns about your account, please contact us:
+      =mail_to('support@coderwall.com', nil, :style => "color:3D8DCC;")
+
+
+

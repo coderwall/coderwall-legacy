@@ -1,0 +1,43 @@
+%tr
+  %td.content-head{:style => "padding: 30px 60px;border-bottom: solid 1px #d4cfc4;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif'"}
+    %h1{:style => "-webkit-font-smoothing: antialiased;color: #393939;font-size: 26px;margin-bottom: 20px;text-align: center;margin: 0;line-height: 100%;font-size: 28px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      Is the #{@user.team.name} team all here?
+
+%tr
+  %td.main-content-grey{:style => "padding: 30px 60px;background: #ece9e2;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      Hey Friend,
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      The
+      = @user.team.name
+      team page looks great. Have you invited your whole team to join yet? There are a lot of advantages to having all your team members on the
+      = @user.team.name
+      page.
+
+
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      %b 1) More team members can lead to a higher score <br>
+      Your team score is determined by each team member’s achievements, peer endorsements, speaking history, and then adjusted to the team’s central tendency.
+
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      %b 2) Higher score = higher ranking on team leaderboard <br>
+      The leaderboard is a fun way to showcase some of Coderwall’s most innovative and interesting teams. We know
+      = @user.team.name
+      is doing awesome things. With a higher team score, everyone else can know that, too.
+
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      %b 3) Every team member counts <br>
+      Github is currently in 1st place on the Team Leaderboard with 61 members while Groupon is ranked 22nd with 60 members. Who is the one teammate that will push
+      = @user.team.name
+      up the leaderboard?
+
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+
+      To add team members, share this private link with them:
+      =link_to(invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token)), invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token)), {:style => "color: #3d8dcc;"})
+
+    .divider{:style => "height: 10px;background: #dbd7cd;"}
+    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+      Check out the FAQ (https://coderwall.com/faq) if you have questions about how teams work.
+    .divider{:style => "height: 10px;background: #dbd7cd;"}

@@ -1,0 +1,17 @@
+= content_for :body_id do
+  admin
+
+.comment-admin
+  %ul.titles.cf
+    %li index
+    %li likes
+    %li comment
+
+  - @comments.each_with_index do |comment, index|
+    %ul.comments-list.cf
+      %li
+        = index+1
+      %li
+        = comment.likes_cache
+      %li
+        = link_to comment.body, protip_path(comment.commentable.try(:public_id)) unless comment.commentable.nil?

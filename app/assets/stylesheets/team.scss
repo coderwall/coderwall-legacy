@@ -1,0 +1,566 @@
+@import "base";
+@import "compass/css3/";
+
+body#team {
+  .inside-main-content {
+    padding-top: 50px;
+  }
+
+  .notification-bar {
+    background: #eee;
+  }
+}
+
+#team-top {
+  background: #fff;
+
+  .inside-team-top {
+    padding: 40px 20px;
+    width: 940px;
+    margin: 0 auto;
+
+    .team-details {
+      float: left;
+
+      .team-page-avatar {
+        float: left;
+        @include border-radius(6px);
+        @include subtle-box-shadow;
+        border: 5px solid #fff;
+      }
+
+      .header-group {
+        padding-left: 30px;
+        float: left;
+        max-width: 530px;
+
+        h1 {
+          font-size: 3.6em;
+          margin-bottom: 5px;
+          color: $dark-grey;
+        }
+
+        p {
+          font-size: 1.6em;
+          margin-bottom: 10px;
+        }
+
+        .team-url {
+          font-size: 1.4em;
+          color: $light-blue;
+          @include transition-all;
+
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+
+      }
+
+    }
+
+    .team-follow {
+      background: image-url("team/dotty-vr.png") repeat-y top left, image-url("team/dotty-vr.png") repeat-y top right;
+      float: right;
+      width: 180px;
+      padding: 0 30px;
+
+      .follow-team {
+        @include blue-btn;
+        @include border-radius(3px);
+        height: 36px;
+        line-height: 36px;
+        font-size: 1.3em;
+        margin-bottom: 20px;
+        padding: 0px;
+        @include follow-team-button;
+        @include transition-all;
+      }
+
+      ul {
+        overflow: auto;
+        margin-bottom: 10px;
+        li {
+          float: left;
+          @include small-grey-btn;
+          margin: 0 0 0 10px;
+
+          &:first-child {
+            margin: 0;
+          }
+
+          a, input[type=submit] {
+            color: #393939;
+
+            &:hover {
+              color: $light-blue;
+            }
+          }
+
+        }
+      }
+
+      .leave {
+        background: none;
+        border: 0;
+      }
+
+      .team-type {
+        display: block;
+        color: #a3a4a6;
+        font-size: 1.4em;
+        background: image-url("team/community-icon.png") no-repeat left;
+        height: 22px;
+        line-height: 22px;
+        padding-left: 45px;
+      }
+    }
+  }
+}
+
+#team-skills {
+  //	float: left;
+  //	width: 530px;
+  //	padding-top: 50px;
+
+  .skills {
+
+    li {
+      float: left;
+      font-size: 1.3em;
+      color: $light-blue;
+      background: #fff image-url("team/skill-cog.png") no-repeat 5px 10px;
+      height: 16px;
+      line-height: 16px;
+      padding: 10px 10px 10px 25px;
+      margin: 0 20px 10px 0;
+      @include border-radius(3px);
+      @include subtle-box-shadow;
+    }
+  }
+}
+
+#team-nav {
+  border-top: solid 1px #ebebeb;
+  background: #fafaf8;
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 200;
+    @include subtle-box-shadow;
+  }
+
+  .inside-team-nav {
+    height: 60px;
+    padding: 20px 20px 0px 20px;
+    width: 940px;
+    margin: 0 auto;
+
+    li {
+      float: left;
+      width: 172px;
+      margin-left: 20px;
+
+      &:first-child {
+        margin: 0;
+      }
+
+      a {
+        height: 36px;
+        line-height: 36px;
+        display: block;
+        font-size: 1.6em;
+        color: $dark-grey;
+        background: image-url("team/team-nav-icons.png") no-repeat top left;
+        padding-left: 45px;
+        @include transition-all;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+
+      .team-url {
+        @include ellipsis;
+      }
+
+      .team-members {
+        background-position: 0px -37px;
+      }
+
+      .team-score {
+        background-position: 0px -73px;
+      }
+
+      .team-activity {
+        background-position: 0px -110px;
+      }
+
+      .no-locations {
+        background-position: bottom left;
+      }
+
+    }
+  }
+}
+
+#team-activity {
+  h2 {
+    float: left;
+  }
+}
+
+.team-panel {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  //background: image-url("protips/grid-hr.png") repeat-x bottom;
+
+  h2 {
+    margin-bottom: 25px;
+  }
+
+  &.protips {
+    h2 {
+      float: left;
+    }
+  }
+
+  .list-of-tips {
+    margin: 0;
+  }
+
+}
+
+.team-stats {
+  background: image-url("team/sign-panel.png") no-repeat 0px 0px;
+  //margin-bottom: 30px;
+  height: 130px;
+  padding-top: 3px;
+
+  #views, #followers {
+    font-size: 1.6em;
+    border-right: 1px solid #eee;
+    float: left;
+    width: 160px;
+    padding: 25px 30px 0 30px;
+    line-height: 69px;
+    height: 103px;
+
+    span {
+      background: image-url("team/stat-bg.png") no-repeat 0px 0px;
+      display: block;
+      width: 69px;
+      height: 69px;
+      line-height: 69px;
+      text-align: center;
+      margin-right: 20px;
+      color: #fff;
+      float: left;
+    }
+  }
+
+  #views {
+    margin-left: 30px;
+    padding-right: 0;
+  }
+
+  #leaderboard {
+    float: left;
+    overflow: auto;
+    padding: 20px 30px 13px 30px;
+    //border-right: 1px solid #eee;
+
+    li.pending-team-score {
+      padding-top: 30px;
+      width: 350px;
+      font-family: "MuseoSans-700";
+      font-size: 1.4em;
+    }
+
+    li {
+      float: left;
+      background: image-url("team/dot-break.png") no-repeat left 20px;
+      width: 65px;
+      //margin-left: 10px;
+      padding-left: 20px;
+      //overflow: hidden;
+
+      &:first-child {
+        background: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      a {
+        text-align: center;
+        display: block;
+        font-size: 1.4em;
+        color: #393939;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+      }
+
+      img {
+        display: block;
+        width: 38px;
+        height: 38px;
+        @include border-radius(100px);
+        margin: 0 auto 10px auto;
+        //border: solid 2px #eee;
+      }
+
+      span {
+        font-size: 1.6em;
+        text-align: center;
+        display: block;
+      }
+    }
+
+    .thisteam {
+
+      img {
+        width: 45px;
+        height: 45px;
+      }
+
+      span {
+        font-size: 2em;
+      }
+    }
+  }
+
+}
+
+.location {
+
+  .map {
+    float: right;
+    width: 580px;
+    border: 15px solid #fff;
+    @include subtle-box-shadow;
+  }
+
+  .location-left {
+    float: left;
+    width: 270px;
+
+    .location-links {
+      li {
+        margin-bottom: 20px;
+        padding-left: 25px;
+        background: image-url("team/blue-star.png") no-repeat left;
+      }
+
+      a {
+        color: $dark-grey;
+        font-size: 1.3em;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+#add-to-team {
+  padding: 20px;
+  background: #fff;
+  float: right;
+  width: 550px;
+  @include subtle-box-shadow;
+  margin-bottom: 20px;
+
+  h3 {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-size: 1.6em;
+    text-align: center;
+  }
+
+  h4 {
+    text-transform: none;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    font-family: "MuseoSans-300";
+    text-align: center;
+  }
+
+  a {
+    font-size: 1.4em;
+    background: $light-blue;
+    padding: 20px;
+    display: block;
+    text-align: center;
+    color: #fff;
+    @include border-radius(6px);
+    @include transition-all;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
+#user-close-up {
+  width: 530px;
+  float: left;
+
+  &.mozilla.fixed {
+    /*Firefox treats fixed differently*/
+    position: fixed;
+    top: 115px;
+  }
+
+  &.fixed {
+    /*Fixed for Chrome & Safari */
+    position: fixed;
+    top: 115px;
+  }
+
+  p {
+    line-height: 1.4em;
+    margin-bottom: 20px;
+  }
+
+  .view-profile {
+    font-size: 1.6em;
+    background: image-url("team/view-icon.png") no-repeat left;
+    padding-left: 40px;
+    display: inline-block;
+    height: 34px;
+    line-height: 34px;
+    color: #393939;
+    @include transition-all;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+  }
+
+  .special-image {
+    width: 510px;
+    height: 263px;
+    border: solid 10px #fff;
+    margin-bottom: 30px;
+    overflow: hidden;
+    position: relative;
+    @include subtle-box-shadow;
+
+    > img {
+      width: 510px;
+      //@include border-radius-top(6px);
+    }
+
+    .business-card {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: image-url("profile/bc-bg.png") repeat;
+      //width: auto;
+      padding: 20px 25px;
+      @include border-radius(3px);
+
+      .profile-avatar {
+        @include border-radius(6px);
+        margin-bottom: 15px;
+        border: solid 4px #fff;
+        float: left;
+      }
+
+      .bc-right {
+        float: left;
+        margin: 0 0 15px 30px;
+        min-width: 200px;
+        max-width: 260px;
+        //@include ellipsis;
+
+        h1 {
+          color: #fff;
+          font-size: 3.6em;
+        }
+
+        .location {
+          color: #fff;
+          margin: 0;
+        }
+
+        .title {
+          color: #fff;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+section.team-members {
+  /*  need this so nav bar works smoothly */
+  min-height: 500px;
+}
+
+.team-members-list {
+  float: right;
+  width: 380px;
+
+  > li {
+    width: 101px;
+    height: 144px;
+    overflow: hidden;
+    float: left;
+    margin: 0 0 20px 30px;
+    display: block;
+    //display: inline-table;
+    //letter-spacing: normal;
+    //vertical-align: top;
+    //width: 25%;
+
+    &:nth-child(3n+1) {
+      margin: 0 0 20px 0;
+    }
+
+    a {
+      @include transition-all;
+      display: block;
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+
+    img {
+      display: block;
+      margin-bottom: 10px;
+      border: solid #fff 8px;
+      @include subtle-box-shadow;
+    }
+
+    #add-to-team-link {
+      width: 85px;
+      height: 85px;
+      display: block;
+      margin-bottom: 10px;
+      border: solid #fff 8px;
+      @include subtle-box-shadow;
+      background: #fff image-url("team/add-member.png") no-repeat center;
+    }
+
+    ul {
+      li {
+        margin-bottom: 2px;
+        font-size: 1.3em;
+        color: $dark-grey;
+        width: 100px;
+      }
+    }
+  }
+}
+
+iframe.slideshare {
+  width: 425px;
+  height: 300px;
+  overflow: hidden;
+}

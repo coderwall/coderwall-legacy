@@ -1,0 +1,792 @@
+@import "base";
+@import "compass/css3/";
+
+.form * {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-font-smoothing: subpixel-antialiased;
+  font-smoothing: subpixel-antialiased;
+}
+
+.form-inputs {
+  float: left;
+  width: 510px;
+}
+
+//edit form resets
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form {
+  //overflow: auto;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  width: 840px;
+  padding: 40px 60px;
+  background: image-url("premium-teams/paper-texture.jpg") repeat;
+  @include border-radius(6px);
+  -webkit-box-shadow: 0px 0px 18px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 18px 8px rgba(0, 0, 0, 0.5);
+
+  footer {
+    clear: both;
+  }
+
+  h1, h2 {
+    font-size: 1.8em;
+    border-bottom: 2px solid #eaeaea;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    color: $dark-grey;
+  }
+
+  .hint, .errors, .ideas {
+    //float: left;
+    margin-bottom: 15px;
+    //width: 200px;
+  }
+
+  .hint {
+    background: #e4eff9 image-url("premium-teams/star.png") no-repeat 95% 8px;
+    color: #6c89a3;
+    border: 2px solid #d4e1ed;
+    padding: 15px;
+    margin-bottom: 15px;
+    @include border-radius(6px);
+
+    p {
+      font-size: 1.4em;
+    }
+
+    h3 {
+      text-transform: uppercase;
+      font-size: 1.4em;
+      border-bottom: solid 2px #d4e1ed;
+      margin-bottom: 10px;
+    }
+  }
+
+  .errors {
+    li {
+      background: $red;
+      padding: 10px;
+      margin-bottom: 15px;
+      @include border-radius(6px);
+      color: #fff;
+      font-size: 1.4em;
+      margin-top: 10px;
+    }
+  }
+
+  .ideas {
+    background: #FEFFEF image-url("premium-teams/blub.png") no-repeat 95% 8px;
+    border: 2px solid #f4f6d2;
+    padding: 15px;
+    margin-bottom: 15px;
+    @include border-radius(6px);
+
+    h3 {
+      text-transform: uppercase;
+      font-size: 1.4em;
+      border-bottom: solid 2px #f4f6d2;
+      margin-bottom: 10px;
+      color: #aeb085;
+    }
+
+    li {
+      color: $dark-grey;
+      font-size: 1.4em;
+      margin-top: 10px;
+
+      &:first-child {
+        margin: 0;
+      }
+    }
+  }
+
+  label {
+    font-size: 1.4em;
+    color: $light-blue;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  span {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+    font-family: "MuseoSans-500";
+  }
+
+  textarea, input[type=text] {
+    font-family: "MuseoSans-500";
+    width: 485px;
+    height: 37px;
+    padding: 0 10px;
+    resize: vertical;
+    outline: none;
+    border: 0;
+    border: 2px solid #e4e4e4;
+    @include border-radius(6px);
+    @include subtle-box-shadow-inset;
+    font-size: 1.4em;
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  textarea {
+    min-height: 100px;
+    //max-width: 98%;
+    padding: 10px;
+  }
+
+  aside {
+    float: right;
+    //padding-top: 28px;
+    width: 300px;
+  }
+}
+
+//form end
+
+a.close-editor.circle {
+  display: block;
+  background: image-url("premium-teams/cross.png") no-repeat;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+
+  span {
+    display: none;
+  }
+}
+
+a.launch-editor {
+  text-transform: uppercase;
+  display: block;
+  position: absolute;
+  left: -83px;
+  top: 20px;
+  background: #b1c7d8 image-url("premium-teams/cog.png") no-repeat 10px 10px;
+  color: #fff;
+  height: 36px;
+  width: 47px;
+  font-size: 1.3em;
+  line-height: 36px;
+  padding-left: 35px;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0px 1px 1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0px 1px 1px 1px rgba(255, 255, 255, 0.2);
+  border-top: solid 1px rgba(0, 0, 0, 0.018);
+}
+
+.arrow.disable {
+  //probably want to style this up oli
+  background-color: red;
+}
+
+.remove-interview-step {
+  float: right;
+  background: $dark-grey;
+  display: inline-block;
+  color: #fff;
+  padding: 6px 12px;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  @include border-radius(4px);
+}
+
+.photos-chooser, .add-new-position, .add-interview-step, .add-new-location, .add-map-location a {
+  background: $light-blue;
+  font-size: 1.4em;
+  height: 40px;
+  line-height: 40px;
+  @include border-radius(4px);
+  color: #fff;
+  margin-bottom: 20px;
+  display: block;
+  text-align: center;
+
+  &:hover {
+    background: #79C839;
+  }
+}
+
+.form footer {
+  clear: both;
+  //border-top: solid 2px #eaeaea;
+  //margin-top: 10px;
+  padding-top: 20px;
+
+  input[type=submit], .close-editor {
+    border: 0;
+    background: $light-blue;
+    font-size: 1.6em;
+    height: 40px;
+    line-height: 40px;
+    width: 150px;
+    @include border-radius(4px);
+    color: #fff;
+    margin-top: 10px;
+    display: inline-block;
+    text-align: center;
+
+    &:hover {
+      background: #79C839;
+    }
+  }
+
+  .close-editor {
+    background: $dark-grey;
+    margin-left: 10px;
+    width: 100px;
+    font-size: 1.3em;
+
+    &:hover {
+      background: #555;
+    }
+  }
+}
+
+.photo-chooser {
+  display: inline-block;
+  border: 0;
+  background: #555;
+  font-size: 1.4em;
+  padding: 8px 24px;
+  @include border-radius(4px);
+  color: #fff;
+  //margin-bottom: 10px;
+
+  &:hover {
+    background: $dark-grey;
+  }
+}
+
+.preview {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  //background: rgba(0, 0, 0, 0.1);
+  border: solid 2px #eaeaea;
+  @include border-radius(6px);
+  margin-bottom: 15px;
+
+  img {
+    width: 450px;
+    border: 5px solid #fff;
+    -webkit-box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+}
+
+.edit-photos {
+
+  li {
+    float: left;
+    width: 146px;
+    height: 146px;
+    overflow: hidden;
+    float: left;
+    margin: 0 0 20px 20px;
+    position: relative;
+    background: #eee;
+    border: 5px solid #fff;
+    -webkit-box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+
+    &:nth-child(3n+1) {
+      margin-left: 0;
+    }
+
+    img {
+      width: 146px;
+    }
+
+    .remove-photo {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+    }
+  }
+}
+
+.edit-links {
+  background: #fff;
+  @include border-radius(6px);
+  border: solid 2px #eaeaea;
+
+  > li {
+    padding: 20px;
+    border-top: solid 2px #eaeaea;
+    overflow: auto;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    .fields {
+      float: right;
+    }
+
+    input[type="text"] {
+      width: 300px;
+    }
+
+    .image {
+      float: left;
+
+    }
+
+    img {
+      width: 100px;
+      background: #eee;
+      border: 5px solid #fff;
+      -webkit-box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+    }
+
+  }
+}
+
+.admin-job-list {
+  font-size: 1.3em;
+  background: #fff;
+  @include border-radius(6px);
+  border: solid 2px #eaeaea;
+
+  > li {
+    padding: 20px;
+    border-top: solid 2px #eaeaea;
+    //make top 4 full opacity
+    opacity: 0.5;
+    @include transition-all;
+
+    &:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+      opacity: 1;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:first-child {
+      border: 0;
+    }
+
+  }
+
+  ul {
+    li {
+      width: 410px;
+    }
+  }
+
+  .title {
+    font-size: 1.1em;
+    font-family: "MuseoSans-500";
+    margin-bottom: 5px;
+  }
+
+  .number {
+    width: auto;
+    float: right;
+    font-size: 1.8em;
+    color: #D4D4D4;
+    font-family: "MuseoSans-700";
+  }
+
+  .added {
+    margin-bottom: 10px;
+  }
+
+  .buttons {
+    overflow: auto;
+
+    li {
+      float: left;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    a {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #555;
+      color: #fff;
+      @include border-radius(4px);
+
+      &:hover {
+        background: $dark-grey;
+      }
+    }
+
+    .inactive-opportunity {
+      &:after {
+        content: "activate";
+      }
+      background: $red;
+      &:hover {
+        background: $green;
+      }
+    }
+
+    .active-opportunity {
+      &:after {
+        content: "deactivate";
+      }
+      background: $green;
+      &:hover {
+        background: $red;
+      }
+    }
+  }
+}
+
+//creating and editing jobs form 
+.edit-update {
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "MuseoSans-100";
+}
+
+#new_opportunity, .edit_opportunity {
+  width: 510px;
+  margin: 0 auto;
+  padding: 40px 60px;
+  background: image-url("premium-teams/paper-texture.jpg") repeat;
+  @include border-radius(6px);
+
+  .errors {
+    background: $red;
+    padding: 10px;
+    @include border-radius(6px);
+    color: #fff;
+    margin-bottom: 10px;
+
+    li {
+      font-size: 1.2em;
+    }
+  }
+
+  label {
+    font-size: 1.4em;
+    color: $dark-grey;
+    margin-bottom: 10px;
+    display: block;
+    font-family: "MuseoSans-500";
+
+    a {
+      color: $light-blue;
+      text-decoration: underline;
+    }
+  }
+
+  .apply-through {
+
+    ul {
+      overflow: auto;
+      clear: both;
+      width: 100%;
+    }
+
+    li {
+      float: left;
+
+      label {
+        font-family: "MuseoSans-300";
+      }
+
+      &:first-child {
+        padding: 5px 0;
+        width: 150px;
+      }
+
+      &:last-child {
+        background: #d4d4d4;
+        padding: 5px;
+        @include border-radius(3px);
+      }
+
+    }
+  }
+
+  textarea, input[type=text] {
+    font-family: "MuseoSans-500";
+    width: 485px;
+    height: 37px;
+    padding: 0 10px;
+    resize: vertical;
+    outline: none;
+    border: 0;
+    border: 2px solid #e4e4e4;
+    @include border-radius(6px);
+    @include subtle-box-shadow-inset;
+    font-size: 1.4em;
+    color: #000;
+    margin-bottom: 15px;
+  }
+
+  select {
+    font-family: "MuseoSans-500";
+    font-size: 1.4em;
+    margin-bottom: 25px;
+    width: 285px;
+  }
+
+  textarea {
+    min-height: 100px;
+    //max-width: 98%;
+    padding: 10px;
+  }
+
+  .save-cancel {
+
+    input[type=submit], a {
+      border: 0;
+      background: $light-blue;
+      font-size: 1.6em;
+      height: 40px;
+      line-height: 40px;
+      width: 150px;
+      @include border-radius(4px);
+      color: #fff;
+      margin-top: 10px;
+      display: inline-block;
+      text-align: center;
+
+      &:hover {
+        background: #79C839;
+      }
+    }
+
+    a {
+      background: $dark-grey;
+      margin-left: 10px;
+      width: 100px;
+      font-size: 1.3em;
+
+      &:hover {
+        background: #555;
+      }
+    }
+  }
+}
+
+////////
+#why-work {
+  .form {
+    textarea {
+      min-height: 70px;
+    }
+  }
+}
+
+#interviewing {
+  .form {
+    textarea {
+      width: 426px;
+    }
+
+    ol {
+      counter-reset: li; /* Initiate a counter */
+
+      > li {
+        position: relative; /* Create a positioning context */
+        margin-bottom: 10px;
+        overflow: auto;
+
+        div {
+          float: right;
+          width: 450px;
+        }
+
+        &:before {
+          //snazzy way of styling auto-incrementing ol numbers
+          content: counter(li); /* Use the counter as content */
+          counter-increment: li; /* Increment the counter by 1 */
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          width: 50px;
+          height: 50px;
+          line-height: 55px;
+          color: #fff;
+          background: #D4D4D4;
+          text-align: center;
+          font-size: 3em;
+          color: #fff;
+          font-family: "MuseoSans-700";
+          @include border-radius(100px);
+        }
+      }
+    }
+  }
+}
+
+#members {
+
+  .bigger-styling {
+    background: #eeeeee;
+    padding: 15px;
+    @include border-radius(6px);
+    border: solid 2px #c1c1c1;
+    color: $dark-grey;
+
+    p {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+
+    a {
+      font-size: 1.3em;
+      padding: 6px 12px;
+      background: $light-blue;
+      color: #ffffff;
+      display: block;
+      @include border-radius(4px);
+      text-align: center;
+      &:hover {
+        background: $green;
+      }
+    }
+  }
+
+  .members-admin {
+    overflow: auto;
+    > li {
+      //float: left;
+      display: inline-block;
+      width: 122px;
+      background: #fff;
+      padding: 15px;
+      //height: 146px;
+      margin: 0 0 20px 18px;
+      @include border-radius(6px);
+      border: solid 2px #eaeaea;
+
+      &:nth-child(3n+1) {
+        margin-left: 0;
+      }
+
+      p {
+        font-size: 1.6em;
+        width: 100%;
+        @include ellipsis;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        float: left;
+        li {
+          margin-top: 8px;
+
+          &:first-child {
+            margin: 0;
+          }
+
+          a, input[type=submit] {
+            display: block;
+            padding: 3px 6px;
+            background: $light-blue;
+            color: #fff;
+            font-size: 1em;
+            @include border-radius(2px);
+            &:hover {
+              background: #79C839;
+            }
+          }
+
+          input[type=submit] {
+            border: 0;
+            background: $dark-grey;
+            &:hover {
+              background: #555;
+            }
+          }
+        }
+      }
+
+      img {
+        float: right;
+        width: 44px;
+        border: solid 3px #fff;
+        -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.07);
+        box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.07);
+      }
+    }
+  }
+
+}
+
+//members
+
+//map locations 
+.location {
+  .form {
+    .location-list {
+      .item {
+        border-bottom: 3px dashed #eaeaea;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+      }
+      .remove-location {
+        overflow: auto;
+        background: #eaeaea;
+        @include border-radius(4px);
+        margin-bottom: 10px;
+        padding: 10px 0 0 10px;
+
+        label {
+          float: left;
+          margin-right: 20px;
+        }
+        input[type=checkbox] {
+          float: left;
+        }
+      }
+    }
+  }
+}
+
+///////////////
+@media screen and (max-width: 1200px) {
+
+  a.launch-editor {
+    left: -40px;
+    top: 0px;
+    background-position: center;
+    padding: 0px;
+    width: 40px;
+    text-indent: -1000px;
+  }
+
+}
+
+#dimmer {
+  display: none;
+  top: 0px;
+  left: 0px;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  width: 100%;
+}

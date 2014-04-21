@@ -1,0 +1,46 @@
+.visitors
+  %header.cf
+    %h1= @team.name
+    %h2
+      Viewed by
+      = @views
+      people
+      = @impressions
+      times
+      (
+      = @visitors.count
+      shown)
+  %ul.table-head.cf
+    //%li Avatar
+    %li.username Username
+    %li.score Score
+    %li.visits Visits
+    %li.time Time Spent
+    %li.furthest Furthest Section Explored
+    %li.exited-type Exited to (type)
+    %li.exited-url Exited to (url)
+    %li.last Last visit
+  %ul.visitors-list
+    -@visitors.each do |visitor|
+      %li
+        %ul.cf
+          - if visitor[:user].nil?
+            %li.visit-avatar
+              %img.profile-avatar
+          -else
+            %li.visit-avatar=link_to(image_tag(users_image_path(visitor[:user]), :class => 'profile-avatar', :width => 80, :height => 80), profile_path(visitor[:user].username))
+          %li.username
+            -if visitor[:user].try(:username)
+              =link_to(visitor[:user].try(:username), "https://coderwall.com/#{visitor[:user].try(:username)}", :target => :visitor)
+            -else
+              Anonymous
+          -score = visitor[:user].try(:score) || 0
+          %li.score= score.round(2)
+          %li.visits= visitor[:visits]
+          %li.time= distance_of_time_in_words(Time.now, Time.now + (visitor[:time_spent].to_i/1000).seconds, true)
+          %li.furthest= visitor[:furthest_scrolled]
+          %li.exited-type= visitor[:exit_target_type]
+          %li.exited-url= link_to visitor[:exit_url] || "N/A", visitor[:exit_url]
+          %li.last
+            = time_ago_in_words(Time.at visitor[:visited_at].to_i)
+            ago

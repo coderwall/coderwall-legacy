@@ -1,0 +1,13 @@
+-if member
+  .special-image
+    =location_image_tag_for(member)
+    .business-card
+      =users_image_tag(member, :class => 'profile-avatar')
+      .bc-right
+        %h1=member.display_name
+        -unless member.title.blank?
+          %p.title=member.title
+        -unless member.location.blank?
+          %p.location=member.location
+  %p=member.about
+  =link_to('View profile', profile_path(member.username), :class => 'view-profile record-exit', 'data-target-type' => 'team-member profile')

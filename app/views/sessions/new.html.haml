@@ -1,0 +1,18 @@
+=content_for :body_id do
+  sign-in
+
+-content_for :page_title do
+  coderwall : level up
+
+-content_for :mixpanel do
+  =record_view_event(failed_signin? ? 'error signing in' : 'sign in page')
+
+#account
+  .signupenclose
+    %section.panel.sign-up-panel
+      %header
+        %h1 Sign up
+      .inside-panel
+        %p Establish your geek cred. It's free and easy to start. Just link to one of your accounts to create your Coderwall profile.
+        =render 'signup'
+    %p.sign-up-terms== We never tweet from your account. By linking an account, you agree to our #{link_to('Terms of Service', tos_path)} and #{link_to('Privacy Policy', privacy_policy_path)}.

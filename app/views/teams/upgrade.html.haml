@@ -1,0 +1,73 @@
+-content_for :mixpanel do
+  =record_view_event('upgrade page')
+
+-content_for :page_title do
+  A simple &amp; engaging way to turn your organizations’ best qualities into an engineer magnet
+
+-content_for :head do
+  =stylesheet_link_tag 'product_description'
+  =tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY
+
+-content_for :javascript do
+  =javascript_include_tag "https://checkout.stripe.com/v2/checkout.js"
+  =javascript_include_tag 'accounts'
+  =javascript_include_tag "jquery.effects.core.js"
+  =javascript_include_tag "jquery.effects.slide.js"
+
+.main-content
+  %section.wrapper
+    %header.masthead.cf
+      %a.desc-logo{:href => 'https://coderwall.com'}
+        %span Coderwall
+        =image_tag("premium-team-description/logo.png")
+      %h2 Enhanced team profile
+
+    %section.title#learnmore
+      %h1 A simple &amp; engaging way to turn your organizations’ best qualities into an engineer magnet
+
+    -if no_account_no_team?
+      %section.feature.cf
+        .intro
+          %h2 Signin to create your team
+          .signup-buttons
+            =render 'sessions/signup'
+    -elsif member_no_team?
+      %section.feature.cf
+        .intro
+          =render 'form'
+          .results
+      %section.feature.payment.cf.hide
+    -elsif @team.can_post_job?
+      %section.feature.cf
+        .intro
+          = form_tag new_team_opportunity_path(@team), :method => :get do
+            #post-a-job
+              .save
+                %input.button{:type => "submit", :value => "Post A Job"}
+    -else
+      %section.feature.payment.cf
+        =render :partial => "payment", :locals => {:account => @team.account || current_user.team.build_account, :plan => @team.account.try(:current_plan)}
+
+
+
+    %section.steps.cf
+      .step-one.cf
+        .img
+          =image_tag("premium-team-description/step1.png")
+        .text
+          %h3 More transparency, better applicants
+          %p The best developers want to work where they can solve interesting challenges and build their skills. By making job descriptions more informative and transparent, we help you convey the unique challenges you're working on and attract the applicants who can help solve them.
+      .step-two.cf
+        .img
+          =image_tag("premium-team-description/step2.png")
+        .text
+          %h3 Reach a new, larger audience
+          %p Your strongest asset in attracting talent to your team is your team itself. That's why we make it easy for each member of your team to become an ambassador for your organization. We increase the exposure of your open positions by sharing them with everyone in your team members' networks too.
+      .step-three.cf
+        .img
+          =image_tag("premium-team-description/step3.png")
+        .text
+          %h3 Attract like-minded candidates
+          %p We provide you with the tools to highlight what makes your team's culture, workplace, and mission unique so that you can attract similarly minded developers to your positions.
+
+    =link_to("Let's get started!", '#learnmore', :class => 'big-button')

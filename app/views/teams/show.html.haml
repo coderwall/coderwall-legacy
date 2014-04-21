@@ -1,0 +1,181 @@
+=content_for :head do
+  %link{:rel => 'canonical', :href => friendly_team_path(@team)}
+
+-content_for :javascript do
+  =javascript_include_tag 'teams.js'
+
+-content_for :mixpanel do
+  =record_event('viewed team', :viewing_my_team => viewing_my_team?, :premium => @team.premium?)
+
+-content_for :page_title do
+  ="Team #{@team.name} : coderwall.com"
+
+=content_for :body_id do
+  team
+
+=content_for :top_of_main_content do
+  #team-top
+    .inside-team-top.cf
+      .team-details.cf
+        =image_tag(@team.avatar_url, :width => '104', :height => '104', :class => 'team-page-avatar')
+        .header-group
+          %h1.team-name=@team.name
+          -unless @team.about.blank?
+            %p.team-talk=@team.about
+          -unless @team.website.blank?
+            =link_to(@team.website, @team.website, :class => 'team-url record-exit', 'data-target-type' => 'company-website')
+
+      .team-follow
+        -if viewing_my_team? || is_admin?
+          %ul
+            %li
+              =link_to('Edit Team', edit_team_path(@team), :class => 'edit')
+            %li
+              =form_tag team_team_member_path(@team, current_user), :method => :delete do
+                %input.button.cancel.track{:type => "submit", :value => "Leave Team", :class => 'leave'}
+
+        =follow_team_link(@team)
+
+        -#=link_to('Upgrade Team', employers_path, :class => 'track', 'data-action' => 'upgrade-from-my-team-page')
+
+        -if @team.company?
+          %p.team-type{:class => 'company'} Company
+        -elsif @team.university?
+          %p.team-type{:class => 'company'} University
+        -else
+          %p.team-type{:class => 'community'} Community
+
+  #team-nav
+    %nav.inside-team-nav
+      %ul.cf
+        %li
+          %a.team-url{:href => '#team-top'}
+            =@team.name
+        %li=link_to(pluralize(@team.team_members.size, 'Members'), '#team-members', :class => 'team-members')
+        -if display_protips?
+          %li=link_to(pluralize(@team_protips.total, 'Protips'), '#team-activity', :class => 'team-activity')
+        %li
+          -if show_team_score?
+            =link_to("Score #{@team.score.to_i}", '#team-score', :class => 'team-score')
+          -else
+            =link_to("Score Pending", '', :class => 'team-score')
+
+        -if display_locations?
+          %li=link_to(pluralize(@team.locations.size, 'Location'), '#team-location', :class => 'no-locations')
+
+-if display_locations?
+  %section.location.team-panel.cf
+    .location-left
+      %h2#team-location{'data-scroll-offset' => '210'} Team locations
+      %ul.location-links
+        -@team.locations.each do |place|
+          %li
+            %a{:href => '/'}=place
+    .map
+      <iframe width="580" height="265" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/?ie=UTF8&amp;t=m&amp;ll=53.800651,-4.064941&amp;spn=4.54297,9.338379&amp;z=6&amp;output=embed"></iframe>
+
+-cache ['v2', @team, 'team-score', viewing_my_team?], :expires_in => 1.day do
+  -if show_team_score? || viewing_my_team?
+    %section#team-score.team-panel.cf{'data-scroll-offset' => '133'}
+      .team-stats.cf
+        / - if is_admin?
+        /   #views
+        /     %span=@team.impressions
+        /     Views
+        /   #views
+        /     %span=@team.reach
+        /     Reach
+
+        #followers
+          %span=@team.followers.count
+          Followers
+
+        %ul#leaderboard
+          -if show_team_score?
+            -unless @team.next_highest_competitors.empty?
+              -@team.next_highest_competitors.each do |competitor|
+                %li.higher
+                  %a.track{:href=>teamname_url(:slug => competitor.slug), 'data-category'=>'team clicked', 'data-action'=>'competitor'}
+                    =image_tag(competitor.avatar_url)
+                    =competitor.name
+                  %span=competitor.rank.ordinalize
+            %li.thisteam
+              %a.track{:href => team_path(@team), 'data-category' => 'team clicked', 'data-action' => 'competitor'}
+                =image_tag(@team.avatar_url)
+            -unless @team.next_lowest_competitors.empty?
+              -@team.next_lowest_competitors.each do |competitor|
+                %li.lower
+                  %a.track{:href=>teamname_url(:slug => competitor.slug), 'data-category'=>'team clicked','data-action'=>'competitor'}
+                    =image_tag(competitor.avatar_url)
+                    =competitor.name
+                  %span=competitor.rank.ordinalize
+          -elsif viewing_my_team?
+            %li.pending-team-score Teams with 3 or more members will receive a coderwall score. The score is calculated once a week.
+
+-cache ['v2', @team, @team_protips.total, 'team-protips', viewing_my_team?] do
+  -if display_protips?
+    %section#team-activity.team-panel{'data-scroll-offset' => '180'}
+      %header.cf
+        %h2 Team activity
+        %ul.protip-options.cf
+          %li
+            -if @team_protips.total > 4
+              %a.protip-more{:href => team_protips_path(@team.slug)}
+                More from
+                = @team.name
+      =render :partial => "protips/grid", :locals => {:protips => @team_protips.results, :collection=>@team_protips, :hide_more => true, :mode => 'fullpage'}
+
+%section.team-panel.cf#team-skills
+  %header
+    %h2 Core skills
+    -cache ['v3', @team, @team.size, 'core-skills', viewing_my_team?] do
+      -if @team.has_specialties?
+        %ul.skills.cf
+          -@team.specialties_with_counts.each do |tag, count|
+            %li=tag
+      -elsif viewing_my_team?
+        %p.skills.missing
+          Skills are a great way to showcase what your team is good at. We'll display the team's core skills here once you and others on your team add a few to your profiles.
+
+
+%section.team-members.team-panel.cf
+  -cache ['v3', @team, @team.size, 'team-members', viewing_my_team?] do
+    %h2="The #{@team.name} team"
+
+    #user-close-up
+      =render :partial => 'teams/user_closeup', :locals => {:member => @team.sorted_team_members.first}
+
+    %ul#team-members.team-members-list.cf{'data-scroll-offset' => '190'}
+      -@team.sorted_team_members.each do |member|
+        %li
+          .tip-user
+            =users_image_tag(member, :width => '85', :height => '85')
+            -unless member.title.blank?
+              %ul
+                %li=member.title
+          .hide
+            .user-close-up=render :partial => 'teams/user_closeup', :locals => {:member => member}
+
+      -if viewing_my_team? || viewing_my_team_while_unauthenticated?
+        %li
+          %a#add-to-team-link{:href => '#add-to-team'}
+          %ul
+            %li
+              Invite Member to Team
+
+  -if viewing_my_team?
+    #add-to-team.hide
+      .add-members
+        .add-members-header
+          %h3 Invite team members
+        %h4 Email this link to your colleagues so they can join this team
+        =mail_to('', invite_to_team_url, :body => invite_to_team_url, :subject => "You've been invited to team #{@team.name}", :class => 'join-link')
+  -elsif viewing_my_team_while_unauthenticated?
+    #add-to-team.hide
+      .add-members-header
+        %h3 Add team members
+      %h4 Sign in to get an invite link to send to your colleagues
+      =link_to("Sign In", signin_path, :class => 'join-link record-exit', 'data-target-type' => 'signin')
+
+-#-if signed_in? && current_user.try(:team) == @team
+-#  =mail_to('teams@coderwall.com', "Is #{current_user.team.name} awesome and hiring? Upgrade to the new enhanced team profile now.", :subject => "Create an enhanced team profile on Coderwall", :body => "Company Name: #{current_user.try(:team).try(:name)}", :class => 'feature-signup track', 'data-action' => 'upgrade-from-my-team-page')

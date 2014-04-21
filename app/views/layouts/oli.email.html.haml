@@ -1,0 +1,188 @@
+%html{style: "margin-top: #{Rails.env.development? ? 120 : 20};margin-bottom: 0;margin-right: 0;margin-left: 0;padding-top: 0;padding-bottom: 0;padding-right: 0;padding-left: 0;background-color: #48494e;margin: 0;padding: 0;-webkit-text-size-adjust:none;"}
+  %head
+    %title
+    %meta{content: "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    :css
+      /**/
+        #outlook a { padding: 0; }
+        body { width: 100% !important; }
+        .ReadMsgBody { width: 100%; }
+        .ExternalClass { width: 100%; display:block !important; }
+        html, body { background-color: #48494e; margin: 0; padding: 0; }
+        img { height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; }
+        br, strong br, b br, em br, i br { line-height:100%; }
+        h1, h2, h3, h4, h5, h6 { line-height: 100% !important; -webkit-font-smoothing: antialiased; }
+        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: #3d8dcc !important; }
+        h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {	color: #3d8dcc !important; }
+        h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited { color: #3d8dcc !important; }
+        table { border: none; }
+
+        body {
+          background: #48494e;font-family: "helvetica", "arial", "sans-serif";padding-bottom: 20px;
+        }
+
+        html, body{
+          -webkit-text-size-adjust:none !important;
+        }
+
+        a {
+        color: #3d8dcc;
+        text-decoration: none;
+        font-size: 14px;
+        }
+
+        a:hover {
+        text-decoration: underline;
+        }
+
+        h1 {
+        color: #393939;
+        font-size: 28px;
+        margin-bottom: 20px;
+        }
+
+        h2 {
+        color: #393939;
+        font-size: 20px;
+        margin-bottom: 20px;
+        }
+
+        h2 a {
+        color: #3d8dcc;
+        text-decoration: none;
+        font-size: 20px;
+        }
+
+
+        p {
+        font-size: 14px;
+        line-height: 22px;
+        }
+
+        li {
+        font-size: 14px;
+        line-height: 22px;
+        }
+
+        .header {
+          width: 600px;
+          margin: 0 auto 40px auto;
+        }
+
+        .logo {
+        width: 211px;
+        margin: 0 auto;
+        }
+
+        .content-box {
+          background: #fff;
+          width: 600px;
+          margin: 0 auto 20px auto;
+          border-radius:6px;
+          -moz-border-radius:6px;
+          -webkit-border-radius:6px;
+        }
+
+        .content-head {
+        padding: 30px 60px;
+        border-bottom: solid 1px #d4cfc4;
+        }
+
+        .content-head h1 {
+        text-align: center;
+        font-size: 26px;
+        color: #393939;
+        margin: 0;
+        }
+
+        .main-content-grey {
+        padding: 30px 60px;
+        background: #ece9e2;
+        }
+
+        .main-content-grey .divider {
+        height: 10px;
+        background: #dbd7cd;
+        }
+
+        .main-content-white {
+        padding: 30px 60px;
+        background: #fff;
+        }
+
+        .main-content-white .divider {
+        height: 10px;
+        background: #eee;
+        }
+
+        .image-right {
+        float: right;
+        margin: 10px 0px 10px 20px;
+        }
+
+        .image-left {
+        float: left;
+        margin: 10px 20px 10px 0;
+        }
+
+        .footer {
+        width: 400px;
+        margin: 0 auto;
+        text-align: center;
+        }
+
+        .footer p {
+        font-size: 12px;
+        color: #fff;
+        line-height: 18px;
+        margin-bottom: 20px;
+        }
+
+        .footer a {
+        font-size: 11px;
+        text-decoration: none;
+        }
+
+        .update {
+        margin: 0 15px;
+        padding-right: 15px;
+        border-right: solid 1px #eee;
+        }
+
+        @media only screen and (max-device-width: 480px) {
+            .hide { display: none !important; }
+            .table, .cell { width: 300px !important; }
+            .divider { height: 1px !important; }
+         }
+      /**/
+        %meta{content: "noindex,nofollow", name: "robots"}/
+    %meta{content: "", property: "og:title"}/
+  %body{background: "#48494e;font-family: 'helvetica', 'arial', 'sans-serif';padding-bottom: 20px;", style: "background: #48494e;font-family: 'helvetica', 'arial', 'sans-serif';padding-bottom: 20px;background-color: #48494e;margin: 0;padding: 0;width: 100%;-webkit-text-size-adjust:none;"}
+    %center
+      %table.header{style: "border: none;width: 600px; margin: 10px auto 40px auto;background: #48494e;font-family: 'helvetica', 'arial', 'sans-serif';background-color: #48494e;"}
+        %tbody
+          %tr
+            %td
+              %img.logo{alt: "Email-logo", src: image_path("email/email-logo.jpg"), style: "height: auto;line-height: 100%;outline: none;text-decoration: none;display: block;width: 211px;margin: 0 auto;"}/
+      %table.content-box{border: "0", cellpadding: "0", cellspacing: "0", style: "border: none;background: #fff;width: 600px;margin: 0 auto 20px auto;border-radius: 6px;-moz-border-radius: 6px;-webkit-border-radius: 6px;"}
+        %tbody
+          =yield
+          %tr
+            %td.main-content-white{style: "padding: 30px 60px;background: #fff;"}
+              %p{style: "font-size: 14px;line-height: 22px;"} Matt & the Coderwall team
+              %p{style: "font-size: 14px;line-height: 22px;"}
+                P.S. Make sure to follow us on twitter (
+                %a{href: "https://twitter.com/coderwall", style: "color: #3d8dcc;text-decoration: none;font-size: 14px;"}> @coderwall
+                )
+      %table.footer{style: "border: none;width: 400px;margin: 0 auto;text-align: center;background: #48494e;font-family: 'helvetica', 'arial', 'sans-serif';background-color: #48494e;"}
+        %tbody
+          %tr
+            %td
+              %p{style: "font-size: 12px;line-height: 18px;color: #fff;margin-bottom: 20px;"}
+                You're receiving this email because you signed up for Coderwall. We hate spam and make an effort to keep notifications to a minimum.
+          %tr
+            %td{style: "padding: 10px; margin-bottom:30px"}
+              %a.update{href: "https://coderwall.com/settings#email", style: "color: #3d8dcc;text-decoration: none;font-size: 11px;margin: 0 15px;padding-right: 15px;border-right: solid 1px #eee;"}
+                Easily Update Email Preferences
+              %a{href: "%unsubscribe_url%", style: "color: #3d8dcc;text-decoration: none;font-size: 11px;"}
+                Immediately Unsubscribe

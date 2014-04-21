@@ -1,0 +1,20 @@
+.jobs-map
+  %h1 Developer jobs by location
+  %ul
+    - @job_locations.each do |location|
+      %li
+        = link_to "developer jobs in #{location}", jobs_path(:location => location.parameterize)
+
+  %h1 Developer jobs by skill
+  %ul
+    - @job_skills.each do |skill|
+      %li
+        = link_to "#{skill.titleize} jobs", jobs_path(:skill => skill.parameterize)
+
+  %h1 Developer jobs by skill and location
+  %ul
+    - @job_locations.each do |location|
+      - @job_skills.each do |skill|
+        -if Opportunity.by_city(location).by_tag(skill).exists?
+          %li
+            = link_to "#{skill.titleize} jobs in #{location}", jobs_path(:location => location.parameterize, :skill => skill.parameterize)

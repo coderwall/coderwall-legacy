@@ -1,0 +1,41 @@
+-content_for :mixpanel do
+  = record_event('viewed networks page', sort: (params[:sort] || :default))
+
+= content_for :body_id do
+  protip-multiple
+
+= content_for :content_wrapper do
+  = false
+
+=content_for :javascript do
+  =javascript_include_tag 'protips'
+  =javascript_include_tag 'networks'
+  :javascript
+    var mynetworks = #{current_user.nil? ? [] : current_user.networks.map(&:name)};
+    for (i = 0; i < mynetworks.length; i++) {
+      $('.network h2 a').filter(function(){return $(this).text().trim() == mynetworks[i]}).closest('.network').find('.join-or-leave').addClass('member')
+    }
+    $('.network h2 a').filter(function(){return mynetworks.indexOf($(this).text().trim()) < 0}).closest('.network').find('.join-or-leave').removeClass('member').addClass('join')
+
+=content_for :footer_menu do
+  %li=link_to 'Protips', by_tags_protips_path
+
+.inside-main-content.cf
+  = render partial: 'navigation', locals: {network: nil}
+  %ul.networks-filter.cf
+    %li
+      %a{href: networks_path, class: networks_sub_nav_class('') + networks_sub_nav_class('a_z')}
+        A - Z
+    - if params[:action] == 'index'
+      %li.add-network
+        =link_to('Add Network', add_network_url, class: '')
+
+  %ol.networks-list
+    - if @networks.blank?
+      %li.no-networks
+        You don't belong to any networks.
+        Join some
+        = link_to 'here', networks_path
+        or from the list below
+      = render partial: determine_networks_partial(params[:sort]), locals: {networks_list: current_user.try(:networks_based_on_skills) || Network.most_protips.first(7), user: (defined?(@user) ? @user : nil)}
+    = render partial: determine_networks_partial(params[:sort]), locals: {networks_list: @networks, user: (defined?(@user) ? @user : nil)}

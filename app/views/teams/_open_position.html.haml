@@ -1,0 +1,47 @@
+%li.job.cf{:id => dom_id(job)}
+  %h3
+    = job.title
+    %span
+      = job.opportunity_type
+  %h3.salary
+    -#= number_to_currency(job.salary, :percision => 0) unless job.salary == 0
+  %ul
+    %li
+      =job.description
+    %li.cf
+      %ul.skills.cf
+        -job.tags.each do |tag|
+          %li=tag
+    %li.location-learn-more
+      %ul
+        - job.locations.each do |location|
+          %li.location
+            = location
+
+  -if job.accepts_applications?
+    -if signed_in?
+      =link_to('', '#apply', :style => "background-color:#{@team.branding_hex_color}", :class => 'track apply record-exit', 'data-opportunity-visit-path' => job_visited(job), 'data-target-type' => 'job-opportunity', 'data-action' => 'view job application', 'data-from' => 'job on team page')
+    -else
+      =link_to('', signin_path(:return_to => team_job_path(job.team)), :style => "background-color:#{@team.branding_hex_color}", :class => 'track apply noauth record-exit', 'data-opportunity-visit-path' => job_visited(job), 'data-target-type' => 'job-opportunity', 'data-action' => 'view job application', 'data-from' => 'job on team page')
+
+    %ul.application.hide
+      -if signed_in?
+        %li
+          == Your email: #{current_user.email}
+        %li.resume
+          == Your Resume:
+          - if current_user.has_resume?
+            = link_to current_user.resume_url[current_user.resume_url.rindex('/')+1..-1], current_user.resume_url, :target => "_blank"
+            = link_to 'change', change_resume_path, :class => 'change'
+          - else
+            = form_for current_user, :html => {:multipart => true, :class => "resume"}, :remote => true do |u|
+              =u.file_field :resume, :html => {:class => 'track', 'data-action' => 'upload resume', 'data-from' => 'job application'}
+              =u.hidden_field :auto_upload, :value => true
+        %li.send
+          =link_to('', apply_url(job), :method => :post, :remote => true, :style => "background-color:#{@team.branding_hex_color}", :class => "track #{application_status_css(job)}", 'data-action' => 'apply for job', 'data-from' => 'job on team page')
+      -else
+        %li
+          You must be signed in to apply.
+          = link_to 'signin', signin_path
+  -else
+    =link_to('Learn More', job.link, :target => :new, :style => "background-color:#{@team.branding_hex_color}", :class => 'track learn-more record-exit', 'data-opportunity-visit-path' => job_visited(job), 'data-target-type' => 'job-opportunity', 'data-action' => 'view external job', 'data-from' => 'job on teams page (learn more)')

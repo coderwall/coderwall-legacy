@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Define session name
+
+SESSION=coderwall
+
+# Go to working directory
+
+cd ~/coderwall/web
+
+vagrant up --no-provision
+
+# Session Exists?
+
+tmux has-session -t $SESSION
+if [ $? -eq 0 ]; then
+  echo "Session $SESSION already exists. Attaching."
+  sleep 1
+  tmux attach -t $SESSION
+  exit 0;
+fi
+
+# Pre-flight Configuration
+
+tmux -2 new-session -d -s $SESSION
+
+# Create windows
+tmux new-window -t $SESSION:1 -n "code"
+tmux new-window -t $SESSION:2 -n "web"
+tmux new-window -t $SESSION:3 -n "background jobs"
+
+# Define window roles
+
+# Code
+tmux select-window -t $SESSION:1
+tmux split-window -h
+tmux split-window -v
+tmux resize-pane -D 20
+
+tmux select-pane -t 0
+tmux send-keys "clear ; bundle exec rails console" C-m
+tmux select-pane -t 1
+tmux send-keys "clear ; vim" C-m
+tmux select-pane -t 2
+tmux send-keys "clear ; bundle exec guard -c -g rspec" C-m
+
+# Web
+tmux select-window -t $SESSION:2
+tmux select-pane -t 0
+tmux send-keys "clear ; bundle exec foreman start web" C-m
+
+# Background Jobs
+tmux select-window -t $SESSION:3
+tmux split-window -v
+tmux split-window -v
+tmux split-window -v
+tmux select-layout even-vertical
+
+tmux select-pane -t 0
+tmux send-keys "clear ; bundle exec foreman start worker" C-m
+tmux select-pane -t 1
+tmux send-keys "clear ; bundle exec foreman start scheduler" C-m
+tmux select-pane -t 2
+tmux send-keys "clear ; bundle exec foreman start refresher" C-m
+tmux select-pane -t 3
+tmux send-keys "clear ; bundle exec foreman start mailer" C-m
+
+# Set the initial working window
+tmux select-window -t $SESSION:1
+
+# Attach to named session
+tmux -2 attach-session -t $SESSION
