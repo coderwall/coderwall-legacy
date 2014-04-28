@@ -32,6 +32,8 @@ class Callbacks::HawtController < ApplicationController
       @protip = Protip.find(protip_id)
       @protip.feature
       @protip.save!
+    else
+      unfeature!(protip_id, im_hawt)
     end
   end
 
