@@ -8,6 +8,8 @@ class Callbacks::HawtController < ApplicationController
   respond_to :json
 
   def feature
+    logger.ap(params, :debug)
+
     feature!(hawt_callback_params[:protip_id], hawt_callback_params[:hawt?])
 
     respond_to do |format|
@@ -34,11 +36,9 @@ class Callbacks::HawtController < ApplicationController
   end
 
   def unfeature!(protip_id, im_hawt)
-    if im_hawt
-      @protip = Protip.find(protip_id)
-      @protip.unfeature
-      @protip.save!
-    end
+    @protip = Protip.find(protip_id)
+    @protip.unfeature
+    @protip.save!
   end
 
   def set_default_response_format
