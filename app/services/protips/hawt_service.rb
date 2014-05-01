@@ -35,7 +35,7 @@ module Services
         url = URI.parse("#{ENV['PRIVATE_URL']}/api/v1/protips/hawt.json").to_s
         protip_json = MultiJson.load(protip_hash.to_json)
 
-        RestClient.post(url, protip_json, accept: :json, content_type: 'application/json')
+        JSON.parse(RestClient.post(url, protip_json, accept: :json, content_type: 'application/json').to_s)['hawt?']
       end
     end
 
