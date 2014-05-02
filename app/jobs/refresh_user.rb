@@ -30,12 +30,9 @@ class RefreshUser
       user.reload.check_achievements!
       user.add_skills_for_unbadgified_facts
 
-      #Event.create_timeline_for(user.reload)
       user.calculate_score!
 
       Rails.logger.debug("Refreshed user #{@username}")
-      #Resque.enqueue(BuildActivityStream, username)
-      Resque.enqueue(UpdateFollowers, @username)
     ensure
       user.touch(:last_refresh_at)
       user.destroy_github_cache

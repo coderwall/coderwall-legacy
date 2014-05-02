@@ -254,56 +254,6 @@ describe User do
     user.badges.count.should == 1
   end
 
-  it 'finds users with twitter' do
-    user_with_twitter = Fabricate :user, twitter: 'mdeiters'
-    user_with_no_twitter = Fabricate :user, twitter: '', username: 'iHaveNoTwitter'
-    User.with_twitter.all.should include(user_with_twitter)
-    User.with_twitter.all.should_not include(user_with_no_twitter)
-  end
-
-  describe 'Twitter profile' do
-    it 'should get people with oldest updated' do
-      first_user = Fabricate :user, twitter: 'user1', username: 'user1'
-      second_user = Fabricate :user, twitter: 'user2', username: 'user2'
-      third_user = Fabricate :user, twitter: 'user3', username: 'user3'
-
-      User.stalest_twitter_profile(3).should include(first_user, second_user, third_user)
-
-      second_user.touch(:twitter_checked_at)
-
-      User.stalest_twitter_profile(2).should include(first_user, third_user)
-      User.stalest_twitter_profile(2).should_not include(second_user)
-
-      first_user.touch(:twitter_checked_at)
-
-      User.stalest_twitter_profile(2).should include(second_user, third_user)
-      User.stalest_twitter_profile(2).should_not include(first_user)
-    end
-
-    it 'should build a twitter profile' do
-      user = Fabricate :user, twitter: 'mdeiters'
-      user.twitter_profile.should_not be_nil
-    end
-
-    describe 'cleaning up username' do
-      it 'should remove spaces' do
-        user = Fabricate :user, twitter: 'user1  ', username: 'user1'
-        user.twitter.should == 'user1  '
-        TwitterClient.should_receive(:timeline_for).and_return([])
-        user.refresh_twitter!
-        user.twitter.should == 'user1'
-      end
-
-      it 'should remove ampersands' do
-        user = Fabricate :user, twitter: '@user1', username: 'user1'
-        user.twitter.should == '@user1'
-        TwitterClient.should_receive(:timeline_for).and_return([])
-        user.refresh_twitter!
-        user.twitter.should == 'user1'
-      end
-    end
-  end
-
   describe "redemptions" do
     it "should have an empty list of redemptions when new" do
       Fabricate.build(:user).redemptions.should be_empty
@@ -342,14 +292,6 @@ describe User do
       user.should_not be_valid
       user.errors[:username].should == ["must not contain a period"]
     end
-  end
-
-  it 'should queue an update for followers when twitter_id changes' do
-    user = Fabricate.build(:user)
-    ResqueSpec.reset!
-    user.twitter_id = 4
-    user.save!
-    UpdateFollowers.should have_queued(user.username)
   end
 
   describe 'score' do

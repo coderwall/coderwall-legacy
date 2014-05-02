@@ -15,18 +15,6 @@ class TwitterProfile
     end
   end
 
-  def refresh_timeline!
-    since_id = most_recent_tweet && most_recent_tweet.tweet_id || nil
-    TwitterClient.timeline_for(username, since_id).reverse.each do |grackle_tweet|
-      tweets.build(Tweet.to_hash(grackle_tweet))
-    end
-    save!
-  end
-
-  def most_recent_tweet
-    tweets.last
-  end
-
   def recent_links
     urls = []
     tweets.each do |tweet|
@@ -36,5 +24,4 @@ class TwitterProfile
     end
     urls.uniq
   end
-
 end

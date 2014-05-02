@@ -196,7 +196,6 @@ class User < ActiveRecord::Base
   scope :receives_newsletter, where(receive_newsletter: true)
   scope :receives_digest, where(receive_weekly_digest: true)
   scope :with_tokens, where("github_token IS NOT NULL")
-  scope :with_twitter, where("twitter IS NOT NULL AND twitter != ''")
   scope :on_team, where("team_document_id IS NOT NULL")
   scope :not_on_team, where("team_document_id IS NULL")
   scope :autocomplete, lambda { |filter|
@@ -246,11 +245,6 @@ class User < ActiveRecord::Base
 
     def with_username_or_email(username_or_email)
       where(["UPPER(username) = ? OR email like ?", username_or_email.upcase, username_or_email]).first
-    end
-
-    def stalest_twitter_profile(limit = nil)
-      query = active.with_twitter.order("twitter_checked_at ASC")
-      limit ? query.limit(limit) : query
     end
 
     def stalest_github_profile(limit = nil)
@@ -464,36 +458,6 @@ class User < ActiveRecord::Base
 
   def twitter_profile
     @twitter_profile ||= TwitterProfile.for_username(twitter) unless twitter.blank?
-  end
-
-  def refresh_twitter!
-    self.update_attribute(:twitter, twitter.strip) if twitter.strip != twitter
-    self.update_attribute(:twitter, twitter.gsub('@', '')) if twitter.include?('@')
-    Rails.logger.debug("Updating twitter #{username} => #{twitter}")
-    twitter_profile.refresh_timeline!
-    touch(:twitter_checked_at)
-    build_links!
-  rescue TwitterClient::UserNotFound => ex
-    #TODO: Test this and consider delete
-    Rails.logger.warn("User #{twitter} was not found")
-    touch(:twitter_checked_at)
-  rescue TwitterClient::UserIsNotPublic => ex
-    #TODO: Test this and consider delete
-    Rails.logger.warn("User #{twitter} has protected tweets")
-    touch(:twitter_checked_at)
-  end
-
-  def build_links!
-    twitter_profile.recent_links.each do |link|
-      begin
-        Link.register_for_user!(link, self)
-      rescue Link::AlreadyLinkForUser
-        Rails.logger.error("Skipping #{link} for #{username} because they already have this link")
-      rescue Link::InvalidUrl
-        puts("URL INVALID => #{url}") if Rails.env.development?
-        Rails.logger.error("Skipping #{link} for #{username} because it is invalid")
-      end
-    end if twitter_profile
   end
 
   def brief
@@ -1423,14 +1387,6 @@ class User < ActiveRecord::Base
   def make_referral_token
     if self.referral_token.nil?
       self.referral_token = SecureRandom.hex(8)
-    end
-  end
-
-  before_save :queue_followers
-
-  def queue_followers
-    if twitter_id_changed?
-      Resque.enqueue(UpdateFollowers, username)
     end
   end
 
