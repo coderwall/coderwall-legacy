@@ -9,4 +9,7 @@ Badgiy::Application.configure do
   config.action_controller.perform_caching = false
   Tire::Model::Search.index_prefix "#{Rails.application.class.parent_name.downcase}_#{Rails.env.to_s.downcase}"
   config.host = 'localhost:3000'
+
+  # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
+  config.assets.allow_debugging = true
 end
