@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '1.9.3'
 
-gem 'rails', '~> 3.1'
+gem 'rails', '~> 3.2'
 
 gem 'strong_parameters'
 
@@ -78,7 +78,7 @@ gem 'resque_mailer'
 gem 'stripe', github: 'stripe/stripe-ruby'
 
 # RSS parsing
-gem 'feedzirra'
+gem 'feedjira'
 
 # ElasticSearch client
 gem 'tire', '~> 0.4.1'
@@ -120,7 +120,7 @@ gem 'font_assets', '~> 0.1.2'
 gem 'geocoder'
 gem 'hashie'
 gem 'leftronic'
-gem 'linkedin', '0.2.2'
+gem 'linkedin'
 gem 'mail'
 gem 'mini_magick'
 gem 'mixpanel'
@@ -136,9 +136,9 @@ gem 'tweet-button'
 
 group :assets do
   gem 'sass', '~> 3.2.9'
-  gem 'coffee-rails', '~> 3.1.1'
+  gem 'coffee-rails', '~> 3.2.1'
   gem 'compass-rails'
-  gem 'sass-rails', github: 'rails/sass-rails', branch: '3-1-stable'
+  gem 'sass-rails', '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -152,7 +152,6 @@ group :development, :test do
   gem 'launchy'
   gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'mail_view'
-  gem 'mailgun-rails'
   gem 'syntax'
 end
 

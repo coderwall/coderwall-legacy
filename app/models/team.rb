@@ -963,7 +963,7 @@ class Team
 
   def blog
     unless self.blog_feed.blank?
-      feed = Feedzirra::Feed.fetch_and_parse(self.blog_feed)
+      feed = Feedjira::Feed.fetch_and_parse(self.blog_feed)
       feed unless feed.is_a?(Fixnum)
     end
   end
