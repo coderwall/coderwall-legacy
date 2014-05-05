@@ -317,17 +317,17 @@ class Team
 
   def collective_days_on_github
     @collective_days_on_github ||= begin
-      days = team_members.collect { |user| days_since(user.joined_github_on) }.sum
+                                     days = team_members.collect { |user| days_since(user.joined_github_on) }.sum
                                      # [(days / 365), (days % 365)]
-    end
+                                   end
   end
 
   def collective_days_on_twitter
     @collective_days_on_twitter ||= begin
-      days = team_members.collect { |user| days_since(user.joined_twitter_on) }.sum
+                                      days = team_members.collect { |user| days_since(user.joined_twitter_on) }.sum
                                       # [(days / 365), (days % 365)]
                                       # / ==#{@team.collective_days_on_twitter.first} yrs & #{@team.collective_days_on_twitter.last} days
-    end
+                                    end
   end
 
   def days_since(date)
@@ -341,15 +341,15 @@ class Team
 
   def achievements_with_counts
     @achievements_with_counts ||= begin
-      achievements = {}
-      team_members.each do |user|
-        user.badges.each do |badge|
-          achievements[badge.badge_class] = 0 if achievements[badge.badge_class].blank?
-          achievements[badge.badge_class] += 1
-        end
-      end
-      achievements.sort_by { |k, v| v }.reverse
-    end
+                                    achievements = {}
+                                    team_members.each do |user|
+                                      user.badges.each do |badge|
+                                        achievements[badge.badge_class] = 0 if achievements[badge.badge_class].blank?
+                                        achievements[badge.badge_class] += 1
+                                      end
+                                    end
+                                    achievements.sort_by { |k, v| v }.reverse
+                                  end
   end
 
   def top_team_members
@@ -490,19 +490,19 @@ class Team
 
   def specialties_with_counts
     @specialties_with_counts ||= begin
-      specialties = {}
-      team_members.each do |user|
-        user.speciality_tags.each do |tag|
-          tag              = tag.downcase
-          specialties[tag] = 0 if specialties[tag].blank?
-          specialties[tag] += 1
-        end
-      end
-      unless only_one_occurence_of_each = specialties.values.sum == specialties.values.length
-        specialties.reject! { |k, v| v <= 1 }
-      end
-      specialties.sort_by { |k, v| v }.reverse[0..7]
-    end
+                                   specialties = {}
+                                   team_members.each do |user|
+                                     user.speciality_tags.each do |tag|
+                                       tag              = tag.downcase
+                                       specialties[tag] = 0 if specialties[tag].blank?
+                                       specialties[tag] += 1
+                                     end
+                                   end
+                                   unless only_one_occurence_of_each = specialties.values.sum == specialties.values.length
+                                     specialties.reject! { |k, v| v <= 1 }
+                                   end
+                                   specialties.sort_by { |k, v| v }.reverse[0..7]
+                                 end
   end
 
   def empty?
@@ -664,8 +664,8 @@ class Team
   def log_history!
     REDIS.rpush("team:#{id.to_s}:score", {
       date:  Date.today,
-      score: self.score,
-      size:  self.size
+        score: self.score,
+        size:  self.size
     }.to_json)
   end
 
@@ -844,7 +844,8 @@ class Team
       Rails.logger.warn("[EVAL:#{i}] Team#detailed_visitors(since = #{since.inspect}) set to eval visitor_string = #{visitor_string.inspect}")
       i += 1
 
-      visitor        = eval(visitor_string)
+      #visitor        = eval(visitor_string)
+      visitor = HashStringParser.better_than_eval(visitor_string)
       visitor[:user] = identify_visitor(visitor[:user_id])
       visitor
     end
@@ -873,14 +874,14 @@ class Team
       aggregate[user_id] ||= visitor
       aggregate[user_id].merge!(visitor) do |key, old, new|
         case key
-          when :time_spent
-            old.to_i + new.to_i
-          when :visited_at
-            [old.to_i, new.to_i].max
-          when :furthest_scrolled
-            SECTIONS[[SECTIONS.index(old) || 0, SECTIONS.index(new) || 0].max]
-          else
-            old.nil? ? new : old
+        when :time_spent
+          old.to_i + new.to_i
+        when :visited_at
+          [old.to_i, new.to_i].max
+        when :furthest_scrolled
+          SECTIONS[[SECTIONS.index(old) || 0, SECTIONS.index(new) || 0].max]
+        else
+          old.nil? ? new : old
         end
       end
       aggregate[user_id][:visits] ||= 0
