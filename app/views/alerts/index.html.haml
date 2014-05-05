@@ -1,9 +1,11 @@
 -content_for :head do
-  =stylesheet_link_tag 'admin'
+  = stylesheet_link_tag 'admin'
 
 %ul.alerts
-  -@alerts.each do |alert|
-    -alert[:data].map{|ds, t| [eval(ds).with_indifferent_access, Time.at(t.to_i)]}.each do |data, time|
+  - @alerts.each do |alert|
+    - i = 1
+    - alert[:data].each { |ds, t| Rails.logger.warn("[EVAL:#{i}] view alerts#index set to eval ds = #{ds.inspect}") ; i += 1 }
+    - alert[:data].map { |ds, t| [ eval(ds).with_indifferent_access, Time.at(t.to_i) ] }.each do |data, time|
       %li
         .when== #{time_ago_in_words(time)} ago
         .type= alert[:type]

@@ -838,7 +838,12 @@ class Team
   end
 
   def detailed_visitors(since = 0)
+    i = 1
     REDIS.zrangebyscore(user_detail_views_key, since, Time.now.to_i).map do |visitor_string|
+
+      Rails.logger.warn("[EVAL:#{i}] Team#detailed_visitors(since = #{since.inspect}) set to eval visitor_string = #{visitor_string.inspect}")
+      i += 1
+
       visitor        = eval(visitor_string)
       visitor[:user] = identify_visitor(visitor[:user_id])
       visitor
