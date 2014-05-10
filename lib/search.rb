@@ -11,11 +11,52 @@ module SearchModule
     end
   end
 
-  def self.included(base)
-    base.extend(ClassMethods)
-  end
+  def self.included(base) ; base.extend(ClassMethods) ; end
 
   class Search
+    def initialize(context, query=nil, scope=nil, sort=nil, facet=nil, options={})
+      @context = context
+      @query = query
+      @scope = scope
+      @sort = sort
+      @facet = facet
+      @options = failover_strategy.merge(options || {})
+    end
+
+    def execute
+      query_criteria, filter_criteria, sort_criteria, facets, context = [@query, @scope, @sort, @facet, @context]
+
+      @context.tire.search(@options) do
+        query do
+          signature = query_criteria.to_tire
+          method = signature.shift
+          self.send(method, *signature)
+        end unless query_criteria.nil? || query_criteria.to_tire.blank?
+
+        filter_criteria.to_tire.each do |fltr|
+          filter *fltr
+        end unless filter_criteria.nil?
+
+        sort { by sort_criteria.to_tire } unless sort_criteria.nil?
+
+        ap facets
+        ap facets.to_tire unless facets.nil?
+        eval(facets.to_tire) unless facets.nil?
+
+        Rails.logger.debug "[search](#{context.to_s}):" + JSON.pretty_generate(to_hash)
+      end
+    rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED
+      if @options[:failover].nil?
+        raise
+      else
+        @options[:failover].limit(@options[:per_page] || 18).offset(((@options[:page] || 1)-1) * (@options[:per_page] || 19))
+      end
+    end
+
+    def sort_criteria ; @sort ; end
+
+    def failover_strategy ; { failover: @context.order('created_at DESC') } ; end
+
     class Scope
       def initialize(domain, object)
         @domain = domain
@@ -23,13 +64,8 @@ module SearchModule
         @filter = to_hash
       end
 
-      def to_tire
-        @filter
-      end
-
-      def to_hash
-        {}
-      end
+      def to_tire ; @filter ; end
+      def to_hash ; {} ; end
 
       def <<(other)
         @filter.deep_merge(other.to_tire)
@@ -43,15 +79,11 @@ module SearchModule
         @direction = direction
       end
 
-      def to_tire
-        @fields.map { |field| {field => @direction} }
-      end
+      def to_tire ; @fields.map { |field| {field => @direction} } ; end
     end
 
     class Query
-      def default_query
-        ''
-      end
+      def default_query ; '' ; end
 
       def initialize(query_string, default_operator = 'AND', default_query_string = default_query)
         @query_string = default_query_string + ' ' + query_string
@@ -59,14 +91,11 @@ module SearchModule
       end
 
       def to_tire
-        unless @query_string.blank?
-          "string '#{@query_string}', :default_operator => '#{@default_operator}'"
-        end
+        [:string, "#{@query_string}", { default_operator: "#{@default_operator}" }] unless @query_string.blank?
       end
     end
 
     class Facet
-
       def initialize(name, type, field, options)
         @name = name
         @type = type
@@ -82,9 +111,7 @@ module SearchModule
           "end"
       end
 
-      def to_tire
-        @facet
-      end
+      def to_tire ; @facet ; end
 
       def <<(other_facet)
         @facet << "\n" << other_facet.to_eval_form
@@ -95,44 +122,6 @@ module SearchModule
 
       def evaluatable_options
         ', ' + @options.join(', ') unless @options.blank?
-      end
-
-    end
-
-    def initialize(context, query=nil, scope=nil, sort=nil, facet=nil, options={})
-      @context = context
-      @query = query
-      @scope = scope
-      @sort = sort
-      @facet = facet
-      @options = failover_strategy.merge(options || {})
-    end
-
-    def sort_criteria
-      @sort
-    end
-
-    def failover_strategy
-      { failover: @context.order('created_at DESC') }
-    end
-
-    def execute
-      query_criteria, filter_criteria, sort_criteria, facets, context = [@query, @scope, @sort, @facet, @context]
-
-      @context.tire.search(@options) do
-        query { eval query_criteria.to_tire } unless query_criteria.nil? || query_criteria.to_tire.blank?
-        filter_criteria.to_tire.each do |fltr|
-          filter *fltr
-        end unless filter_criteria.nil?
-        sort { by sort_criteria.to_tire } unless sort_criteria.nil?
-        eval(facets.to_tire) unless facets.nil?
-        Rails.logger.debug "[search](#{context.to_s}):" + JSON.pretty_generate(to_hash)
-      end
-    rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED
-      if @options[:failover].nil?
-        raise
-      else
-        @options[:failover].limit(@options[:per_page] || 18).offset(((@options[:page] || 1)-1) * (@options[:per_page] || 19))
       end
     end
   end

@@ -63,17 +63,6 @@ class ProtipsController < ApplicationController
     end
   end
 
-  def search
-    search_params = params.permit(:search)
-    @context             = "search"
-    query_string, @scope = expand_query(search_params[:search])
-    facets               = top_tags_facet << Protip::Search::Facet.new('suggested-networks', :terms, :networks, [size: 4])
-    @protips             = Protip::Search.new(Protip, Protip::Search::Query.new(query_string), @scope, Protip::Search::Sort.new(:trending_score), facets, search_options).execute
-    @suggested_networks  = suggested_networks
-    find_a_job_for(@protips)
-    render :index
-  end
-
   def topic
     topic_params = params.permit(:tags, :page, :per_page)
 
@@ -398,12 +387,43 @@ class ProtipsController < ApplicationController
     render partial: 'protip', locals: { protip: protip, mode: 'preview', include_comments: false, job: nil }
   end
 
+  def search
+    search_params = params.permit(:search)
+
+    @context = 'search'
+    query_string, @scope = expand_query(search_params[:search])
+    facets = top_tags_facet << Protip::Search::Facet.new('suggested-networks', :terms, :networks, [size: 4])
+
+    @protips = Protip::Search.new(
+      Protip,
+      Protip::Search::Query.new(query_string),
+      @scope,
+      Protip::Search::Sort.new(:trending_score),
+      facets,
+      search_options
+    ).execute
+    @suggested_networks = suggested_networks
+    find_a_job_for(@protips)
+    render :index
+  end
+
   private
+
+  def expand_query(query_string)
+    scopes = []
+    query  = query_string.nil? ? '' : query_string.dup
+    query.scan(/#([\w\.\-#]+)/).flatten.reduce(query) do |query, tag|
+      query.slice!("##{tag}")
+      scopes << Protip::Search::Scope.new(:network, tag)
+      query
+    end
+    [query, scopes.blank? ? nil : scopes.reduce(&:<<)]
+  end
+
   def lookup_protip
     @protip = Protip.find_by_public_id(params.permit(:id)[:id].downcase)
   end
 
-  private
   def choose_protip_layout
     if [:show, :random, :new, :edit, :create, :update].include? action_name.to_sym
       'protip'
@@ -413,8 +433,6 @@ class ProtipsController < ApplicationController
       'application'
     end
   end
-
-  private
 
   def search_options
     search_options_params = params.permit(:page, :per_page)
@@ -491,17 +509,6 @@ class ProtipsController < ApplicationController
 
   def private_scope?
     params[:scope] == "following"
-  end
-
-  def expand_query(query_string)
-    scopes = []
-    query  = query_string.nil? ? "" : query_string.dup
-    query.scan(/#([\w\.\-#]+)/).flatten.reduce(query) do |query, tag|
-      query.slice!("##{tag}")
-      scopes << Protip::Search::Scope.new(:network, tag)
-      query
-    end
-    [query, scopes.blank? ? nil : scopes.reduce(&:<<)]
   end
 
   def track_discovery
