@@ -853,10 +853,6 @@ class User < ActiveRecord::Base
   def refresh_github!
     unless github.blank?
       load_github_profile
-      # token = github_token || User.with_tokens.first.github_token
-      # client = Github.new(token)
-      # github_profile.refresh!(client)
-      # load_github_profile
     end
   end
 

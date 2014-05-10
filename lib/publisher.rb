@@ -1,5 +1,4 @@
 module Publisher
-
   def agent
     @@pubnub ||= Pubnub.new(
         ENV['PUBNUB_PUBLISH_KEY'],
