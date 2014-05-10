@@ -148,6 +148,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'quiet_assets'
   gem 'jazz_hands'
   gem 'launchy'
   gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'

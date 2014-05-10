@@ -401,6 +401,8 @@ GEM
       em-http-request (>= 1.0.2)
       json
     querystring (0.1.0)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -652,6 +654,7 @@ DEPENDENCIES
   pg
   pubnub (= 0.1.9)
   querystring
+  quiet_assets
   rack-timeout
   rails (~> 3.2)
   rails_12factor
