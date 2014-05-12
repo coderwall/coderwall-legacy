@@ -61,7 +61,7 @@ make install
 cd ..
 rm -rf node*
 
-RUBY_VERSION="2.1.1"
+RUBY_VERSION="2.1.0"
 wget http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-$RUBY_VERSION.tar.bz2
 tar jxf ruby-$RUBY_VERSION.tar.bz2
 cd ruby-$RUBY_VERSION
