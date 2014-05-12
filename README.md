@@ -31,7 +31,7 @@ register it yourself.__
 
 There's only a VirtualBox basebox right now.
 
-        vagrant box add coderwall https://www.dropbox.com/s/reh3tx7x06k94pc/coderwall.box
+        vagrant box add coderwall http://cdn.coderwall.com/vagrant/coderwall.box
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
