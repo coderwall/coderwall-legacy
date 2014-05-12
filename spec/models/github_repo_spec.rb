@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe GithubRepo do
+describe GithubRepo, :pending do
   before :each do
     register_fake_paths
 

@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Github, functional: true do
+describe Github, :pending, functional: true do
   let(:github) { Github.new }
 
   it 'can get profile' do

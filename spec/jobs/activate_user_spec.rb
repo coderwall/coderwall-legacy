@@ -1,4 +1,4 @@
-describe ActivateUser, functional: true do
+describe ActivateUser, :pending, functional: true do
   it 'should activate a user regardless of achievements by default', slow: true do
     user = Fabricate(:pending_user, github: 'hirelarge')
     ActivateUser.new(user.username).perform
