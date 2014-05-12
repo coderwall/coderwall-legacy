@@ -14,7 +14,7 @@ source "$HOME/.rvm/scripts/rvm"
 [[ -s "$rvm_path/hooks/after_cd_bundle" ]] && chmod +x $rvm_path/hooks/after_cd_bundle
 rvm requirements
 rvm reload
-_RUBY_VERSION=ruby-2.1.1
+_RUBY_VERSION=ruby-2.1.0
 rvm install $_RUBY_VERSION
 rvm gemset create coderwall
 rvm use $_RUBY_VERSION --default
@@ -23,5 +23,6 @@ cd $HOME/web
 gem update --system && gem update bundler
 bundle config --global jobs 3
 bundle install
+bundle exec rake db:create:all
 bundle exec rake db:setup
 bundle exec rake db:test:prepare
