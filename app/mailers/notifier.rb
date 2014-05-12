@@ -246,7 +246,6 @@ class Notifier < ActionMailer::Base
         bundle = PurchasedBundle.create! do |bundle|
           bundle.email = User.active.order("Random()").first.email
           bundle.codeschool_coupon = 'http://www.codeschool.com/vouchers/ef4f215468?secret=1dd6bd0315'
-          bundle.peepcode_coupon = 'coderwall_933ea65cf6a8'
           bundle.recipes_coupon = 'CWJSBUNDLE'
           bundle.total_amount = 6400
           bundle.token = PurchasedBundle.create_test_token

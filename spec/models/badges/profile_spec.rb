@@ -1,4 +1,4 @@
-describe 'profile badges' do
+describe 'profile badges', :pending do
   it 'mdeiters', functional: true, slow: true, pending: 'the data bootstrap is incorrect' do
     VCR.use_cassette('github_for_mdeiters') do
       User.delete_all

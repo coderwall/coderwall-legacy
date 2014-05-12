@@ -33,9 +33,8 @@ describe PurchasedBundle do
   it 'should split purchase amount on creation', functional: true do
     purchase = create_test_bundle(amount = 6000)
     purchase.codeschool_proceeds.should == 3477 #3600
-    purchase.peepcode_proceeds.should == 753 #780
     purchase.charity_proceeds.should == 1159 #1200
-    purchase.coderwall_proceeds.should == 407 #420
+    purchase.coderwall_proceeds.should == 1160 #420
   end
 
   it 'should not allow purchases under 20 dollars', functional: true do

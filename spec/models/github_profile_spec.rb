@@ -1,4 +1,4 @@
-describe GithubProfile do
+describe GithubProfile, :pending do
   let(:languages) {
     {
       'C' => 194738,

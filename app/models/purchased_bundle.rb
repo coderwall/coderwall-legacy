@@ -59,7 +59,6 @@ class PurchasedBundle < ActiveRecord::Base
     transaction do
       coupon = AvailableCoupon.first
       update_attributes!(
-        peepcode_coupon:   coupon.peepcode_coupon,
         codeschool_coupon: coupon.codeschool_coupon,
         recipes_coupon:    coupon.recipes_coupon
       )
@@ -109,9 +108,8 @@ class PurchasedBundle < ActiveRecord::Base
 
   def split_purchase
     self.total_amount        = 0 if self.total_amount.nil?
-    self.peepcode_proceeds   = ((total_amount - fee) * 0.13)
     self.codeschool_proceeds = ((total_amount - fee) * 0.60)
     self.charity_proceeds    = ((total_amount - fee) * 0.20)
-    self.coderwall_proceeds  = total_amount - (peepcode_proceeds + codeschool_proceeds + charity_proceeds + fee)
+    self.coderwall_proceeds  = total_amount - (codeschool_proceeds + charity_proceeds + fee)
   end
 end
