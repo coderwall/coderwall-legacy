@@ -145,6 +145,8 @@ end
 group :development do
   gem 'better_errors'
   gem 'guard-rspec'
+  gem 'travis'
+  gem 'travis-lint'
 end
 
 group :development, :test do
