@@ -15,4 +15,4 @@
 #
 # Rails.application.config.session_store = :dalli_store, ENV['MEMCACHE_SERVERS'], { :namespace => 'sessions', :key => '_cw',  :expires_in => 1.day, :compress => false}
 
-Badgiy::Application.config.session_store :active_record_store, expire_after: 1.month, session_key: '_session', secret: 'a2764e6a-d6a2-4bb1-9b3c-dbe76038edf3'
+Badgiy::Application.config.session_store :active_record_store, expire_after: 1.month, session_key: '_session', secret: ENV['SESSION_SECRET']
