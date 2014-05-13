@@ -23,6 +23,10 @@ cd $HOME/web
 gem update --system && gem update bundler
 bundle config --global jobs 3
 bundle install
-bundle exec rake db:create:all
-bundle exec rake db:setup
-bundle exec rake db:test:prepare
+
+# Setup .env
+cp .env.example .env -n
+
+foreman run rake db:create:all
+foreman run rake db:setup
+foreman run rake db:test:prepare

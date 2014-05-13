@@ -7,7 +7,7 @@
 .DS_Store
 .bundle
 .config
-.env
+*.env
 .idea
 .sass-cache
 .vagrant
