@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 $box = 'coderwall'
-$box_url = 'https://dl.dropboxusercontent.com/u/7573062/vagrant/boxes/coderwall.box'
+$box_url = 'http://cdn.coderwall.com/vagrant/coderwall.box'
 $provision = 'vagrant/bootstrap.sh'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -36,8 +36,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9292, host: 9293, auto_correct: true
 
   config.vm.synced_folder '.', '/home/vagrant/web', nfs: true
-  # config.vm.synced_folder './vagrant', '/home/vagrant/provision', nfs: true
-  # config.vm.synced_folder './vagrant/dotfiles', '/home/vagrant/dotfiles', nfs: true
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ['modifyvm', :id, '--cpus', '4']
