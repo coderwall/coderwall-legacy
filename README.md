@@ -9,10 +9,6 @@ A community for developers to unlock & share new skills.
 TODO: Describe Stripe configuration
 TODO: Describe GitHub configuration https://github.com/settings/applications/new
 
-TODO: heroku plugins:install git://github.com/ddollar/heroku-config.git
-
-TODO: bundle exec rake assets:clean assets:precompile
-
 ### How to work on Coderwall using Vagrant on VirtualBox
 
 Sure you could download and install all the dependencies, services, and whatnot
@@ -24,12 +20,11 @@ everything in place and ready for you to start hacking (even on Windows!)
 
 Here's everything you need to get started working on Coderwall with Vagrant TODAY!
 
-*At the time of writing this document we were using VirtualBox 4.3.6 and Vagrant 1.4.2.*
+*At the time of writing this document we were using VirtualBox 4.3.10 and Vagrant 1.6.2.*
 
 #### Vagrant! I already know what to do.
 
-__If you're an experienced Vagrant user then you can fetch the base box and
-register it yourself.__
+__If you're an experienced Vagrant user then you can fetch the base box and register it yourself.__
 
 There's only a VirtualBox basebox right now.
 
@@ -41,16 +36,16 @@ There's only a VirtualBox basebox right now.
 
     Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Downloads)**.
 
-    _At the time of writing this documentation the current version is VirtualBox 4.3.6._
+    _At the time of writing this documentation the current version is VirtualBox 4.3.10._
 
-    You don't have to install the VirtualBox 4.3.6 Oracle VM VirtualBox Extension Pack
+    You don't have to install the VirtualBox 4.3.10 Oracle VM VirtualBox Extension Pack
     but I recommend installing it for the extra drivers.
 
 2. **Install Vagrant**
 
     Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**.
 
-    _At the time of writing this documentation the current version is Vagrant 1.4.2._
+    _At the time of writing this documentation the current version is Vagrant 1.6.2._
 
     Follow the installation instructions for your platform on the Vagrant download page.
 
@@ -59,25 +54,24 @@ There's only a VirtualBox basebox right now.
     If you're on a OS X/Linux system you can install the plugins by running:
 
         vagrant plugin install vagrant-vbguest
-        vagrant plugin install vagrant-cachier
 
-    The tools will each help with keeping the VirtualBox Guest Additions up-to-date as
-    well as helping reduce network bandwidth and speed up requests for APT packages,
-    RubyGems, and RVM after their first request by caching the responses locally.
+    The vagrant-vbguest plugin will each help with keeping the VirtualBox Guest Additions up-to-date.
 
-3. **Git coderwall/web**
+3. **Git assemblymade/coderwall**
 
-    At the moment I'm going to assume that I don't need to describe this process yet.
+    mkdir -p ~/assemblymade
+    cd ~/assemblymade
+    git clone git@github.com:assemblymade/coderwall.git
 
     I am going to assume that the project is cloned into your home directory in
-    and into a directory structure like `~/coderwall/web`.
+    and into a directory structure like `~/assemblymade/coderwall`.
 
 4. **Fire it up! Fire it up! Fire it up!**
 
     Now that you've got VirtualBox and Vagrant installed with the source code
-    cloned in `~/coderwall/web` we can start up the Vagrant instance.
+    cloned in `~/assemblymade/coderwall` we can start up the Vagrant instance.
 
-        cd ~/coderwall/web
+        cd ~/assemblymade/coderwall
         vagrant up
 
     You will likely be prompted for your `sudo` password to allow VirtualBox
@@ -92,7 +86,7 @@ There's only a VirtualBox basebox right now.
     Once Vagrant reports that you're booted up and ready to go then you'll be
     able to SSH into the local vm similiar to any other remote box.
 
-        # still in ~/coderwall/web
+        # still in ~/assemblymade/coderwall
         vagrant ssh
         # whoa!
         pwd
@@ -103,8 +97,8 @@ There's only a VirtualBox basebox right now.
     Now that you're SSH'ed into the Vagrant VM it's time to run the app.
 
         # we're still SSH'ed into Vbox
-        cd ~/web
-        rvm current # should be ruby-1.9.3-p484@coderwall
+        cd ~/assemblymade
+        rvm current # should be ruby-2.1.0@coderwall
         bundle check # should be a response that everything's good
         bundle exec rails server
 
@@ -128,14 +122,14 @@ There's only a VirtualBox basebox right now.
     let you have whatever crazy, complicated editors and tools to work on your
     code while abstracting away the nasty details of installing and configuring Postgres.
 
-    If you're on your host computer and navigate to `~/coderwall/web` (we're all there, right?)
+    If you're on your host computer and navigate to `~/assemblymade/coderwall` (we're all there, right?)
     and make changes to your code while Vagrant is running you'll be able to see the changes
     reflected in Vagrant immediately. Try this.
 
-        cd ~/coderwall/web
+        cd ~/assemblymade/coderwall
         echo Hello, `whoami` from `hostname` >> HELLO.txt
         vagrant ssh
-        cd ~/web
+        cd ~/assemblymade
         cat HELLO.txt #whoa.
         echo Hello, `whoami` from `hostname` >> HELLO.txt
         exit
@@ -174,7 +168,7 @@ Coderwall is built from the following open source components:
 - [Redis](http://redis.io/)
 - [Ruby on Rails](https://github.com/rails/rails)
 
-Plus *lots* of Ruby Gems, a complete list of which is at [/master/Gemfile](https://github.com/assemblymade/cw-web/blob/master/Gemfile).
+Plus *lots* of Ruby Gems, a complete list of which is at [/master/Gemfile](https://github.com/assemblymade/coderwall/blob/master/Gemfile).
 
 We use [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) to isolate and simplify the local development process.
 
