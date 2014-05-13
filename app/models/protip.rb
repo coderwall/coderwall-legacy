@@ -401,7 +401,13 @@ class Protip < ActiveRecord::Base
     end
 
     def valid_reviewers
-      Rails.cache.fetch('valid_protip_reviewers', expires_in: 1.month) { User.where(username: YAML.load(ENV['REVIEWERS'])).all }
+      Rails.cache.fetch('valid_protip_reviewers', expires_in: 1.month) do
+        if ENV['REVIEWERS']
+          User.where(username: YAML.load(ENV['REVIEWERS'])).all
+        else
+          []
+        end
+      end
     end
 
   end

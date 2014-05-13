@@ -17,7 +17,8 @@ class AccountsController < ApplicationController
 
     @account           = @team.build_account(params[:account])
     @account.admin_id  = current_user.id
-    @account.trial_end = Date.new(2013, 1, 1).to_time.to_i if session[:discount] == ENV['DISCOUNT_TOKEN']
+    # TODO: (whatupdave) this doesn't look like it's being used any more. Remove if possible
+    # @account.trial_end = Date.new(2013, 1, 1).to_time.to_i if session[:discount] == ENV['DISCOUNT_TOKEN']
 
     if @account.save_with_payment(@plan)
       unless @team.is_member?(current_user)
