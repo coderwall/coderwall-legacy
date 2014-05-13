@@ -47,6 +47,11 @@ class AdminController < ApplicationController
   end
 
   def section_teams
-    @teams = Team.with_completed_section(params[:section].to_sym)
+    @teams = Team.with_completed_section(parse_section_name(params[:section]))
+  end
+
+  def parse_section_name(section_name)
+    name = Team::SECTIONS.select { |section| section == section_name }.first
+    return name.to_sym unless name.nil?
   end
 end
