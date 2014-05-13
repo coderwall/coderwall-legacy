@@ -1,0 +1,5 @@
+test:
+  adapter: postgresql
+  database: uglst_test
+  encoding: unicode
+  username: postgres

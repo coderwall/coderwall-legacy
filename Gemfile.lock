@@ -577,7 +577,7 @@ GEM
       multi_json (~> 1.0)
       rake
       rest-client (~> 1.6)
-    travis (1.6.10)
+    travis (1.6.11)
       addressable (~> 2.3)
       backports
       faraday (~> 0.9)
@@ -587,7 +587,7 @@ GEM
       launchy (~> 2.1)
       pry (~> 0.9)
       pusher-client (~> 0.4)
-      typhoeus (~> 0.6)
+      typhoeus (~> 0.6, >= 0.6.8)
     travis-lint (1.7.0)
       hashr (~> 0.0.22)
     treetop (1.4.15)

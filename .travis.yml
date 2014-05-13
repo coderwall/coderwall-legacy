@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - 2.1.0
+bundler_args: "--without development production autotest"
+before_install:
+  - gem update --system
+  - travis_retry gem install bundler --pre
+before_script:
+  - cp -f config/database.travis.yml config/database.yml
+  - cp -f .env.example .env
+  - bin/rake db:create db:schema:load RAILS_ENV=test
