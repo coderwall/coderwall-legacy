@@ -2,6 +2,11 @@ language: ruby
 rvm:
   - 2.1.0
 bundler_args: "--without development production autotest"
+services:
+  - elasticsearch
+  - memcached
+  - mongodb
+  - redis-server
 before_install:
   - gem update --system
   - travis_retry gem install bundler --pre
