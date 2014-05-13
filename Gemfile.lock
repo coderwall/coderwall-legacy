@@ -547,6 +547,9 @@ GEM
       redis-namespace (>= 1.1.0)
       simple-random
       sinatra (>= 1.2.6)
+    spring (1.1.2)
+    spring-commands-rspec (1.0.2)
+      spring (>= 0.9.1)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -722,6 +725,8 @@ DEPENDENCIES
   simple_form
   simplecov
   split
+  spring
+  spring-commands-rspec
   squeel (= 1.0.1)
   stripe!
   strong_parameters
