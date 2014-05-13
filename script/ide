@@ -6,7 +6,7 @@ SESSION=coderwall
 
 # Go to working directory
 
-cd ~/coderwall/web
+cd ~/assemblymade/coderwall
 
 vagrant up --no-provision
 
