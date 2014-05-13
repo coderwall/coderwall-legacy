@@ -191,14 +191,6 @@ class Notifier < ActionMailer::Base
     mail to: @user.email, subject: "Coderwall just got delicious"
   end
 
-  def deliver_bundle(purchased_bundle_id)
-    headers['X-Mailgun-Variables'] = {email_type: RECIPT_EVENT}.to_json
-
-    @bundle = PurchasedBundle.find(purchased_bundle_id)
-    attachments['recipeswithbackbone.pdf'] = File.read(File.join(Rails.root, 'db', 'seeds', 'recipes_with_backbone.pdf'))
-    mail to: @bundle.email, subject: 'Your Shiny New Coderwall JavaScript Bundle'
-  end
-
   def newsletter_networks(username)
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
     track_campaign("newsletter_networks")
@@ -241,18 +233,6 @@ class Notifier < ActionMailer::Base
 
   if Rails.env.development?
     class Preview < MailView
-
-      def deliver_bundle
-        bundle = PurchasedBundle.create! do |bundle|
-          bundle.email = User.active.order("Random()").first.email
-          bundle.codeschool_coupon = 'http://www.codeschool.com/vouchers/ef4f215468?secret=1dd6bd0315'
-          bundle.recipes_coupon = 'CWJSBUNDLE'
-          bundle.total_amount = 6400
-          bundle.token = PurchasedBundle.create_test_token
-        end
-        mail = Notifier.deliver_bundle(bundle.id)
-        mail
-      end
 
       def new_follower
         user = User.active.order("Random()").first

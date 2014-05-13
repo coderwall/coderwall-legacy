@@ -24,12 +24,6 @@ namespace :leftronic do
     leftronic.list 'latest_team_updates', Team.order_by(:updated_at => 'desc').limit(10).map(&:slug)
   end
 
-  task :purchased_bundles => :environment do
-    leftronic.number 'purchased_bundles', PurchasedBundle.count
-    leftronic.number 'gross_revenue', PurchasedBundle.sum(:total_amount).to_f / 100
-    leftronic.number 'net_revenue', PurchasedBundle.sum(:coderwall_proceeds).to_f / 100
-  end
-
   task :au => :environment do
     leftronic.number 'dau', percent_of_users_visited(24.hours.ago)
     leftronic.number 'wau', percent_of_users_visited(7.days.ago)
