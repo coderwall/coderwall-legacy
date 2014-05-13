@@ -1,6 +1,11 @@
 class GithubBadge
   def initialize
-    @client = Octokit::Client.new(login: ENV['GITHUB_ADMIN_USER'], password: ENV['GITHUB_ADMIN_USER_PASSWORD'], client_id: ENV['GITHUB_CLIENT_ID'], client_secret: ENV['GITHUB_SECRET'])
+    @client = Octokit::Client.new(
+      login: ENV['GITHUB_ADMIN_USER'],
+      password: ENV['GITHUB_ADMIN_USER_PASSWORD'],
+      client_id: ENV['GITHUB_CLIENT_ID'],
+      client_secret: ENV['GITHUB_SECRET']
+    )
   rescue Exception => e
     Rails.logger.error("Failed to initialize octokit: #{e.message}")
   end

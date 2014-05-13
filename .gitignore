@@ -1,3 +1,5 @@
+
+# Ignore application configuration
 *.dat
 *.gem
 *.rbc
@@ -6,12 +8,12 @@
 .bundle
 .config
 .env
-.env.*
 .idea
 .sass-cache
 .vagrant
 .yardoc
 /.bundle
+/config/application.yml
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*.log
@@ -32,6 +34,7 @@ log/*.log
 logfile
 nlp.rb
 pkg
+public/assets/
 public/images/top/
 rdoc
 script/env
@@ -42,13 +45,8 @@ test/tmp
 test/version_tmp
 tmp
 vagrant/cache
+vagrant/coderwall-box/output-virtualbox-iso/
+vagrant/coderwall-box/packer_cache/
+vagrant/coderwall-box/packer_virtualbox-iso_virtualbox.box
 vagrant/dotfiles
 vcr_cassettes
-public/assets/
-
-vagrant/coderwall-box/packer_cache/
-vagrant/coderwall-box/output-virtualbox-iso/
-vagrant/coderwall-box/packer_virtualbox-iso_virtualbox.box
-
-# Ignore application configuration
-/config/application.yml

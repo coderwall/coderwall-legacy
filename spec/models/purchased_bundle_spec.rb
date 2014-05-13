@@ -29,7 +29,6 @@
 require 'spec_helper'
 
 describe PurchasedBundle do
-
   it 'should split purchase amount on creation', functional: true do
     purchase = create_test_bundle(amount = 6000)
     purchase.codeschool_proceeds.should == 3477 #3600
@@ -51,7 +50,8 @@ describe PurchasedBundle do
 
   it 'should put stripe message into errors if charge unsucessful', functional: true do
     purchase = create_test_bundle(amount = 2000, bad_token = 'this-is-bogus')
-    purchase.errors.full_messages.should include("Unable to charge card. Please contact us at support@coderwall.com if you continue to have issues.")
+    expected_message = "Unable to charge card. Please contact us at support@coderwall.com if you continue to have issues."
+    purchase.errors.full_messages.should include(expected_message)
   end
 
   def create_test_bundle(amount, token = PurchasedBundle.create_test_token)

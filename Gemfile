@@ -4,6 +4,9 @@ ruby '2.1.0'
 
 gem 'rails', '~> 3.2'
 
+# Load environment variables first
+gem 'dotenv-rails', groups: [:development, :test]
+
 gem 'strong_parameters'
 
 # Mongo
@@ -94,9 +97,6 @@ gem 'multi_json'
 gem 'oj'
 gem 'active_model_serializers'
 gem 'jbuilder'
-
-# Environment variable configuration management
-gem 'figaro'
 
 # Run app
 gem 'foreman'
