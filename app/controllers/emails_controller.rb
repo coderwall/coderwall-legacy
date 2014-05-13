@@ -1,6 +1,6 @@
 class EmailsController < ApplicationController
   def unsubscribe
-    Rails.logger.info("Mailgun Unsubscribe: #{params.inspect}")
+    puts("Mailgun Unsubscribe: #{params.inspect}")
     if mailgun?(ENV['MAILGUN_API_KEY'], params['token'], params['timestamp'], params['signature'])
       if params[:email_type] == Notifier::WELCOME_EVENT
         user = User.where(email: params[:recipient]).first
@@ -30,9 +30,12 @@ class EmailsController < ApplicationController
   protected
 
   def mailgun?(api_key, token, timestamp, signature)
-    return signature == OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'),
-                                                api_key,
-                                                '%s%s' % [timestamp, token])
+    encrypted = encrypt_signature(api_key, timestamp, token)
+    return signature == encrypted
+  end
+
+  def encrypt_signature(api_key, timestamp, token)
+    OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), api_key, '%s%s' % [timestamp, token])
   end
 
 end
