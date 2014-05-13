@@ -1,5 +1,7 @@
 <a href="http://www.coderwall.com/">![Logo](app/assets/images/logo.png)</a>
 
+[![Build Status](https://travis-ci.org/assemblymade/coderwall.svg?branch=master)](https://travis-ci.org/assemblymade/coderwall)
+
 [![Code Climate](https://codeclimate.com/repos/53713d15e30ba01ff50013f0/badges/78d29b02a9f5dab80043/gpa.png)](https://codeclimate.com/repos/53713d15e30ba01ff50013f0/feed)
 
 A community for developers to unlock & share new skills.
