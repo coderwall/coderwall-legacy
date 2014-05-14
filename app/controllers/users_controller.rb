@@ -198,7 +198,9 @@ class UsersController < ApplicationController
     clear_provider_params = params.permit(:id, :provider)
 
     @user = User.find(clear_provider_params[:id])
-    @user.send("clear_#{clear_provider_params[:provider]}!")
+
+    clear_provider_for_user(clear_provider_params[:provider], @user)
+
     redirect_to(badge_url(username: @user.username))
   end
 
@@ -228,11 +230,20 @@ class UsersController < ApplicationController
     unlink_provider_params = params.permit(:provider)
 
     provider = unlink_provider_params[:provider]
-    current_user.send("clear_#{provider}!") if current_user.can_unlink_provider?(provider)
+    clear_provider_for_user(provider, user) if current_user.can_unlink_provider?(provider)
     redirect_to(edit_user_url(current_user))
   end
 
   protected
+
+  def clear_provider_for_user(provider, user)
+    case provider
+    when 'twitter' then user.clear_twitter!
+    when 'github' then user.clear_github!
+    when 'linkedin' then user.clear_linkedin!
+    else raise("Unknown Provider: '#{provider}'")
+    end
+  end
 
   def admin_of_premium_team?
     current_user != @user && @user.team.try(:admin?, current_user)
