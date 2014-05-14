@@ -28,8 +28,6 @@ RSpec.configure do |config|
     REDIS.SELECT(testdb = 1)
     REDIS.flushdb
 
-    Team.rebuild_index
-    Plan.seed_plans!
   end
 
   config.before(:suite) do

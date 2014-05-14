@@ -210,16 +210,6 @@ class Team
       empty = Team.new.send(section).is_a?(Array) ? [] : nil
       Team.where(section.to_sym.ne => empty)
     end
-
-    def rebuild_index(name = nil)
-      raise "Unable to rebuild search index in production because it is disabled by bonsai" if Rails.env.staging? || Rails.env.production?
-      klass = self
-      Tire.index name || self.index_name || self.class.name do
-        delete
-        create
-        klass.all.in_groups_of(1000) { |batch| import batch }
-      end
-    end
   end
 
   def relevancy

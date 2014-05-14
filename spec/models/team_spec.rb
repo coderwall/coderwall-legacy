@@ -37,6 +37,7 @@ describe Team do
   end
 
   it 'should clear the cache when a premium team is updated' do
+    seed_plans!
     Rails.cache.write(Team::FEATURED_TEAMS_CACHE_KEY, 'test')
     team.team_members << admin = Fabricate(:user)
     team.build_account
@@ -54,10 +55,18 @@ describe Team do
 
   it 'should be able to add team link' do
     team.update_attributes(
-        featured_links: [{
-                             name: 'Google',
-                             url: 'http://www.google.com'
-                         }])
+      featured_links: [{
+        name: 'Google',
+        url: 'http://www.google.com'
+      }])
     team.featured_links.should have(1).link
+  end
+
+  def seed_plans!(reset=false)
+    Plan.destroy_all if reset
+    Plan.create(amount: 0, interval: Plan::MONTHLY, name: "Basic") if Plan.enhanced_team_page_free.nil?
+    Plan.create(amount: 9900, interval: Plan::MONTHLY, name: "Monthly") if Plan.enhanced_team_page_monthly.nil?
+    Plan.create(amount: 19900, interval: nil, name: "Single") if Plan.enhanced_team_page_one_time.nil?
+    Plan.create(amount: 19900, interval: Plan::MONTHLY, analytics: true, name: "Analytics") if Plan.enhanced_team_page_analytics.nil?
   end
 end

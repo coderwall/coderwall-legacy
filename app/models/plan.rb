@@ -53,14 +53,6 @@ class Plan < ActiveRecord::Base
       Plan.where(interval: MONTHLY).where(amount: 0).first
     end
 
-    def seed_plans!(reset=false)
-      Plan.destroy_all if reset
-      Plan.create(amount: 0, interval: Plan::MONTHLY, name: "Basic") if enhanced_team_page_free.nil?
-      Plan.create(amount: 9900, interval: Plan::MONTHLY, name: "Monthly") if enhanced_team_page_monthly.nil?
-      Plan.create(amount: 19900, interval: nil, name: "Single") if enhanced_team_page_one_time.nil?
-      Plan.create(amount: 19900, interval: Plan::MONTHLY, analytics: true, name: "Analytics") if enhanced_team_page_analytics.nil?
-    end
-
   end
 
   def register_on_stripe
