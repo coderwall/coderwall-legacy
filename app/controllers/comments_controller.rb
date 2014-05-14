@@ -10,17 +10,15 @@ class CommentsController < ApplicationController
     @comments = Comment.where('created_at > ?', 1.day.ago)
   end
 
-  def new
+  def new ; end
 
-  end
-
-  def edit
-
-  end
+  def edit ; end
 
   def create
-    redirect_to_signup_if_unauthenticated(request.referer + "?" + (params[:comment].try(:to_query) || ""), "You must signin/signup to add a comment") do
-      @comment      = @protip.comments.build(params[:comment])
+    create_comment_params = params.require(:comment).permit(:comment)
+
+    redirect_to_signup_if_unauthenticated(request.referer + "?" + (create_comment_params.try(:to_query) || ""), "You must signin/signup to add a comment") do
+      @comment      = @protip.comments.build(create_comment_params)
       @comment.user = current_user
       respond_to do |format|
         if @comment.save
@@ -36,8 +34,10 @@ class CommentsController < ApplicationController
   end
 
   def update
+    update_comment_params = params.require(:comment).permit(:comment)
+
     respond_to do |format|
-      if @comment.update_attributes(params[:comment])
+      if @comment.update_attributes(update_comment_params)
         format.html { redirect_to protip_path(@comment.commentable.try(:public_id)) }
         format.json { head :ok }
       else
@@ -50,7 +50,6 @@ class CommentsController < ApplicationController
   def destroy
     return head(:forbidden) if @comment.nil?
     @comment.destroy
-    #record_event('destroyed comment')
     respond_to do |format|
       format.html { redirect_to @protip }
       format.json { head :ok }
@@ -68,13 +67,16 @@ class CommentsController < ApplicationController
   end
 
   private
+
   def lookup_comment
-    @comment = Comment.find(params[:id])
+    id = params.permit(:id)[:id]
+    @comment = Comment.find(id)
     lookup_protip
   end
 
   def lookup_protip
-    @protip = Protip.with_public_id(params[:protip_id])
+    protip_id = params.permit(:protip_id)[:protip_id]
+    @protip = Protip.with_public_id(protip_id)
   end
 
   def verify_ownership

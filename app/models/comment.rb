@@ -112,6 +112,7 @@ class Comment < ActiveRecord::Base
   end
 
   private
+
   def decrement_likes_cache(value)
     self.likes_cache       -= 1
     self.likes_value_cache -= value
