@@ -34,13 +34,13 @@ class Badge < ActiveRecord::Base
   class << self
     def rename(old_class_name, new_class_name)
       Badge.where(badge_class_name: old_class_name).map { |badge| badge.update_attribute(:badge_class_name, new_class_name) }
-      Fact.where("metadata LIKE '%#{old_class_name}%'").each do |fact|
+      Fact.where('metadata LIKE ?', "%#{old_class_name}%").each do |fact|
         if fact.metadata[:award] == old_class_name
           fact.metadata[:award] = new_class_name
         end
         fact.save
       end
-      ApiAccess.where("awards LIKE '%#{old_class_name}%'").each do |api_access|
+      ApiAccess.where('awards LIKE ?', "%#{old_class_name}%").each do |api_access|
         if api_access.awards.delete(old_class_name)
           api_access.awards << new_class_name
         end

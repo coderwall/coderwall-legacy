@@ -71,5 +71,5 @@ namespace :protips do
 end
 
 def slideshare_facts
-  (Fact.where("tags LIKE '% slideshare%'")).uniq
+  (Fact.where('tags LIKE ?', '% slideshare%')).uniq
 end
