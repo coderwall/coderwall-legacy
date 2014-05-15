@@ -57,8 +57,8 @@ class Opportunity < ActiveRecord::Base
   after_create :pay_for_it!
 
   scope :valid, where(deleted: false).where('expires_at > ?', Time.now).order('created_at DESC')
-  scope :by_city, lambda { |city| where("LOWER(location_city) LIKE '%#{city.try(:downcase)}%'") }
-  scope :by_tag, lambda { |tag| where("LOWER(cached_tags) LIKE '%#{tag}%'") unless tag.nil? }
+  scope :by_city, lambda { |city| where('LOWER(location_city) LIKE ?', "%#{city.try(:downcase)}%") }
+  scope :by_tag, lambda { |tag| where('LOWER(cached_tags) LIKE ?', "%#{tag}%") unless tag.nil? }
   default_scope valid
 
   attr_accessor :title
@@ -318,8 +318,8 @@ class Opportunity < ActiveRecord::Base
 
   def add_opportunity_locations_to_team
     geocoded_all = true
-    self.location.split("|").each do |location_string|
-      geocoded_all &&= self.team.team_locations.where("address LIKE '%#{location_string}%'").exists? or anywhere?(location_string) ? false : self.team.team_locations.build(address: location_string, name: location_string).geocode
+    self.location.split('|').each do |location_string|
+      geocoded_all &&= self.team.team_locations.where(conditions: ['address LIKE ?', "%#{location_string}%"]).exists? or anywhere?(location_string) ? false : self.team.team_locations.build(address: location_string, name: location_string).geocode
     end
     geocoded_all || nil
   end
