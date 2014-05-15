@@ -6,21 +6,26 @@ class AchievementsController < ApplicationController
   respond_to :json, only: [:award]
 
   def show
-    @badge = Badge.find(params[:id])
+    show_achievements_params = params.permit(:id, :username)
+
+    @badge = Badge.find(show_achievements_params[:id])
     @user  = @badge.user
-    return redirect_to(destination_url) if @badge && @user.username.downcase != params[:username].downcase
+    return redirect_to(destination_url) if @badge && @user.username.downcase != show_achievements_params[:username].downcase
   end
 
   def award
-    provider = (User::LINKABLE_PROVIDERS & params.keys).first
+
+    award_params = params.permit(:badge, :twitter, :linkedin, :github, :date)
+
+    provider = pick_a_provider(award_params)
 
     if provider.nil?
       render_404
     else
-      if @api_access.can_award?(params[:badge])
-        user  = User.with_username(params[provider], provider)
-        badge = params[:badge].constantize.new(user, Date.strptime(params[:date], '%m/%d/%Y'))
-        badge.generate_fact!(params[:badge], params[provider], provider)
+      if @api_access.can_award?(award_params[:badge])
+        user  = User.with_username(award_params[provider], provider)
+        badge = badge_class_factory(award_params[:badge].to_s).new(user, Date.strptime(award_params[:date], '%m/%d/%Y'))
+        badge.generate_fact!(award_params[:badge], award_params[provider], provider)
         unless user.nil?
           user.award_and_add_skill badge
           user.save!
@@ -35,11 +40,18 @@ class AchievementsController < ApplicationController
   end
 
   private
+
   def ensure_valid_api_key
-    @api_key    = params[:api_key]
+    @api_key    = params.permit(:api_key)[:api_key]
     @api_access = ApiAccess.for(@api_key) unless @api_key.nil?
     return render json: { message: "no/invalid api_key provided. get your api_key from coderwall.com/settings" }.to_json if @api_access.nil?
   end
 
+  def badge_class_factory(requested_badge_name)
+    BADGES_LIST.select { |badge_name| badge_name == requested_badge_name }.first.constantize
+  end
 
+  def pick_a_provider(award_params)
+    (User::LINKABLE_PROVIDERS & award_params.keys.select { |key| %w{twitter linkedin github}.include?(key) }).first
+  end
 end
