@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   def show
-    render action: params[:page], layout: (params[:layout] || 'application')
+    show_pages_params = params.permit(:page, :layout)
+    render action: show_pages_params[:page], layout: (show_pages_params[:layout] || 'application')
   end
 end
