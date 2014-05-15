@@ -1,6 +1,6 @@
 $('#dimmer').css('display', 'none').css('z-index', -1000);
-$('<%=params[:section_id]%>').replaceWith('<%=escape_javascript(render(:partial => partialify_html_section_id(params[:section_id])))%>');
-<% if params[:section_id] == '#office-images' %>
+$('<%= @section_id%>').replaceWith('<%=escape_javascript(render(:partial => partialify_html_section_id(@section_id)))%>');
+<% if @section_id == '#office-images' %>
 autoOrganizePhotos();
 <% end %>
 <% if @team.has_specified_enough_info? %>

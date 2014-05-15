@@ -25,13 +25,13 @@ class NetworksController < ApplicationController
   end
 
   def index
+    @index_networks_params = params.permit(:sort, :action)
+
     @networks = Rails.cache.fetch('all_networks', expires_in: 1.day) { Network.all }
-    if params[:sort] == 'upvotes'
+    if @index_networks_params[:sort] == 'upvotes'
       Rails.cache.fetch('networks_by_upvotes', expires_in: 12.hours) { @networks.sort_by! { |network| -network.upvotes } }
-    elsif params[:sort] == 'newmembers'
+    elsif @index_networks_params[:sort] == 'newmembers'
       Rails.cache.fetch('networks_by_member_count', expires_in: 1.day) { @networks.sort_by! { |network| -network.new_members.count } }
-      #elsif params[:sort] == 'new'
-      #  @networks.sort_by(&:recent_protips_count)
     end
   end
 

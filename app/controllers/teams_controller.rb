@@ -102,6 +102,7 @@ class TeamsController < ApplicationController
   def update
     update_params = params.permit(:id, :_id, :job_id, :slug)
     update_team_params = params.require(:team).permit!
+    @section_id = (params.permit(:section_id) || {})[:section_id]
 
     @team = Team.find(update_params[:id])
     return head(:forbidden) unless current_user.belongs_to_team?(@team) || current_user.admin?
