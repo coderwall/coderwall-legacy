@@ -373,10 +373,7 @@ class ProtipsController < ApplicationController
   end
 
   def preview
-
-    ap params
-
-    preview_params = params.require(:protip)
+    preview_params = params.require(:protip).permit(:title, :body)
 
     preview_params.delete(:topics) if preview_params[:topics].blank?
     protip            = Protip.new(preview_params)
