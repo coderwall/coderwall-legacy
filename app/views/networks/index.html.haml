@@ -1,5 +1,5 @@
 - content_for :mixpanel do
-  = record_event('viewed networks page', sort: (@index_networks_params[[:sort] || :default))
+  = record_event('viewed networks page', sort: (@index_networks_params[:sort] || :default))
 
 = content_for :body_id do
   protip-multiple
