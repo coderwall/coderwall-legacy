@@ -81,6 +81,8 @@
             %a.feature-jobs.track{:href => employers_path, 'data-action' => 'upgrade team', 'data-from' => 'protip page'}
               feature your jobs here
 
+            %pm:widget{"max-item-count" => "4", "show-thumbs" => "false", :title => "Recommended", :width => "244"}/
+
     %article.tip-panel{:id => protip.public_id}
       -ab_test(TWITTER_SHARE_TEST, 'left', 'right') do |direction|
         =share_on_twitter(protip, 'share-this-tip direction')
