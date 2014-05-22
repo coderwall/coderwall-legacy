@@ -230,7 +230,7 @@ class UsersController < ApplicationController
     unlink_provider_params = params.permit(:provider)
 
     provider = unlink_provider_params[:provider]
-    clear_provider_for_user(provider, user) if current_user.can_unlink_provider?(provider)
+    clear_provider_for_user(provider, current_user) if current_user.can_unlink_provider?(provider)
     redirect_to(edit_user_url(current_user))
   end
 
