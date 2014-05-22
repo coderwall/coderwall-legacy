@@ -20,7 +20,8 @@ class OpportunitiesController < ApplicationController
   end
 
   def new
-    @job = Opportunity.new(team_document_id: params[:team_id])
+    team_id = params.permit(:team_id)[:team_id]
+    @job = Opportunity.new(team_document_id: team_id)
   end
 
   def edit
@@ -28,7 +29,8 @@ class OpportunitiesController < ApplicationController
   end
 
   def create
-    @job = Opportunity.new(params[:opportunity])
+    opportunity_create_params = params.require(:opportunity).permit(:name, :team_document_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
+    @job = Opportunity.new(opportunity_create_params)
     respond_to do |format|
       if @job.save
         format.html { redirect_to teamname_path(@team.slug), notice: "#{@job.name} added" }
@@ -40,8 +42,9 @@ class OpportunitiesController < ApplicationController
   end
 
   def update
+    opportunity_update_params = params.require(:opportunity).permit(:id, :name, :team_document_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
     respond_to do |format|
-      if @job.update_attributes(params[:opportunity])
+      if @job.update_attributes(opportunity_update_params)
         format.html { redirect_to teamname_path(@team.slug), notice: "#{@job.name} updated" }
       else
         format.html { render action: "new" }
