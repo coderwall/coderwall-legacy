@@ -124,8 +124,8 @@ class OpportunitiesController < ApplicationController
 
   def cleanup_params_to_prevent_rocket_tag_error
     if params[:opportunity] && params[:opportunity][:tags]
-      params[:opportunity][:tags] = params[:opportunity][:tags].split(",").compact.join(",")
-      params[:opportunity][:tags] = nil if params[:opportunity][:tags].blank?
+      params[:opportunity][:tags] = "#{params[:opportunity][:tags]}".split(',').map(&:strip).reject(&:empty?).join(",")
+      params[:opportunity][:tags] = nil if params[:opportunity][:tags].strip.blank?
     end
   end
 
