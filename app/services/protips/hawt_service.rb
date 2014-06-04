@@ -21,21 +21,27 @@ module Services
         url = URI.parse("#{ENV['PRIVATE_URL']}/api/v1/protips/feature.json").to_s
         protip_json = MultiJson.load(protip_hash.to_json)
 
-        RestClient.post(url, protip_json, accept: :json, content_type: 'application/json')
+        Rails.cache.fetch(['hawt_feature', url, protip_hash[:public_id]], expires: 1.hour) do
+          RestClient.post(url, protip_json, accept: :json, content_type: 'application/json')
+        end
       end
 
       def unfeature!
         url = URI.parse("#{ENV['PRIVATE_URL']}/api/v1/protips/unfeature.json").to_s
         protip_json = MultiJson.load(protip_hash.to_json)
 
-        RestClient.post(url, protip_json, accept: :json, content_type: 'application/json')
+        Rails.cache.fetch(['hawt_unfeature', url, protip_hash[:public_id]], expires: 1.hour) do
+          RestClient.post(url, protip_json, accept: :json, content_type: 'application/json')
+        end
       end
 
       def hawt?
         url = URI.parse("#{ENV['PRIVATE_URL']}/api/v1/protips/hawt.json").to_s
         protip_json = MultiJson.load(protip_hash.to_json)
 
-        JSON.parse(RestClient.post(url, protip_json, accept: :json, content_type: 'application/json').to_s)['hawt?']
+        Rails.cache.fetch(['hawt_hawt', url, protip_hash[:public_id]], expires: 1.hour) do
+          JSON.parse(RestClient.post(url, protip_json, accept: :json, content_type: 'application/json').to_s)['hawt?']
+        end
       end
     end
 
