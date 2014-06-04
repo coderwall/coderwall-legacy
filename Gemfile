@@ -107,6 +107,8 @@ gem 'awesome_print'
 # Hangup on long calls
 gem 'rack-timeout'
 
+gem 'faraday', '~> 0.8.1'
+
 # ----------------
 
 gem 'rocket_tag'
@@ -125,7 +127,7 @@ gem 'mail'
 gem 'mini_magick'
 gem 'mixpanel'
 gem 'never_wastes'
-gem 'octokit'
+gem 'octokit', '~> 1.23.0'
 gem 'pubnub', '0.1.9'
 gem 'querystring'
 gem 'rails_autolink'
@@ -147,8 +149,8 @@ group :development do
   gem 'guard-rspec'
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'travis'
-  gem 'travis-lint'
+  #gem 'travis'
+  #gem 'travis-lint'
 end
 
 group :development, :test do
