@@ -738,6 +738,8 @@ class User < ActiveRecord::Base
 
   def build_linkedin_facts
     LinkedInStream.new(linkedin_token + '::' + linkedin_secret).facts if linkedin_identity
+  rescue => e
+    logger.error(e.message + "\n  " + e.backtrace.join("\n  "))
   end
 
   def build_lanyrd_facts
