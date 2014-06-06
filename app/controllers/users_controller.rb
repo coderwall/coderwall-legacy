@@ -115,16 +115,20 @@ class UsersController < ApplicationController
   end
 
   def update
-    user_id = params.permit(:id)[:id]
+
+    user_id = params[:id]
+
     @user = user_id.blank? ? current_user : User.find(user_id)
+
     return head(:forbidden) unless @user == current_user || admin_of_premium_team?
-    auto_upload = user_update_params.delete(:auto_upload)
+
     if @user.update_attributes(user_update_params)
       @user.activate! if @user.has_badges? && !@user.active?
       flash.now[:notice] = "The changes have been applied to your profile."
       expire_fragment(@user.daily_cache_key)
     end
 
+    auto_upload = params[:user][:auto_upload]
     if auto_upload
       head :ok
     else
@@ -291,7 +295,8 @@ class UsersController < ApplicationController
       :sourceforge,
       :speakerdeck,
       :stackoverflow,
-      :title
+      :title,
+      :resume
     )
   end
 
