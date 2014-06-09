@@ -48,9 +48,9 @@ class ApplicationController < ActionController::Base
 
   def viewing_user
     @viewing_user ||= current_user || begin
-      if cookies[:identity]
-        User.with_username(cookies[:identity])
-      end
+    if cookies[:identity]
+      User.with_username(cookies[:identity])
+    end
     end
   end
 
@@ -69,12 +69,17 @@ class ApplicationController < ActionController::Base
   end
 
   def mixpanel_cookie
-    (cookies["mp_#{ENV['MIXPANEL_TOKEN']}_mixpanel"] && JSON.parse(cookies["mp_#{ENV['MIXPANEL_TOKEN']}_mixpanel"])) || {}
+    mp_cookie = cookies["mp_#{ENV['MIXPANEL_TOKEN']}_mixpanel"]
+    if mp_cookie.present?
+      JSON.parse(mp_cookie)
+    else
+      {}
+    end
   end
 
   def ensure_and_reconcile_tracking_code
     if cookies[:trc].blank?
-      session[:new_visit]     = true
+      session[:new_visit] = true
       cookies.permanent[:trc] = mixpanel_cookie['distinct_id']
     end
 
@@ -233,7 +238,7 @@ class ApplicationController < ActionController::Base
         options.merge!({ 'signed in'   => false,
                          'member'      => cookies[:identity] && User.exists?(username: cookies[:identity]),
                          'first visit' => session[:new_visit]
-                       })
+        })
       end
 
       #options.merge!('signed up on' => current_user.created_at.to_formatted_s(:mixpanel),
@@ -265,9 +270,9 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.json do
         render json: {
-                       status: :redirect,
-                       to:     uri
-                     }.to_json
+          status: :redirect,
+          to:     uri
+        }.to_json
       end
     end
   end
