@@ -29,7 +29,14 @@ We use [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtual
 
 ## Contributing
 
-TODO
+1. Create an [Assembly account](https://assemblymade.com).
+2. [Fork the code](https://github.com/assemblymade/coderwall)
+3. Get vagrant running
+4. Run the test suite
+5. If you have any issues, jump into chat, introduce yourself and ask or leave a message if no one is around.
+6. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
+7. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
+
 
 ## Copyright / License
 
@@ -38,7 +45,7 @@ All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted and provided that the following conditions are met:
 
-* Any redistribution or use is for noncommercial purposes only and is not redistributed or used in connection with any application that is substantially similar to the Selected App Idea.
+* Any redistribution or use is for noncommercial purposes only and is not redistributed or used in connection with any application that is substantially similar to it (Coderwall).
 * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 
