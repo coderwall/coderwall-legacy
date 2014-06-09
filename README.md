@@ -40,7 +40,7 @@ We use [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtual
 
 ## Copyright / License
 
-Copyright © 2013, Assembly Made, Inc
+Copyright © 2014, Assembly Made, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted and provided that the following conditions are met:
