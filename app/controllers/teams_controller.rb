@@ -212,10 +212,8 @@ class TeamsController < ApplicationController
   end
 
   def visitors
-    visitors_params = params.permit(:full)
-
     since = is_admin? ? 0 : 2.weeks.ago.to_i
-    full = is_admin? && visitors_params[:full] == 'true'
+    full = is_admin? && params[:full] == 'true'
     @visitors = @team.aggregate_visitors(since).reject { |visitor| visitor[:user] && @team.on_team?(visitor[:user]) }
     @visitors = fake_visitors if @visitors.blank? && Rails.env.development?
     @visitors = @visitors.first(75) if !is_admin? || !full
