@@ -121,7 +121,6 @@ gem 'fog'
 gem 'font_assets', '~> 0.1.2'
 gem 'geocoder'
 gem 'hashie'
-gem 'leftronic'
 gem 'linkedin'
 gem 'mail'
 gem 'mini_magick'
@@ -149,8 +148,6 @@ group :development do
   gem 'guard-rspec'
   gem 'spring'
   gem 'spring-commands-rspec'
-  #gem 'travis'
-  #gem 'travis-lint'
 end
 
 group :development, :test do

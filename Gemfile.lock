@@ -283,9 +283,6 @@ GEM
     launchy (2.4.2)
       addressable (~> 2.3)
     le (2.2.6)
-    leftronic (0.0.3)
-      json (>= 1.4.6)
-      rest-client (>= 1.6.1)
     libwebsocket (0.1.5)
       addressable
     linkedin (0.4.6)
@@ -648,7 +645,6 @@ DEPENDENCIES
   kramdown
   launchy
   le
-  leftronic
   letter_opener!
   linkedin
   mail
