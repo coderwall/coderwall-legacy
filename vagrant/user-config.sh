@@ -18,7 +18,7 @@ _RUBY_VERSION=ruby-2.1.0
 rvm install $_RUBY_VERSION
 rvm gemset create coderwall
 rvm use $_RUBY_VERSION --default
-rvm use $_RUBY_VERSION@coderwall-web
+rvm use $_RUBY_VERSION@coderwall
 cd $HOME/web
 gem update --system && gem update bundler
 bundle config --global jobs 3

@@ -19,21 +19,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :private_network, ip: '192.168.237.95' # 192.168.cdr.wl
 
-  {
-    'Postgres'        => 5432,
-    'Redis'           => 6379,
-    'ElasticSearch'   => 9200,
-    'MongoDB'         => 27017
-  }.each do |service, port|
-    puts "Opening port #{port} to allow access to #{service} on guest"
-    config.vm.network :forwarded_port, guest: port, host: port, auto_correct: true
-  end
-  # Rails (default)
-  config.vm.network :forwarded_port, guest: 3000, host: 3001, auto_correct: true
-  # Rails (foreman)
-  config.vm.network :forwarded_port, guest: 5000, host: 5001, auto_correct: true
-  # Rails (puma)
-  config.vm.network :forwarded_port, guest: 9292, host: 9293, auto_correct: true
+  # Postgres
+  config.vm.network :forwarded_port, guest: 5432, host: 2200
+  # Redis
+  config.vm.network :forwarded_port, guest: 6379, host: 2201
+  # ElasticSearch
+  config.vm.network :forwarded_port, guest: 9200, host: 9200
+  # MongoDB
+  config.vm.network :forwarded_port, guest: 27017, host: 27017
 
   config.vm.synced_folder '.', '/home/vagrant/web', nfs: true
 

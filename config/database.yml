@@ -1,29 +1,16 @@
-development:
-  database: coderwall_development
+default: &default
   adapter: postgresql
   encoding: unicode
   host: localhost
   password:
   pool: 5
-  port: 5432
+  port: <%= ENV['DEV_POSTGRES_PORT'] || 5432 %>
   username: vagrant
+
+development:
+  <<: *default
+  database: coderwall_development
 
 test:
-  adapter: postgresql
+  <<: *default
   database: coderwall_test
-  encoding: unicode
-  host: localhost
-  password:
-  pool: 5
-  port: 5432
-  username: vagrant
-
-production:
-  adapter: postgresql
-  database: coderwall_production
-  encoding: unicode
-  host: localhost
-  password:
-  pool: 5
-  port: 5432
-  username: vagrant
