@@ -34,7 +34,6 @@ class Notifier < ActionMailer::Base
     @user = User.with_username(username)
     @user.touch(:last_email_sent)
 
-
     if @user.created_at < 2.days.ago
       track_campaign('welcome_delayed')
     else
