@@ -155,9 +155,9 @@ group :development, :test do
   gem 'jazz_hands'
   gem 'launchy'
   gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
-  gem 'mail_view'
   gem 'syntax'
 end
+gem 'mail_view'
 
 group :test do
   gem 'capybara', '~> 1.1'
