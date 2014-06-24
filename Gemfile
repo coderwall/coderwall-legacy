@@ -148,6 +148,7 @@ group :development do
   gem 'guard-rspec'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'rails-erd'
 end
 
 group :development, :test do
