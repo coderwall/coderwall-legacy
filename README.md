@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/assemblymade/coderwall.svg?branch=master)](https://travis-ci.org/assemblymade/coderwall)
 
-[![Code Climate](https://codeclimate.com/repos/53713d15e30ba01ff50013f0/badges/78d29b02a9f5dab80043/gpa.png)](https://codeclimate.com/repos/53713d15e30ba01ff50013f0/feed)
+[![Code Climate](https://codeclimate.com/repos/5372500ce30ba06dcb029a39/badges/aee85ae9136d5b8b525c/gpa.png)](https://codeclimate.com/repos/5372500ce30ba06dcb029a39/feed)
 
 A community for developers to unlock & share new skills.
 
