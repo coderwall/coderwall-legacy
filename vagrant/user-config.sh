@@ -27,9 +27,6 @@ bundle install
 # Setup .env
 cp .env.example .env -n
 
-sudo su postgres -c 'pg_ctl stop -D /var/pgsql/data  2>&1'
-sudo su postgres -c 'pg_ctl restart -D /var/pgsql/data  2>&1 &'
-
-rake db:create:all
-rake db:test:prepare
-rake db:setup
+bundle exec rake db:create:all
+bundle exec rake db:setup
+bundle exec rake db:test:prepare

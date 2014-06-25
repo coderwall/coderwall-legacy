@@ -21,6 +21,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :private_network, ip: '192.168.237.95' # 192.168.cdr.wl
 
+  # Rails
+  config.vm.network :forwarded_port, guest: 3000, host: 3000
+
   # Postgres
   config.vm.network :forwarded_port, guest: 5432, host: 2200
   # Redis
