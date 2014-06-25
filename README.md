@@ -6,7 +6,7 @@
 
 A community for developers to unlock & share new skills.
 
-## Getting Started
+## Getting Started / Contributing
 
 Please see our CONTRIBUTING.md for instructions on how to get started working on Coderwall.
 
