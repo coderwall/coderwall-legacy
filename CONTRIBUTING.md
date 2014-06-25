@@ -14,9 +14,9 @@ Then just go ahead, fork the repo & issue a pull request. You're on your way to 
 
 You'll need to set up a test account with Stripe for local development until this dependency is refactored out of development/test.
 
-## Github configuration
+## GitHub configuration
 
-You will need a Github application configured for local development until this dependency is refactored out of development/test.
+You will need a GitHub application configured for local development until this dependency is refactored out of development/test.
 
 https://github.com/settings/applications/new
 
