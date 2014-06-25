@@ -57,18 +57,18 @@
       %ul.toggle-nav
         - if signed_in?
           %li
-            %a.switch#x-scope-toggle{:href => '/', :class => display_scope_class, :alt => "Toggle Filter Everything"}
-              #span.sr-only Filter on/off
+            %a.switch#x-scope-toggle{:href => '/', :class => display_scope_class}
+              #span.sr-only Filtered by #{display_scope_class}, Toggle to #{display_scope_class == "following" ? "Everything" : "Following"}
           %li
-            %a.action.followings#x-followings-toggle{:href => '/', :alt => "Toggle Following Menu"}
+            %a.action.followings#x-followings-toggle{:href => '/'}
               #span.sr-only Toggle Following Menu
           %li
-            %a.action.share-tip{:href => new_protip_path, :class => "track", :alt => "Create Pro Tip", 'data-action' => 'create protip', 'data-from' => 'homepage', 'data-properties' => {'context' => @context}.to_json}
+            %a.action.share-tip{:href => new_protip_path, :class => "track", 'data-action' => 'create protip', 'data-from' => 'homepage', 'data-properties' => {'context' => @context}.to_json}
               #span.sr-only Create Pro Tip
 
         %li
-          %a.action.search#x-show-search{:href => '/', :alt => "Toggle Search"}
-            #span.sr-only Toggle Search
+          %a.action.search#x-show-search{:href => '/'}
+            #span.sr-only Toggle Search Area
 
   //search bar
   .filter-bar.search-bar#x-search{:class => display_search_class}
