@@ -76,9 +76,9 @@ There's only a VirtualBox basebox right now.
 
 3. **Git assemblymade/coderwall**
 
-    mkdir -p ~/assemblymade
-    cd ~/assemblymade
-    git clone git@github.com:assemblymade/coderwall.git
+        mkdir -p ~/assemblymade
+        cd ~/assemblymade
+        git clone git@github.com:assemblymade/coderwall.git
 
     I am going to assume that the project is cloned into your home directory in
     and into a directory structure like `~/assemblymade/coderwall`.
