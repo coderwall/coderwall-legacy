@@ -27,6 +27,13 @@ bundle install
 # Setup .env
 cp .env.example .env -n
 
+sudo su postgres -c 'pg_ctl stop -D /var/pgsql/data  2>&1'
+sudo su postgres -c 'pg_ctl start -D /var/pgsql/data  2>&1 &'
+
+export DEV_POSTGRES_PORT=5432
+export REDIS_URL=redis://127.0.0.1:6379
+
+bundle exec rake db:drop:all
 bundle exec rake db:create:all
 bundle exec rake db:setup
 bundle exec rake db:test:prepare
