@@ -27,6 +27,9 @@ bundle install
 # Setup .env
 cp .env.example .env -n
 
-foreman run rake db:create:all
-foreman run rake db:setup
-foreman run rake db:test:prepare
+sudo su postgres -c 'pg_ctl stop -D /var/pgsql/data  2>&1'
+sudo su postgres -c 'pg_ctl restart -D /var/pgsql/data  2>&1 &'
+
+rake db:create:all
+rake db:test:prepare
+rake db:setup

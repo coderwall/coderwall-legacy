@@ -4,7 +4,9 @@
 VAGRANTFILE_API_VERSION = "2"
 
 $box = 'coderwall'
-$box_url = 'http://cdn.coderwall.com/vagrant/coderwall.box'
+# The box is 1GB. Prepare yourself.
+#$box_url = 'http://cdn.coderwall.com/vagrant/coderwall.box'
+$box_url = 'https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall.box'
 $provision = 'vagrant/bootstrap.sh'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
