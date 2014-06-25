@@ -1,4 +1,4 @@
-<a href="http://www.coderwall.com/">![Logo](app/assets/images/logo.png)</a>
+<a href="http://www.coderwall.com/">![Coderwall Logo](app/assets/images/premium-team-description/logo.png)</a>
 
 [![Build Status](https://travis-ci.org/assemblymade/coderwall.svg?branch=master)](https://travis-ci.org/assemblymade/coderwall)
 
