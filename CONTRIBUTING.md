@@ -1,12 +1,18 @@
+
 # Contributing
 
 There are a couple of steps you need to take before contributing:
 
-1. Go to [https://assemblymade.com](https://assemblymade.com) and sign up.
+1. Go to https://assemblymade.com and sign up.
 2. Link your GitHub account to your Assembly account in your profile settings.
-3. Create a new WIP at [https://assemblymade.com/coderwall/wips](https://assemblymade.com/coderwall/wips).
+3. [Fork the code](https://github.com/assemblymade/coderwall).
+4. Get vagrant running
+5. Run the test suite
+6. If you have any issues, jump into chat, introduce yourself and ask or leave a message if no one is around.
+7. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
+8. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
 
-Then just go ahead, fork the repo & issue a pull request. You're on your way to having a stake in Helpful.
+You're on your way to having a stake in CoderWall.
 
 ## External Dependencies
 
@@ -49,6 +55,9 @@ There's only a VirtualBox basebox right now.
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
+If you're running Windows, [here's a guide written by one of our members on how to get set up.](https://github.com/assemblymade/coderwall/docs/getting_started_on_windows.md)
+
+
 1. **Install VirtualBox**
 
     Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Downloads)**.
@@ -60,11 +69,11 @@ There's only a VirtualBox basebox right now.
 
 2. **Install Vagrant**
 
-    Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**.
-
+    [Vagrant](http://vagrantup.com) is the recommended way to run CoderWall on your own machine. You need to download and install.  
+    Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**. 
     _At the time of writing this documentation the current version is Vagrant 1.6.2._
-
-    Follow the installation instructions for your platform on the Vagrant download page.
+    
+     Follow the installation instructions for your platform on the Vagrant download page.
 
     After installing Vagrant we need to add a couple plugins.
 
@@ -78,8 +87,11 @@ There's only a VirtualBox basebox right now.
 
     mkdir -p ~/assemblymade
     cd ~/assemblymade
-    git clone git@github.com:assemblymade/coderwall.git
-
+    
+    depending on your choice of protocols : _(this will take a while to run so you may want to grab some coffee)_
+    git clone https://github.com/assemblymade/coderwall.git coderwall
+    git clone git@github.com:assemblymade/coderwall.git coderwall 
+    
     I am going to assume that the project is cloned into your home directory in
     and into a directory structure like `~/assemblymade/coderwall`.
 
@@ -122,14 +134,14 @@ There's only a VirtualBox basebox right now.
     If all went well the Rails server should start up on PORT 3000.
 
     Now go open your favorite web browser on you host machine and
-    navigate to `http://localhost:3000`.
+    navigate to [http://localhost:3000](http://localhost:3000).
 
     If all goes well (and if it doesn't then check if another app is
     running on port 3000 and if there's any logging output being displayed
     in the window you were running Vagrant in) then you're going to be
-    looking at the Coderwall homepage.
+    looking at the CoderWall homepage.
 
-    Congratulations! NOW GET TO WORK! Enough dilly-dallying with your devenv.
+    Congratulations! NOW GET TO WORK! Enough dilly-dallying with your DEV env.
 
 5. **Hackety Hack!**
 
@@ -158,7 +170,7 @@ There's only a VirtualBox basebox right now.
     local folder with the folder on the VM. Now you can edit and manage your files from
     the comfort of your favorite OS without having to worry about copying them to the VM.
 
-6. **All done.**
+6. **All done for the day - Turning your Vagrant VM off**
 
     When you're ready to call it a day and want to turn the VM off you have two options.
 
@@ -166,7 +178,20 @@ There's only a VirtualBox basebox right now.
 
     Either way when you're ready to resume working just `vagrant up` and you're good to go.
 
-7. **Thanks**
+7. Gems Installation and Database Migration
+
+	Remember that you are using Vagrant, so if you run ```bundle install``` or ```rake db:migrate``` directly in your terminal it will not affect the virtual machine where CoderWall is running.
+
+	In order to run these commands, in the virtual machine, all you have to do is to run ```vagrant provision```.
+
+8. Environment Variables
+
+	If you need to change any environment variable you have to edit ```.env``` file properly and restart Rails server running:
+
+    vagrant ssh -c "sudo restart coderwall"
+
+
+9. **Thanks**
 
     I hope you enjoy working with Vagrant as much as we do and feel free to ask questions
     if you get stuck or have a problem. You're probably not alone and even if you're the
