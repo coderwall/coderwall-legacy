@@ -27,6 +27,6 @@ bundle install
 # Setup .env
 cp .env.example .env -n
 
-foreman run rake db:create:all
-foreman run rake db:setup
-foreman run rake db:test:prepare
+bundle exec rake db:create:all
+bundle exec rake db:setup
+bundle exec rake db:test:prepare

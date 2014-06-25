@@ -4,7 +4,9 @@
 VAGRANTFILE_API_VERSION = "2"
 
 $box = 'coderwall'
-$box_url = 'http://cdn.coderwall.com/vagrant/coderwall.box'
+# The box is 1GB. Prepare yourself.
+#$box_url = 'http://cdn.coderwall.com/vagrant/coderwall.box'
+$box_url = 'https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall.box'
 $provision = 'vagrant/bootstrap.sh'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -18,6 +20,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
 
   config.vm.network :private_network, ip: '192.168.237.95' # 192.168.cdr.wl
+
+  # Rails
+  config.vm.network :forwarded_port, guest: 3000, host: 3000
 
   # Postgres
   config.vm.network :forwarded_port, guest: 5432, host: 2200
