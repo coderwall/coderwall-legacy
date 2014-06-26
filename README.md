@@ -13,7 +13,7 @@ When committing a Pull Request for non-application/test code please add [`[skip 
 
 ## Contributing & Getting Started
 
-Please see our CONTRIBUTING.md for instructions on how to set up your development environment for Coderwall.
+Please see our [/master/CONTRIBUTING.md] for instructions on how to set up your development environment for Coderwall.
 
 **TL;DR**
 
