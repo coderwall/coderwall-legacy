@@ -310,7 +310,7 @@ class Opportunity < ActiveRecord::Base
       begin
         locations = self.team.cities.compact.select { |city| self.location.include?(city) }
       end while locations.blank? && add_opportunity_locations_to_team && set_location_city
-      locations.join("|")
+      self.team.cities.join("|")
     end unless self.location.nil?
     errors.add(:location, "is not valid, please specify one or more cities separated by | (e.g. Miami, FL | San Francisco). put 'anywhere' if location doesn't matter") if !self.location.nil? and !valid_location_city
     self.location_city
