@@ -40,9 +40,10 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if @current_user.nil? && session[:current_user]
-      @current_user = User.find(session[:current_user])
-    end
+    @current_user = User.first
+    # if @current_user.nil? && session[:current_user]
+    #   @current_user = User.find(session[:current_user])
+    # end
     @current_user
   end
 
