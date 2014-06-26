@@ -13,7 +13,7 @@ When committing a Pull Request for non-application/test code please add [`[skip 
 
 ## Contributing & Getting Started
 
-Please see our [/master/CONTRIBUTING.md] for instructions on how to set up your development environment for Coderwall.
+Please see our [/master/CONTRIBUTING.md](https://github.com/assemblymade/coderwall/blob/master/CONTRIBUTING.md) for instructions on how to set up your development environment for Coderwall.
 
 **TL;DR**
 
