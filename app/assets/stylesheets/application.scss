@@ -455,7 +455,7 @@ body#sign-in {
       font-size: 3.6em;
       text-transform: uppercase;
     }
-    h2 {
+    h2, h3 {
       color: $dark-grey;
       text-align: center;
       font-family: "MuseoSans-300";
@@ -616,16 +616,48 @@ body#sign-in {
   }
 }
 
+.contact-hero {
+  width: 940px;
+  margin: 50px auto 75px auto;
+  text-align: center;
+  
+  h2 {
+    color: #777;
+    text-transform: uppercase;
+    font-size: 2.2em;
+    font-weight: normal;
+    margin-bottom: 15px;
+  }
+
+  p {
+    padding: 25px;
+    font-size: 1.9em;
+    color: #FFF;
+    @include border-radius(3px);
+    background: #555;
+  }
+
+  a {
+    color: #CCC;
+    text-decoration: underline;
+    display: block;
+    font-size: .85em;
+  }
+}
+
+.contact-panels {
+  width: 940px;
+  margin: 0 auto;
+}
+
 .half-panel {
   float: left;
   width: 434px;
   a {
-    @include blue-btn;
+    @include flat-blue-btn;
     @include border-radius(6px);
-    height: 58px;
-    line-height: 58px;
+    text-transform: none;
     color: #fff;
-    text-transform: capitalize;
     font-size: 1.6em;
     display: block;
     text-align: center;
