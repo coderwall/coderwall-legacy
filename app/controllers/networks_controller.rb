@@ -107,6 +107,7 @@ class NetworksController < ApplicationController
       user      = User.with_username(params[:username]) if is_admin?
       @networks = user.networks
       @user     = user
+      @index_networks_params = params.permit(:sort, :action)
       render :index
     end
   end
