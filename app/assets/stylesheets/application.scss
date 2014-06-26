@@ -13,6 +13,20 @@
 .hide {
   display: none;
 }
+/*
+ * This hides only from visibilty, but lets a screen reader access it
+ * Very useful for accessibility concerns.
+ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
 
 .faded {
   opacity: 0 !important;
