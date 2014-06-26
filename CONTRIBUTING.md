@@ -14,9 +14,9 @@ Then just go ahead, fork the repo & issue a pull request. You're on your way to 
 
 You'll need to set up a test account with Stripe for local development until this dependency is refactored out of development/test.
 
-## Github configuration
+## GitHub configuration
 
-You will need a Github application configured for local development until this dependency is refactored out of development/test.
+You will need a GitHub application configured for local development until this dependency is refactored out of development/test.
 
 https://github.com/settings/applications/new
 
@@ -45,7 +45,7 @@ __If you're an experienced Vagrant user then you can fetch the base box and regi
 
 There's only a VirtualBox basebox right now.
 
-        vagrant box add coderwall http://cdn.coderwall.com/vagrant/coderwall.box
+    vagrant box add coderwall http://cdn.coderwall.com/vagrant/coderwall.box
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
