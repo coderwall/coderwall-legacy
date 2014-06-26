@@ -3,11 +3,13 @@ rvm:
   - 2.1.0
 bundler_args: "--without development production autotest"
 services:
-  - elasticsearch
   - memcached
   - mongodb
   - redis-server
 before_install:
+  - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.5.deb
+  - sudo dpkg -i elasticsearch-0.20.5.deb
+  - sudo service elasticsearch start
   - gem update --system
   - travis_retry gem install bundler --pre
 before_script:
