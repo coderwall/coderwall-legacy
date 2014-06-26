@@ -174,8 +174,6 @@ group :test do
   gem 'webmock', '<1.16'
 end
 
-  gem 'puma'
-  gem 'puma_worker_killer'
 group :production do
   gem 'honeybadger'
   gem 'rails_stdout_logging'
