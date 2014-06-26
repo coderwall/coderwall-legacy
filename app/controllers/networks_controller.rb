@@ -14,7 +14,7 @@ class NetworksController < ApplicationController
   end
 
   def create
-    @network = Network.new(params[:network])
+    @network = Network.new(params[:network].permit(:name))
     respond_to do |format|
       if @network.save
         format.html { redirect_to networks_path, notice: "#{@network.name} Network was successfully created." }
