@@ -6,9 +6,24 @@
 
 A community for developers to unlock & share new skills.
 
-## Getting Started
 
-Please see our CONTRIBUTING.md for instructions on how to get started working on Coderwall.
+## **Protip for Contributors**
+
+When committing a Pull Request for non-application/test code please add [`[skip ci]`](http://docs.travis-ci.com/user/how-to-skip-a-build/) to your commit message.
+
+## Contributing & Getting Started
+
+Please see our CONTRIBUTING.md for instructions on how to set up your development environment for Coderwall.
+
+**TL;DR**
+
+1. Create an [Assembly account](https://assemblymade.com).
+2. [Fork the code](https://github.com/assemblymade/coderwall)
+3. Get vagrant running
+4. Run the test suite
+5. If you have any issues, jump into chat, introduce yourself and ask or leave a message if no one is around.
+6. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
+7. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
 
 ## Built With
 
@@ -26,16 +41,6 @@ Coderwall is built from the following open source components:
 Plus *lots* of Ruby Gems, a complete list of which is at [/master/Gemfile](https://github.com/assemblymade/coderwall/blob/master/Gemfile).
 
 We use [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) to isolate and simplify the local development process.
-
-## Contributing
-
-1. Create an [Assembly account](https://assemblymade.com).
-2. [Fork the code](https://github.com/assemblymade/coderwall)
-3. Get vagrant running
-4. Run the test suite
-5. If you have any issues, jump into chat, introduce yourself and ask or leave a message if no one is around.
-6. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
-7. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
 
 
 ## Copyright / License

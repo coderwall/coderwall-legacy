@@ -1,14 +1,18 @@
 # Contributing
 
+## **Protip for Contributors**
+
+When committing a Pull Request for non-application/test code please add [`[skip ci]`](http://docs.travis-ci.com/user/how-to-skip-a-build/) to your commit message.
+
+## External Dependencies
+
 There are a couple of steps you need to take before contributing:
 
-1. Go to [https://assemblymade.com](https://assemblymade.com) and sign up.
+1. Go to [https://assemblymade.com/coderwall](https://assemblymade.com/coderwall) and sign up.
 2. Link your GitHub account to your Assembly account in your profile settings.
 3. Create a new WIP at [https://assemblymade.com/coderwall/wips](https://assemblymade.com/coderwall/wips).
 
-Then just go ahead, fork the repo & issue a pull request. You're on your way to having a stake in Helpful.
-
-## External Dependencies
+Then just go ahead, fork the repo & issue a pull request. You're on your way to having a stake in Coderwall.
 
 ### Stripe configuration
 
