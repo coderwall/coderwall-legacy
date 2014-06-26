@@ -32,7 +32,7 @@
             = @user.protips.count > 1 ? 'Pro Tip'.pluralize : 'Pro Tip'
           .recent-pro-tip
             -if viewing_self?
-              %a.share-a-protip.track{:href => new_protip_path, 'data-action' => 'create protip', 'data-from' => 'profile card'}
+              %a.tip.share-a-protip.track{:href => new_protip_path, 'data-action' => 'create protip', 'data-from' => 'profile card', 'title' => @user.skills.empty? ? "Fill out your profile by adding some skills first, then share some Pro Tips!" : "Share your best coding tidbits!" }
                 Share a Pro Tip
             -else
               %h4 Most recent Protip

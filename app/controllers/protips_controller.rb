@@ -1,6 +1,7 @@
 class ProtipsController < ApplicationController
 
   before_filter :access_required, only: [:new, :create, :edit, :update, :destroy, :me]
+  before_filter :require_skills_first, only: [:new, :create]
   before_filter :lookup_protip, only: [:show, :edit, :update, :destroy, :upvote, :tag, :flag, :queue, :feature, :delete_tag]
   before_filter :reformat_tags, only: [:create, :update]
   before_filter :verify_ownership, only: [:edit, :update, :destroy]
@@ -555,5 +556,12 @@ class ProtipsController < ApplicationController
 
     topics = protips.map(&:tags).flatten.uniq.first(8) if topics.blank? && protips.present?
     topics
+  end
+
+  def require_skills_first
+    if current_user.skills.empty?
+      flash[:error] = "Please improve your profile by adding some skills before posting Pro Tips"
+      redirect_to badge_path(username: current_user.username, anchor: 'add-skill')
+    end
   end
 end

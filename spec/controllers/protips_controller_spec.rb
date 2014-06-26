@@ -34,9 +34,22 @@ describe ProtipsController do
   end
 
   describe "GET new" do
+    before { User.any_instance.stub(:skills).and_return(['skill']) } # User must have a skill to create protips
+
     it "assigns a new protip as @protip" do
       get :new, {}, valid_session
       assigns(:protip).should be_a_new(Protip)
+    end
+
+    it "allows viewing the page when you have a skill" do
+      get :new, {}, valid_session
+      response.should render_template('new')
+    end
+
+    it "prevents viewing the page when you don't have a skill" do
+      User.any_instance.stub(:skills).and_return([])
+      get :new, {}, valid_session
+      response.should redirect_to badge_path(username: current_user.username, anchor: 'add-skill')
     end
   end
 
@@ -49,6 +62,8 @@ describe ProtipsController do
   end
 
   describe "POST create" do
+    before { User.any_instance.stub(:skills).and_return(['skill']) } # User must have a skill to create protips
+
     describe "with valid params" do
       it "creates a new Protip" do
         expect {
@@ -82,6 +97,12 @@ describe ProtipsController do
         post :create, { protip: {} }, valid_session
         response.should render_template("new")
       end
+    end
+
+    it "prevents creating when you don't have a skill" do
+      User.any_instance.stub(:skills).and_return([])
+      post :create, {protip: valid_attributes}, valid_session
+      response.should redirect_to badge_path(username: current_user.username, anchor: 'add-skill')
     end
   end
 
