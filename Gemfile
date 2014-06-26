@@ -176,7 +176,6 @@ end
 
 group :production do
   gem 'honeybadger'
-  gem 'rails_stdout_logging'
   gem 'rails_12factor'
   gem 'unicorn'
   gem 'unicorn-worker-killer'

@@ -683,7 +683,6 @@ DEPENDENCIES
   rails-erd
   rails_12factor
   rails_autolink
-  rails_stdout_logging
   redcarpet
   redis
   resque
