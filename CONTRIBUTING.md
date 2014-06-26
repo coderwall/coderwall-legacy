@@ -14,9 +14,9 @@ Then just go ahead, fork the repo & issue a pull request. You're on your way to 
 
 You'll need to set up a test account with Stripe for local development until this dependency is refactored out of development/test.
 
-## GitHub configuration
+## Github configuration
 
-You will need a GitHub application configured for local development until this dependency is refactored out of development/test.
+You will need a Github application configured for local development until this dependency is refactored out of development/test.
 
 https://github.com/settings/applications/new
 
@@ -45,7 +45,7 @@ __If you're an experienced Vagrant user then you can fetch the base box and regi
 
 There's only a VirtualBox basebox right now.
 
-    vagrant box add coderwall http://cdn.coderwall.com/vagrant/coderwall.box
+        vagrant box add coderwall http://cdn.coderwall.com/vagrant/coderwall.box
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
@@ -114,7 +114,7 @@ There's only a VirtualBox basebox right now.
     Now that you're SSH'ed into the Vagrant VM it's time to run the app.
 
         # we're still SSH'ed into Vbox
-        cd ~/assemblymade
+        cd ~/web
         rvm current # should be ruby-2.1.0@coderwall
         bundle check # should be a response that everything's good
         bundle exec rails server
@@ -146,7 +146,7 @@ There's only a VirtualBox basebox right now.
         cd ~/assemblymade/coderwall
         echo Hello, `whoami` from `hostname` >> HELLO.txt
         vagrant ssh
-        cd ~/assemblymade
+        cd ~/web
         cat HELLO.txt #whoa.
         echo Hello, `whoami` from `hostname` >> HELLO.txt
         exit
