@@ -9,6 +9,7 @@ class Team
   include ResqueSupport::Basic
   include LeaderboardRedisRank
   include SearchModule
+  include Viewable
 
   # Disabled Team indexing because it slows down updates
   # we should BG this
@@ -687,47 +688,6 @@ class Team
 
   def has_user_with_referral_token?(token)
     team_members.collect(&:referral_token).include?(token)
-  end
-
-  def impressions_key
-    "team:#{id}:impressions"
-  end
-
-  def user_views_key
-    "team:#{id}:views"
-  end
-
-  def user_anon_views_key
-    "team:#{id}:views:anon"
-  end
-
-  def user_detail_views_key
-    "team:#{id}:views:detail"
-  end
-
-  def viewed_by(viewer)
-    epoch_now = Time.now.to_i
-    REDIS.incr(impressions_key)
-    if viewer.is_a?(User)
-      REDIS.zadd(user_views_key, epoch_now, viewer.id)
-    else
-      REDIS.zadd(user_anon_views_key, epoch_now, viewer)
-    end
-  end
-
-  def impressions
-    REDIS.get(impressions_key).to_i
-  end
-
-  def viewers(since=0)
-    epoch_now  = Time.now.to_i
-    viewer_ids = REDIS.zrevrangebyscore(user_views_key, epoch_now, since)
-    User.where(id: viewer_ids).all
-  end
-
-  def total_views(epoch_since = 0)
-    epoch_now = Time.now.to_i
-    REDIS.zcount(user_views_key, epoch_since, epoch_now) + REDIS.zcount(user_anon_views_key, epoch_since, epoch_now)
   end
 
   def followers

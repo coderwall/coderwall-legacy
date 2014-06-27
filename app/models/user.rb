@@ -120,6 +120,7 @@ class User < ActiveRecord::Base
   extend ResqueSupport::ActiveModel
   include ResqueSupport::Basic
   include NetValidators
+  include Viewable
 
   attr_protected :admin, :username, :id, :github_id, :twitter_id, :linkedin_id, :api_key
 
@@ -953,51 +954,9 @@ class User < ActiveRecord::Base
     @timeline_key ||= "user:#{id}:timeline"
   end
 
-  def impressions_key
-    "user:#{id}:impressions"
-  end
-
-  def user_views_key
-    "user:#{id}:views"
-  end
-
-  def user_anon_views_key
-    "user:#{id}:views:anon"
-  end
-
-  def viewed_by(viewer)
-    epoch_now = Time.now.to_i
-    REDIS.incr(impressions_key)
-    if viewer.is_a?(User)
-      REDIS.zadd(user_views_key, epoch_now, viewer.id)
-      generate_event(viewer: viewer.username)
-    else
-      REDIS.zadd(user_anon_views_key, epoch_now, viewer)
-      count = REDIS.zcard(user_anon_views_key)
-      REDIS.zremrangebyrank(user_anon_views_key, -(count - 100), -1) if count > 100
-    end
-  end
-
-  def viewers(since=0)
-    epoch_now  = Time.now.to_i
-    viewer_ids = REDIS.zrevrangebyscore(user_views_key, epoch_now, since)
-    User.where(id: viewer_ids).all
-  end
-
-  def viewed_by_since?(user_id, since=0)
-    epoch_now   = Time.now.to_i
-    views_since = Hash[*REDIS.zrevrangebyscore(user_views_key, epoch_now, since, withscores: true)]
-    !views_since[user_id.to_s].nil?
-  end
-
-  def total_views(epoch_since = 0)
-    if epoch_since.to_i == 0
-      REDIS.get(impressions_key).to_i
-    else
-      epoch_now   = Time.now.to_i
-      epoch_since = epoch_since.to_i
-      REDIS.zcount(user_views_key, epoch_since, epoch_now) + REDIS.zcount(user_anon_views_key, epoch_since, epoch_now)
-    end
+  def truncate_view_records
+    count = REDIS.zcard(user_anon_views_key)
+    REDIS.zremrangebyrank(user_anon_views_key, -(count - 100), -1) if count > 100
   end
 
   def generate_event(options={})
