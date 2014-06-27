@@ -695,7 +695,7 @@ DEPENDENCIES
   ruby-progressbar
   sanitize
   sass (~> 3.2.9)
-  sass-rails (~> 3.2.3)
+  sass-rails (~> 3.2.6)
   simple_form
   simplecov
   split
