@@ -51,3 +51,4 @@ vagrant/coderwall-box/packer_virtualbox-iso_virtualbox.box
 vagrant/dotfiles
 vcr_cassettes
 erd.pdf
+Vagrantfile
