@@ -17,15 +17,12 @@
           %input{:type => "button", :value => "Cancel", :class => "button cancel"}
   %ul.edit-del.cf
     - if signed_in?
-      - if can_edit_comment?(comment)
-        %li
-          %a.edit{:href => '#', :onclick => 'return false;'}
-            Edit
-        %li
-          %a.delete{:href => protip_comment_path(comment.commentable.try(:public_id), comment.id), 'data-method' => :delete}
-            Delete
-
-      -if !comment_author?(comment)
-        %li
-          %a.reply{:href => "#add-comment", :rel => "nofollow"}
-            Reply
+      %li.hidden.show-for-user{"data-user" => comment.user.username}
+        %a.edit{:href => '#', :onclick => 'return false;'}
+          Edit
+      %li.hidden.show-for-user{"data-user" => comment.user.username}
+        %a.delete{:href => protip_comment_path(comment.commentable.try(:public_id), comment.id), 'data-method' => :delete}
+          Delete
+      %li.remove-for-user{"data-user" => comment.user.username}
+        %a.reply{:href => "#add-comment", :rel => "nofollow"}
+          Reply
