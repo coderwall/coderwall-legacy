@@ -31,10 +31,13 @@
 class Comment < ActiveRecord::Base
   include ResqueSupport::Basic
   include ActsAsCommentable::Comment
+  include Rakismet::Model
 
   belongs_to :commentable, polymorphic: true
   has_many :likes, as: :likable, dependent: :destroy, after_add: :update_likes_cache, after_remove: :update_likes_cache
+  has_one :spam_report, as: :spammable
   after_create :generate_event
+  after_create :analyze_spam
   after_save :commented_callback
 
   default_scope order: 'likes_cache DESC, created_at ASC'
@@ -43,6 +46,14 @@ class Comment < ActiveRecord::Base
 
   alias_method :author, :user
   alias_attribute :body, :comment
+
+  rakismet_attrs  author: proc { self.user.name },
+                  author_email: proc { self.user.email },
+                  content: :comment,
+                  blog: ENV['AKISMET_URL']
+                  # TODO: add columns ip and http_user_agent into the users table
+                  # user_ip: proc { self.user.ip }
+                  # user_agent: proc { self.user.http_user_agent }
 
   validates :comment, length: { minimum: 2 }
 
@@ -171,5 +182,9 @@ class Comment < ActiveRecord::Base
     else
       :new_comment
     end
+  end
+
+  def analyze_spam
+    Resque.enqueue(AnalyzeSpam, self)
   end
 end

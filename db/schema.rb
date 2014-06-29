@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205021701) do
+ActiveRecord::Schema.define(:version => 20140629031154) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -329,6 +329,13 @@ ActiveRecord::Schema.define(:version => 20131205021701) do
 
   add_index "skills", ["deleted", "user_id"], :name => "index_skills_on_deleted_and_user_id"
   add_index "skills", ["user_id"], :name => "index_skills_on_user_id"
+
+  create_table "spam_reports", :force => true do |t|
+    t.integer  "spammable_id",   :null => false
+    t.string   "spammable_type", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
