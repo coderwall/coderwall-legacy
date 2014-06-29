@@ -1,18 +1,24 @@
-# Contributing
-
 ## **Protip for Contributors**
 
 When committing a Pull Request for non-application/test code please add [`[skip ci]`](http://docs.travis-ci.com/user/how-to-skip-a-build/) to your commit message.
 
-## External Dependencies
+# Contributing
 
-There are a couple of steps you need to take before contributing:
+Here are the steps for getting setup & started with contributing to CoderWall :
 
 1. Go to [https://assemblymade.com/coderwall](https://assemblymade.com/coderwall) and sign up.
 2. Link your GitHub account to your Assembly account in your profile settings.
-3. Create a new WIP at [https://assemblymade.com/coderwall/wips](https://assemblymade.com/coderwall/wips).
+3. [Fork the code](https://github.com/assemblymade/coderwall).
+4. Create a new WIP at [https://assemblymade.com/coderwall/wips](https://assemblymade.com/coderwall/wips).
+5. Get vagrant running
+6. Run the test suite
+7. If you have any issues, jump into chat, introduce yourself and ask or leave a message if no one is around.
+8. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
+9. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
 
-Then just go ahead, fork the repo & issue a pull request. You're on your way to having a stake in Coderwall.
+You're on your way to having a stake in CoderWall.
+
+## External Dependencies
 
 ### Stripe configuration
 
@@ -32,12 +38,9 @@ You're free to not use Vagrant but by the time you're done setting up you'll pro
 
 ### How to work on Coderwall using Vagrant on VirtualBox
 
-Sure you could download and install all the dependencies, services, and whatnot
-on to your local workstation but ain't nobody got time for that mess.
+Sure you could download and install all the dependencies, services, and what not on to your local workstation but ain't nobody got time for that mess.
 
-To save time and headaches we use Vagrant. Vagrant is a automation tool for
-VirtualBox that will help you spin up a virtual environment with pretty much
-everything in place and ready for you to start hacking (even on Windows!)
+To save time and headaches we use Vagrant. Vagrant is a automation tool for VirtualBox that will help you spin up a virtual environment with pretty much everything in place and ready for you to start hacking (even on Windows!)
 
 Here's everything you need to get started working on Coderwall with Vagrant TODAY!
 
@@ -53,22 +56,23 @@ There's only a VirtualBox basebox right now.
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
+If you're running Windows, [here's a guide written by one of our members on how to get set up.](https://github.com/assemblymade/coderwall/docs/getting_started_on_windows.md)
+
 1. **Install VirtualBox**
 
     Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Downloads)**.
 
     _At the time of writing this documentation the current version is VirtualBox 4.3.10._
 
-    You don't have to install the VirtualBox 4.3.10 Oracle VM VirtualBox Extension Pack
-    but I recommend installing it for the extra drivers.
+    You don't have to install the VirtualBox 4.3.10 Oracle VM VirtualBox Extension Pack but I recommend installing it for the extra drivers.
 
 2. **Install Vagrant**
 
-    Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**.
-
+    [Vagrant](http://vagrantup.com) is the recommended way to run CoderWall on your own machine. You need to download and install.  
+    Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**. 
     _At the time of writing this documentation the current version is Vagrant 1.6.2._
-
-    Follow the installation instructions for your platform on the Vagrant download page.
+    
+     Follow the installation instructions for your platform on the Vagrant download page.
 
     After installing Vagrant we need to add a couple plugins.
 
@@ -80,32 +84,27 @@ There's only a VirtualBox basebox right now.
 
 3. **Git assemblymade/coderwall**
 
-        mkdir -p ~/assemblymade
-        cd ~/assemblymade
-        git clone git@github.com:assemblymade/coderwall.git
-
-    I am going to assume that the project is cloned into your home directory in
-    and into a directory structure like `~/assemblymade/coderwall`.
+    mkdir -p ~/assemblymade
+    cd ~/assemblymade
+    
+    depending on your choice of protocols : _(this will take a while to run so you may want to grab some coffee)_
+    * git clone https://github.com/assemblymade/coderwall.git coderwall
+    * git clone git@github.com:assemblymade/coderwall.git coderwall 
+    
+    I am going to assume that the project is cloned into your home directory in and into a directory structure like `~/assemblymade/coderwall`.
 
 4. **Fire it up! Fire it up! Fire it up!**
 
-    Now that you've got VirtualBox and Vagrant installed with the source code
-    cloned in `~/assemblymade/coderwall` we can start up the Vagrant instance.
+    Now that you've got VirtualBox and Vagrant installed with the source code cloned in `~/assemblymade/coderwall` we can start up the Vagrant instance.
 
         cd ~/assemblymade/coderwall
         vagrant up
 
-    You will likely be prompted for your `sudo` password to allow VirtualBox
-    to mount the shared folder using NFS.
+    You will likely be prompted for your `sudo` password to allow VirtualBox to mount the shared folder using NFS.
 
-    Since this is probably the first time you're running this command it's going
-    to take a VERY long time (bandwidth willing) to run. This is because Vagrant
-    needs to fetch the Coderwall base box from the Internet and it's about 1GB.
-    Fortunately that really only has to be done once (unless the base box get's
-    updated but that's another story).
+    Since this is probably the first time you're running this command it's going to take a VERY long time (bandwidth willing) to run. This is because Vagrant needs to fetch the Coderwall base box from the Internet and it's about 1GB.  Fortunately that really only has to be done once (unless the base box get's updated but that's another story).
 
-    Once Vagrant reports that you're booted up and ready to go then you'll be
-    able to SSH into the local vm similiar to any other remote box.
+    Once Vagrant reports that you're booted up and ready to go then you'll be able to SSH into the local vm similiar to any other remote box.
 
         # still in ~/assemblymade/coderwall
         vagrant ssh
@@ -118,51 +117,38 @@ There's only a VirtualBox basebox right now.
     Now that you're SSH'ed into the Vagrant VM it's time to run the app.
 
         # we're still SSH'ed into Vbox
-        cd ~/web
+        cd ~/assemblymade
         rvm current # should be ruby-2.1.0@coderwall
         bundle check # should be a response that everything's good
         bundle exec rails server
 
     If all went well the Rails server should start up on PORT 3000.
 
-    Now go open your favorite web browser on you host machine and
-    navigate to `http://localhost:3000`.
+    Now go open your favorite web browser on you host machine and navigate to [http://localhost:3000](http://localhost:3000).
 
-    If all goes well (and if it doesn't then check if another app is
-    running on port 3000 and if there's any logging output being displayed
-    in the window you were running Vagrant in) then you're going to be
-    looking at the Coderwall homepage.
+    If all goes well (and if it doesn't then check if another app is running on port 3000 and if there's any logging output being displayed in the window you were running Vagrant in) then you're going to be looking at the CoderWall homepage.
 
-    Congratulations! NOW GET TO WORK! Enough dilly-dallying with your devenv.
+    Congratulations! NOW GET TO WORK! Enough dilly-dallying with your DEV env.
 
 5. **Hackety Hack!**
 
-    Vagrant is powerful not just because it can abstract away the mess of
-    managing a crazy, complicated development environment while ensuring everyone
-    has a common platform to work on. It's also powerful because it will still
-    let you have whatever crazy, complicated editors and tools to work on your
-    code while abstracting away the nasty details of installing and configuring Postgres.
+    Vagrant is powerful not just because it can abstract away the mess of managing a crazy, complicated development environment while ensuring everyone has a common platform to work on. It's also powerful because it will still let you have whatever crazy, complicated editors and tools to work on your code while abstracting away the nasty details of installing and configuring Postgres.
 
-    If you're on your host computer and navigate to `~/assemblymade/coderwall` (we're all there, right?)
-    and make changes to your code while Vagrant is running you'll be able to see the changes
-    reflected in Vagrant immediately. Try this.
+    If you're on your host computer and navigate to `~/assemblymade/coderwall` (we're all there, right?) and make changes to your code while Vagrant is running you'll be able to see the changes reflected in Vagrant immediately. Try this.
 
         cd ~/assemblymade/coderwall
         echo Hello, `whoami` from `hostname` >> HELLO.txt
         vagrant ssh
-        cd ~/web
+        cd ~/assemblymade
         cat HELLO.txt #whoa.
         echo Hello, `whoami` from `hostname` >> HELLO.txt
         exit
         cat HELLO.txt # wah-wah-wee-wa!
         rm -f HELLO.txt # yeah, it's deleted in the other spot too.
 
-    Yeah, that's pretty awesome. Remember that NFS thing we glossed over earlier? That's
-    the mechanism that Vagrant set up with VirtualBox to transparently synchronize your
-    local folder with the folder on the VM. Now you can edit and manage your files from
-    the comfort of your favorite OS without having to worry about copying them to the VM.
+    Yeah, that's pretty awesome. Remember that NFS thing we glossed over earlier? That's the mechanism that Vagrant set up with VirtualBox to transparently synchronize your local folder with the folder on the VM. Now you can edit and manage your files from the comfort of your favorite OS without having to worry about copying them to the VM.
 
-6. **All done.**
+6. **All done for the day - Turning your Vagrant VM off**
 
     When you're ready to call it a day and want to turn the VM off you have two options.
 
@@ -170,8 +156,19 @@ There's only a VirtualBox basebox right now.
 
     Either way when you're ready to resume working just `vagrant up` and you're good to go.
 
-7. **Thanks**
+7. Gems Installation and Database Migration
 
-    I hope you enjoy working with Vagrant as much as we do and feel free to ask questions
-    if you get stuck or have a problem. You're probably not alone and even if you're the
-    first to encounter a rough patch you won't be the last.
+	Remember that you are using Vagrant, so if you run ```bundle install``` or ```rake db:migrate``` directly in your terminal it will not affect the virtual machine where CoderWall is running.
+
+	In order to run these commands, in the virtual machine, all you have to do is to run ```vagrant provision```.
+
+8. Environment Variables
+
+	If you need to change any environment variable you have to edit ```.env``` file properly and restart Rails server running:
+
+    vagrant ssh -c "sudo restart coderwall"
+
+
+9. **Thanks**
+
+    I hope you enjoy working with Vagrant as much as we do and feel free to ask questions if you get stuck or have a problem. You're probably not alone and even if you're the first to encounter a rough patch you won't be the last.
