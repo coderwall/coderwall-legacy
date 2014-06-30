@@ -67,6 +67,7 @@ window.initializeProtip = ->
   fixScrollBars()
   fillComment()
   setupMobileMenu()
+  show_hide_by_current_user()
 
 toggleSubscriptionStatus = (subscription_link) ->
 #  subscription_link.toggleClass('protip-subscribe')
