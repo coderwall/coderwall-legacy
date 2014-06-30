@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205021701) do
+ActiveRecord::Schema.define(:version => 20140630201109) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -456,6 +456,8 @@ ActiveRecord::Schema.define(:version => 20131205021701) do
     t.string   "visit_frequency",               :default => "rarely"
     t.boolean  "join_badge_orgs",               :default => false
     t.datetime "last_asm_email_at"
+    t.string   "last_ip"
+    t.string   "last_ua"
   end
 
   add_index "users", ["linkedin_id"], :name => "index_users_on_linkedin_id", :unique => true

@@ -64,6 +64,9 @@ class ApplicationController < ActionController::Base
     cookies[:signedin]           = user.username # this cookie is used by js to show loggedin or not on cached HTML
     cookies.permanent[:identity] = user.username
     current_user.increment!(:login_count)
+    current_user.last_ip = request.remote_ip
+    current_user.last_ua = request.user_agent
+    current_user.save
     ensure_and_reconcile_tracking_code #updated tracking code if appropriate.
     current_user
   end
