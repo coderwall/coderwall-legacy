@@ -316,7 +316,13 @@ class Opportunity < ActiveRecord::Base
   def add_opportunity_locations_to_team
     geocoded_all = true
     self.location.split('|').each do |location_string|
-      geocoded_all &&= self.team.team_locations.where(conditions: ['address LIKE ?', "%#{location_string}%"]).exists? or anywhere?(location_string) ? false : self.team.team_locations.build(address: location_string, name: location_string).geocode
+      # skip if location is anywhere or already exists
+      if anywhere?(location_string) || self.team.team_locations.where(address: /.*#{location_string}.*/).count > 0
+        geocoded_all = false
+        next
+      end
+
+      geocoded_all &&= self.team.team_locations.build(address: location_string, name: location_string).geocode
     end
     geocoded_all || nil
   end
