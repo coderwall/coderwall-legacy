@@ -2,21 +2,20 @@
 # vi: set ft=ruby :
 
 # Load in custom vagrant settings
-if File.file?("vagrant.yml")
-  require 'yaml'
-  custom_settings = YAML.load_file 'vagrant.yml'
-  puts '== Using Custom Vagrant Settings =='
-end
+require 'yaml'
+custom_settings = File.file?('vagrant.yml') ?  YAML.load_file('vagrant.yml') : {}
+
+puts '== Using Custom Vagrant Settings =='
+puts custom_settings.inspect
 
 VAGRANTFILE_API_VERSION = "2"
 
 $box = 'coderwall'
-# The box is 1GB. Prepare yourself.
-#$box_url = 'http://cdn.coderwall.com/vagrant/coderwall.box'
-$box_url = 'https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall.box'
+$box_url = 'https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall.box' # The box is 1GB. Prepare your
 $provision = 'vagrant/bootstrap.sh'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
   config.vm.box = $box
   config.vm.box_url = $box_url
   config.vm.provision :shell do |s|
@@ -28,33 +27,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :private_network, ip: '192.168.237.95' # 192.168.cdr.wl
 
-  # Use custom settings unless they don't exist
-  unless custom_settings.nil?
-    config.vm.network :forwarded_port, guest: 3000, host: custom_settings['network']['port_mappings']['rails']
-    config.vm.network :forwarded_port, guest: 5432, host: custom_settings['network']['port_mappings']['postgres']
-    config.vm.network :forwarded_port, guest: 6379, host: custom_settings['network']['port_mappings']['redis']
-    config.vm.network :forwarded_port, guest: 9200, host: custom_settings['network']['port_mappings']['elasticsearch']
-    config.vm.network :forwarded_port, guest: 27017, host: custom_settings['network']['port_mappings']['mongodb']
-  else
-    # Rails
-    config.vm.network :forwarded_port, guest: 3000, host: 3000
-    # Postgres
-    config.vm.network :forwarded_port, guest: 5432, host: 2200
-    # Redis
-    config.vm.network :forwarded_port, guest: 6379, host: 2201
-    # ElasticSearch
-    config.vm.network :forwarded_port, guest: 9200, host: 9200
-    # MongoDB
-    config.vm.network :forwarded_port, guest: 27017, host: 27017
-  end
+  set_port_mapping_for(config, 'elasticsearch', 9200,  custom_settings)
+  set_port_mapping_for(config, 'mongodb',       27017, custom_settings)
+  set_port_mapping_for(config, 'postgres',      5432,  custom_settings)
+  set_port_mapping_for(config, 'redis',         6379,  custom_settings)
+  set_port_mapping_for(config, 'rails',         3000,  custom_settings, true)
 
-  config.vm.synced_folder '.', '/home/vagrant/web', nfs: true
+  if sync_settings = custom_settings['sync']
+    config.vm.synced_folder '.', '/home/vagrant/web', nfs: sync_settings['use_nfs']
+  end
 
   config.vm.provider :virtualbox do |vb|
     # Use custom settings unless they don't exist
-    unless custom_settings.nil?
-      vb.customize ['modifyvm', :id, '--cpus', custom_settings['virtualbox']['cpus']]
-      vb.customize ['modifyvm', :id, '--memory', custom_settings['virtualbox']['memory']]
+    if virtualbox_settings = custom_settings['virtualbox']
+      vb.customize ['modifyvm', :id, '--cpus', virtualbox_settings['cpus']]
+      vb.customize ['modifyvm', :id, '--memory', virtualbox_settings['memory']]
     else
       vb.customize ['modifyvm', :id, '--cpus', '4']
       vb.customize ['modifyvm', :id, '--memory', '4096']
@@ -69,6 +56,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # seems to be safe to run: https://github.com/griff/docker/commit/e5239b98598ece4287c1088e95a2eaed585d2da4
   end
 
-  config.vbguest.auto_update = true
-  config.vbguest.no_remote = false
+  if Vagrant.has_plugin?('vagrant-vbguest')
+    config.vbguest.auto_update = true
+    config.vbguest.no_remote = false
+  else
+    puts "Please install the 'vagrant-vbguest' plugin"
+  end
+
+end
+
+def set_port_mapping_for(config, service, guest_port, settings, force = false)
+  if settings['network'] && settings['network']['port_mappings'] && settings['network']['port_mappings'][service]
+    host_port = settings['network']['port_mappings'][service]
+    puts " !! Setting up port mapping rule for #{service} host:#{host_port} => guest:#{guest_port}"
+    config.vm.network(:forwarded_port, guest: guest_port,  host: host_port)
+  else
+    # no host port mapping was defined
+    if force
+      # but we want to force a mapping for the default ports
+      puts " !! Setting up port mapping rule for #{service} host:#{guest_port} => guest:#{guest_port}"
+      config.vm.network(:forwarded_port, guest: guest_port,  host: guest_port)
+    end
+  end
 end
