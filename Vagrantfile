@@ -1,6 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Load in custom vagrant settings
+if File.file?("vagrant.yml")
+  require 'yaml'
+  custom_settings = YAML.load_file 'vagrant.yml'
+  puts '== Using Custom Vagrant Settings =='
+end
+
 VAGRANTFILE_API_VERSION = "2"
 
 $box = 'coderwall'
@@ -21,24 +28,39 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :private_network, ip: '192.168.237.95' # 192.168.cdr.wl
 
-  # Rails
-  config.vm.network :forwarded_port, guest: 3000, host: 3000
-
-  # Postgres
-  config.vm.network :forwarded_port, guest: 5432, host: 2200
-  # Redis
-  config.vm.network :forwarded_port, guest: 6379, host: 2201
-  # ElasticSearch
-  config.vm.network :forwarded_port, guest: 9200, host: 9200
-  # MongoDB
-  config.vm.network :forwarded_port, guest: 27017, host: 27017
+  # Use custom settings unless they don't exist
+  unless custom_settings.nil?
+    config.vm.network :forwarded_port, guest: 3000, host: custom_settings['network']['port_mappings']['rails']
+    config.vm.network :forwarded_port, guest: 5432, host: custom_settings['network']['port_mappings']['postgres']
+    config.vm.network :forwarded_port, guest: 6379, host: custom_settings['network']['port_mappings']['redis']
+    config.vm.network :forwarded_port, guest: 9200, host: custom_settings['network']['port_mappings']['elasticsearch']
+    config.vm.network :forwarded_port, guest: 27017, host: custom_settings['network']['port_mappings']['mongodb']
+  else
+    # Rails
+    config.vm.network :forwarded_port, guest: 3000, host: 3000
+    # Postgres
+    config.vm.network :forwarded_port, guest: 5432, host: 2200
+    # Redis
+    config.vm.network :forwarded_port, guest: 6379, host: 2201
+    # ElasticSearch
+    config.vm.network :forwarded_port, guest: 9200, host: 9200
+    # MongoDB
+    config.vm.network :forwarded_port, guest: 27017, host: 27017
+  end
 
   config.vm.synced_folder '.', '/home/vagrant/web', nfs: true
 
   config.vm.provider :virtualbox do |vb|
-    vb.customize ['modifyvm', :id, '--cpus', '4']
+    # Use custom settings unless they don't exist
+    unless custom_settings.nil?
+      vb.customize ['modifyvm', :id, '--cpus', custom_settings['virtualbox']['cpus']]
+      vb.customize ['modifyvm', :id, '--memory', custom_settings['virtualbox']['memory']]
+    else
+      vb.customize ['modifyvm', :id, '--cpus', '4']
+      vb.customize ['modifyvm', :id, '--memory', '4096']
+    end
+
     vb.customize ['modifyvm', :id, '--ioapic', 'on']
-    vb.customize ['modifyvm', :id, '--memory', '4096']
 
     # https://github.com/mitchellh/vagrant/issues/1807
     # whatupdave: my VM was super slow until I added these:
