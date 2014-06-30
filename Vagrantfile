@@ -40,11 +40,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
     # Use custom settings unless they don't exist
     if virtualbox_settings = custom_settings['virtualbox']
-      vb.customize ['modifyvm', :id, '--cpus', virtualbox_settings['cpus']]
-      vb.customize ['modifyvm', :id, '--memory', virtualbox_settings['memory']]
+      vb.customize ['modifyvm', :id, '--cpus',   "#{virtualbox_settings['cpus']   || 2}"]
+      vb.customize ['modifyvm', :id, '--memory', "#{virtualbox_settings['memory'] || 2048}"]
     else
-      vb.customize ['modifyvm', :id, '--cpus', '4']
-      vb.customize ['modifyvm', :id, '--memory', '4096']
+      vb.customize ['modifyvm', :id, '--cpus',   '2']
+      vb.customize ['modifyvm', :id, '--memory', '2048']
     end
 
     vb.customize ['modifyvm', :id, '--ioapic', 'on']
@@ -62,7 +62,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   else
     puts "Please install the 'vagrant-vbguest' plugin"
   end
-
 end
 
 def set_port_mapping_for(config, service, guest_port, settings, force = false)
