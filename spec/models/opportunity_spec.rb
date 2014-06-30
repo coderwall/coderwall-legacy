@@ -101,4 +101,37 @@ describe Opportunity do
       job.has_application_from?(user).should be_true
     end
   end
+
+  describe "changing job location" do
+    it "should set location_city" do
+      job = Fabricate(:job)
+      job.location = "Amsterdam|San Francisco"
+      job.save
+      (job.location_city.split("|") - ["Amsterdam", "San Francisco"]).should == []
+    end
+
+    it "should not add anywhere to location_city" do
+      job = Fabricate(:job)
+      job.location = "Amsterdam|San Francisco|anywhere"
+      job.save
+      (job.location_city.split("|") - ["Amsterdam", "San Francisco"]).should == []
+    end
+
+    it "should update location_city with changes" do
+      job = Fabricate(:job)
+      job.location = "Amsterdam|San Francisco"
+      job.save
+      (job.location_city.split("|") - ["Amsterdam", "San Francisco"]).should == []
+      job.location = "Amsterdam"
+      job.save
+      job.location_city.should == "Amsterdam"
+    end
+
+    it "should not add existing locations to the team" do
+      job = Fabricate(:job)
+      job.location = "San Francisco"
+      job.save
+      job.team.team_locations.count.should === 1
+    end
+  end
 end
