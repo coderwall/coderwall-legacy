@@ -305,21 +305,24 @@ class Opportunity < ActiveRecord::Base
 
   protected
   def set_location_city
-    self.location_city = begin
-      locations = []
-      begin
-        locations = self.team.cities.compact.select { |city| self.location.include?(city) }
-      end while locations.blank? && add_opportunity_locations_to_team && set_location_city
-      self.team.cities.join("|")
-    end unless self.location.nil?
-    errors.add(:location, "is not valid, please specify one or more cities separated by | (e.g. Miami, FL | San Francisco). put 'anywhere' if location doesn't matter") if !self.location.nil? and !valid_location_city
-    self.location_city
+    add_opportunity_locations_to_team
+    locations = self.team.cities.compact.select { |city| self.location.include?(city) }
+
+    return if locations.blank? && anywhere?(self.location)
+
+    self.location_city = locations.join("|")
   end
 
   def add_opportunity_locations_to_team
     geocoded_all = true
     self.location.split('|').each do |location_string|
-      geocoded_all &&= self.team.team_locations.where(conditions: ['address LIKE ?', "%#{location_string}%"]).exists? or anywhere?(location_string) ? false : self.team.team_locations.build(address: location_string, name: location_string).geocode
+      # skip if location is anywhere or already exists
+      if anywhere?(location_string) || self.team.team_locations.where(address: /.*#{location_string}.*/).count > 0
+        geocoded_all = false
+        next
+      end
+
+      geocoded_all &&= self.team.team_locations.build(address: location_string, name: location_string).geocode
     end
     geocoded_all || nil
   end
