@@ -37,9 +37,9 @@
             - protip_networks(protip).each do |name|
               -slug = Network.slugify(name)
               %li{:style => "border-color:##{color_signature(slug)}"}
-                %a.name{:href => network_path(:id => slug)}= name
-                -followed = current_user.member_of?(Network.find_by_slug(slug))
-                =link_to '', followed ? leave_network_path(:id => slug) : join_network_path(:id => slug), :class => followed ? "follow followed #{slug}" : "follow #{slug}", :remote => true, :method => :post, :rel => "nofollow", :'data-follow-type' => 'Networks', :'data-value' => "#{slug}"
+                %a.name{href: network_path(:id => slug)}= name
+                - followed = current_user.try(:member_of?, Network.find_by_slug(slug))
+                = link_to '', followed ? leave_network_path(id: slug) : join_network_path(id: slug), class: followed ? "follow followed #{slug}" : "follow #{slug}", remote: true, method: :post, rel: "nofollow", :'data-follow-type' => 'Networks', :'data-value' => "#{slug}"
 
         -unless mode == 'preview'
           -if protip_owner?(protip, current_user) || is_admin?
