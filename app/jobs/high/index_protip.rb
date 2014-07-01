@@ -5,6 +5,6 @@ class IndexProtip < Struct.new(:protip_id)
 
   def perform
     protip = Protip.find(protip_id)
-    protip.tire.update_index
+    Coderwall::Search::IndexProtip.run(protip)
   end
 end

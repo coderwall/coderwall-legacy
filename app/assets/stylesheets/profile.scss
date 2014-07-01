@@ -593,6 +593,15 @@
   }
 }
 
+.sidebar {
+  .admin-controls {
+    width: 300px;
+    float: right;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+}
+
 .profile-sidebar {
   float: right;
   width: 330px;
@@ -1288,7 +1297,7 @@
       color: $light-blue;
     }
 
-    .impersonate, .refresh {
+    .admin-action {
       background: none;
       padding: 0;
       margin-bottom: 10px;

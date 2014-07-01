@@ -170,9 +170,9 @@ class Protip < ActiveRecord::Base
   before_save :recalculate_score!
 
   # Begin these three lines fail the test
-  after_save :reindex_search
+  after_save :index_search
   after_save :unqueue_flagged, if: :flagged?
-  after_destroy :reindex_search
+  after_destroy :index_search_after_destroy
   after_create :update_network
   after_create :analyze_spam
   # End of test failing lines
@@ -467,12 +467,16 @@ class Protip < ActiveRecord::Base
     end
   end
 
-  def reindex_search
-    if Rails.env.development? or Rails.env.test? or self.destroyed?
-      self.tire.update_index
-    else
-      Resque.enqueue(IndexProtip, self.id)
-    end
+  def deindex_search
+    Coderwall::Search::DeindexProtip.run(self)
+  end
+
+  def index_search
+    Coderwall::Search::IndexProtip.run(self)
+  end
+
+  def index_search_after_destroy
+    self.tire.update_index
   end
 
   def unqueue_flagged
@@ -1016,7 +1020,7 @@ class Protip < ActiveRecord::Base
     if viewer.is_a?(User)
       REDIS.zadd(user_views_key, epoch_now, viewer.id)
       generate_event(viewer: viewer.username) unless viewer_ids(5.minutes.ago.to_i).include? viewer.id.to_s
-      reindex_search if viewer.admin?
+      index_search if viewer.admin?
     else
       REDIS.zadd(user_anon_views_key, epoch_now, viewer)
       count = REDIS.zcard(user_anon_views_key)
