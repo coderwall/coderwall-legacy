@@ -1,5 +1,4 @@
-class ProcessingQueuesController < ApplicationController
-  before_filter :require_admin!
+class ProcessingQueuesController < BaseAdminController
   before_filter :lookup_queue, only: [:show, :dequeue]
 
   def index

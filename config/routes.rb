@@ -172,6 +172,8 @@ Badgiy::Application.routes.draw do
     resources :endorsements
     resources :pictures
     resources :follows
+    resources :bans,    only: [:create]
+    resources :unbans,  only: [:create]
   end
 
   match 'clear/:id/:provider' => 'users#clear_provider', as: :clear_provider

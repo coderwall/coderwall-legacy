@@ -1,5 +1,4 @@
-class LinksController < ApplicationController
-  before_filter :require_admin!
+class LinksController < BaseAdminController
 
   def index
     @links1, @links2, @links3 = *Link.featured.popular.limit(100).all.chunk(3)
