@@ -107,7 +107,7 @@ gem 'faraday', '~> 0.8.1'
 
 # ----------------
 
-gem 'rocket_tag'
+gem 'rocket_tag', '0.0.4'
 
 gem 'acts_as_commentable', '2.0.1'
 gem 'acts_as_follower'

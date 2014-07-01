@@ -462,9 +462,9 @@ GEM
       rspec (>= 2.5.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rocket_tag (0.5.6)
-      activerecord (>= 3.2.0)
-      squeel (~> 1.0.0)
+    rocket_tag (0.0.4)
+      activerecord (>= 3.1.0)
+      squeel
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -670,7 +670,7 @@ DEPENDENCIES
   resque_mailer
   resque_spec
   rest-client
-  rocket_tag
+  rocket_tag (= 0.0.4)
   rspec-rails
   ruby-progressbar
   sanitize
