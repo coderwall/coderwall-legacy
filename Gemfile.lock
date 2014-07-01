@@ -206,6 +206,7 @@ GEM
       rspec-instafail (~> 0.2.0)
       ruby-progressbar (~> 1.0)
     geocoder (1.1.4)
+    get_process_mem (0.2.0)
     github-markdown (0.6.5)
     grackle (0.2.1)
       json
@@ -279,7 +280,6 @@ GEM
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.9.2)
     kramdown (1.3.3)
     launchy (2.4.2)
       addressable (~> 2.3)
@@ -405,6 +405,11 @@ GEM
     pubnub (0.1.9)
       em-http-request (>= 1.0.2)
       json
+    puma (2.8.2)
+      rack (>= 1.1, < 2.0)
+    puma_worker_killer (0.0.3)
+      get_process_mem (~> 0.1)
+      puma (~> 2.7)
     querystring (0.1.0)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
@@ -587,12 +592,6 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    unicorn (4.8.2)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
-    unicorn-worker-killer (0.4.2)
-      unicorn (~> 4)
     vcr (2.8.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
@@ -677,6 +676,8 @@ DEPENDENCIES
   omniauth-twitter (~> 0.0.16)
   pg
   pubnub (= 0.1.9)
+  puma
+  puma_worker_killer
   querystring
   quiet_assets
   rack-timeout
@@ -712,7 +713,5 @@ DEPENDENCIES
   tweet-button
   twitter
   uglifier (>= 1.0.3)
-  unicorn
-  unicorn-worker-killer
   vcr
   webmock (< 1.16)

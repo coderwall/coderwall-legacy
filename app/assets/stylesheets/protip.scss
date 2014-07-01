@@ -453,11 +453,11 @@ body.protip-single {
           float: left;
           li {
             float: left;
-            margin-left: 10px;
-            padding-left: 10px;
-            border-left: solid 1px #777;
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: solid 1px #777;
 
-            &:first-child {
+            &:last-child {
               margin: 0;
               border: 0;
               padding: 0;

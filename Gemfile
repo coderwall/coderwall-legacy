@@ -178,8 +178,8 @@ end
 group :production do
   gem 'honeybadger'
   gem 'rails_12factor'
-  gem 'unicorn'
-  gem 'unicorn-worker-killer'
+  gem 'puma'
+  gem 'puma_worker_killer'
   gem 'newrelic_rpm'
   gem 'newrelic_resque_agent'
   gem 'le'
