@@ -16,6 +16,30 @@ describe ProtipsController do
     {}
   end
 
+  describe "GET user" do
+    describe "banned" do
+      it "should assign user @protips for page, despite not being in search index" do
+        current_user.update_attribute(:banned_at,Time.now)
+        current_user.banned?.should == true
+        Protip.rebuild_index
+        protip = Protip.create! valid_attributes
+        get :user, {username: current_user.username}, valid_session
+        assigns(:protips).first.title.should eq(protip.title)
+      end
+    end
+
+    describe "not banned" do
+      it "should assign user @protips for page" do
+        Protip.rebuild_index
+        protip = Protip.create! valid_attributes
+        get :user, {username: current_user.username}, valid_session
+        assigns(:protips).results.first.title.should eq(protip.title)
+      end
+      
+    end
+    
+  end
+
   describe "GET topic" do
     it "assigns all protips as @protips" do
       Protip.rebuild_index

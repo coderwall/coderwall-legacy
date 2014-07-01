@@ -1,0 +1,17 @@
+class BansController < BaseAdminController
+
+  def create
+    ban_params = params.permit(:user_id)
+    user = User.find(ban_params[:user_id])
+    return redirect_to(badge_url(username: user.username), notice: "User is already banned.") if user.banned?
+
+    flash_notice = if Coderwall::Banning::User.ban(user)
+      Coderwall::Banning::DeindexUserProtips.run(user)
+      "User successfully banned."
+    else
+      "User could not be banned."
+    end
+    redirect_to(badge_url(username: user.username), notice: flash_notice)
+  end
+
+end

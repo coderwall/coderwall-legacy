@@ -426,4 +426,18 @@ describe User do
       user.following_by_type(User.name).size.should == 1
     end
   end
+
+  describe 'banning' do
+    let(:user) { Fabricate(:user) }
+
+    it "should respond to banned? public method" do
+      user.respond_to?(:banned?).should be_true
+    end
+
+    it "should not default to banned" do
+      user.banned?.should == false
+    end
+
+  end
+
 end
