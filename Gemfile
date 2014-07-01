@@ -54,10 +54,6 @@ gem 'github-markdown'
 # XML
 gem 'nokogiri'
 
-# Hosted on Heroku
-gem 'heroku'
-gem 'heroku-autoscale', github: 'ndbroadbent/heroku-autoscale'
-
 # Twitter API client
 gem 'grackle'
 gem 'twitter'

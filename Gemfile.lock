@@ -18,15 +18,6 @@ GIT
       railties (~> 3.1)
 
 GIT
-  remote: git://github.com/ndbroadbent/heroku-autoscale.git
-  revision: fc5a14dc46abe54452a24fdd312856b853a7e142
-  specs:
-    heroku-autoscale (0.2.2)
-      eventmachine
-      heroku (~> 2.31.3)
-      rack (~> 1.0)
-
-GIT
   remote: git://github.com/stripe/stripe-ruby.git
   revision: 637d5899f614a6f4d0fa2147f9b3b8b1c8b39b28
   specs:
@@ -233,15 +224,6 @@ GEM
       tilt
     hashie (1.2.0)
     hashr (0.0.22)
-    heroku (2.31.5)
-      heroku-api (~> 0.3.5)
-      launchy (>= 0.3.2)
-      netrc (~> 0.7.7)
-      rest-client (~> 1.6.1)
-      rubyzip
-    heroku-api (0.3.17)
-      excon (~> 0.27)
-      multi_json (~> 1.8.2)
     hike (1.2.3)
     hirb (0.7.1)
     hiredis (0.4.5)
@@ -450,7 +432,6 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    raindrops (0.13.0)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
@@ -640,8 +621,6 @@ DEPENDENCIES
   haml (= 3.1.7)
   hamlbars
   hashie
-  heroku
-  heroku-autoscale!
   hiredis
   honeybadger
   jazz_hands
