@@ -670,7 +670,7 @@ DEPENDENCIES
   resque_mailer
   resque_spec
   rest-client
-  rocket_tag
+  rocket_tag (= 0.0.4)
   rspec-rails
   ruby-progressbar
   sanitize

@@ -363,6 +363,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def banned?
+    banned_at.present?
+  end
+
   def oldest_achievement_since_last_visit
     badges.where("badges.created_at > ?", last_request_at).order('badges.created_at ASC').last
   end
@@ -1399,7 +1403,7 @@ class User < ActiveRecord::Base
 
   def refresh_protips
     self.protips.each do |protip|
-      protip.reindex_search
+      protip.index_search
     end
     return true
   end

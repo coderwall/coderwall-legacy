@@ -80,7 +80,7 @@ class ProtipsController < ApplicationController
 
     user = User.with_username(params[:username]) unless params[:username].blank?
     return redirect_to(protips_path) if user.nil?
-    @protips    = Protip.search_trending_by_user(user_params[:username], nil, [], user_params[:page], user_params[:per_page])
+    @protips    = protips_for_user(user,user_params)
     @topics     = [user.username]
     @topic      = "author:#{user.username}"
     @topic_user = user
@@ -406,6 +406,17 @@ class ProtipsController < ApplicationController
   end
 
   private
+
+  # Return protips for a user
+  # If the user is banned, grab protips from their association 
+  # because the tip will have been removed from the search index.
+  #
+  # @param [ Hash ] params - Should contain :page and :per_page key/values
+  def protips_for_user(user,params)
+    if user.banned? then user.protips.page(params[:page]).per(params[:per_page])
+    else Protip.search_trending_by_user(user.username, nil, [], params[:page], params[:per_page])
+    end
+  end
 
   def expand_query(query_string)
     scopes = []

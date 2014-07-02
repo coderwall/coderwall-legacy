@@ -456,6 +456,7 @@ ActiveRecord::Schema.define(:version => 20140701170008) do
     t.string   "visit_frequency",               :default => "rarely"
     t.boolean  "join_badge_orgs",               :default => false
     t.datetime "last_asm_email_at"
+    t.datetime "banned_at"
   end
 
   add_index "users", ["linkedin_id"], :name => "index_users_on_linkedin_id", :unique => true

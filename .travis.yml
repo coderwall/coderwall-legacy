@@ -15,4 +15,7 @@ before_install:
 before_script:
   - cp -f config/database.travis.yml config/database.yml
   - cp -f .env.example .env
-  - bin/rake db:create db:schema:load RAILS_ENV=test
+  - bundle exec rake db:create:all
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:migrate
+  - bundle exec rake db:test:prepare

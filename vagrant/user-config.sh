@@ -35,5 +35,7 @@ export REDIS_URL=redis://127.0.0.1:6379
 
 bundle exec rake db:drop:all
 bundle exec rake db:create:all
-bundle exec rake db:setup
+bundle exec rake db:schema:load
+bundle exec rake db:migrate
+bundle exec rake db:seed
 bundle exec rake db:test:prepare
