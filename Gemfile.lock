@@ -404,7 +404,6 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rack-timeout (0.0.4)
     rails (3.2.18)
       actionmailer (= 3.2.18)
       actionpack (= 3.2.18)
@@ -659,7 +658,6 @@ DEPENDENCIES
   puma_worker_killer
   querystring
   quiet_assets
-  rack-timeout
   rails (~> 3.2)
   rails-erd
   rails_12factor

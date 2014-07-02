@@ -100,9 +100,6 @@ gem 'foreman'
 # Better logging
 gem 'awesome_print'
 
-# Hangup on long calls
-gem 'rack-timeout'
-
 gem 'faraday', '~> 0.8.1'
 
 # ----------------
