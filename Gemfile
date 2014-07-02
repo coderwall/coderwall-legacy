@@ -174,5 +174,4 @@ group :production do
   gem 'puma_worker_killer'
   gem 'newrelic_rpm'
   gem 'newrelic_resque_agent'
-  gem 'le'
 end
