@@ -91,7 +91,6 @@ gem 'rest-client'
 # JSON parser
 gem 'multi_json'
 gem 'oj'
-gem 'active_model_serializers'
 gem 'jbuilder'
 
 # Run app
@@ -111,7 +110,7 @@ gem 'acts_as_follower'
 gem 'color'
 gem 'createsend'
 gem 'fog'
-gem 'font_assets', '~> 0.1.2'
+#gem 'font_assets', 'cleanoffer/font_assets'
 gem 'geocoder'
 gem 'hashie'
 gem 'linkedin'
@@ -146,7 +145,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'quiet_assets'
+  #gem 'quiet_assets'
   gem 'jazz_hands'
   gem 'launchy'
   gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
