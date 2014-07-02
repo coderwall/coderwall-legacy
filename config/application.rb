@@ -7,6 +7,8 @@ Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
 
 module Badgiy
   class Application < Rails::Application
+    config.threadsafe!
+    config.allow_concurrency = true
 
     config.autoload_paths += %W(#{config.root}/app)
 
@@ -52,4 +54,4 @@ ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
 }
 
 require "#{Rails.root}/app/jobs/resque_support.rb"
-require 'font_assets/railtie' # => loads font middleware so cloudfront can serve fonts that render in Firefox
+#require 'font_assets/railtie' # => loads font middleware so cloudfront can serve fonts that render in Firefox
