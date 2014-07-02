@@ -66,23 +66,7 @@
                 = link_to '', report_inappropriate_protip_path(protip), method: :post, remote: true, class: (cookies["report_inappropriate-#{protip.public_id}"] ? 'user-flagged' : '') + ' user-flag'
 
           -if defined?(:job) && !job.nil?
-            %h3 Featured team
-            - adjective = ["is amazing", "is awesome", "has a great engineering team"].sample
-            =link_to teamname_path(job.team.slug), :class => 'team-box', 'data-action' => 'view team jobs', 'data-from' => 'job on protip', 'data-properties' => {"author's team" => protip.user.belongs_to_team?(job.team), 'adjective' => adjective, 'mode' => mode}.to_json do
-              .image-top
-                =image_tag(featured_team_banner(job.team))
-              .content
-                -#-team_member = protip.user.belongs_to_team?(job.team) ? protip.user : job.team.top_team_member
-                .avatar
-                  =image_tag(job.team.avatar_url)
-                %h4= job.team.name
-
-                %p
-                  ==Calling all #{job.title.pluralize}. #{job.team.name} #{adjective} and is hiring!
-            %a.feature-jobs.track{:href => employers_path, 'data-action' => 'upgrade team', 'data-from' => 'protip page'}
-              feature your jobs here
-
-            %pm:widget{"max-item-count" => "4", "show-thumbs" => "false", :title => "Recommended", :width => "244"}/
+            = render partial: "sidebar_featured_team", locals: {job: job, mode: mode, protip: protip}
 
     %article.tip-panel{:id => protip.public_id}
       -ab_test(TWITTER_SHARE_TEST, 'left', 'right') do |direction|
