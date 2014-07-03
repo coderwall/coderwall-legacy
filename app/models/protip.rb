@@ -457,11 +457,11 @@ class Protip < ActiveRecord::Base
   end
 
   def deindex_search
-    Coderwall::Search::DeindexProtip.run(self)
+    ::Coderwall::Search::DeindexProtip.run(self)
   end
 
   def index_search
-    Coderwall::Search::IndexProtip.run(self)
+    ::Coderwall::Search::IndexProtip.run(self)
   end
 
   def index_search_after_destroy
@@ -469,11 +469,11 @@ class Protip < ActiveRecord::Base
   end
 
   def unqueue_flagged
-    ProcessingQueue.unqueue(self, :auto_tweet)
+    ::ProcessingQueue.unqueue(self, :auto_tweet)
   end
 
   def networks
-    Network.tagged_with(self.topics)
+    ::Network.tagged_with(self.topics)
   end
 
   def orphan?
@@ -481,7 +481,7 @@ class Protip < ActiveRecord::Base
   end
 
   def update_network(event=:new_protip)
-    enqueue(UpdateNetwork, event, self.public_id, self.score)
+    enqueue(::UpdateNetwork, event, self.public_id, self.score)
   end
 
   def generate_event(options={})
