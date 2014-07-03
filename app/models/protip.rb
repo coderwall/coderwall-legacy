@@ -461,7 +461,7 @@ class Protip < ActiveRecord::Base
   end
 
   def index_search
-    Services::Search::IndexProtip.run(self)
+    Services::Search::ReindexProtip.run(self)
   end
 
   def index_search_after_destroy

@@ -3,7 +3,7 @@ module Services
     class IndexUserProtips
       def self.run(user)
         user.protips.each do |tip|
-          Services::Search::IndexProtip.run(tip)
+          Services::Search::ReindexProtip.run(tip)
         end
       end
     end
