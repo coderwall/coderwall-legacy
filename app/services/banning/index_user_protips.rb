@@ -1,13 +1,11 @@
-module Coderwall
+module Services
   module Banning
-    class DeindexUserProtips
-
+    class IndexUserProtips
       def self.run(user)
         user.protips.each do |tip|
-          Coderwall::Search::DeindexProtip.run(tip)
+          Services::Search::IndexProtip.run(tip)
         end
       end
-
     end
   end
 end

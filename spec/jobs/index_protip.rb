@@ -1,11 +1,8 @@
 describe IndexProtip do
-
-  before(:each) do
-    Protip.rebuild_index
-  end
+  before { Protip.rebuild_index }
 
   def deindex_protip(tip)
-    Coderwall::Search::DeindexProtip.run(tip)
+    Services::Search::DeindexProtip.run(tip)
   end
 
   it 'job should index a protip' do
@@ -16,7 +13,4 @@ describe IndexProtip do
     IndexProtip.new(protip.id).perform
     Protip.search("this content").count.should == 1
   end
-
-
-
 end

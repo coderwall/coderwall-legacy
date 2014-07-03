@@ -47,7 +47,8 @@ tmux send-keys "clear ; bundle exec guard -c -g rspec" C-m
 # Web
 tmux select-window -t $SESSION:2
 tmux select-pane -t 0
-tmux send-keys "clear ; env bin/rails server webrick -p3000" C-m
+#tmux send-keys "clear ; env bin/rails server webrick -p3000" C-m
+tmux send-keys "clear ; bundle exec puma -C ./config/puma.rb" C-m
 
 # Background Jobs
 tmux select-window -t $SESSION:3
