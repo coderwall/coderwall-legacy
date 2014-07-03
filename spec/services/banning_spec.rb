@@ -1,25 +1,23 @@
 require 'spec_helper'
 
-describe "Coderwall::Banning::" do
+describe 'Services::Banning::' do
 
-  describe "User" do
+  describe 'User' do
     let(:user) { Fabricate(:user) }
-
 
     it "should ban a user " do
       user.banned?.should == false
-      Coderwall::Banning::User.ban(user)
+      Services::Banning::UserBanner.ban(user)
       user.banned?.should == true
     end
 
     it "should unban a user" do
-      Coderwall::Banning::User.ban(user)
+      Services::Banning::UserBanner.ban(user)
       user.banned?.should == true
-      Coderwall::Banning::User.unban(user)
+      Services::Banning::UserBanner.unban(user)
       user.banned?.should == false
     end
   end
-
 
   describe "DeindexUserProtips" do
     before(:each) do
@@ -33,7 +31,7 @@ describe "Coderwall::Banning::" do
       user.reload
 
       Protip.search("this content").count.should == 2
-      Coderwall::Banning::DeindexUserProtips.run(user)
+      Services::Banning::DeindexUserProtips.run(user)
       Protip.search("this content").count.should == 0
     end
   end
@@ -49,13 +47,11 @@ describe "Coderwall::Banning::" do
       protip_2  = Fabricate(:protip,body: "Second", title: "look at this content 2", user: user)
       search    = lambda {Protip.search("this content")}
       user.reload
-      
 
-      Coderwall::Banning::DeindexUserProtips.run(user)
+      Services::Banning::DeindexUserProtips.run(user)
       search.call.count.should == 0
-      Coderwall::Banning::IndexUserProtips.run(user)
+      Services::Banning::IndexUserProtips.run(user)
       search.call.count.should == 2
     end
   end
-
 end
