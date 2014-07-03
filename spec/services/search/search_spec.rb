@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Services::Search::' do
 
   describe 'ReindexProtip' do
