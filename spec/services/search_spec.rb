@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Services::Search::' do
 
-  describe 'IndexProtip' do
+  describe 'ReindexProtip' do
     before { Protip.rebuild_index }
 
     it 'should add a users protip to the search index' do
@@ -10,7 +10,7 @@ describe 'Services::Search::' do
       Services::Search::DeindexProtip.run(protip)
       Protip.search('this content').count.should == 0
 
-      Services::Search::IndexProtip.run(protip)
+      Services::Search::ReindexProtip.run(protip)
       Protip.search('this content').count.should == 1
     end
 
