@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
+ruby '2.1.2'
 
 gem 'rails', '~> 3.2'
 
@@ -144,8 +144,9 @@ group :development do
 end
 
 group :development, :test do
-  #gem 'quiet_assets'
-  gem 'jazz_hands'
+  gem 'quiet_assets'
+  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
+  gem 'pry-byebug'
   gem 'launchy'
   gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'syntax'
