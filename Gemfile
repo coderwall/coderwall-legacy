@@ -2,23 +2,23 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
-gem 'rails', '~> 3.2'
-
+gem 'rails', '~> 4.0'
+gem 'activesupport', '~> 4.0'
+gem 'activerecord-session_store'
+gem 'protected_attributes'
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
-gem 'strong_parameters'
-
 # Mongo
-gem 'mongoid', '~> 2.4.12'
+gem 'mongoid', '~> 4.0'
 gem 'mongo', '<= 1.6.2'
 gem 'mongoid_taggable'
 gem 'bson_ext', '~> 1.3'
 
 # Attachements
-gem 'carrierwave', '0.5.8'
+gem 'carrierwave', '0.10.0'
 gem 'carrierwave_backgrounder' #background processing of images
-gem 'carrierwave-mongoid', '~> 0.1.7', require: 'carrierwave/mongoid'
+gem 'carrierwave-mongoid', '~> 0.7', require: 'carrierwave/mongoid'
 
 # Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
 gem 'backbone-on-rails'
@@ -37,7 +37,7 @@ gem 'memcachier'
 gem 'pg'
 
 # AREL support for RDBMS queries
-gem 'squeel', '1.0.1'
+gem 'squeel'
 
 # Authentication
 gem 'omniauth', '~> 1.1.0'
@@ -70,7 +70,7 @@ gem 'redis', require: ['redis', 'redis/connection/hiredis']
 
 # Background Job Processing
 gem 'resque'
-gem 'resque-scheduler', require: 'resque_scheduler'
+gem 'resque-scheduler'
 gem 'resque_mailer'
 
 # Payment processing
@@ -110,7 +110,7 @@ gem 'acts_as_follower'
 gem 'color'
 gem 'createsend'
 gem 'fog'
-#gem 'font_assets', 'cleanoffer/font_assets'
+
 gem 'geocoder'
 gem 'hashie'
 gem 'linkedin'
@@ -128,13 +128,12 @@ gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
 
-group :assets do
-  gem 'sass', '~> 3.2.9'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
-  gem 'sass-rails', '~> 3.2.6'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails',   '~> 4.0'
+gem 'coffee-rails', '~> 4.0.1'
+gem 'sass', '~> 3.2.9'
+gem 'compass-rails'
+gem 'uglifier', '>= 1.3.0'
+
 
 group :development do
   gem 'better_errors'
