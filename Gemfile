@@ -166,7 +166,10 @@ gem 'mail_view'
 group :test do
   gem 'capybara', '~> 2.2'
   gem 'database_cleaner'
-  gem 'fabrication', '1.4.1'
+
+  gem 'fabrication'
+  gem 'faker'
+
   gem 'fuubar'
   gem 'resque_spec'
   gem 'rspec-rails'
