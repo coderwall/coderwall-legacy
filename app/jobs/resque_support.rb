@@ -1,4 +1,4 @@
-require 'resque_scheduler/tasks'
+require 'resque/scheduler/tasks'
 
 module ResqueSupport
   module Heroku

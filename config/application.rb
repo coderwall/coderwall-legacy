@@ -1,9 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'sprockets/engines'
+require 'sprockets/railtie'
 
-Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
+Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Badgiy
   class Application < Rails::Application
@@ -55,4 +55,3 @@ ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
 }
 
 require "#{Rails.root}/app/jobs/resque_support.rb"
-#require 'font_assets/railtie' # => loads font middleware so cloudfront can serve fonts that render in Firefox
