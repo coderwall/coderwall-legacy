@@ -40,7 +40,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    Mongoid.master.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
+    Mongoid::Sessions.default.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
     DatabaseCleaner.start
     ActionMailer::Base.deliveries.clear
   end
