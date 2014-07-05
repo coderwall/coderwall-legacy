@@ -2,8 +2,8 @@ class GithubProfile
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  index "login", unique: true, background: true
-  index "github_id", unique: true, background: true
+  index({login: 1}, {unique: true, background: true})
+  index({github_id: 1}, {unique: true, background: true})
 
   field :github_id
   field :name, type: String

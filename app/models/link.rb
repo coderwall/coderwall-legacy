@@ -7,9 +7,9 @@ class Link
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  index "url", unique: true
-  index "user_ids"
-  index "featured_on"
+  index({url: 1}, {unique: true})
+  index user_ids: 1
+  index featured_on: 1
 
   field :url, type: String
   field :user_ids, type: Array, default: []
@@ -23,9 +23,9 @@ class Link
   before_create :extract_host
   before_save :clean_collections
 
-  scope :popular, where(user_count: { '$gt' => 1 }).where(score: { '$gt' => 7 })
-  scope :featured, where(featured_on: { '$exists' => true }).order_by([[:featured_on, :desc], [:score, :desc]])
-  scope :not_featured, where(featured_on: { '$exists' => false })
+  scope :popular, ->{ where(user_count: { '$gt' => 1 }).where(score: { '$gt' => 7 }) }
+  scope :featured, ->{ where(featured_on: { '$exists' => true }).order_by([[:featured_on, :desc], [:score, :desc]]) }
+  scope :not_featured, ->{ where(featured_on: { '$exists' => false }) }
 
   class << self
     #def feature_popular_links!

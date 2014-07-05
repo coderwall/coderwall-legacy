@@ -2,8 +2,9 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
-gem 'rails', '~> 4.0'
+gem 'rails', '4.0.6'
 gem 'activesupport', '~> 4.0'
+gem 'railties', '~> 4.0'
 gem 'activerecord-session_store'
 gem 'protected_attributes'
 # Load environment variables first
@@ -38,6 +39,7 @@ gem 'pg'
 
 # AREL support for RDBMS queries
 gem 'squeel'
+# gem 'polyamorous', github: 'activerecord-hackery/polyamorous', branch: 'rails-4.1'
 
 # Authentication
 gem 'omniauth', '~> 1.1.0'
