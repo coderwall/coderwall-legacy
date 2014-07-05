@@ -12,7 +12,7 @@ class Team
 
   # Disabled Team indexing because it slows down updates
   # we should BG this
-  #include Tire::Model::Callbacks
+  # include Tire::Model::Callbacks
 
   mapping team: {
     properties: {
@@ -897,7 +897,7 @@ class Team
 
   def reindex_search
     if Rails.env.development? or Rails.env.test? or self.destroyed?
-      self.tire.update_index
+      self.update_index
     else
       Resque.enqueue(IndexTeam, self.id)
     end

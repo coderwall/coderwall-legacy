@@ -82,7 +82,7 @@ gem 'stripe', github: 'stripe/stripe-ruby'
 gem 'feedjira'
 
 # ElasticSearch client
-gem 'tire', '~> 0.4.1'
+gem 'tire', '~> 0.5'
 
 # A/B testing
 gem 'split', require: 'split/dashboard'
