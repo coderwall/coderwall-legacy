@@ -159,8 +159,8 @@ class User < ActiveRecord::Base
   before_validation :correct_ids
   before_validation :correct_urls
 
-  VALID_USERNAME_RIGHT_WAY = /^[a-z0-9]+$/
-  VALID_USERNAME           = /^[^\.]+$/
+  VALID_USERNAME_RIGHT_WAY = /\A[a-z0-9]+\z/
+  VALID_USERNAME           = /\A[^\.]+\z/
   validates :username,
     exclusion: { in: RESERVED, message: "is reserved" },
     format:    { with: VALID_USERNAME, message: "must not contain a period" }
