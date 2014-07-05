@@ -151,15 +151,18 @@ group :development, :test do
   gem 'ffaker'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
+
   gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'pry-byebug'
   gem 'quiet_assets'
+
+  # gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'syntax'
 end
 gem 'mail_view'
 
 group :test do
-  gem 'capybara', '~> 1.1'
+  gem 'capybara', '~> 2.2'
   gem 'database_cleaner'
   gem 'fabrication', '1.4.1'
   gem 'fuubar'
