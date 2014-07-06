@@ -8,6 +8,15 @@ GIT
       launchy
 
 GIT
+  remote: git://github.com/chytreg/rocket_tag.git
+  revision: 02e0c4d176b4797e566e2ed9ec671425620e5322
+  branch: feature/rails4-compatibility
+  specs:
+    rocket_tag (0.5.6)
+      activerecord (>= 3.2.0)
+      squeel (~> 1.1.1)
+
+GIT
   remote: git://github.com/emberjs/ember-rails.git
   revision: 46ce4ecf3a01d79bcc5c2ddecfe481a5230f0766
   specs:
@@ -546,9 +555,6 @@ GEM
     rest-client (1.7.1)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rocket_tag (0.0.4)
-      activerecord (>= 3.1.0)
-      squeel
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -766,7 +772,7 @@ DEPENDENCIES
   resque_mailer
   resque_spec
   rest-client
-  rocket_tag (= 0.0.4)
+  rocket_tag!
   rspec-rails
   ruby-progressbar
   sanitize

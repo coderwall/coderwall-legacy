@@ -105,7 +105,7 @@ gem 'faraday', '~> 0.8.1'
 
 # ----------------
 
-gem 'rocket_tag', '0.0.4'
+gem 'rocket_tag', github: 'chytreg/rocket_tag', branch: 'feature/rails4-compatibility'
 
 gem 'acts_as_commentable', '2.0.1'
 gem 'acts_as_follower'
