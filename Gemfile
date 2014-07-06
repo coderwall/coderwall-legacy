@@ -141,8 +141,8 @@ group :development do
   gem 'better_errors'
   gem 'flog'
   gem 'fukuzatsu'
-  gem 'guard-rspec'
   gem 'rails-erd'
+  gem 'guard-rspec', '4.2.9'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'git_stats', require: false
@@ -160,6 +160,7 @@ group :development, :test do
 
   # gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'syntax'
+  gem 'rspec-mocks', '2.14.0'
 end
 gem 'mail_view'
 
@@ -171,8 +172,8 @@ group :test do
   gem 'faker'
 
   gem 'fuubar'
-  gem 'resque_spec'
-  gem 'rspec-rails'
+  gem 'resque_spec', '~> 0.15'
+  gem 'rspec-rails', '~> 2.14'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'

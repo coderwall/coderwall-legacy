@@ -294,7 +294,7 @@ GEM
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-rspec (4.2.10)
+    guard-rspec (4.2.9)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
     haml (3.1.7)
@@ -547,34 +547,30 @@ GEM
       rufus-scheduler (~> 2.0)
     resque_mailer (2.2.6)
       actionmailer (>= 3.0)
-    resque_spec (0.16.0)
+    resque_spec (0.15.0)
       resque (>= 1.19.0)
-      rspec-core (>= 3.0.0)
-      rspec-expectations (>= 3.0.0)
-      rspec-mocks (>= 3.0.0)
+      rspec-core (>= 2.5.0)
+      rspec-expectations (>= 2.5.0)
+      rspec-mocks (>= 2.5.0)
     rest-client (1.7.1)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rspec (3.0.0)
-      rspec-core (~> 3.0.0)
-      rspec-expectations (~> 3.0.0)
-      rspec-mocks (~> 3.0.0)
-    rspec-core (3.0.2)
-      rspec-support (~> 3.0.0)
-    rspec-expectations (3.0.2)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.0.0)
-    rspec-mocks (3.0.2)
-      rspec-support (~> 3.0.0)
-    rspec-rails (3.0.1)
+    rspec (2.14.1)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
+    rspec-core (2.14.8)
+    rspec-expectations (2.14.5)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.14.0)
+    rspec-rails (2.14.2)
       actionpack (>= 3.0)
+      activemodel (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (~> 3.0.0)
-      rspec-expectations (~> 3.0.0)
-      rspec-mocks (~> 3.0.0)
-      rspec-support (~> 3.0.0)
-    rspec-support (3.0.2)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
     ruby-graphviz (1.0.9)
     ruby-progressbar (1.5.1)
     ruby_parser (3.6.1)
@@ -715,7 +711,7 @@ DEPENDENCIES
   git_stats
   github-markdown
   grackle
-  guard-rspec
+  guard-rspec (= 4.2.9)
   haml (= 3.1.7)
   hamlbars
   hashie
@@ -770,10 +766,11 @@ DEPENDENCIES
   resque
   resque-scheduler
   resque_mailer
-  resque_spec
+  resque_spec (~> 0.15)
   rest-client
   rocket_tag!
-  rspec-rails
+  rspec-mocks (= 2.14.0)
+  rspec-rails (~> 2.14)
   ruby-progressbar
   sanitize
   sass (~> 3.2.9)
