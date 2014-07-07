@@ -322,7 +322,11 @@ class User < ActiveRecord::Base
       if github = oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][:gravatar_id]
         "https://secure.gravatar.com/avatar/#{oauth[:extra][:raw_info][:gravatar_id]}"
       elsif oauth[:info]
-        oauth[:info][:image]
+        if oauth['provider'] == 'twitter'
+          oauth[:extra][:raw_info][:profile_image_url_https]
+        else
+          oauth[:info][:image]
+        end
       end
     end
 
