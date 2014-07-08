@@ -236,7 +236,7 @@ describe UsersController do
       post :create, user: {}
 
       assigns[:user].username.should == 'mdeiters'
-      assigns[:user].thumbnail_url.should == 'http://a1.twimg.com/profile_images/1672080012/instagram_profile_normal.jpg'
+      assigns[:user].thumbnail_url.should == 'https://si0.twimg.com/profile_images/1672080012/instagram_profile_normal.jpg'
       assigns[:user].twitter.should == 'mdeiters'
       assigns[:user].twitter_token.should == '6271932-8erxrXfJykBNMrvsdCEq5WqKd6FIcO97L9BzvPq7'
       assigns[:user].twitter_secret.should == '8fRS1ZARd6Wm53wvvDwHNrBmZcW0H2aSwmQjuOTHl'

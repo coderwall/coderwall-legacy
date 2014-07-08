@@ -47,6 +47,7 @@ class Protip < ActiveRecord::Base
   include ResqueSupport::Basic
   include Scoring::HotStream
   include SearchModule
+  include Rakismet::Model
 
   acts_as_commentable
 
@@ -116,7 +117,16 @@ class Protip < ActiveRecord::Base
 
   has_many :likes, as: :likable, dependent: :destroy, after_add: :reset_likes_cache, after_remove: :reset_likes_cache
   has_many :protip_links, autosave: true, dependent: :destroy, after_add: :reset_links_cache, after_remove: :reset_links_cache
+  has_one :spam_report, as: :spammable
   belongs_to :user
+
+  rakismet_attrs  author: proc { self.user.name },
+                  author_email: proc { self.user.email },
+                  content: :body,
+                  blog: ENV['AKISMET_URL']
+                  # TODO: add columns ip and http_user_agent into the users table
+                  # user_ip: proc { self.user.ip }
+                  # user_agent: proc { self.user.http_user_agent }
 
   attr_taggable :topics, :users
   attr_accessor :upvotes
@@ -164,6 +174,7 @@ class Protip < ActiveRecord::Base
   after_save :unqueue_flagged, if: :flagged?
   after_destroy :index_search_after_destroy
   after_create :update_network
+  after_create :analyze_spam
   # End of test failing lines
 
   attr_accessor :upvotes_value
@@ -1099,6 +1110,10 @@ class Protip < ActiveRecord::Base
 
   def adjust_like_value(user, like_value)
     user.is_a?(User) && self.author.team_member_of?(user) ? [like_value/2, 1].max : like_value
+  end
+
+  def analyze_spam
+    Resque.enqueue(AnalyzeSpam, self)
   end
 
   class SearchWrapper
