@@ -247,56 +247,71 @@
     }
   }
 }
-.team-box {
-  background: #fff;
-  color: #333;
-  display: block;
-  margin-bottom: 13%;
-  &:hover {
-    color: $light-blue;
-  }
-  .image-top {
-    position: relative;
-    img {
-      width: 100%;
-    }
-  }
-  .content {
-    padding: 0 8% 8% 8%;
+
+.featured-team {
+  .team-box {
     background: #fff;
-    z-index: 100;
-    .avatar {
+    color: #333;
+    display: block;
+    margin-bottom: 13%;
+    &:hover {
+      color: $light-blue;
+    }
+    .image-top {
       position: relative;
-      z-index: 100;
-      display: block;
-      margin-top: -24px;
-      margin-bottom: 1em;
-      width: 40px;
-      height: 40px;
-      @include border-radius(50%);
-      overflow: hidden;
-      background: #f7f7f7;
       img {
-        max-width: 100%;
+        width: 100%;
       }
     }
-    a {
-      text-decoration: none;
-      color: black;
-      &::selection {
+    .content {
+      padding: 0 8% 8% 8%;
+      background: #fff;
+      z-index: 100;
+      .avatar {
+        position: relative;
+        z-index: 100;
+        display: block;
+        margin-top: -24px;
+        margin-bottom: 1em;
+        width: 40px;
+        height: 40px;
+        @include border-radius(50%);
+        overflow: hidden;
+        background: #f7f7f7;
+        img {
+          max-width: 100%;
+        }
+      }
+      a {
+        text-decoration: none;
         color: black;
+        &::selection {
+          color: black;
+        }
       }
-    }
-    h4 {
-      text-transform: capitalize;
-      margin-bottom: 0.5em;
-    }
-    p {
-      font-size: 1.4em;
-      line-height: 1.6em;
+      h4 {
+        text-transform: capitalize;
+        margin-bottom: 0.5em;
+      }
+      p {
+        font-size: 1.4em;
+        line-height: 1.6em;
+      }
     }
   }
 }
+
+/* Override styles for featured team image if we're not using default image */
+
+.featured-team.custom-image {
+  .image-top {
+    padding: 8px;
+  }
+  .content .avatar {
+    margin-top: 1em;
+  }
+} 
+
 .tip-sidebar {
   width: 30%;
   float: right;

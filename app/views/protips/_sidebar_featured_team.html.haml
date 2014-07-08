@@ -1,0 +1,35 @@
+- # Locals params
+- # @param job [ Opportunity ]  - job needed to render this partial
+- # @param protip [ Protip ]    - protip page this job is being rendered on
+- # @param mode [ String ]      - page mode
+
+:ruby
+  team = job.team
+  adjective = ["is amazing", "is awesome", "has a great engineering team"].sample
+  team_has_featured_banner = team.featured_banner_image.present?
+  team_has_big_image = team.big_image.present?
+  team_has_custom_image = (team_has_featured_banner || team_has_big_image) ? true : false
+
+  banner_image = if team_has_featured_banner then team.featured_banner_image
+  elsif team_has_big_image then team.big_image
+  else default_featured_job_banner
+  end
+
+.featured-team{class: team_has_custom_image ? "custom-image" : "default-image"}
+  %h3 Featured team
+    
+  =link_to teamname_path(team.slug), class: 'team-box', 'data-action' => 'view team jobs', 'data-from' => 'job on protip', 'data-properties' => {"author's team" => protip.user.belongs_to_team?(team), 'adjective' => adjective, 'mode' => mode}.to_json do
+    .image-top
+      =image_tag(banner_image)
+    .content
+      -#-team_member = protip.user.belongs_to_team?(job.team) ? protip.user : job.team.top_team_member
+      .avatar
+        =image_tag(team.avatar_url)
+      %h4= team.name
+      %p
+        ==Calling all #{job.title.pluralize}. #{job.team.name} #{adjective} and is hiring!
+  %a.feature-jobs.track{href: employers_path, 'data-action' => 'upgrade team', 'data-from' => 'protip page'}
+    feature your jobs here
+
+  %pm:widget{"max-item-count" => "4", "show-thumbs" => "false", title: "Recommended", width: "244"}/
+}
