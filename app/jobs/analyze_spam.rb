@@ -6,7 +6,9 @@ class AnalyzeSpam < Struct.new(:spammable)
   def perform
     ap spammable
 
-    thing_to_analyze = spammable['commentable_type'].constantize.find_by_id(spammable['id'])
+    thing_to_analyze = spammable['commentable_type'].constantize.find_by_id(spammable['commentable_id'])
+
+    ap thing_to_analyze
 
     if thing_to_analyze.spam?
       thing_to_analyze.create_spam_report
