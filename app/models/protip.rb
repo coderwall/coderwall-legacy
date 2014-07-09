@@ -40,7 +40,7 @@ require 'search'
 
 class Protip < ActiveRecord::Base
   include Featurable
-   # TODO: Break out the various responsibilities on the Protip into modules/concerns.
+  # TODO: Break out the various responsibilities on the Protip into modules/concerns.
 
   include NetValidators
   include Tire::Model::Search
@@ -121,12 +121,11 @@ class Protip < ActiveRecord::Base
   belongs_to :user
 
   rakismet_attrs  author: proc { self.user.name },
-                  author_email: proc { self.user.email },
-                  content: :body,
-                  blog: ENV['AKISMET_URL']
-                  # TODO: add columns ip and http_user_agent into the users table
-                  # user_ip: proc { self.user.ip }
-                  # user_agent: proc { self.user.http_user_agent }
+    author_email: proc { self.user.email },
+    content: :body,
+    blog: ENV['AKISMET_URL'],
+    user_ip: proc { self.user.last_ip },
+    user_agent: proc { self.user.last_ua }
 
   attr_taggable :topics, :users
   attr_accessor :upvotes

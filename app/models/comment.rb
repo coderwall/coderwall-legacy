@@ -48,12 +48,11 @@ class Comment < ActiveRecord::Base
   alias_attribute :body, :comment
 
   rakismet_attrs  author: proc { self.user.name },
-                  author_email: proc { self.user.email },
-                  content: :comment,
-                  blog: ENV['AKISMET_URL']
-                  # TODO: add columns ip and http_user_agent into the users table
-                  # user_ip: proc { self.user.ip }
-                  # user_agent: proc { self.user.http_user_agent }
+    author_email: proc { self.user.email },
+    content: :comment,
+    blog: ENV['AKISMET_URL'],
+    user_ip: proc { self.user.last_ip },
+    user_agent: proc { self.user.last_ua }
 
   validates :comment, length: { minimum: 2 }
 
@@ -168,10 +167,10 @@ class Comment < ActiveRecord::Base
   def event_audience(event_type, options ={})
     audience = {}
     case event_type
-      when :new_comment
-        audience = Audience.user(self.commentable.try(:user_id))
-      else
-        audience = Audience.user(self.author_id)
+    when :new_comment
+      audience = Audience.user(self.commentable.try(:user_id))
+    else
+      audience = Audience.user(self.author_id)
     end
     audience
   end
