@@ -7,8 +7,6 @@ Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
 
 module Badgiy
   class Application < Rails::Application
-    config.threadsafe! unless $rails_rake_task
-
     config.autoload_paths += %W(#{config.root}/app)
 
     config.autoload_paths += Dir[ Rails.root.join('app', 'models',      'concerns', '**/') ]
