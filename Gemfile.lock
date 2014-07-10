@@ -191,6 +191,9 @@ GEM
       loofah (~> 1.2.1)
       sax-machine (~> 0.2.1)
     ffi (1.9.3)
+    flog (4.2.1)
+      ruby_parser (~> 3.1, > 3.1.0)
+      sexp_processor (~> 4.4)
     fog (0.7.2)
       builder
       excon (>= 0.6.1)
@@ -485,6 +488,8 @@ GEM
     ruby-graphviz (1.0.9)
     ruby-hmac (0.4.0)
     ruby-progressbar (1.4.1)
+    ruby_parser (3.6.1)
+      sexp_processor (~> 4.1)
     rubyzip (1.1.0)
     rufus-scheduler (2.0.24)
       tzinfo (>= 0.3.22)
@@ -503,6 +508,7 @@ GEM
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
+    sexp_processor (4.4.3)
     simple-random (0.9.3)
     simple_form (2.0.4)
       actionpack (~> 3.0)
@@ -609,6 +615,7 @@ DEPENDENCIES
   faker
   faraday (~> 0.8.1)
   feedjira
+  flog
   fog
   foreman
   fuubar
