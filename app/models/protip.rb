@@ -1,4 +1,4 @@
-# ## Schema Information
+  # ## Schema Information
 # Schema version: 20131205021701
 #
 # Table name: `protips`
@@ -1112,7 +1112,7 @@ class Protip < ActiveRecord::Base
   end
 
   def analyze_spam
-    Resque.enqueue(AnalyzeSpam, self)
+    Resque.enqueue(AnalyzeSpam, {spammable_id: id, spammable_klass: self.class.name})
   end
 
   class SearchWrapper
