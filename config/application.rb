@@ -7,8 +7,7 @@ Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
 
 module Badgiy
   class Application < Rails::Application
-    #config.threadsafe!
-    #config.allow_concurrency = true
+    config.threadsafe! unless $rails_rake_task
 
     config.autoload_paths += %W(#{config.root}/app)
 
