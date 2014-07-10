@@ -139,6 +139,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'flog'
+  gem 'fukuzatsu'
   gem 'guard-rspec'
   gem 'rails-erd'
   gem 'spring'

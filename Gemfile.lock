@@ -79,6 +79,7 @@ GEM
     acts_as_follower (0.1.1)
     addressable (2.3.6)
     arel (3.0.3)
+    ast (2.0.0)
     atomic (1.1.16)
     awesome_print (1.2.0)
     backbone-on-rails (1.0.0.0)
@@ -171,6 +172,8 @@ GEM
       http_parser.rb (>= 0.5.3)
     em-socksify (0.2.1)
       eventmachine (>= 1.0.0.beta.4)
+    ephemeral (1.3.0)
+      activesupport
     equalizer (0.0.9)
     erubis (2.7.0)
     escape (0.0.4)
@@ -208,6 +211,12 @@ GEM
       thor (>= 0.13.6)
     formatador (0.2.4)
     fssm (0.2.10)
+    fukuzatsu (0.9.16)
+      ephemeral
+      haml
+      parser
+      poro_plus
+      thor
     fuubar (1.2.1)
       rspec (~> 2.0)
       rspec-instafail (~> 0.2.0)
@@ -360,10 +369,14 @@ GEM
     omniauth-twitter (0.0.16)
       multi_json (~> 1.3)
       omniauth-oauth (~> 1.0)
+    parser (2.1.9)
+      ast (>= 1.1, < 3.0)
+      slop (~> 3.4, >= 3.4.5)
     pg (0.14.1)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.5)
+    poro_plus (1.0.2)
     posix-spawn (0.3.8)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -618,6 +631,7 @@ DEPENDENCIES
   flog
   fog
   foreman
+  fukuzatsu
   fuubar
   geocoder
   github-markdown
