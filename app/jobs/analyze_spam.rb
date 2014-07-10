@@ -7,6 +7,8 @@ class AnalyzeSpam < Struct.new(:spammable)
 
     ap(spammable) unless Rails.env.test?
 
+    spammable.symbolize_keys!
+
     thing_to_analyze = spammable[:klass].constantize.find(spammable[:id])
 
     ap(thing_to_analyze) unless Rails.env.test?
