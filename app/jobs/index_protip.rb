@@ -5,6 +5,6 @@ class IndexProtip < Struct.new(:protip_id)
 
   def perform
     protip = Protip.find(protip_id)
-    protip.tire.update_index
+    protip.tire.update_index unless protip.user.banned?
   end
 end
