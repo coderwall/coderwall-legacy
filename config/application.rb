@@ -29,7 +29,7 @@ module Badgiy
     config.filter_parameters += [:password]
     config.generators do |g|
       g.test_framework :rspec, fixture: true
-      g.fixture_replacement :fabrication
+      g.fixture_replacement :factory_girl
       g.orm :active_record
     end
 
@@ -41,6 +41,7 @@ module Badgiy
 
     config.after_initialize do
       if %w{development test}.include?(Rails.env)
+        include FactoryGirl::Syntax::Methods
         Hirb.enable
       end
     end
