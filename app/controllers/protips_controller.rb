@@ -408,7 +408,7 @@ class ProtipsController < ApplicationController
   private
 
   # Return protips for a user
-  # If the user is banned, grab protips from their association 
+  # If the user is banned, grab protips from their association
   # because the tip will have been removed from the search index.
   #
   # @param [ Hash ] params - Should contain :page and :per_page key/values
@@ -434,9 +434,9 @@ class ProtipsController < ApplicationController
   end
 
   def choose_protip_layout
-    if [:show, :random, :new, :edit, :create, :update].include? action_name.to_sym
+    if [:show, :random, :new, :edit, :create, :update].include?(action_name.to_sym)
       'protip'
-    elsif [:subscribe, :unsubscribe].include? action_name.to_sym
+    elsif [:subscribe, :unsubscribe].include?(action_name.to_sym)
       false
     else
       'application'
