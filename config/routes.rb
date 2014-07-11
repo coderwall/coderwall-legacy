@@ -2,6 +2,9 @@ require 'resque/server'
 
 Badgiy::Application.routes.draw do
 
+  # We get 10K's of requests for this route.
+  match '/.json', to: proc { [404, {}, ['']] }
+
   if Rails.env.development?
     mount MailPreview => 'mail_view'
   end
@@ -225,4 +228,5 @@ Badgiy::Application.routes.draw do
     post '/hawt/feature' => 'hawt#feature'
     post '/hawt/unfeature' => 'hawt#unfeature'
   end
+
 end
