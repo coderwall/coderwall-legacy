@@ -685,6 +685,7 @@ DEPENDENCIES
   querystring
   quiet_assets
   rack-attack
+  rack-cache
   rails (~> 3.2)
   rails-erd
   rails_12factor
