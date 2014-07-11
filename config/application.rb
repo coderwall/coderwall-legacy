@@ -33,9 +33,6 @@ module Badgiy
     config.ember.variant = Rails.env.downcase.to_sym
     config.assets.js_compressor  = :uglifier
 
-    config.logger = Logger.new(STDOUT)
-    config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
-
     config.after_initialize do
       if %w{development test}.include?(Rails.env)
         include FactoryGirl::Syntax::Methods

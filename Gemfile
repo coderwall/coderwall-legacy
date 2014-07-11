@@ -168,7 +168,7 @@ group :test do
   gem 'capybara', '~> 2.2'
   gem 'database_cleaner'
 
-  gem 'fabrication'
+  gem 'fabrication', '1.4.1'
   gem 'faker'
 
   gem 'fuubar'

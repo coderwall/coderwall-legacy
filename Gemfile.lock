@@ -214,7 +214,7 @@ GEM
     eventmachine (1.0.3)
     excon (0.38.0)
     execjs (2.2.1)
-    fabrication (2.11.3)
+    fabrication (1.4.1)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -696,7 +696,7 @@ DEPENDENCIES
   database_cleaner
   dotenv-rails
   ember-rails!
-  fabrication
+  fabrication (= 1.4.1)
   factory_girl_rails
   faker
   faraday (~> 0.8.1)
