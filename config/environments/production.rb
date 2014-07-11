@@ -28,5 +28,6 @@ Badgiy::Application.configure do
   config.assets.digest = true
   config.static_cache_control = 'public, max-age=31536000'
   config.host = ENV['HOST_DOMAIN']
+  config.middleware.use('Rack::Deflater')
   config.middleware.use('Rack::Attack')
 end
