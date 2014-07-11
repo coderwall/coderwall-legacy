@@ -52,3 +52,4 @@ vagrant/dotfiles
 vcr_cassettes
 erd.pdf
 vagrant.yml
+git_stats
