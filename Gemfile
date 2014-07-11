@@ -173,9 +173,10 @@ end
 
 group :production do
   gem 'honeybadger'
-  gem 'rails_12factor'
+  gem 'newrelic_resque_agent'
+  gem 'newrelic_rpm'
   gem 'puma'
   gem 'puma_worker_killer'
-  gem 'newrelic_rpm'
-  gem 'newrelic_resque_agent'
+  gem 'rack-attack'
+  gem 'rails_12factor'
 end
