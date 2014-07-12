@@ -3,11 +3,11 @@ require 'resque/server'
 Badgiy::Application.routes.draw do
 
   # We get 10K's of requests for this route.
-  match '/.json',       to: proc { [404, {}, ['']] }
-  match '/teams/.json', to: proc { [404, {}, ['']] }
+  match '/.json',       to: proc { [404, {}, ['']] }, via: :get
+  match '/teams/.json', to: proc { [404, {}, ['']] }, via: :get
 
   if Rails.env.development?
-    mount MailPreview => 'mail_view'
+    # mount MailPreview => 'mail_view'
   end
 
   get 'protips/update'

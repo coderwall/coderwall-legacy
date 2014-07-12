@@ -7,6 +7,7 @@ gem 'activesupport', '~> 4.0'
 gem 'railties', '~> 4.0'
 gem 'activerecord-session_store'
 gem 'protected_attributes'
+gem 'rails-observers'
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
@@ -154,7 +155,7 @@ group :development, :test do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
 
-  gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
+  # gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'pry-byebug'
   gem 'quiet_assets'
 
@@ -168,8 +169,7 @@ group :test do
   gem 'capybara', '~> 2.2'
   gem 'database_cleaner'
 
-  gem 'fabrication', '1.4.1'
-  gem 'faker'
+  gem 'fabrication'
 
   gem 'fuubar'
   gem 'resque_spec', '~> 0.15'

@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/alexrothenberg/letter_opener.git
-  revision: 50b077315f11872f1173d092ddf81b9176c9badf
-  branch: on_a_server
-  specs:
-    letter_opener (0.0.2)
-      fakefs
-      launchy
-
-GIT
   remote: git://github.com/chytreg/rocket_tag.git
   revision: 02e0c4d176b4797e566e2ed9ec671425620e5322
   branch: feature/rails4-compatibility
@@ -214,15 +205,12 @@ GEM
     eventmachine (1.0.3)
     excon (0.38.0)
     execjs (2.2.1)
-    fabrication (1.4.1)
+    fabrication (2.11.3)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
-    fakefs (0.5.2)
-    faker (1.4.1)
-      i18n (~> 0.5)
     faraday (0.8.9)
       multipart-post (~> 1.2.0)
     faraday_middleware (0.9.1)
@@ -696,9 +684,8 @@ DEPENDENCIES
   database_cleaner
   dotenv-rails
   ember-rails!
-  fabrication (= 1.4.1)
+  fabrication
   factory_girl_rails
-  faker
   faraday (~> 0.8.1)
   feedjira
   ffaker
@@ -723,7 +710,6 @@ DEPENDENCIES
   kaminari
   kramdown
   launchy
-  letter_opener!
   linkedin
   mail
   mail_view
@@ -757,6 +743,7 @@ DEPENDENCIES
   rack-cache
   rails (= 4.0.6)
   rails-erd
+  rails-observers
   rails_12factor
   rails_autolink
   railties (~> 4.0)
