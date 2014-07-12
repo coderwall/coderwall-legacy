@@ -117,10 +117,10 @@ If you're running Windows, [here's a guide written by one of our members on how 
     Now that you're SSH'ed into the Vagrant VM it's time to run the app.
 
         # we're still SSH'ed into Vbox
-        cd ~/assemblymade
-        rvm current # should be ruby-2.1.0@coderwall
-        bundle check # should be a response that everything's good
-        bundle exec rails server
+        cd ~/web
+        rvm current # should be ruby-2.1.2@coderwall
+        bundle check # should be 'The Gemfile's dependencies are satisfied'
+        bin/rails s 
 
     If all went well the Rails server should start up on PORT 3000.
 
