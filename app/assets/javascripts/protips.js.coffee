@@ -4,7 +4,7 @@
 #= require  showdown
 #= require  blur
 #= require  jquery.filedrop
-#= require  vendor/jquery.textselection
+#= require  jquery.textselection
 #= require local_time
 
 window.handle_redirect = (response)->

@@ -4,7 +4,7 @@
 #= require_tree ./templates/teams
 #= require_tree ./helpers
 #= require_tree ./views/teams
-#= require      ../search
+#= require      search
 
 $ ->
   search_teams = (name, country) ->
