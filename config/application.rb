@@ -1,9 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'sprockets/engines'
+require 'sprockets/railtie'
 
-Bundler.require(:default, :assets, Rails.env) if defined?(Bundler)
+Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Badgiy
   class Application < Rails::Application
@@ -33,9 +33,6 @@ module Badgiy
     config.ember.variant = Rails.env.downcase.to_sym
     config.assets.js_compressor  = :uglifier
 
-    config.logger = Logger.new(STDOUT)
-    config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
-
     config.after_initialize do
       if %w{development test}.include?(Rails.env)
         include FactoryGirl::Syntax::Methods
@@ -45,6 +42,7 @@ module Badgiy
 
     config.rakismet.key = ENV['AKISMET_KEY']
     config.rakismet.url = ENV['AKISMET_URL']
+    config.active_record.whitelist_attributes = false
   end
 end
 
@@ -55,4 +53,7 @@ ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
 }
 
 require "#{Rails.root}/app/jobs/resque_support.rb"
-#require 'font_assets/railtie' # => loads font middleware so cloudfront can serve fonts that render in Firefox
+require "bson"
+require "moped"
+
+Moped::BSON = BSON

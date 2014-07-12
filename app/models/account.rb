@@ -12,7 +12,7 @@ class Account
   field :trial_end, default: nil
   field :plan_ids, type: Array, default: []
 
-  attr_protected :stripe_customer_token, :admin_id
+  # attr_protected :stripe_customer_token, :admin_id
 
   validate :stripe_customer_token, presence: true
   validate :stripe_card_token, presence: true

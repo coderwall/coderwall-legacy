@@ -2,23 +2,25 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
-gem 'rails', '~> 3.2'
-
+gem 'rails', '4.0.6'
+gem 'activesupport', '~> 4.0'
+gem 'railties', '~> 4.0'
+gem 'activerecord-session_store'
+gem 'protected_attributes'
+gem 'rails-observers'
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
-gem 'strong_parameters'
-
 # Mongo
-gem 'mongoid', '~> 2.4.12'
+gem 'mongoid', '~> 4.0'
 gem 'mongo', '<= 1.6.2'
 gem 'mongoid_taggable'
 gem 'bson_ext', '~> 1.3'
 
 # Attachements
-gem 'carrierwave', '0.5.8'
+gem 'carrierwave', '0.10.0'
 gem 'carrierwave_backgrounder' #background processing of images
-gem 'carrierwave-mongoid', '~> 0.1.7', require: 'carrierwave/mongoid'
+gem 'carrierwave-mongoid', '~> 0.7', require: 'carrierwave/mongoid'
 
 # Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
 gem 'backbone-on-rails'
@@ -37,7 +39,8 @@ gem 'memcachier'
 gem 'pg'
 
 # AREL support for RDBMS queries
-gem 'squeel', '1.0.1'
+gem 'squeel'
+# gem 'polyamorous', github: 'activerecord-hackery/polyamorous', branch: 'rails-4.1'
 
 # Authentication
 gem 'omniauth', '~> 1.1.0'
@@ -70,7 +73,7 @@ gem 'redis', require: ['redis', 'redis/connection/hiredis']
 
 # Background Job Processing
 gem 'resque'
-gem 'resque-scheduler', require: 'resque_scheduler'
+gem 'resque-scheduler'
 gem 'resque_mailer'
 
 # Payment processing
@@ -80,7 +83,7 @@ gem 'stripe', github: 'stripe/stripe-ruby'
 gem 'feedjira'
 
 # ElasticSearch client
-gem 'tire', '~> 0.4.1'
+gem 'tire', '~> 0.5'
 
 # A/B testing
 gem 'split', require: 'split/dashboard'
@@ -103,14 +106,14 @@ gem 'faraday', '~> 0.8.1'
 
 # ----------------
 
-gem 'rocket_tag', '0.0.4'
+gem 'rocket_tag', github: 'chytreg/rocket_tag', branch: 'feature/rails4-compatibility'
 
 gem 'acts_as_commentable', '2.0.1'
 gem 'acts_as_follower'
 gem 'color'
 gem 'createsend'
 gem 'fog'
-#gem 'font_assets', 'cleanoffer/font_assets'
+
 gem 'geocoder'
 gem 'hashie'
 gem 'linkedin'
@@ -128,20 +131,19 @@ gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
 
-group :assets do
-  gem 'sass', '~> 3.2.9'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
-  gem 'sass-rails', '~> 3.2.6'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'sass-rails',   '~> 4.0'
+gem 'coffee-rails', '~> 4.0.1'
+gem 'sass', '~> 3.2.9'
+gem 'compass-rails'
+gem 'uglifier', '>= 1.3.0'
+
 
 group :development do
   gem 'better_errors'
   gem 'flog'
   gem 'fukuzatsu'
-  gem 'guard-rspec'
   gem 'rails-erd'
+  gem 'guard-rspec', '4.2.9'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'git_stats', require: false
@@ -152,20 +154,26 @@ group :development, :test do
   gem 'ffaker'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
-  gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
+
+  # gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'pry-byebug'
   gem 'quiet_assets'
+
+  # gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'syntax'
+  gem 'rspec-mocks', '2.14.0'
 end
 gem 'mail_view'
 
 group :test do
-  gem 'capybara', '~> 1.1'
+  gem 'capybara', '~> 2.2'
   gem 'database_cleaner'
-  gem 'fabrication', '1.4.1'
+
+  gem 'fabrication'
+
   gem 'fuubar'
-  gem 'resque_spec'
-  gem 'rspec-rails'
+  gem 'resque_spec', '~> 0.15'
+  gem 'rspec-rails', '~> 2.14'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'

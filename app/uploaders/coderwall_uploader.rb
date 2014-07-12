@@ -1,7 +1,6 @@
 class CoderwallUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  include Sprockets::Helpers::RailsHelper
-  include Sprockets::Helpers::IsolatedHelper
+  include Sprockets::Rails::Helper
   include ::CarrierWave::Backgrounder::Delay
 
   def store_dir

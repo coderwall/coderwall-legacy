@@ -686,7 +686,7 @@ class Protip < ActiveRecord::Base
   end
 
   def upvoters_ids
-    ActiveRecord::Base.connection.select_values(self.likes.select(:user_id).to_sql).map(&:to_i).reject { |id| id == 0 }
+    self.likes.select(:user_id).map(&:to_i).reject { |id| id == 0 }
   end
 
   def best_stat
