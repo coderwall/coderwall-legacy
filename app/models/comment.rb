@@ -184,6 +184,6 @@ class Comment < ActiveRecord::Base
   end
 
   def analyze_spam
-    Resque.enqueue(AnalyzeSpam, {spammable_id: id, spammable_klass: self.class.name})
+    Resque.enqueue(AnalyzeSpam, { id: id, klass: self.class.name })
   end
 end
