@@ -4,6 +4,13 @@ ruby '2.1.2'
 
 gem 'rails', '~> 3.2'
 
+gem 'sass', '~> 3.2.9'
+gem 'coffee-rails', '~> 3.2.1'
+gem 'compass-rails'
+gem 'sass-rails', '~> 3.2.6'
+gem 'uglifier', '>= 1.0.3'
+
+
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
@@ -127,14 +134,6 @@ gem 'ruby-progressbar'
 gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
-
-group :assets do
-  gem 'sass', '~> 3.2.9'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
-  gem 'sass-rails', '~> 3.2.6'
-  gem 'uglifier', '>= 1.0.3'
-end
 
 group :development do
   gem 'better_errors'
