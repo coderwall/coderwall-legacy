@@ -426,46 +426,6 @@ class Protip < ActiveRecord::Base
   # Homepage 4.0 rewrite
   #######################
 
-  class Search < SearchModule::Search
-
-    class Scope < SearchModule::Search::Scope
-
-      def to_hash
-        case @domain
-        when :user
-          followings(@object)
-        when :network
-          network(@object)
-        end
-      end
-
-      def followings(user)
-        {
-          or: [
-            { terms: { "user.user_id" => [user.id] + user.following_users_ids + user.following_team_members_ids } },
-            { terms: { "tags" => user.following_networks_tags } }
-          ]
-        }
-      end
-
-      def network(tag)
-        {
-          terms: { tags: Network.find_by_slug(Network.slugify(tag)).try(&:tags) || [tag, Network.unslugify(tag)].uniq }
-        }
-      end
-    end
-
-    class Query < SearchModule::Search::Query
-      def default_query
-        "flagged:false"
-      end
-    end
-
-    def failover_strategy
-      { failover: Protip.order('score DESC') }
-    end
-  end
-
   def deindex_search
     Services::Search::DeindexProtip.run(self)
   end
