@@ -1,4 +1,4 @@
-RSpec.describe Github, type: :model, functional: true do
+RSpec.describe Github, type: :model, functional: true, skip: ENV['TRAVIS']  do
   let(:github) { Github.new }
 
   it 'can get profile' do

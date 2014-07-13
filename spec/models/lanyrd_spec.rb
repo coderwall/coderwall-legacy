@@ -9,7 +9,7 @@ RSpec.describe Lanyrd, type: :model, functional: true do
 
     expect(event.identity).to eq('/2011/speakerconf-rome/:mdeiters')
     expect(event.owner).to eq('lanyrd:mdeiters')
-    expect(event.name).to eq("Speaker Conf")
+    expect(event.name).to eq('speakerconf Rome 2012')
     expect(event.relevant_on.to_date).to eq(Date.parse('2011-09-11'))
     expect(event.url).to eq('http://lanyrd.com/2011/speakerconf-rome/')
     expect(event.tags).to include('event', 'Software', 'Technology')

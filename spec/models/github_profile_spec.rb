@@ -1,4 +1,4 @@
-RSpec.describe GithubProfile, :type => :model do
+RSpec.describe GithubProfile, :type => :model, skip: ENV['TRAVIS']  do
   let(:languages) {
     {
       'C' => 194738,

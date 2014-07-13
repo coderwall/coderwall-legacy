@@ -1,4 +1,4 @@
-RSpec.describe GithubRepo,  :type => :model do
+RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
   before :each do
     register_fake_paths
 
