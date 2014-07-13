@@ -54,5 +54,4 @@ ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
   %(<span class="field_with_errors">#{html_tag}</span>).html_safe
 }
 
-require "#{Rails.root}/app/jobs/resque_support.rb"
 #require 'font_assets/railtie' # => loads font middleware so cloudfront can serve fonts that render in Firefox
