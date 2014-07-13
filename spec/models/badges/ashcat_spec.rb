@@ -1,4 +1,4 @@
-describe Ashcat, pending: 'the BSON document coming back is too large' do
+RSpec.describe Ashcat, type: :model, pending: 'the BSON document coming back is too large' do
   let(:profile) { Fabricate(:github_profile) }
   let(:contributor) { Fabricate(:user, github_id: profile.github_id, github: 'dhh') }
 
@@ -9,8 +9,8 @@ describe Ashcat, pending: 'the BSON document coming back is too large' do
       contributor.build_github_facts
 
       badge = Ashcat.new(contributor)
-      badge.award?.should == true
-      badge.reasons.should =~ /Contributed \d+ times to Rails Core/
+      expect(badge.award?).to eq(true)
+      expect(badge.reasons).to match(/Contributed \d+ times to Rails Core/)
     end
   end
 end

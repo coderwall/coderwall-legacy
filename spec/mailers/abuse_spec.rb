@@ -1,4 +1,4 @@
-describe Abuse do
+RSpec.describe Abuse, :type => :mailer do
   describe 'report_inappropriate' do
 
     let(:mail) { Abuse.report_inappropriate({ protip_public_id: protip.to_param }) }
@@ -15,13 +15,13 @@ describe Abuse do
     }
 
     it 'renders the headers' do
-      mail.subject.should match('Spam Report for Protip: "hello world"')
-      mail.to.should eq(['someone@example.com'])
-      mail.from.should eq(['support@coderwall.com'])
+      expect(mail.subject).to match('Spam Report for Protip: "hello world"')
+      expect(mail.to).to eq(['someone@example.com'])
+      expect(mail.from).to eq(['support@coderwall.com'])
     end
 
     it 'renders the body' do
-      mail.body.encoded.should match("somethings that's meaningful and nice")
+      expect(mail.body.encoded).to match("somethings that's meaningful and nice")
     end
   end
 end

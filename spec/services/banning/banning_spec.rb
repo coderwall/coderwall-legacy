@@ -1,21 +1,21 @@
 require 'spec_helper'
 
-describe 'Services::Banning::' do
+RSpec.describe 'Services::Banning::' do
 
   describe 'User' do
     let(:user) { Fabricate(:user) }
 
     it "should ban a user " do
-      user.banned?.should == false
+      expect(user.banned?).to eq(false)
       Services::Banning::UserBanner.ban(user)
-      user.banned?.should == true
+      expect(user.banned?).to eq(true)
     end
 
     it "should unban a user" do
       Services::Banning::UserBanner.ban(user)
-      user.banned?.should == true
+      expect(user.banned?).to eq(true)
       Services::Banning::UserBanner.unban(user)
-      user.banned?.should == false
+      expect(user.banned?).to eq(false)
     end
   end
 
@@ -30,9 +30,9 @@ describe 'Services::Banning::' do
       protip_2 = Fabricate(:protip,body: "Second", title: "look at this content 2", user: user)
       user.reload
 
-      Protip.search("this content").count.should == 2
+      expect(Protip.search("this content").count).to eq(2)
       Services::Banning::DeindexUserProtips.run(user)
-      Protip.search("this content").count.should == 0
+      expect(Protip.search("this content").count).to eq(0)
     end
   end
 
@@ -49,9 +49,9 @@ describe 'Services::Banning::' do
       user.reload
 
       Services::Banning::DeindexUserProtips.run(user)
-      search.call.count.should == 0
+      expect(search.call.count).to eq(0)
       Services::Banning::IndexUserProtips.run(user)
-      search.call.count.should == 2
+      expect(search.call.count).to eq(2)
     end
   end
 end

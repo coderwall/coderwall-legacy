@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe HighlightsHelper do
+RSpec.describe HighlightsHelper, :type => :helper do
 
 end

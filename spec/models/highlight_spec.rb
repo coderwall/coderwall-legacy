@@ -24,7 +24,7 @@
 
 require 'spec_helper'
 
-describe Highlight do
+RSpec.describe Highlight, :type => :model do
 
 
 end

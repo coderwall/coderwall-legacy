@@ -16,6 +16,6 @@
 
 require 'spec_helper'
 
-describe ApiAccess do
+RSpec.describe ApiAccess, :type => :model do
 
 end

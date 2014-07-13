@@ -30,6 +30,6 @@
 
 require 'spec_helper'
 
-describe GithubAssignment do
+RSpec.describe GithubAssignment, :type => :model do
 
 end

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Charity do
+RSpec.describe Charity, :type => :model do
 
   it 'should have a name and description' do
-    Charity.name.should_not be_blank
-    Charity.description.should_not be_blank
+    expect(Charity.name).not_to be_blank
+    expect(Charity.description).not_to be_blank
   end
 
   it 'if the project is a fork and has languages then the user should be award' do
@@ -14,7 +14,7 @@ describe Charity do
     fact = Fabricate(:github_fork_fact, context: user)
 
     badge = Charity.new(user)
-    badge.award?.should == true
-    badge.reasons[:links].first[fact.name].should == fact.url
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons[:links].first[fact.name]).to eq(fact.url)
   end
 end

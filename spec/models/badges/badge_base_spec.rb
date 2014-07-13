@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe BadgeBase do
+RSpec.describe BadgeBase, :type => :model do
   let(:repo) { Fabricate(:github_repo) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }
 
   it 'should check to see if it needs to award users' do
     stub_request(:get, 'http://octocoder.heroku.com/rails/rails/mdeiters').to_return(body: '{}')
-    Octopussy.stub(:new).and_return do |*args|
+    allow(Octopussy).to receive(:new) do |*args|
       octopussy_mock = double("Octopussy")
-      octopussy_mock.should_receive(:valid?).and_return(true)
-      octopussy_mock.should_receive(:award?).and_return(false)
+      expect(octopussy_mock).to receive(:valid?).and_return(true)
+      expect(octopussy_mock).to receive(:award?).and_return(false)
       octopussy_mock
     end
     BadgeBase.award!(user)
@@ -25,13 +25,13 @@ describe BadgeBase do
       describe "Bar", description: "Bar", image_name: 'bar.png'
     end
 
-    foo.display_name.should == 'Foo'
-    foo.description.should == 'Foo'
-    foo.image_name.should == 'foo.png'
+    expect(foo.display_name).to eq('Foo')
+    expect(foo.description).to eq('Foo')
+    expect(foo.image_name).to eq('foo.png')
 
-    bar.display_name.should == 'Bar'
-    bar.description.should == 'Bar'
-    bar.image_name.should == 'bar.png'
+    expect(bar.display_name).to eq('Bar')
+    expect(bar.description).to eq('Bar')
+    expect(bar.image_name).to eq('bar.png')
   end
 
   class NotaBadge < BadgeBase

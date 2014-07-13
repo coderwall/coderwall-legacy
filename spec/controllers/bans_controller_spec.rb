@@ -1,10 +1,10 @@
-describe BansController do
+RSpec.describe BansController, :type => :controller do
 
   def valid_session
     {}
   end
 
-  describe "POST create" do
+   describe "POST create" do
 
     it_behaves_like "admin controller with #create"
 
@@ -13,7 +13,7 @@ describe BansController do
       controller.send :sign_in, user
       post :create, {user_id: user.id}, valid_session
 
-      user.reload.banned?.should == true
+      expect(user.reload.banned?).to eq(true)
     end
   end
 

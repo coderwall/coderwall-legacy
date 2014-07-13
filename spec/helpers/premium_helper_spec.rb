@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe PremiumHelper do
+RSpec.describe PremiumHelper, :type => :helper do
 
   it 'should strip p tags from markdown' do
-    markdown("some raw text markdown").should == "some raw text markdown\n"
+    expect(markdown("some raw text markdown")).to eq("some raw text markdown\n")
   end
 
 end

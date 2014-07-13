@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe EndorsementsController do
+RSpec.describe EndorsementsController, :type => :controller do
 
 end

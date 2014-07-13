@@ -24,19 +24,19 @@
 
 require 'spec_helper'
 
-describe Badge do
+RSpec.describe Badge, :type => :model do
   let(:badge) { Badge.new(badge_class_name: 'Polygamous') }
 
   it 'gets name from badge class' do
-    badge.display_name.should == 'Walrus'
+    expect(badge.display_name).to eq('Walrus')
   end
 
   it 'gets description from badge class' do
-    badge.description.should include('The walrus is no stranger')
+    expect(badge.description).to include('The walrus is no stranger')
   end
 
   it 'creates an image path from image name in class' do
-    badge.image_path.should == 'badges/walrus.png'
+    expect(badge.image_path).to eq('badges/walrus.png')
   end
 
 end

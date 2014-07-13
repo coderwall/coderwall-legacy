@@ -18,7 +18,6 @@ DatabaseCleaner.logger = Rails.logger
 LOCAL_ELASTIC_SEARCH_SERVER = %r[^http://localhost:9200] unless defined?(LOCAL_ELASTIC_SEARCH_SERVER)
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
 
   config.mock_with :rspec
   config.use_transactional_fixtures = false

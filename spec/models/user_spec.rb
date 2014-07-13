@@ -115,7 +115,7 @@
 
 require 'spec_helper'
 
-describe User do
+RSpec.describe User, :type => :model do
   before :each do
     User.destroy_all
   end
@@ -125,47 +125,47 @@ describe User do
       user = Fabricate :user
       viewer = Fabricate :user
       user.viewed_by(viewer)
-      user.viewers.first.should == viewer
-      user.total_views.should == 1
+      expect(user.viewers.first).to eq(viewer)
+      expect(user.total_views).to eq(1)
     end
 
     it 'tracks when a user views a profile' do
       user = Fabricate :user
       user.viewed_by(nil)
-      user.total_views.should == 1
+      expect(user.total_views).to eq(1)
     end
   end
 
   it 'should create a token on creation' do
     user = Fabricate(:user)
-    user.referral_token.should_not be_nil
+    expect(user.referral_token).not_to be_nil
   end
 
   it 'should not allow the username in multiple cases to be use on creation' do
     user = Fabricate(:user, username: 'MDEITERS')
     lambda {
-      Fabricate(:user, username: 'mdeiters').should raise_error('Validation failed: Username has already been taken')
+      expect(Fabricate(:user, username: 'mdeiters')).to raise_error('Validation failed: Username has already been taken')
     }
   end
 
   it 'should not return incorrect user because of pattern matching' do
     user = Fabricate(:user, username: 'MDEITERS')
     found = User.with_username('M_EITERS')
-    found.should_not == user
+    expect(found).not_to eq(user)
   end
 
   it 'should find users by username when provider is blank' do
     user = Fabricate(:user, username: 'mdeiters')
-    User.with_username('mdeiters', '').should == user
-    User.with_username('mdeiters', nil).should == user
+    expect(User.with_username('mdeiters', '')).to eq(user)
+    expect(User.with_username('mdeiters', nil)).to eq(user)
   end
 
   it 'should find users ignoring case' do
     user = Fabricate(:user, username: 'MDEITERS', twitter: 'MDEITERS', github: 'MDEITERS', linkedin: 'MDEITERS')
-    User.with_username('mdeiters').should == user
-    User.with_username('mdeiters', :twitter).should == user
-    User.with_username('mdeiters', :github).should == user
-    User.with_username('mdeiters', :linkedin).should == user
+    expect(User.with_username('mdeiters')).to eq(user)
+    expect(User.with_username('mdeiters', :twitter)).to eq(user)
+    expect(User.with_username('mdeiters', :github)).to eq(user)
+    expect(User.with_username('mdeiters', :linkedin)).to eq(user)
   end
 
   it 'should return users with most badges' do
@@ -178,15 +178,15 @@ describe User do
     badge2 = user_with_3_badges.badges.create!(badge_class_name: Octopussy.name)
     badge3 = user_with_3_badges.badges.create!(badge_class_name: Mongoose.name)
 
-    User.top(1).should include(user_with_3_badges)
-    User.top(1).should_not include(user_with_2_badges)
+    expect(User.top(1)).to include(user_with_3_badges)
+    expect(User.top(1)).not_to include(user_with_2_badges)
   end
 
   it 'should require valid email when instantiating' do
     u = Fabricate.build(:user, email: 'someting @ not valid.com', state: nil)
-    u.save.should be_false
-    u.should_not be_valid
-    u.errors[:email].should_not be_empty
+    expect(u.save).to be_falsey
+    expect(u).not_to be_valid
+    expect(u.errors[:email]).not_to be_empty
   end
 
   it 'returns badges in order created with latest first' do
@@ -195,8 +195,8 @@ describe User do
     badge2 = user.badges.create!(badge_class_name: Octopussy.name)
     badge3 = user.badges.create!(badge_class_name: Mongoose.name)
 
-    user.badges.first.should == badge3
-    user.badges.last.should == badge1
+    expect(user.badges.first).to eq(badge3)
+    expect(user.badges.last).to eq(badge1)
   end
 
   class NotaBadge < BadgeBase
@@ -208,15 +208,15 @@ describe User do
   it 'should award user with badge' do
     user = Fabricate :user
     user.award(NotaBadge.new(user))
-    user.badges.should have(1).badge
-    user.badges.first.badge_class_name.should == NotaBadge.name
+    expect(user.badges.size).to eq(1)
+    expect(user.badges.first.badge_class_name).to eq(NotaBadge.name)
   end
 
   it 'instantiates new user with omniauth if the user is not on file' do
     omniauth = {"info" => {"name" => "Matthew Deiters", "urls" => {"Blog" => "http://www.theagiledeveloper.com", "GitHub" => "http://github.com/mdeiters"}, "nickname" => "mdeiters", "email" => ""}, "uid" => 7330, "credentials" => {"token" => "f0f6946eb12c4156a7a567fd73aebe4d3cdde4c8"}, "extra" => {"user_hash" => {"plan" => {"name" => "micro", "collaborators" => 1, "space" => 614400, "private_repos" => 5}, "gravatar_id" => "aacb7c97f7452b3ff11f67151469e3b0", "company" => nil, "name" => "Matthew Deiters", "created_at" => "2008/04/14 15:53:10 -0700", "location" => "", "disk_usage" => 288049, "collaborators" => 0, "public_repo_count" => 18, "public_gist_count" => 31, "blog" => "http://www.theagiledeveloper.com", "following_count" => 27, "id" => 7330, "owned_private_repo_count" => 2, "private_gist_count" => 2, "type" => "User", "permission" => nil, "total_private_repo_count" => 2, "followers_count" => 19, "login" => "mdeiters", "email" => ""}}, "provider" => "github"}
 
     user = User.for_omniauth(omniauth.with_indifferent_access)
-    user.should be_new_record
+    expect(user).to be_new_record
   end
 
   it 'increments the badge count when you add new badges' do
@@ -225,12 +225,12 @@ describe User do
     user.award(NotaBadge.new(user))
     user.save!
     user.reload
-    user.badges_count.should == 1
+    expect(user.badges_count).to eq(1)
 
     user.award(AlsoNotaBadge.new(user))
     user.save!
     user.reload
-    user.badges_count.should == 2
+    expect(user.badges_count).to eq(2)
   end
 
   it 'should randomly select the user with badges' do
@@ -242,7 +242,7 @@ describe User do
     user2 = Fabricate :user, username: 'different', github_token: 'unique'
 
     4.times do
-      User.random.should_not == user2
+      expect(User.random).not_to eq(user2)
     end
   end
 
@@ -251,30 +251,30 @@ describe User do
     user.award(NotaBadge.new(user))
     user.award(NotaBadge.new(user))
     user.save!
-    user.badges.count.should == 1
+    expect(user.badges.count).to eq(1)
   end
 
   describe "redemptions" do
     it "should have an empty list of redemptions when new" do
-      Fabricate.build(:user).redemptions.should be_empty
+      expect(Fabricate.build(:user).redemptions).to be_empty
     end
 
     it "should have a single redemption with a redemptions list of one item" do
       user = Fabricate.build(:user, redemptions: %w{railscampx nodeknockout})
       user.save
-      user.reload.redemptions.should == %w{railscampx nodeknockout}
+      expect(user.reload.redemptions).to eq(%w{railscampx nodeknockout})
     end
 
     it "should allow you to add a redemption" do
       user = Fabricate.build(:user, redemptions: %w{foo})
       user.update_attributes redemptions: %w{bar}
-      user.reload.redemptions.should == %w{bar}
+      expect(user.reload.redemptions).to eq(%w{bar})
     end
 
     it "should allow you to remove redemptions" do
       user = Fabricate.build(:user, redemptions: %w{foo})
       user.update_attributes redemptions: []
-      user.reload.redemptions.should be_empty
+      expect(user.reload.redemptions).to be_empty
     end
   end
 
@@ -282,15 +282,15 @@ describe User do
     it "should not allow a username in the reserved list" do
       User::RESERVED.each do |reserved|
         user = Fabricate.build(:user, username: reserved)
-        user.should_not be_valid
-        user.errors[:username].should == ["is reserved"]
+        expect(user).not_to be_valid
+        expect(user.errors[:username]).to eq(["is reserved"])
       end
     end
 
     it "should not allow a username with a period character" do
       user = Fabricate.build(:user, username: "foo.bar")
-      user.should_not be_valid
-      user.errors[:username].should == ["must not contain a period"]
+      expect(user).not_to be_valid
+      expect(user.errors[:username]).to eq(["must not contain a period"])
     end
   end
 
@@ -299,39 +299,39 @@ describe User do
     let(:endorser) { Fabricate(:user) }
 
     it 'calculates weight of badges' do
-      user.achievement_score.should == 0
+      expect(user.achievement_score).to eq(0)
       user.award(Cub.new(user))
-      user.achievement_score.should == 1
+      expect(user.achievement_score).to eq(1)
       user.award(Philanthropist.new(user))
-      user.achievement_score.should == 4
+      expect(user.achievement_score).to eq(4)
     end
 
     it 'should penalize by amount or 1' do
       user.award(Cub.new(user))
-      user.score.should == 1
+      expect(user.score).to eq(1)
       user.penalize!
-      user.reload.score.should == 0
+      expect(user.reload.score).to eq(0)
       endorser.endorse(user, 'Ruby')
       endorser.endorse(user, 'C++')
       endorser.endorse(user, 'CSS')
       user.reload
-      user.score.should == 0.16666666666666674
+      expect(user.score).to eq(0.16666666666666674)
       user.penalize!(0.3)
-      user.reload.score.should == 0.866666666666667
+      expect(user.reload.score).to eq(0.866666666666667)
       user.penalize!(2.0)
-      user.reload.score.should == 0
+      expect(user.reload.score).to eq(0)
     end
   end
 
   it 'should indicate when user is on a premium team' do
     team = Fabricate(:team, premium: true)
     team.add_user(user = Fabricate(:user))
-    user.on_premium_team?.should == true
+    expect(user.on_premium_team?).to eq(true)
   end
 
   it 'should indicate a user not on a premium team when they dont belong to a team at all' do
     user = Fabricate(:user)
-    user.on_premium_team?.should == false
+    expect(user.on_premium_team?).to eq(false)
   end
 
   it 'should not error if the users team has been deleted' do
@@ -339,27 +339,27 @@ describe User do
     user = Fabricate(:user)
     team.add_user(user)
     team.destroy
-    user.team.should be_nil
+    expect(user.team).to be_nil
   end
 
   it 'can follow another user' do
     user = Fabricate(:user)
     other_user = Fabricate(:user)
     user.follow(other_user)
-    other_user.followed_by?(user).should == true
+    expect(other_user.followed_by?(user)).to eq(true)
 
-    user.following?(other_user).should == true
+    expect(user.following?(other_user)).to eq(true)
   end
 
   it 'should pull twitter follow list and follow any users on our system' do
-    Twitter.should_receive(:friend_ids).with(6271932).and_return(['1111', '2222'])
+    expect(Twitter).to receive(:friend_ids).with(6271932).and_return(['1111', '2222'])
 
     user = Fabricate(:user, twitter_id: 6271932)
     other_user = Fabricate(:user, twitter_id: '1111')
-    user.should_not be_following(other_user)
+    expect(user).not_to be_following(other_user)
     user.build_follow_list!
 
-    user.should be_following(other_user)
+    expect(user).to be_following(other_user)
   end
 
   describe 'skills' do
@@ -369,12 +369,12 @@ describe User do
       user.add_skill('Ruby')
       user.add_skill('Ruby ')
       user.reload
-      user.should have(1).skill
+      expect(user.skills.size).to eq(1)
     end
 
     it 'finds skill by name' do
       skill_created = user.add_skill('Ruby')
-      user.skill_for('ruby').should == skill_created
+      expect(user.skill_for('ruby')).to eq(skill_created)
     end
   end
 
@@ -383,21 +383,21 @@ describe User do
 
     it 'should assign and save an api_key if not exists' do
       api_key = user.api_key
-      api_key.should_not be_nil
-      api_key.should == user.api_key
+      expect(api_key).not_to be_nil
+      expect(api_key).to eq(user.api_key)
       user.reload
-      user.api_key.should == api_key
+      expect(user.api_key).to eq(api_key)
     end
 
     it 'should assign a new api_key if the one generated already exists' do
       RandomSecure = double('RandomSecure')
-      RandomSecure.stub(:hex).and_return("0b5c141c21c15b34")
+      allow(RandomSecure).to receive(:hex).and_return("0b5c141c21c15b34")
       user2 = Fabricate(:user)
       api_key2 = user2.api_key
       user2.api_key = RandomSecure.hex(8)
-      user2.api_key.should_not == api_key2
+      expect(user2.api_key).not_to eq(api_key2)
       api_key1 = user.api_key
-      api_key1.should_not == api_key2
+      expect(api_key1).not_to eq(api_key2)
     end
   end
 
@@ -405,12 +405,12 @@ describe User do
     let(:user) { Fabricate(:user) }
 
     it 'indicates when a user has not seen a feature' do
-      user.seen?('some_feature').should == false
+      expect(user.seen?('some_feature')).to eq(false)
     end
 
     it 'indicates when a user has seen a feature' do
       user.seen('some_feature')
-      user.seen?('some_feature').should == true
+      expect(user.seen?('some_feature')).to eq(true)
     end
   end
 
@@ -419,11 +419,11 @@ describe User do
     let(:followable) { Fabricate(:user) }
 
     it 'should follow another user only once' do
-      user.following_by_type(User.name).size.should == 0
+      expect(user.following_by_type(User.name).size).to eq(0)
       user.follow(followable)
-      user.following_by_type(User.name).size.should == 1
+      expect(user.following_by_type(User.name).size).to eq(1)
       user.follow(followable)
-      user.following_by_type(User.name).size.should == 1
+      expect(user.following_by_type(User.name).size).to eq(1)
     end
   end
 
@@ -431,11 +431,11 @@ describe User do
     let(:user) { Fabricate(:user) }
 
     it "should respond to banned? public method" do
-      user.respond_to?(:banned?).should be_true
+      expect(user.respond_to?(:banned?)).to be_truthy
     end
 
     it "should not default to banned" do
-      user.banned?.should == false
+      expect(user.banned?).to eq(false)
     end
 
   end
