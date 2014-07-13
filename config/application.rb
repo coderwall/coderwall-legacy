@@ -1,7 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
-require 'sprockets/engines'
+require 'active_record/railtie'
+require 'action_mailer/railtie'
+require 'sprockets/railtie'
 
 Bundler.require(*Rails.groups)
 

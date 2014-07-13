@@ -4,7 +4,6 @@ SimpleCov.start 'rails'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rspec'
 require 'database_cleaner'
 
@@ -18,7 +17,7 @@ DatabaseCleaner.logger = Rails.logger
 LOCAL_ELASTIC_SEARCH_SERVER = %r[^http://localhost:9200] unless defined?(LOCAL_ELASTIC_SEARCH_SERVER)
 
 RSpec.configure do |config|
-
+  config.raise_errors_for_deprecations!
   config.mock_with :rspec
   config.use_transactional_fixtures = false
   config.use_transactional_examples = false
