@@ -1,5 +1,5 @@
 class Protip::SearchWrapper
-  attr_reader :item
+  attr_accessor :item
 
   def initialize(item)
     @item = item.is_a?(Protip) ? item.to_public_hash : item

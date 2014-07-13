@@ -29,7 +29,7 @@ class Badge < ActiveRecord::Base
   validates_uniqueness_of :badge_class_name, scope: :user_id
   after_create :generate_event
 
-  scope :of_type, lambda { |badge| where(badge_class_name: badge.class.name) }
+  scope :of_type, ->(badge) { where(badge_class_name: badge.class.name) }
 
   class << self
     def rename(old_class_name, new_class_name)

@@ -1,4 +1,4 @@
-  # ## Schema Information
+# ## Schema Information
 # Schema version: 20131205021701
 #
 # Table name: `protips`
@@ -51,65 +51,7 @@ class Protip < ActiveRecord::Base
 
   acts_as_commentable
 
-  settings analysis: {
-    analyzer: {
-      comma: { "type" => "pattern",
-               "pattern" => ",",
-               "filter" => "keyword"
-    }
-
-    }
-  }
-
-  mapping show: { properties: {
-    public_id:             { type: 'string', index: 'not_analyzed' },
-    kind:                  { type: 'string', index: 'not_analyzed' },
-    title:                 { type: 'string', boost: 100, analyzer: 'snowball' },
-    body:                  { type: 'string', boost: 80, analyzer: 'snowball' },
-    html:                  { type: 'string', index: 'not_analyzed' },
-    tags:                  { type: 'string', boost: 80, analyzer: 'comma' },
-    upvotes:               { type: 'integer', index: 'not_analyzed' },
-    url:                   { type: 'string', index: 'not_analyzed' },
-    upvote_path:           { type: 'string', index: 'not_analyzed' },
-    popular_score:         { type: 'double', index: 'not_analyzed' },
-    score:                 { type: 'double', index: 'not_analyzed' },
-    trending_score:        { type: 'double', index: 'not_analyzed' },
-    only_link:             { type: 'string', index: 'not_analyzed' },
-    link:                  { type: 'string', index: 'not_analyzed' },
-    team:                  { type: 'multi_field', index: 'not_analyzed', fields: {
-      name:         { type: 'string', index: 'snowball' },
-      slug:         { type: 'string', boost: 50, index: 'snowball' },
-      avatar:       { type: 'string', index: 'not_analyzed' },
-      profile_path: { type: 'string', index: 'not_analyzed' },
-      hiring:       { type: 'boolean', index: 'not_analyzed' }
-    } },
-    views_count:           { type: 'integer', index: 'not_analyzed' },
-    comments_count:        { type: 'integer', index: 'not_analyzed' },
-    best_stat:             { type: 'multi_field', index: 'not_analyzed', fields: {
-      name:  { type: 'string', index: 'not_analyzed' },
-      value: { type: 'integer', index: 'not_analyzed' },
-    } },
-    comments:              { type: 'object', index: 'not_analyzed', properties: {
-      title: { type: 'string', boost: 100, analyzer: 'snowball' },
-      body:  { type: 'string', boost: 80, analyzer: 'snowball' },
-      likes: { type: 'integer', index: 'not_analyzed' }
-    } },
-    networks:              { type: 'string', boost: 50, analyzer: 'comma' },
-    upvoters:              { type: 'integer', boost: 50, index: 'not_analyzed' },
-    created_at:            { type: 'date', boost: 10, index: 'not_analyzed' },
-    featured:              { type: 'boolean', index: 'not_analyzed' },
-    flagged:               { type: 'boolean', index: 'not_analyzed' },
-    created_automagically: { type: 'boolean', index: 'not_analyzed' },
-    reviewed:              { type: 'boolean', index: 'not_analyzed' },
-    user:                  { type: 'multi_field', index: 'not_analyzed', fields: {
-      username:     { type: 'string', boost: 40, index: 'not_analyzed' },
-      name:         { type: 'string', boost: 40, index: 'not_analyzed' },
-      user_id:      { type: 'integer', boost: 40, index: 'not_analyzed' },
-      profile_path: { type: 'string', index: 'not_analyzed' },
-      avatar:       { type: 'string', index: 'not_analyzed' },
-      about:        { type: 'string', index: 'not_analyzed' },
-    } } } }
-
+  include ProtipMapping
 
   paginates_per(PAGESIZE = 18)
 
@@ -179,24 +121,20 @@ class Protip < ActiveRecord::Base
   attr_accessor :upvotes_value
 
 
-  scope :random, lambda { |count| order("RANDOM()").limit(count) }
-  scope :recent, lambda { |count| order("created_at DESC").limit(count) }
-  scope :for, lambda { |userlist| where(user: userlist.map(&:id)) }
-  scope :most_upvotes, lambda { |count| joins(:likes).select(['protips.*', 'SUM(likes.value) AS like_score']).group(['likes.likable_id', 'protips.id']).order('like_score DESC').limit(count) }
-  scope :any_topics, lambda { |topics_list|
-    where(id: select('DISTINCT protips.id').joins(taggings: :tag).where('tags.name IN (?)', topics_list))
-  }
+  scope :random, ->(count) { order("RANDOM()").limit(count) }
+  scope :recent, ->(count) { order("created_at DESC").limit(count) }
+  scope :for, ->(userlist) { where(user: userlist.map(&:id)) }
+  scope :most_upvotes, ->(count) { joins(:likes).select(['protips.*', 'SUM(likes.value) AS like_score']).group(['likes.likable_id', 'protips.id']).order('like_score DESC').limit(count) }
+  scope :any_topics, ->(topics_list) { where(id: select('DISTINCT protips.id').joins(taggings: :tag).where('tags.name IN (?)', topics_list)) }
 
-  scope :topics, lambda { |topics_list, match_all|
-    match_all ? any_topics(topics_list).group('protips.id').having('count(protips.id)=?', topics_list.size) : any_topics(topics_list)
-  }
+  scope :topics, ->(topics_list, match_all) { match_all ? any_topics(topics_list).group('protips.id').having('count(protips.id)=?', topics_list.size) : any_topics(topics_list) }
 
-  scope :for_topic, lambda { |topic| any_topics([topic]) }
+  scope :for_topic, ->(topic) { any_topics([topic]) }
 
   scope :with_upvotes, joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id")
   scope :trending, order('score DESC')
   scope :flagged, where(flagged: true)
-  scope :queued_for, lambda { |queue| ProcessingQueue.queue_for_type(queue, self.class.name) }
+  scope :queued_for, ->(queue) { ProcessingQueue.queue_for_type(queue, self.class.name) }
 
   class << self
 
@@ -243,8 +181,8 @@ class Protip < ActiveRecord::Base
       force_index_commit = Protip.tire.index.refresh if Rails.env.test?
       query_fields = [:title, :body]
       filters = []
-      filters << { term: { upvoters: bookmarked_by } } unless bookmarked_by.nil?
-      filters << { term: { 'user.user_id' => author } } unless author.nil?
+      filters << {term: {upvoters: bookmarked_by}} unless bookmarked_by.nil?
+      filters << {term: {'user.user_id' => author}} unless author.nil?
       Rails.logger.debug "SEARCH: query=#{query}, tags=#{tags}, team=#{team}, author=#{author}, bookmarked_by=#{bookmarked_by}, execution=#{execution}, sorts=#{sorts} from query-string=#{query_string}, #{options.inspect}"
       begin
         tire.search(options) do
@@ -345,7 +283,7 @@ class Protip < ActiveRecord::Base
     def search_trending_by_date(query, date, page, per_page)
       date_string = "#{date.midnight.strftime('%Y-%m-%dT%H:%M:%S')} TO #{(date.midnight + 1.day).strftime('%Y-%m-%dT%H:%M:%S')}" unless date.is_a?(String)
       query = "" if query.nil?
-      query       += " created_at:[#{date_string}]"
+      query += " created_at:[#{date_string}]"
       Protip.search(query, [], page: page, per_page: per_page)
     end
 
@@ -685,6 +623,7 @@ class Protip < ActiveRecord::Base
   end
 
   MAX_SCORE = 100
+
   def normalized_upvotes_score
     (upvotes_score * MAX_SCORE) / ([self.class.most_upvotes_for_a_protip.to_f, UPVOTES_SCORE_BENCHMARK].min)
   end
@@ -706,6 +645,7 @@ class Protip < ActiveRecord::Base
   end
 
   QUALITY_WEIGHT = 20
+
   def quality_score
     self.determine_boost_factor! * QUALITY_WEIGHT
   end
@@ -752,6 +692,7 @@ class Protip < ActiveRecord::Base
   ORIGINAL_CONTENT_BOOST = 1.5
   IMAGE_BOOST = 0.5
   MAX_SCORABLE_IMAGES = 3
+
   def determine_boost_factor!
     factor = 1
     if article?
@@ -853,6 +794,7 @@ class Protip < ActiveRecord::Base
   end
 
   MIN_CONTENT_LENGTH = 30
+
   def only_link?
     has_featured_image? == false && links.size == 1 && (body.length - link.length) <= MIN_CONTENT_LENGTH
   end

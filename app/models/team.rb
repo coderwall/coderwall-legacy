@@ -14,27 +14,7 @@ class Team
   # we should BG this
   #include Tire::Model::Callbacks
 
-  mapping team: {
-    properties: {
-      id:                 { type: 'string', index: 'not_analyzed' },
-      slug:               { type: 'string', index: 'not_analyzed' },
-      name:               { type: 'string', boost: 100, analyzer: 'snowball' },
-      score:              { type: 'float', index: 'not_analyzed' },
-      size:               { type: 'integer', index: 'not_analyzed' },
-      avatar:             { type: 'string', index: 'not_analyzed' },
-      country:            { type: 'string', boost: 50, analyzer: 'snowball' },
-      url:                { type: 'string', index: 'not_analyzed' },
-      follow_path:        { type: 'string', index: 'not_analyzed' },
-      hiring:             { type: 'boolean', index: 'not_analyzed' },
-      total_member_count: { type: 'integer', index: 'not_analyzed' },
-      completed_sections: { type: 'integer', index: 'not_analyzed' },
-      team_members:       { type: 'multi_field', fields: {
-        username:    { type: 'string', index: 'not_analyzed' },
-        profile_url: { type: 'string', index: 'not_analyzed' },
-        avatar:      { type: 'string', index: 'not_analyzed' }
-      } }
-    }
-  }
+  include TeamMapping
 
   DEFAULT_HEX_BRAND        = '#343131'
   LEADERBOARD_KEY          = 'teams:leaderboard'
@@ -1041,79 +1021,4 @@ class Team
     self.slug = self.class.slugify(name)
   end
 
-  class SearchWrapper
-    attr_reader :item
-
-    def initialize(item)
-      @item = item.is_a?(Team) ? item.to_public_hash : item
-    end
-
-    def about
-      item[:about]
-    end
-
-    def updated_at
-      item[:updated_at]
-    end
-
-    def rank
-      item[:rank]
-    end
-
-    def to_key
-      item.try(:to_key) || BSON::ObjectId(item[:id])
-    end
-
-    def name
-      item[:name]
-    end
-
-    def class
-      Team
-    end
-
-    def score
-      item[:score]
-    end
-
-    def slug
-      item[:slug]
-    end
-
-    def avatar_url
-      item[:avatar]
-    end
-
-    def thumbnail_url
-      User::BLANK_PROFILE_URL
-    end
-
-    def team_members
-      item[:team_members] || []
-    end
-
-    def top_three_team_members
-      team_members.first(3)
-    end
-
-    def top_two_team_members
-      team_members.first(2)
-    end
-
-    def hiring?
-      item[:hiring]
-    end
-
-    def size
-      item[:size]
-    end
-
-    def id
-      item[:id]
-    end
-
-    def locations_message
-      (item[:locations] || []).join(", ")
-    end
-  end
 end

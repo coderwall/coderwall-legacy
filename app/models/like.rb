@@ -35,7 +35,7 @@ class Like < ActiveRecord::Base
   after_save :liked_callback
 
   scope :protips, where(likable_type: 'Protip')
-  scope :protips_score, lambda { |protip_ids| protips.where(likable_id: protip_ids).group(:likable_id).select('SUM(likes.value) as like_score') }
+  scope :protips_score, ->(protip_ids) { protips.where(likable_id: protip_ids).group(:likable_id).select('SUM(likes.value) as like_score') }
 
   def liked_callback
     likable.try(:liked, value)
