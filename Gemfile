@@ -148,7 +148,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'fabrication-rails'
   gem 'ffaker'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
@@ -162,7 +162,6 @@ gem 'mail_view'
 group :test do
   gem 'capybara', '~> 1.1'
   gem 'database_cleaner'
-  gem 'fabrication', '1.4.1'
   gem 'fuubar'
   gem 'resque_spec'
   gem 'rspec-rails'

@@ -26,23 +26,23 @@
 #     * **`owner`**
 #
 
-Fabricator(:fact) do
+Fabricator(:fact, from: 'fact') do
   context { Fabricate(:user) }
 end
 
 Fabricator(:lanyrd_original_fact, from: :fact) do
-  owner { |fact| fact.context.lanyrd_identity }
+  owner { |fact| fact[:context].lanyrd_identity }
   url { Faker::Internet.domain_name }
-  identity { |fact| "/#{rand(1000)}/speakerconf/:" + fact.context.lanyrd_identity }
+  identity { |fact| "/#{rand(1000)}/speakerconf/:" + fact[:owner] }
   name { Faker::Company.catch_phrase }
   relevant_on { rand(100).days.ago }
   tags { ['lanyrd', 'event', 'spoke', 'Software', 'Ruby'] }
 end
 
 Fabricator(:github_original_fact, from: :fact) do
-  owner { |fact| fact.context.github_identity }
+  owner { |fact| fact[:context].github_identity }
   url { Faker::Internet.domain_name }
-  identity { |fact| fact.url + ':' + fact.context.github_identity }
+  identity { |fact| fact[:url] + ':' + fact[:owner] }
   name { Faker::Company.catch_phrase }
   relevant_on { rand(100).days.ago }
   metadata { {

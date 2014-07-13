@@ -1,4 +1,4 @@
-class Scope < SearchModule::Search::Scope
+class Protip::Search::Scope < SearchModule::Search::Scope
 
   def to_hash
     case @domain

@@ -42,7 +42,7 @@ class Comment < ActiveRecord::Base
 
   default_scope order: 'likes_cache DESC, created_at ASC'
 
-  belongs_to :user
+  belongs_to :user, autosave: true
 
   alias_method :author, :user
   alias_attribute :body, :comment

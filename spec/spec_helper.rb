@@ -20,8 +20,6 @@ LOCAL_ELASTIC_SEARCH_SERVER = %r[^http://localhost:9200] unless defined?(LOCAL_E
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
 
-  config.include FactoryGirl::Syntax::Methods
-
   config.mock_with :rspec
   config.use_transactional_fixtures = false
   config.use_transactional_examples = false
@@ -33,7 +31,6 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    FactoryGirl.lint
 
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
