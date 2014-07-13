@@ -11,16 +11,20 @@ module CFM
         redcarpet.render(render_cfm(text)) unless text.nil?
       end
 
-      def render_cfm(text)
-        #hotlink coderwall usernames to their profile
-        text.gsub(/((?<!\s{4}).*)@([a-zA-Z_\-0-9]+)/) { $1+coderwall_user_link($2) }
-      end
-
       USERNAME_BLACKLIST = %w(include)
 
       private
+      def render_cfm(text)
+        text.lines.map { |x| inspect_line x }.join("\n")
+      end
+
       def coderwall_user_link(username)
         (User.where(username: username).exists? && !USERNAME_BLACKLIST.include?(username)) ? ActionController::Base.helpers.link_to("@#{username}", "/#{username}") : "@#{username}"
+      end
+
+      def inspect_line(line)
+        #hotlink coderwall usernames to their profile, but don't search for @mentions in code blocks
+        line.start_with?("    ") ? line : line.gsub(/((?<!\s{4}).*)@([a-zA-Z_\-0-9]+)/) { $1+coderwall_user_link($2) }
       end
     end
   end
