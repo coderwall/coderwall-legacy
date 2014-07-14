@@ -1,0 +1,41 @@
+badgify_development:
+  teams:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - achievement_count: INTEGER
+    - analytics: BOOLEAN
+    - benefit_description_1: TEXT
+    - benefit_name_1: TEXT
+    - big_quote: TEXT
+    - blog_feed: TEXT
+    - created_at: timestamp without time zone
+    - endorsement_count: INTEGER
+    - featured_banner_image: TEXT
+    - headline: TEXT
+    - hide_from_featured: BOOLEAN
+    - hiring_tagline: TEXT
+    - mean: INTEGER
+    - median: INTEGER
+    - monthly_subscription: BOOLEAN
+    - name: TEXT
+    - number_of_jobs_to_show: INTEGER
+    - our_challenge: TEXT
+    - paid_job_posts: INTEGER
+    - premium: BOOLEAN
+    - reason_description_1: TEXT
+    - reason_name_1: TEXT
+    - reason_name_2: TEXT
+    - reason_name_3: TEXT
+    - score: INTEGER
+    - size: INTEGER
+    - slug: TEXT
+    - stack_list: TEXT
+    - total: INTEGER
+    - updated_at: timestamp without time zone
+    - valid_jobs: BOOLEAN
+    - your_impact: TEXT
+    :meta:
+      :table: teams
+      :extra_props: true
