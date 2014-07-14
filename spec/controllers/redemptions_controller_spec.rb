@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe RedemptionsController do
+RSpec.describe RedemptionsController, :type => :controller do
 
   it 'should render page if user not signed in' do
     get :show, code: Redemption::STANDFORD_ACM312.code
-    response.should be_success
+    expect(response).to be_success
   end
 
   describe 'signed in' do
@@ -15,11 +15,11 @@ describe RedemptionsController do
     end
 
     it 'should activate a new user' do
-      @current_user.should be_active
+      expect(@current_user).to be_active
     end
 
     it 'should redirect the user' do
-      response.should redirect_to(user_achievement_url(username: @current_user.username, id: @current_user.badges.first.id))
+      expect(response).to redirect_to(user_achievement_url(username: @current_user.username, id: @current_user.badges.first.id))
     end
   end
 end

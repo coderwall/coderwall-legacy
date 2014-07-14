@@ -1,17 +1,12 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `user_events`
+# Table name: user_events
 #
-# ### Columns
-#
-# Name              | Type               | Attributes
-# ----------------- | ------------------ | ---------------------------
-# **`created_at`**  | `datetime`         | `default(2014-02-20 22:39:11 UTC)`
-# **`data`**        | `text`             |
-# **`id`**          | `integer`          | `not null, primary key`
-# **`name`**        | `string(255)`      |
-# **`user_id`**     | `integer`          |
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  name       :string(255)
+#  data       :text
+#  created_at :datetime         default(2014-02-20 22:39:11 UTC)
 #
 
 class UserEvent < ActiveRecord::Base

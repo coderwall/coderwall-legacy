@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe PagesController do
+RSpec.describe PagesController, :type => :controller do
   it 'should be able to access privacy policy while user is logged in but not registered' do
     unregisterd_user = Fabricate(:user, state: User::REGISTRATION)
     controller.send :sign_in, unregisterd_user
     get :show, page: 'tos', layout: 'application'
-    response.should be_success
+    expect(response).to be_success
   end
 
   it 'fails when presented an non-whitelisted page' do

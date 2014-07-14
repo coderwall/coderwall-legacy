@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Link do
+RSpec.describe Link, :type => :model do
   let(:url) { "http://test.google.com" }
   before :each do
     #FakeWeb.register_uri(:get, 'http://test.google.com/', body: 'OK')
@@ -9,8 +9,8 @@ describe Link do
   it 'retrieves popular links with score higher then 2 and has at least 2 or mor users' do
     enough_users = Link.create!(score: 8, user_ids: [1, 2])
     not_enought_user = Link.create!(score: 3, user_ids: [1])
-    Link.popular.all.collect.should include(enough_users)
-    Link.popular.all.collect.should_not include(not_enought_user)
+    expect(Link.popular.all.collect).to include(enough_users)
+    expect(Link.popular.all.collect).not_to include(not_enought_user)
   end
 
   describe 'featuring' do
@@ -21,29 +21,29 @@ describe Link do
     end
 
     it 'finds items featured by featured date' do
-      Link.featured.first.should == @latest
-      Link.featured.last.should == @earliest
-      Link.featured.should_not include(@not_featured)
+      expect(Link.featured.first).to eq(@latest)
+      expect(Link.featured.last).to eq(@earliest)
+      expect(Link.featured).not_to include(@not_featured)
     end
 
     it 'finds items not featured' do
-      Link.not_featured.should_not include(@latest)
-      Link.not_featured.should_not include(@earliest)
-      Link.not_featured.should include(@not_featured)
+      expect(Link.not_featured).not_to include(@latest)
+      expect(Link.not_featured).not_to include(@earliest)
+      expect(Link.not_featured).to include(@not_featured)
     end
   end
 
   it 'expands twitter urls', functional: true do
-    Link.expand_url('http://t.co/eWplTxA').should == 'https://github.com/RailsApps/rails3-application-templates'
+    expect(Link.expand_url('http://t.co/eWplTxA')).to eq('https://github.com/RailsApps/rails3-application-templates')
   end
 
   it 'expands bitly urls', functional: true do
-    Link.expand_url('http://bit.ly/pPzKX5').should == 'http://lokka.org/if-you-forget-a-password'
+    expect(Link.expand_url('http://bit.ly/pPzKX5')).to eq('http://lokka.org/if-you-forget-a-password')
   end
 
   it 'should find links for a user' do
     the_link = Link.create!(url: url, user_ids: [123])
-    Link.for_user(123).should include(the_link)
-    Link.for_user(444).should_not include(the_link)
+    expect(Link.for_user(123)).to include(the_link)
+    expect(Link.for_user(444)).not_to include(the_link)
   end
 end

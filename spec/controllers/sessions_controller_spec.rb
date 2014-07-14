@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionsController do
+RSpec.describe SessionsController, :type => :controller do
   let(:github_response) { {
       "provider" => "github",
       "uid" => 1310330,
@@ -46,9 +46,9 @@ describe SessionsController do
       request.cookies['trc'] = 'asdf'
 
       get :create
-      response.should redirect_to(badge_url(username: 'alreadyauser'))
+      expect(response).to redirect_to(badge_url(username: 'alreadyauser'))
 
-      user.reload.tracking_code.should == 'asdf'
+      expect(user.reload.tracking_code).to eq('asdf')
     end
 
     it 'updates the tracking code even if the user isnt logged in' do
@@ -57,7 +57,7 @@ describe SessionsController do
 
       get :new
 
-      response.cookies['trc'].should == 'somethingelse'
+      expect(response.cookies['trc']).to eq('somethingelse')
     end
 
     it 'updates the tracking code to the one already setup for a user' do
@@ -66,18 +66,18 @@ describe SessionsController do
       user = Fabricate(:user, github_id: 1310330, username: 'alreadyauser', tracking_code: 'somethingelse')
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] = github_response
       get :create
-      response.should redirect_to(badge_url(username: 'alreadyauser'))
+      expect(response).to redirect_to(badge_url(username: 'alreadyauser'))
 
-      response.cookies['trc'].should == 'somethingelse'
+      expect(response.cookies['trc']).to eq('somethingelse')
     end
 
     it 'creates a tracking code when one doesnt exist' do
-      controller.stub(:mixpanel_cookie).and_return({'distinct_id' => 1234})
+      allow(controller).to receive(:mixpanel_cookie).and_return({'distinct_id' => 1234})
       user = Fabricate(:user, github_id: 1310330, username: 'alreadyauser')
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] = github_response
       get :create
-      response.should redirect_to(badge_url(username: 'alreadyauser'))
-      response.cookies['trc'].should_not be_blank
+      expect(response).to redirect_to(badge_url(username: 'alreadyauser'))
+      expect(response.cookies['trc']).not_to be_blank
     end
 
   end
@@ -88,7 +88,7 @@ describe SessionsController do
       user = Fabricate(:user, github_id: 1310330, username: 'alreadyauser')
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] = github_response
       get :create
-      response.should redirect_to(badge_url(username: 'alreadyauser'))
+      expect(response).to redirect_to(badge_url(username: 'alreadyauser'))
     end
 
     it 'logs oauth response if it is an unexpected structure' do
@@ -96,22 +96,22 @@ describe SessionsController do
       github_response.delete('uid')
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] = github_response
       get :create
-      response.should redirect_to(root_url)
-      flash[:notice].should include("Looks like something went wrong")
+      expect(response).to redirect_to(root_url)
+      expect(flash[:notice]).to include("Looks like something went wrong")
     end
 
     it 'sets up a new user and redirects to signup page' do
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] = github_response
       get :create
-      response.should redirect_to(new_user_url)
+      expect(response).to redirect_to(new_user_url)
     end
 
     it 'redirects back to profile page if user is already signed in' do
       sign_in(user = Fabricate(:user, username: 'darth'))
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:github] = github_response
       get :create
-      flash[:notice].should include('linked')
-      response.should redirect_to(badge_url(username: 'darth'))
+      expect(flash[:notice]).to include('linked')
+      expect(response).to redirect_to(badge_url(username: 'darth'))
     end
   end
 
@@ -189,8 +189,8 @@ describe SessionsController do
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter] = twitter_response
       get :create
       user.reload
-      user.about.should_not == 'Dad. Amateur Foodie. Founder Extraordinaire of @coderwall'
-      user.about.should == 'something original'
+      expect(user.about).not_to eq('Dad. Amateur Foodie. Founder Extraordinaire of @coderwall')
+      expect(user.about).to eq('something original')
     end
 
     it 'attempting to link an account already used should notify user' do
@@ -200,7 +200,7 @@ describe SessionsController do
 
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter] = twitter_response
       get :create
-      flash[:error].should include('already associated with a different member')
+      expect(flash[:error]).to include('already associated with a different member')
     end
   end
 

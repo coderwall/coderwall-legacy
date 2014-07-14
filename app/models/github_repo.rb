@@ -15,9 +15,9 @@ class GithubRepo
   embeds_many :followers, class_name: GithubUser.name.to_s, as: :personable
   embeds_many :contributors, class_name: GithubUser.name.to_s, as: :personable
 
-  index "owner.login"
-  index "owner.github_id"
-  index "name"
+  index('owner.login' => 1)
+  index('owner.github_id' => 1)
+  index({name: 1})
 
   before_save :update_tags!
 

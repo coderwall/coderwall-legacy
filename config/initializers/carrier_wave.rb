@@ -23,3 +23,4 @@ CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
 CarrierWave::Backgrounder.configure do |c|
   c.backend = :resque
 end
+

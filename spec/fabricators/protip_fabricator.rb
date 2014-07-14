@@ -1,41 +1,35 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `protips`
+# Table name: protips
 #
-# ### Columns
+#  id                  :integer          not null, primary key
+#  public_id           :string(255)
+#  kind                :string(255)
+#  title               :string(255)
+#  body                :text
+#  user_id             :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  score               :float
+#  created_by          :string(255)      default("self")
+#  featured            :boolean          default(FALSE)
+#  featured_at         :datetime
+#  upvotes_value_cache :integer          default(75)
+#  boost_factor        :float            default(1.0)
+#  inappropriate       :integer          default(0)
+#  likes_count         :integer          default(0)
 #
-# Name                       | Type               | Attributes
-# -------------------------- | ------------------ | ---------------------------
-# **`body`**                 | `text`             |
-# **`boost_factor`**         | `float`            | `default(1.0)`
-# **`created_at`**           | `datetime`         |
-# **`created_by`**           | `string(255)`      | `default("self")`
-# **`featured`**             | `boolean`          | `default(FALSE)`
-# **`featured_at`**          | `datetime`         |
-# **`id`**                   | `integer`          | `not null, primary key`
-# **`inappropriate`**        | `integer`          | `default(0)`
-# **`kind`**                 | `string(255)`      |
-# **`public_id`**            | `string(255)`      |
-# **`score`**                | `float`            |
-# **`title`**                | `string(255)`      |
-# **`updated_at`**           | `datetime`         |
-# **`upvotes_value_cache`**  | `integer`          |
-# **`user_id`**              | `integer`          |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_protips_on_public_id`:
-#     * **`public_id`**
-# * `index_protips_on_user_id`:
-#     * **`user_id`**
+#  index_protips_on_public_id  (public_id)
+#  index_protips_on_user_id    (user_id)
 #
 
 Fabricator(:protip) do
   topics ["Javascript", "CoffeeScript"]
   title { Faker::Company.catch_phrase }
   body { Faker::Lorem.sentences(8).join(' ') }
-  user { Fabricate(:user) }
+  user { Fabricate.build(:user) }
 end
 
 Fabricator(:link_protip, from: :protip) do

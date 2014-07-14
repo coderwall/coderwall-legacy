@@ -1,5 +1,5 @@
 require 'resque/tasks'
-require 'resque_scheduler/tasks'
+require 'resque/scheduler/tasks'
 
 task "resque:setup" => :environment do
   ENV['QUEUE'] = '*' if ENV['QUEUE'].blank?

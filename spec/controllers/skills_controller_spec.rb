@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe SkillsController do
+RSpec.describe SkillsController, :type => :controller do
 
 end

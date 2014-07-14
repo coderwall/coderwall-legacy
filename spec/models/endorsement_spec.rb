@@ -1,49 +1,39 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `endorsements`
+# Table name: endorsements
 #
-# ### Columns
+#  id                :integer          not null, primary key
+#  endorsed_user_id  :integer
+#  endorsing_user_id :integer
+#  specialty         :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  skill_id          :integer
 #
-# Name                     | Type               | Attributes
-# ------------------------ | ------------------ | ---------------------------
-# **`created_at`**         | `datetime`         |
-# **`endorsed_user_id`**   | `integer`          |
-# **`endorsing_user_id`**  | `integer`          |
-# **`id`**                 | `integer`          | `not null, primary key`
-# **`skill_id`**           | `integer`          |
-# **`specialty`**          | `string(255)`      |
-# **`updated_at`**         | `datetime`         |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_endorsements_on_endorsed_user_id`:
-#     * **`endorsed_user_id`**
-# * `index_endorsements_on_endorsing_user_id`:
-#     * **`endorsing_user_id`**
-# * `only_unique_endorsements` (_unique_):
-#     * **`endorsed_user_id`**
-#     * **`endorsing_user_id`**
-#     * **`specialty`**
+#  index_endorsements_on_endorsed_user_id   (endorsed_user_id)
+#  index_endorsements_on_endorsing_user_id  (endorsing_user_id)
+#  only_unique_endorsements                 (endorsed_user_id,endorsing_user_id,specialty) UNIQUE
 #
 
 require 'spec_helper'
 
-describe Endorsement do
+RSpec.describe Endorsement, :type => :model do
 
   it 'requires a specialty' do
     endorsement = Fabricate.build(:endorsement, specialty: nil)
-    endorsement.should_not be_valid
+    expect(endorsement).not_to be_valid
   end
 
   it 'requires an endorsed user' do
     endorsement = Fabricate.build(:endorsement, endorsed: nil)
-    endorsement.should_not be_valid
+    expect(endorsement).not_to be_valid
   end
 
   it 'requires an endorsing user' do
     endorsement = Fabricate.build(:endorsement, endorser: nil)
-    endorsement.should_not be_valid
+    expect(endorsement).not_to be_valid
   end
 
   it 'udates the users updated_at timestamp when they recieve a new endorsement' do
@@ -51,7 +41,7 @@ describe Endorsement do
     original_updated_at = endorsed.updated_at
     Fabricate(:user).endorse(endorsed, 'skill')
     endorsed.reload
-    endorsed.updated_at.should_not == original_updated_at
+    expect(endorsed.updated_at).not_to eq(original_updated_at)
   end
 
   describe User do
@@ -63,17 +53,17 @@ describe Endorsement do
     }
 
     it 'saves the specialty' do
-      endorsed.endorsements.first.specialty.should == 'ruby'
+      expect(endorsed.endorsements.first.specialty).to eq('ruby')
     end
 
     it 'saves the endorsed' do
-      endorsed.endorsements.first.endorsed.should == endorsed
+      expect(endorsed.endorsements.first.endorsed).to eq(endorsed)
     end
 
     it 'saves the endorser' do
       endorsed.reload
-      endorsed.endorsements.size.should == 1
-      endorsed.endorsements.first.endorser.should == endorser
+      expect(endorsed.endorsements.size).to eq(1)
+      expect(endorsed.endorsements.first.endorser).to eq(endorser)
     end
 
     class NotaBadge < BadgeBase
@@ -81,7 +71,7 @@ describe Endorsement do
 
     it 'should increment counter cache' do
       endorsed.reload
-      endorsed.endorsements_count.should == 1
+      expect(endorsed.endorsements_count).to eq(1)
     end
   end
 

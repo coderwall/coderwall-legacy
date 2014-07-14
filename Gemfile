@@ -4,21 +4,22 @@ ruby '2.1.2'
 
 gem 'rails', '~> 3.2'
 
+gem 'sass', '~> 3.2.9'
+gem 'coffee-rails', '~> 3.2.1'
+gem 'compass-rails'
+gem 'sass-rails', '~> 3.2.6'
+gem 'uglifier', '>= 1.0.3'
+
+
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'strong_parameters'
 
-# Mongo
-gem 'mongoid', '~> 2.4.12'
-gem 'mongo', '<= 1.6.2'
-gem 'mongoid_taggable'
-gem 'bson_ext', '~> 1.3'
-
 # Attachements
-gem 'carrierwave', '0.5.8'
-gem 'carrierwave_backgrounder' #background processing of images
-gem 'carrierwave-mongoid', '~> 0.1.7', require: 'carrierwave/mongoid'
+gem 'carrierwave'
+gem 'carrierwave_backgrounder', '0.0.8' #background processing of images
+gem 'carrierwave-mongoid',  require: 'carrierwave/mongoid'
 
 # Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
 gem 'backbone-on-rails'
@@ -27,7 +28,7 @@ gem 'jquery-rails', '= 2.0.3'
 
 # HTML
 gem 'haml', '3.1.7'
-gem 'hamlbars' #haml support for handlebars/ember.js
+gem 'hamlbars', '1.1.0' #haml support for handlebars/ember.js
 
 # Memcached
 gem 'dalli'
@@ -70,7 +71,7 @@ gem 'redis', require: ['redis', 'redis/connection/hiredis']
 
 # Background Job Processing
 gem 'resque'
-gem 'resque-scheduler', require: 'resque_scheduler'
+gem 'resque-scheduler'
 gem 'resque_mailer'
 
 # Payment processing
@@ -103,10 +104,10 @@ gem 'faraday', '~> 0.8.1'
 
 # ----------------
 
-gem 'rocket_tag', '0.0.4'
+gem 'rocket_tag'
 
 gem 'acts_as_commentable', '2.0.1'
-gem 'acts_as_follower'
+gem 'acts_as_follower', '0.1.1'
 gem 'color'
 gem 'createsend'
 gem 'fog'
@@ -128,13 +129,12 @@ gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
 
-group :assets do
-  gem 'sass', '~> 3.2.9'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'compass-rails'
-  gem 'sass-rails', '~> 3.2.6'
-  gem 'uglifier', '>= 1.0.3'
-end
+
+# Mongo
+gem 'mongoid'
+gem 'mongo'
+gem 'mongoid_taggable'
+gem 'bson_ext', '~> 1.3'
 
 group :development do
   gem 'better_errors'
@@ -148,7 +148,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'factory_girl_rails'
+  gem 'fabrication-rails'
   gem 'ffaker'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
@@ -156,16 +156,18 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'quiet_assets'
   gem 'syntax'
+  gem 'annotate'
+  gem 'mail_view'
 end
-gem 'mail_view'
+
 
 group :test do
-  gem 'capybara', '~> 1.1'
+  gem 'capybara'
   gem 'database_cleaner'
-  gem 'fabrication', '1.4.1'
-  gem 'fuubar'
+  gem 'fuubar' , '2.0.0.rc1'
   gem 'resque_spec'
   gem 'rspec-rails'
+  # gem 'rspec-its'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'

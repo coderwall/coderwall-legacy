@@ -1,4 +1,4 @@
-describe EmailsController do
+RSpec.describe EmailsController, :type => :controller do
   let(:mailgun_params) { {
     'domain'     => ENV['MAILGUN_DOMAIN'],
     'tag'        => '*',
@@ -14,23 +14,23 @@ describe EmailsController do
 
   it 'unsubscribes member from notifications when they unsubscribe from a notification email on mailgun' do
     user = Fabricate(:user, email: 'someone@example.com')
-    user.notify_on_award.should == true
-    EmailsController.any_instance.should_receive(:encrypt_signature).and_return(ENV['MAILGUN_SIGNATURE'])
+    expect(user.notify_on_award).to eq(true)
+    expect_any_instance_of(EmailsController).to receive(:encrypt_signature).and_return(ENV['MAILGUN_SIGNATURE'])
     post :unsubscribe, mailgun_params
     user.reload
-    user.notify_on_award.should == false
-    user.receive_newsletter.should == true
+    expect(user.notify_on_award).to eq(false)
+    expect(user.receive_newsletter).to eq(true)
   end
 
   it 'unsubscribes member from everything when they unsubscribe from a welcome email on mailgun' do
     user = Fabricate(:user, email: 'someone@example.com')
     new_params = mailgun_params
     new_params["email_type"] = Notifier::WELCOME_EVENT
-    EmailsController.any_instance.should_receive(:encrypt_signature).and_return(ENV['MAILGUN_SIGNATURE'])
+    expect_any_instance_of(EmailsController).to receive(:encrypt_signature).and_return(ENV['MAILGUN_SIGNATURE'])
     post :unsubscribe, mailgun_params
     user.reload
-    user.notify_on_award.should == true
-    user.receive_newsletter.should == false
+    expect(user.notify_on_award).to eq(true)
+    expect(user.receive_newsletter).to eq(false)
   end
 
 end

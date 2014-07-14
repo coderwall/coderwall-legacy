@@ -1,31 +1,24 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `comments`
+# Table name: comments
 #
-# ### Columns
+#  id                :integer          not null, primary key
+#  title             :string(50)       default("")
+#  comment           :text             default("")
+#  commentable_id    :integer
+#  commentable_type  :string(255)
+#  user_id           :integer
+#  likes_cache       :integer          default(0)
+#  likes_value_cache :integer          default(0)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  likes_count       :integer          default(0)
 #
-# Name                     | Type               | Attributes
-# ------------------------ | ------------------ | ---------------------------
-# **`comment`**            | `text`             | `default("")`
-# **`commentable_id`**     | `integer`          |
-# **`commentable_type`**   | `string(255)`      |
-# **`created_at`**         | `datetime`         |
-# **`id`**                 | `integer`          | `not null, primary key`
-# **`likes_cache`**        | `integer`          | `default(0)`
-# **`likes_value_cache`**  | `integer`          | `default(0)`
-# **`title`**              | `string(50)`       | `default("")`
-# **`updated_at`**         | `datetime`         |
-# **`user_id`**            | `integer`          |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_comments_on_commentable_id`:
-#     * **`commentable_id`**
-# * `index_comments_on_commentable_type`:
-#     * **`commentable_type`**
-# * `index_comments_on_user_id`:
-#     * **`user_id`**
+#  index_comments_on_commentable_id    (commentable_id)
+#  index_comments_on_commentable_type  (commentable_type)
+#  index_comments_on_user_id           (user_id)
 #
 
 class Comment < ActiveRecord::Base
@@ -34,7 +27,7 @@ class Comment < ActiveRecord::Base
   include Rakismet::Model
 
   belongs_to :commentable, polymorphic: true
-  has_many :likes, as: :likable, dependent: :destroy, after_add: :update_likes_cache, after_remove: :update_likes_cache
+  has_many :likes, as: :likable, dependent: :destroy
   has_one :spam_report, as: :spammable
   after_create :generate_event
   after_create :analyze_spam
@@ -42,7 +35,7 @@ class Comment < ActiveRecord::Base
 
   default_scope order: 'likes_cache DESC, created_at ASC'
 
-  belongs_to :user
+  belongs_to :user, autosave: true
 
   alias_method :author, :user
   alias_attribute :body, :comment
@@ -64,10 +57,6 @@ class Comment < ActiveRecord::Base
 
   def commented_callback
     commentable.try(:commented)
-  end
-
-  def update_likes_cache(like)
-    like.destroyed? ? decrement_likes_cache(like.value) : increment_likes_cache(like.value)
   end
 
   def like_by(user)
@@ -123,18 +112,6 @@ class Comment < ActiveRecord::Base
 
   private
 
-  def decrement_likes_cache(value)
-    self.likes_cache       -= 1
-    self.likes_value_cache -= value
-    save(validate: false)
-  end
-
-  def increment_likes_cache(value)
-    self.likes_cache       += 1
-    self.likes_value_cache += value
-    save(validate: false)
-  end
-
   def generate_event(options={})
     event_type = event_type(options)
     data       = to_event_hash(options)
@@ -165,7 +142,6 @@ class Comment < ActiveRecord::Base
   end
 
   def event_audience(event_type, options ={})
-    audience = {}
     case event_type
     when :new_comment
       audience = Audience.user(self.commentable.try(:user_id))

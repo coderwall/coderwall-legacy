@@ -1,34 +1,28 @@
-  # ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `protips`
+# Table name: protips
 #
-# ### Columns
+#  id                  :integer          not null, primary key
+#  public_id           :string(255)
+#  kind                :string(255)
+#  title               :string(255)
+#  body                :text
+#  user_id             :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  score               :float
+#  created_by          :string(255)      default("self")
+#  featured            :boolean          default(FALSE)
+#  featured_at         :datetime
+#  upvotes_value_cache :integer          default(75)
+#  boost_factor        :float            default(1.0)
+#  inappropriate       :integer          default(0)
+#  likes_count         :integer          default(0)
 #
-# Name                       | Type               | Attributes
-# -------------------------- | ------------------ | ---------------------------
-# **`body`**                 | `text`             |
-# **`boost_factor`**         | `float`            | `default(1.0)`
-# **`created_at`**           | `datetime`         |
-# **`created_by`**           | `string(255)`      | `default("self")`
-# **`featured`**             | `boolean`          | `default(FALSE)`
-# **`featured_at`**          | `datetime`         |
-# **`id`**                   | `integer`          | `not null, primary key`
-# **`inappropriate`**        | `integer`          | `default(0)`
-# **`kind`**                 | `string(255)`      |
-# **`public_id`**            | `string(255)`      |
-# **`score`**                | `float`            |
-# **`title`**                | `string(255)`      |
-# **`updated_at`**           | `datetime`         |
-# **`upvotes_value_cache`**  | `integer`          |
-# **`user_id`**              | `integer`          |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_protips_on_public_id`:
-#     * **`public_id`**
-# * `index_protips_on_user_id`:
-#     * **`user_id`**
+#  index_protips_on_public_id  (public_id)
+#  index_protips_on_user_id    (user_id)
 #
 
 require 'net_validators'
@@ -51,65 +45,7 @@ class Protip < ActiveRecord::Base
 
   acts_as_commentable
 
-  settings analysis: {
-    analyzer: {
-      comma: { "type" => "pattern",
-               "pattern" => ",",
-               "filter" => "keyword"
-    }
-
-    }
-  }
-
-  mapping show: { properties: {
-    public_id:             { type: 'string', index: 'not_analyzed' },
-    kind:                  { type: 'string', index: 'not_analyzed' },
-    title:                 { type: 'string', boost: 100, analyzer: 'snowball' },
-    body:                  { type: 'string', boost: 80, analyzer: 'snowball' },
-    html:                  { type: 'string', index: 'not_analyzed' },
-    tags:                  { type: 'string', boost: 80, analyzer: 'comma' },
-    upvotes:               { type: 'integer', index: 'not_analyzed' },
-    url:                   { type: 'string', index: 'not_analyzed' },
-    upvote_path:           { type: 'string', index: 'not_analyzed' },
-    popular_score:         { type: 'double', index: 'not_analyzed' },
-    score:                 { type: 'double', index: 'not_analyzed' },
-    trending_score:        { type: 'double', index: 'not_analyzed' },
-    only_link:             { type: 'string', index: 'not_analyzed' },
-    link:                  { type: 'string', index: 'not_analyzed' },
-    team:                  { type: 'multi_field', index: 'not_analyzed', fields: {
-      name:         { type: 'string', index: 'snowball' },
-      slug:         { type: 'string', boost: 50, index: 'snowball' },
-      avatar:       { type: 'string', index: 'not_analyzed' },
-      profile_path: { type: 'string', index: 'not_analyzed' },
-      hiring:       { type: 'boolean', index: 'not_analyzed' }
-    } },
-    views_count:           { type: 'integer', index: 'not_analyzed' },
-    comments_count:        { type: 'integer', index: 'not_analyzed' },
-    best_stat:             { type: 'multi_field', index: 'not_analyzed', fields: {
-      name:  { type: 'string', index: 'not_analyzed' },
-      value: { type: 'integer', index: 'not_analyzed' },
-    } },
-    comments:              { type: 'object', index: 'not_analyzed', properties: {
-      title: { type: 'string', boost: 100, analyzer: 'snowball' },
-      body:  { type: 'string', boost: 80, analyzer: 'snowball' },
-      likes: { type: 'integer', index: 'not_analyzed' }
-    } },
-    networks:              { type: 'string', boost: 50, analyzer: 'comma' },
-    upvoters:              { type: 'integer', boost: 50, index: 'not_analyzed' },
-    created_at:            { type: 'date', boost: 10, index: 'not_analyzed' },
-    featured:              { type: 'boolean', index: 'not_analyzed' },
-    flagged:               { type: 'boolean', index: 'not_analyzed' },
-    created_automagically: { type: 'boolean', index: 'not_analyzed' },
-    reviewed:              { type: 'boolean', index: 'not_analyzed' },
-    user:                  { type: 'multi_field', index: 'not_analyzed', fields: {
-      username:     { type: 'string', boost: 40, index: 'not_analyzed' },
-      name:         { type: 'string', boost: 40, index: 'not_analyzed' },
-      user_id:      { type: 'integer', boost: 40, index: 'not_analyzed' },
-      profile_path: { type: 'string', index: 'not_analyzed' },
-      avatar:       { type: 'string', index: 'not_analyzed' },
-      about:        { type: 'string', index: 'not_analyzed' },
-    } } } }
-
+  include ProtipMapping
 
   paginates_per(PAGESIZE = 18)
 
@@ -118,7 +54,7 @@ class Protip < ActiveRecord::Base
   has_many :likes, as: :likable, dependent: :destroy, after_add: :reset_likes_cache, after_remove: :reset_likes_cache
   has_many :protip_links, autosave: true, dependent: :destroy, after_add: :reset_links_cache, after_remove: :reset_links_cache
   has_one :spam_report, as: :spammable
-  belongs_to :user
+  belongs_to :user , autosave: true
 
   rakismet_attrs  author: proc { self.user.name },
     author_email: proc { self.user.email },
@@ -179,24 +115,20 @@ class Protip < ActiveRecord::Base
   attr_accessor :upvotes_value
 
 
-  scope :random, lambda { |count| order("RANDOM()").limit(count) }
-  scope :recent, lambda { |count| order("created_at DESC").limit(count) }
-  scope :for, lambda { |userlist| where(user: userlist.map(&:id)) }
-  scope :most_upvotes, lambda { |count| joins(:likes).select(['protips.*', 'SUM(likes.value) AS like_score']).group(['likes.likable_id', 'protips.id']).order('like_score DESC').limit(count) }
-  scope :any_topics, lambda { |topics_list|
-    where(id: select('DISTINCT protips.id').joins(taggings: :tag).where('tags.name IN (?)', topics_list))
-  }
+  scope :random, ->(count) { order("RANDOM()").limit(count) }
+  scope :recent, ->(count) { order("created_at DESC").limit(count) }
+  scope :for, ->(userlist) { where(user: userlist.map(&:id)) }
+  scope :most_upvotes, ->(count) { joins(:likes).select(['protips.*', 'SUM(likes.value) AS like_score']).group(['likes.likable_id', 'protips.id']).order('like_score DESC').limit(count) }
+  scope :any_topics, ->(topics_list) { where(id: select('DISTINCT protips.id').joins(taggings: :tag).where('tags.name IN (?)', topics_list)) }
 
-  scope :topics, lambda { |topics_list, match_all|
-    match_all ? any_topics(topics_list).group('protips.id').having('count(protips.id)=?', topics_list.size) : any_topics(topics_list)
-  }
+  scope :topics, ->(topics_list, match_all) { match_all ? any_topics(topics_list).group('protips.id').having('count(protips.id)=?', topics_list.size) : any_topics(topics_list) }
 
-  scope :for_topic, lambda { |topic| any_topics([topic]) }
+  scope :for_topic, ->(topic) { any_topics([topic]) }
 
   scope :with_upvotes, joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id")
   scope :trending, order('score DESC')
   scope :flagged, where(flagged: true)
-  scope :queued_for, lambda { |queue| ProcessingQueue.queue_for_type(queue, self.class.name) }
+  scope :queued_for, ->(queue) { ProcessingQueue.queue_for_type(queue, self.class.name) }
 
   class << self
 
@@ -243,8 +175,8 @@ class Protip < ActiveRecord::Base
       force_index_commit = Protip.tire.index.refresh if Rails.env.test?
       query_fields = [:title, :body]
       filters = []
-      filters << { term: { upvoters: bookmarked_by } } unless bookmarked_by.nil?
-      filters << { term: { 'user.user_id' => author } } unless author.nil?
+      filters << {term: {upvoters: bookmarked_by}} unless bookmarked_by.nil?
+      filters << {term: {'user.user_id' => author}} unless author.nil?
       Rails.logger.debug "SEARCH: query=#{query}, tags=#{tags}, team=#{team}, author=#{author}, bookmarked_by=#{bookmarked_by}, execution=#{execution}, sorts=#{sorts} from query-string=#{query_string}, #{options.inspect}"
       begin
         tire.search(options) do
@@ -345,7 +277,7 @@ class Protip < ActiveRecord::Base
     def search_trending_by_date(query, date, page, per_page)
       date_string = "#{date.midnight.strftime('%Y-%m-%dT%H:%M:%S')} TO #{(date.midnight + 1.day).strftime('%Y-%m-%dT%H:%M:%S')}" unless date.is_a?(String)
       query = "" if query.nil?
-      query       += " created_at:[#{date_string}]"
+      query += " created_at:[#{date_string}]"
       Protip.search(query, [], page: page, per_page: per_page)
     end
 
@@ -425,46 +357,6 @@ class Protip < ActiveRecord::Base
   #######################
   # Homepage 4.0 rewrite
   #######################
-
-  class Search < SearchModule::Search
-
-    class Scope < SearchModule::Search::Scope
-
-      def to_hash
-        case @domain
-        when :user
-          followings(@object)
-        when :network
-          network(@object)
-        end
-      end
-
-      def followings(user)
-        {
-          or: [
-            { terms: { "user.user_id" => [user.id] + user.following_users_ids + user.following_team_members_ids } },
-            { terms: { "tags" => user.following_networks_tags } }
-          ]
-        }
-      end
-
-      def network(tag)
-        {
-          terms: { tags: Network.find_by_slug(Network.slugify(tag)).try(&:tags) || [tag, Network.unslugify(tag)].uniq }
-        }
-      end
-    end
-
-    class Query < SearchModule::Search::Query
-      def default_query
-        "flagged:false"
-      end
-    end
-
-    def failover_strategy
-      { failover: Protip.order('score DESC') }
-    end
-  end
 
   def deindex_search
     Services::Search::DeindexProtip.run(self)
@@ -725,6 +617,7 @@ class Protip < ActiveRecord::Base
   end
 
   MAX_SCORE = 100
+
   def normalized_upvotes_score
     (upvotes_score * MAX_SCORE) / ([self.class.most_upvotes_for_a_protip.to_f, UPVOTES_SCORE_BENCHMARK].min)
   end
@@ -746,6 +639,7 @@ class Protip < ActiveRecord::Base
   end
 
   QUALITY_WEIGHT = 20
+
   def quality_score
     self.determine_boost_factor! * QUALITY_WEIGHT
   end
@@ -792,6 +686,7 @@ class Protip < ActiveRecord::Base
   ORIGINAL_CONTENT_BOOST = 1.5
   IMAGE_BOOST = 0.5
   MAX_SCORABLE_IMAGES = 3
+
   def determine_boost_factor!
     factor = 1
     if article?
@@ -893,6 +788,7 @@ class Protip < ActiveRecord::Base
   end
 
   MIN_CONTENT_LENGTH = 30
+
   def only_link?
     has_featured_image? == false && links.size == 1 && (body.length - link.length) <= MIN_CONTENT_LENGTH
   end
@@ -1115,88 +1011,4 @@ class Protip < ActiveRecord::Base
     Resque.enqueue(AnalyzeSpam, { id: id, klass: self.class.name })
   end
 
-  class SearchWrapper
-    attr_reader :item
-
-    def initialize(item)
-      @item = item.is_a?(Protip) ? item.to_public_hash : item
-    end
-
-    def username
-      item[:user][:username]
-    end
-
-    def profile_url
-      avatar
-    end
-
-    def avatar
-      item[:user][:avatar]
-    end
-
-    def already_voted?(current_user, tracking, ip_address)
-      false
-    end
-
-    def user
-      self #proxy user calls to self
-    end
-
-    def owner?(user)
-      return false if user.nil?
-      username == user.username
-    end
-
-    def upvotes
-      item[:upvotes]
-    end
-
-    def topics
-      (item[:tags] - [item[:user][:username]]).uniq
-    end
-
-    def only_link?
-      item[:only_link] == true
-    end
-
-    def link
-      item[:link]
-    end
-
-    def title
-      item[:title]
-    end
-
-    def to_s
-      public_id #for url creation
-    end
-
-    def public_id
-      item[:public_id]
-    end
-
-    def created_at
-      item[:created_at]
-    end
-
-    def self.model_name
-      Protip.model_name
-    end
-
-    def viewed_by?(viewer)
-      singleton.viewed_by?(viewer)
-    end
-
-    def total_views
-      singleton.total_views
-    end
-
-    def team_profile_url
-      item[:team][:profile_url]
-    end
-
-    def singleton
-      item.is_a?(Protip) ? item : Protip.new(public_id: public_id)
-    end
-  end
 end

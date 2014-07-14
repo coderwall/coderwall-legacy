@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe NodeKnockout do
+RSpec.describe NodeKnockout, :type => :model do
 
 end

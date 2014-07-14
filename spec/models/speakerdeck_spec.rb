@@ -1,23 +1,23 @@
-require 'spec_helper'
+require 'vcr_helper'
 
-describe 'speakerdeck', functional: true do
+RSpec.describe 'speakerdeck', type: :model, functional: true do
 
   it 'should pull events for user' do
     deck = Speakerdeck.new('jnunemaker')
-    deck.facts.size.should > 5
+    expect(deck.facts.size).to be > 5
 
     event = deck.facts.last
-    event.identity.should == '4cbf544157530814c0000006'
-    event.owner.should == 'speakerdeck:jnunemaker'
-    event.name.should == 'MongoMapper - Mapping Ruby To and From Mongo'
-    event.relevant_on.to_date.should == Date.parse('2010-10-20')
-    event.url.should == 'https://speakerdeck.com/jnunemaker/mongomapper-mapping-ruby-to-and-from-mongo'
-    event.tags.should include('speakerdeck', 'presentation')
+    expect(event.identity).to eq('4cbf544157530814c0000006')
+    expect(event.owner).to eq('speakerdeck:jnunemaker')
+    expect(event.name).to eq('MongoMapper - Mapping Ruby To and From Mongo')
+    expect(event.relevant_on.to_date).to eq(Date.parse('2010-10-20'))
+    expect(event.url).to eq('https://speakerdeck.com/jnunemaker/mongomapper-mapping-ruby-to-and-from-mongo')
+    expect(event.tags).to include('speakerdeck', 'presentation')
   end
 
   it 'should return no events for a user that does not exist' do
     deck = Speakerdeck.new('asfjkdsfkjldsafdskljfdsdsfdsafas')
-    deck.facts.should be_empty
+    expect(deck.facts).to be_empty
   end
 
 end

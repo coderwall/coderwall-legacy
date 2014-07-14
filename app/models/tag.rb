@@ -1,14 +1,9 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `tags`
+# Table name: tags
 #
-# ### Columns
-#
-# Name        | Type               | Attributes
-# ----------- | ------------------ | ---------------------------
-# **`id`**    | `integer`          | `not null, primary key`
-# **`name`**  | `string(255)`      |
+#  id   :integer          not null, primary key
+#  name :string(255)
 #
 
 class Tag < ActiveRecord::Base

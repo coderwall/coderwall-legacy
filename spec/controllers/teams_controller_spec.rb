@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TeamsController do
+RSpec.describe TeamsController, :type => :controller do
   let(:current_user) { Fabricate(:user) }
   let(:team) { Fabricate(:team) }
 
@@ -8,14 +8,14 @@ describe TeamsController do
 
   it 'allows user to follow team' do
     get :follow, id: team.id.to_s
-    current_user.following_team?(team).should == true
+    expect(current_user.following_team?(team)).to eq(true)
   end
 
   it 'allows user to stop follow team' do
     current_user.follow_team!(team)
     get :follow, id: team.id.to_s
     current_user.reload
-    current_user.following_team?(team).should == false
+    expect(current_user.following_team?(team)).to eq(false)
   end
 
 end

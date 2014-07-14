@@ -1,20 +1,20 @@
-describe AnalyzeSpam do
+RSpec.describe AnalyzeSpam do
   describe '#perform' do
     context 'when it is a spam' do
       it 'should create a spam report' do
-        Comment.any_instance.stub(:spam?).and_return(true)
-        spammable = create(:comment)
+        allow_any_instance_of(Comment).to receive(:spam?).and_return(true)
+        spammable = Fabricate(:comment)
         AnalyzeSpam.new(id: spammable.id, klass: spammable.class.name).perform
-        spammable.spam_report.should_not be_nil
+        expect(spammable.spam_report).not_to be_nil
       end
     end
 
     context 'when it is not a spam' do
       it 'should not create a spam report' do
-        Comment.any_instance.stub(:spam?).and_return(false)
-        spammable = create(:comment)
+        allow_any_instance_of(Comment).to receive(:spam?).and_return(false)
+        spammable = Fabricate(:comment)
         AnalyzeSpam.new(id: spammable.id, klass: spammable.class.name).perform
-        spammable.spam_report.should be_nil
+        expect(spammable.spam_report).to be_nil
       end
     end
   end

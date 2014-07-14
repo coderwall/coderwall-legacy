@@ -1,18 +1,20 @@
-describe 'profile badges', :pending do
-  it 'mdeiters', functional: true, slow: true, pending: 'the data bootstrap is incorrect' do
+require 'vcr_helper'
+
+RSpec.describe 'profile badges', :type => :model, skip: ENV['TRAVIS'] do
+  it 'mdeiters', functional: true, slow: true, skip: 'the data bootstrap is incorrect' do
     VCR.use_cassette('github_for_mdeiters') do
       User.delete_all
       Fact.delete_all
       @user = User.bootstrap('mdeiters', GITHUB_SECRET)
 
       badge = Charity.new(@user)
-      badge.award?.should == false
+      expect(badge.award?).to eq(false)
 
       badge = Cub.new(@user)
-      badge.award?.should == false
+      expect(badge.award?).to eq(false)
 
       badge = EarlyAdopter.new(@user)
-      badge.award?.should == true
+      expect(badge.award?).to eq(true)
     end
   end
 
@@ -22,7 +24,7 @@ describe 'profile badges', :pending do
       @user = User.bootstrap('verdammelt', ENV['GITHUB_CLIENT_ID'])
 
       badge = Charity.new(@user)
-      badge.award?.should == true
+      expect(badge.award?).to eq(true)
     end
   end
 
@@ -31,7 +33,7 @@ describe 'profile badges', :pending do
       User.delete_all
       @user = User.bootstrap('mrdg', ENV['GITHUB_CLIENT_ID'])
       badge = Cub.new(@user)
-      badge.award?.should == true
+      expect(badge.award?).to eq(true)
     end
   end
 end

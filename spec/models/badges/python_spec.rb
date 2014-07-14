@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Python do
+RSpec.describe Python, :type => :model do
   let(:languages) { {
       "Python" => 2519686,
       "Java" => 76867
@@ -10,15 +10,15 @@ describe Python do
   let(:user) { Fabricate(:user, github_id: profile.github_id) }
 
   it 'should have a name and description' do
-    Python.description.should_not be_blank
+    expect(Python.description).not_to be_blank
   end
 
   it 'should not award ruby dev with one ruby repo' do
     user.build_github_facts
 
     badge = Python.new(user)
-    badge.award?.should == true
-    badge.reasons[:links].should_not be_empty
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons[:links]).not_to be_empty
   end
 
   it 'should not for a python dev' do
@@ -26,6 +26,6 @@ describe Python do
     user.build_github_facts
 
     badge = Python.new(user)
-    badge.award?.should == false
+    expect(badge.award?).to eq(false)
   end
 end

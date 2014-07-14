@@ -1,29 +1,22 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `facts`
+# Table name: facts
 #
-# ### Columns
+#  id          :integer          not null, primary key
+#  identity    :string(255)
+#  owner       :string(255)
+#  name        :string(255)
+#  url         :string(255)
+#  tags        :text
+#  metadata    :text
+#  relevant_on :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
 #
-# Name               | Type               | Attributes
-# ------------------ | ------------------ | ---------------------------
-# **`created_at`**   | `datetime`         |
-# **`id`**           | `integer`          | `not null, primary key`
-# **`identity`**     | `string(255)`      |
-# **`metadata`**     | `text`             |
-# **`name`**         | `string(255)`      |
-# **`owner`**        | `string(255)`      |
-# **`relevant_on`**  | `datetime`         |
-# **`tags`**         | `text`             |
-# **`updated_at`**   | `datetime`         |
-# **`url`**          | `string(255)`      |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_facts_on_identity`:
-#     * **`identity`**
-# * `index_facts_on_owner`:
-#     * **`owner`**
+#  index_facts_on_identity  (identity)
+#  index_facts_on_owner     (owner)
 #
 
 class Fact < ActiveRecord::Base

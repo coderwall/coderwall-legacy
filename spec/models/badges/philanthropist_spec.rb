@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Philanthropist do
+RSpec.describe Philanthropist, :type => :model do
   it 'should have a name and description' do
-    Philanthropist.name.should_not be_blank
-    Philanthropist.description.should_not be_blank
+    expect(Philanthropist.name).not_to be_blank
+    expect(Philanthropist.description).not_to be_blank
   end
 
   it 'should award user if they have 50 or more original repos with contents' do
@@ -14,8 +14,8 @@ describe Philanthropist do
     end
 
     badge = Philanthropist.new(user.reload)
-    badge.award?.should == true
-    badge.reasons.should == "for having shared 50 individual projects."
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons).to eq("for having shared 50 individual projects.")
   end
 
   it 'should not award empty repos' do
@@ -26,7 +26,7 @@ describe Philanthropist do
     end
 
     badge = Philanthropist.new(user.reload)
-    badge.award?.should == false
+    expect(badge.award?).to eq(false)
   end
 
 end
