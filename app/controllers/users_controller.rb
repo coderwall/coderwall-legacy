@@ -299,7 +299,8 @@ class UsersController < ApplicationController
                                  :team_avatar,
                                  :team_banner,
                                  :team_responsibilities,
-                                 :title
+                                 :title,
+                                 :username
                                 )
   end
 

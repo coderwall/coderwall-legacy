@@ -1,6 +1,7 @@
 = content_for :javascript do
   = javascript_include_tag 'https://s3.amazonaws.com/cdn.getchute.com/media-chooser.min.js'
   = javascript_include_tag 'settings.js'
+  = javascript_include_tag 'username-validation.js'
 
 - content_for :mixpanel do
   = record_view_event('settings')
@@ -63,6 +64,11 @@
             .setting
               = form.label :location, "Location: <em>required</em>".html_safe
               = form.text_field :location
+            .setting
+              = form.label :username, "Username: <em>required</em>".html_safe
+              = form.text_field :username, 'data-validation' => usernames_path, :maxlength => 15
+              #username_validation
+              %p Changing your username will make your previous username available to someone else.
             .setting
               = form.label :about, "Bio:"
               = form.text_area :about

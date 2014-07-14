@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
   include ResqueSupport::Basic
   include NetValidators
 
-  attr_protected :admin, :username, :id, :github_id, :twitter_id, :linkedin_id, :api_key
+  attr_protected :admin, :id, :github_id, :twitter_id, :linkedin_id, :api_key
 
   mount_uploader :avatar, AvatarUploader
   mount_uploader :banner, BannerUploader
