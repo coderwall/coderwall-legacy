@@ -1,13 +1,23 @@
 development:
-  host: localhost
-  database: badgify_development
+   sessions:
+    default:
+     database: badgify_development
+     hosts:
+      - localhost
 
 test:
-  host: localhost
-  database: badgify_test
+  sessions:
+   default:
+    database: badgify_test
+    hosts:
+     - localhost
 
 staging:
-  uri: <%= ENV['MONGOLAB_URI'] %>
+  sessions:
+   default:
+    uri: <%= ENV['MONGOLAB_URI'] %>
 
 production:
-  uri: <%= ENV['MONGOLAB_URI'] %>
+  sessions:
+   default:
+     uri: <%= ENV['MONGOLAB_URI'] %>

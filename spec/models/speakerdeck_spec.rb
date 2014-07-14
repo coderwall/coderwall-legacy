@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'vcr_helper'
 
 RSpec.describe 'speakerdeck', type: :model, functional: true do
 

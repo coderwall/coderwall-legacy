@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'vcr_helper'
 
 RSpec.describe 'slideshare', type: :model, functional: true do
 

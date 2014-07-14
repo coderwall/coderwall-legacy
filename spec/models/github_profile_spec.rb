@@ -1,3 +1,5 @@
+require 'vcr_helper'
+
 RSpec.describe GithubProfile, :type => :model, skip: ENV['TRAVIS']  do
   let(:languages) {
     {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140709044301) do
+ActiveRecord::Schema.define(:version => 20140713193201) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20140709044301) do
     t.integer  "likes_value_cache",               :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "likes_count",                     :default => 0
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
@@ -253,9 +254,10 @@ ActiveRecord::Schema.define(:version => 20140709044301) do
     t.string   "created_by",          :default => "self"
     t.boolean  "featured",            :default => false
     t.datetime "featured_at"
-    t.integer  "upvotes_value_cache"
+    t.integer  "upvotes_value_cache", :default => 0,      :null => false
     t.float    "boost_factor",        :default => 1.0
     t.integer  "inappropriate",       :default => 0
+    t.integer  "likes_count",         :default => 0
   end
 
   add_index "protips", ["public_id"], :name => "index_protips_on_public_id"

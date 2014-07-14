@@ -82,6 +82,9 @@ GEM
     acts_as_commentable (2.0.1)
     acts_as_follower (0.1.1)
     addressable (2.3.6)
+    annotate (2.6.5)
+      activerecord (>= 2.3.0)
+      rake (>= 0.8.7)
     arel (3.0.3)
     ast (2.0.0)
     awesome_print (1.2.0)
@@ -117,11 +120,15 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    carrierwave (0.5.8)
-      activesupport (~> 3.0)
-    carrierwave-mongoid (0.1.7)
-      carrierwave (~> 0.5.6)
-      mongoid (~> 2.1)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    carrierwave-mongoid (0.7.1)
+      carrierwave (>= 0.8.0, < 0.11.0)
+      mongoid (>= 3.0, < 5.0)
+      mongoid-grid_fs (>= 1.3, < 3.0)
     carrierwave_backgrounder (0.0.8)
       carrierwave (~> 0.5)
     celluloid (0.15.2)
@@ -346,14 +353,21 @@ GEM
       escape
       json
       rack
-    mongo (1.3.1)
-      bson (>= 1.3.1)
-    mongoid (2.4.12)
-      activemodel (~> 3.1)
-      mongo (<= 1.6.2)
-      tzinfo (~> 0.3.22)
-    mongoid_taggable (0.1.7)
+    mongo (1.10.2)
+      bson (= 1.10.2)
+    mongoid (3.1.6)
+      activemodel (~> 3.2)
+      moped (~> 1.4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.29)
+    mongoid-grid_fs (2.1.0)
+      mime-types (>= 1.0, < 3.0)
+      mongoid (>= 3.0, < 5.0)
+    mongoid_taggable (1.1.1)
+      mongoid (>= 3)
+      rake
     mono_logger (1.1.0)
+    moped (1.5.2)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
@@ -410,6 +424,7 @@ GEM
     omniauth-twitter (0.0.18)
       multi_json (~> 1.3)
       omniauth-oauth (~> 1.0)
+    origin (1.1.0)
     parser (2.1.9)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
@@ -522,9 +537,9 @@ GEM
     rest-client (1.7.1)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rocket_tag (0.0.4)
-      activerecord (>= 3.1.0)
-      squeel
+    rocket_tag (0.5.6)
+      activerecord (>= 3.2.0)
+      squeel (~> 1.0.0)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -649,13 +664,14 @@ PLATFORMS
 DEPENDENCIES
   acts_as_commentable (= 2.0.1)
   acts_as_follower (= 0.1.1)
+  annotate
   awesome_print
   backbone-on-rails
   better_errors
   bson_ext (~> 1.3)
   capybara
-  carrierwave (= 0.5.8)
-  carrierwave-mongoid (~> 0.1.7)
+  carrierwave
+  carrierwave-mongoid
   carrierwave_backgrounder (= 0.0.8)
   chronic
   coffee-rails (~> 3.2.1)
@@ -698,8 +714,8 @@ DEPENDENCIES
   memcachier
   mini_magick
   mixpanel
-  mongo (<= 1.6.2)
-  mongoid (~> 2.4.12)
+  mongo
+  mongoid
   mongoid_taggable
   multi_json
   never_wastes
@@ -734,7 +750,7 @@ DEPENDENCIES
   resque_mailer
   resque_spec
   rest-client
-  rocket_tag (= 0.0.4)
+  rocket_tag
   rspec-rails
   ruby-progressbar
   sanitize

@@ -1,30 +1,20 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `endorsements`
+# Table name: endorsements
 #
-# ### Columns
+#  id                :integer          not null, primary key
+#  endorsed_user_id  :integer
+#  endorsing_user_id :integer
+#  specialty         :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  skill_id          :integer
 #
-# Name                     | Type               | Attributes
-# ------------------------ | ------------------ | ---------------------------
-# **`created_at`**         | `datetime`         |
-# **`endorsed_user_id`**   | `integer`          |
-# **`endorsing_user_id`**  | `integer`          |
-# **`id`**                 | `integer`          | `not null, primary key`
-# **`skill_id`**           | `integer`          |
-# **`specialty`**          | `string(255)`      |
-# **`updated_at`**         | `datetime`         |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_endorsements_on_endorsed_user_id`:
-#     * **`endorsed_user_id`**
-# * `index_endorsements_on_endorsing_user_id`:
-#     * **`endorsing_user_id`**
-# * `only_unique_endorsements` (_unique_):
-#     * **`endorsed_user_id`**
-#     * **`endorsing_user_id`**
-#     * **`specialty`**
+#  index_endorsements_on_endorsed_user_id   (endorsed_user_id)
+#  index_endorsements_on_endorsing_user_id  (endorsing_user_id)
+#  only_unique_endorsements                 (endorsed_user_id,endorsing_user_id,specialty) UNIQUE
 #
 
 require 'spec_helper'

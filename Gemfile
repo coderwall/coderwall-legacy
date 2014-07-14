@@ -16,16 +16,10 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'strong_parameters'
 
-# Mongo
-gem 'mongoid', '~> 2.4.12'
-gem 'mongo', '<= 1.6.2'
-gem 'mongoid_taggable'
-gem 'bson_ext', '~> 1.3'
-
 # Attachements
-gem 'carrierwave', '0.5.8'
+gem 'carrierwave'
 gem 'carrierwave_backgrounder', '0.0.8' #background processing of images
-gem 'carrierwave-mongoid', '~> 0.1.7', require: 'carrierwave/mongoid'
+gem 'carrierwave-mongoid',  require: 'carrierwave/mongoid'
 
 # Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
 gem 'backbone-on-rails'
@@ -110,7 +104,7 @@ gem 'faraday', '~> 0.8.1'
 
 # ----------------
 
-gem 'rocket_tag', '0.0.4'
+gem 'rocket_tag'
 
 gem 'acts_as_commentable', '2.0.1'
 gem 'acts_as_follower', '0.1.1'
@@ -135,6 +129,13 @@ gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
 
+
+# Mongo
+gem 'mongoid'
+gem 'mongo'
+gem 'mongoid_taggable'
+gem 'bson_ext', '~> 1.3'
+
 group :development do
   gem 'better_errors'
   gem 'flog'
@@ -155,8 +156,10 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'quiet_assets'
   gem 'syntax'
+  gem 'annotate'
+  gem 'mail_view'
 end
-gem 'mail_view'
+
 
 group :test do
   gem 'capybara'

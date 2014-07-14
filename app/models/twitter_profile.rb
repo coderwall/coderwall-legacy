@@ -2,7 +2,7 @@ class TwitterProfile
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  index 'username', unique: true, background: true
+  index({username: 1}, {unique: true, background: true})
 
   field :username, type: String
   field :user_id, type: String

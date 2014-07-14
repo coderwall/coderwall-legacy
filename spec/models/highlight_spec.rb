@@ -1,25 +1,18 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `highlights`
+# Table name: highlights
 #
-# ### Columns
+#  id          :integer          not null, primary key
+#  user_id     :integer
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#  featured    :boolean          default(FALSE)
 #
-# Name               | Type               | Attributes
-# ------------------ | ------------------ | ---------------------------
-# **`created_at`**   | `datetime`         |
-# **`description`**  | `text`             |
-# **`featured`**     | `boolean`          | `default(FALSE)`
-# **`id`**           | `integer`          | `not null, primary key`
-# **`updated_at`**   | `datetime`         |
-# **`user_id`**      | `integer`          |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_highlights_on_featured`:
-#     * **`featured`**
-# * `index_highlights_on_user_id`:
-#     * **`user_id`**
+#  index_highlights_on_featured  (featured)
+#  index_highlights_on_user_id   (user_id)
 #
 
 require 'spec_helper'

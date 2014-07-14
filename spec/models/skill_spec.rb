@@ -1,36 +1,28 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `skills`
+# Table name: skills
 #
-# ### Columns
+#  id                 :integer          not null, primary key
+#  user_id            :integer
+#  name               :string(255)      not null
+#  endorsements_count :integer          default(0)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  tokenized          :string(255)
+#  weight             :integer          default(0)
+#  repos              :text
+#  speaking_events    :text
+#  attended_events    :text
+#  deleted            :boolean          default(FALSE), not null
+#  deleted_at         :datetime
 #
-# Name                      | Type               | Attributes
-# ------------------------- | ------------------ | ---------------------------
-# **`attended_events`**     | `text`             |
-# **`created_at`**          | `datetime`         |
-# **`deleted`**             | `boolean`          | `default(FALSE), not null`
-# **`deleted_at`**          | `datetime`         |
-# **`endorsements_count`**  | `integer`          | `default(0)`
-# **`id`**                  | `integer`          | `not null, primary key`
-# **`name`**                | `string(255)`      | `not null`
-# **`repos`**               | `text`             |
-# **`speaking_events`**     | `text`             |
-# **`tokenized`**           | `string(255)`      |
-# **`updated_at`**          | `datetime`         |
-# **`user_id`**             | `integer`          |
-# **`weight`**              | `integer`          | `default(0)`
+# Indexes
 #
-# ### Indexes
-#
-# * `index_skills_on_deleted_and_user_id`:
-#     * **`deleted`**
-#     * **`user_id`**
-# * `index_skills_on_user_id`:
-#     * **`user_id`**
+#  index_skills_on_deleted_and_user_id  (deleted,user_id)
+#  index_skills_on_user_id              (user_id)
 #
 
-require 'spec_helper'
+require 'vcr_helper'
 
 RSpec.describe Skill, :type => :model do
   let(:user) { Fabricate(:user) }

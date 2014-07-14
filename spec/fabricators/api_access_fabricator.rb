@@ -1,17 +1,12 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `api_accesses`
+# Table name: api_accesses
 #
-# ### Columns
-#
-# Name              | Type               | Attributes
-# ----------------- | ------------------ | ---------------------------
-# **`api_key`**     | `string(255)`      |
-# **`awards`**      | `text`             |
-# **`created_at`**  | `datetime`         |
-# **`id`**          | `integer`          | `not null, primary key`
-# **`updated_at`**  | `datetime`         |
+#  id         :integer          not null, primary key
+#  api_key    :string(255)
+#  awards     :text
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 Fabricator(:api_access) do

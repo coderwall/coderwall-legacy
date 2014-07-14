@@ -1,4 +1,5 @@
 require 'vcr'
+require 'rails_helper.rb'
 
 VCR.configure do |c|
   c.cassette_library_dir = 'vcr_cassettes'

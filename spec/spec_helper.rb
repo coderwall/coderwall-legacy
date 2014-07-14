@@ -1,5 +1,7 @@
-require 'simplecov'
-SimpleCov.start 'rails'
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
@@ -35,7 +37,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    Mongoid.master.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
+    Mongoid::Sessions.default.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
     DatabaseCleaner.start
     ActionMailer::Base.deliveries.clear
   end

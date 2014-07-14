@@ -1,3 +1,5 @@
+require 'vcr_helper'
+
 RSpec.describe ActivateUser, functional: true , skip: ENV['TRAVIS'] do
   it 'should activate a user regardless of achievements by default', slow: true do
     user = Fabricate(:pending_user, github: 'hirelarge')

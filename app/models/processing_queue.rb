@@ -1,18 +1,13 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `processing_queues`
+# Table name: processing_queues
 #
-# ### Columns
-#
-# Name                  | Type               | Attributes
-# --------------------- | ------------------ | ---------------------------
-# **`dequeued_at`**     | `datetime`         |
-# **`id`**              | `integer`          | `not null, primary key`
-# **`queue`**           | `string(255)`      |
-# **`queueable_id`**    | `integer`          |
-# **`queueable_type`**  | `string(255)`      |
-# **`queued_at`**       | `datetime`         |
+#  id             :integer          not null, primary key
+#  queueable_id   :integer
+#  queueable_type :string(255)
+#  queue          :string(255)
+#  queued_at      :datetime
+#  dequeued_at    :datetime
 #
 
 class ProcessingQueue < ActiveRecord::Base

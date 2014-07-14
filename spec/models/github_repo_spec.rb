@@ -1,3 +1,5 @@
+require 'vcr_helper'
+
 RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
   before :each do
     register_fake_paths

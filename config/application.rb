@@ -3,22 +3,22 @@ require File.expand_path('../boot', __FILE__)
 require 'active_record/railtie'
 require 'action_mailer/railtie'
 require 'sprockets/railtie'
+I18n.config.enforce_available_locales = false
 
-Bundler.require(*Rails.groups)
+Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Badgiy
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/app)
 
-    config.autoload_paths += Dir[ Rails.root.join('app', 'models',      'concerns', '**/') ]
-    config.autoload_paths += Dir[ Rails.root.join('app', 'controllers', 'concerns', '**/') ]
-    config.autoload_paths += Dir[ Rails.root.join('app', 'services',    '**/'            ) ]
-    config.autoload_paths += Dir[ Rails.root.join('app', 'jobs',    '**/'            ) ]
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', 'concerns', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'services', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'jobs', '**/')]
 
     config.autoload_paths << File.join(config.root, 'app', 'models', 'badges')
     config.autoload_paths << File.join(config.root, 'lib')
 
-    config.i18n.enforce_available_locales = true
 
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false
@@ -28,7 +28,7 @@ module Badgiy
 
 
     config.ember.variant = Rails.env.downcase.to_sym
-    config.assets.js_compressor  = :uglifier
+    config.assets.js_compressor = :uglifier
 
     config.logger = Logger.new(STDOUT)
     config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
@@ -38,6 +38,7 @@ module Badgiy
         Hirb.enable
       end
     end
+
 
     config.rakismet.key = ENV['AKISMET_KEY']
     config.rakismet.url = ENV['AKISMET_URL']

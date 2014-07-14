@@ -1,31 +1,26 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `opportunities`
+# Table name: opportunities
 #
-# ### Columns
-#
-# Name                    | Type               | Attributes
-# ----------------------- | ------------------ | ---------------------------
-# **`apply`**             | `boolean`          | `default(FALSE)`
-# **`cached_tags`**       | `string(255)`      |
-# **`created_at`**        | `datetime`         |
-# **`deleted`**           | `boolean`          | `default(FALSE)`
-# **`deleted_at`**        | `datetime`         |
-# **`description`**       | `text`             |
-# **`designation`**       | `string(255)`      |
-# **`expires_at`**        | `datetime`         | `default(1970-01-01 00:00:00 UTC)`
-# **`id`**                | `integer`          | `not null, primary key`
-# **`link`**              | `string(255)`      |
-# **`location`**          | `string(255)`      |
-# **`location_city`**     | `string(255)`      |
-# **`name`**              | `string(255)`      |
-# **`opportunity_type`**  | `string(255)`      | `default("full-time")`
-# **`options`**           | `float`            |
-# **`public_id`**         | `string(255)`      |
-# **`salary`**            | `integer`          |
-# **`team_document_id`**  | `string(255)`      |
-# **`updated_at`**        | `datetime`         |
+#  id               :integer          not null, primary key
+#  name             :string(255)
+#  description      :text
+#  designation      :string(255)
+#  location         :string(255)
+#  cached_tags      :string(255)
+#  team_document_id :string(255)
+#  link             :string(255)
+#  salary           :integer
+#  options          :float
+#  deleted          :boolean          default(FALSE)
+#  deleted_at       :datetime
+#  created_at       :datetime
+#  updated_at       :datetime
+#  expires_at       :datetime         default(1970-01-01 00:00:00 UTC)
+#  opportunity_type :string(255)      default("full-time")
+#  location_city    :string(255)
+#  apply            :boolean          default(FALSE)
+#  public_id        :string(255)
 #
 
 require 'search'

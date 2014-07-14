@@ -126,7 +126,7 @@ class Team
   after_destroy :reindex_search
   after_destroy :remove_dependencies
 
-  scope :featured, where(premium: true, valid_jobs: true, hide_from_featured: false)
+  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
   if Rails.env.development? #for Oli
     def avatar_url

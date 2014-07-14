@@ -1,4 +1,6 @@
-RSpec.describe 'profile badges', :type => :model do
+require 'vcr_helper'
+
+RSpec.describe 'profile badges', :type => :model, skip: ENV['TRAVIS'] do
   it 'mdeiters', functional: true, slow: true, skip: 'the data bootstrap is incorrect' do
     VCR.use_cassette('github_for_mdeiters') do
       User.delete_all

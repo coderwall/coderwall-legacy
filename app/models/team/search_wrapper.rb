@@ -46,7 +46,7 @@ class Team::SearchWrapper
   end
 
   def team_members
-    item[:team_members] || []
+    Array(item[:team_members])
   end
 
   def top_three_team_members
@@ -70,6 +70,6 @@ class Team::SearchWrapper
   end
 
   def locations_message
-    (item[:locations] || []).join(", ")
+    Array(item[:locations]).join(", ")
   end
 end

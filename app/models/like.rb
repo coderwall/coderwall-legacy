@@ -1,34 +1,26 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `likes`
+# Table name: likes
 #
-# ### Columns
+#  id            :integer          not null, primary key
+#  value         :integer
+#  tracking_code :string(255)
+#  user_id       :integer
+#  likable_id    :integer
+#  likable_type  :string(255)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  ip_address    :string(255)
 #
-# Name                 | Type               | Attributes
-# -------------------- | ------------------ | ---------------------------
-# **`created_at`**     | `datetime`         |
-# **`id`**             | `integer`          | `not null, primary key`
-# **`ip_address`**     | `string(255)`      |
-# **`likable_id`**     | `integer`          |
-# **`likable_type`**   | `string(255)`      |
-# **`tracking_code`**  | `string(255)`      |
-# **`updated_at`**     | `datetime`         |
-# **`user_id`**        | `integer`          |
-# **`value`**          | `integer`          |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_likes_on_user_id` (_unique_):
-#     * **`likable_id`**
-#     * **`likable_type`**
-#     * **`user_id`**
+#  index_likes_on_user_id  (likable_id,likable_type,user_id) UNIQUE
 #
 
 class Like < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :likable, polymorphic: true
+  belongs_to :likable, polymorphic: true, counter_cache: true
 
   validates :likable, presence: true
   validates :value, presence: true, numericality: { min: 1 }

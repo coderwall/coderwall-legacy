@@ -7,9 +7,9 @@ class Link
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  index "url", unique: true
-  index "user_ids"
-  index "featured_on"
+  index({url: 1}, {unique: true})
+  index({user_ids: 1})
+  index({featured_on: 1})
 
   field :url, type: String
   field :user_ids, type: Array, default: []

@@ -1,35 +1,31 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `protips`
+# Table name: protips
 #
-# ### Columns
+#  id                  :integer          not null, primary key
+#  public_id           :string(255)
+#  kind                :string(255)
+#  title               :string(255)
+#  body                :text
+#  user_id             :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  score               :float
+#  created_by          :string(255)      default("self")
+#  featured            :boolean          default(FALSE)
+#  featured_at         :datetime
+#  upvotes_value_cache :integer          default(75)
+#  boost_factor        :float            default(1.0)
+#  inappropriate       :integer          default(0)
+#  likes_count         :integer          default(0)
 #
-# Name                       | Type               | Attributes
-# -------------------------- | ------------------ | ---------------------------
-# **`body`**                 | `text`             |
-# **`boost_factor`**         | `float`            | `default(1.0)`
-# **`created_at`**           | `datetime`         |
-# **`created_by`**           | `string(255)`      | `default("self")`
-# **`featured`**             | `boolean`          | `default(FALSE)`
-# **`featured_at`**          | `datetime`         |
-# **`id`**                   | `integer`          | `not null, primary key`
-# **`inappropriate`**        | `integer`          | `default(0)`
-# **`kind`**                 | `string(255)`      |
-# **`public_id`**            | `string(255)`      |
-# **`score`**                | `float`            |
-# **`title`**                | `string(255)`      |
-# **`updated_at`**           | `datetime`         |
-# **`upvotes_value_cache`**  | `integer`          |
-# **`user_id`**              | `integer`          |
+# Indexes
 #
-# ### Indexes
+#  index_protips_on_public_id  (public_id)
+#  index_protips_on_user_id    (user_id)
 #
-# * `index_protips_on_public_id`:
-#     * **`public_id`**
-# * `index_protips_on_user_id`:
-#     * **`user_id`**
-#
+
+require 'vcr_helper'
 
 RSpec.describe Protip, :type => :model do
 
@@ -109,7 +105,7 @@ RSpec.describe Protip, :type => :model do
       team = Fabricate(:team, name: "first-team")
       user = Fabricate(:user, username: "initial-username")
       team.add_user(user)
-      protip = Fabricate(:protip, body: 'protip by user on team', title: "content #{r = rand(100)}", user: user)
+      protip = Fabricate(:protip, body: 'protip by user on team', title: "content #{rand(100)}", user: user)
       user.reload
       expect(Protip.search("team.name:first-team").results.first.title).to eq(protip.title)
       team2 = Fabricate(:team, name: "second-team")
@@ -260,13 +256,11 @@ RSpec.describe Protip, :type => :model do
 
   describe 'upvotes' do
     let(:protip) { Fabricate(:protip, user: Fabricate(:user)) }
-    let(:user) {
-      u = Fabricate(:user)
-      u.score_cache = 5
-      u
-    }
+    let(:user) { Fabricate(:user) { score_cache 5 } }
+
     it 'should upvote by right amount' do
       protip.upvote_by(user, user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
+      protip.reload
       expect(protip.upvotes).to eq(1)
       expect(protip.upvotes_value).to be_within(0.1).of(5)
       expect(protip.upvoters_ids).to eq([user.id])
@@ -275,6 +269,7 @@ RSpec.describe Protip, :type => :model do
     it 'should upvote only once per user' do
       protip.upvote_by(user, user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.upvote_by(user, user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
+      protip.reload
       expect(protip.upvotes).to eq(1)
       expect(protip.likes.count).to eq(1)
     end
@@ -285,25 +280,22 @@ RSpec.describe Protip, :type => :model do
       team_member = Fabricate(:user, team_document_id: protip.author.team_document_id)
       team_member.score_cache = 5
       protip.upvote_by(team_member, team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
+      protip.reload
       expect(protip.upvotes_value).to eq(2)
       non_team_member = Fabricate(:user, team_document_id: "4f271930973bf00004000002")
       non_team_member.score_cache = 5
       protip.upvote_by(non_team_member, non_team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
+      protip.reload
       expect(protip.upvotes).to eq(2)
       expect(protip.upvotes_value).to eq(7)
     end
   end
 
   describe 'scoring' do
-    let(:first_protip) { Fabricate(:protip, user: Fabricate(:user), body: 'some text') }
-    let(:second_protip) { Timecop.travel(1.minute.from_now) { Fabricate(:protip, user: Fabricate(:user), body: 'some text') } }
+    let(:first_protip) { Fabricate(:protip, body: 'some text') }
+    let(:second_protip) { Timecop.travel(1.minute.from_now) { Fabricate(:protip, body: 'some text') } }
 
-    let(:user) {
-      u = Fabricate(:user)
-      u.score_cache = 2
-      u.tracking_code = "ghi"
-      u
-    }
+    let(:user) { Fabricate(:user, score_cache: 2, tracking_code: 'ghi') }
 
     it 'should have second protip with higher score than first' do
       expect(second_protip.score).to be > first_protip.score
@@ -321,4 +313,8 @@ RSpec.describe Protip, :type => :model do
     end
   end
 
+
+  context 'counter_cache' do
+    describe 'like_'
+  end
 end

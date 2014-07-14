@@ -1,3 +1,5 @@
+require 'vcr_helper'
+
 RSpec.describe Account, :type => :model do
   let(:team) { Fabricate(:team) }
   let(:account) { { stripe_card_token: new_token } }
