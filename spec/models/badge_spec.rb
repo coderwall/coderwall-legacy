@@ -1,42 +1,34 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `badges`
+# Table name: badges
 #
-# ### Columns
+#  id               :integer          not null, primary key
+#  created_at       :datetime
+#  updated_at       :datetime
+#  user_id          :integer
+#  badge_class_name :string(255)
 #
-# Name                    | Type               | Attributes
-# ----------------------- | ------------------ | ---------------------------
-# **`badge_class_name`**  | `string(255)`      |
-# **`created_at`**        | `datetime`         |
-# **`id`**                | `integer`          | `not null, primary key`
-# **`updated_at`**        | `datetime`         |
-# **`user_id`**           | `integer`          |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_badges_on_user_id`:
-#     * **`user_id`**
-# * `index_badges_on_user_id_and_badge_class_name` (_unique_):
-#     * **`user_id`**
-#     * **`badge_class_name`**
+#  index_badges_on_user_id                       (user_id)
+#  index_badges_on_user_id_and_badge_class_name  (user_id,badge_class_name) UNIQUE
 #
 
 require 'spec_helper'
 
-describe Badge do
+RSpec.describe Badge, :type => :model do
   let(:badge) { Badge.new(badge_class_name: 'Polygamous') }
 
   it 'gets name from badge class' do
-    badge.display_name.should == 'Walrus'
+    expect(badge.display_name).to eq('Walrus')
   end
 
   it 'gets description from badge class' do
-    badge.description.should include('The walrus is no stranger')
+    expect(badge.description).to include('The walrus is no stranger')
   end
 
   it 'creates an image path from image name in class' do
-    badge.image_path.should == 'badges/walrus.png'
+    expect(badge.image_path).to eq('badges/walrus.png')
   end
 
 end

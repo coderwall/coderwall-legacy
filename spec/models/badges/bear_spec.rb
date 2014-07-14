@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Bear do
+RSpec.describe Bear, :type => :model do
   it 'should have a name and description' do
-    Bear.description.should_not be_blank
+    expect(Bear.description).not_to be_blank
   end
 
   it 'awards user bear if they have a repo tagged objective-c' do
@@ -11,8 +11,8 @@ describe Bear do
     fact = Fabricate(:github_original_fact, context: user, tags: ['Objective-C', 'repo', 'original', 'personal', 'github'])
 
     badge = Bear.new(user)
-    badge.award?.should == true
-    badge.reasons[:links].first[fact.name].should == fact.url
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons[:links].first[fact.name]).to eq(fact.url)
   end
 
   it 'does not award user if they dont have objective c as a dominant language' do
@@ -21,6 +21,6 @@ describe Bear do
     fact = Fabricate(:github_original_fact, context: user, tags: ['Ruby', 'repo', 'original', 'personal', 'github'])
 
     badge = Bear.new(user)
-    badge.award?.should == false
+    expect(badge.award?).to eq(false)
   end
 end

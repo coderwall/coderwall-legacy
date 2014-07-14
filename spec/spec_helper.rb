@@ -1,10 +1,11 @@
-require 'simplecov'
-SimpleCov.start 'rails'
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'capybara/rspec'
 require 'database_cleaner'
 
@@ -18,10 +19,7 @@ DatabaseCleaner.logger = Rails.logger
 LOCAL_ELASTIC_SEARCH_SERVER = %r[^http://localhost:9200] unless defined?(LOCAL_ELASTIC_SEARCH_SERVER)
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
-
-  config.include FactoryGirl::Syntax::Methods
-
+  config.raise_errors_for_deprecations!
   config.mock_with :rspec
   config.use_transactional_fixtures = false
   config.use_transactional_examples = false
@@ -33,14 +31,13 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    FactoryGirl.lint
 
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
-    Mongoid.master.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
+    Mongoid::Sessions.default.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
     DatabaseCleaner.start
     ActionMailer::Base.deliveries.clear
   end

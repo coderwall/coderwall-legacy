@@ -1,4 +1,6 @@
-describe GithubRepo, :pending do
+require 'vcr_helper'
+
+RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
   before :each do
     register_fake_paths
 
@@ -43,15 +45,15 @@ describe GithubRepo, :pending do
           {'github_id' => nil, 'contributions' => 18000}
       ])
 
-      contributed_by_count_repo.significant_contributions?(user.github_id).should == true
-      non_contributed_repo.significant_contributions?(user.github_id).should == false
+      expect(contributed_by_count_repo.significant_contributions?(user.github_id)).to eq(true)
+      expect(non_contributed_repo.significant_contributions?(user.github_id)).to eq(false)
     end
   end
 
   it 'should have an owner' do
-    repo.owner.github_id.should == 7330
-    repo.owner.login.should == 'mdeiters'
-    repo.owner.gravatar.should == 'aacb7c97f7452b3ff11f67151469e3b0'
+    expect(repo.owner.github_id).to eq(7330)
+    expect(repo.owner.login).to eq('mdeiters')
+    expect(repo.owner.gravatar).to eq('aacb7c97f7452b3ff11f67151469e3b0')
   end
 
   it 'should update repo on second call' do
@@ -59,24 +61,24 @@ describe GithubRepo, :pending do
     2.times do
       GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
     end
-    GithubRepo.count.should == 1
+    expect(GithubRepo.count).to eq(1)
   end
 
   it 'should indicate dominant language' do
-    repo.dominant_language.should == 'Ruby'
+    expect(repo.dominant_language).to eq('Ruby')
   end
 
   it 'should indicate dominant language percantage' do
-    repo.dominant_language_percentage.should == 55
+    expect(repo.dominant_language_percentage).to eq(55)
   end
 
   it 'should indicate if contents' do
-    repo.has_contents?.should == true
+    expect(repo.has_contents?).to eq(true)
   end
 
-  it 'should indicate no contents if there are no languages', pending: 'incorrect data' do
+  it 'should indicate no contents if there are no languages', skip: 'incorrect data' do
     stub_request(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100").to_return(body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_empty.js')), content_type: 'application/json; charset=utf-8')
-    repo.has_contents?.should == false
+    expect(repo.has_contents?).to eq(false)
   end
 
   it 'should not modify users on refresh' do
@@ -85,8 +87,8 @@ describe GithubRepo, :pending do
     refreshed_repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
     refreshed_follower = refreshed_repo.followers.first
 
-    refreshed_follower.login.should == original_follower.login
-    refreshed_follower.gravatar.should == original_follower.gravatar
+    expect(refreshed_follower.login).to eq(original_follower.login)
+    expect(refreshed_follower.gravatar).to eq(original_follower.gravatar)
   end
 
   describe 'tagging' do
@@ -98,15 +100,15 @@ describe GithubRepo, :pending do
       modified_repo.save!
 
       refreshed_repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
-      refreshed_repo.tags.should include('a', 'b')
+      expect(refreshed_repo.tags).to include('a', 'b')
     end
 
     it 'should tag dominant language' do
-      repo.tags.should include("Ruby")
+      expect(repo.tags).to include("Ruby")
     end
 
     it 'does not duplicate tags on refresh' do
-      repo.tags.should == GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data).tags
+      expect(repo.tags).to eq(GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data).tags)
     end
 
     describe 'tags javascript projects' do
@@ -115,35 +117,35 @@ describe GithubRepo, :pending do
         stub_request(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100").to_return(body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_js.js')), content_type: 'application/json; charset=utf-8')
 
         data[:description] = 'something for jquery'
-        repo.tags.should include('Ruby')
+        expect(repo.tags).to include('Ruby')
       end
 
       it 'tags node if dominant lanugage is js and description has nodejs in it' do
-        pending "Disabled inspecting README because of false positives"
+        skip "Disabled inspecting README because of false positives"
         #FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', body: 'empty')
         #FakeWeb.register_uri(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100", body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_js.js')), content_type: 'application/json; charset=utf-8')
 
         data[:description] = 'Node Routing'
-        repo.tags.should include('Node')
+        expect(repo.tags).to include('Node')
       end
 
       it 'tags node if dominant lanugage is js and readme has node in it' do
-        pending "Disabled inspecting README because of false positives"
+        skip "Disabled inspecting README because of false positives"
         #FakeWeb.register_uri(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100", body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_js.js')), content_type: 'application/json; charset=utf-8')
         #FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', body: 'trying out node')
-        repo.tags.should include('Node')
+        expect(repo.tags).to include('Node')
       end
     end
   end
 
   describe 'viewing readme' do
     it 'finds the readme for .txt files', functional: true do
-      repo.readme.should =~ /semr gem uses the oniguruma library/
+      expect(repo.readme).to match(/semr gem uses the oniguruma library/)
     end
 
     it 'should cache readme for repeat calls' do
       #FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', [body: 'test readme'])
-      repo.readme.should == repo.readme
+      expect(repo.readme).to eq(repo.readme)
     end
   end
 end

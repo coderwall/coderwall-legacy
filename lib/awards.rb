@@ -1,3 +1,4 @@
+require 'resque_support'
 module Awards
   include ResqueSupport::Basic
 
@@ -11,7 +12,7 @@ module Awards
         date = row.shift
         provider = row.shift
         row.to_a.each do |candidate|
-          puts "award #{badge} to #{candidate}"
+          Rails.logger.info "award #{badge} to #{candidate}"
           enqueue(Award, badge, date, provider, candidate)
         end
       end

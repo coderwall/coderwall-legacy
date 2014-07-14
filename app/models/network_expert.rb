@@ -1,18 +1,13 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `network_experts`
+# Table name: network_experts
 #
-# ### Columns
-#
-# Name               | Type               | Attributes
-# ------------------ | ------------------ | ---------------------------
-# **`created_at`**   | `datetime`         |
-# **`designation`**  | `string(255)`      |
-# **`id`**           | `integer`          | `not null, primary key`
-# **`network_id`**   | `integer`          |
-# **`updated_at`**   | `datetime`         |
-# **`user_id`**      | `integer`          |
+#  id          :integer          not null, primary key
+#  designation :string(255)
+#  network_id  :integer
+#  user_id     :integer
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 class NetworkExpert < ActiveRecord::Base

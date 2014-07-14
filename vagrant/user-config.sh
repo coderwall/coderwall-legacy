@@ -14,7 +14,7 @@ source "$HOME/.rvm/scripts/rvm"
 [[ -s "$rvm_path/hooks/after_cd_bundle" ]] && chmod +x $rvm_path/hooks/after_cd_bundle
 rvm requirements
 rvm reload
-_RUBY_VERSION=ruby-2.1.0
+_RUBY_VERSION=ruby-2.1.2
 rvm install $_RUBY_VERSION
 rvm gemset create coderwall
 rvm use $_RUBY_VERSION --default

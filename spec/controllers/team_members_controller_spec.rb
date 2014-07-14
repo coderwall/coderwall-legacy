@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TeamMembersController do
+RSpec.describe TeamMembersController, :type => :controller do
   let(:current_user) { Fabricate(:user) }
   let(:invitee) { Fabricate(:user) }
   let(:team) { Fabricate(:team) }
@@ -14,15 +14,15 @@ describe TeamMembersController do
       controller.send(:current_user).reload
       delete :destroy, team_id: team.id, id: member_added.id
 
-      team.reload.should_not have_member(invitee)
-      response.should redirect_to(teamname_url(slug: current_user.team.slug))
+      expect(team.reload).not_to have_member(invitee)
+      expect(response).to redirect_to(teamname_url(slug: current_user.team.slug))
     end
 
     it 'redirects back to leader board when you remove yourself' do
       member = team.add_user(current_user)
       controller.send(:current_user).reload
       delete :destroy, team_id: team.id, id: member.id
-      response.should redirect_to(teams_url)
+      expect(response).to redirect_to(teams_url)
     end
   end
 end

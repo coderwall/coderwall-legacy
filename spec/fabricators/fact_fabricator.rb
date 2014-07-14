@@ -1,48 +1,41 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `facts`
+# Table name: facts
 #
-# ### Columns
+#  id          :integer          not null, primary key
+#  identity    :string(255)
+#  owner       :string(255)
+#  name        :string(255)
+#  url         :string(255)
+#  tags        :text
+#  metadata    :text
+#  relevant_on :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
 #
-# Name               | Type               | Attributes
-# ------------------ | ------------------ | ---------------------------
-# **`created_at`**   | `datetime`         |
-# **`id`**           | `integer`          | `not null, primary key`
-# **`identity`**     | `string(255)`      |
-# **`metadata`**     | `text`             |
-# **`name`**         | `string(255)`      |
-# **`owner`**        | `string(255)`      |
-# **`relevant_on`**  | `datetime`         |
-# **`tags`**         | `text`             |
-# **`updated_at`**   | `datetime`         |
-# **`url`**          | `string(255)`      |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_facts_on_identity`:
-#     * **`identity`**
-# * `index_facts_on_owner`:
-#     * **`owner`**
+#  index_facts_on_identity  (identity)
+#  index_facts_on_owner     (owner)
 #
 
-Fabricator(:fact) do
+Fabricator(:fact, from: 'fact') do
   context { Fabricate(:user) }
 end
 
 Fabricator(:lanyrd_original_fact, from: :fact) do
-  owner { |fact| fact.context.lanyrd_identity }
+  owner { |fact| fact[:context].lanyrd_identity }
   url { Faker::Internet.domain_name }
-  identity { |fact| "/#{rand(1000)}/speakerconf/:" + fact.context.lanyrd_identity }
+  identity { |fact| "/#{rand(1000)}/speakerconf/:" + fact[:owner] }
   name { Faker::Company.catch_phrase }
   relevant_on { rand(100).days.ago }
   tags { ['lanyrd', 'event', 'spoke', 'Software', 'Ruby'] }
 end
 
 Fabricator(:github_original_fact, from: :fact) do
-  owner { |fact| fact.context.github_identity }
+  owner { |fact| fact[:context].github_identity }
   url { Faker::Internet.domain_name }
-  identity { |fact| fact.url + ':' + fact.context.github_identity }
+  identity { |fact| fact[:url] + ':' + fact[:owner] }
   name { Faker::Company.catch_phrase }
   relevant_on { rand(100).days.ago }
   metadata { {

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Cub do
+RSpec.describe Cub, :type => :model do
   let(:languages) { {
       "JavaScript" => 111435
   } }
@@ -9,7 +9,7 @@ describe Cub do
   let(:user) { Fabricate(:user, github_id: profile.github_id) }
 
   it 'should have a name and description' do
-    Cub.description.should_not be_nil
+    expect(Cub.description).not_to be_nil
   end
 
   it 'should award the user if they have a repo tagged with JQuery' do
@@ -19,8 +19,8 @@ describe Cub do
     user.build_github_facts
 
     badge = Cub.new(user)
-    badge.award?.should == true
-    badge.reasons[:links].should_not be_empty
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons[:links]).not_to be_empty
   end
 
   it 'should not award if repo when readme contains text and is less then 90 javascript' do
@@ -30,7 +30,7 @@ describe Cub do
     user.build_github_facts
 
     badge = Cub.new(user)
-    badge.award?.should == false
+    expect(badge.award?).to eq(false)
   end
 
   it 'should award the user if they have a repo tagged with Prototype' do
@@ -40,7 +40,7 @@ describe Cub do
     user.build_github_facts
 
     badge = Cub.new(user)
-    badge.award?.should == true
+    expect(badge.award?).to eq(true)
   end
 
   it 'should not support forks' do
@@ -50,6 +50,6 @@ describe Cub do
     user.build_github_facts
 
     badge = Cub.new(user)
-    badge.award?.should == false
+    expect(badge.award?).to eq(false)
   end
 end

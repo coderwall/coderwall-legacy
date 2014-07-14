@@ -1,4 +1,4 @@
-describe AccountsController do
+RSpec.describe AccountsController, :type => :controller do
   let(:team) { Fabricate(:team) }
   let(:plan) { Plan.create(amount: 20000, interval: Plan::MONTHLY, name: 'Monthly') }
   let(:current_user) { Fabricate(:user) }
@@ -21,8 +21,8 @@ describe AccountsController do
 
   it 'should create an account and send email' do
     post :create, { team_id: team.id, account: valid_params }
-    ActionMailer::Base.deliveries.size.should == 1
-    ActionMailer::Base.deliveries.first.body.encoded.should include(team.name)
-    ActionMailer::Base.deliveries.first.body.encoded.should include(plan.name)
+    expect(ActionMailer::Base.deliveries.size).to eq(1)
+    expect(ActionMailer::Base.deliveries.first.body.encoded).to include(team.name)
+    expect(ActionMailer::Base.deliveries.first.body.encoded).to include(plan.name)
   end
 end

@@ -1,20 +1,15 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `invitations`
+# Table name: invitations
 #
-# ### Columns
-#
-# Name                    | Type               | Attributes
-# ----------------------- | ------------------ | ---------------------------
-# **`created_at`**        | `datetime`         |
-# **`email`**             | `string(255)`      |
-# **`id`**                | `integer`          | `not null, primary key`
-# **`inviter_id`**        | `integer`          |
-# **`state`**             | `string(255)`      |
-# **`team_document_id`**  | `string(255)`      |
-# **`token`**             | `string(255)`      |
-# **`updated_at`**        | `datetime`         |
+#  id               :integer          not null, primary key
+#  email            :string(255)
+#  team_document_id :string(255)
+#  token            :string(255)
+#  state            :string(255)
+#  inviter_id       :integer
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 class Invitation < ActiveRecord::Base

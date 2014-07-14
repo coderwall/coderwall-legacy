@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe NephilaKomaci do
+RSpec.describe NephilaKomaci, :type => :model do
   let(:languages) { {
       "PHP" => 2519686,
       "Python" => 76867
@@ -14,15 +14,15 @@ describe NephilaKomaci do
   end
 
   it 'should have a name and description' do
-    NephilaKomaci.description.should_not be_blank
+    expect(NephilaKomaci.description).not_to be_blank
   end
 
   it 'should award php dev with badge' do
     user.build_github_facts
 
     badge = NephilaKomaci.new(user)
-    badge.award?.should == true
-    badge.reasons[:links].should_not be_empty
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons[:links]).not_to be_empty
   end
 
 end

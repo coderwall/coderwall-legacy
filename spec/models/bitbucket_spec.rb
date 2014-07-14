@@ -1,4 +1,4 @@
-describe Bitbucket do
+RSpec.describe Bitbucket, :type => :model do
   describe 'facts' do
     before(:all) do
       stub_request(:get, 'https://api.bitbucket.org/1.0/users/jespern').to_return(body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'bitbucketv1', 'repositories.js')))
@@ -23,55 +23,55 @@ describe Bitbucket do
     end
 
     it 'creates facts for original repos' do
-      @bitbucket.facts.should_not be_empty
+      expect(@bitbucket.facts).not_to be_empty
       fact = @bitbucket.facts.first
-      fact.identity.should == 'https://bitbucket.org/jespern/django-piston/overview:jespern'
-      fact.owner.should == "bitbucket:jespern"
-      fact.name.should == 'django-piston'
-      fact.relevant_on.to_date.should == Date.parse('2009-04-19')
-      fact.url.should == 'https://bitbucket.org/jespern/django-piston/overview'
-      fact.tags.should include('repo', 'bitbucket', 'personal', 'original', 'Python', 'Django')
-      fact.metadata[:languages].should include("Python")
-      fact.metadata[:original].should be_true
-      fact.metadata[:times_forked].should == 243
-      fact.metadata[:watchers].first.should be_a_kind_of String
-      fact.metadata[:watchers].count.should == 983
-      fact.metadata[:website].should == "http://bitbucket.org/jespern/"
+      expect(fact.identity).to eq('https://bitbucket.org/jespern/django-piston/overview:jespern')
+      expect(fact.owner).to eq("bitbucket:jespern")
+      expect(fact.name).to eq('django-piston')
+      expect(fact.relevant_on.to_date).to eq(Date.parse('2009-04-19'))
+      expect(fact.url).to eq('https://bitbucket.org/jespern/django-piston/overview')
+      expect(fact.tags).to include('repo', 'bitbucket', 'personal', 'original', 'Python', 'Django')
+      expect(fact.metadata[:languages]).to include("Python")
+      expect(fact.metadata[:original]).to be_truthy
+      expect(fact.metadata[:times_forked]).to eq(243)
+      expect(fact.metadata[:watchers].first).to be_a_kind_of String
+      expect(fact.metadata[:watchers].count).to eq(983)
+      expect(fact.metadata[:website]).to eq("http://bitbucket.org/jespern/")
     end
 
     it 'creates facts for small repos' do
-      @bitbucket.facts.count.should == 3
-      @bitbucket.repos.collect(&:name).should_not include('par2-drobofs')
+      expect(@bitbucket.facts.count).to eq(3)
+      expect(@bitbucket.repos.collect(&:name)).not_to include('par2-drobofs')
     end
 
     it 'creates facts for forked repos' do
-      @bitbucket.facts.should_not be_empty
+      expect(@bitbucket.facts).not_to be_empty
       fact = @bitbucket.facts.second
-      fact.identity.should == 'https://bitbucket.org/jespern/heechee-fixes/overview:jespern'
-      fact.owner.should == 'bitbucket:jespern'
-      fact.name.should == 'heechee-fixes'
-      fact.relevant_on.to_date.should == Date.parse('2010-04-14')
-      fact.url.should == 'https://bitbucket.org/jespern/heechee-fixes/overview'
-      fact.tags.should include('repo', 'bitbucket', 'personal', 'fork')
-      fact.metadata[:languages].should be_empty
-      fact.metadata[:original].should be_false
-      fact.metadata[:times_forked].should == 0
-      fact.metadata[:watchers].count.should == 2
-      fact.metadata[:website].should be_nil
+      expect(fact.identity).to eq('https://bitbucket.org/jespern/heechee-fixes/overview:jespern')
+      expect(fact.owner).to eq('bitbucket:jespern')
+      expect(fact.name).to eq('heechee-fixes')
+      expect(fact.relevant_on.to_date).to eq(Date.parse('2010-04-14'))
+      expect(fact.url).to eq('https://bitbucket.org/jespern/heechee-fixes/overview')
+      expect(fact.tags).to include('repo', 'bitbucket', 'personal', 'fork')
+      expect(fact.metadata[:languages]).to be_empty
+      expect(fact.metadata[:original]).to be_falsey
+      expect(fact.metadata[:times_forked]).to eq(0)
+      expect(fact.metadata[:watchers].count).to eq(2)
+      expect(fact.metadata[:website]).to be_nil
     end
 
     it 'creates facts for when user signed up' do
-      @bitbucket.facts.should_not be_empty
+      expect(@bitbucket.facts).not_to be_empty
       fact = @bitbucket.facts.last
-      fact.identity.should == 'bitbucket:jespern'
-      fact.owner.should == "bitbucket:jespern"
-      fact.name.should == 'Joined Bitbucket'
-      fact.relevant_on.to_date.should == Date.parse('2008-06-13')
-      fact.url.should == 'https://bitbucket.org/jespern'
-      fact.tags.should include('bitbucket', 'account-created')
-      fact.tags.should include('account-created')
-      fact.metadata[:avatar_url].should == "https://secure.gravatar.com/avatar/b658715b9635ef057daf2a22d4a8f36e?d=identicon&s=32"
-      fact.metadata[:followers].count.should == 218
+      expect(fact.identity).to eq('bitbucket:jespern')
+      expect(fact.owner).to eq("bitbucket:jespern")
+      expect(fact.name).to eq('Joined Bitbucket')
+      expect(fact.relevant_on.to_date).to eq(Date.parse('2008-06-13'))
+      expect(fact.url).to eq('https://bitbucket.org/jespern')
+      expect(fact.tags).to include('bitbucket', 'account-created')
+      expect(fact.tags).to include('account-created')
+      expect(fact.metadata[:avatar_url]).to eq("https://secure.gravatar.com/avatar/b658715b9635ef057daf2a22d4a8f36e?d=identicon&s=32")
+      expect(fact.metadata[:followers].count).to eq(218)
     end
 
     it 'should fail gracefully if bitbucket user does not exist', functional: true do

@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe AccountsHelper do
+RSpec.describe AccountsHelper, :type => :helper do
 
 end

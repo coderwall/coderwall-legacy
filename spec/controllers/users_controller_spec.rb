@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UsersController do
+RSpec.describe UsersController, :type => :controller do
   let(:user) {
     user = Fabricate.build(:user)
     user.badges << Fabricate.build(:badge, badge_class_name: "Octopussy")
@@ -44,7 +44,7 @@ describe UsersController do
     first_etag = response.headers['ETag']
     get :show, username: user.username, format: :json
     second_etag = response.headers['ETag']
-    first_etag.should == second_etag
+    expect(first_etag).to eq(second_etag)
   end
 
   it 'should have different etags for json and jsonp' do
@@ -54,18 +54,18 @@ describe UsersController do
     get :show, username: user.username, format: :json, callback: 'foo'
     jsonp_etag = response.headers['ETag']
 
-    jsonp_etag.should_not == json_etag
+    expect(jsonp_etag).not_to eq(json_etag)
   end
 
   it 'should save referral if first hit' do
     get :show, username: user.username
-    session[:referred_by].should == user.referral_token
+    expect(session[:referred_by]).to eq(user.referral_token)
   end
 
   it 'should not save referral if they have already been to site' do
     request.cookies[:trc] = 'asdfsdafsadfdsafadsfda'
     get :show, username: user.username
-    session[:referred_by].should be_blank
+    expect(session[:referred_by]).to be_blank
   end
 
   describe 'tracking viral coefficient on signup' do
@@ -74,14 +74,14 @@ describe UsersController do
       session["oauth.data"] = github_response
       post :create, user: {location: 'SF', username: 'testingReferredBy'}
       user = User.with_username('testingReferredBy')
-      user.referred_by.should == 'asdfasdf'
+      expect(user.referred_by).to eq('asdfasdf')
     end
 
     it 'should not add referred by if not present' do
       session["oauth.data"] = github_response
       post :create, user: {location: 'SF', username: 'testingReferredBy'}
       user = User.with_username('testingReferredBy')
-      user.referred_by.should be_nil
+      expect(user.referred_by).to be_nil
     end
   end
 
@@ -90,12 +90,12 @@ describe UsersController do
     session["oauth.data"] = github_response
     post :create, user: {location: 'SF', username: 'testingUTM_campaign'}
     user = User.with_username('testingUTM_campaign')
-    user.utm_campaign.should == 'asdfasdf'
+    expect(user.utm_campaign).to eq('asdfasdf')
   end
 
   it 'should capture utm_campaign if ever in params' do
     get :show, username: user.username, utm_campaign: 'asdfasdf'
-    session[:utm_campaign].should == 'asdfasdf'
+    expect(session[:utm_campaign]).to eq('asdfasdf')
   end
 
   it 'applies oauth information to user on creation' do
@@ -110,21 +110,21 @@ describe UsersController do
     github_response['extra']['raw_info']['location'] = 'San Francisco'
     session["oauth.data"] = github_response
     post :create, user: {}
-    assigns[:user].location.should == 'San Francisco'
+    expect(assigns[:user].location).to eq('San Francisco')
   end
 
   it 'extracts blog if present from oauth' do
     github_response['info']['urls']['Blog'] = 'http://theagiledeveloper.com'
     session["oauth.data"] = github_response
     post :create, user: {location: 'SF'}
-    assigns[:user].blog.should == 'http://theagiledeveloper.com'
+    expect(assigns[:user].blog).to eq('http://theagiledeveloper.com')
   end
 
   it 'extracts joined date from oauth' do
     github_response['info']['urls']['Blog'] = 'http://theagiledeveloper.com'
     session["oauth.data"] = github_response
     post :create, user: {location: 'SF'}
-    assigns[:user].joined_github_on.should == Date.parse("2012-01-06T20:49:02Z")
+    expect(assigns[:user].joined_github_on).to eq(Date.parse("2012-01-06T20:49:02Z"))
   end
 
   describe 'linkedin' do
@@ -151,9 +151,9 @@ describe UsersController do
       session["oauth.data"] = linkedin_response
       post :create, user: {}
 
-      assigns[:user].username.should be_nil
-      assigns[:user].location.should be_nil
-      assigns[:user].linkedin.should be_nil
+      expect(assigns[:user].username).to be_nil
+      expect(assigns[:user].location).to be_nil
+      expect(assigns[:user].linkedin).to be_nil
       assigns[:user].linkedin_token == 'acafe540-606a-4f73-aef7-f6eba276603'
       assigns[:user].linkedin_secret == 'df7427be-3d93-4563-baef-d1d38826686'
       assigns[:user].linkedin_id == 'DlC5AmUPnM'
@@ -235,15 +235,15 @@ describe UsersController do
       session["oauth.data"] = twitter_response
       post :create, user: {}
 
-      assigns[:user].username.should == 'mdeiters'
-      assigns[:user].thumbnail_url.should == 'https://si0.twimg.com/profile_images/1672080012/instagram_profile_normal.jpg'
-      assigns[:user].twitter.should == 'mdeiters'
-      assigns[:user].twitter_token.should == '6271932-8erxrXfJykBNMrvsdCEq5WqKd6FIcO97L9BzvPq7'
-      assigns[:user].twitter_secret.should == '8fRS1ZARd6Wm53wvvDwHNrBmZcW0H2aSwmQjuOTHl'
-      assigns[:user].twitter_id.should == '6271932'
-      assigns[:user].location.should == 'San Francisco'
-      assigns[:user].joined_twitter_on.should == Date.parse('Wed May 23 21:14:29 +0000 2007')
-      assigns[:user].about.should == 'Dad. Amateur Foodie. Founder Extraordinaire of @coderwall'
+      expect(assigns[:user].username).to eq('mdeiters')
+      expect(assigns[:user].thumbnail_url).to eq('https://si0.twimg.com/profile_images/1672080012/instagram_profile_normal.jpg')
+      expect(assigns[:user].twitter).to eq('mdeiters')
+      expect(assigns[:user].twitter_token).to eq('6271932-8erxrXfJykBNMrvsdCEq5WqKd6FIcO97L9BzvPq7')
+      expect(assigns[:user].twitter_secret).to eq('8fRS1ZARd6Wm53wvvDwHNrBmZcW0H2aSwmQjuOTHl')
+      expect(assigns[:user].twitter_id).to eq('6271932')
+      expect(assigns[:user].location).to eq('San Francisco')
+      expect(assigns[:user].joined_twitter_on).to eq(Date.parse('Wed May 23 21:14:29 +0000 2007'))
+      expect(assigns[:user].about).to eq('Dad. Amateur Foodie. Founder Extraordinaire of @coderwall')
     end
   end
 end

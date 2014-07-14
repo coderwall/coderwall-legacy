@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Mongoose do
+RSpec.describe Mongoose, :type => :model do
   let(:languages) { {
       "Ruby" => 2519686,
       "JavaScript" => 6107,
@@ -15,15 +15,15 @@ describe Mongoose do
   end
 
   it 'should have a name and description' do
-    Mongoose.description.should_not be_blank
+    expect(Mongoose.description).not_to be_blank
   end
 
   it 'should award ruby dev with one ruby repo' do
     user.build_github_facts
 
     badge = Mongoose.new(user)
-    badge.award?.should == true
-    badge.reasons[:links].should_not be_empty
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons[:links]).not_to be_empty
   end
 
   it 'should not for a python dev' do
@@ -31,6 +31,6 @@ describe Mongoose do
     user.build_github_facts
 
     badge = Mongoose.new(user)
-    badge.award?.should == false
+    expect(badge.award?).to eq(false)
   end
 end

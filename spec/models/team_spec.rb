@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Team do
+RSpec.describe Team, :type => :model do
   let(:team) { Fabricate(:team) }
   let(:invitee) { Fabricate(:user) }
 
   it 'adds the team id to the user when they are added to a team' do
     team.add_user(invitee)
-    invitee.reload.team.should == team
+    expect(invitee.reload.team).to eq(team)
   end
 
   it 'should indicate if team member has referral' do
@@ -15,25 +15,25 @@ describe Team do
 
     team.reload_team_members
 
-    team.has_user_with_referral_token?('asdfasdf').should == true
-    team.has_user_with_referral_token?("something else").should == false
+    expect(team.has_user_with_referral_token?('asdfasdf')).to eq(true)
+    expect(team.has_user_with_referral_token?("something else")).to eq(false)
   end
 
   it 'updates team size when adding and removing member' do
     team_owner = Fabricate(:user)
     @team = Team.find(team.id)
-    @team.size.should == 0
+    expect(@team.size).to eq(0)
 
     @team.add_user(team_owner)
-    @team.reload.size.should == 1
+    expect(@team.reload.size).to eq(1)
     @team.remove_user(team_owner)
-    @team.reload.size.should == 0
+    expect(@team.reload.size).to eq(0)
   end
 
   it 'should create a unique slug with no trailing - for each character' do
     team = Team.new(name: 'Tilde Inc .')
     team.valid?
-    team.slug.should == 'tilde-inc'
+    expect(team.slug).to eq('tilde-inc')
   end
 
   it 'should clear the cache when a premium team is updated' do
@@ -43,14 +43,14 @@ describe Team do
     team.build_account
     team.account.admin_id = admin.id
     team.account.subscribe_to!(Plan.enhanced_team_page_monthly, true)
-    Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY).should be_nil
+    expect(Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY)).to be_nil
   end
 
   it 'should not clear cache when a normal team is updated' do
     Rails.cache.write(Team::FEATURED_TEAMS_CACHE_KEY, 'test')
     team.name = 'something-else'
     team.save!
-    Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY).should == 'test'
+    expect(Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY)).to eq('test')
   end
 
   it 'should be able to add team link' do
@@ -59,7 +59,7 @@ describe Team do
         name: 'Google',
         url: 'http://www.google.com'
       }])
-    team.featured_links.should have(1).link
+    expect(team.featured_links.size).to eq(1)
   end
 
   def seed_plans!(reset=false)

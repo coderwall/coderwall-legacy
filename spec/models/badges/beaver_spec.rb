@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Beaver do
+RSpec.describe Beaver, :type => :model do
 
 
 end

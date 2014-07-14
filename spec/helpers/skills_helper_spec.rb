@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SkillsHelper do
+RSpec.describe SkillsHelper, :type => :helper do
 
 
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Event do
+RSpec.describe Event, :type => :model do
 
 
 end

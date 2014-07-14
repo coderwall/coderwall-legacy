@@ -1,4 +1,4 @@
-describe UnbansController do
+RSpec.describe UnbansController, :type => :controller do
 
   def valid_session
     {}
@@ -10,12 +10,12 @@ describe UnbansController do
 
     it "bans a user" do
       user = Fabricate(:user, admin: true, banned_at: Time.now)
-      user.reload.banned?.should == true
+      expect(user.reload.banned?).to eq(true)
 
       controller.send :sign_in, user
       post :create, {user_id: user.id}, valid_session
 
-      user.reload.banned?.should == false
+      expect(user.reload.banned?).to eq(false)
     end
   end
 

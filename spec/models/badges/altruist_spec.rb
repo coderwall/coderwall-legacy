@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Altruist do
+RSpec.describe Altruist, :type => :model do
 
   it 'should have a name and description' do
-    Altruist.description.should include('20')
+    expect(Altruist.description).to include('20')
   end
 
   it 'should award user if they have 50 or more original repos with contents' do
@@ -14,8 +14,8 @@ describe Altruist do
     end
 
     badge = Altruist.new(user.reload)
-    badge.award?.should == true
-    badge.reasons.should == "for having shared 20 individual projects."
+    expect(badge.award?).to eq(true)
+    expect(badge.reasons).to eq("for having shared 20 individual projects.")
   end
 
   it 'should not award empty repos' do
@@ -26,6 +26,6 @@ describe Altruist do
     end
 
     badge = Altruist.new(user.reload)
-    badge.award?.should == false
+    expect(badge.award?).to eq(false)
   end
 end

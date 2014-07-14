@@ -1,4 +1,6 @@
-describe Account do
+require 'vcr_helper'
+
+RSpec.describe Account, :type => :model do
   let(:team) { Fabricate(:team) }
   let(:account) { { stripe_card_token: new_token } }
 
@@ -26,14 +28,14 @@ describe Account do
   describe 'account creation' do
 
     it 'should create a valid account locally and on stripe' do
-      team.account.should be_nil
+      expect(team.account).to be_nil
       team.build_account(account)
       team.account.admin_id = admin.id
       team.account.save_with_payment
       team.reload
-      team.account.stripe_card_token.should == account[:stripe_card_token]
-      team.account.stripe_customer_token.should_not be_nil
-      team.account.plan_ids.should == []
+      expect(team.account.stripe_card_token).to eq(account[:stripe_card_token])
+      expect(team.account.stripe_customer_token).not_to be_nil
+      expect(team.account.plan_ids).to eq([])
     end
 
     it 'should still create an account if account admin not team admin' do
@@ -42,7 +44,7 @@ describe Account do
       team.account.admin_id = some_random_user.id
       team.account.save_with_payment
       team.reload
-      team.account.should_not be_nil
+      expect(team.account).not_to be_nil
     end
 
     it 'should not create an account if stripe_card_token invalid' do
@@ -51,7 +53,7 @@ describe Account do
       team.account.admin_id = admin.id
       team.account.save_with_payment
       team.reload
-      team.account.should be_nil
+      expect(team.account).to be_nil
     end
 
     it 'should not allow stripe_customer_token or admin to be set/updated' do
@@ -61,7 +63,7 @@ describe Account do
       team.build_account(account)
       team.account.save_with_payment
       team.reload
-      team.account.should be_nil
+      expect(team.account).to be_nil
     end
   end
 
@@ -72,7 +74,7 @@ describe Account do
 
     describe 'free subscription' do
       before(:each) do
-        team.account.should be_nil
+        expect(team.account).to be_nil
         team.build_account(account)
         team.account.admin_id = admin.id
         team.account.save_with_payment
@@ -81,41 +83,41 @@ describe Account do
       end
 
       it 'should add a free subscription' do
-        team.account.plan_ids.should include(free_plan.id)
-        team.paid_job_posts.should == 0
+        expect(team.account.plan_ids).to include(free_plan.id)
+        expect(team.paid_job_posts).to eq(0)
       end
 
       it 'should not allow any job posts' do
-        team.can_post_job?.should == false
-        team.premium?.should == false
-        team.valid_jobs?.should == false
-        lambda { Fabricate(:opportunity, team_document_id: team.id) }.should raise_error(ActiveRecord::RecordNotSaved)
+        expect(team.can_post_job?).to eq(false)
+        expect(team.premium?).to eq(false)
+        expect(team.valid_jobs?).to eq(false)
+        expect { Fabricate(:opportunity, team_document_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
       end
 
       it 'should allow upgrade to monthly subscription' do
         team.account.save_with_payment(monthly_plan)
         team.reload
-        team.can_post_job?.should == true
-        team.paid_job_posts.should == 0
-        team.valid_jobs?.should == true
-        team.has_monthly_subscription?.should == true
-        team.premium?.should == true
+        expect(team.can_post_job?).to eq(true)
+        expect(team.paid_job_posts).to eq(0)
+        expect(team.valid_jobs?).to eq(true)
+        expect(team.has_monthly_subscription?).to eq(true)
+        expect(team.premium?).to eq(true)
       end
 
       it 'should allow upgrade to one-time job post charge' do
         team.account.update_attributes({stripe_card_token: new_token})
         team.account.save_with_payment(onetime_plan)
         team.reload
-        team.can_post_job?.should == true
-        team.valid_jobs?.should == true
-        team.paid_job_posts.should == 1
-        team.premium?.should == true
+        expect(team.can_post_job?).to eq(true)
+        expect(team.valid_jobs?).to eq(true)
+        expect(team.paid_job_posts).to eq(1)
+        expect(team.premium?).to eq(true)
       end
     end
 
     describe 'monthly paid subscription' do
       before(:each) do
-        team.account.should be_nil
+        expect(team.account).to be_nil
         team.build_account(account)
         team.account.admin_id = admin.id
         team.account.save_with_payment
@@ -124,77 +126,77 @@ describe Account do
       end
 
       it 'should add a paid monthly subscription' do
-        team.account.plan_ids.should include(monthly_plan.id)
-        team.paid_job_posts.should == 0
-        team.valid_jobs?.should == true
-        team.can_post_job?.should == true
-        team.premium?.should == true
+        expect(team.account.plan_ids).to include(monthly_plan.id)
+        expect(team.paid_job_posts).to eq(0)
+        expect(team.valid_jobs?).to eq(true)
+        expect(team.can_post_job?).to eq(true)
+        expect(team.premium?).to eq(true)
       end
 
       it 'should allow unlimited job posts' do
-        team.can_post_job?.should == true
+        expect(team.can_post_job?).to eq(true)
         5.times do
           Fabricate(:opportunity, team_document_id: team.id)
         end
-        team.can_post_job?.should == true
+        expect(team.can_post_job?).to eq(true)
       end
     end
 
     describe 'one-time job post charge' do
       before(:each) do
-        team.account.should be_nil
+        expect(team.account).to be_nil
         team.build_account(account)
         team.account.admin_id = admin.id
         team.account.save_with_payment(onetime_plan)
         team.reload
       end
       it 'should add a one-time job post charge' do
-        team.account.plan_ids.should include(onetime_plan.id)
-        team.paid_job_posts.should == 1
-        team.valid_jobs?.should == true
-        team.can_post_job?.should == true
-        team.premium?.should == true
+        expect(team.account.plan_ids).to include(onetime_plan.id)
+        expect(team.paid_job_posts).to eq(1)
+        expect(team.valid_jobs?).to eq(true)
+        expect(team.can_post_job?).to eq(true)
+        expect(team.premium?).to eq(true)
       end
 
       it 'should allow only one job-post' do
-        team.can_post_job?.should == true
+        expect(team.can_post_job?).to eq(true)
         Fabricate(:opportunity, team_document_id: team.id)
         team.reload
-        team.paid_job_posts.should == 0
-        team.can_post_job?.should == false
-        lambda { Fabricate(:opportunity, team_document_id: team.id) }.should raise_error(ActiveRecord::RecordNotSaved)
+        expect(team.paid_job_posts).to eq(0)
+        expect(team.can_post_job?).to eq(false)
+        expect { Fabricate(:opportunity, team_document_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
       end
 
       it 'should allow upgrade to monthly subscription' do
         team.account.update_attributes({stripe_card_token: new_token})
         team.account.save_with_payment(monthly_plan)
         team.reload
-        team.can_post_job?.should == true
-        team.valid_jobs?.should == true
-        team.paid_job_posts.should == 1
-        team.has_monthly_subscription?.should == true
+        expect(team.can_post_job?).to eq(true)
+        expect(team.valid_jobs?).to eq(true)
+        expect(team.paid_job_posts).to eq(1)
+        expect(team.has_monthly_subscription?).to eq(true)
         5.times do
           Fabricate(:opportunity, team_document_id: team.id)
         end
-        team.can_post_job?.should == true
-        team.paid_job_posts.should == 1
-        team.premium?.should == true
+        expect(team.can_post_job?).to eq(true)
+        expect(team.paid_job_posts).to eq(1)
+        expect(team.premium?).to eq(true)
       end
 
       it 'should allow additional one time job post charges' do
         team.account.update_attributes({stripe_card_token: new_token})
         team.account.save_with_payment(onetime_plan)
         team.reload
-        team.paid_job_posts.should == 2
-        team.can_post_job?.should == true
+        expect(team.paid_job_posts).to eq(2)
+        expect(team.can_post_job?).to eq(true)
         2.times do
           Fabricate(:opportunity, team_document_id: team.id)
         end
         team.reload
-        team.paid_job_posts.should == 0
-        team.has_monthly_subscription?.should == false
-        team.premium?.should == true
-        team.valid_jobs?.should == true
+        expect(team.paid_job_posts).to eq(0)
+        expect(team.has_monthly_subscription?).to eq(false)
+        expect(team.premium?).to eq(true)
+        expect(team.valid_jobs?).to eq(true)
       end
     end
   end

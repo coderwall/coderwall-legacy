@@ -1,37 +1,33 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `protips`
+# Table name: protips
 #
-# ### Columns
+#  id                  :integer          not null, primary key
+#  public_id           :string(255)
+#  kind                :string(255)
+#  title               :string(255)
+#  body                :text
+#  user_id             :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  score               :float
+#  created_by          :string(255)      default("self")
+#  featured            :boolean          default(FALSE)
+#  featured_at         :datetime
+#  upvotes_value_cache :integer          default(75)
+#  boost_factor        :float            default(1.0)
+#  inappropriate       :integer          default(0)
+#  likes_count         :integer          default(0)
 #
-# Name                       | Type               | Attributes
-# -------------------------- | ------------------ | ---------------------------
-# **`body`**                 | `text`             |
-# **`boost_factor`**         | `float`            | `default(1.0)`
-# **`created_at`**           | `datetime`         |
-# **`created_by`**           | `string(255)`      | `default("self")`
-# **`featured`**             | `boolean`          | `default(FALSE)`
-# **`featured_at`**          | `datetime`         |
-# **`id`**                   | `integer`          | `not null, primary key`
-# **`inappropriate`**        | `integer`          | `default(0)`
-# **`kind`**                 | `string(255)`      |
-# **`public_id`**            | `string(255)`      |
-# **`score`**                | `float`            |
-# **`title`**                | `string(255)`      |
-# **`updated_at`**           | `datetime`         |
-# **`upvotes_value_cache`**  | `integer`          |
-# **`user_id`**              | `integer`          |
+# Indexes
 #
-# ### Indexes
-#
-# * `index_protips_on_public_id`:
-#     * **`public_id`**
-# * `index_protips_on_user_id`:
-#     * **`user_id`**
+#  index_protips_on_public_id  (public_id)
+#  index_protips_on_user_id    (user_id)
 #
 
-describe Protip do
+require 'vcr_helper'
+
+RSpec.describe Protip, :type => :model do
 
   describe 'indexing linked content' do
 
@@ -43,13 +39,13 @@ describe Protip do
       user = Fabricate(:user)
       protip = Fabricate(:protip, user: user)
       protip.save!
-      protip.title.should_not be_nil
-      protip.body.should_not be_nil
-      protip.tags.count.should == 3
+      expect(protip.title).not_to be_nil
+      expect(protip.body).not_to be_nil
+      expect(protip.tags.count).to eq(3)
       protip.topics =~ ["Javascript", "CoffeeScript"]
       protip.users =~ [user.username]
-      protip.public_id.should have(6).characters
-      protip.should be_article
+      expect(protip.public_id.size).to eq(6)
+      expect(protip).to be_article
     end
   end
 
@@ -59,26 +55,26 @@ describe Protip do
       link = "http://www.ruby-doc.org/core/classes/Object.html#M001057"
       protip = Fabricate(:protip, body: link, title: title, user: Fabricate(:user))
       protip.save!
-      protip.title.should == title
-      protip.body.should_not be_nil
-      protip.should be_link
-      protip.should be_only_link
-      protip.images.count.should == 0
-      protip.links.count.should == 1
-      protip.links.first.should == link
+      expect(protip.title).to eq(title)
+      expect(protip.body).not_to be_nil
+      expect(protip).to be_link
+      expect(protip).to be_only_link
+      expect(protip.images.count).to eq(0)
+      expect(protip.links.count).to eq(1)
+      expect(protip.links.first).to eq(link)
       protip.protip_links.count == 1
     end
 
     it 'should indicate an image protip as not being treated as link' do
       link = '![Picture](https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG)';
       protip = Fabricate(:protip, body: link, title: "not a link", user: Fabricate(:user))
-      protip.should_not be_link
-      protip.should_not be_only_link
-      protip.images.count.should == 1
-      protip.has_featured_image?.should == true
-      protip.links.count.should == 1
-      protip.should have(1).protip_links
-      protip.protip_links.first.kind.to_sym.should == :jpg
+      expect(protip).not_to be_link
+      expect(protip).not_to be_only_link
+      expect(protip.images.count).to eq(1)
+      expect(protip.has_featured_image?).to eq(true)
+      expect(protip.links.count).to eq(1)
+      expect(protip.protip_links.size).to eq(1)
+      expect(protip.protip_links.first.kind.to_sym).to eq(:jpg)
     end
   end
 
@@ -89,43 +85,43 @@ describe Protip do
 
     it 'is searchable by title' do
       protip = Fabricate(:protip, body: 'something to ignore', title: "look at this content #{r = rand(100)}", user: Fabricate(:user))
-      Protip.search('this content').results.first.title.should == protip.title
+      expect(Protip.search('this content').results.first.title).to eq(protip.title)
     end
 
     it 'should be an and query' do
       protip1 = Fabricate(:protip, body: 'thing one', title: "content #{r = rand(100)}", user: Fabricate(:user))
       protip1 = Fabricate(:protip, body: 'thing two', title: "content #{r = rand(100)}", user: Fabricate(:user))
-      Protip.search('one two').results.size.should == 0
+      expect(Protip.search('one two').results.size).to eq(0)
     end
 
     it 'is not searchable if deleted' do
       protip = Fabricate(:protip, title: "I don't exist'", user: Fabricate(:user))
-      Protip.search("I don't exist").results.first.title.should == protip.title
+      expect(Protip.search("I don't exist").results.first.title).to eq(protip.title)
       protip.destroy
-      Protip.search("I don't exist").results.count.should == 0
+      expect(Protip.search("I don't exist").results.count).to eq(0)
     end
 
     it 'is reindexed if username or team change' do
       team = Fabricate(:team, name: "first-team")
       user = Fabricate(:user, username: "initial-username")
       team.add_user(user)
-      protip = Fabricate(:protip, body: 'protip by user on team', title: "content #{r = rand(100)}", user: user)
+      protip = Fabricate(:protip, body: 'protip by user on team', title: "content #{rand(100)}", user: user)
       user.reload
-      Protip.search("team.name:first-team").results.first.title.should == protip.title
+      expect(Protip.search("team.name:first-team").results.first.title).to eq(protip.title)
       team2 = Fabricate(:team, name: "second-team")
       team.remove_user(user)
       user.reload
       team2.add_user(user)
       user.reload
-      Protip.search("team.name:first-team").results.count.should == 0
-      Protip.search("team.name:second-team").results.first.title.should == protip.title
-      Protip.search("author:#{user.username}").results.first.title.should == protip.title
+      expect(Protip.search("team.name:first-team").results.count).to eq(0)
+      expect(Protip.search("team.name:second-team").results.first.title).to eq(protip.title)
+      expect(Protip.search("author:#{user.username}").results.first.title).to eq(protip.title)
       user.username = "second-username"
       user.save!
-      Protip.search("author:initial-username").results.count.should == 0
-      Protip.search("author:#{user.username}").results.first.title.should == protip.title
+      expect(Protip.search("author:initial-username").results.count).to eq(0)
+      expect(Protip.search("author:#{user.username}").results.first.title).to eq(protip.title)
       user.github = "something"
-      user.save.should_not_receive(:refresh_index)
+      expect(user.save).not_to receive(:refresh_index)
     end
   end
 
@@ -133,59 +129,59 @@ describe Protip do
     it 'should sanitize tags into normalized form' do
       protip = Fabricate(:protip, topics: ["Javascript", "CoffeeScript"], user: Fabricate(:user))
       protip.save!
-      protip.topics.should =~ ["javascript", "coffeescript"]
-      protip.topics.count.should == 2
+      expect(protip.topics).to match_array(["javascript", "coffeescript"])
+      expect(protip.topics.count).to eq(2)
     end
 
     it 'should sanitize empty tag' do
       protip = Fabricate(:protip, topics: "Javascript, ", user: Fabricate(:user))
       protip.save!
-      protip.topics.should =~ ["javascript"]
-      protip.topics.count.should == 1
+      expect(protip.topics).to match_array(["javascript"])
+      expect(protip.topics.count).to eq(1)
     end
 
     it 'should remove duplicate tags' do
       protip = Fabricate(:protip, topics: ["github", "github", "Github", "GitHub"], user: Fabricate(:user))
       protip.save!
-      protip.topics.should == ["github"]
-      protip.topics.count.should == 1
+      expect(protip.topics).to eq(["github"])
+      expect(protip.topics.count).to eq(1)
     end
 
     it 'should accept tags separated by spaces only' do
       protip = Fabricate(:protip, topics: "ruby python heroku", user: Fabricate(:user))
       protip.save!
-      protip.topics.should == ["ruby", "python", "heroku"]
-      protip.topics.count.should == 3
+      expect(protip.topics).to eq(["ruby", "python", "heroku"])
+      expect(protip.topics.count).to eq(3)
     end
   end
 
   describe 'linking and featuring an image' do
     it 'should indicate when the protip is only a link' do
       protip = Fabricate(:protip, body: 'http://www.google.com', user: Fabricate(:user))
-      protip.should be_link
+      expect(protip).to be_link
 
       protip = Fabricate(:protip, body: '![Picture](https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG)', user: Fabricate(:user))
-      protip.should_not be_only_link
+      expect(protip).not_to be_only_link
     end
 
     it 'should indicate when the protip is only a link if it is followed by little content' do
       protip = Fabricate(:protip, body: 'http://www.google.com go check it out!', user: Fabricate(:user))
-      protip.should be_only_link
+      expect(protip).to be_only_link
     end
 
     it 'should indicate when the protip starts with an image' do
       protip = Fabricate(:protip, body: '![Picture](https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG)', user: Fabricate(:user))
-      protip.has_featured_image?.should == true
+      expect(protip.has_featured_image?).to eq(true)
     end
 
     it 'should indicate when the protip starts with an image' do
       protip = Fabricate(:protip, body: '![Picture](https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG)', user: Fabricate(:user))
-      protip.featured_image.should == 'https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG'
+      expect(protip.featured_image).to eq('https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG')
     end
 
     it 'should have a featured_image when the protip has some content before image' do
       protip = Fabricate(:protip, body: 'some text here ![Picture](https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG)', user: Fabricate(:user))
-      protip.featured_image.should_not be_nil
+      expect(protip.featured_image).not_to be_nil
     end
   end
 
@@ -197,15 +193,15 @@ describe Protip do
     it 'provides a consistence api to a protip' do
       wrapper = Protip::SearchWrapper.new(protip)
 
-      wrapper.user.username.should == protip.user.username
-      wrapper.user.profile_url.should == protip.user.profile_url
-      wrapper.upvotes.should == protip.upvotes
-      wrapper.topics.should == protip.topics
-      wrapper.only_link?.should == protip.only_link?
-      wrapper.link.should == protip.link
-      wrapper.title.should == protip.title
-      wrapper.to_s.should == protip.public_id
-      wrapper.public_id.should == protip.public_id
+      expect(wrapper.user.username).to eq(protip.user.username)
+      expect(wrapper.user.profile_url).to eq(protip.user.profile_url)
+      expect(wrapper.upvotes).to eq(protip.upvotes)
+      expect(wrapper.topics).to eq(protip.topics)
+      expect(wrapper.only_link?).to eq(protip.only_link?)
+      expect(wrapper.link).to eq(protip.link)
+      expect(wrapper.title).to eq(protip.title)
+      expect(wrapper.to_s).to eq(protip.public_id)
+      expect(wrapper.public_id).to eq(protip.public_id)
     end
 
     it 'handles link only protips' do
@@ -213,8 +209,8 @@ describe Protip do
       link_protip = Fabricate(:protip, body: 'http://google.com', user: Fabricate(:user))
       result = Protip.search(link_protip.title).results.first
       wrapper = Protip::SearchWrapper.new(result)
-      wrapper.only_link?.should == link_protip.only_link?
-      wrapper.link.should == link_protip.link
+      expect(wrapper.only_link?).to eq(link_protip.only_link?)
+      expect(wrapper.link).to eq(link_protip.link)
     end
 
     it 'provides a consistence api to a protip search result' do
@@ -222,16 +218,16 @@ describe Protip do
       result = Protip.search(protip.title).results.first
       wrapper = Protip::SearchWrapper.new(result)
 
-      wrapper.user.username.should == protip.user.username
-      wrapper.user.profile_url.should == protip.user.profile_url
-      wrapper.upvotes.should == protip.upvotes
-      wrapper.topics.should == protip.topics
-      wrapper.only_link?.should == protip.only_link?
-      wrapper.link.should == protip.link
-      wrapper.title.should == protip.title
-      wrapper.to_s.should == protip.public_id
-      wrapper.public_id.should == protip.public_id
-      wrapper.class.model_name.should == Protip.model_name
+      expect(wrapper.user.username).to eq(protip.user.username)
+      expect(wrapper.user.profile_url).to eq(protip.user.profile_url)
+      expect(wrapper.upvotes).to eq(protip.upvotes)
+      expect(wrapper.topics).to eq(protip.topics)
+      expect(wrapper.only_link?).to eq(protip.only_link?)
+      expect(wrapper.link).to eq(protip.link)
+      expect(wrapper.title).to eq(protip.title)
+      expect(wrapper.to_s).to eq(protip.public_id)
+      expect(wrapper.public_id).to eq(protip.public_id)
+      expect(wrapper.class.model_name).to eq(Protip.model_name)
     end
   end
 
@@ -248,35 +244,34 @@ describe Protip do
     end
 
     it 'should not be featured' do
-      @protip.should_not be_featured
+      expect(@protip).not_to be_featured
     end
 
     it 'should be liked' do
-      @protip.likes.count.should == 1
-      @protip.likes.first.user_id.should == @user.id
-      @protip.likes.first.value.should == @user.like_value
+      expect(@protip.likes.count).to eq(1)
+      expect(@protip.likes.first.user_id).to eq(@user.id)
+      expect(@protip.likes.first.value).to eq(@user.like_value)
     end
   end
 
   describe 'upvotes' do
     let(:protip) { Fabricate(:protip, user: Fabricate(:user)) }
-    let(:user) {
-      u = Fabricate(:user)
-      u.score_cache = 5
-      u
-    }
+    let(:user) { Fabricate(:user) { score_cache 5 } }
+
     it 'should upvote by right amount' do
       protip.upvote_by(user, user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
-      protip.upvotes.should == 1
-      protip.upvotes_value.should be_within(0.1).of(5)
-      protip.upvoters_ids.should == [user.id]
+      protip.reload
+      expect(protip.upvotes).to eq(1)
+      expect(protip.upvotes_value).to be_within(0.1).of(5)
+      expect(protip.upvoters_ids).to eq([user.id])
     end
 
     it 'should upvote only once per user' do
       protip.upvote_by(user, user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.upvote_by(user, user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
-      protip.upvotes.should == 1
-      protip.likes.count.should == 1
+      protip.reload
+      expect(protip.upvotes).to eq(1)
+      expect(protip.likes.count).to eq(1)
     end
 
     it 'should weigh team member upvotes less' do
@@ -285,40 +280,41 @@ describe Protip do
       team_member = Fabricate(:user, team_document_id: protip.author.team_document_id)
       team_member.score_cache = 5
       protip.upvote_by(team_member, team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
-      protip.upvotes_value.should == 2
+      protip.reload
+      expect(protip.upvotes_value).to eq(2)
       non_team_member = Fabricate(:user, team_document_id: "4f271930973bf00004000002")
       non_team_member.score_cache = 5
       protip.upvote_by(non_team_member, non_team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
-      protip.upvotes.should == 2
-      protip.upvotes_value.should == 7
+      protip.reload
+      expect(protip.upvotes).to eq(2)
+      expect(protip.upvotes_value).to eq(7)
     end
   end
 
   describe 'scoring' do
-    let(:first_protip) { Fabricate(:protip, user: Fabricate(:user), body: 'some text') }
-    let(:second_protip) { Timecop.travel(1.minute.from_now) { Fabricate(:protip, user: Fabricate(:user), body: 'some text') } }
+    let(:first_protip) { Fabricate(:protip, body: 'some text') }
+    let(:second_protip) { Timecop.travel(1.minute.from_now) { Fabricate(:protip, body: 'some text') } }
 
-    let(:user) {
-      u = Fabricate(:user)
-      u.score_cache = 2
-      u.tracking_code = "ghi"
-      u
-    }
+    let(:user) { Fabricate(:user, score_cache: 2, tracking_code: 'ghi') }
 
     it 'should have second protip with higher score than first' do
-      second_protip.score.should be > first_protip.score
+      expect(second_protip.score).to be > first_protip.score
     end
 
     it 'calculated score should be same as score' do
-      first_protip.calculated_score.should be == first_protip.score
+      expect(first_protip.calculated_score).to eq(first_protip.score)
     end
 
     it 'upvoted protip should have higher score than unupvoted protip created around same time' do
       twin_protip = Fabricate(:protip, created_at: first_protip.created_at + 1.second, user: Fabricate(:user))
       initial_score = twin_protip.score
       twin_protip.upvote_by(user, user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
-      twin_protip.calculated_score.should be > initial_score
+      expect(twin_protip.calculated_score).to be > initial_score
     end
   end
 
+
+  context 'counter_cache' do
+    describe 'like_'
+  end
 end

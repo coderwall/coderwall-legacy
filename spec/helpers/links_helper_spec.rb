@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LinksHelper do
+RSpec.describe LinksHelper, :type => :helper do
 
 
 end

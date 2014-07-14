@@ -1,20 +1,15 @@
 # encoding: utf-8
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `networks`
+# Table name: networks
 #
-# ### Columns
-#
-# Name                       | Type               | Attributes
-# -------------------------- | ------------------ | ---------------------------
-# **`created_at`**           | `datetime`         |
-# **`featured`**             | `boolean`          | `default(FALSE)`
-# **`id`**                   | `integer`          | `not null, primary key`
-# **`name`**                 | `string(255)`      |
-# **`protips_count_cache`**  | `integer`          | `default(0)`
-# **`slug`**                 | `string(255)`      |
-# **`updated_at`**           | `datetime`         |
+#  id                  :integer          not null, primary key
+#  name                :string(255)
+#  slug                :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  protips_count_cache :integer          default(0)
+#  featured            :boolean          default(FALSE)
 #
 
 class Network < ActiveRecord::Base

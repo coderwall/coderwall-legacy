@@ -1,17 +1,12 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `pictures`
+# Table name: pictures
 #
-# ### Columns
-#
-# Name              | Type               | Attributes
-# ----------------- | ------------------ | ---------------------------
-# **`created_at`**  | `datetime`         |
-# **`file`**        | `string(255)`      |
-# **`id`**          | `integer`          | `not null, primary key`
-# **`updated_at`**  | `datetime`         |
-# **`user_id`**     | `integer`          |
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  file       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 class Picture < ActiveRecord::Base

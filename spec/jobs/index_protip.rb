@@ -1,4 +1,4 @@
-describe IndexProtip do
+RSpec.describe IndexProtip do
   before { Protip.rebuild_index }
 
   def deindex_protip(tip)
@@ -9,8 +9,8 @@ describe IndexProtip do
     user = Fabricate(:user)
     protip = Fabricate(:protip, body: 'something to ignore', title: "look at this content", user: user)
     deindex_protip(protip)
-    Protip.search("this content").count.should == 0
+    expect(Protip.search("this content").count).to eq(0)
     IndexProtip.new(protip.id).perform
-    Protip.search("this content").count.should == 1
+    expect(Protip.search("this content").count).to eq(1)
   end
 end

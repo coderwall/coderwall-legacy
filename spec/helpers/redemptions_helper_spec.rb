@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe RedemptionsHelper do
+RSpec.describe RedemptionsHelper, :type => :helper do
 
 end

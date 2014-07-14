@@ -1,19 +1,14 @@
-# ## Schema Information
-# Schema version: 20131205021701
+# == Schema Information
 #
-# Table name: `seized_opportunities`
+# Table name: seized_opportunities
 #
-# ### Columns
-#
-# Name                    | Type               | Attributes
-# ----------------------- | ------------------ | ---------------------------
-# **`created_at`**        | `datetime`         |
-# **`id`**                | `integer`          | `not null, primary key`
-# **`opportunity_id`**    | `integer`          |
-# **`opportunity_type`**  | `string(255)`      |
-# **`team_document_id`**  | `string(255)`      |
-# **`updated_at`**        | `datetime`         |
-# **`user_id`**           | `integer`          |
+#  id               :integer          not null, primary key
+#  opportunity_id   :integer
+#  opportunity_type :string(255)
+#  user_id          :integer
+#  team_document_id :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 class SeizedOpportunity < ActiveRecord::Base

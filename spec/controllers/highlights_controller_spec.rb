@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe HighlightsController do
+RSpec.describe HighlightsController, :type => :controller do
 
 end

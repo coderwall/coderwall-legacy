@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ProtipsHelper do
+RSpec.describe ProtipsHelper, :type => :helper do
 
 
 end
