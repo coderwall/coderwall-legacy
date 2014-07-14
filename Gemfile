@@ -128,7 +128,7 @@ gem 'ruby-progressbar'
 gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
-
+gem 'mail_view'
 
 # Mongo
 gem 'mongoid'
@@ -157,9 +157,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'syntax'
   gem 'annotate'
-  gem 'mail_view'
 end
-
 
 group :test do
   gem 'capybara'
