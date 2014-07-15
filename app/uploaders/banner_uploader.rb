@@ -4,10 +4,6 @@ class BannerUploader < CoderwallUploader
   # process :resize_to_fill => [500, 375]
   #process :resize_to_fit => [500, 375]
 
-  def extension_white_list
-    %w(jpg jpeg gif png)
-  end
-
   def apply_tilt_shift
     directory = File.dirname(current_path)
     tmpfile = File.join(directory, "tmpfile")
