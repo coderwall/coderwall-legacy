@@ -1,8 +1,8 @@
 class Lemmings100 < BadgeBase
-  describe "Lemmings 100",
+  describe 'Lemmings 100',
            skill:              'API Design',
-           description:        "Write something great enough to have at least 100 watchers of the project",
-           for:                "writing something great enough to have at least 100 people following it.",
+           description:        'Write something great enough to have at least 100 watchers of the project',
+           for:                'writing something great enough to have at least 100 people following it.',
            image_name:         '100lemming.png',
            providers:          :github,
            required_followers: 100,
@@ -31,5 +31,4 @@ class Lemmings100 < BadgeBase
   def award?
     reasons[:links].size >= 1
   end
-
 end

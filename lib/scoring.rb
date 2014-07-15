@@ -9,7 +9,7 @@ module Scoring
   module HN
     def trending_score
       return 0 if flagged?
-      value_score / (((created_at.to_i-Time.parse("05/07/2012").to_i)/60) ** -gravity)
+      value_score / (((created_at.to_i - Time.parse('05/07/2012').to_i) / 60)**-gravity)
     end
   end
 end

@@ -2,7 +2,7 @@ class TwitterProfile
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  index({username: 1}, {unique: true, background: true})
+  index({ username: 1 }, { unique: true, background: true })
 
   field :username, type: String
   field :user_id, type: String
@@ -18,7 +18,7 @@ class TwitterProfile
   def recent_links
     urls = []
     tweets.each do |tweet|
-      tweet.text.split(/[ |"]/).collect(&:strip).select { |part| part =~ /^https?:/ }.each do |tweet_url|
+      tweet.text.split(/[ |"]/).map(&:strip).select { |part| part =~ /^https?:/ }.each do |tweet_url|
         urls << tweet_url
       end if tweet.created_at > 10.days.ago
     end

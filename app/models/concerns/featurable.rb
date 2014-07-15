@@ -33,11 +33,11 @@ module Featurable
   end
 
   def ever_featured?
-    !self.featured_at.blank?
+    !featured_at.blank?
   end
 
   def featured?
-    self.featured
+    featured
   end
 
   def has_featured_image?

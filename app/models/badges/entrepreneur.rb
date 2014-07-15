@@ -1,15 +1,15 @@
 class Entrepreneur < BadgeBase
   describe 'Entrepreneur',
            skill:       'Entrepreneur',
-           description: "Help build a product by contributing to an Assembly product",
-           for:         "working on an Assembly product when your commit was accepted.",
+           description: 'Help build a product by contributing to an Assembly product',
+           for:         'working on an Assembly product when your commit was accepted.',
            image_name:  'entrepreneur.png',
            weight:      3,
            providers:   :github
 
   def reasons
     @reasons ||= begin
-      fact = user.facts.detect { |fact| fact.tagged?('assembly', 'contribution') }
+      fact = user.facts.find { |fact| fact.tagged?('assembly', 'contribution') }
       fact.name if fact
     end
   end
@@ -30,8 +30,8 @@ class Entrepreneur < BadgeBase
     end
   end
 
-  def self.add_contributor(repo_url, github_username, contributions=1)
-    name = contributions <= 1 ? "Contributed one time to an Assembly product" : "Contributed #{contributions} times to an Assembly product"
-    Fact.append!("#{repo_url}:#{github_username}", "github:#{github_username}", name, Time.now, repo_url, ['assembly', 'contribution'])
+  def self.add_contributor(repo_url, github_username, contributions = 1)
+    name = contributions <= 1 ? 'Contributed one time to an Assembly product' : "Contributed #{contributions} times to an Assembly product"
+    Fact.append!("#{repo_url}:#{github_username}", "github:#{github_username}", name, Time.now, repo_url, %w(assembly contribution))
   end
 end

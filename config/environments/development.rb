@@ -22,7 +22,7 @@ Badgiy::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Move cache dir's out of vagrant NFS directory
-  config.cache_store = [:file_store,"/tmp/codewall-cache/"]
-  config.assets.cache_store = [:file_store,"/tmp/codewall-cache/assets/"]
-  Rails.application.config.sass.cache_location = "/tmp/codewall-cache/sass/"
+  config.cache_store = [:file_store, '/tmp/codewall-cache/']
+  config.assets.cache_store = [:file_store, '/tmp/codewall-cache/assets/']
+  Rails.application.config.sass.cache_location = '/tmp/codewall-cache/sass/'
 end

@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def signup_via_email
-    mail_to "support@coderwall.com", "But I don't have a GitHub account",
+    mail_to 'support@coderwall.com', "But I don't have a GitHub account",
             subject: 'Let me in!',
             body: "I don't have a GitHub account but would like to be notified when Coderwall expands features beyond GitHub."
   end
@@ -31,9 +31,9 @@ module ApplicationHelper
     return override_from_haml unless override_from_haml.blank?
     if viewing_self?
       if @user.pending?
-        "coderwall.com : your profile (in queue)"
+        'coderwall.com : your profile (in queue)'
       else
-        "coderwall.com : your profile"
+        'coderwall.com : your profile'
       end
     elsif @user
       if @user.pending?
@@ -42,7 +42,7 @@ module ApplicationHelper
         "coderwall.com : #{@user.display_name}'s profile"
       end
     else
-      "coderwall.com : establishing geek cred since 1305712800"
+      'coderwall.com : establishing geek cred since 1305712800'
     end
   end
 
@@ -50,26 +50,26 @@ module ApplicationHelper
     "Coderwall is a space for tech's most talented makers to connect, share, build, and be inspired"
   end
 
-  def page_description(description=nil)
+  def page_description(description = nil)
     if @user
       description = "#{@user.display_name}'s achievements."
     else
-      #"Coderwall is a community of developers and the teams they work on fundamentally changing how you find your next job"
+      # "Coderwall is a community of developers and the teams they work on fundamentally changing how you find your next job"
       description = description || "Coderwall is a space for tech's most talented makers to connect, share, build, and be inspired"
     end
-    description + " " + standard_description
+    description + ' ' + standard_description
   end
 
-  def page_keywords(keywords=nil)
+  def page_keywords(keywords = nil)
     if @user
       "#{@user.username}, developer, programmer, open source, resume, portfolio, achievements, badges, #{@user.speciality_tags.join(', ')}"
     else
-      [keywords, "developers, engineers, open source, resume, portfolio, achievements, badges, job, jobs, job sites, it jobs, computer jobs, engineering jobs, technology jobs, ruby, java, nodejs, .net, python, php, perl"].join(",")
+      [keywords, 'developers, engineers, open source, resume, portfolio, achievements, badges, job, jobs, job sites, it jobs, computer jobs, engineering jobs, technology jobs, ruby, java, nodejs, .net, python, php, perl'].join(',')
     end
   end
 
   def blog_posts_nav_class
-    if params[:controller] == "blogs"
+    if params[:controller] == 'blogs'
       'active'
     else
       nil
@@ -77,7 +77,7 @@ module ApplicationHelper
   end
 
   def settings_nav_class
-    if params[:controller] == "users" && params[:action] == "edit"
+    if params[:controller] == 'users' && params[:action] == 'edit'
       'active'
     else
       nil
@@ -85,7 +85,7 @@ module ApplicationHelper
   end
 
   def signin_nav_class
-    if params[:controller] == "sessions" && params[:action] == "signin"
+    if params[:controller] == 'sessions' && params[:action] == 'signin'
       'active'
     else
       nil
@@ -93,7 +93,7 @@ module ApplicationHelper
   end
 
   def signup_nav_class
-    if params[:controller] == "sessions" && params[:action] == "new"
+    if params[:controller] == 'sessions' && params[:action] == 'new'
       'active'
     else
       nil
@@ -101,7 +101,7 @@ module ApplicationHelper
   end
 
   def protip_nav_class
-    if params[:controller] == "protips" && params[:action] == "index"
+    if params[:controller] == 'protips' && params[:action] == 'index'
       'active'
     else
       nil
@@ -109,7 +109,7 @@ module ApplicationHelper
   end
 
   def network_nav_class
-    if params[:controller] == "networks"
+    if params[:controller] == 'networks'
       'active'
     else
       nil
@@ -117,7 +117,7 @@ module ApplicationHelper
   end
 
   def connections_nav_class
-    if params[:controller] == "follows"
+    if params[:controller] == 'follows'
       'active'
     else
       nil
@@ -125,7 +125,7 @@ module ApplicationHelper
   end
 
   def team_nav_class
-    if params[:controller] == "teams" && params[:action] != 'index'
+    if params[:controller] == 'teams' && params[:action] != 'index'
       if signed_in? && current_user.team_document_id == params[:id] || params[:id].blank?
         'active'
       else
@@ -137,7 +137,7 @@ module ApplicationHelper
   end
 
   def teams_nav_class
-    if params[:controller] == "teams" && params[:action] == 'index'
+    if params[:controller] == 'teams' && params[:action] == 'index'
       'active'
     else
       nil
@@ -145,7 +145,7 @@ module ApplicationHelper
   end
 
   def jobs_nav_class
-    if params[:controller] == "opportunities" && params[:action] == 'index'
+    if params[:controller] == 'opportunities' && params[:action] == 'index'
       'active'
     else
       nil
@@ -155,7 +155,7 @@ module ApplicationHelper
   def mywall_nav_class
     not_on_reviewing_achievement_page = params[:id].blank?
     not_on_followers = connections_nav_class.nil?
-    if signed_in? && params[:username] == current_user.username && not_on_followers && not_on_reviewing_achievement_page && params[:controller] == "users"
+    if signed_in? && params[:username] == current_user.username && not_on_followers && not_on_reviewing_achievement_page && params[:controller] == 'users'
       'active'
     else
       nil
@@ -177,16 +177,16 @@ module ApplicationHelper
     endorsements << [User.with_username('iamdustan'), "One of the geekiest (and coolest) things I've seen in quite a while"]
 
     # https://twitter.com/#!/ang3lfir3/status/72810316882391040
-    endorsements << [User.with_username('ang3lfir3'), "the companies I *want* to work for... care about the info on @coderwall"]
+    endorsements << [User.with_username('ang3lfir3'), 'the companies I *want* to work for... care about the info on @coderwall']
 
     # https://twitter.com/#!/chase_mccarthy/status/75582647396614145
     endorsements << [User.with_username('ozone1015'), "@coderwall is an awesome idea. It's like having Halo achievements for your resume!!!"]
 
     # https://twitter.com/#!/razorjack/status/75125655322374144
-    endorsements << [User.with_username('RazorJack'), "@coderwall is awesome but everyone already knows it."]
+    endorsements << [User.with_username('RazorJack'), '@coderwall is awesome but everyone already knows it.']
 
     # https://twitter.com/#!/kennethkalmer/status/86392260555587584
-    endorsements << [User.with_username('kennethkalmer'), "@coderwall really dishes out some neat achievements, hope this helps motivate even more folks to contribute to FOSS"]
+    endorsements << [User.with_username('kennethkalmer'), '@coderwall really dishes out some neat achievements, hope this helps motivate even more folks to contribute to FOSS']
 
     # endorsements << [User.with_username('jeffhogan'), 'I really dig @coderwall...I see great potential in utilizing @coderwall for portfolio/linkedin/professional ref. for developers!']
 
@@ -198,7 +198,7 @@ module ApplicationHelper
   end
 
   def profile_path(username)
-    #this is here because its really slow to use badges_url named routes. For example it adds a whole second to leaderboar
+    # this is here because its really slow to use badges_url named routes. For example it adds a whole second to leaderboar
     "/#{username}"
   end
 
@@ -211,7 +211,7 @@ module ApplicationHelper
   end
 
   def hide_all_but_first
-    return 'hide' if !@hide_all_but_first.nil?
+    return 'hide' unless @hide_all_but_first.nil?
     @hide_all_but_first = 'hide'
     nil
   end
@@ -249,20 +249,20 @@ module ApplicationHelper
     referrer.host == request.env['SERVER_NAME'] || referrer.host == URI.parse(request.env['REQUEST_URI']).host
   end
 
-  def follow_coderwall_on_twitter(text='Follow us on twitter', show_count=false)
+  def follow_coderwall_on_twitter(text = 'Follow us on twitter', show_count = false)
     link_to(text, 'http://twitter.com/coderwall', target: :new, class: 'twitter-follow-button', 'data-show-count' => show_count)
   end
 
   def admin_stat_class(yesterday, today)
-    today > yesterday ? "goodday" : "badday"
+    today > yesterday ? 'goodday' : 'badday'
   end
 
   def mperson
-    "http://data-vocabulary.org/Person"
+    'http://data-vocabulary.org/Person'
   end
 
   def maddress
-    "http://data-vocabulary.org/Address"
+    'http://data-vocabulary.org/Address'
   end
 
   def image_url(source)
@@ -276,32 +276,32 @@ module ApplicationHelper
   def number_to_word(number)
     case number
       when 1
-        "one"
+        'one'
       when 2
-        "two"
+        'two'
       when 3
-        "three"
+        'three'
       when 4
-        "four"
+        'four'
       when 5
-        "five"
+        'five'
       when 6
-        "six"
+        'six'
       when 7
-        "seven"
+        'seven'
       when 8
-        "eight"
+        'eight'
       when 9
-        "nine"
+        'nine'
       when 10
-        "ten"
+        'ten'
       else
         number.to_s
     end
   end
 
   def record_view_event(page_name)
-    record_event("viewed", what: "#{page_name}")
+    record_event('viewed', what: "#{page_name}")
   end
 
   def main_content_wrapper(omit)
@@ -310,17 +310,17 @@ module ApplicationHelper
 
   def mobile_device?
     if session[:mobile_param]
-      session[:mobile_param] == "1"
-    elsif params[:mobile] == "force"
+      session[:mobile_param] == '1'
+    elsif params[:mobile] == 'force'
       true
     else
       !(request.user_agent =~ /Mobile|webOS/).nil?
     end
   end
 
-  def cc_attribution(username, link='http://creativecommons.org/licenses/by-sa/2.0/')
-    haml_tag(:div, class: "cc") do
-      haml_concat link_to image_tag("https://d3levm2kxut31z.cloudfront.net/assets/cclicense-91f45ad7b8cd17d1c907d4bdb2bf4852.png", title: "Creative Commons Attribution-Share Alike 2.0 Generic License", alt: "Creative Commons Attribution-Share Alike 2.0 Generic License"), 'http://creativecommons.org/licenses/by-sa/2.0/'
+  def cc_attribution(username, link = 'http://creativecommons.org/licenses/by-sa/2.0/')
+    haml_tag(:div, class: 'cc') do
+      haml_concat link_to image_tag('https://d3levm2kxut31z.cloudfront.net/assets/cclicense-91f45ad7b8cd17d1c907d4bdb2bf4852.png', title: 'Creative Commons Attribution-Share Alike 2.0 Generic License', alt: 'Creative Commons Attribution-Share Alike 2.0 Generic License'), 'http://creativecommons.org/licenses/by-sa/2.0/'
       haml_tag(:span) do
         haml_concat link_to("photo by #{username}", link)
       end
@@ -331,5 +331,4 @@ module ApplicationHelper
     photo = LocationPhoto::Panoramic.for(location)
     cc_attribution(photo.try(:author), photo.try(:url))
   end
-
 end

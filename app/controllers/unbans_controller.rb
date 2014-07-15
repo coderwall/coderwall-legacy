@@ -1,5 +1,4 @@
 class UnbansController < BaseAdminController
-
   def create
     ban_params  = params.permit(:user_id)
     user        = User.find(ban_params[:user_id])

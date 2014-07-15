@@ -24,11 +24,10 @@ module NetValidators
     end
   end
 
-
   class UriValidator < ActiveModel::EachValidator
     def validate_each(object, attribute, value)
-      raise(ArgumentError, "A regular expression must be supplied as the :format option of the options hash") unless options[:format].nil? or options[:format].is_a?(Regexp)
-      configuration = {message: "is invalid or not responding", format: URI::regexp(%w(http https))}
+      fail(ArgumentError, 'A regular expression must be supplied as the :format option of the options hash') unless options[:format].nil? || options[:format].is_a?(Regexp)
+      configuration = { message: 'is invalid or not responding', format: URI.regexp(%w(http https)) }
       configuration.update(options)
 
       if value =~ (configuration[:format])
@@ -48,4 +47,3 @@ module NetValidators
     end
   end
 end
-

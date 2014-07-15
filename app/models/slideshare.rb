@@ -1,5 +1,5 @@
 class Slideshare < Struct.new(:username)
-  DOMAIN = "http://www.slideshare.net"
+  DOMAIN = 'http://www.slideshare.net'
 
   def doc
     @doc ||= begin
@@ -10,7 +10,7 @@ class Slideshare < Struct.new(:username)
   end
 
   def facts
-    doc.css('#slideshows ul li').collect do |presentation|
+    doc.css('#slideshows ul li').map do |presentation|
       heading = presentation.css('strong a').first
       if heading && heading[:href]
         time     = Chronic.parse(presentation.css('.stats span').first.text)
@@ -19,7 +19,7 @@ class Slideshare < Struct.new(:username)
         response = JSON.parse(RestClient.get("http://www.slideshare.net/api/oembed/2?url=#{url}&format=json"))
         title    = response['title']
         id       = response['slideshow_id'].to_s
-        fact     = Fact.append!(id, "slideshare:#{username}", title, date, url, ['slideshare', 'presentation'])
+        fact     = Fact.append!(id, "slideshare:#{username}", title, date, url, %w(slideshare presentation))
         Importers::Protips::SlideshareImporter.import_from_fact(fact)
         fact
       end

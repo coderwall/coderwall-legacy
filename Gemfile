@@ -140,11 +140,12 @@ group :development do
   gem 'better_errors'
   gem 'flog'
   gem 'fukuzatsu'
+  gem 'git_stats', require: false
   gem 'guard-rspec'
   gem 'rails-erd'
+  gem 'rubocop'
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'git_stats', require: false
 end
 
 group :development, :test do

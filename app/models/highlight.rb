@@ -4,11 +4,11 @@ class Highlight < ActiveRecord::Base
   after_create :add_to_timeline
 
   def self.random(limit = 1)
-    order("Random()").limit(limit)
+    order('Random()').limit(limit)
   end
 
   def self.random_featured(limit = 1)
-    where(featured: true).order("Random()").limit(limit).all(include: :user)
+    where(featured: true).order('Random()').limit(limit).all(include: :user)
   end
 
   def event
@@ -17,7 +17,7 @@ class Highlight < ActiveRecord::Base
 
   private
   def add_to_timeline
-    @event = Event.create_highlight_event(self.user, self)
+    @event = Event.create_highlight_event(user, self)
   end
 end
 

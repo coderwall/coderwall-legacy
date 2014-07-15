@@ -11,17 +11,17 @@ class LocationPhoto < Struct.new(:image_name, :author, :url, :location)
     end
 
     def for(user, location = nil)
-      return photos[location] if !location.nil?
+      return photos[location] unless location.nil?
       return photos[user.city] if photos[user.city]
       return photos[user.state_name] if photos[user.state_name]
       return photos[user.country] if photos[user.country]
-      return photos['Nowhere']
+      photos['Nowhere']
     end
   end
 
-  photo "nowhere.jpg", "sanfranannie", "http://www.flickr.com/photos/sanfranannie/2929942248", "Nowhere"
-  photo "czech.jpg", "fklv", "http://www.flickr.com/photos/fklv/2984579465/", "Czech Republic"
-  photo "turkey.png", "hectorgarcia", "http://www.flickr.com/photos/hectorgarcia/5637715404/", "Turkey"
+  photo 'nowhere.jpg', 'sanfranannie', 'http://www.flickr.com/photos/sanfranannie/2929942248', 'Nowhere'
+  photo 'czech.jpg', 'fklv', 'http://www.flickr.com/photos/fklv/2984579465/', 'Czech Republic'
+  photo 'turkey.png', 'hectorgarcia', 'http://www.flickr.com/photos/hectorgarcia/5637715404/', 'Turkey'
 
   class Panoramic < Struct.new(:image_name, :author, :url, :location)
     @@panoramas = {}
@@ -35,7 +35,7 @@ class LocationPhoto < Struct.new(:image_name, :author, :url, :location)
       end
 
       def for(location)
-        return photos[location.titleize] || photos["Worldwide"]
+        photos[location.titleize] || photos['Worldwide']
       end
     end
   end

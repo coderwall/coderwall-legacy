@@ -12,7 +12,7 @@ class Team
 
   # Disabled Team indexing because it slows down updates
   # we should BG this
-  #include Tire::Model::Callbacks
+  # include Tire::Model::Callbacks
 
   include TeamMapping
 
@@ -41,7 +41,7 @@ class Team
   field :youtube_url
 
   field :github_organization_name
-  alias :github :github_organization_name
+  alias_method :github, :github_organization_name
 
   field :highlight_tags
   field :branding
@@ -70,7 +70,7 @@ class Team
   field :organization_way_photo
 
   field :office_photos, type: Array, default: []
-  field :upcoming_events, type: Array, default: [] #just stubbed
+  field :upcoming_events, type: Array, default: [] # just stubbed
 
   field :featured_links_title
   embeds_many :featured_links, class_name: TeamLink.name
@@ -126,9 +126,9 @@ class Team
   after_destroy :reindex_search
   after_destroy :remove_dependencies
 
-  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
+  scope :featured, -> { where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
-  if Rails.env.development? #for Oli
+  if Rails.env.development? # for Oli
     def avatar_url
       url = super
       url = 'team-avatar.png'
@@ -141,20 +141,19 @@ class Team
   end
 
   class << self
-
     def with_name(name)
       where(name: name).first
     end
 
     def search(query_string, country, page, per_page, search_type = :query_and_fetch)
-      country = query_string.gsub!(/country:(.+)/, '') && $1 if country.nil?
-      query   = ""
+      country = query_string.gsub!(/country:(.+)/, '') && Regexp.last_match[1] if country.nil?
+      query   = ''
       if query_string.blank? or query_string =~ /:/
         query += query_string
       else
         query += "name:#{query_string}*"
       end
-      #query += "country:#{country}" unless country.nil?
+      # query += "country:#{country}" unless country.nil?
       begin
         tire.search(load: false, search_type: search_type, page: page, per_page: per_page) do
           query { string query, default_operator: 'AND' } if query_string.present?
@@ -162,7 +161,7 @@ class Team
           sort { by [{ score: 'desc', total_member_count: 'desc', '_score' => {} }] }
         end
       rescue Tire::Search::SearchRequestFailed => e
-        ::SearchResultsWrapper.new(nil, "Looks like our teams server is down. Try again soon.")
+        ::SearchResultsWrapper.new(nil, 'Looks like our teams server is down. Try again soon.')
       end
     end
 
@@ -170,7 +169,7 @@ class Team
       if !!(name =~ /\p{Latin}/)
         name.to_s.downcase.gsub(/[^a-z0-9]+/i, '-').chomp('-')
       else
-        name.to_s.gsub(/\s/, "-")
+        name.to_s.gsub(/\s/, '-')
       end
     end
 
@@ -182,7 +181,7 @@ class Team
       Team.featured.sort_by { |team| -team.match_score_for(user) }
     end
 
-    def completed_at_least(section_count = 6, page=1, per_page=Team.count, search_type = :query_and_fetch)
+    def completed_at_least(section_count = 6, page = 1, per_page = Team.count, search_type = :query_and_fetch)
       Team.search("completed_sections:[ #{section_count} TO * ]", nil, page, per_page, search_type)
     end
 
@@ -197,34 +196,34 @@ class Team
   end
 
   def match_score_for(user)
-    team_skills = self.tokenized_stack.blank? ? self.tokenized_job_tags : self.tokenized_stack
+    team_skills = tokenized_stack.blank? ? tokenized_job_tags : tokenized_stack
     (user.skills.map(&:tokenized) & team_skills).count
   end
 
   def best_positions_for(user)
     user_skills = user.skills.map(&:tokenized)
-    self.jobs.sort_by { |job| -(job.tags.map { |tag| Skill.tokenize(tag) } & user_skills).count }
+    jobs.sort_by { |job| -(job.tags.map { |tag| Skill.tokenize(tag) } & user_skills).count }
   end
 
   def most_influential_members_for(user)
-    influencers = user.following_by_type(User.name).where('follows.followable_id in (?)', self.team_members.map(&:id))
-    (influencers + self.team_members.first(3)).uniq
+    influencers = user.following_by_type(User.name).where('follows.followable_id in (?)', team_members.map(&:id))
+    (influencers + team_members.first(3)).uniq
   end
 
   def hiring_message
-    (!self.hiring_tagline.blank? && self.hiring_tagline) || (!self.about.blank? && self.about) || (!self.big_quote.blank? && self.big_quote)
+    (!hiring_tagline.blank? && hiring_tagline) || (!about.blank? && about) || (!big_quote.blank? && big_quote)
   end
 
   def tokenized_stack
-    @tokenized_stack ||= self.stack.collect { |stack| Skill.tokenize(stack) }
+    @tokenized_stack ||= stack.map { |stack| Skill.tokenize(stack) }
   end
 
   def tokenized_job_tags
-    @tokenized_job_tags ||= self.jobs.map(&:tags).flatten.collect { |tag| Skill.tokenize(tag) }
+    @tokenized_job_tags ||= jobs.map(&:tags).flatten.map { |tag| Skill.tokenize(tag) }
   end
 
   def tags_for_jobs
-    (self.stack + self.jobs.map(&:tags).flatten)
+    (stack + jobs.map(&:tags).flatten)
   end
 
   def has_protips?
@@ -239,28 +238,28 @@ class Team
     true
   end
 
-  def trending_protips(limit=4)
-    Protip.search_trending_by_team(self.slug, nil, 1, limit)
+  def trending_protips(limit = 4)
+    Protip.search_trending_by_team(slug, nil, 1, limit)
   end
 
   def locations
-    (location || '').split(';').collect { |location| location.strip }
+    (location || '').split(';').map { |location| location.strip }
   end
 
   def locations_message
     if premium?
-      team_locations.collect(&:name).join(', ')
+      team_locations.map(&:name).join(', ')
     else
       locations.join(', ')
     end
   end
 
   def dominant_country_of_members
-    User.where(team_document_id: self.id.to_s).select([:country, 'count(country) as count']).group([:country]).order('count DESC').limit(1).map(&:country)
+    User.where(team_document_id: id.to_s).select([:country, 'count(country) as count']).group([:country]).order('count DESC').limit(1).map(&:country)
   end
 
   def team_members
-    @team_members ||= User.where(team_document_id: self.id.to_s).all
+    @team_members ||= User.where(team_document_id: id.to_s).all
   end
 
   def reload_team_members
@@ -270,7 +269,7 @@ class Team
   def reach
     team_member_ids = team_members.map(&:id)
     Follow.where(followable_type: 'User', followable_id: team_member_ids).count + Follow.where(follower_id: team_member_ids, follower_type: 'User').count
-    #team_members.collect{|member| member.followers.count + member.following.count }.sum
+    # team_members.collect{|member| member.followers.count + member.following.count }.sum
   end
 
   def has_member?(user)
@@ -287,14 +286,14 @@ class Team
 
   def collective_days_on_github
     @collective_days_on_github ||= begin
-                                     days = team_members.collect { |user| days_since(user.joined_github_on) }.sum
+                                     days = team_members.map { |user| days_since(user.joined_github_on) }.sum
                                      # [(days / 365), (days % 365)]
                                    end
   end
 
   def collective_days_on_twitter
     @collective_days_on_twitter ||= begin
-                                      days = team_members.collect { |user| days_since(user.joined_twitter_on) }.sum
+                                      days = team_members.map { |user| days_since(user.joined_twitter_on) }.sum
                                       # [(days / 365), (days % 365)]
                                       # / ==#{@team.collective_days_on_twitter.first} yrs & #{@team.collective_days_on_twitter.last} days
                                     end
@@ -306,7 +305,7 @@ class Team
   end
 
   def events
-    @events ||= team_members.collect { |user| user.followed_repos }.flatten.sort { |x, y| y.date <=> x.date }
+    @events ||= team_members.map { |user| user.followed_repos }.flatten.sort { |x, y| y.date <=> x.date }
   end
 
   def achievements_with_counts
@@ -318,7 +317,7 @@ class Team
                                         achievements[badge.badge_class] += 1
                                       end
                                     end
-                                    achievements.sort_by { |k, v| v }.reverse
+                                    achievements.sort_by { |_k, v| v }.reverse
                                   end
   end
 
@@ -343,7 +342,7 @@ class Team
       completed_sections: number_of_completed_sections,
       country:            dominant_country_of_members,
       hiring:             hiring?,
-      locations:          locations_message.split(",").map(&:strip)
+      locations:          locations_message.split(',').map(&:strip)
     ).to_json
   end
 
@@ -354,13 +353,13 @@ class Team
   def public_hash
     neighbors = Team.find((higher_competitors(5) + lower_competitors(5)).flatten.uniq)
     summary.merge(
-      neighbors:    neighbors.collect(&:summary),
-      team_members: team_members.collect { |user| {
+      neighbors:    neighbors.map(&:summary),
+      team_members: team_members.map do |user| {
         name:               user.display_name,
         username:           user.username,
         badges_count:       user.badges_count,
         endorsements_count: user.endorsements_count
-      } }
+      } end
     )
   end
 
@@ -469,9 +468,9 @@ class Team
                                      end
                                    end
                                    unless only_one_occurence_of_each = specialties.values.sum == specialties.values.length
-                                     specialties.reject! { |k, v| v <= 1 }
+                                     specialties.reject! { |_k, v| v <= 1 }
                                    end
-                                   specialties.sort_by { |k, v| v }.reverse[0..7]
+                                   specialties.sort_by { |_k, v| v }.reverse[0..7]
                                  end
   end
 
@@ -508,7 +507,7 @@ class Team
   end
 
   def sorted_team_members
-    @sorted_team_members = User.where(team_document_id: self.id.to_s).order('score_cache DESC')
+    @sorted_team_members = User.where(team_document_id: id.to_s).order('score_cache DESC')
   end
 
   def add_user(user)
@@ -519,10 +518,10 @@ class Team
   end
 
   def remove_user(user)
-    if user.team_document_id.to_s == self.id.to_s
+    if user.team_document_id.to_s == id.to_s
       user.update_attribute(:team_document_id, nil)
       touch!
-      self.destroy if self.reload.empty?
+      destroy if reload.empty?
     end
   end
 
@@ -532,11 +531,11 @@ class Team
   end
 
   def total_member_count
-    User.where(team_document_id: self.id.to_s).count
+    User.where(team_document_id: id.to_s).count
   end
 
   def total_highlights_count
-    team_members.collect { |u| u.highlights.count }.sum
+    team_members.map { |u| u.highlights.count }.sum
   end
 
   def team_size_threshold
@@ -547,7 +546,7 @@ class Team
     end
   end
 
-  def <=> y
+  def <=>(y)
     val = team_size_threshold <=> y.team_size_threshold
     return val unless val == 0
 
@@ -567,9 +566,9 @@ class Team
     return nil if team_members.size <= 0
     log_history!
     update_team_size!
-    self.total             = team_members.collect(&:score).sum
-    self.achievement_count = team_members.collect { |t| t.badges.count }.sum
-    self.endorsement_count = team_members.collect { |t| t.endorsements.count }.sum
+    self.total             = team_members.map(&:score).sum
+    self.achievement_count = team_members.map { |t| t.badges.count }.sum
+    self.endorsement_count = team_members.map { |t| t.endorsements.count }.sum
     self.mean              = team_members.empty? ? 0 : (total / team_members_with_scores.size).to_f
     self.median            = calculate_median
     self.score             = [real_score, MAX_TEAM_SCORE].min
@@ -620,22 +619,22 @@ class Team
   end
 
   def calculate_median
-    sorted = team_members.collect(&:score).sort
+    sorted = team_members.map(&:score).sort
     return 0 if sorted.empty?
-    lower = sorted[(sorted.size/2) - 1]
-    upper = sorted[((sorted.size+1)/2) -1]
+    lower = sorted[(sorted.size / 2) - 1]
+    upper = sorted[((sorted.size + 1) / 2) - 1]
     (lower + upper) / 2
   end
 
   def team_members_with_scores
-    @team_members_with_scores ||= team_members.collect { |t| t.score > 0 }
+    @team_members_with_scores ||= team_members.map { |t| t.score > 0 }
   end
 
   def log_history!
-    REDIS.rpush("team:#{id.to_s}:score", {
+    REDIS.rpush("team:#{id}:score", {
       date:  Date.today,
-        score: self.score,
-        size:  self.size
+      score: score,
+      size:  size
     }.to_json)
   end
 
@@ -662,11 +661,11 @@ class Team
   end
 
   def timeline_key
-    @timeline_key ||= "team:#{id.to_s}:timeline"
+    @timeline_key ||= "team:#{id}:timeline"
   end
 
   def has_user_with_referral_token?(token)
-    team_members.collect(&:referral_token).include?(token)
+    team_members.map(&:referral_token).include?(token)
   end
 
   def impressions_key
@@ -699,7 +698,7 @@ class Team
     REDIS.get(impressions_key).to_i
   end
 
-  def viewers(since=0)
+  def viewers(since = 0)
     epoch_now  = Time.now.to_i
     viewer_ids = REDIS.zrevrangebyscore(user_views_key, epoch_now, since)
     User.where(id: viewer_ids).all
@@ -711,7 +710,7 @@ class Team
   end
 
   def followers
-    FollowedTeam.where(team_document_id: self.id.to_s)
+    FollowedTeam.where(team_document_id: id.to_s)
   end
 
   def self.most_active_countries
@@ -734,7 +733,7 @@ class Team
       '37signals',
       'Flattr',
       'Clock'
-    ].collect { |name| t = Team.where(name: name).first; puts name; t.recalculate!; t }.sort.reverse.each do |t|
+    ].map { |name| t = Team.where(name: name).first; puts name; t.recalculate!; t }.sort.reverse.each do |t|
       puts "#{t.score} => #{t.name}"
     end
     nil
@@ -762,7 +761,7 @@ class Team
 
   def generate_event
     only_member_is_creator = team_members.first.try(:id)
-    enqueue(GenerateEvent, self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
+    enqueue(GenerateEvent, event_type, Audience.following_user(only_member_is_creator), to_event_hash, 1.minute) unless only_member_is_creator.nil?
   end
 
   def to_event_hash
@@ -774,13 +773,13 @@ class Team
   end
 
   def fix_website_url!
-    unless self.website.blank? or self.website =~ /^https?:\/\//
-      self.website = "http://#{self.website}"
+    unless website.blank? || website =~ /^https?:\/\//
+      self.website = "http://#{website}"
     end
   end
 
   def upcoming_events
-    team_members.collect do |member|
+    team_members.map do |_member|
 
     end
   end
@@ -790,7 +789,7 @@ class Team
   end
 
   def active_job_titles
-    active_jobs.collect(&:title).uniq
+    active_jobs.map(&:title).uniq
   end
 
   def jobs
@@ -798,7 +797,7 @@ class Team
   end
 
   def all_jobs
-    Opportunity.where(team_document_id: self.id.to_s).order('created_at DESC')
+    Opportunity.where(team_document_id: id.to_s).order('created_at DESC')
   end
 
   def record_exit(viewer, exit_url, exit_target_type, furthest_scrolled, time_spent)
@@ -817,22 +816,22 @@ class Team
 
   def simple_visitors(since = 0)
     all_visitors = REDIS.zrangebyscore(user_views_key, since, Time.now.to_i, withscores: true) + REDIS.zrangebyscore(user_anon_views_key, since, Time.now.to_i, withscores: true)
-    Hash[*all_visitors.flatten].collect do |viewer_id, timestamp|
+    Hash[*all_visitors.flatten].map do |viewer_id, timestamp|
       visitor_data(nil, nil, nil, 0, viewer_id, timestamp, identify_visitor(viewer_id))
     end
   end
 
-  def visitors(since=0)
+  def visitors(since = 0)
     detailed_visitors    = self.detailed_visitors
-    first_detailed_visit = detailed_visitors.last.nil? ? self.updated_at : detailed_visitors.first[:visited_at]
-    self.detailed_visitors(since) + self.simple_visitors(since == 0 ? first_detailed_visit.to_i : since)
+    first_detailed_visit = detailed_visitors.last.nil? ? updated_at : detailed_visitors.first[:visited_at]
+    self.detailed_visitors(since) + simple_visitors(since == 0 ? first_detailed_visit.to_i : since)
   end
 
   SECTIONS       = %w(team-details members about-members big-headline big-quote challenges favourite-benefits organization-style office-images jobs stack protips why-work interview-steps locations team-blog)
   SECTION_FIELDS = %w(about headline big_quote our_challenge benefit_description_1 organization_way office_photos stack_list reason_name_1 interview_steps team_locations blog_feed)
 
-  def aggregate_visitors(since=0)
-    aggregate ={}
+  def aggregate_visitors(since = 0)
+    aggregate = {}
     visitors(since).map do |visitor|
       user_id            = visitor[:user_id].to_i
       aggregate[user_id] ||= visitor
@@ -856,15 +855,15 @@ class Team
   end
 
   def visitors_interested_in_jobs
-    aggregate_visitors.select { |visitor| visitor[:exit_target_type] == 'job-opportunity' }.collect { |visitor| visitor[:user_id] }
+    aggregate_visitors.select { |visitor| visitor[:exit_target_type] == 'job-opportunity' }.map { |visitor| visitor[:user_id] }
   end
 
   def members_interested_in_jobs
-    User.where(id: aggregate_visitors.select { |visitor| visitor[:exit_target_type] == 'job-opportunity' || visitor[:exit_target_type] == 'all-job-opportunities' }.collect { |visitor| visitor[:user_id] }).compact
+    User.where(id: aggregate_visitors.select { |visitor| visitor[:exit_target_type] == 'job-opportunity' || visitor[:exit_target_type] == 'all-job-opportunities' }.map { |visitor| visitor[:user_id] }).compact
   end
 
   def click_through_rate
-    self.visitors_interested_in_jobs.count/self.total_views(self.upgraded_at)
+    visitors_interested_in_jobs.count / total_views(upgraded_at)
   end
 
   def sections_up_to(furthest)
@@ -876,22 +875,22 @@ class Team
   end
 
   def reindex_search
-    if Rails.env.development? or Rails.env.test? or self.destroyed?
-      self.tire.update_index
+    if Rails.env.development? || Rails.env.test? || self.destroyed?
+      tire.update_index
     else
-      Resque.enqueue(IndexTeam, self.id)
+      Resque.enqueue(IndexTeam, id)
     end
   end
 
   def remove_dependencies
     [FollowedTeam, Invitation, Opportunity, SeizedOpportunity].each do |klass|
-      klass.where(team_document_id: self.id.to_s).delete_all
+      klass.where(team_document_id: id.to_s).delete_all
     end
-    User.where(team_document_id: self.id.to_s).update_all('team_document_id = NULL')
+    User.where(team_document_id: id.to_s).update_all('team_document_id = NULL')
   end
 
   def rerank!
-    enqueue(ProcessTeam, :recalculate, self.id)
+    enqueue(ProcessTeam, :recalculate, id)
   end
 
   def can_post_job?
@@ -899,7 +898,7 @@ class Team
   end
 
   def has_monthly_subscription?
-    self.monthly_subscription
+    monthly_subscription
   end
 
   def has_specified_enough_info?
@@ -910,17 +909,17 @@ class Team
     completed_sections = 0
 
     (SECTIONS - excluded_sections).map { |section| "has_#{section.gsub(/-/, '_')}?" }.each do |section_complete|
-      completed_sections +=1 if self.respond_to?(section_complete) && self.send(section_complete)
+      completed_sections += 1 if self.respond_to?(section_complete) && send(section_complete)
     end
     completed_sections
   end
 
   def has_team_details?
-    has_external_link? and !self.about.nil? and !self.avatar.nil?
+    has_external_link? && !about.nil? && !avatar.nil?
   end
 
   def has_external_link?
-    self.twitter.nil? or self.facebook.nil? or self.website.nil? or self.github.nil?
+    twitter.nil? || facebook.nil? || website.nil? || github.nil?
   end
 
   def has_members?
@@ -928,12 +927,12 @@ class Team
   end
 
   def stack
-    @stack_list ||= (self.stack_list || "").split(/,/)
+    @stack_list ||= (stack_list || '').split(/,/)
   end
 
   def blog
-    unless self.blog_feed.blank?
-      feed = Feedjira::Feed.fetch_and_parse(self.blog_feed)
+    unless blog_feed.blank?
+      feed = Feedjira::Feed.fetch_and_parse(blog_feed)
       feed unless feed.is_a?(Fixnum)
     end
   end
@@ -943,46 +942,46 @@ class Team
   end
 
   def plan
-    plan_id = self.account && self.account.plan_ids.first
+    plan_id = account && account.plan_ids.first
     plan_id && Plan.find(plan_id)
   end
 
   def plan=(plan)
-    self.build_account
-    self.account.admin_id = self.admins.first || self.team_members.first.id
-    self.account.subscribe_to!(plan, true)
+    build_account
+    account.admin_id = admins.first || team_members.first.id
+    account.subscribe_to!(plan, true)
   end
 
   def edited_by(user)
-    self.editors.delete(user.id)
-    self.editors << user.id
+    editors.delete(user.id)
+    editors << user.id
   end
 
   def latest_editors
-    self.editors.collect { |editor| User.where(id: editor).first }.compact
+    editors.map { |editor| User.where(id: editor).first }.compact
   end
 
   def video_url
-    if self.youtube_url =~ /vimeo\.com\/(\d+)/
-      "https://player.vimeo.com/video/#{$1}"
-    elsif self.youtube_url =~ /(youtube\.com|youtu\.be)\/(watch\?v=)?([\w\-_]{11})/i
-      "https://www.youtube.com/embed/#{$3}"
+    if youtube_url =~ /vimeo\.com\/(\d+)/
+      "https://player.vimeo.com/video/#{Regexp.last_match[1]}"
+    elsif youtube_url =~ /(youtube\.com|youtu\.be)\/(watch\?v=)?([\w\-_]{11})/i
+      "https://www.youtube.com/embed/#{Regexp.last_match[3]}"
     else
-      self.youtube_url
+      youtube_url
     end
   end
 
   def request_to_join(user)
-    self.pending_join_requests << user.id
+    pending_join_requests << user.id
   end
 
   def approve_join_request(user)
-    self.add_user(user)
-    self.pending_join_requests.delete user.id
+    add_user(user)
+    pending_join_requests.delete user.id
   end
 
   def deny_join_request(user)
-    self.pending_join_requests.delete user.id
+    pending_join_requests.delete user.id
   end
 
   private
@@ -1010,7 +1009,7 @@ class Team
   end
 
   def update_team_size!
-    self.size = User.where(team_document_id: self.id.to_s).count
+    self.size = User.where(team_document_id: id.to_s).count
   end
 
   def clear_cache_if_premium_team
@@ -1020,5 +1019,4 @@ class Team
   def create_slug!
     self.slug = self.class.slugify(name)
   end
-
 end

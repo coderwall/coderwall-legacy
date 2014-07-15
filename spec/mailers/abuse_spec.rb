@@ -1,18 +1,18 @@
-RSpec.describe Abuse, :type => :mailer do
+RSpec.describe Abuse, type: :mailer do
   describe 'report_inappropriate' do
 
-    let(:mail) { Abuse.report_inappropriate({ protip_public_id: protip.to_param }) }
+    let(:mail) { Abuse.report_inappropriate(protip_public_id: protip.to_param) }
 
     let(:current_user) { Fabricate(:user, admin: true) }
 
-    let(:protip) {
+    let(:protip) do
       Protip.create!(
-        title: "hello world",
+        title: 'hello world',
         body: "somethings that's meaningful and nice",
-        topics: ["java", "javascript"],
+        topics: %w(java javascript),
         user_id: current_user.id
       )
-    }
+    end
 
     it 'renders the headers' do
       expect(mail.subject).to match('Spam Report for Protip: "hello world"')
@@ -25,4 +25,3 @@ RSpec.describe Abuse, :type => :mailer do
     end
   end
 end
-

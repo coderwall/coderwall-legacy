@@ -6,7 +6,7 @@ class GithubBadge
       client_id: ENV['GITHUB_CLIENT_ID'],
       client_secret: ENV['GITHUB_SECRET']
     )
-  rescue Exception => e
+  rescue => e
     Rails.logger.error("Failed to initialize octokit: #{e.message}")
   end
 
@@ -44,9 +44,9 @@ class GithubBadge
     name = badge.badge_class.to_s
     # GH caps size of org name, so have to shorten special cases
     if name =~ /TwentyFourPullRequestsContinuous/
-      return "24PullRequestsContinuous"
+      return '24PullRequestsContinuous'
     elsif name =~ /TwentyFourPullRequestsParticipant/
-      return "24PullRequestsParticipant"
+      return '24PullRequestsParticipant'
     end
     name
   end

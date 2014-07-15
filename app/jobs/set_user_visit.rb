@@ -8,5 +8,4 @@ class SetUserVisit < Struct.new(:username)
     user.append_latest_visits(user.last_request_at || 2.years.ago)
     user.save(validate: false)
   end
-
 end

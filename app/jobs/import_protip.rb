@@ -21,7 +21,7 @@ class ImportProtip < Struct.new(:type, :arg1)
 
   def import_slideshares(fact_id)
     fact = Fact.find(fact_id)
-    #Importers::Protips::SlideshareImporter.import_from_fact(fact)
+    # Importers::Protips::SlideshareImporter.import_from_fact(fact)
   end
 
   def autsubscribe_users(username)

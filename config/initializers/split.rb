@@ -1,5 +1,5 @@
 Split.redis = REDIS
-Split.redis.namespace = "split:coderwall"
+Split.redis.namespace = 'split:coderwall'
 Split.configure do |config|
   # config.robot_regex = //
   # config.ignore_ip_addresses << 'disable chute office' '1.2.3.4'

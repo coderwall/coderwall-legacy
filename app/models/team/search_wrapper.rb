@@ -70,6 +70,6 @@ class Team::SearchWrapper
   end
 
   def locations_message
-    Array(item[:locations]).join(", ")
+    Array(item[:locations]).join(', ')
   end
 end

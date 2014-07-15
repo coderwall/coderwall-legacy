@@ -3,14 +3,13 @@ require 'rexml/document'
 require 'uri'
 
 class Taggers
-
   def self.acronyms(text)
     text.scan(/[A-Z][A-Z0-9]{2,}/).uniq
   end
 
   def self.tag(html = nil, url)
     html ||= Nokogiri.parse(open(url))
-    title, *text = html.xpath("//title|//h1|//h2").map(&:text)
+    title, *text = html.xpath('//title|//h1|//h2').map(&:text)
     text = (text + title).join
     tags = (YahooTagger.extract(text) + acronyms(text)).map(&:strip).uniq
     tags << title if tags.empty?
@@ -32,14 +31,14 @@ class Taggers
       def retrieve(options)
         options['appid'] = ENV['YAHOO_APP_KEY']
         response, data = Net::HTTP.post_form(URI.parse(ENV['YAHOO_TERM_EXTRACTION_URL']), options)
-        response == Net::HTTPSuccess ? data : ""
+        response == Net::HTTPSuccess ? data : ''
       end
 
       private
       def parse(xml)
         tags = []
         doc = REXML::Document.new(xml)
-        doc.elements.each("*/Result") do |result|
+        doc.elements.each('*/Result') do |result|
           tags << result.text
         end
         tags

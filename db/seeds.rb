@@ -26,7 +26,7 @@ Plan.find_or_create_by_id(2) do |s|
 end
 
 Plan.find_or_create_by_id(3) do |s|
-  s.amount    = 19900
+  s.amount    = 19_900
   s.interval  = nil
   s.name      = 'Single'
   s.currency  = 'usd'
@@ -35,7 +35,7 @@ Plan.find_or_create_by_id(3) do |s|
 end
 
 Plan.find_or_create_by_id(4) do |s|
-  s.amount    = 19900
+  s.amount    = 19_900
   s.interval  = 'month'
   s.name      = 'Analytics'
   s.currency  = 'usd'
@@ -103,23 +103,22 @@ end
 
 puts '---- PROTIPS ----'
 
-
 S.create_protip_for(bryce) do |p|
   p.title  = 'Suspendisse potenti'
   p.body   = '<p>Suspendisse potenti. Nunc iaculis risus vel &#8216;Orci Ornare&#8217; dignissim sed vitae nulla. Nulla lobortis tempus commodo. Suspendisse <em>potenti</em>. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id &#8216;molestie&#8217; magna risus ut nunc. Donec tempus tempus tellus, ac <abbr title="Hypertext Markup Language">HTML</abbr> lacinia turpis mattis ac. Fusce ac sodales magna. Fusce ac sodales <abbr title="Cascading Style Sheets">CSS</abbr> magna.</p>'
-  p.topics = %w{suspendisse potenti}
+  p.topics = %w(suspendisse potenti)
 end
 
 S.create_protip_for(bryce) do |p|
   p.title  = 'Vinyl Blue Bottle four loko wayfarers'
   p.body   = 'Austin try-hard artisan, bicycle rights salvia squid dreamcatcher hoodie before they sold out Carles scenester ennui. Organic mumblecore Tumblr, gentrify retro 90\'s fanny pack flexitarian raw denim roof party cornhole. Hella direct trade mixtape +1 cliche, slow-carb Neutra craft beer tousled fap DIY.'
-  p.topics = %w{etsy hipster}
+  p.topics = %w(etsy hipster)
 end
 
 S.create_protip_for(lisa) do |p|
   p.title  = 'Cras molestie risus a enim convallis vitae luctus libero lacinia'
   p.body   = '<p>Cras molestie risus a enim convallis vitae luctus libero lacinia. Maecenas sit <q cite="http://www.heydonworks.com">amet tellus nec mi gravida posuere</q> non pretium magna. Nulla vel magna sit amet dui <a href="#">lobortis</a> commodo vitae vel nulla. </p>'
-  p.topics = %w{cras molestie}
+  p.topics = %w(cras molestie)
 end
 
 puts '---- TEAMS ----'
@@ -134,7 +133,7 @@ paboi.big_quote = 'The dream of the 90s is alive in Portland!'
 paboi.featured_banner_image = 'http://images.amcnetworks.com/ifc.com/wp-content/uploads/2011/05/portlandia-put-a-bird-on-it-ifc.jpg'
 paboi.headline = 'We put birds on things!'
 paboi.hiring_tagline = 'Put a bird on it!'
-paboi.interview_steps = [ 'Do you like to put birds on things?' ]
+paboi.interview_steps = ['Do you like to put birds on things?']
 paboi.our_challenge = 'Keep the dream of the 90\'s alive!'
 paboi.reason_description_1 = 'Do you dream of the 90\'s?'
 paboi.reason_name_1 = 'Because flannel.'

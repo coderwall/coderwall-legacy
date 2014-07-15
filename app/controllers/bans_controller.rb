@@ -1,5 +1,4 @@
 class BansController < BaseAdminController
-
   def create
     ban_params = params.permit(:user_id)
     user = User.find(ban_params[:user_id])
@@ -13,5 +12,4 @@ class BansController < BaseAdminController
                    end
     redirect_to(badge_url(username: user.username), notice: flash_notice)
   end
-
 end

@@ -64,10 +64,7 @@ module Services
         ).merge(token: token, protip_id: protip_id)
       end
 
-      def token
-        @token
-      end
-
+      attr_reader :token
 
       def protip_id
         if @protip.class == Hash

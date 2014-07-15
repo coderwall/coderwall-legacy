@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe RedemptionsController, :type => :controller do
+RSpec.describe RedemptionsController, type: :controller do
 
   it 'should render page if user not signed in' do
     get :show, code: Redemption::STANDFORD_ACM312.code

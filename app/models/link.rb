@@ -1,15 +1,15 @@
 class Link
-  class AlreadyLinkForUser < RuntimeError;
-  end;
-  class InvalidUrl < RuntimeError;
-  end;
+  class AlreadyLinkForUser < RuntimeError
+  end
+  class InvalidUrl < RuntimeError
+  end
 
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  index({url: 1}, {unique: true})
-  index({user_ids: 1})
-  index({featured_on: 1})
+  index({ url: 1 }, { unique: true })
+  index(user_ids: 1)
+  index(featured_on: 1)
 
   field :url, type: String
   field :user_ids, type: Array, default: []
@@ -28,11 +28,11 @@ class Link
   scope :not_featured, where(featured_on: { '$exists' => false })
 
   class << self
-    #def feature_popular_links!
-      #popular.not_featured.all.each do |link|
-        #link.feature!
-      #end
-    #end
+    # def feature_popular_links!
+    # popular.not_featured.all.each do |link|
+    # link.feature!
+    # end
+    # end
 
     def register_for_user!(url, user)
       link = Link.for_url(url) || begin
@@ -60,29 +60,29 @@ class Link
       else
         return url
       end
-    rescue Exception => ex
+    rescue => ex
       Rails.logger.error(ex.message)
       raise InvalidUrl
     end
   end
 
-  #def feature!
-    #querystring        = QueryString.stringify({ url: url })
-    #response           = RestClient.get("http://api.embed.ly/1/oembed?#{querystring}")
-    #self.embedded_data = JSON.parse(response)
-    #self.featured_on   = Date.today
-    #save!
-  #end
+  # def feature!
+  # querystring        = QueryString.stringify({ url: url })
+  # response           = RestClient.get("http://api.embed.ly/1/oembed?#{querystring}")
+  # self.embedded_data = JSON.parse(response)
+  # self.featured_on   = Date.today
+  # save!
+  # end
 
   def add_user(user)
-    raise AlreadyLinkForUser if knows?(user)
-    self.score = (self.score || 0) + score_for_user(user)
-    self.user_ids << user.id
-    self.user_interests << user.interests
+    fail AlreadyLinkForUser if knows?(user)
+    self.score = (score || 0) + score_for_user(user)
+    user_ids << user.id
+    user_interests << user.interests
   end
 
   def knows?(user)
-    self.user_ids.include?(user.id)
+    user_ids.include?(user.id)
   end
 
   def title
@@ -104,7 +104,7 @@ class Link
   private
   def extract_host
     self.domain = URI.parse(url).host if url
-  rescue Exception => ex
+  rescue => ex
     Rails.logger.warn("Unable to extract host from #{url}")
   end
 
@@ -114,6 +114,6 @@ class Link
 
   def clean_collections
     self.user_count = user_ids.size
-    self.user_interests.flatten!
+    user_interests.flatten!
   end
 end

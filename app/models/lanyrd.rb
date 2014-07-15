@@ -1,10 +1,10 @@
 class Lanyrd < Struct.new(:username)
-  HOST    = "http://lanyrd.com"
-  API     = "/partners/coderwall/profile-api/"
+  HOST    = 'http://lanyrd.com'
+  API     = '/partners/coderwall/profile-api/'
   API_URL = "#{HOST}#{API}"
 
   def facts
-    events.collect do |event|
+    events.map do |event|
       id = event[:url].gsub(HOST, '') + ":#{username}"
       Fact.append!(id, "lanyrd:#{username}", event[:name], event[:date], event[:url], event[:tags])
     end
@@ -30,7 +30,7 @@ class Lanyrd < Struct.new(:username)
   end
 
   def topics_for(conference)
-    conference[:topics].collect { |topic| topic[:name] }
+    conference[:topics].map { |topic| topic[:name] }
   end
 
   def profile

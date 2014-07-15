@@ -1,6 +1,6 @@
 class ServeFonts < Sinatra::Base
-  ONE_YEAR = 31557600
-  TEN_YEARS_IN_TEXT = "Sun, 12 Jun 2022 22:13:16 GMT"
+  ONE_YEAR = 31_557_600
+  TEN_YEARS_IN_TEXT = 'Sun, 12 Jun 2022 22:13:16 GMT'
 
   get '/:font_face' do
     headers['Cache-Control'] = "public, max-age=#{ONE_YEAR}"

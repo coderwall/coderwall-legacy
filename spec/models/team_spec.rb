@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Team, :type => :model do
+RSpec.describe Team, type: :model do
   let(:team) { Fabricate(:team) }
   let(:invitee) { Fabricate(:user) }
 
@@ -16,7 +16,7 @@ RSpec.describe Team, :type => :model do
     team.reload_team_members
 
     expect(team.has_user_with_referral_token?('asdfasdf')).to eq(true)
-    expect(team.has_user_with_referral_token?("something else")).to eq(false)
+    expect(team.has_user_with_referral_token?('something else')).to eq(false)
   end
 
   it 'updates team size when adding and removing member' do
@@ -62,11 +62,11 @@ RSpec.describe Team, :type => :model do
     expect(team.featured_links.size).to eq(1)
   end
 
-  def seed_plans!(reset=false)
+  def seed_plans!(reset = false)
     Plan.destroy_all if reset
-    Plan.create(amount: 0, interval: Plan::MONTHLY, name: "Basic") if Plan.enhanced_team_page_free.nil?
-    Plan.create(amount: 9900, interval: Plan::MONTHLY, name: "Monthly") if Plan.enhanced_team_page_monthly.nil?
-    Plan.create(amount: 19900, interval: nil, name: "Single") if Plan.enhanced_team_page_one_time.nil?
-    Plan.create(amount: 19900, interval: Plan::MONTHLY, analytics: true, name: "Analytics") if Plan.enhanced_team_page_analytics.nil?
+    Plan.create(amount: 0, interval: Plan::MONTHLY, name: 'Basic') if Plan.enhanced_team_page_free.nil?
+    Plan.create(amount: 9900, interval: Plan::MONTHLY, name: 'Monthly') if Plan.enhanced_team_page_monthly.nil?
+    Plan.create(amount: 19_900, interval: nil, name: 'Single') if Plan.enhanced_team_page_one_time.nil?
+    Plan.create(amount: 19_900, interval: Plan::MONTHLY, analytics: true, name: 'Analytics') if Plan.enhanced_team_page_analytics.nil?
   end
 end

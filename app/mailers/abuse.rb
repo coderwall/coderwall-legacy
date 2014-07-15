@@ -6,8 +6,8 @@ class Abuse < ActionMailer::Base
   default_url_options[:host]      = 'coderwall.com'
   default_url_options[:only_path] = false
 
-  default to: Proc.new { User.admins.map(&:email) },
-    from: '"Coderwall" <support@coderwall.com>'
+  default to: proc { User.admins.map(&:email) },
+          from: '"Coderwall" <support@coderwall.com>'
 
   def report_inappropriate(opts)
     headers['X-Mailgun-Campaign-Id'] = 'coderwall-abuse-report_inappropriate'

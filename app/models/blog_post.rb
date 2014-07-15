@@ -1,7 +1,7 @@
 class BlogPost
   extend ActiveModel::Naming
 
-  BLOG_ROOT = Rails.root.join("app", "blog").expand_path
+  BLOG_ROOT = Rails.root.join('app', 'blog').expand_path
 
   class PostNotFound < StandardError
   end
@@ -14,7 +14,7 @@ class BlogPost
     end
 
     def all
-      Rails.cache.fetch("blog_posts", expires_in: 30.minutes) do
+      Rails.cache.fetch('blog_posts', expires_in: 30.minutes) do
         all_entries.map { |f| to_post(f) }
       end
     end
@@ -26,7 +26,7 @@ class BlogPost
     def find(id)
       found_post = all_entries.select { |f| id_of(f) == id }.first
       if found_post.nil?
-        raise BlogPost::PostNotFound, "Couldn't find post for id #{id}"
+        fail BlogPost::PostNotFound, "Couldn't find post for id #{id}"
       else
         to_post found_post
       end
@@ -45,7 +45,7 @@ class BlogPost
     end
 
     def id_of(pathname)
-      pathname.basename.to_s.gsub(pathname.extname, "")
+      pathname.basename.to_s.gsub(pathname.extname, '')
     end
   end
 
@@ -80,7 +80,6 @@ class BlogPost
   end
 
   def cached_content
-    @cached_content ||= @content.read.split("---")
+    @cached_content ||= @content.read.split('---')
   end
-
 end

@@ -37,9 +37,9 @@ class Skill < ActiveRecord::Base
   end
 
   def merge_with(another_skill)
-    if another_skill.user_id == self.user_id
+    if another_skill.user_id == user_id
       another_skill.endorsements.each do |endorsement|
-        self.endorsed_by(endorsement.endorser)
+        endorsed_by(endorsement.endorser)
       end
       self.repos           += another_skill.repos
       self.attended_events += another_skill.attended_events
@@ -49,7 +49,7 @@ class Skill < ActiveRecord::Base
 
   def endorsed_by(endorser)
     # endorsed is only in here during migration of endorsement to skill
-    endorsements.create!(endorser: endorser, endorsed: self.user, specialty: self.name)
+    endorsements.create!(endorser: endorser, endorsed: user, specialty: name)
   end
 
   def has_endorsements?
@@ -85,7 +85,7 @@ class Skill < ActiveRecord::Base
   end
 
   def locked?
-    return false #no longer lock skills
+    false # no longer lock skills
   end
 
   def trending_protips
@@ -113,12 +113,12 @@ class Skill < ActiveRecord::Base
   end
 
   def generate_event
-    enqueue(GenerateEvent, self.event_type, Audience.user_reach(self.user.id), self.to_event_hash)
+    enqueue(GenerateEvent, event_type, Audience.user_reach(user.id), to_event_hash)
   end
 
   def to_event_hash
-    { skill: { name: self.name, add_path: Rails.application.routes.url_helpers.add_skill_path(skill: { name: self.name }) },
-      user:  { username: self.user.username } }
+    { skill: { name: name, add_path: Rails.application.routes.url_helpers.add_skill_path(skill: { name: name }) },
+      user:  { username: user.username } }
   end
 
   def event_type

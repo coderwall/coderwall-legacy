@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe TeamsController, :type => :controller do
+RSpec.describe TeamsController, type: :controller do
   let(:current_user) { Fabricate(:user) }
   let(:team) { Fabricate(:team) }
 

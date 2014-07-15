@@ -4,6 +4,6 @@ module AccountsHelper
   end
 
   def purchased_plan(plan)
-    plan.nil? ? "Monthly" : plan.name
+    plan.nil? ? 'Monthly' : plan.name
   end
 end

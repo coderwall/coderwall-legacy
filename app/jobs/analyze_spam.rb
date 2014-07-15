@@ -4,7 +4,6 @@ class AnalyzeSpam < Struct.new(:spammable)
   @queue = 'MEDIUM'
 
   def perform
-
     ap(spammable) unless Rails.env.test?
 
     spammable.symbolize_keys!

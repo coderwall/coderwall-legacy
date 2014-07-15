@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Forked50, :type => :model do
+RSpec.describe Forked50, type: :model do
   before :all do
     Fact.delete_all
   end
@@ -11,7 +11,7 @@ RSpec.describe Forked50, :type => :model do
 
   it 'should award user if a repo has been forked 100 times' do
     user = Fabricate(:user, github: 'mdeiters')
-    fact = Fabricate(:github_original_fact, context: user, metadata: {times_forked: 50})
+    fact = Fabricate(:github_original_fact, context: user, metadata: { times_forked: 50 })
 
     badge = Forked50.new(user)
     expect(badge.award?).to eq(true)
@@ -19,7 +19,7 @@ RSpec.describe Forked50, :type => :model do
 
   it 'should not award user a repo has been forked 20 if it is a fork' do
     user = Fabricate(:user, github: 'mdeiters')
-    fact = Fabricate(:github_original_fact, context: user, tags: ['Ruby', 'repo', 'original', 'fork', 'github'], metadata: {times_forked: 20})
+    fact = Fabricate(:github_original_fact, context: user, tags: %w(Ruby repo original fork github), metadata: { times_forked: 20 })
 
     badge = Forked20.new(user)
     expect(badge.award?).to eq(false)

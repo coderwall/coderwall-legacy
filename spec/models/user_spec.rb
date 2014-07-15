@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe User, :type => :model do
+RSpec.describe User, type: :model do
   before :each do
     User.destroy_all
   end
@@ -28,9 +28,9 @@ RSpec.describe User, :type => :model do
 
   it 'should not allow the username in multiple cases to be use on creation' do
     user = Fabricate(:user, username: 'MDEITERS')
-    lambda {
+    lambda do
       expect(Fabricate(:user, username: 'mdeiters')).to raise_error('Validation failed: Username has already been taken')
-    }
+    end
   end
 
   it 'should not return incorrect user because of pattern matching' do
@@ -98,7 +98,7 @@ RSpec.describe User, :type => :model do
   end
 
   it 'instantiates new user with omniauth if the user is not on file' do
-    omniauth = {"info" => {"name" => "Matthew Deiters", "urls" => {"Blog" => "http://www.theagiledeveloper.com", "GitHub" => "http://github.com/mdeiters"}, "nickname" => "mdeiters", "email" => ""}, "uid" => 7330, "credentials" => {"token" => "f0f6946eb12c4156a7a567fd73aebe4d3cdde4c8"}, "extra" => {"user_hash" => {"plan" => {"name" => "micro", "collaborators" => 1, "space" => 614400, "private_repos" => 5}, "gravatar_id" => "aacb7c97f7452b3ff11f67151469e3b0", "company" => nil, "name" => "Matthew Deiters", "created_at" => "2008/04/14 15:53:10 -0700", "location" => "", "disk_usage" => 288049, "collaborators" => 0, "public_repo_count" => 18, "public_gist_count" => 31, "blog" => "http://www.theagiledeveloper.com", "following_count" => 27, "id" => 7330, "owned_private_repo_count" => 2, "private_gist_count" => 2, "type" => "User", "permission" => nil, "total_private_repo_count" => 2, "followers_count" => 19, "login" => "mdeiters", "email" => ""}}, "provider" => "github"}
+    omniauth = { 'info' => { 'name' => 'Matthew Deiters', 'urls' => { 'Blog' => 'http://www.theagiledeveloper.com', 'GitHub' => 'http://github.com/mdeiters' }, 'nickname' => 'mdeiters', 'email' => '' }, 'uid' => 7330, 'credentials' => { 'token' => 'f0f6946eb12c4156a7a567fd73aebe4d3cdde4c8' }, 'extra' => { 'user_hash' => { 'plan' => { 'name' => 'micro', 'collaborators' => 1, 'space' => 614_400, 'private_repos' => 5 }, 'gravatar_id' => 'aacb7c97f7452b3ff11f67151469e3b0', 'company' => nil, 'name' => 'Matthew Deiters', 'created_at' => '2008/04/14 15:53:10 -0700', 'location' => '', 'disk_usage' => 288_049, 'collaborators' => 0, 'public_repo_count' => 18, 'public_gist_count' => 31, 'blog' => 'http://www.theagiledeveloper.com', 'following_count' => 27, 'id' => 7330, 'owned_private_repo_count' => 2, 'private_gist_count' => 2, 'type' => 'User', 'permission' => nil, 'total_private_repo_count' => 2, 'followers_count' => 19, 'login' => 'mdeiters', 'email' => '' } }, 'provider' => 'github' }
 
     user = User.for_omniauth(omniauth.with_indifferent_access)
     expect(user).to be_new_record
@@ -139,43 +139,43 @@ RSpec.describe User, :type => :model do
     expect(user.badges.count).to eq(1)
   end
 
-  describe "redemptions" do
-    it "should have an empty list of redemptions when new" do
+  describe 'redemptions' do
+    it 'should have an empty list of redemptions when new' do
       expect(Fabricate.build(:user).redemptions).to be_empty
     end
 
-    it "should have a single redemption with a redemptions list of one item" do
-      user = Fabricate.build(:user, redemptions: %w{railscampx nodeknockout})
+    it 'should have a single redemption with a redemptions list of one item' do
+      user = Fabricate.build(:user, redemptions: %w(railscampx nodeknockout))
       user.save
-      expect(user.reload.redemptions).to eq(%w{railscampx nodeknockout})
+      expect(user.reload.redemptions).to eq(%w(railscampx nodeknockout))
     end
 
-    it "should allow you to add a redemption" do
-      user = Fabricate.build(:user, redemptions: %w{foo})
-      user.update_attributes redemptions: %w{bar}
-      expect(user.reload.redemptions).to eq(%w{bar})
+    it 'should allow you to add a redemption' do
+      user = Fabricate.build(:user, redemptions: %w(foo))
+      user.update_attributes redemptions: %w(bar)
+      expect(user.reload.redemptions).to eq(%w(bar))
     end
 
-    it "should allow you to remove redemptions" do
-      user = Fabricate.build(:user, redemptions: %w{foo})
+    it 'should allow you to remove redemptions' do
+      user = Fabricate.build(:user, redemptions: %w(foo))
       user.update_attributes redemptions: []
       expect(user.reload.redemptions).to be_empty
     end
   end
 
-  describe "validation" do
-    it "should not allow a username in the reserved list" do
+  describe 'validation' do
+    it 'should not allow a username in the reserved list' do
       User::RESERVED.each do |reserved|
         user = Fabricate.build(:user, username: reserved)
         expect(user).not_to be_valid
-        expect(user.errors[:username]).to eq(["is reserved"])
+        expect(user.errors[:username]).to eq(['is reserved'])
       end
     end
 
-    it "should not allow a username with a period character" do
-      user = Fabricate.build(:user, username: "foo.bar")
+    it 'should not allow a username with a period character' do
+      user = Fabricate.build(:user, username: 'foo.bar')
       expect(user).not_to be_valid
-      expect(user.errors[:username]).to eq(["must not contain a period"])
+      expect(user.errors[:username]).to eq(['must not contain a period'])
     end
   end
 
@@ -237,9 +237,9 @@ RSpec.describe User, :type => :model do
   end
 
   it 'should pull twitter follow list and follow any users on our system' do
-    expect(Twitter).to receive(:friend_ids).with(6271932).and_return(['1111', '2222'])
+    expect(Twitter).to receive(:friend_ids).with(6_271_932).and_return(%w(1111 2222))
 
-    user = Fabricate(:user, twitter_id: 6271932)
+    user = Fabricate(:user, twitter_id: 6_271_932)
     other_user = Fabricate(:user, twitter_id: '1111')
     expect(user).not_to be_following(other_user)
     user.build_follow_list!
@@ -276,7 +276,7 @@ RSpec.describe User, :type => :model do
 
     it 'should assign a new api_key if the one generated already exists' do
       RandomSecure = double('RandomSecure')
-      allow(RandomSecure).to receive(:hex).and_return("0b5c141c21c15b34")
+      allow(RandomSecure).to receive(:hex).and_return('0b5c141c21c15b34')
       user2 = Fabricate(:user)
       api_key2 = user2.api_key
       user2.api_key = RandomSecure.hex(8)
@@ -315,11 +315,11 @@ RSpec.describe User, :type => :model do
   describe 'banning' do
     let(:user) { Fabricate(:user) }
 
-    it "should respond to banned? public method" do
+    it 'should respond to banned? public method' do
       expect(user.respond_to?(:banned?)).to be_truthy
     end
 
-    it "should not default to banned" do
+    it 'should not default to banned' do
       expect(user.banned?).to eq(false)
     end
 

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe NephilaKomaci, :type => :model do
-  let(:languages) { {
-      "PHP" => 2519686,
-      "Python" => 76867
-  } }
+RSpec.describe NephilaKomaci, type: :model do
+  let(:languages) do {
+    'PHP' => 2_519_686,
+    'Python' => 76_867
+  } end
   let(:repo) { Fabricate(:github_repo, languages: languages) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }

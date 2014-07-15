@@ -7,7 +7,7 @@ class Campaigns < ActionMailer::Base
     :digest_mailer
   end
 
-  default_url_options[:host] = "coderwall.com"
+  default_url_options[:host] = 'coderwall.com'
   default_url_options[:only_path] = false
   default from: '"Coderwall" <support@coderwall.com>'
 
@@ -16,19 +16,16 @@ class Campaigns < ActionMailer::Base
 
     @user = User.with_username(username)
 
-    mail to: @user.email, subject: "[Coderwall] Unlock the new Entrepreneur badge"
+    mail to: @user.email, subject: '[Coderwall] Unlock the new Entrepreneur badge'
   end
 
   if Rails.env.development?
     class Preview < MailView
-
       def asm_badge
-        user = User.active.order("Random()").first
+        user = User.active.order('Random()').first
         mail = ::Campaigns.asm_badge(user.username)
         mail
       end
-
     end
   end
-
 end

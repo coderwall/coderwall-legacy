@@ -1,30 +1,30 @@
 #!/usr/bin/env ruby
 # vim: set syntax=ruby
 
-environment = "production"
-branch = "master"
+environment = 'production'
+branch = 'master'
 
-def abort(text="failure")
-  exit text + " DID NOT DEPLOY"
+def abort(text = 'failure')
+  exit text + ' DID NOT DEPLOY'
 end
 
 def tests_pass?
-  %x[ rake spec:fast | grep '[1-9]\{1\}[0-9]* failure'] == ''
+  ` rake spec:fast | grep '[1-9]\{1\}[0-9]* failure'` == ''
 end
 
 puts "pulling latest code from #{branch}"
-%x[ git pull origin #{branch} ]
+` git pull origin `
 
-puts "running specs..."
+puts 'running specs...'
 unless tests_pass?
-  abort "tests FAILED!"
+  abort 'tests FAILED!'
 end
 
 puts "deploying #{branch} to #{environment}..."
 
-%x[ git push production #{branch}]
+` git push production `
 
 # TODO
-#heroku maintenance:on
-#heroku pgbackups:capture --expire --app production
-#Back up MongoDB
+# heroku maintenance:on
+# heroku pgbackups:capture --expire --app production
+# Back up MongoDB

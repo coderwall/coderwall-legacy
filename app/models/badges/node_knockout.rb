@@ -1,7 +1,6 @@
 require 'csv'
 
 class NodeKnockout
-
   CATEGORIES   = %w(innovation design utility completeness popularity)
   PARTICIPANTS = %w(judges contenders)
   WINNERS      = %w(team solo)
@@ -15,11 +14,11 @@ class NodeKnockout
   end
 
   def user_with_github(github_username)
-    where(["UPPER(github) = ?", github_username.upcase]).first
+    where(['UPPER(github) = ?', github_username.upcase]).first
   end
 
   def scrap
-    res = Servant.get("http://nodeknockout.com/people")
+    res = Servant.get('http://nodeknockout.com/people')
     doc = Nokogiri::HTML(res.to_s)
     doc.css('#inner ul li a').each do |element|
       if element[:href] =~ /people\//i
@@ -34,7 +33,7 @@ class NodeKnockout
       csv = CSV.parse(text, headers: false)
       csv.each do |row|
         category = row.shift
-        self.send("#{category}=", row.to_a)
+        send("#{category}=", row.to_a)
       end
     end
   end
@@ -49,26 +48,26 @@ class NodeKnockout
 
   def reset!
     load_from_file
-    only_contenders = self.contenders - (self.winners + self.popularity + self.utility + self.design + self.innovation + self.completeness)
+    only_contenders = contenders - (winners + popularity + utility + design + innovation + completeness)
     replace_assignments_and_awards(only_contenders, self.ContenderBadge)
-    replace_assignments_and_awards(self.winners, self.ChampionBadge)
-    replace_assignments_and_awards(self.popularity, self.MostVotesBadge)
-    replace_assignments_and_awards(self.utility, self.MostUsefulBadge)
-    replace_assignments_and_awards(self.design, self.BestDesignBadge)
-    replace_assignments_and_awards(self.innovation, self.MostInnovativeBadge)
-    replace_assignments_and_awards(self.completeness, self.MostCompleteBadge)
-    replace_assignments_and_awards_for_twitter(self.judges, self.JudgeBadge)
-    puts "DONE"
+    replace_assignments_and_awards(winners, self.ChampionBadge)
+    replace_assignments_and_awards(popularity, self.MostVotesBadge)
+    replace_assignments_and_awards(utility, self.MostUsefulBadge)
+    replace_assignments_and_awards(design, self.BestDesignBadge)
+    replace_assignments_and_awards(innovation, self.MostInnovativeBadge)
+    replace_assignments_and_awards(completeness, self.MostCompleteBadge)
+    replace_assignments_and_awards_for_twitter(judges, self.JudgeBadge)
+    puts 'DONE'
   end
 
   def replace_assignments_and_awards(github_usernames, badge_class)
     competition_end_date = Date.parse(@end_date)
-    tags                 = ['hackathon', 'nodejs', 'award', 'nodeknockout']
+    tags                 = %w(hackathon nodejs award nodeknockout)
     metadata             = {
       award: badge_class.name
     }
     github_usernames.each do |github_username|
-      fact = Fact.append!("http://nodeknockout.com/#{badge_class.to_s}:#{github_username}", "github:#{github_username}", badge_class.description, competition_end_date, "http://nodeknockout.com/", tags, metadata)
+      fact = Fact.append!("http://nodeknockout.com/#{badge_class}:#{github_username}", "github:#{github_username}", badge_class.description, competition_end_date, 'http://nodeknockout.com/', tags, metadata)
       fact.user.try(:check_achievements!)
     end
   end
@@ -76,10 +75,10 @@ class NodeKnockout
   # erniehacks => Judget
   def replace_assignments_and_awards_for_twitter(twitter_usernames, badge_class)
     competition_end_date = Date.parse(@end_date)
-    tags                 = ['hackathon', 'nodejs', 'award', 'nodeknockout']
+    tags                 = %w(hackathon nodejs award nodeknockout)
     metadata             = { award: badge_class.name }
     twitter_usernames.each do |twitter_username|
-      fact = Fact.append!("http://nodeknockout.com/#{badge_class.to_s}:#{twitter_username}", "twitter:#{twitter_username}", badge_class.description, competition_end_date, "http://nodeknockout.com/", tags, metadata)
+      fact = Fact.append!("http://nodeknockout.com/#{badge_class}:#{twitter_username}", "twitter:#{twitter_username}", badge_class.description, competition_end_date, 'http://nodeknockout.com/', tags, metadata)
       fact.user.try(:check_achievements!)
     end
   end
@@ -100,54 +99,50 @@ class NodeKnockout
     WINNERS.each do |winner_category|
       populate_category(winner_category)
     end
-    self.winners = WINNERS.map { |winner| self.send(winner) }.reduce(:+)
+    self.winners = WINNERS.map { |winner| send(winner) }.reduce(:+)
   end
 
   def populate_category(category)
     res  = Servant.get("http://nodeknockout.com/entries?sort=#{category}")
     doc  = Nokogiri::HTML(res.to_s)
     link = doc.css('ul.teams > li h4 a').first[:href]
-    self.send("#{category}=", get_people_from(link).map { |user| user[1] }) #get the usernames
+    send("#{category}=", get_people_from(link).map { |user| user[1] }) # get the usernames
   end
 
   def populate_participants
     self.judges     = []
     self.contenders = []
-    get_people_from("/people").each do |role, user|
-      if role == "judge"
-        self.judges << user
-      elsif role == "contestant"
-        self.contenders << user
+    get_people_from('/people').each do |role, user|
+      if role == 'judge'
+        judges << user
+      elsif role == 'contestant'
+        contenders << user
       end
     end
   end
 
   def github_for(path)
-    begin
-      res      = Servant.get("http://nodeknockout.com#{path}")
-      doc      = Nokogiri::HTML(res.to_s)
-      username = doc.css("a.github").first[:href].gsub(/https?:\/\/github.com\//, '')
-      role     = doc.css(".role").first.text
-      Rails.logger.info "Found node knockout #{role}: #{username}"
-      return [role, username]
-    rescue Exception => ex
-      Rails.logger.warn("Was unable to determine github for #{path}")
-      return nil
-    end
+    res      = Servant.get("http://nodeknockout.com#{path}")
+    doc      = Nokogiri::HTML(res.to_s)
+    username = doc.css('a.github').first[:href].gsub(/https?:\/\/github.com\//, '')
+    role     = doc.css('.role').first.text
+    Rails.logger.info "Found node knockout #{role}: #{username}"
+    return [role, username]
+  rescue => ex
+    Rails.logger.warn("Was unable to determine github for #{path}")
+    return nil
   end
 
   def twitter_for(path)
-    begin
-      res      = Servant.get("http://nodeknockout.com#{path}")
-      doc      = Nokogiri::HTML(res.to_s)
-      username = doc.css("a.twitter").first[:href].gsub("http://twitter.com/", '').strip
-      role     = doc.css(".role").first.text
-      Rails.logger.info "Found node knockout #{role}: #{username}"
-      return [role, username]
-    rescue Exception => ex
-      Rails.logger.warn("Was unable to determine twitter for #{path}")
-      return nil
-    end
+    res      = Servant.get("http://nodeknockout.com#{path}")
+    doc      = Nokogiri::HTML(res.to_s)
+    username = doc.css('a.twitter').first[:href].gsub('http://twitter.com/', '').strip
+    role     = doc.css('.role').first.text
+    Rails.logger.info "Found node knockout #{role}: #{username}"
+    return [role, username]
+  rescue => ex
+    Rails.logger.warn("Was unable to determine twitter for #{path}")
+    return nil
   end
 
   AWARDS = %w(Champion BestDesign MostVotes MostUseful MostInnovative MostComplete Contender Judge)
@@ -160,7 +155,7 @@ class NodeKnockout
 
   YEARS.each do |year|
     const_set "Contender#{year}", Class.new(BadgeBase) {
-      describe "KO Contender",
+      describe 'KO Contender',
                skill:       'Node.js',
                description: "Participated in #{year} Node Knockout",
                for:         "participating in #{year} Node Knockout.",
@@ -169,7 +164,7 @@ class NodeKnockout
     }
 
     const_set "Judge#{year}", Class.new(BadgeBase) {
-      describe "KO Judge",
+      describe 'KO Judge',
                skill:       'Node.js',
                description: "Official Judge of the #{year} Node Knockout",
                for:         "judging the #{year} Node Knockout.",
@@ -178,7 +173,7 @@ class NodeKnockout
     }
 
     const_set "Champion#{year}", Class.new(BadgeBase) {
-      describe "KO Champion",
+      describe 'KO Champion',
                skill:       'Node.js',
                description: "Won first place in the #{year} Node Knockout",
                for:         "winning first place in the #{year} Node Knockout.",
@@ -187,7 +182,7 @@ class NodeKnockout
     }
 
     const_set "BestDesign#{year}", Class.new(BadgeBase) {
-      describe "KO Design",
+      describe 'KO Design',
                skill:       'Node.js',
                description: "Won the best designed app in the #{year} Node Knockout",
                for:         "winning the best designed app in the #{year} Node Knockout",
@@ -196,7 +191,7 @@ class NodeKnockout
     }
 
     const_set "MostVotes#{year}", Class.new(BadgeBase) {
-      describe "KO Popular",
+      describe 'KO Popular',
                skill:       'Node.js',
                description: "Won the most votes in the #{year} Node Knockout",
                for:         "winning the most votes in the #{year} Node Knockout",
@@ -205,7 +200,7 @@ class NodeKnockout
     }
 
     const_set "MostUseful#{year}", Class.new(BadgeBase) {
-      describe "KO Utility",
+      describe 'KO Utility',
                skill:       'Node.js',
                description: "Won the most useful app in the #{year} Node Knockout",
                for:         "winning the most useful app in the #{year} Node Knockout",
@@ -214,7 +209,7 @@ class NodeKnockout
     }
 
     const_set "MostInnovative#{year}", Class.new(BadgeBase) {
-      describe "KO Innovation",
+      describe 'KO Innovation',
                skill:       'Node.js',
                description: "Won the most innovative app in the #{year} Node Knockout",
                for:         "winning the most innovative app in the #{year} Node Knockout",
@@ -223,7 +218,7 @@ class NodeKnockout
     }
 
     const_set "MostComplete#{year}", Class.new(BadgeBase) {
-      describe "KO Complete",
+      describe 'KO Complete',
                skill:       'Node.js',
                description: "Won the most complete app in the #{year} Node Knockout",
                for:         "winning the most complete app in the #{year} Node Knockout",

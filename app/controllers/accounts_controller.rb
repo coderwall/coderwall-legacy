@@ -48,7 +48,7 @@ class AccountsController < ApplicationController
 
   def webhook
     data = JSON.parse request.body.read
-    if data[:type] == "invoice.payment_succeeded"
+    if data[:type] == 'invoice.payment_succeeded'
       invoice_id  = data['data']['object']['id']
       customer_id = data['data']['object']['customer']
       team        = Team.where('account.stripe_customer_token' => customer_id).first
@@ -64,7 +64,7 @@ class AccountsController < ApplicationController
   def send_invoice
     @team = Team.find(params[:team_id])
     @team.account.send_invoice_for(1.month.ago)
-    redirect_to teamname_path(slug: @team.slug), notice: "sent invoice for #{1.month.ago.strftime("%B")} to #{@team.account.admin.email}"
+    redirect_to teamname_path(slug: @team.slug), notice: "sent invoice for #{1.month.ago.strftime('%B')} to #{@team.account.admin.email}"
   end
 
   private
@@ -84,15 +84,15 @@ class AccountsController < ApplicationController
   end
 
   def ensure_eligibility
-    return redirect_to(teamname_path(@team.slug), notice: "you must complete at least 6 sections of the team profile before posting jobs") unless @team.has_specified_enough_info?
+    return redirect_to(teamname_path(@team.slug), notice: 'you must complete at least 6 sections of the team profile before posting jobs') unless @team.has_specified_enough_info?
   end
 
   def plan_capability(plan, team)
-    message = ""
+    message = ''
     if plan.subscription?
       message = "You can now post up to #{team.number_of_jobs_to_show} jobs at any time"
     elsif plan.one_time?
-      message = "You can now post one job for 30 days"
+      message = 'You can now post one job for 30 days'
     end
     message
   end
@@ -100,5 +100,4 @@ class AccountsController < ApplicationController
   def paying_user_context
     Honeybadger.context(user_email: current_user.try(:email)) if current_user
   end
-
 end

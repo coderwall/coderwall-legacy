@@ -1,8 +1,8 @@
 Array.class_eval do
-  def chunk(pieces=2)
+  def chunk(pieces = 2)
     results = []
     counter = 0
-    self.each do |item|
+    each do |item|
       counter = 0 if counter == pieces
       (results[counter] || (results << Array.new))
       results[counter] << item

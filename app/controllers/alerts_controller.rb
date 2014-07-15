@@ -34,7 +34,7 @@ class AlertsController < ApplicationController
 
     case @alert[:type].to_sym
       when :traction, :google_analytics
-        valid = (@alert[:key] == "3fEtu89_W13k1")
+        valid = (@alert[:key] == '3fEtu89_W13k1')
       else
         valid = false
     end
@@ -78,7 +78,7 @@ class AlertsController < ApplicationController
     Time.at(REDIS.get(last_sent_key(:traction, url)).to_i) < TRACTION_ALERT_INTERVAL.ago
   end
 
-  def last_sent_key(type, subkey=nil)
+  def last_sent_key(type, subkey = nil)
     key = "alert:#{type}:last_sent"
     key += ":#{subkey}" unless subkey.nil?
     key

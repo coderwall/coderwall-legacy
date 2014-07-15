@@ -32,33 +32,29 @@ class Fact < ActiveRecord::Base
   end
 
   def merge!(another_fact)
-    self.tags        = (another_fact.tags.nil? ? another_fact.tags : (self.tags + another_fact.tags).uniq)
+    self.tags        = (another_fact.tags.nil? ? another_fact.tags : (tags + another_fact.tags).uniq)
     self.owner       = another_fact.owner.downcase
     self.name        = another_fact.name
     self.url         = another_fact.url
     self.relevant_on = another_fact.relevant_on
-    self.metadata.merge!(another_fact.metadata)
+    metadata.merge!(another_fact.metadata)
     self.save!
     self
   end
 
-  def context=(val)
-    @context = val
-  end
+  attr_writer :context
 
-  def context
-    @context
-  end
+  attr_reader :context
 
   def tagged?(*required_tags)
     required_tags.each do |tag|
-      return false if !tags.include?(tag)
+      return false unless tags.include?(tag)
     end
-    return true
+    true
   end
 
   def user
-    service, username = self.owner.split(":")
+    service, username = owner.split(':')
     User.with_username(username, service)
   end
 end

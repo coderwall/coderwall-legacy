@@ -1,34 +1,34 @@
 Date.class_eval do
   def to_words
     if self == Date.today
-      "today"
+      'today'
     elsif self <= Date.today - 1
       if self == Date.today - 1
-        "yesterday"
+        'yesterday'
       elsif ((Date.today - 7)..(Date.today - 1)).include?(self)
-        "last #{self.strftime("%A")}"
+        "last #{strftime('%A')}"
       elsif ((Date.today - 14)..(Date.today - 8)).include?(self)
-        "two #{self.strftime("%A")}s ago"
+        "two #{strftime('%A')}s ago"
       elsif ((Date.today - 21)..(Date.today - 15)).include?(self)
-        "three #{self.strftime("%A")}s ago"
+        "three #{strftime('%A')}s ago"
       elsif ((Date.today - 29)..(Date.today - 22)).include?(self)
-        "four #{self.strftime("%A")}s ago"
+        "four #{strftime('%A')}s ago"
       elsif Date.today - 30 < self
-        "more than a month ago"
+        'more than a month ago'
       end
     else
       if self == Date.today + 1
-        "tomorrow"
+        'tomorrow'
       elsif ((Date.today + 1)..(Date.today + 6)).include?(self)
-        "this coming #{self.strftime("%A")}"
+        "this coming #{strftime('%A')}"
       elsif ((Date.today + 7)..(Date.today + 14)).include?(self)
-        "next #{self.strftime("%A")}"
+        "next #{strftime('%A')}"
       elsif ((Date.today + 15)..(Date.today + 21)).include?(self)
-        "two #{self.strftime("%A")}s away"
+        "two #{strftime('%A')}s away"
       elsif ((Date.today + 22)..(Date.today + 29)).include?(self)
-        "three #{self.strftime("%A")}s away"
+        "three #{strftime('%A')}s away"
       elsif Date.today + 30 > self
-        "more than a month in the future"
+        'more than a month in the future'
       end
     end
   end

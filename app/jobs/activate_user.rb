@@ -3,7 +3,7 @@ class ActivateUser < RefreshUser
 
   attr_reader :always_activate
 
-  def initialize(username, always_activate=true)
+  def initialize(username, always_activate = true)
     super(username)
     @always_activate = always_activate
   end
@@ -21,8 +21,7 @@ class ActivateUser < RefreshUser
   end
 
   def activate_user?(user)
-    return true if !user.badges.empty?
+    return true unless user.badges.empty?
     always_activate
   end
-
 end

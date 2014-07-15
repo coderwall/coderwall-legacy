@@ -1,6 +1,4 @@
 class PagesController < ApplicationController
-
-
   def show
     show_pages_params = params.permit(:page, :layout)
 
@@ -13,7 +11,7 @@ class PagesController < ApplicationController
 
   # Checks whether the requested_page exists in app/views/pages/*.html.haml
   def whitelist_page(requested_page)
-    raise "Invalid page: #{requested_page}" unless ::STATIC_PAGES.include?(requested_page.to_s)
+    fail "Invalid page: #{requested_page}" unless ::STATIC_PAGES.include?(requested_page.to_s)
 
     requested_page
   end
@@ -21,7 +19,7 @@ class PagesController < ApplicationController
   def whitelist_layout(requested_layout)
     return 'application' if requested_layout.nil?
 
-    raise "Invalid layout: #{requested_layout}" unless ::STATIC_PAGE_LAYOUTS.include?(requested_layout.to_s)
+    fail "Invalid layout: #{requested_layout}" unless ::STATIC_PAGE_LAYOUTS.include?(requested_layout.to_s)
 
     requested_layout
   end

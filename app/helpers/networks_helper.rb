@@ -1,7 +1,6 @@
 module NetworksHelper
-
   def alphabets
-    ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    %w(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z)
   end
 
   def top_networks_starting_with(networks, character)
@@ -9,25 +8,25 @@ module NetworksHelper
   end
 
   def selected_class(tab)
-    params[:sort] == tab || params[:filter] == tab || params[:action] == tab ? "active" : ""
+    params[:sort] == tab || params[:filter] == tab || params[:action] == tab ? 'active' : ''
   end
 
   def networks_nav_class(action)
-    params[:action].to_sym == action ? "current" : ""
+    params[:action].to_sym == action ? 'current' : ''
   end
 
   def networks_sub_nav_class(sort)
     if [:user, :featured].include? params[:action]
-      "hide"
+      'hide'
     elsif params[:sort] == sort
-      "current"
+      'current'
     else
-      ""
+      ''
     end
   end
 
   def join_or_leave_class(network)
-    current_user && current_user.member_of?(network) ? "member" : "join"
+    current_user && current_user.member_of?(network) ? 'member' : 'join'
   end
 
   def join_or_leave_label(network)
@@ -35,7 +34,7 @@ module NetworksHelper
   end
 
   def join_or_leave_tracking(network)
-    join_or_leave_class(network) == "member" ? "leave" : "join"
+    join_or_leave_class(network) == 'member' ? 'leave' : 'join'
   end
 
   def join_or_leave_path(network)
@@ -55,11 +54,10 @@ module NetworksHelper
   end
 
   def new_network?(network)
-    network.created_at > 2.weeks.ago && network.created_at > Date.parse('03/08/2012') #launch date
+    network.created_at > 2.weeks.ago && network.created_at > Date.parse('03/08/2012') # launch date
   end
 
   def add_network_url
-    is_admin? ? new_network_path : 'mailto:support@coderwall.com?subject='+"Request for a new network"
+    is_admin? ? new_network_path : 'mailto:support@coderwall.com?subject=' + 'Request for a new network'
   end
-
 end

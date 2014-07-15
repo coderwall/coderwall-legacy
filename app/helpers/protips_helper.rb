@@ -1,15 +1,14 @@
 require 'cfm'
 module ProtipsHelper
-
   def protip_summary
     "A protip by #{@protip.user.username} about #{@protip.topics.to_sentence}."
   end
 
-  def right_border_css(text, width=6)
+  def right_border_css(text, width = 6)
     "border-left: #{width}px solid ##{color_signature(text)}"
   end
 
-  def bottom_border_css(text, width=6)
+  def bottom_border_css(text, width = 6)
     "border-bottom: #{width}px solid ##{color_signature(text)}"
   end
 
@@ -19,11 +18,11 @@ module ProtipsHelper
 
   def youtube_embed(youtube_url)
     if youtube_url[/youtu\.be\/([^\?]*)/]
-      youtube_id = $1
+      youtube_id = Regexp.last_match[1]
     else
       # Regex from # http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url/4811367#4811367
       youtube_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
-      youtube_id = $5
+      youtube_id = Regexp.last_match[5]
     end
 
     s = %Q(<iframe title="YouTube video player" width="640" height="390" src="http://www.youtube.com/embed/#{ youtube_id }" frameborder="0" allowfullscreen></iframe>)
@@ -31,17 +30,17 @@ module ProtipsHelper
   end
 
   def to_tweet(text, url, hashes)
-    tweet = truncate(text, length: (144-hashes.length-url.length-2))
+    tweet = truncate(text, length: (144 - hashes.length - url.length - 2))
     "#{tweet} #{hashes}"
   end
 
-  def share_on_twitter(protip, klass='share-this')
-    text = to_tweet(protip.title, protip_url(protip), "#protip")
-    custom_tweet_button 'Share this', {text: text, via: 'coderwall', url: protip_url(protip)}, {class: klass + ' track', 'data-action' => 'share protip', 'data-from' => 'protip', target: :new}
+  def share_on_twitter(protip, klass = 'share-this')
+    text = to_tweet(protip.title, protip_url(protip), '#protip')
+    custom_tweet_button 'Share this', { text: text, via: 'coderwall', url: protip_url(protip) }, class: klass + ' track', 'data-action' => 'share protip', 'data-from' => 'protip', target: :new
   end
 
   def domain(url)
-    url.split("/")[2]
+    url.split('/')[2]
   end
 
   def formatted_protip(protip)
@@ -72,17 +71,17 @@ module ProtipsHelper
   end
 
   def tags_list
-    params[:tags].split("/")
+    params[:tags].split('/')
   end
 
   def searched_tags
-    (params[:tags].nil? ? "" : tags_list.join("+"))
+    (params[:tags].nil? ? '' : tags_list.join('+'))
   end
 
   def relevant_topics_for_user(count)
     trending = trending_protips_topics(20)
     mutual = (current_user.skills.map(&:name) & trending).first(count)
-    #mutual + (trending - mutual).first(count - mutual.size)
+    # mutual + (trending - mutual).first(count - mutual.size)
     mutual
   end
 
@@ -94,20 +93,20 @@ module ProtipsHelper
     Protip.trending.for_topic(topic)
   end
 
-  def search_trending_protips_for_topic(topic, query=nil, page=params[:page], per_page=params[:per_page])
+  def search_trending_protips_for_topic(topic, query = nil, page = params[:page], per_page = params[:per_page])
     Protip.search_trending_by_topic_tags(query, topic.to_a, page || 1, per_page || Protip::PAGESIZE)
   end
 
-  def subscribe_to_topic(topic, additional_classes="", options={})
+  def subscribe_to_topic(topic, additional_classes = '', options = {})
     link_to '', unsubscribe_protips_path(topic), options.merge(class: "protip-subscription subscribed #{additional_classes}", 'data-reverse-action' => subscribe_protips_path(topic))
   end
 
-  def unsubscribe_from_topic(topic, additional_classes="", options={})
+  def unsubscribe_from_topic(topic, additional_classes = '', options = {})
     link_to '', subscribe_protips_path(topic), options.merge(class: authenticated_class("protip-subscription #{additional_classes}"), 'data-reverse-action' => unsubscribe_protips_path(topic))
   end
 
-  def subscription_link(topic, additional_classes="", options={})
-    topic = topic.gsub(/^author:/, "") unless topic.is_a?(Array)
+  def subscription_link(topic, additional_classes = '', options = {})
+    topic = topic.gsub(/^author:/, '') unless topic.is_a?(Array)
     if signed_in? and current_user.subscribed_to_topic?(topic)
       subscribe_to_topic(topic, additional_classes, options)
     else
@@ -119,7 +118,7 @@ module ProtipsHelper
     if protip.already_voted?(current_user, current_user.try(:tracking_code), request.remote_ip)
       content_tag :div, "#{protip.upvotes}", class: "upvoted #{classname}"
     else
-      link_to "#{protip.upvotes}", upvote_protip_path(protip.public_id), class: "#{classname} track", remote: true, method: :post, rel: "nofollow", 'data-action' => "upvote protip", 'data-from' => (classname == "small-upvote" ? 'mini protip' : 'protip')
+      link_to "#{protip.upvotes}", upvote_protip_path(protip.public_id), class: "#{classname} track", remote: true, method: :post, rel: 'nofollow', 'data-action' => 'upvote protip', 'data-from' => (classname == 'small-upvote' ? 'mini protip' : 'protip')
     end
   end
 
@@ -137,7 +136,7 @@ module ProtipsHelper
 
   def search_params(index)
     search = {}
-    search[:q] = @query || params[:q] || ""
+    search[:q] = @query || params[:q] || ''
     search[:p] = params[:page] || 1
     search[:t] = (@topics || params[:tags] || []).first(5)
     search[:i] = index unless search[:q].blank? && search[:t].blank? && @query.nil?
@@ -149,7 +148,7 @@ module ProtipsHelper
   end
 
   def protip_result_index
-    return nil if @protip_result_index == nil
+    return nil if @protip_result_index.nil?
     val = @protip_result_index
     @protip_result_index = @protip_result_index + 1
     val
@@ -177,30 +176,30 @@ module ProtipsHelper
   end
 
   def search_target(init_target)
-    params[:page].to_i == 0 ? init_target : init_target + " #more"
+    params[:page].to_i == 0 ? init_target : init_target + ' #more'
   end
 
   def search_results_replace_method
-    params[:page].to_i == 0 ? "html" : "replaceWith"
+    params[:page].to_i == 0 ? 'html' : 'replaceWith'
   end
 
   def topics_to_query(topics)
-    topics = topics.split(" + ") unless topics.nil? or topics.is_a? Array
+    topics = topics.split(' + ') unless topics.nil? or topics.is_a? Array
     topics.map do |topic|
       if Protip::USER_SCOPE.include? topic or topic =~ /^team:/ or topic =~ /^author:/
         topic
       else
         "tagged:#{topic}"
       end
-    end.join(" ") unless topics.nil?
+    end.join(' ') unless topics.nil?
   end
 
   def protips_back
-    Rails.env.test? ? controller.request.env["HTTP_REFERER"] : 'javascript:history.back()'
+    Rails.env.test? ? controller.request.env['HTTP_REFERER'] : 'javascript:history.back()'
   end
 
   def protip_query_options
-    params.select { |k, v| ['q', 'page', 'per_page'].include? k }.to_json
+    params.select { |k, _v| %w(q page per_page).include? k }.to_json
   end
 
   def my_protips?(topics)
@@ -213,7 +212,7 @@ module ProtipsHelper
   end
 
   def topics_to_sentence(topics)
-    topics.nil? ? "" : topics.to_sentence.gsub(/<[^<>]*>#?([^<>]+)<\/\w+>/, '\1')
+    topics.nil? ? '' : topics.to_sentence.gsub(/<[^<>]*>#?([^<>]+)<\/\w+>/, '\1')
   end
 
   def protip_topic_page_title(topics)
@@ -230,7 +229,7 @@ module ProtipsHelper
   end
 
   def protip_topic_page_keywords(topics)
-    (topics_to_sentence(topics).split("and") + ["pro tips", "links", "tutorials", "how-tos"]).join(",").strip!
+    (topics_to_sentence(topics).split('and') + ['pro tips', 'links', 'tutorials', 'how-tos']).join(',').strip!
   end
 
   def formatted_comment(text)
@@ -242,11 +241,11 @@ module ProtipsHelper
   end
 
   def comment_liked_class(comment)
-    comment.likes_cache > 0 ? "liked" : "not-liked"
+    comment.likes_cache > 0 ? 'liked' : 'not-liked'
   end
 
   def comment_likes(comment)
-    comment.likes_cache > 0 ? comment.likes_cache.to_s : ""
+    comment.likes_cache > 0 ? comment.likes_cache.to_s : ''
   end
 
   def top_comment?(comment, index)
@@ -257,28 +256,28 @@ module ProtipsHelper
     comment.author_id == current_user.try(:id)
   end
 
-  def protip_reviewer(protip)
-    @reviewer.nil? ? "not yet reviewed" : "reviewed by #{@reviewer.username}"
+  def protip_reviewer(_protip)
+    @reviewer.nil? ? 'not yet reviewed' : "reviewed by #{@reviewer.username}"
   end
 
   def follow_or_following(user)
-    signed_in? && current_user.following?(user) ? "following" : "follow"
+    signed_in? && current_user.following?(user) ? 'following' : 'follow'
   end
 
   def selected_search_context_class(chosen)
-    @context == chosen ? "selected" : ""
+    @context == chosen ? 'selected' : ''
   end
 
   def display_search_class
-    @context == "search" ? "" : "hide"
+    @context == 'search' ? '' : 'hide'
   end
 
   def display_scopes_class
-    @context == "search" ? "hide" : ""
+    @context == 'search' ? 'hide' : ''
   end
 
   def display_scope_class
-    @scope.nil? || params[:action] == 'search' ? "everything" : "following"
+    @scope.nil? || params[:action] == 'search' ? 'everything' : 'following'
   end
 
   def current_user_upvotes
@@ -291,7 +290,7 @@ module ProtipsHelper
 
   def protip_stat_class(protip)
     class_name = best_stat_name(protip)
-    #class_name << " " << (user_upvoted?(protip) ? "upvoted" : "")
+    # class_name << " " << (user_upvoted?(protip) ? "upvoted" : "")
   end
 
   def formatted_best_stat_value(protip)
@@ -302,7 +301,7 @@ module ProtipsHelper
           else
             best_stat_value(protip)
         end
-    number_to_human(value, units: {unit: "", thousand: "k"})
+    number_to_human(value, units: { unit: '', thousand: 'k' })
   end
 
   def blur_protips?
@@ -322,7 +321,7 @@ module ProtipsHelper
   end
 
   def protip_networks(protip)
-    protip.networks.respond_to?(:[]) ? protip.networks.map(&:name).map(&:downcase) : protip.networks.split(",")
+    protip.networks.respond_to?(:[]) ? protip.networks.map(&:name).map(&:downcase) : protip.networks.split(',')
   end
 
   def protip_owner?(protip, user)
@@ -342,10 +341,10 @@ module ProtipsHelper
   end
 
   def default_featured_job_banner
-    "home-top-bg.jpg"
+    'home-top-bg.jpg'
   end
 
   def protip_display_mode
-    mobile_device? ? "fullpage" : "popup"
+    mobile_device? ? 'fullpage' : 'popup'
   end
 end

@@ -1,7 +1,7 @@
 class LanguageBadge < BadgeBase
   describe 'Language badge',
-           language_required: lambda { raise "Not implemented" },
-           number_required:   lambda { raise "Not implemented" }
+           language_required: lambda { fail 'Not implemented' },
+           number_required:   lambda { fail 'Not implemented' }
 
   def reasons
     @reasons ||= begin
@@ -19,5 +19,4 @@ class LanguageBadge < BadgeBase
   def award?
     reasons[:links].size >= number_required
   end
-
 end

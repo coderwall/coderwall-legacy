@@ -32,23 +32,22 @@ class Plan < ActiveRecord::Base
     def enhanced_team_page_free
       Plan.where(interval: MONTHLY).where(amount: 0).first
     end
-
   end
 
   def register_on_stripe
     if subscription?
       Stripe::Plan.create(
-        amount:   self.amount,
-        interval: self.interval,
-        name:     self.name,
-        currency: self.currency,
-        id:       self.stripe_plan_id
+        amount:   amount,
+        interval: interval,
+        name:     name,
+        currency: currency,
+        id:       stripe_plan_id
       )
     end
   rescue Stripe::InvalidRequestError => e
     Rails.logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, "There was a problem with the plan"
-    self.destroy
+    errors.add :base, 'There was a problem with the plan'
+    destroy
   end
 
   def price
@@ -69,7 +68,7 @@ class Plan < ActiveRecord::Base
   end
 
   def stripe_plan_id
-    self.public_id
+    public_id
   end
 
   def set_currency
@@ -77,19 +76,19 @@ class Plan < ActiveRecord::Base
   end
 
   def subscription?
-    not one_time?
+    !one_time?
   end
 
   def free?
-    self.amount == 0
+    amount == 0
   end
 
   def one_time?
-    self.interval.nil?
+    interval.nil?
   end
 
   def has_analytics?
-    self.analytics
+    analytics
   end
 
   def generate_public_id

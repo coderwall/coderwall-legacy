@@ -2,7 +2,7 @@ class GenerateTopUsersComposite
   extend ResqueSupport::Basic
 
   IMAGE_PATH = Rails.root.join('public', 'images', 'top')
-  WALL_IMAGE = IMAGE_PATH.join("wall.png")
+  WALL_IMAGE = IMAGE_PATH.join('wall.png')
 
   def perform
     cache_users
@@ -13,18 +13,18 @@ class GenerateTopUsersComposite
   private
 
   def cache_users
-    users = User.top(108).map { |u| {u.username => u.thumbnail_url} }.to_json
-    REDIS.set "top_users", users
+    users = User.top(108).map { |u| { u.username => u.thumbnail_url } }.to_json
+    REDIS.set 'top_users', users
   end
 
   def cache_images
     IMAGE_PATH.mkpath
 
-    users = JSON.parse(REDIS.get("top_users"))
+    users = JSON.parse(REDIS.get('top_users'))
     users.each.with_index do |pair, i|
       username, url = pair.keys.first, pair.values.first
 
-      fname = IMAGE_PATH.join("#{i+1}.png")
+      fname = IMAGE_PATH.join("#{i + 1}.png")
       sh "curl -s #{url} | convert - -resize '65x65' #{fname}"
     end
   end
@@ -48,5 +48,4 @@ class GenerateTopUsersComposite
     Rails.logger.info "GenerateTopUsersComposite: executing #{command}"
     system command
   end
-
 end

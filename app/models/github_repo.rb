@@ -17,12 +17,12 @@ class GithubRepo
 
   index('owner.login' => 1)
   index('owner.github_id' => 1)
-  index({name: 1})
+  index(name: 1)
 
   before_save :update_tags!
 
   class << self
-    def for_owner_and_name(owner, name, client=nil, prefetched={})
+    def for_owner_and_name(owner, name, client = nil, prefetched = {})
       (where('owner.login' => owner, 'name' => name).first || new('name' => name, 'owner' => { 'login' => owner })).tap do |repo|
         if repo.new_record?
           logger.info "ALERT: No cached repo for #{owner}/#{name}"
@@ -32,7 +32,7 @@ class GithubRepo
     end
   end
 
-  def refresh!(client=nil, repo={})
+  def refresh!(client = nil, repo = {})
     client      ||= Github.new
     owner, name = self.owner.login, self.name
 
@@ -55,7 +55,7 @@ class GithubRepo
   end
 
   def full_name
-    "#{self.owner.login}/#{self.name}"
+    "#{owner.login}/#{name}"
   end
 
   def times_forked
@@ -67,8 +67,8 @@ class GithubRepo
   end
 
   def dominant_language_percentage
-    main_language        = self.dominant_language
-    bytes_of_other_langs = languages.collect { |k, v| k != main_language ? v : 0 }.sum
+    main_language        = dominant_language
+    bytes_of_other_langs = languages.map { |k, v| k != main_language ? v : 0 }.sum
     bytes_of_main_lang   = languages[main_language]
     return 0 if bytes_of_main_lang == 0
     return 100 if bytes_of_other_langs == 0
@@ -76,13 +76,13 @@ class GithubRepo
   end
 
   def total_commits
-    self.contributors.to_a.sum do |c|
+    contributors.to_a.sum do |c|
       c['contributions']
     end
   end
 
   def total_contributions_for(github_id)
-    contributor = self.contributors.first { |c| c['github_id'] == github_id }
+    contributor = contributors.first { |c| c['github_id'] == github_id }
     (contributor && contributor['contributions']) || 0
   end
 
@@ -90,7 +90,7 @@ class GithubRepo
   CONTRIBUTION_PERCENT_THRESHOLD = 0.10
 
   def percent_contributions_for(github_id)
-    total_contributions_for(github_id) / self.total_commits.to_f
+    total_contributions_for(github_id) / total_commits.to_f
   end
 
   def significant_contributions?(github_id)
@@ -99,7 +99,7 @@ class GithubRepo
 
   def dominant_language
     return '' if languages.blank?
-    primary_language = languages.sort_by { |k, v| v }.last
+    primary_language = languages.sort_by { |_k, v| v }.last
     if primary_language
       primary_language.first
     else
@@ -108,7 +108,7 @@ class GithubRepo
   end
 
   def languages_that_meet_threshold
-    languages.collect do |key, value|
+    languages.map do |key, value|
       key if value.to_i >= 200
     end.compact
   end
@@ -127,7 +127,7 @@ class GithubRepo
 
   def popularity
     @popularity ||= begin
-      rank = times_forked + watchers #(times_forked + followers.size)
+      rank = times_forked + watchers # (times_forked + followers.size)
       case
         when rank > 600 then
           5
@@ -144,19 +144,19 @@ class GithubRepo
   end
 
   def raw_readme
-    %w{
+    %w(
       README
       README.markdown
       README.md
       README.txt
-    }.each do |file_type|
+    ).each do |file_type|
       begin
         return Servant.get("#{html_url}/raw/master/#{file_type}").result
       rescue RestClient::ResourceNotFound
         Rails.logger.debug("Looking for readme, did not find #{file_type}")
       end
     end
-    return empty_string = ''
+    empty_string = ''
   end
 
   def update_tags!
@@ -170,7 +170,7 @@ class GithubRepo
   end
 
   def add_tag(tag)
-    self.tags << tag
+    tags << tag
   end
 
   def tagged?(tag)
@@ -195,7 +195,7 @@ class GithubRepo
         return true
       end
     end
-    return false
+    false
   end
 
   def field_matches?(field, regex)

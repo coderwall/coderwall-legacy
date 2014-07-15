@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe InvitationsController, :type => :controller do
+RSpec.describe InvitationsController, type: :controller do
 
   it 'should capture referred by when viewing team invitation' do
     user = Fabricate(:user, referral_token: 'asdfasdf')

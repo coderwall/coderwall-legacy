@@ -11,12 +11,12 @@ class Endorsement < ActiveRecord::Base
   after_create :generate_event
 
   def generate_event
-    enqueue(GenerateEvent, self.event_type, Audience.user(self.endorsed.id), self.to_event_hash, 1.minute)
+    enqueue(GenerateEvent, event_type, Audience.user(endorsed.id), to_event_hash, 1.minute)
   end
 
   def to_event_hash
-    { endorsement: { endorsed: self.endorsed.name, endorser: self.endorser.name, skill: self.skill.name },
-      user:        { username: self.endorser.username } }
+    { endorsement: { endorsed: endorsed.name, endorser: endorser.name, skill: skill.name },
+      user:        { username: endorser.username } }
   end
 
   def event_type

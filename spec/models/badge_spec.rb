@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Badge, :type => :model do
+RSpec.describe Badge, type: :model do
   let(:badge) { Badge.new(badge_class_name: 'Polygamous') }
 
   it 'gets name from badge class' do

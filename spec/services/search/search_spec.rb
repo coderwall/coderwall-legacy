@@ -13,8 +13,8 @@ RSpec.describe 'Services::Search::' do
     end
 
     it 'should not add a users protip to search index if user is banned' do
-      user = Fabricate(:user,banned_at: Time.now)
-      protip = Fabricate(:protip, body: "Some body.", title: "Some title.", user: user)
+      user = Fabricate(:user, banned_at: Time.now)
+      protip = Fabricate(:protip, body: 'Some body.', title: 'Some title.', user: user)
       expect(Protip.search('Some title').count).to eq(0)
     end
   end

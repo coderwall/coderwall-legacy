@@ -1,8 +1,8 @@
 class Cub < BadgeBase
-  describe "Cub",
+  describe 'Cub',
            skill:       'Javascript',
-           description: "Have at least one original jQuery or Prototype open source repo",
-           for:         "having at least one original jQuery or Prototype open source repo.",
+           description: 'Have at least one original jQuery or Prototype open source repo',
+           for:         'having at least one original jQuery or Prototype open source repo.',
            image_name:  'cub.png',
            providers:   :github
 
@@ -21,5 +21,4 @@ class Cub < BadgeBase
   def award?
     reasons[:links].size >= 1
   end
-
 end

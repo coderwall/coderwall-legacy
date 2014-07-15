@@ -1,5 +1,5 @@
 class HackathonStanford < BadgeBase
-  describe "Stanford Hackathon",
+  describe 'Stanford Hackathon',
            skill:       'Hacking',
            description: "Participated in Stanford's premier Hackathon, organized by the ACM, SVI Hackspace and BASES.",
            for:         "participating in Stanford's premier Hackathon, organized by the ACM, SVI Hackspace and BASES.",

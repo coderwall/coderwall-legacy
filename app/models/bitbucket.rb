@@ -4,13 +4,12 @@ require_dependency 'repository'
 class Bitbucket
   include Factual
   acts_as_factual
-  NAME = "bitbucket"
+  NAME = 'bitbucket'
 
   class V1 < Bitbucket
-
-    PROTOCOL = "https"
-    API_URL  = "api.bitbucket.org/1.0"
-    WEB_URL  = "bitbucket.org"
+    PROTOCOL = 'https'
+    API_URL  = 'api.bitbucket.org/1.0'
+    WEB_URL  = 'bitbucket.org'
 
     class Repo
       include Factual
@@ -51,7 +50,7 @@ class Bitbucket
       end
 
       def followers
-        repo[:followers].collect { |follower| follower[:username] }
+        repo[:followers].map { |follower| follower[:username] }
       end
 
       def forks
@@ -63,12 +62,12 @@ class Bitbucket
       end
 
       def languages_with_percentage
-        @languages ||= repo[:language].split(",").map { |language| { language.camelize => 100.0 } }.reduce(&:merge!) || {}
-        #TODO: if no language, try to discover it from wiki, code, etc
+        @languages ||= repo[:language].split(',').map { |language| { language.camelize => 100.0 } }.reduce(&:merge!) || {}
+        # TODO: if no language, try to discover it from wiki, code, etc
       end
 
       def contributions_of(user_credentials)
-        repo[:commits].collect { |commit| commit[:user][:username] == user_credentials }.count
+        repo[:commits].map { |commit| commit[:user][:username] == user_credentials }.count
       end
 
       def contributions
@@ -79,7 +78,7 @@ class Bitbucket
         repo[:readme] ? repo[:readme][:data] : nil
       end
 
-      #factual interface
+      # factual interface
       def fact_identity
         "#{repo[:html_url]}:#{username}"
       end
@@ -113,10 +112,9 @@ class Bitbucket
           website:      repo[:website].blank? ? nil : repo[:website]
         }
       end
-
     end
 
-    def initialize(username, password=nil)
+    def initialize(username, password = nil)
       @username = username.to_s.strip
       @password = password
       @data     = get_all
@@ -127,17 +125,15 @@ class Bitbucket
       end unless @data.blank?
     end
 
-    def repos
-      @repos
-    end
+    attr_reader :repos
 
-    #factual interface
+    # factual interface
     def facts
       return [] if @username.blank?
       repo_facts + user_facts
     end
 
-    def repo_facts()
+    def repo_facts
       @repos.reduce([]) { |facts, repo| facts + repo.facts }
     end
 
@@ -166,25 +162,25 @@ class Bitbucket
     end
 
     def fact_tags
-      [NAME, "account-created"]
+      [NAME, 'account-created']
     end
 
     def fact_meta_data
       {
         avatar_url: @data[:user][:avatar],
-        followers:  @data[:user][:followers].collect { |follower| follower[:username] }
+        followers:  @data[:user][:followers].map { |follower| follower[:username] }
       } unless @data[:user].nil?
     end
 
     def get_all
       repositories = get_user_repositories
-      if (repositories[:user] and repositories[:repositories])
-        @username                       = repositories[:user][:username] #the get repositiories accepts emails but the rest of the API calls do not
-        repositories[:user][:followers] = get_user_followers #add user followers to user hash
+      if repositories[:user] and repositories[:repositories]
+        @username                       = repositories[:user][:username] # the get repositiories accepts emails but the rest of the API calls do not
+        repositories[:user][:followers] = get_user_followers # add user followers to user hash
         repositories[:user][:joined]    = get_user_join_date
 
         repositories[:repositories].each do |repository|
-          repository[:followers] = get_repository_followers(repository[:slug]) #add repo followers to repo hash
+          repository[:followers] = get_repository_followers(repository[:slug]) # add repo followers to repo hash
           repository[:commits]   = get_repository_commits(repository[:slug])
           repository[:readme]    = get_repository_readme(repository[:slug])
           repository[:forks]     = get_repository_forks(repository[:slug])
@@ -217,7 +213,7 @@ class Bitbucket
       count   = commits[:count]
       start   = 50
 
-      until start > count do
+      until start > count
         commit_batch = get(build_uri("repositories/#{@username}/#{repo_slug}/events?type=commit&limit=50&start=#{start}"))
         commits[:events].concat(commit_batch[:events])
         start += 50
@@ -234,15 +230,15 @@ class Bitbucket
     end
 
     def get_user_join_date
-      RestClient.get("#{web_address}/#{@username}").match(/time datetime="([\d\-T:\.\+]+)"/) && $1
+      RestClient.get("#{web_address}/#{@username}").match(/time datetime="([\d\-T:\.\+]+)"/) && Regexp.last_match[1]
     end
 
     def get_repository_followers(repo_slug)
       get(build_uri("repositories/#{@username}/#{repo_slug}/followers"))[:followers]
     end
 
-    #their uris are not symmetric, they're actually pretty bad. hopefully they'll fix it in the future so only one path
-    #is needed
+    # their uris are not symmetric, they're actually pretty bad. hopefully they'll fix it in the future so only one path
+    # is needed
     protected
     def build_uri(path)
       url = "#{PROTOCOL}://"
@@ -251,19 +247,16 @@ class Bitbucket
       end
       url += "#{API_URL}/#{path}"
       RestClient::Resource.new(url, verify_ssl: OpenSSL::SSL::VERIFY_NONE).url
-      #URI.parse(url)
+      # URI.parse(url)
     end
 
     protected
     def get(uri)
-      begin
-        response = RestClient.get uri
-
-        JSON.parse(response).with_indifferent_access
-      rescue Exception => e
-        Rails.logger.error "Bitbucket-Error@#{@username}:#{uri}#{e.message}"
-        {}
-      end
+      response = RestClient.get uri
+      JSON.parse(response).with_indifferent_access
+    rescue => e
+      Rails.logger.error "Bitbucket-Error@#{@username}:#{uri}#{e.message}"
+      {}
     end
   end
 end

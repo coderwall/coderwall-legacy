@@ -6,7 +6,7 @@ class RefreshUser
   attr_reader :username
   attr_reader :full
 
-  def initialize(username, full=false)
+  def initialize(username, full = false)
     @username = username
     @full = full
   end

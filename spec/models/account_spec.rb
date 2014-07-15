@@ -1,15 +1,15 @@
 require 'vcr_helper'
 
-RSpec.describe Account, :type => :model do
+RSpec.describe Account, type: :model do
   let(:team) { Fabricate(:team) }
   let(:account) { { stripe_card_token: new_token } }
 
-  let(:admin) {
+  let(:admin) do
     user = Fabricate(:user, team_document_id: team.id.to_s)
     team.admins << user.id
     team.save
     user
-  }
+  end
 
   before(:all) do
     url = 'http://maps.googleapis.com/maps/api/geocode/json?address=San+Francisco%2C+CA&language=en&sensor=false'
@@ -18,7 +18,7 @@ RSpec.describe Account, :type => :model do
   end
 
   def new_token
-    Stripe::Token.create(card: { number: 4242424242424242, cvc: 224, exp_month: 12, exp_year: 14 }).try(:id)
+    Stripe::Token.create(card: { number: 4_242_424_242_424_242, cvc: 224, exp_month: 12, exp_year: 14 }).try(:id)
   end
 
   def post_job_for(team)
@@ -48,7 +48,7 @@ RSpec.describe Account, :type => :model do
     end
 
     it 'should not create an account if stripe_card_token invalid' do
-      account[:stripe_card_token] = "invalid"
+      account[:stripe_card_token] = 'invalid'
       team.build_account(account)
       team.account.admin_id = admin.id
       team.account.save_with_payment
@@ -58,7 +58,7 @@ RSpec.describe Account, :type => :model do
 
     it 'should not allow stripe_customer_token or admin to be set/updated' do
       some_random_user = Fabricate(:user)
-      account[:stripe_customer_token] = "invalid_customer_token"
+      account[:stripe_customer_token] = 'invalid_customer_token'
       account[:admin_id] = some_random_user.id
       team.build_account(account)
       team.account.save_with_payment
@@ -68,9 +68,9 @@ RSpec.describe Account, :type => :model do
   end
 
   describe 'subscriptions' do
-    let(:free_plan) { Plan.create!(amount: 0, interval: Plan::MONTHLY, name: "Starter") }
-    let(:monthly_plan) { Plan.create!(amount: 15000, interval: Plan::MONTHLY, name: "Recruiting Magnet") }
-    let(:onetime_plan) { Plan.create!(amount: 30000, interval: nil, name: "Single Job Post") }
+    let(:free_plan) { Plan.create!(amount: 0, interval: Plan::MONTHLY, name: 'Starter') }
+    let(:monthly_plan) { Plan.create!(amount: 15_000, interval: Plan::MONTHLY, name: 'Recruiting Magnet') }
+    let(:onetime_plan) { Plan.create!(amount: 30_000, interval: nil, name: 'Single Job Post') }
 
     describe 'free subscription' do
       before(:each) do
@@ -105,7 +105,7 @@ RSpec.describe Account, :type => :model do
       end
 
       it 'should allow upgrade to one-time job post charge' do
-        team.account.update_attributes({stripe_card_token: new_token})
+        team.account.update_attributes(stripe_card_token: new_token)
         team.account.save_with_payment(onetime_plan)
         team.reload
         expect(team.can_post_job?).to eq(true)
@@ -168,7 +168,7 @@ RSpec.describe Account, :type => :model do
       end
 
       it 'should allow upgrade to monthly subscription' do
-        team.account.update_attributes({stripe_card_token: new_token})
+        team.account.update_attributes(stripe_card_token: new_token)
         team.account.save_with_payment(monthly_plan)
         team.reload
         expect(team.can_post_job?).to eq(true)
@@ -184,7 +184,7 @@ RSpec.describe Account, :type => :model do
       end
 
       it 'should allow additional one time job post charges' do
-        team.account.update_attributes({stripe_card_token: new_token})
+        team.account.update_attributes(stripe_card_token: new_token)
         team.account.save_with_payment(onetime_plan)
         team.reload
         expect(team.paid_job_posts).to eq(2)

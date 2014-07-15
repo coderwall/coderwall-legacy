@@ -27,7 +27,7 @@ class FollowsController < ApplicationController
         format.js { render json: { dom_id: dom_id(@user), following: current_user.following?(@user) }.to_json }
       end
     else
-      #TODO: Refactor teams to use acts_as_follower after we move Team out of mongodb
+      # TODO: Refactor teams to use acts_as_follower after we move Team out of mongodb
       if params[:id] =~ /^[0-9A-F]{24}$/i
         @team = Team.find(params[:id])
       else

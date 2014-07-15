@@ -5,7 +5,7 @@ class Usage
     end
 
     def unique_visitors_on(date = Date.today)
-      REDIS.zcount(dated_key('view', date), 1, 1000000)
+      REDIS.zcount(dated_key('view', date), 1, 1_000_000)
     end
 
     def top_ten_users_today

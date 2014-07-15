@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html do
-        raise ActiveRecord::RecordNotFound if @user.nil?
+        fail ActiveRecord::RecordNotFound if @user.nil?
 
         if Rails.env.development?
           @user.migrate_to_skills! if @user.skills.empty?
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
           if stale?(etag: ['v3', @user, user_show_params[:callback], user_show_params[:full]], last_modified: @user.last_modified_at.utc, public: true)
             response = Rails.cache.fetch(['v3', @user, :json, user_show_params[:full]]) do
               @user.public_hash(user_show_params[:full]) do |badge|
-                view_context.image_path(badge.image_path) #fully qualified in product
+                view_context.image_path(badge.image_path) # fully qualified in product
               end.to_json
             end
             response = "#{user_show_params[:callback]}({\"data\":#{response}})" if user_show_params[:callback]
@@ -81,13 +81,13 @@ class UsersController < ApplicationController
     ucp[:referred_by] = session[:referred_by] unless session[:referred_by].blank?
     ucp[:utm_campaign] = session[:utm_campaign] unless session[:utm_campaign].blank?
 
-    @user.username = ucp[:username] unless ucp[:username].blank? #attr protected
+    @user.username = ucp[:username] unless ucp[:username].blank? # attr protected
 
     ucp.delete(:username)
 
     if @user.update_attributes(ucp)
       @user.complete_registration!
-      record_event("signed up", via: oauth[:provider])
+      record_event('signed up', via: oauth[:provider])
       session[:newuser] = nil
       sign_in(@user)
       redirect_to(destination_url)
@@ -115,7 +115,6 @@ class UsersController < ApplicationController
   end
 
   def update
-
     user_id = params[:id]
 
     @user = user_id.blank? ? current_user : User.find(user_id)
@@ -124,7 +123,7 @@ class UsersController < ApplicationController
 
     if @user.update_attributes(user_update_params)
       @user.activate! if @user.has_badges? && !@user.active?
-      flash.now[:notice] = "The changes have been applied to your profile."
+      flash.now[:notice] = 'The changes have been applied to your profile.'
       expire_fragment(@user.daily_cache_key)
     end
 
@@ -147,21 +146,20 @@ class UsersController < ApplicationController
         @users = User.autocomplete(autocomplete_params[:query]).limit(10).sort
         render json: {
           query:       autocomplete_params[:query],
-          suggestions: @users.each_with_object([]) { |user, results| results << {
+          suggestions: @users.each_with_object([]) do |user, results| results << {
             username:  user.username,
             name:      user.display_name,
             twitter:   user.twitter,
             github:    user.github,
             thumbnail: user.thumbnail_url
-          } },
-          data:        @users.collect(&:username)
+          } end,
+          data:        @users.map(&:username)
         }.to_json
       end
     end
   end
 
   def refresh
-
     refresh_params = params.permit(:username)
 
     Resque.enqueue(RefreshUser, refresh_params[:username], true)
@@ -221,10 +219,10 @@ class UsersController < ApplicationController
 
   def settings
     if signed_in?
-      record_event("api key requested", username: current_user.username, site: request.env["REMOTE_HOST"])
+      record_event('api key requested', username: current_user.username, site: request.env['REMOTE_HOST'])
       render json: { api_key: current_user.api_key }.to_json
     else
-      render json: { error: "you need to be logged in to coderwall" }.to_json, status: :forbidden
+      render json: { error: 'you need to be logged in to coderwall' }.to_json, status: :forbidden
     end
   end
 
@@ -245,7 +243,7 @@ class UsersController < ApplicationController
     when 'twitter' then user.clear_twitter!
     when 'github' then user.clear_github!
     when 'linkedin' then user.clear_linkedin!
-    else raise("Unknown Provider: '#{provider}'")
+    else fail("Unknown Provider: '#{provider}'")
     end
   end
 
@@ -262,7 +260,7 @@ class UsersController < ApplicationController
   end
 
   def oauth
-    session["oauth.data"]
+    session['oauth.data']
   end
 
   def user_edit_params

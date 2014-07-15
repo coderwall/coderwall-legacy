@@ -1,8 +1,8 @@
 class Railsberry < BadgeBase
-  describe "Railsberry",
+  describe 'Railsberry',
            skill:       'Hacking',
-           description: "Attended the 2012 Railsberry conference.",
-           for:         "attending the 2012 Railsberry conference.",
+           description: 'Attended the 2012 Railsberry conference.',
+           for:         'attending the 2012 Railsberry conference.',
            image_name:  'railsberry.png'
 
   def reasons

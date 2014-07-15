@@ -9,5 +9,4 @@ class DeactivateTeamJobs < Struct.new(:id)
       job.deactivate!
     end
   end
-
 end

@@ -11,5 +11,4 @@ class BuildBioAndJoinedDates < Struct.new(:username)
 
     user.save! if user.changed?
   end
-
 end

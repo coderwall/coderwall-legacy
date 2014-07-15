@@ -1,5 +1,4 @@
 module TeamsHelper
-
   def badge_display_limit
     7
   end
@@ -50,7 +49,7 @@ module TeamsHelper
   end
 
   def followed_teams_hash
-    (signed_in? ? current_user.teams_being_followed.inject(Hash.new(0)) { |h, team| h.merge({team.id => true}) } : {})
+    (signed_in? ? current_user.teams_being_followed.reduce(Hash.new(0)) { |h, team| h.merge(team.id => true) } : {})
   end
 
   def build_your_team_path
@@ -87,7 +86,7 @@ module TeamsHelper
   end
 
   def display_locations?
-    return false #!@team.locations.empty?
+    false # !@team.locations.empty?
   end
 
   def display_protips?
@@ -98,13 +97,12 @@ module TeamsHelper
     @team.size >= 3 && @team.rank > 0
   end
 
-
   def friendly_team_path(team)
     teamname_path(slug: team.slug)
   end
 
   def teams_leaderboard_title(teams)
-    "Top tech teams in the world | " + teams.first(3).map(&:name).join(", ") + " and many more!"
+    'Top tech teams in the world | ' + teams.first(3).map(&:name).join(', ') + ' and many more!'
   end
 
   def leaderboard_css_class
@@ -136,7 +134,7 @@ module TeamsHelper
   end
 
   def add_job_class
-    (@team.has_specified_enough_info? || @team.can_post_job?) ? "enable" : "disable"
+    (@team.has_specified_enough_info? || @team.can_post_job?) ? 'enable' : 'disable'
   end
 
   def banner_image_or_default(team)
@@ -152,11 +150,11 @@ module TeamsHelper
   end
 
   def team_job_path(team)
-    teamname_path(slug: team.slug) + "#open-positions"
+    teamname_path(slug: team.slug) + '#open-positions'
   end
 
   def edit_team_locations_path(team)
-    teamname_path(slug: team.slug) + "/edit/#locations"
+    teamname_path(slug: team.slug) + '/edit/#locations'
   end
 
   def change_resume_path

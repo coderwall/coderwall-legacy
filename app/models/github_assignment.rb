@@ -1,5 +1,4 @@
 class GithubAssignment < ActiveRecord::Base
-
   scope :badge_assignments, where(repo_url: nil)
 
   def self.for_repo(url)
@@ -12,9 +11,8 @@ class GithubAssignment < ActiveRecord::Base
 
   def self.for_github_username(github_username)
     return empty = [] if github_username.nil?
-    where(["UPPER(github_username) = ?", github_username.upcase])
+    where(['UPPER(github_username) = ?', github_username.upcase])
   end
-
 end
 
 # == Schema Information

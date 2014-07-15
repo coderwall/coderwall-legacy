@@ -25,7 +25,7 @@ class ProtipLink < ActiveRecord::Base
   end
 
   def determine_link_kind
-    match     = self.url.match(IMAGE_URL)
+    match     = url.match(IMAGE_URL)
     self.kind = match.nil? ? :webpage : match[4].downcase
   end
 end

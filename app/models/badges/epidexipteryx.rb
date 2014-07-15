@@ -1,10 +1,10 @@
 class Epidexipteryx < LanguageBadge
-  describe "Epidexipteryx",
+  describe 'Epidexipteryx',
            skill:             'C++',
-           description:       "Have at least one original repo where C++ is the dominant language",
-           for:               "having at least one original repo where C++ is the dominant language.",
+           description:       'Have at least one original repo where C++ is the dominant language',
+           for:               'having at least one original repo where C++ is the dominant language.',
            image_name:        'epidexipteryx.png',
            providers:         :github,
-           language_required: "C++",
+           language_required: 'C++',
            number_required:   1
 end

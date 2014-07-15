@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-RSpec.describe Mongoose, :type => :model do
-  let(:languages) { {
-      "Ruby" => 2519686,
-      "JavaScript" => 6107,
-      "Python" => 76867
-  } }
+RSpec.describe Mongoose, type: :model do
+  let(:languages) do {
+    'Ruby' => 2_519_686,
+    'JavaScript' => 6107,
+    'Python' => 76_867
+  } end
   let(:repo) { Fabricate(:github_repo, languages: languages) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }

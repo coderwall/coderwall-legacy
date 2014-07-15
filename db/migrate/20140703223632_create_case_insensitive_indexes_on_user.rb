@@ -1,5 +1,4 @@
 class CreateCaseInsensitiveIndexesOnUser < ActiveRecord::Migration
-
   # User.with_username looks up on following fields almost
   # constantly but with a UPPER(fieldname) = UPPER(val)
   # which is nasty and slow, add upcase and downcase indexes

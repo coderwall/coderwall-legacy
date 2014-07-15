@@ -37,7 +37,7 @@ class EventsController < ApplicationController
 
   def find_featured_protips
     if Rails.env.development? && ENV['FEATURED_PROTIPS'].blank?
-      ENV['FEATURED_PROTIPS'] = Protip.limit(3).collect(&:public_id).join(',')
+      ENV['FEATURED_PROTIPS'] = Protip.limit(3).map(&:public_id).join(',')
     end
     return [] if ENV['FEATURED_PROTIPS'].blank?
     Protip.where(public_id: ENV['FEATURED_PROTIPS'].split(','))
