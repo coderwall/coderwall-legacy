@@ -4,6 +4,8 @@
 
 [![Code Climate](https://codeclimate.com/github/assemblymade/coderwall.png)](https://codeclimate.com/github/assemblymade/coderwall)
 
+[![Dependency Status](https://gemnasium.com/assemblymade/coderwall.svg)](https://gemnasium.com/assemblymade/coderwall)
+
 A community for developers to unlock & share new skills.
 
 
