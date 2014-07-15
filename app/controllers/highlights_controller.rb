@@ -31,7 +31,7 @@ class HighlightsController < ApplicationController
       @highlight = current_user.highlights.find(params[:id])
       @badge     = nil
       if @highlight.destroy
-        # record_event("highlight removed", :mp_note => @highlight.description)
+        # record_event("highlight removed", mp_note: @highlight.description)
         badge = Beaver.new(current_user)
         unless badge.award?
           @badge = current_user.badges.where(badge_class_name: Beaver.name).first

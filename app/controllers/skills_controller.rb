@@ -28,7 +28,7 @@ class SkillsController < ApplicationController
       @skill = current_user.skills.find(params[:id])
       if @skill
 
-        # record_event('deleted skill', :skill => @skill.tokenized)
+        # record_event('deleted skill', skill: @skill.tokenized)
         flash[:notice] = "Ok got it...you're no longer into #{@skill.name}"
         @skill.destroy
         redirect_to(badge_url(username: @skill.user.username))

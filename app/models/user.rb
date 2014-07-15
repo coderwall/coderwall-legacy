@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
             exclusion: { in: RESERVED, message: 'is reserved' },
             format:    { with: VALID_USERNAME, message: 'must not contain a period' }
 
-  validates_uniqueness_of :username # , :case_sensitive => false, :on => :create
+  validates_uniqueness_of :username # , case_sensitive: false, on: :create
 
   validates_presence_of :username
   validates_presence_of :email

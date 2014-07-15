@@ -5,7 +5,7 @@ module Importers
         def import_from_fact(_fact)
           # slideshare_display_url = "http://www.slideshare.net/slideshow/embed_code/#{fact.identity}"
           # unless Protip.already_created_a_protip_for(slideshare_display_url)
-          #  user = User.where(:slideshare => fact.owner.match(/slideshare:(.+)/)[1]).first
+          #  user = User.where(slideshare: fact.owner.match(/slideshare:(.+)/)[1]).first
           #  return if user.nil?
           #  Rails.logger.debug "creating slideshare: #{fact.url} by #{fact.owner}/#{user.username unless user.nil?}"
           #  user.protips.create(title: fact.name, body: slideshare_display_url, created_at: fact.relevant_on, topics: ["Slideshare"], created_by: Protip::IMPORTER, user: user)

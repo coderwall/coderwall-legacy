@@ -162,7 +162,7 @@ class Protip < ActiveRecord::Base
             end
           end
           sort { by [sorts] }
-          # sort { by [{:upvotes => 'desc' }] }
+          # sort { by [{upvotes: 'desc' }] }
         end
       rescue Tire::Search::SearchRequestFailed => e
         ::SearchResultsWrapper.new(nil, 'Looks like our search servers are out to lunch. Try again soon.')

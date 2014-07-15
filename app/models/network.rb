@@ -123,7 +123,7 @@ class Network < ActiveRecord::Base
       Rails.logger.debug "mayor for #{name} found: #{person_with_most_upvoted_protips_on_topic.username}"
 
       # if self.mayor && person_with_most_upvoted_protips_on_topic && person_with_most_upvoted_protips_on_topic.id != self.mayor.id
-      #  enqueue(GenerateEvent, :new_mayor, Hash[*[Audience.network(self.id), Audience.admin].map(&:to_a).flatten(2)], self.to_event_hash(:mayor => person_with_most_upvoted_protips_on_topic), 30.minutes)
+      #  enqueue(GenerateEvent, :new_mayor, Hash[*[Audience.network(self.id), Audience.admin].map(&:to_a).flatten(2)], self.to_event_hash(mayor: person_with_most_upvoted_protips_on_topic), 30.minutes)
       # end
 
       network_experts.build(user: person_with_most_upvoted_protips_on_topic, designation: :mayor)
@@ -181,7 +181,7 @@ class Network < ActiveRecord::Base
   end
 
   def featured_protips(limit = nil, offset = 0)
-    # self.protips.where(:featured => true)
+    # self.protips.where(featured: true)
     Protip.search('featured:true', tags, page: offset, per_page: limit)
   end
 
