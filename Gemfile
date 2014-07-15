@@ -146,6 +146,7 @@ group :development do
   gem 'rubocop'
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'travis'
 end
 
 group :development, :test do
@@ -161,12 +162,13 @@ group :development, :test do
 end
 
 group :test do
+  # gem 'rspec-its'
+  gem "codeclimate-test-reporter", require: false
   gem 'capybara'
   gem 'database_cleaner'
   gem 'fuubar' , '2.0.0.rc1'
   gem 'resque_spec'
   gem 'rspec-rails'
-  # gem 'rspec-its'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'
@@ -183,3 +185,4 @@ group :production do
   gem 'rack-cache'
   gem 'rails_12factor'
 end
+
