@@ -386,7 +386,7 @@ Badgiy::Application.routes.draw do
 
   get 'award' => 'achievements#award', as: :award_badge
 
-  match '/auth/:provider/callback' => 'sessions#create', as: :authenticate
+  match '/auth/:provider/callback' => 'sessions#create', as: :authenticate, via: [:get, :post]
   get '/auth/failure' => 'sessions#failure', as: :authentication_failure
   get '/settings' => 'users#edit', as: :settings
   get '/redeem/:code' => 'redemptions#show'
