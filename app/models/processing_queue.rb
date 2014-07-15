@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: processing_queues
-#
-#  id             :integer          not null, primary key
-#  queueable_id   :integer
-#  queueable_type :string(255)
-#  queue          :string(255)
-#  queued_at      :datetime
-#  dequeued_at    :datetime
-#
-
 class ProcessingQueue < ActiveRecord::Base
 
   belongs_to :queueable, polymorphic: true
@@ -55,3 +43,16 @@ class ProcessingQueue < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+# Schema version: 20140713193201
+#
+# Table name: processing_queues
+#
+#  id             :integer          not null, primary key
+#  queueable_id   :integer
+#  queueable_type :string(255)
+#  queue          :string(255)
+#  queued_at      :datetime
+#  dequeued_at    :datetime
+#

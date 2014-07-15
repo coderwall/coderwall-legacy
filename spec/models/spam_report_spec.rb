@@ -1,4 +1,14 @@
+require 'spec_helper'
+
+RSpec.describe SpamReport, :type => :model do
+  describe '#spammable' do
+    subject { super().spammable }
+    it { is_expected.to be_nil }
+  end
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: spam_reports
 #
@@ -8,12 +18,3 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
-
-require 'spec_helper'
-
-RSpec.describe SpamReport, :type => :model do
-  describe '#spammable' do
-    subject { super().spammable }
-    it { is_expected.to be_nil }
-  end
-end

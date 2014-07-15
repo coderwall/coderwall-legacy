@@ -1,24 +1,3 @@
-# == Schema Information
-#
-# Table name: facts
-#
-#  id          :integer          not null, primary key
-#  identity    :string(255)
-#  owner       :string(255)
-#  name        :string(255)
-#  url         :string(255)
-#  tags        :text
-#  metadata    :text
-#  relevant_on :datetime
-#  created_at  :datetime
-#  updated_at  :datetime
-#
-# Indexes
-#
-#  index_facts_on_identity  (identity)
-#  index_facts_on_owner     (owner)
-#
-
 class Fact < ActiveRecord::Base
   serialize :tags, Array
   serialize :metadata, Hash
@@ -83,3 +62,25 @@ class Fact < ActiveRecord::Base
     User.with_username(username, service)
   end
 end
+
+# == Schema Information
+# Schema version: 20140713193201
+#
+# Table name: facts
+#
+#  id          :integer          not null, primary key
+#  identity    :string(255)      indexed
+#  owner       :string(255)      indexed
+#  name        :string(255)
+#  url         :string(255)
+#  tags        :text
+#  metadata    :text
+#  relevant_on :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+# Indexes
+#
+#  index_facts_on_identity  (identity)
+#  index_facts_on_owner     (owner)
+#

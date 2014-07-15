@@ -1,24 +1,3 @@
-# == Schema Information
-#
-# Table name: facts
-#
-#  id          :integer          not null, primary key
-#  identity    :string(255)
-#  owner       :string(255)
-#  name        :string(255)
-#  url         :string(255)
-#  tags        :text
-#  metadata    :text
-#  relevant_on :datetime
-#  created_at  :datetime
-#  updated_at  :datetime
-#
-# Indexes
-#
-#  index_facts_on_identity  (identity)
-#  index_facts_on_owner     (owner)
-#
-
 Fabricator(:fact, from: 'fact') do
   context { Fabricate(:user) }
 end
@@ -50,3 +29,25 @@ end
 Fabricator(:github_fork_fact, from: :github_original_fact) do
   tags { ['repo', 'github', 'fork', 'personal'] }
 end
+
+# == Schema Information
+# Schema version: 20140713193201
+#
+# Table name: facts
+#
+#  id          :integer          not null, primary key
+#  identity    :string(255)      indexed
+#  owner       :string(255)      indexed
+#  name        :string(255)
+#  url         :string(255)
+#  tags        :text
+#  metadata    :text
+#  relevant_on :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+# Indexes
+#
+#  index_facts_on_identity  (identity)
+#  index_facts_on_owner     (owner)
+#

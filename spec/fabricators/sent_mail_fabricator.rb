@@ -1,4 +1,8 @@
+Fabricator(:sent_mail) do
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: sent_mails
 #
@@ -8,6 +12,3 @@
 #  user_id       :integer
 #  sent_at       :datetime
 #
-
-Fabricator(:sent_mail) do
-end

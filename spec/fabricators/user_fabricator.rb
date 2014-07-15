@@ -1,13 +1,35 @@
+Fabricator(:user) do
+  github { 'mdeiters' }
+  twitter { 'mdeiters' }
+  username { Faker::Internet.user_name.gsub(/\./, "_") }
+  name { 'Matthew Deiters' }
+  email { 'someone@example.com' }
+  location { 'San Francisco' }
+  github_token { Faker::Internet.ip_v4_address }
+  state { User::ACTIVE }
+end
+
+Fabricator(:pending_user, from: :user) do
+  github { 'bguthrie' }
+  username { Faker::Internet.user_name.gsub(/\./, "_") }
+  name { 'Brian Guthrie' }
+  email { 'someone@example.com' }
+  location { 'Mountain View' }
+  github_token { Faker::Internet.ip_v4_address }
+  state { User::PENDING }
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: users
 #
 #  id                            :integer          not null, primary key
-#  username                      :string(255)
+#  username                      :string(255)      indexed
 #  name                          :string(255)
 #  email                         :string(255)
 #  location                      :string(255)
-#  old_github_token              :string(255)
+#  old_github_token              :string(255)      indexed
 #  state                         :string(255)
 #  created_at                    :datetime
 #  updated_at                    :datetime
@@ -44,9 +66,9 @@
 #  zerply                        :string(255)
 #  thumbnail_url                 :text
 #  linkedin                      :string(255)
-#  linkedin_id                   :string(255)
+#  linkedin_id                   :string(255)      indexed
 #  linkedin_token                :string(255)
-#  twitter_id                    :string(255)
+#  twitter_id                    :string(255)      indexed
 #  twitter_token                 :string(255)
 #  twitter_secret                :string(255)
 #  linkedin_secret               :string(255)
@@ -55,7 +77,7 @@
 #  beta_access                   :boolean          default(FALSE)
 #  redemptions                   :text
 #  endorsements_count            :integer          default(0)
-#  team_document_id              :string(255)
+#  team_document_id              :string(255)      indexed
 #  speakerdeck                   :string(255)
 #  slideshare                    :string(255)
 #  last_refresh_at               :datetime         default(1970-01-01 00:00:00 UTC)
@@ -105,24 +127,3 @@
 #  index_users_on_twitter_id        (twitter_id) UNIQUE
 #  index_users_on_username          (username) UNIQUE
 #
-
-Fabricator(:user) do
-  github { 'mdeiters' }
-  twitter { 'mdeiters' }
-  username { Faker::Internet.user_name.gsub(/\./, "_") }
-  name { 'Matthew Deiters' }
-  email { 'someone@example.com' }
-  location { 'San Francisco' }
-  github_token { Faker::Internet.ip_v4_address }
-  state { User::ACTIVE }
-end
-
-Fabricator(:pending_user, from: :user) do
-  github { 'bguthrie' }
-  username { Faker::Internet.user_name.gsub(/\./, "_") }
-  name { 'Brian Guthrie' }
-  email { 'someone@example.com' }
-  location { 'Mountain View' }
-  github_token { Faker::Internet.ip_v4_address }
-  state { User::PENDING }
-end

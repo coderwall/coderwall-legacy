@@ -1,4 +1,8 @@
+class Invitation < ActiveRecord::Base
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: invitations
 #
@@ -11,6 +15,3 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #
-
-class Invitation < ActiveRecord::Base
-end

@@ -1,20 +1,3 @@
-# == Schema Information
-#
-# Table name: highlights
-#
-#  id          :integer          not null, primary key
-#  user_id     :integer
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
-#  featured    :boolean          default(FALSE)
-#
-# Indexes
-#
-#  index_highlights_on_featured  (featured)
-#  index_highlights_on_user_id   (user_id)
-#
-
 class Highlight < ActiveRecord::Base
   belongs_to :user
 
@@ -37,3 +20,21 @@ class Highlight < ActiveRecord::Base
     @event = Event.create_highlight_event(self.user, self)
   end
 end
+
+# == Schema Information
+# Schema version: 20140713193201
+#
+# Table name: highlights
+#
+#  id          :integer          not null, primary key
+#  user_id     :integer          indexed
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#  featured    :boolean          default(FALSE), indexed
+#
+# Indexes
+#
+#  index_highlights_on_featured  (featured)
+#  index_highlights_on_user_id   (user_id)
+#

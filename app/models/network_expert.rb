@@ -1,4 +1,14 @@
+class NetworkExpert < ActiveRecord::Base
+  belongs_to :network
+  belongs_to :user
+
+  DESIGNATIONS = %(mayor resident_expert)
+
+  validates :designation, presence: true, inclusion: { in: DESIGNATIONS }
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: network_experts
 #
@@ -9,12 +19,3 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #
-
-class NetworkExpert < ActiveRecord::Base
-  belongs_to :network
-  belongs_to :user
-
-  DESIGNATIONS = %(mayor resident_expert)
-
-  validates :designation, presence: true, inclusion: { in: DESIGNATIONS }
-end

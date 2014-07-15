@@ -1,28 +1,3 @@
-# == Schema Information
-#
-# Table name: opportunities
-#
-#  id               :integer          not null, primary key
-#  name             :string(255)
-#  description      :text
-#  designation      :string(255)
-#  location         :string(255)
-#  cached_tags      :string(255)
-#  team_document_id :string(255)
-#  link             :string(255)
-#  salary           :integer
-#  options          :float
-#  deleted          :boolean          default(FALSE)
-#  deleted_at       :datetime
-#  created_at       :datetime
-#  updated_at       :datetime
-#  expires_at       :datetime         default(1970-01-01 00:00:00 UTC)
-#  opportunity_type :string(255)      default("full-time")
-#  location_city    :string(255)
-#  apply            :boolean          default(FALSE)
-#  public_id        :string(255)
-#
-
 require 'search'
 
 class Opportunity < ActiveRecord::Base
@@ -310,3 +285,29 @@ class Opportunity < ActiveRecord::Base
     self.class.tire.index.remove self
   end
 end
+
+# == Schema Information
+# Schema version: 20140713193201
+#
+# Table name: opportunities
+#
+#  id               :integer          not null, primary key
+#  name             :string(255)
+#  description      :text
+#  designation      :string(255)
+#  location         :string(255)
+#  cached_tags      :string(255)
+#  team_document_id :string(255)
+#  link             :string(255)
+#  salary           :integer
+#  options          :float
+#  deleted          :boolean          default(FALSE)
+#  deleted_at       :datetime
+#  created_at       :datetime
+#  updated_at       :datetime
+#  expires_at       :datetime         default(1970-01-01 00:00:00 UTC)
+#  opportunity_type :string(255)      default("full-time")
+#  location_city    :string(255)
+#  apply            :boolean          default(FALSE)
+#  public_id        :string(255)
+#

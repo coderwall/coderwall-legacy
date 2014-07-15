@@ -1,4 +1,10 @@
+Fabricator(:protip_link) do
+  identifier 1
+  url "MyString"
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: protip_links
 #
@@ -10,8 +16,3 @@
 #  updated_at :datetime
 #  kind       :string(255)
 #
-
-Fabricator(:protip_link) do
-  identifier 1
-  url "MyString"
-end

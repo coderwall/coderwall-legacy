@@ -1,4 +1,8 @@
+Fabricator(:plan) do
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: plans
 #
@@ -12,6 +16,3 @@
 #  updated_at :datetime
 #  analytics  :boolean          default(FALSE)
 #
-
-Fabricator(:plan) do
-end

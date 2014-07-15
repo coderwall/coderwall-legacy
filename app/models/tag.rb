@@ -1,11 +1,3 @@
-# == Schema Information
-#
-# Table name: tags
-#
-#  id   :integer          not null, primary key
-#  name :string(255)
-#
-
 class Tag < ActiveRecord::Base
   acts_as_followable
 
@@ -45,3 +37,12 @@ class Tag < ActiveRecord::Base
   end
 
 end
+
+# == Schema Information
+# Schema version: 20140713193201
+#
+# Table name: tags
+#
+#  id   :integer          not null, primary key
+#  name :string(255)
+#

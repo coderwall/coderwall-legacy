@@ -1,4 +1,10 @@
+class UserEvent < ActiveRecord::Base
+  belongs_to :user
+  serialize :data, Hash
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: user_events
 #
@@ -8,8 +14,3 @@
 #  data       :text
 #  created_at :datetime         default(2014-02-20 22:39:11 UTC)
 #
-
-class UserEvent < ActiveRecord::Base
-  belongs_to :user
-  serialize :data, Hash
-end

@@ -1,4 +1,11 @@
+require 'spec_helper'
+
+RSpec.describe Plan, :type => :model do
+  skip "add some examples to (or delete) #{__FILE__}"
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: plans
 #
@@ -12,9 +19,3 @@
 #  updated_at :datetime
 #  analytics  :boolean          default(FALSE)
 #
-
-require 'spec_helper'
-
-RSpec.describe Plan, :type => :model do
-  skip "add some examples to (or delete) #{__FILE__}"
-end

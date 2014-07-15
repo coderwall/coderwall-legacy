@@ -1,23 +1,3 @@
-# == Schema Information
-#
-# Table name: follows
-#
-#  id              :integer          not null, primary key
-#  followable_id   :integer          not null
-#  followable_type :string(255)      not null
-#  follower_id     :integer          not null
-#  follower_type   :string(255)      not null
-#  blocked         :boolean          default(FALSE), not null
-#  created_at      :datetime
-#  updated_at      :datetime
-#
-# Indexes
-#
-#  fk_followables                            (followable_id,followable_type)
-#  fk_follows                                (follower_id,follower_type)
-#  follows_uniq_followable_id_type_follower  (followable_id,followable_type,follower_id) UNIQUE
-#
-
 class Follow < ActiveRecord::Base
   include ResqueSupport::Basic
 
@@ -56,3 +36,24 @@ class Follow < ActiveRecord::Base
     "followed_#{followable.class.name.downcase}".to_sym
   end
 end
+
+# == Schema Information
+# Schema version: 20140713193201
+#
+# Table name: follows
+#
+#  id              :integer          not null, primary key
+#  followable_id   :integer          not null, indexed => [followable_type], indexed => [followable_type, follower_id]
+#  followable_type :string(255)      not null, indexed => [followable_id], indexed => [followable_id, follower_id]
+#  follower_id     :integer          not null, indexed => [follower_type], indexed => [followable_id, followable_type]
+#  follower_type   :string(255)      not null, indexed => [follower_id]
+#  blocked         :boolean          default(FALSE), not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+# Indexes
+#
+#  fk_followables                            (followable_id,followable_type)
+#  fk_follows                                (follower_id,follower_type)
+#  follows_uniq_followable_id_type_follower  (followable_id,followable_type,follower_id) UNIQUE
+#

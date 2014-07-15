@@ -1,4 +1,11 @@
+require 'spec_helper'
+
+RSpec.describe ProtipLink, :type => :model do
+  skip "add some examples to (or delete) #{__FILE__}"
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: protip_links
 #
@@ -10,9 +17,3 @@
 #  updated_at :datetime
 #  kind       :string(255)
 #
-
-require 'spec_helper'
-
-RSpec.describe ProtipLink, :type => :model do
-  skip "add some examples to (or delete) #{__FILE__}"
-end

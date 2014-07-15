@@ -1,4 +1,8 @@
+Fabricator(:spam_report) do
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: spam_reports
 #
@@ -8,6 +12,3 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
-
-Fabricator(:spam_report) do
-end

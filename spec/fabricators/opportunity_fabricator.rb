@@ -1,4 +1,19 @@
+Fabricator(:opportunity) do
+  salary 100000
+  name "Senior Rails Web Developer"
+  description "Architect and implement the Ruby and Javascript underpinnings of our various user-facing and internal web apps like api.heroku.com."
+  tags ["rails", "sinatra", "JQuery", "Clean, beautiful code"]
+  location "San Francisco, CA"
+  cached_tags "java, python"
+  team_document_id { Fabricate(:team, paid_job_posts: 1).id }
+end
+
+Fabricator(:job, from: :opportunity, class_name: :opportunity) do
+
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: opportunities
 #
@@ -22,17 +37,3 @@
 #  apply            :boolean          default(FALSE)
 #  public_id        :string(255)
 #
-
-Fabricator(:opportunity) do
-  salary 100000
-  name "Senior Rails Web Developer"
-  description "Architect and implement the Ruby and Javascript underpinnings of our various user-facing and internal web apps like api.heroku.com."
-  tags ["rails", "sinatra", "JQuery", "Clean, beautiful code"]
-  location "San Francisco, CA"
-  cached_tags "java, python"
-  team_document_id { Fabricate(:team, paid_job_posts: 1).id }
-end
-
-Fabricator(:job, from: :opportunity, class_name: :opportunity) do
-
-end

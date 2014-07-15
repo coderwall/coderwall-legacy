@@ -1,4 +1,8 @@
+class SeizedOpportunity < ActiveRecord::Base
+end
+
 # == Schema Information
+# Schema version: 20140713193201
 #
 # Table name: seized_opportunities
 #
@@ -10,6 +14,3 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #
-
-class SeizedOpportunity < ActiveRecord::Base
-end
