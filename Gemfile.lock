@@ -49,6 +49,7 @@ GIT
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     actionmailer (3.2.19)
       actionpack (= 3.2.19)
@@ -501,6 +502,7 @@ GEM
       activesupport (= 3.2.19)
       bundler (~> 1.0)
       railties (= 3.2.19)
+    rails-assets-font-awesome (4.1.0)
     rails-erd (1.1.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -779,6 +781,7 @@ DEPENDENCIES
   rack-cache
   rack-zippy
   rails (~> 3.2)
+  rails-assets-font-awesome
   rails-erd
   rails_12factor
   rails_autolink

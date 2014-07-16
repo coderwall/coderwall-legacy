@@ -1,5 +1,7 @@
 #add-comment.add-comment.cf
-  %h2 Add a comment
+  %h2
+    %i.fa.fa-comment
+    Add a comment
   =form_for [@protip, @protip.comments.build] do |f|
     =f.text_area :comment, :label => false, :rows => 5, :value => @reply_to || params[:comment]
     %input{:type => "submit", :value => "Submit comment", :class => "button"}

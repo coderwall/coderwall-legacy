@@ -1,4 +1,4 @@
-=content_for :content_wrapper do
+-content_for :content_wrapper do
   false
 
 -content_for :javascript do
@@ -7,12 +7,12 @@
 -content_for :head do
   =stylesheet_link_tag 'protip'
 
-=content_for :footer_menu do
+-content_for :footer_menu do
   %li=link_to 'Protips', by_tags_protips_path
 
 -unless signed_in?
   %section.home-top.cf
-    .inside-home-top
+    .home-top
       .left-panel
         %h1
           A community for developers to unlock and share new skills, join us
