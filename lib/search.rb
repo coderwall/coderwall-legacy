@@ -121,7 +121,7 @@ module SearchModule
       end
 
       def to_eval_form
-        "facet '#{@name}', global: #{@global} do \n"\
+        "facet '#{@name}', :global => #{@global} do \n"\
           "#{@type} :#{@field} #{evaluatable_options} \n"\
           'end'
       end

@@ -1,7 +1,7 @@
 class BannerUploader < CoderwallUploader
   # process :apply_tilt_shift
-  # process resize_to_fill: [500, 375]
-  # process resize_to_fit: [500, 375]
+  # process :resize_to_fill => [500, 375]
+  # process :resize_to_fit => [500, 375]
 
   def extension_white_list
     %w(jpg jpeg gif png)
