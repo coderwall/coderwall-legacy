@@ -81,6 +81,7 @@
             = sanitize(protip.title)
         - if is_admin? || protip_owner?(protip, current_user) || protip.total_views > 100
           %p.views
+            %i.fa.fa-eye
             %span
               = protip.total_views
             views
@@ -92,7 +93,8 @@
                 =link_to 'delete', delete_tag_protip_path(protip.public_id, CGI.escape(tag)), :method => :post, :class => "delete"
 
         //Time stamp
-        %div.timestamp.cf
+        %div.timestamp.cf{title: 'Publish time'}
+          %i.fa.fa-clock-o
           = local_time_ago(protip.created_at)
 
         - if is_admin?
@@ -107,7 +109,9 @@
 
     -if include_comments
       %section.comments
-        %h2.comments-header Comments
+        %h2.comments-header
+          %i.fa.fa-comments
+          Comments
         %ul.comment-list
           = render protip.comments
 

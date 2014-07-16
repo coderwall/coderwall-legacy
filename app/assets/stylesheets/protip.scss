@@ -1,5 +1,5 @@
 @import "base";
-@import "compass/css3/";
+@import "compass/css3";
 
 .next-tip-mob {
   display: none;
@@ -515,7 +515,6 @@ body.protip-single {
         color: #e6e6e6;
         background: #757575;
         text-align: center;
-        padding: 0;
         @include border-radius(4px);
         float: right;
         font-size: 1.4em;
@@ -650,14 +649,8 @@ body.protip-single {
       font-size: 1.6em;
       margin-bottom: 1em;
 
-      &:before {
-        @include icon-font;
+      i:before {
         font-size: 20px;
-        content: "6";
-        margin-right: 5px;
-        //padding-top: 5px;
-        display: inline-block;
-        line-height: 11px;
       }
     }
     //views
@@ -685,8 +678,8 @@ body.protip-single {
         @include border-radius(2px);
 
         &:after {
-          @include icon-font;
-          content: "8";
+          font-family: FontAwesome;
+          content: "\f02c";    //fa-tags
           margin-left: 0.5em;
         }
 
