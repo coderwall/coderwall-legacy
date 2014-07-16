@@ -1,5 +1,4 @@
 .inside.cf.x-protip-pane
-  //.blur-screen
   .tip-container.cf.x-protip-content.protip-single#x-protip{:class => mode}
     %aside.tip-sidebar
       .user-box
@@ -92,13 +91,17 @@
               - if is_admin?
                 =link_to 'delete', delete_tag_protip_path(protip.public_id, CGI.escape(tag)), :method => :post, :class => "delete"
 
+        //Time stamp
+        %div.timestamp.cf
+          = local_time_ago(protip.created_at)
+
         - if is_admin?
           %ul.admin-tag-links.cf
             %li=link_to 'flag', flag_protip_path(protip), :method => :post, :remote => true, :class => (protip.flagged? ? 'flagged' : "") + " flag"
             %li=link_to 'feature', feature_protip_path(protip), :method => :post, :remote => true, :class => (protip.featured? ? 'featured' : "") + " feature"
             %li=link_to('delete', protip_path(protip.public_id), :method => :delete, :class => 'delete-tip del', :rel => 'nofollow', :title => 'remove protip', :confirm => "Are you sure you permanently want to remove this pro tip?")
 
-        //.tip-body.tip-content
+      %hr
       %div.tip-content
         =raw sanitize(protip.to_html)
 
