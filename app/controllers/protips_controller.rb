@@ -540,24 +540,9 @@ class ProtipsController < ApplicationController
     if @protips.respond_to?(:facets)
       @protips.facets['suggested-networks']['terms'].map { |h| h['term'] }
     else
-      # gets top 10 tags for the protips and picks up associated networks
-      top_tags_for_protips(@protips)
+      #gets top 10 tags for the protips and picks up associated networks
+      Network.tagged_with(@protips.map(&:tags).flatten.reduce(Hash.new(0)) { |h, t| h[t] += 1; h }.sort_by { |k, v| -v }.first(10).flatten.values_at(*(0..20).step(2))).select(:slug).limit(4).map(&:slug)
     end
-  end
-
-  def top_tags_for_protips(protips)
-    tags = Network.tagged_with(
-      protips.
-      map(&:tags).
-      flatten.
-      reduce(Hash.new(0)) { |h, t| h[t] += 1; h }.
-      sort_by { |_k, v| -v }.
-      first(10).
-      flatten.
-      values_at(*(0..20).step(2))
-    )
-
-    tags.select(:slug).limit(4).map(&:slug)
   end
 
   def find_a_job_for(protips)
