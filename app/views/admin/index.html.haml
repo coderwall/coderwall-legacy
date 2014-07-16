@@ -72,8 +72,11 @@
         %td 7 day growth rate
         %td{:colspan => 2}= User.weekly_growth
       %tr
-        %td Redis Stats
-        %td{:colspan => 2}= link_to "Resque stats", "/admin/resque"
+        %td Resque Dashboard
+        %td{:colspan => 2}= link_to "Resque dashboard", "/admin/resque"
+      %tr
+        %td Sidekiq Dashboard
+        %td{:colspan => 2}= link_to "Sidekiq dashboard", "/admin/sidekiq"
       %tr
         %td Cache Stats
         %td{:colspan => 2}= link_to "Cache stats", admin_cache_stats_path
