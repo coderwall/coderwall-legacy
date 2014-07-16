@@ -297,8 +297,6 @@
 #        letter_opener_letter          /letter_opener/:id/:style.html(.:format)               letter_opener/letters#show
 #
 
-require 'resque/server'
-
 Badgiy::Application.routes.draw do
 
   # We get 10K's of requests for this route.
@@ -489,7 +487,10 @@ Badgiy::Application.routes.draw do
     get '/teams' => 'admin#teams', as: :teams
     get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
+    require 'resque/server'
     mount Resque::Server.new, at: '/resque'
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   get '/blog' => 'blog_posts#index', as: :blog

@@ -1,8 +1,10 @@
 class CoderwallUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  include Sprockets::Helpers::RailsHelper
-  include Sprockets::Helpers::IsolatedHelper
   include ::CarrierWave::Backgrounder::Delay
+
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
 
   def store_dir
     if Rails.env.development? || Rails.env.test?

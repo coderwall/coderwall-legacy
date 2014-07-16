@@ -145,8 +145,7 @@ class Protip < ActiveRecord::Base
       tag_ids = process_tags_for_search(tags)
       tag_ids = [0] if !tags.blank? and tag_ids.blank?
 
-      force_index_commit = Protip.tire.index.refresh if Rails.env.test?
-      query_fields = [:title, :body]
+      Protip.tire.index.refresh if Rails.env.test?
       filters = []
       filters << {term: {upvoters: bookmarked_by}} unless bookmarked_by.nil?
       filters << {term: {'user.user_id' => author}} unless author.nil?
@@ -163,7 +162,7 @@ class Protip < ActiveRecord::Base
               filter *fltr.first
             end
           end
-          sort { by [sorts] }
+          # sort { by [sorts] }
           #sort { by [{:upvotes => 'desc' }] }
         end
       rescue Tire::Search::SearchRequestFailed => e
@@ -330,22 +329,22 @@ class Protip < ActiveRecord::Base
   #######################
   # Homepage 4.0 rewrite
   #######################
+  #TODO REMOVE
+    def deindex_search
+      ProtipIndexer.new(self).remove
+    end
+    def index_search
+      ProtipIndexer.new(self).store
+    end
 
-  def deindex_search
-    Services::Search::DeindexProtip.run(self)
-  end
+    def index_search_after_destroy
+      self.tire.update_index
+    end
 
-  def index_search
-    Services::Search::ReindexProtip.run(self)
-  end
+    def unqueue_flagged
+      ProcessingQueue.unqueue(self, :auto_tweet)
+    end
 
-  def index_search_after_destroy
-    self.tire.update_index
-  end
-
-  def unqueue_flagged
-    ProcessingQueue.unqueue(self, :auto_tweet)
-  end
 
   def networks
     Network.tagged_with(self.topics)

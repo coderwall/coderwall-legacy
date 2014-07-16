@@ -3,7 +3,7 @@ module Services
     class IndexUserProtips
       def self.run(user)
         user.protips.each do |tip|
-          Services::Search::ReindexProtip.run(tip)
+          ProtipIndexer.new(tip).store
         end
       end
     end

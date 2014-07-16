@@ -1,9 +1,5 @@
 class PictureUploader < CoderwallUploader
 
-  def extension_white_list
-    %w(jpg jpeg gif png)
-  end
-
   process :auto_orient
 
   def auto_orient
