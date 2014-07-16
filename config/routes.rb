@@ -258,7 +258,6 @@
 #                   add_skill GET      /add-skill(.:format)                                   skills#create
 #                  admin_root GET      /admin(.:format)                                       admin#index
 #           admin_failed_jobs GET      /admin/failed_jobs(.:format)                           admin#failed_jobs
-#           admin_cache_stats GET      /admin/cache_stats(.:format)                           admin#cache_stats
 #                 admin_teams GET      /admin/teams(.:format)                                 admin#teams
 #        admin_sections_teams GET      /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
 #         admin_section_teams GET      /admin/teams/section/:section(.:format)                admin#section_teams
@@ -483,7 +482,6 @@ Badgiy::Application.routes.draw do
   scope :admin, as: :admin, :path => '/admin', :constraints => require_admin do
     get '/' => 'admin#index', as: :root
     get '/failed_jobs' => 'admin#failed_jobs'
-    get '/cache_stats' => 'admin#cache_stats'
     get '/teams' => 'admin#teams', as: :teams
     get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams

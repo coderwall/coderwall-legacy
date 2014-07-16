@@ -3,10 +3,6 @@ class AdminController < BaseAdminController
   def index
   end
 
-  def cache_stats
-    @cache_stats = Rails.cache.stats
-  end
-
   def failed_jobs
     @page     = params[:page].try(:to_i) || 1
     @per_page = params[:per_page].try(:to_i) || 10

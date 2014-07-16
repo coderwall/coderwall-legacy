@@ -78,9 +78,6 @@
         %td Sidekiq Dashboard
         %td{:colspan => 2}= link_to "Sidekiq dashboard", "/admin/sidekiq"
       %tr
-        %td Cache Stats
-        %td{:colspan => 2}= link_to "Cache stats", admin_cache_stats_path
-      %tr
         %td{:colspan => 2} Pro tips created in networks in past week
       -Network.all.each do |network|
         %tr
