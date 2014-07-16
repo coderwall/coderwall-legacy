@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe LifecycleMarketing, type: :model do
+RSpec.describe LifecycleMarketing, :type => :model do
 
   describe 'valid_newsletter_users' do
     it 'should only find users with newsletter enabled' do

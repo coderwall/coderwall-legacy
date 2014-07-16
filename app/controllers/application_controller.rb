@@ -28,13 +28,13 @@ class ApplicationController < ActionController::Base
   end
 
   def apply_cache_buster
-    response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
-    response.headers['Pragma']        = 'no-cache'
-    response.headers['Expires']       = 'Fri, 01 Jan 1990 00:00:00 GMT'
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"]        = "no-cache"
+    response.headers["Expires"]       = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
   def clear_expired_cookie_if_session_is_empty
-    unless signed_in?
+    if !signed_in?
       cookies.delete(:signedin)
     end
   end
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     current_user.last_ip = request.remote_ip
     current_user.last_ua = request.user_agent
     current_user.save
-    ensure_and_reconcile_tracking_code # updated tracking code if appropriate.
+    ensure_and_reconcile_tracking_code #updated tracking code if appropriate.
     current_user
   end
 
@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
   end
 
   def sign_out
-    record_event('signed out')
+    record_event("signed out")
     @current_user          = nil
     session[:current_user] = nil
     cookies.delete(:signedin)
@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
 
   def require_registration
     if signed_in? && not_on_pages?
-      redirect_to(edit_user_url(current_user)) unless current_user.valid?
+      redirect_to(edit_user_url(current_user)) if !current_user.valid?
     end
   end
 
@@ -137,7 +137,7 @@ class ApplicationController < ActionController::Base
   end
 
   def deployment_environment?
-    Rails.env.production? || Rails.env.staging?
+    Rails.env.production? or Rails.env.staging?
   end
 
   def destination_url
@@ -158,7 +158,7 @@ class ApplicationController < ActionController::Base
   end
 
   def access_required
-    redirect_to(root_url) unless signed_in?
+    redirect_to(root_url) if !signed_in?
   end
 
   def viewing_self?
@@ -174,8 +174,8 @@ class ApplicationController < ActionController::Base
   end
 
   unless Rails.env.development? || Rails.env.test?
-    rescue_from(ActiveRecord::RecordNotFound) { |_e| render_404 }
-    rescue_from(ActionController::RoutingError) { |_e| render_404 }
+    rescue_from(ActiveRecord::RecordNotFound) { |e| render_404 }
+    rescue_from(ActionController::RoutingError) { |e| render_404 }
     # rescue_from(RuntimeError) { |e| render_500 }
   end
 
@@ -206,7 +206,7 @@ class ApplicationController < ActionController::Base
   end
 
   def iphone_user_agent?
-    request.env['HTTP_USER_AGENT'] && request.env['HTTP_USER_AGENT'][/(Mobile\/.+Safari)/]
+    request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
   end
 
   def round(number)
@@ -216,7 +216,7 @@ class ApplicationController < ActionController::Base
       number.round(-1)
     elsif number < 1000
       number.round(-2)
-    elsif number < 10_000
+    elsif number < 10000
       number.round(-3)
     else
       number.round(-Math.log(number, 10))
@@ -228,28 +228,28 @@ class ApplicationController < ActionController::Base
       options.merge!('mp_name_tag' => cookies[:identity]) unless cookies[:identity].blank?
       options.merge!('distinct_id' => cookies[:trc]) unless cookies[:trc].blank?
       unless current_user.nil?
-        options.merge!('score'           => current_user.score.round(-1),
-                       'followers'       => round(current_user.followers_count),
-                       'achievements'    => current_user.badges_count,
-                       'on team'         => current_user.on_team?,
-                       'premium team'    => (current_user.team && current_user.team.premium?) || false,
-                       'signed in'       => true,
-                       'member'          => true,
-                       'first visit'     => false,
-                       'visit frequency' => current_user.visit_frequency)
+        options.merge!({ 'score'           => current_user.score.round(-1),
+                         'followers'       => round(current_user.followers_count),
+                         'achievements'    => current_user.badges_count,
+                         'on team'         => current_user.on_team?,
+                         'premium team'    => (current_user.team && current_user.team.premium?) || false,
+                         'signed in'       => true,
+                         'member'          => true,
+                         'first visit'     => false,
+                         'visit frequency' => current_user.visit_frequency })
       else
-        options.merge!('signed in'   => false,
-                       'member'      => cookies[:identity] && User.exists?(username: cookies[:identity]),
-                       'first visit' => session[:new_visit]
-        )
+        options.merge!({ 'signed in'   => false,
+                         'member'      => cookies[:identity] && User.exists?(username: cookies[:identity]),
+                         'first visit' => session[:new_visit]
+        })
       end
 
-      # options.merge!('signed up on' => current_user.created_at.to_formatted_s(:mixpanel),
+      #options.merge!('signed up on' => current_user.created_at.to_formatted_s(:mixpanel),
       #               'achievements' => current_user.badges_count) if signed_in?
 
       Resque.enqueue(MixpanelTracker::TrackEventJob, action_name, options, request.ip) if ENABLE_TRACKING
     end
-  rescue => ex
+  rescue Exception => ex
     Rails.logger.error("MIXPANEL: Swallowing error when trying to record #{action_name}, #{ex.message}")
   end
 
@@ -260,7 +260,7 @@ class ApplicationController < ActionController::Base
   def ensure_domain
     if Rails.env.production?
       if request.env['HTTP_HOST'] != APP_DOMAIN
-        redirect_to request.url.sub('//www.', '//'), status: 301
+        redirect_to request.url.sub("//www.", "//"), status: 301
       end
     end
   end
@@ -288,12 +288,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def redirect_to_signup_if_unauthenticated(return_to = request.referer, message = 'You must be signed in to do that', &_block)
+  def redirect_to_signup_if_unauthenticated(return_to=request.referer, message = "You must be signed in to do that", &block)
     if signed_in?
       yield
     else
       flash[:notice] = message
-      # This is called when someone tries to do an action while unauthenticated
+      #This is called when someone tries to do an action while unauthenticated
       Rails.logger.info "WILL RETURN TO #{return_to}"
       store_location!(return_to)
       redirect_to_path(signin_path)
@@ -309,4 +309,5 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
 end

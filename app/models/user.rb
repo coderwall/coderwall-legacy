@@ -1,4 +1,4 @@
-require 'net_validators'
+require "net_validators"
 
 class User < ActiveRecord::Base
   include ActionController::Caching::Fragments
@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   mount_uploader :resume, ResumeUploader
   process_in_background :banner, ResizeTiltShiftBanner
 
-  RESERVED = %w(
+  RESERVED = %w{
     achievements
     admin
     administrator
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     tos
     usernames
     users
-  )
+  }
 
   BLANK_PROFILE_URL = 'blank-mugshot.png'
 
@@ -47,10 +47,10 @@ class User < ActiveRecord::Base
   VALID_USERNAME_RIGHT_WAY = /^[a-z0-9]+$/
   VALID_USERNAME           = /^[^\.]+$/
   validates :username,
-            exclusion: { in: RESERVED, message: 'is reserved' },
-            format:    { with: VALID_USERNAME, message: 'must not contain a period' }
+    exclusion: { in: RESERVED, message: "is reserved" },
+    format:    { with: VALID_USERNAME, message: "must not contain a period" }
 
-  validates_uniqueness_of :username # , :case_sensitive => false, :on => :create
+  validates_uniqueness_of :username #, :case_sensitive => false, :on => :create
 
   validates_presence_of :username
   validates_presence_of :email
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   has_many :highlights, order: 'created_at DESC', dependent: :delete_all
   has_many :followed_teams, dependent: :delete_all
   has_many :user_events
-  has_many :skills, order: 'weight DESC', dependent: :delete_all
+  has_many :skills, order: "weight DESC", dependent: :delete_all
   has_many :endorsements, foreign_key: 'endorsed_user_id', dependent: :delete_all
   has_many :endorsings, foreign_key: 'endorsing_user_id', class_name: Endorsement.name, dependent: :delete_all
   has_many :protips, dependent: :delete_all
@@ -75,17 +75,17 @@ class User < ActiveRecord::Base
     User.near([lat, lng])
   end
 
-  scope :top, lambda { |num| order('badges_count DESC').limit(num || 10) }
-  scope :no_emails_since, lambda { |date| where('last_email_sent IS NULL OR last_email_sent < ?', date) }
+  scope :top, lambda { |num| order("badges_count DESC").limit(num || 10) }
+  scope :no_emails_since, lambda { |date| where("last_email_sent IS NULL OR last_email_sent < ?", date) }
   scope :receives_activity, where(notify_on_award: true)
   scope :receives_newsletter, where(receive_newsletter: true)
   scope :receives_digest, where(receive_weekly_digest: true)
-  scope :with_tokens, where('github_token IS NOT NULL')
-  scope :on_team, where('team_document_id IS NOT NULL')
-  scope :not_on_team, where('team_document_id IS NULL')
+  scope :with_tokens, where("github_token IS NOT NULL")
+  scope :on_team, where("team_document_id IS NOT NULL")
+  scope :not_on_team, where("team_document_id IS NULL")
   scope :autocomplete, lambda { |filter|
     filter = "#{filter.upcase}%"
-    where('upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?', filter, filter, filter, "%#{filter}").order('name ASC')
+    where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
   }
   scope :admins, where(admin: true)
 
@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
     end
 
     def username_in(usernames)
-      where(['UPPER(username) in (?)', usernames.map(&:upcase)])
+      where(["UPPER(username) in (?)", usernames.collect(&:upcase)])
     end
 
     def with_username(username, provider = :username)
@@ -122,18 +122,18 @@ class User < ActiveRecord::Base
                                         when 'github'
                                           'github'
                                         else
-                                          # A user could malicously pass in a provider, thats why we do the string matching above
-                                          fail 'Unkown provider type specified, unable to find user by username'
+                                          #A user could malicously pass in a provider, thats why we do the string matching above
+                                          raise "Unkown provider type specified, unable to find user by username"
                                         end
       where(["UPPER(#{sql_injection_safe_where_clause}) = UPPER(?)", username]).first
     end
 
     def with_username_or_email(username_or_email)
-      where(['UPPER(username) = ? OR email like ?', username_or_email.upcase, username_or_email]).first
+      where(["UPPER(username) = ? OR email like ?", username_or_email.upcase, username_or_email]).first
     end
 
     def stalest_github_profile(limit = nil)
-      query = active.order('achievements_checked_at ASC')
+      query = active.order("achievements_checked_at ASC")
       limit ? query.limit(limit) : query
     end
 
@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
     end
 
     def random(limit = 1)
-      active.where('badges_count > 1').order('Random()').limit(limit)
+      active.where("badges_count > 1").order("Random()").limit(limit)
     end
 
     def for_omniauth(auth)
@@ -175,23 +175,23 @@ class User < ActiveRecord::Base
       case oauth[:provider]
       when 'github'
         github_scope = (oauth[:uid] ? where(github_id: oauth[:uid]) : where(github: oauth[:info][:nickname]))
-        fail "Not a unique github credential #{oauth[:uid] || oauth[:info][:nickname]}" if github_scope.count > 1
+        raise "Not a unique github credential #{oauth[:uid] || oauth[:info][:nickname]}" if github_scope.count > 1
         return github_scope.first
       when 'linkedin'
         linkedin_scope = where(linkedin_id: oauth[:uid])
-        fail "Not a unique linkedin credential #{oauth[:uid]}" if linkedin_scope.count > 1
+        raise "Not a unique linkedin credential #{oauth[:uid]}" if linkedin_scope.count > 1
         return linkedin_scope.first
       when 'twitter'
         twitter_scope = where(twitter_id: oauth[:uid])
-        fail "Not a unique twitter credential #{oauth[:uid]}" if twitter_scope.count > 1
+        raise "Not a unique twitter credential #{oauth[:uid]}" if twitter_scope.count > 1
         return twitter_scope.first
       when 'developer'
         fail 'Developer Strategy must not be used in production.' if Rails.env.production?
         developer_scope = where(email: oauth[:uid])
-        fail "Looks like there's duplicate users for the email '#{oauth[:uid]}'. Check user ids: #{developer_scope.map(&:id).join(', ')}" if developer_scope.count > 1
+        raise "Looks like there's duplicate users for the email '#{oauth[:uid]}'. Check user ids: #{developer_scope.map(&:id).join(', ')}" if developer_scope.count > 1
         return developer_scope.first
       else
-        fail "Unexpected provider: #{oauth[:provider]}"
+        raise "Unexpected provider: #{oauth[:provider]}"
       end
     end
 
@@ -216,38 +216,38 @@ class User < ActiveRecord::Base
     end
 
     def all_tokens
-      with_tokens.select('github_token').map(&:github_token)
+      with_tokens.select("github_token").collect(&:github_token)
     end
 
     def signups_by_day
-      find_by_sql("SELECT to_char(created_at, 'MM DD') AS day, count(*) AS signups from users group by to_char(created_at, 'MM DD') order by to_char(created_at, 'MM DD')").map { |u| [u.day, u.signups] }
+      find_by_sql("SELECT to_char(created_at, 'MM DD') AS day, count(*) AS signups from users group by to_char(created_at, 'MM DD') order by to_char(created_at, 'MM DD')").collect { |u| [u.day, u.signups] }
     end
 
     def signups_by_hour
-      find_by_sql("SELECT to_char(created_at, 'HH24') AS hour, count(*) AS signups from users where created_at > NOW() - interval '24 hours' group by to_char(created_at, 'HH24') order by to_char(created_at, 'HH24')").map { |u| [u.hour, u.signups] }
+      find_by_sql("SELECT to_char(created_at, 'HH24') AS hour, count(*) AS signups from users where created_at > NOW() - interval '24 hours' group by to_char(created_at, 'HH24') order by to_char(created_at, 'HH24')").collect { |u| [u.hour, u.signups] }
     end
 
     def signups_by_month
-      find_by_sql("SELECT to_char(created_at, 'MON') AS day, count(*) AS signups from users group by to_char(created_at, 'MON') order by to_char(created_at, 'MON') DESC").map { |u| [u.day, u.signups] }
+      find_by_sql("SELECT to_char(created_at, 'MON') AS day, count(*) AS signups from users group by to_char(created_at, 'MON') order by to_char(created_at, 'MON') DESC").collect { |u| [u.day, u.signups] }
     end
 
     def repeat_visits_by_count
-      find_by_sql('SELECT login_count, count(*) AS visits from users group by login_count').map { |u| [u.login_count, u.visits] }
+      find_by_sql("SELECT login_count, count(*) AS visits from users group by login_count").collect { |u| [u.login_count, u.visits] }
     end
 
     def monthly_growth
-      prior = where('created_at < ?', 31.days.ago).count
-      month = where('created_at >= ?', 31.days.ago).count
+      prior = where("created_at < ?", 31.days.ago).count
+      month = where("created_at >= ?", 31.days.ago).count
       ((month.to_f / prior.to_f) * 100)
     end
 
     def weekly_growth
-      prior = where('created_at < ?', 7.days.ago).count
-      week  = where('created_at >= ?', 7.days.ago).count
+      prior = where("created_at < ?", 7.days.ago).count
+      week  = where("created_at >= ?", 7.days.ago).count
       ((week.to_f / prior.to_f) * 100)
     end
 
-    def most_active_by_country(since = 1.week.ago)
+    def most_active_by_country(since=1.week.ago)
       select('country, count(distinct(id))').where('last_request_at > ?', since).group(:country).order('count(distinct(id)) DESC')
     end
   end
@@ -257,21 +257,21 @@ class User < ActiveRecord::Base
   end
 
   def oldest_achievement_since_last_visit
-    badges.where('badges.created_at > ?', last_request_at).order('badges.created_at ASC').last
+    badges.where("badges.created_at > ?", last_request_at).order('badges.created_at ASC').last
   end
 
   def correct_ids
     [:stackoverflow, :slideshare].each do |social_id|
-      if try(social_id) =~ /^https?:.*\/([\w_\-]+)\/([\w\-]+|newsfeed)?/
-        send("#{social_id}=", Regexp.last_match[1])
+      if self.try(social_id) =~ /^https?:.*\/([\w_\-]+)\/([\w\-]+|newsfeed)?/
+        self.send("#{social_id}=", $1)
       end
     end
   end
 
   def correct_urls
-    self.favorite_websites = favorite_websites.split(',').map do |website|
+    self.favorite_websites = self.favorite_websites.split(",").collect do |website|
       correct_url(website.strip)
-    end.join(',') unless favorite_websites.nil?
+    end.join(",") unless self.favorite_websites.nil?
   end
 
   def company_name
@@ -294,8 +294,8 @@ class User < ActiveRecord::Base
       self.github           = oauth[:info][:nickname]
       self.github_id        = oauth[:uid]
       self.github_token     = oauth[:credentials][:token]
-      self.blog             = oauth[:info][:urls][:Blog] if oauth[:info][:urls] && blog.blank?
-      self.joined_github_on = extract_joined_on(oauth) if joined_github_on.blank?
+      self.blog             = oauth[:info][:urls][:Blog] if oauth[:info][:urls] && self.blog.blank?
+      self.joined_github_on = extract_joined_on(oauth) if self.joined_github_on.blank?
     when 'linkedin'
       self.linkedin_id         = oauth[:uid]
       self.linkedin_public_url = oauth[:info][:urls][:public_profile] if oauth[:info][:urls]
@@ -306,13 +306,13 @@ class User < ActiveRecord::Base
       self.twitter_id        = oauth[:uid]
       self.twitter_token     = oauth[:credentials][:token]
       self.twitter_secret    = oauth[:credentials][:secret]
-      self.about             = extract_from_oauth_extras(:description, oauth) if about.blank?
-      self.joined_twitter_on = extract_joined_on(oauth) if joined_twitter_on.blank?
+      self.about             = extract_from_oauth_extras(:description, oauth) if self.about.blank?
+      self.joined_twitter_on = extract_joined_on(oauth) if self.joined_twitter_on.blank?
     when 'developer'
-      logger.debug 'Using the Developer Strategy for OmniAuth'
+      logger.debug "Using the Developer Strategy for OmniAuth"
       logger.ap oauth, :debug
     else
-      fail "Unexpected provider: #{oauth[:provider]}"
+      raise "Unexpected provider: #{oauth[:provider]}"
     end
   end
 
@@ -342,7 +342,7 @@ class User < ActiveRecord::Base
   end
 
   def has_badge?(badge_class)
-    badges.map(&:badge_class_name).include?(badge_class.name)
+    badges.collect(&:badge_class_name).include?(badge_class.name)
   end
 
   def achievements_checked?
@@ -372,8 +372,8 @@ class User < ActiveRecord::Base
   def team
     @team ||= team_document_id && Team.find(team_document_id)
   rescue Mongoid::Errors::DocumentNotFound
-    # readonly issue in follows/_user partial from partial iterator
-    User.connection.execute("UPDATE users set team_document_id = NULL where id = #{id}")
+    #readonly issue in follows/_user partial from partial iterator
+    User.connection.execute("UPDATE users set team_document_id = NULL where id = #{self.id}")
     @team = nil
   end
 
@@ -382,7 +382,7 @@ class User < ActiveRecord::Base
   end
 
   def following_team?(team)
-    followed_teams.map(&:team_document_id).include?(team.id.to_s)
+    followed_teams.collect(&:team_document_id).include?(team.id.to_s)
   end
 
   def follow_team!(team)
@@ -396,7 +396,7 @@ class User < ActiveRecord::Base
   end
 
   def teams_being_followed
-    Team.find(followed_teams.map(&:team_document_id)).sort { |x, y| y.score <=> x.score }
+    Team.find(followed_teams.collect(&:team_document_id)).sort { |x, y| y.score <=> x.score }
   end
 
   def on_team?
@@ -404,7 +404,7 @@ class User < ActiveRecord::Base
   end
 
   def team_member_of?(user)
-    on_team? && team_document_id == user.team_document_id
+    on_team? && self.team_document_id == user.team_document_id
   end
 
   def belongs_to_team?(team = nil)
@@ -415,10 +415,10 @@ class User < ActiveRecord::Base
     end
   end
 
-  def complete_registration!(_opts = {})
+  def complete_registration!(opts={})
     update_attribute(:state, PENDING)
-    Resque.enqueue(ActivateUser, username)
-    Resque.enqueue(AnalyzeUser, username)
+    Resque.enqueue(ActivateUser, self.username)
+    Resque.enqueue(AnalyzeUser, self.username)
   end
 
   def activate!
@@ -427,7 +427,7 @@ class User < ActiveRecord::Base
   end
 
   def unregistered?
-    state.nil?
+    state == nil
   end
 
   def not_active?
@@ -451,23 +451,23 @@ class User < ActiveRecord::Base
   end
 
   def award(badge)
-    new_badge = badges.of_type(badge).first || badges.build(badge_class_name: badge.class.name)
+    new_badge = self.badges.of_type(badge).first || self.badges.build(badge_class_name: badge.class.name)
   end
 
   def add_github_badge(badge)
-    GithubBadge.new.add(badge, github)
+    GithubBadge.new.add(badge, self.github)
   end
 
   def remove_github_badge(badge)
-    GithubBadge.new.remove(badge, github)
+    GithubBadge.new.remove(badge, self.github)
   end
 
   def add_all_github_badges
-    enqueue(GithubBadgeOrg, username, :add)
+    enqueue(GithubBadgeOrg, self.username, :add)
   end
 
   def remove_all_github_badges
-    enqueue(GithubBadgeOrg, username, :remove)
+    enqueue(GithubBadgeOrg, self.username, :remove)
   end
 
   def award_and_add_skill(badge)
@@ -479,7 +479,7 @@ class User < ActiveRecord::Base
 
   def assign_badges(new_badges)
     new_badge_classes = new_badges.map { |b| b.class.name }
-    old_badge_classes = badges.map(&:badge_class_name)
+    old_badge_classes = self.badges.map(&:badge_class_name)
 
     @badges_to_destroy = old_badge_classes - new_badge_classes
 
@@ -496,11 +496,11 @@ class User < ActiveRecord::Base
       "https://twitter.com/#{twitter}",
       "https://github.com/#{github}",
       linkedin_public_url,
-      skills.map(&:name).join(' ')
+      skills.collect(&:name).join(' ')
     ].join(',')
   end
 
-  def public_hash(full = false)
+  def public_hash(full=false)
     hash = { username:     username,
              name:         display_name,
              location:     location,
@@ -521,7 +521,7 @@ class User < ActiveRecord::Base
       hash[:company]            = company
       hash[:specialities]       = speciality_tags
       hash[:thumbnail]          = thumbnail_url
-      hash[:accomplishments]    = highlights.map(&:description)
+      hash[:accomplishments]    = highlights.collect(&:description)
       hash[:accounts][:twitter] = twitter
     end
     hash
@@ -530,7 +530,7 @@ class User < ActiveRecord::Base
   def facts
     @facts ||= begin
                  user_identites = [linkedin_identity, bitbucket_identity, lanyrd_identity, twitter_identity, github_identity, speakerdeck_identity, slideshare_identity, id.to_s].compact
-                 Fact.where(owner: user_identites.map(&:downcase)).all
+                 Fact.where(owner: user_identites.collect(&:downcase)).all
                end
   end
 
@@ -570,13 +570,13 @@ class User < ActiveRecord::Base
   end
 
   def can_unlink_provider?(provider)
-    self.respond_to?("clear_#{provider}!") && send("#{provider}_identity") && num_linked_accounts > 1
+    self.respond_to?("clear_#{provider}!") && self.send("#{provider}_identity") && num_linked_accounts > 1
   end
 
-  LINKABLE_PROVIDERS = %w(twitter linkedin github)
+  LINKABLE_PROVIDERS= %w(twitter linkedin github)
 
   def num_linked_accounts
-    LINKABLE_PROVIDERS.map { |provider| send("#{provider}_identity") }.compact.count
+    LINKABLE_PROVIDERS.map { |provider| self.send("#{provider}_identity") }.compact.count
   end
 
   def linkedin_identity
@@ -608,7 +608,7 @@ class User < ActiveRecord::Base
   end
 
   def build_facts(all)
-    since = (all ? Time.at(0) : last_refresh_at)
+    since = (all ? Time.at(0) : self.last_refresh_at)
     build_github_facts(since)
     build_lanyrd_facts
     build_linkedin_facts
@@ -625,8 +625,8 @@ class User < ActiveRecord::Base
     Slideshare.new(slideshare).facts if slideshare_identity
   end
 
-  def build_github_facts(since = Time.at(0))
-    GithubProfile.for_username(github, since).facts if github_identity && github_failures == 0
+  def build_github_facts(since=Time.at(0))
+    GithubProfile.for_username(github, since).facts if github_identity and github_failures == 0
   end
 
   def build_linkedin_facts
@@ -667,7 +667,7 @@ class User < ActiveRecord::Base
 
   def add_skills_for_lanyrd_facts!
     tokenized_lanyrd_tags.each do |lanyrd_tag|
-      if skills.any?
+      if self.skills.any?
         skill = skill_for(lanyrd_tag)
         skill.apply_facts unless skill.nil?
       else
@@ -678,19 +678,19 @@ class User < ActiveRecord::Base
   end
 
   def deleted_skill?(skill_name)
-    Skill.deleted?(id, skill_name)
+    Skill.deleted?(self.id, skill_name)
   end
 
   def repo_facts
-    facts.select { |fact| fact.tagged?('personal', 'repo', 'original') }
+    self.facts.select { |fact| fact.tagged?('personal', 'repo', 'original') }
   end
 
   def lanyrd_facts
-    facts.select { |fact| fact.tagged?('lanyrd') }
+    self.facts.select { |fact| fact.tagged?('lanyrd') }
   end
 
   def tokenized_lanyrd_tags
-    lanyrd_facts.map { |fact| fact.tags }.flatten.compact.map { |tag| Skill.tokenize(tag) }
+    lanyrd_facts.collect { |fact| fact.tags }.flatten.compact.map { |tag| Skill.tokenize(tag) }
   end
 
   def last_modified_at
@@ -707,7 +707,7 @@ class User < ActiveRecord::Base
   end
 
   def geocode_location
-    do_lookup(false) do |_o, rs|
+    do_lookup(false) do |o, rs|
       geo             = rs.first
       self.lat        = geo.latitude
       self.lng        = geo.longitude
@@ -715,30 +715,30 @@ class User < ActiveRecord::Base
       self.state_name = geo.state
       self.city       = geo.city
     end
-  rescue => ex
+  rescue Exception => ex
     Rails.logger.error("Failed geolocating '#{location}': #{ex.message}")
   end
 
-  def activity_stats(since = Time.at(0), full = false)
-    { profile_views:  total_views(since),
-      protips_count:  protips.where('protips.created_at > ?', since).count,
-      protip_upvotes: protips.joins('inner join likes on likes.likable_id = protips.id').where("likes.likable_type = 'Protip'").where('likes.created_at > ?', since).count,
+  def activity_stats(since=Time.at(0), full=false)
+    { profile_views:  self.total_views(since),
+      protips_count:  self.protips.where('protips.created_at > ?', since).count,
+      protip_upvotes: self.protips.joins("inner join likes on likes.likable_id = protips.id").where("likes.likable_type = 'Protip'").where('likes.created_at > ?', since).count,
       followers:      followers_since(since).count,
       endorsements:   full ? endorsements_since(since).count : 0,
-      protips_views:  full ? protips.map { |protip| protip.total_views(since) }.reduce(0, :+) : 0
+      protips_views:  full ? self.protips.collect { |protip| protip.total_views(since) }.reduce(0, :+) : 0
     }
   end
 
   def upvoted_protips
-    Protip.where(id: Like.where(likable_type: 'Protip').where(user_id: id).select(:likable_id).map(&:likable_id))
+    Protip.where(id: Like.where(likable_type: "Protip").where(user_id: self.id).select(:likable_id).map(&:likable_id))
   end
 
   def upvoted_protips_public_ids
     upvoted_protips.select(:public_id).map(&:public_id)
   end
 
-  def followers_since(since = Time.at(0))
-    followers_by_type(User.name).where('follows.created_at > ?', since)
+  def followers_since(since=Time.at(0))
+    self.followers_by_type(User.name).where('follows.created_at > ?', since)
   end
 
   def activity
@@ -752,7 +752,7 @@ class User < ActiveRecord::Base
   end
 
   def achievement_score
-    badges.map(&:weight).sum
+    badges.collect(&:weight).sum
   end
 
   def score
@@ -761,14 +761,14 @@ class User < ActiveRecord::Base
   end
 
   def team_members
-    User.where(team_document_id: team_document_id.to_s)
+    User.where(team_document_id: self.team_document_id.to_s)
   end
 
   def team_member_ids
-    User.select(:id).where(team_document_id: team_document_id.to_s).map(&:id)
+    User.select(:id).where(team_document_id: self.team_document_id.to_s).map(&:id)
   end
 
-  def penalize!(amount = (((team && team.team_members.size) || 6) / 6.0) * activitiy_multipler)
+  def penalize!(amount=(((team && team.team_members.size) || 6) / 6.0)*activitiy_multipler)
     self.penalty = amount
     self.calculate_score!
   end
@@ -786,11 +786,11 @@ class User < ActiveRecord::Base
   end
 
   def times_spoken
-    facts.select { |fact| fact.tagged?('event', 'spoke') }.count
+    facts.select { |fact| fact.tagged?("event", "spoke") }.count
   end
 
   def times_attended
-    facts.select { |fact| fact.tagged?('event', 'attended') }.count
+    facts.select { |fact| fact.tagged?("event", "attended") }.count
   end
 
   def activitiy_multipler
@@ -803,27 +803,27 @@ class User < ActiveRecord::Base
   end
 
   def latest_activity_on
-    @latest_activity_on ||= facts.map(&:relevant_on).compact.max
+    @latest_activity_on ||= facts.collect(&:relevant_on).compact.max
   end
 
   def speciality_tags
-    (specialties || '').split(',').map(&:strip).compact
+    (specialties || '').split(',').collect(&:strip).compact
   end
 
   def achievements_unlocked_since_last_visit
-    badges.where('badges.created_at > ?', last_request_at).reorder('badges.created_at ASC')
+    self.badges.where("badges.created_at > ?", last_request_at).reorder('badges.created_at ASC')
   end
 
   def endorsements_unlocked_since_last_visit
     endorsements_since(last_request_at)
   end
 
-  def endorsements_since(since = Time.at(0))
-    endorsements.where('endorsements.created_at > ?', since).order('endorsements.created_at ASC')
+  def endorsements_since(since=Time.at(0))
+    self.endorsements.where("endorsements.created_at > ?", since).order('endorsements.created_at ASC')
   end
 
-  def endorsers(since = Time.at(0))
-    User.where(id: endorsements.select('distinct(endorsements.endorsing_user_id), endorsements.created_at').where('endorsements.created_at > ?', since).map(&:endorsing_user_id))
+  def endorsers(since=Time.at(0))
+    User.where(id: self.endorsements.select('distinct(endorsements.endorsing_user_id), endorsements.created_at').where('endorsements.created_at > ?', since).map(&:endorsing_user_id))
   end
 
   def activity_since_last_visit?
@@ -871,13 +871,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def viewers(since = 0)
+  def viewers(since=0)
     epoch_now  = Time.now.to_i
     viewer_ids = REDIS.zrevrangebyscore(user_views_key, epoch_now, since)
     User.where(id: viewer_ids).all
   end
 
-  def viewed_by_since?(user_id, since = 0)
+  def viewed_by_since?(user_id, since=0)
     epoch_now   = Time.now.to_i
     views_since = Hash[*REDIS.zrevrangebyscore(user_views_key, epoch_now, since, withscores: true)]
     !views_since[user_id.to_s].nil?
@@ -893,34 +893,34 @@ class User < ActiveRecord::Base
     end
   end
 
-  def generate_event(options = {})
+  def generate_event(options={})
     event_type = self.event_type(options)
-    enqueue(GenerateEvent, event_type, event_audience(event_type, options), to_event_hash(options), 30.seconds)
+    enqueue(GenerateEvent, event_type, event_audience(event_type, options), self.to_event_hash(options), 30.seconds)
   end
 
   def subscribed_channels
-    Audience.to_channels(Audience.user(id))
+    Audience.to_channels(Audience.user(self.id))
   end
 
-  def event_audience(event_type, options = {})
+  def event_audience(event_type, options={})
     if event_type == :profile_view
-      Audience.user(id)
+      Audience.user(self.id)
     elsif event_type == :followed_team
       Audience.team(options[:team].try(:id))
     end
   end
 
-  def to_event_hash(options = {})
-    event_hash = { user: { username: options[:viewer] || username } }
+  def to_event_hash(options={})
+    event_hash = { user: { username: options[:viewer] || self.username } }
     if options[:viewer]
       event_hash[:views] = total_views
     elsif options[:team]
-      event_hash[:follow] = { followed: options[:team].try(:name), follower: try(:name) }
+      event_hash[:follow] = { followed: options[:team].try(:name), follower: self.try(:name) }
     end
     event_hash
   end
 
-  def event_type(options = {})
+  def event_type(options={})
     if options[:team]
       :followed_team
     else
@@ -929,19 +929,19 @@ class User < ActiveRecord::Base
   end
 
   def build_github_proptips_fast
-    repos = followed_repos(since = 2.months.ago)
+    repos = followed_repos(since=2.months.ago)
     repos.each do |repo|
       Importers::Protips::GithubImporter.import_from_follows(repo.description, repo.link, repo.date, self)
     end
   end
 
-  def build_repo_followed_activity!(refresh = false)
+  def build_repo_followed_activity!(refresh=false)
     REDIS.zremrangebyrank(followed_repo_key, 0, Time.now.to_i) if refresh
     epoch_now  = Time.now.to_i
     first_time = refresh || REDIS.zcount(followed_repo_key, 0, epoch_now) <= 0
-    links      = Github.new.activities_for(github, (first_time ? 20 : 1))
+    links      = Github.new.activities_for(self.github, (first_time ? 20 : 1))
     links.each do |link|
-      link[:user_id] = id
+      link[:user_id] = self.id
       REDIS.zadd(followed_repo_key, link[:date].to_i, link.to_json)
       Importers::Protips::GithubImporter.import_from_follows(link[:description], link[:link], link[:date], self)
     end
@@ -956,27 +956,27 @@ class User < ActiveRecord::Base
   end
 
   def track_user_view!(user)
-    track!('viewed user', user_id: user.id, username: user.username)
+    track!("viewed user", user_id: user.id, username: user.username)
   end
 
   def track_signin!
-    track!('signed in')
+    track!("signed in")
   end
 
   def track_viewed_self!
-    track!('viewed self')
+    track!("viewed self")
   end
 
   def track_team_view!(team)
-    track!('viewed team', team_id: team.id.to_s, team_name: team.name)
+    track!("viewed team", team_id: team.id.to_s, team_name: team.name)
   end
 
   def track_protip_view!(protip)
-    track!('viewed protip', protip_id: protip.public_id, protip_score: protip.score)
+    track!("viewed protip", protip_id: protip.public_id, protip_score: protip.score)
   end
 
   def track_opportunity_view!(opportunity)
-    track!('viewed opportunity', opportunity_id: opportunity.id, team: opportunity.team_document_id)
+    track!("viewed opportunity", opportunity_id: opportunity.id, team: opportunity.team_document_id)
   end
 
   def track!(name, data = {})
@@ -984,7 +984,7 @@ class User < ActiveRecord::Base
   end
 
   def teams_nearby
-    @teams_nearby ||= nearbys(50).map { |u| u.team rescue nil }.compact.uniq
+    @teams_nearby ||= nearbys(50).collect { |u| u.team rescue nil }.compact.uniq
   end
 
   def followers_key
@@ -998,7 +998,7 @@ class User < ActiveRecord::Base
       people_user_is_following.each do |id|
         REDIS.sadd(followers_key, id)
         if user = User.where(twitter_id: id.to_s).first
-          follow(user)
+          self.follow(user)
         end
       end
     end
@@ -1013,72 +1013,72 @@ class User < ActiveRecord::Base
   end
 
   def following_users_ids
-    following_users.select(:id).map(&:id)
+    self.following_users.select(:id).map(&:id)
   end
 
   def following_teams_ids
-    followed_teams.map(&:team_document_id)
+    self.followed_teams.map(&:team_document_id)
   end
 
   def following_team_members_ids
-    User.select(:id).where(team_document_id: following_teams_ids).map(&:id)
+    User.select(:id).where(team_document_id: self.following_teams_ids).map(&:id)
   end
 
   def following_networks_ids
-    following_networks.select(:id).map(&:id)
+    self.following_networks.select(:id).map(&:id)
   end
 
   def following_networks_tags
-    following_networks.map(&:tags).uniq
+    self.following_networks.map(&:tags).uniq
   end
 
   def following
     @following ||= begin
                      ids = REDIS.smembers(followers_key)
-                     User.where(twitter_id: ids).order('badges_count DESC').limit(10)
+                     User.where(twitter_id: ids).order("badges_count DESC").limit(10)
                    end
   end
 
   def following_in_common(user)
     @following_in_common ||= begin
                                ids = REDIS.sinter(followers_key, user.followers_key)
-                               User.where(twitter_id: ids).order('badges_count DESC').limit(10)
+                               User.where(twitter_id: ids).order("badges_count DESC").limit(10)
                              end
   end
 
-  def followed_repos(since = 2.months.ago)
-    REDIS.zrevrange(followed_repo_key, 0, since.to_i).map { |link| FollowedRepo.new(link) }
+  def followed_repos(since=2.months.ago)
+    REDIS.zrevrange(followed_repo_key, 0, since.to_i).collect { |link| FollowedRepo.new(link) }
   end
 
   def networks
-    following_networks
+    self.following_networks
   end
 
   def is_mayor_of?(network)
-    network.mayor.try(:id) == id
+    network.mayor.try(:id) == self.id
   end
 
   def networks_based_on_skills
-    skills.map { |skill| Network.all_with_tag(skill.name) }.flatten.uniq
+    self.skills.collect { |skill| Network.all_with_tag(skill.name) }.flatten.uniq
   end
 
   def visited!
-    append_latest_visits(Time.now) if last_request_at && (last_request_at < 1.day.ago)
-    touch(:last_request_at)
+    self.append_latest_visits(Time.now) if self.last_request_at && (self.last_request_at < 1.day.ago)
+    self.touch(:last_request_at)
   end
 
   def latest_visits
-    @latest_visits ||= visits.split(';').map(&:to_time)
+    @latest_visits ||= self.visits.split(";").map(&:to_time)
   end
 
   def append_latest_visits(timestamp)
-    self.visits = (visits.split(';') << timestamp.to_s).join(';')
-    visits.slice!(0, visits.index(';') + 1) if visits.length >= 64
+    self.visits = (self.visits.split(";") << timestamp.to_s).join(";")
+    self.visits.slice!(0, self.visits.index(';')+1) if self.visits.length >= 64
     calculate_frequency_of_visits!
   end
 
   def average_time_between_visits
-    @average_time_between_visits ||= (latest_visits.each_with_index.map { |visit, index| visit - latest_visits[index - 1] }.reject { |difference| difference < 0 }.reduce(:+) || 0) / latest_visits.count
+    @average_time_between_visits ||= (self.latest_visits.each_with_index.map { |visit, index| visit - self.latest_visits[index-1] }.reject { |difference| difference < 0 }.reduce(:+) || 0)/self.latest_visits.count
   end
 
   def calculate_frequency_of_visits!
@@ -1127,7 +1127,7 @@ class User < ActiveRecord::Base
     "user:#{id}:following:repos"
   end
 
-  # This is a temporary method as we migrate to the new 1.0 profile
+  #This is a temporary method as we migrate to the new 1.0 profile
   def migrate_to_skills!
     badges.each do |b|
       if b.badge_class.respond_to?(:skill)
@@ -1158,7 +1158,7 @@ class User < ActiveRecord::Base
 
   def skill_for(name)
     tokenized_skill = Skill.tokenize(name)
-    skills.find { |skill| skill.tokenized == tokenized_skill }
+    skills.detect { |skill| skill.tokenized == tokenized_skill }
   end
 
   def subscribed_to_topic?(topic)
@@ -1180,23 +1180,23 @@ class User < ActiveRecord::Base
     following_tags
   end
 
-  def bookmarked_protips(count = Protip::PAGESIZE, force = false)
+  def bookmarked_protips(count=Protip::PAGESIZE, force=false)
     if force
-      likes.where(likable_type: 'Protip').map(&:likable)
+      self.likes.where(likable_type: 'Protip').map(&:likable)
     else
-      Protip.search("bookmark:#{username}", [], per_page: count)
+      Protip.search("bookmark:#{self.username}", [], per_page: count)
     end
   end
 
-  def authored_protips(count = Protip::PAGESIZE, force = false)
+  def authored_protips(count=Protip::PAGESIZE, force=false)
     if force
-      protips
+      self.protips
     else
-      Protip.search("author:#{username}", [], per_page: count)
+      Protip.search("author:#{self.username}", [], per_page: count)
     end
   end
 
-  def protip_subscriptions_for(topic, count = Protip::PAGESIZE, force = false)
+  def protip_subscriptions_for(topic, count=Protip::PAGESIZE, force=false)
     if force
       following?(tag) && Protip.for_topic(topic)
     else
@@ -1217,11 +1217,11 @@ class User < ActiveRecord::Base
   end
 
   def join(network)
-    follow(network)
+    self.follow(network)
   end
 
   def leave(network)
-    stop_following(network)
+    self.stop_following(network)
   end
 
   def apply_to(job)
@@ -1233,7 +1233,7 @@ class User < ActiveRecord::Base
   end
 
   def seen(feature_name)
-    REDIS.SADD("user:seen:#{feature_name}", id.to_s)
+    REDIS.SADD("user:seen:#{feature_name}", self.id.to_s)
   end
 
   def self.that_have_seen(feature_name)
@@ -1241,26 +1241,26 @@ class User < ActiveRecord::Base
   end
 
   def seen?(feature_name)
-    REDIS.SISMEMBER("user:seen:#{feature_name}", id.to_s) == 1 # true
+    REDIS.SISMEMBER("user:seen:#{feature_name}", self.id.to_s) == 1 #true
   end
 
   def has_resume?
-    !resume.blank?
+    !self.resume.blank?
   end
 
   private
 
   def load_github_profile
-    github.blank? ? nil : (cached_profile || fresh_profile)
+    self.github.blank? ? nil : (cached_profile || fresh_profile)
   end
 
   def cached_profile
-    github_id.present? && GithubProfile.where(github_id: github_id).first
+    self.github_id.present? && GithubProfile.where(github_id: self.github_id).first
   end
 
   def fresh_profile
-    GithubProfile.for_username(github).tap do |profile|
-      update_attribute(:github_id, profile.github_id)
+    GithubProfile.for_username(self.github).tap do |profile|
+      self.update_attribute(:github_id, profile.github_id)
     end
   end
 
@@ -1268,7 +1268,7 @@ class User < ActiveRecord::Base
 
   def destroy_badges
     unless @badges_to_destroy.nil?
-      badges.where(badge_class_name: @badges_to_destroy).destroy_all
+      self.badges.where(badge_class_name: @badges_to_destroy).destroy_all
       @badges_to_destroy = nil
     end
   end
@@ -1276,7 +1276,7 @@ class User < ActiveRecord::Base
   before_create :make_referral_token
 
   def make_referral_token
-    if referral_token.nil?
+    if self.referral_token.nil?
       self.referral_token = SecureRandom.hex(8)
     end
   end
@@ -1285,16 +1285,16 @@ class User < ActiveRecord::Base
   after_destroy :refresh_protips
 
   def refresh_dependencies
-    if username_changed? || avatar_changed? || team_document_id_changed?
+    if username_changed? or avatar_changed? or team_document_id_changed?
       refresh_protips
     end
   end
 
   def refresh_protips
-    protips.each do |protip|
+    self.protips.each do |protip|
       protip.index_search
     end
-    true
+    return true
   end
 
   after_save :manage_github_orgs

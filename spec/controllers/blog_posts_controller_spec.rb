@@ -1,4 +1,4 @@
-RSpec.describe BlogPostsController, type: :controller do
+RSpec.describe BlogPostsController, :type => :controller do
 
   describe 'GET /blog/:id' do
     it 'should retrieve the post for the given id' do

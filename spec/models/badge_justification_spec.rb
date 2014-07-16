@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-RSpec.describe BadgeJustification, type: :model do
+RSpec.describe BadgeJustification, :type => :model do
 
 end

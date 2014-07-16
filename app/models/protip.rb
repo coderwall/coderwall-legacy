@@ -29,36 +29,36 @@ class Protip < ActiveRecord::Base
   has_one :spam_report, as: :spammable
   belongs_to :user , autosave: true
 
-  rakismet_attrs author: proc { user.name },
-                 author_email: proc { user.email },
-                 content: :body,
-                 blog: ENV['AKISMET_URL'],
-                 user_ip: proc { user.last_ip },
-                 user_agent: proc { user.last_ua }
+  rakismet_attrs  author: proc { self.user.name },
+    author_email: proc { self.user.email },
+    content: :body,
+    blog: ENV['AKISMET_URL'],
+    user_ip: proc { self.user.last_ip },
+    user_agent: proc { self.user.last_ua }
 
   attr_taggable :topics, :users
   attr_accessor :upvotes
 
   DEFAULT_IP_ADDRESS = '0.0.0.0'
 
-  USER_SCOPE = ['!!mine', '!!bookmarks']
+  USER_SCOPE = ["!!mine", "!!bookmarks"]
   USER_SCOPE_REGEX = { author:   /!!m(ine)?/, bookmark: /!!b(ookmarks?)?/, }
   KINDS = [:link, :qa, :article]
   FEATURED_PHOTO = /\A\s*!\[[\w\s\W]*\]\(([\w\s\W]*)\)/i
   FORMATTERS = { q: /###[Qq|Pp]/, a: /###[Aa|Ss]/ }
   VALID_TAG = /[\w#\-\.\_\$\!\?\* ]+/
 
-  # possible content creators
-  IMPORTER = 'coderwall:importer'
-  SELF = 'self'
+  #possible content creators
+  IMPORTER = "coderwall:importer"
+  SELF = "self"
 
   MAX_TITLE_LENGTH = 255
 
-  # these settings affect the trending order
+  #these settings affect the trending order
   COUNTABLE_VIEWS_CHUNK = 100.00
   UPVOTES_SCORE_BENCHMARK = 5112.0
 
-  EPOCH = Time.at(1_305_712_800) + 10.years # begining of time according to protips. affects time score
+  EPOCH = Time.at(1305712800)+10.years #begining of time according to protips. affects time score
 
   MIN_FLAG_THRESHOLD = 2
 
@@ -87,8 +87,9 @@ class Protip < ActiveRecord::Base
 
   attr_accessor :upvotes_value
 
-  scope :random, ->(count) { order('RANDOM()').limit(count) }
-  scope :recent, ->(count) { order('created_at DESC').limit(count) }
+
+  scope :random, ->(count) { order("RANDOM()").limit(count) }
+  scope :recent, ->(count) { order("created_at DESC").limit(count) }
   scope :for, ->(userlist) { where(user: userlist.map(&:id)) }
   scope :most_upvotes, ->(count) { joins(:likes).select(['protips.*', 'SUM(likes.value) AS like_score']).group(['likes.likable_id', 'protips.id']).order('like_score DESC').limit(count) }
   scope :any_topics, ->(topics_list) { where(id: select('DISTINCT protips.id').joins(taggings: :tag).where('tags.name IN (?)', topics_list)) }
@@ -103,6 +104,7 @@ class Protip < ActiveRecord::Base
   scope :queued_for, ->(queue) { ProcessingQueue.queue_for_type(queue, self.class.name) }
 
   class << self
+
     def most_upvotes_for_a_protip
       UPVOTES_SCORE_BENCHMARK
     end
@@ -117,7 +119,7 @@ class Protip < ActiveRecord::Base
       trending_protips = search(nil, [], page: 1, per_page: 100)
 
       unless trending_protips.respond_to?(:errored?) and trending_protips.errored?
-        static_trending = ENV['FEATURED_TOPICS'].split(',').map(&:strip).map(&:downcase) unless ENV['FEATURED_TOPICS'].blank?
+        static_trending = ENV['FEATURED_TOPICS'].split(",").map(&:strip).map(&:downcase) unless ENV['FEATURED_TOPICS'].blank?
         dynamic_trending = trending_protips.map { |p| p.tags }.flatten.reduce(Hash.new(0)) { |h, tag| h.tap { |h| h[tag] += 1 } }.sort { |a1, a2| a2[1] <=> a1[1] }.map { |entry| entry[0] }.reject { |tag| User.where(username: tag).any? }
         ((static_trending || []) + dynamic_trending).uniq
       else
@@ -130,24 +132,23 @@ class Protip < ActiveRecord::Base
     end
 
     def search_next(query, tag, index, page)
-      return nil if page.nil? || (tag.blank? && query.blank?) # when your viewing a protip if we don't check this it thinks we came from trending and shows the next trending prootip eventhough we directly landed here
+      return nil if page.nil? || (tag.blank? && query.blank?) #when your viewing a protip if we don't check this it thinks we came from trending and shows the next trending prootip eventhough we directly landed here
       page = (index.to_i * page.to_i) + 1
       tag = [tag] unless tag.is_a?(Array) || tag.nil?
       search(query, tag, page: page, per_page: 1).results.try(:first)
     end
 
-    def search(query_string, tags = [], options = {})
-      query, team, author, bookmarked_by, execution, sorts = preprocess_query(query_string)
+    def search(query_string, tags =[], options={})
+      query, team, author, bookmarked_by, execution, sorts= preprocess_query(query_string)
       tags = [] if tags.nil?
       tags = preprocess_tags(tags)
       tag_ids = process_tags_for_search(tags)
       tag_ids = [0] if !tags.blank? and tag_ids.blank?
 
-      force_index_commit = Protip.tire.index.refresh if Rails.env.test?
-      query_fields = [:title, :body]
+      Protip.tire.index.refresh if Rails.env.test?
       filters = []
-      filters << { term: { upvoters: bookmarked_by } } unless bookmarked_by.nil?
-      filters << { term: { 'user.user_id' => author } } unless author.nil?
+      filters << {term: {upvoters: bookmarked_by}} unless bookmarked_by.nil?
+      filters << {term: {'user.user_id' => author}} unless author.nil?
       Rails.logger.debug "SEARCH: query=#{query}, tags=#{tags}, team=#{team}, author=#{author}, bookmarked_by=#{bookmarked_by}, execution=#{execution}, sorts=#{sorts} from query-string=#{query_string}, #{options.inspect}"
       begin
         tire.search(options) do
@@ -161,11 +162,11 @@ class Protip < ActiveRecord::Base
               filter *fltr.first
             end
           end
-          sort { by [sorts] }
-          # sort { by [{:upvotes => 'desc' }] }
+          # sort { by [sorts] }
+          #sort { by [{:upvotes => 'desc' }] }
         end
       rescue Tire::Search::SearchRequestFailed => e
-        ::SearchResultsWrapper.new(nil, 'Looks like our search servers are out to lunch. Try again soon.')
+        ::SearchResultsWrapper.new(nil, "Looks like our search servers are out to lunch. Try again soon.")
       end
     end
 
@@ -215,7 +216,7 @@ class Protip < ActiveRecord::Base
     end
 
     def trending_by_topic_tags(tags)
-      trending.topics(tags.split('/'), true)
+      trending.topics(tags.split("/"), true)
     end
 
     def top_trending(page = 1, per_page = PAGESIZE)
@@ -227,12 +228,12 @@ class Protip < ActiveRecord::Base
     def search_trending_by_team(team_id, query_string, page, per_page)
       options = { page: page, per_page: per_page }
       force_index_commit = Protip.tire.index.refresh if Rails.env.test?
-      query = "team.name:#{team_id}"
+      query = "team.name:#{team_id.to_s}"
       query              += " #{query_string}" unless query_string.nil?
       Protip.search(query, [], page: page, per_page: per_page)
     rescue Errno::ECONNREFUSED
       team = Team.where(slug: team_id).first
-      team.team_members.map(&:protips).flatten
+      team.team_members.collect(&:protips).flatten
     end
 
     def search_trending_by_user(username, query_string, tags, page, per_page)
@@ -247,7 +248,7 @@ class Protip < ActiveRecord::Base
 
     def search_trending_by_date(query, date, page, per_page)
       date_string = "#{date.midnight.strftime('%Y-%m-%dT%H:%M:%S')} TO #{(date.midnight + 1.day).strftime('%Y-%m-%dT%H:%M:%S')}" unless date.is_a?(String)
-      query = '' if query.nil?
+      query = "" if query.nil?
       query += " created_at:[#{date_string}]"
       Protip.search(query, [], page: page, per_page: per_page)
     end
@@ -256,12 +257,12 @@ class Protip < ActiveRecord::Base
       Protip.search("bookmark:#{username}", [], page: page, per_page: per_page)
     end
 
-    def most_interesting_for(user, since = Time.at(0), page = 1, per_page = 10)
-      search_top_trending_since('only_link:false', since, user.networks.map(&:ordered_tags).flatten.concat(user.skills.map(&:name)), page, per_page)
+    def most_interesting_for(user, since=Time.at(0), page = 1, per_page = 10)
+      search_top_trending_since("only_link:false", since, user.networks.map(&:ordered_tags).flatten.concat(user.skills.map(&:name)), page, per_page)
     end
 
     def search_top_trending_since(query, since, tags, page = 1, per_page = 10)
-      query ||= ''
+      query ||= ""
       query += " created_at:[#{since.strftime('%Y-%m-%dT%H:%M:%S')} TO *] sort:upvotes desc"
       search_trending_by_topic_tags(query, tags, page, per_page)
     end
@@ -270,18 +271,18 @@ class Protip < ActiveRecord::Base
       query = team = nil
       unless query_string.nil?
         query = query_string.dup
-        query.gsub!(/(\d+)\"/, "\\1\\\"") # handle 27" cases
-        team = query.gsub!(/(team:([0-9A-Z\-]+))/i, '') && Regexp.last_match[2]
+        query.gsub!(/(\d+)\"/, "\\1\\\"") #handle 27" cases
+        team = query.gsub!(/(team:([0-9A-Z\-]+))/i, "") && $2
         team = (team =~ /^[a-f0-9]+$/i && team.length == 24 ? team : Team.where(slug: team).first.try(:id))
-        author = query.gsub!(/author:([^\. ]+)/i, '') && Regexp.last_match[1].try(:downcase)
+        author = query.gsub!(/author:([^\. ]+)/i, "") && $1.try(:downcase)
         author = User.with_username(author).try(:id) || 0 unless author.nil? or (author =~ /^\d+$/)
-        bookmarked_by = query.gsub!(/bookmark:([^\. ]+)/i, '') && Regexp.last_match[1]
+        bookmarked_by = query.gsub!(/bookmark:([^\. ]+)/i, "") && $1
         bookmarked_by = User.with_username(bookmarked_by).try(:id) unless bookmarked_by.nil? or (bookmarked_by =~ /^\d+$/)
-        execution = query.gsub!(/execution:(plain|bool|and)/, '') && Regexp.last_match[1].to_sym
-        sorts_string = query.gsub!(/sort:([[\w\d_]+\s+(desc|asc),?]+)/i, '') && Regexp.last_match[1]
-        sorts = Hash[sorts_string.split(',').map { |sort| sort.split(/\s/) }] unless sorts_string.nil?
-        flagged = query.gsub!(/flagged:(true|false)/, '') && Regexp.last_match[1] == 'true'
-        query.gsub!(/\!{2,}\s*/, '') unless query.nil?
+        execution = query.gsub!(/execution:(plain|bool|and)/, "") && $1.to_sym
+        sorts_string = query.gsub!(/sort:([[\w\d_]+\s+(desc|asc),?]+)/i, "") && $1
+        sorts = Hash[sorts_string.split(",").map { |sort| sort.split(/\s/) }] unless sorts_string.nil?
+        flagged = query.gsub!(/flagged:(true|false)/, "") && $1 == "true"
+        query.gsub!(/\!{2,}\s*/, "") unless query.nil?
 
       end
       execution = :plain if execution.nil?
@@ -293,7 +294,7 @@ class Protip < ActiveRecord::Base
     end
 
     def preprocess_tags(tags)
-      tags.map do |tag|
+      tags.collect do |tag|
         preprocess_tag(tag)
       end unless tags.nil?
     end
@@ -322,49 +323,50 @@ class Protip < ActiveRecord::Base
         end
       end
     end
+
   end
 
   #######################
   # Homepage 4.0 rewrite
   #######################
+  #TODO REMOVE
+    def deindex_search
+      ProtipIndexer.new(self).remove
+    end
+    def index_search
+      ProtipIndexer.new(self).store
+    end
 
-  def deindex_search
-    Services::Search::DeindexProtip.run(self)
-  end
+    def index_search_after_destroy
+      self.tire.update_index
+    end
 
-  def index_search
-    Services::Search::ReindexProtip.run(self)
-  end
+    def unqueue_flagged
+      ProcessingQueue.unqueue(self, :auto_tweet)
+    end
 
-  def index_search_after_destroy
-    tire.update_index
-  end
-
-  def unqueue_flagged
-    ProcessingQueue.unqueue(self, :auto_tweet)
-  end
 
   def networks
-    Network.tagged_with(topics)
+    Network.tagged_with(self.topics)
   end
 
   def orphan?
-    networks.blank?
+    self.networks.blank?
   end
 
-  def update_network(event = :new_protip)
-    enqueue(::UpdateNetwork, event, public_id, score)
+  def update_network(event=:new_protip)
+    enqueue(::UpdateNetwork, event, self.public_id, self.score)
   end
 
-  def generate_event(options = {})
-    unless self.created_automagically? && topics.include?('github')
+  def generate_event(options={})
+    unless self.created_automagically? and self.topics.include?("github")
       event_type = self.event_type(options)
-      enqueue_in(10.minutes, GenerateEvent, event_type, event_audience(event_type), to_event_hash(options), 1.minute)
+      enqueue_in(10.minutes, GenerateEvent, event_type, event_audience(event_type), self.to_event_hash(options), 1.minute)
     end
   end
 
-  def to_event_hash(options = {})
-    event_hash = to_public_hash.merge(user: { username: user && user.username }, body: {})
+  def to_event_hash(options={})
+    event_hash = to_public_hash.merge({ user: { username: user && user.username }, body: {} })
     event_hash[:created_at] = event_hash[:created_at].to_i
     unless options[:viewer].nil?
       event_hash[:user][:username] = options[:viewer]
@@ -381,18 +383,18 @@ class Protip < ActiveRecord::Base
     audience = {}
     case event_type
     when :protip_view, :protip_upvote
-      audience = Audience.user(author.id)
+      audience = Audience.user(self.author.id)
     else
-      audience = Hash[*[Audience.user_reach(author.id), networks.any? ? Audience.networks(networks.map(&:id)) : Audience.admin(self.slideshare? ? nil : :orphan_protips)].map(&:to_a).flatten(2)]
+      audience = Hash[*[Audience.user_reach(self.author.id), self.networks.any? ? Audience.networks(self.networks.map(&:id)) : Audience.admin(self.slideshare? ? nil : :orphan_protips)].map(&:to_a).flatten(2)]
     end
     audience
   end
 
   def slideshare?
-    topics.count == 1 && topics.include?('slideshare')
+    self.topics.count == 1 && self.topics.include?("slideshare")
   end
 
-  def event_type(options = {})
+  def event_type(options={})
     if options[:viewer]
       :protip_view
     elsif options[:voter]
@@ -403,12 +405,12 @@ class Protip < ActiveRecord::Base
   end
 
   def topic_ids
-    taggings.joins('inner join tags on taggings.tag_id = tags.id').select('tags.id').map(&:id)
+    self.taggings.joins('inner join tags on taggings.tag_id = tags.id').select('tags.id').map(&:id)
   end
 
   def to_indexed_json
     to_public_hash.deep_merge(
-
+      {
         trending_score:        trending_score,
         popular_score:         value_score,
         score:                 score,
@@ -422,7 +424,7 @@ class Protip < ActiveRecord::Base
             likes: comment.likes_cache
           }
         end,
-        networks:              networks.map(&:name).map(&:downcase).join(','),
+        networks:              networks.map(&:name).map(&:downcase).join(","),
         best_stat:             Hash[*[:name, :value].zip(best_stat.to_a).flatten],
         team:                  user && user.team && {
           name:         user.team.name,
@@ -437,18 +439,18 @@ class Protip < ActiveRecord::Base
         created_automagically: created_automagically?,
         reviewed:              viewed_by_admin?,
         tag_ids:               topic_ids
-
+      }
     ).to_json(methods: [:to_param])
   end
 
   def user_hash
-    user.public_hash(true).select { |k, _v| [:username, :name].include? k }.merge(
-
+    user.public_hash(true).select { |k, v| [:username, :name].include? k }.merge(
+      {
         profile_url:  user.profile_url,
         avatar:       user.profile_url,
         profile_path: Rails.application.routes.url_helpers.badge_path(user.username),
         about:        user.about
-
+      }
     ) unless user.nil?
   end
 
@@ -487,11 +489,11 @@ class Protip < ActiveRecord::Base
   end
 
   def author
-    user
+    self.user
   end
 
   def team
-    user.try(:team)
+    self.user.try(:team)
   end
 
   def path
@@ -502,7 +504,7 @@ class Protip < ActiveRecord::Base
     Rails.application.routes.url_helpers.upvote_protip_path(public_id)
   end
 
-  # link? qa? article?
+  #link? qa? article?
   KINDS.each do |kind|
     define_method("#{kind}?") do
       self.kind.to_sym == kind
@@ -510,7 +512,7 @@ class Protip < ActiveRecord::Base
   end
 
   def created_automagically?
-    created_by == IMPORTER
+    self.created_by == IMPORTER
   end
 
   def original?
@@ -518,67 +520,69 @@ class Protip < ActiveRecord::Base
   end
 
   def tokenized_skills
-    @tokenized_skills ||= topics.map { |tag| Skill.tokenize(tag) }
+    @tokenized_skills ||= self.topics.collect { |tag| Skill.tokenize(tag) }
   end
 
   def to_param
-    public_id
+    self.public_id
   end
 
-  # callback from likes after save
-  def liked(how_much = nil)
+  #callback from likes after save
+  def liked(how_much=nil)
     unless how_much.nil?
-      self.upvotes_value = (upvotes_value + how_much)
+      self.upvotes_value= (self.upvotes_value + how_much)
       recalculate_score!
       update_network(:protip_upvote)
     end
-    save(validate: false)
+    self.save(validate: false)
   end
 
   def commented
     update_score!(false)
   end
 
-  def reset_likes_cache(_like)
+  def reset_likes_cache(like)
     @upvotes = @upvotes_score = nil
   end
 
-  def reset_links_cache(_link)
+  def reset_links_cache(link)
     @valid_links = nil
   end
 
   def upvoters_ids
-    ActiveRecord::Base.connection.select_values(likes.select(:user_id).to_sql).map(&:to_i).reject { |id| id == 0 }
+    ActiveRecord::Base.connection.select_values(self.likes.select(:user_id).to_sql).map(&:to_i).reject { |id| id == 0 }
   end
 
   def best_stat
     {
-      views:    total_views / COUNTABLE_VIEWS_CHUNK,
-      upvotes:  upvotes,
-      comments: comments.count,
+      views:    self.total_views/COUNTABLE_VIEWS_CHUNK,
+      upvotes:  self.upvotes,
+      comments: self.comments.count,
       hawt:     self.hawt? ? 100 : 0
-    }.sort_by { |_k, v| -v }.first
+    }.sort_by { |k, v| -v }.first
   end
 
   def upvotes
     @upvotes ||= likes.count
   end
 
-  attr_writer :upvotes
+  def upvotes=(count)
+    @upvotes = count
+  end
 
-  def upvotes_value(force = false)
-    ((force || upvotes_value_cache.nil?) ? ::Like.protips_score(id).map(&:like_score).first.to_i : upvotes_value_cache)
+  def upvotes_value(force=false)
+    ((force || self.upvotes_value_cache.nil?) ? ::Like.protips_score(self.id).map(&:like_score).first.to_i : self.upvotes_value_cache)
   end
 
   def upvotes_value=(value)
     @upvotes_value = self.upvotes_value_cache = value
   end
 
-  # new records get an equivalent of 75 upvotes, after first upvote/recalculate they're back to normal. We also add author's score and random offset for imported ones so they don't have same score
+  #new records get an equivalent of 75 upvotes, after first upvote/recalculate they're back to normal. We also add author's score and random offset for imported ones so they don't have same score
   def upvotes_score
     @upvotes_score ||= begin
-                         score = (created_automagically? ? rand / 10 : 0) # make automated tasks that have exactly same timestamp and same author, have different scores
-                         score += (upvotes_value(true) + (author.try(:score) || 0))
+                         score = (created_automagically? ? rand()/10 : 0) #make automated tasks that have exactly same timestamp and same author, have different scores
+                         score += (self.upvotes_value(true) + (author.try(:score) || 0))
                          score -= team_members_upvotes.map(&:value).reduce(:+) if detect_voting_ring?
                          score + 1
                        end
@@ -591,7 +595,7 @@ class Protip < ActiveRecord::Base
   end
 
   def cap_score
-    self.score = (score > MAX_SCORE ? MAX_SCORE : score)
+    self.score = (self.score > MAX_SCORE ? MAX_SCORE : self.score)
   end
 
   def half_life
@@ -599,11 +603,11 @@ class Protip < ActiveRecord::Base
   end
 
   def views_score
-    total_views / COUNTABLE_VIEWS_CHUNK
+    self.total_views/COUNTABLE_VIEWS_CHUNK
   end
 
   def comments_score
-    comments.map { |comment| comment.likes_value_cache + comment.author.score }.reduce(:+) || 0
+    self.comments.collect { |comment| comment.likes_value_cache + comment.author.score }.reduce(:+) || 0
   end
 
   QUALITY_WEIGHT = 20
@@ -627,7 +631,7 @@ class Protip < ActiveRecord::Base
   end
 
   def upvotes_since(time)
-    likes.where('created_at > ?', time).count
+    self.likes.where('created_at > ?', time).count
   end
 
   def upvote_velocity(since = Time.at(0))
@@ -636,7 +640,7 @@ class Protip < ActiveRecord::Base
     us = upvotes_since(since)
     Rails.logger.ap us
 
-    more_recent = [created_at, since].compact.max
+    more_recent = [self.created_at, since].compact.max
     Rails.logger.ap more_recent
 
     us / (((Time.now - more_recent).to_i + 1) / 3600.00)
@@ -650,7 +654,7 @@ class Protip < ActiveRecord::Base
   DECENT_ARTICLE_SIZE = 300
   MAX_ARTICLE_BOOST = 3.0
   LINK_PROTIP_PENALTY = -5.0
-  ARTICLE_BOOST = 2.0 # 200%
+  ARTICLE_BOOST = 2.0 #200%
   ORIGINAL_CONTENT_BOOST = 1.5
   IMAGE_BOOST = 0.5
   MAX_SCORABLE_IMAGES = 3
@@ -658,7 +662,7 @@ class Protip < ActiveRecord::Base
   def determine_boost_factor!
     factor = 1
     if article?
-      factor += [(body.length / DECENT_ARTICLE_SIZE), MAX_ARTICLE_BOOST].min
+      factor += [(body.length/DECENT_ARTICLE_SIZE), MAX_ARTICLE_BOOST].min
     else
       factor += LINK_PROTIP_PENALTY
     end
@@ -674,44 +678,46 @@ class Protip < ActiveRecord::Base
 
   def boost_by(factor)
     self.boost_factor *= factor
-    # cap_score
+    #cap_score
   end
 
-  def update_score!(recalculate_quality_score = true)
+  def update_score!(recalculate_quality_score=true)
     recalculate_score!(recalculate_quality_score)
     save(validate: false)
   end
 
-  def recalculate_score!(force = false)
-    determine_boost_factor! if force or self.boost_factor.nil? or body_changed? or created_at > 1.day.ago
+  def recalculate_score!(force=false)
+    determine_boost_factor! if force or self.boost_factor.nil? or body_changed? or self.created_at > 1.day.ago
     self.score = calculated_score
   end
 
   def detect_voting_ring?
-    (upvotes < 15) && (upvotes >= 3) && ([team_members_ids_that_upvoted].count / upvotes.to_f > 0.7)
+    (upvotes < 15) && (upvotes >= 3) && ([team_members_ids_that_upvoted].count/self.upvotes.to_f > 0.7)
   end
 
   def team_members_ids_that_upvoted
-    upvoters_ids & author.team_member_ids
+    upvoters_ids & self.author.team_member_ids
   end
 
   def team_members_upvotes
-    likes.where(user_id: team_members_ids_that_upvoted)
+    self.likes.where(user_id: team_members_ids_that_upvoted)
   end
 
   def upvote_by(voter, tracking_code, ip_address)
-    unless already_voted?(voter, tracking_code, ip_address) or (author.id == voter.try(:id))
-      likes.create(user: voter, value: voter.nil? ? 1 : adjust_like_value(voter, voter.like_value), tracking_code: tracking_code, ip_address: ip_address)
-      generate_event(voter: voter.username) unless voter.nil?
+    begin
+      unless already_voted?(voter, tracking_code, ip_address) or (self.author.id == voter.try(:id))
+        self.likes.create(user: voter, value: voter.nil? ? 1 : adjust_like_value(voter, voter.like_value), tracking_code: tracking_code, ip_address: ip_address)
+        generate_event(voter: voter.username) unless voter.nil?
+      end
+    rescue ActiveRecord::RecordNotUnique
     end
-  rescue ActiveRecord::RecordNotUnique
   end
 
   @valid_links = nil
 
   def valid_links?
     @valid_links ||= begin
-                       links.each do |link|
+                       self.links.each do |link|
                          return false unless valid_link?(link)
                        end
                        true
@@ -719,7 +725,7 @@ class Protip < ActiveRecord::Base
   end
 
   def invalid_links?
-    !valid_links?
+    not valid_links?
   end
 
   def already_voted?(voter, tracking, ip_address)
@@ -732,14 +738,14 @@ class Protip < ActiveRecord::Base
 
   def assign_random_id
     self.public_id = SecureRandom.urlsafe_base64(4).downcase
-    assign_random_id unless self.class.where(public_id: public_id).blank? # retry if not unique
+    assign_random_id unless self.class.where(public_id: self.public_id).blank? #retry if not unique
   end
 
   def determine_kind
     self.kind = begin
                   if only_link?
                     :link
-                  elsif FORMATTERS[:q].match(body) && FORMATTERS[:a].match(body)
+                  elsif FORMATTERS[:q].match(body) and FORMATTERS[:a].match(body)
                     :qa
                   else
                     :article
@@ -748,7 +754,7 @@ class Protip < ActiveRecord::Base
   end
 
   def assign_title(html)
-    if self.link? && title.blank?
+    if self.link? and self.title.blank?
       self.title = retrieve_title_from_html(html)
     end
   end
@@ -760,38 +766,38 @@ class Protip < ActiveRecord::Base
   end
 
   def non_link_size
-    body.length - URI.regexp.match(body)[0].length
+    body.length - URI::regexp.match(body)[0].length
   end
 
-  # takes out links from parenthesis so the parenthesis, a valid url character, is not included as part of the url
+  #takes out links from parenthesis so the parenthesis, a valid url character, is not included as part of the url
   def body_without_link_markup
-    body && body.gsub(/\((#{URI.regexp})\)/, '\1')
+    body && body.gsub(/\((#{URI::regexp})\)/, '\1')
   end
 
   def links
     if self.body_changed?
-      @links ||= (URI.extract(body_without_link_markup || '', %w(http https mailto ftp)))
+      @links ||= (URI::extract(body_without_link_markup || "", ['http', 'https', 'mailto', 'ftp']))
     else
-      protip_links.map(&:url)
+      self.protip_links.map(&:url)
     end
   end
 
   def images
     if self.new_record?
-      links.select { |link| ProtipLink.is_image? link }
+      self.links.select { |link| ProtipLink.is_image? link }
     else
       protip_links.where('kind in (?)', ProtipLink::IMAGE_KINDS).map(&:url)
     end
   end
 
   def retrieve_title_from_html(html)
-    Nokogiri::XML.fragment(html.xpath('//title').map(&:text).join).text.force_encoding('ASCII-8BIT').gsub(/\P{ASCII}/, '')
+    Nokogiri::XML.fragment(html.xpath("//title").map(&:text).join).text.force_encoding('ASCII-8BIT').gsub(/\P{ASCII}/, '')
   end
 
   def upvote_ancestor(link_identifier, link)
     ProtipLink.where(identifier: link_identifier).order('created_at ASC').first.try(:tap) do |ancestor|
-      if (ancestor.protip != self) and (ancestor.protip.author.id != author.id) and (ancestor.url == link)
-        ancestor.protip.upvote_by(user, user.tracking_code, DEFAULT_IP_ADDRESS) unless ancestor.nil? || ancestor.protip.nil?
+      if (ancestor.protip != self) and (ancestor.protip.author.id != self.author.id) and (ancestor.url == link)
+        ancestor.protip.upvote_by(self.user, self.user.tracking_code, DEFAULT_IP_ADDRESS) unless ancestor.nil? || ancestor.protip.nil?
         break
       end
     end
@@ -799,24 +805,24 @@ class Protip < ActiveRecord::Base
 
   def process_links
     if self.body_changed?
-      links.each do |link|
+      self.links.each do |link|
         link_identifier = ProtipLink.generate_identifier(link)
-        existing_link = protip_links.find_or_initialize_by_identifier(identifier: link_identifier, url: link.first(254))
+        existing_link = self.protip_links.find_or_initialize_by_identifier(identifier: link_identifier, url: link.first(254))
 
         if existing_link.new_record?
-          upvote_ancestor(link_identifier, link) unless user.nil?
+          upvote_ancestor(link_identifier, link) unless self.user.nil?
         end
       end
-      # delete old links
-      protip_links.reject { |link| link.changed? }.map(&:destroy)
+      #delete old links
+      self.protip_links.reject { |link| link.changed? }.map(&:destroy)
     end
   end
 
   def extract_data_from_links
-    links.each do |link|
+    self.links.each do |link|
       html = Nokogiri.parse(open(link))
-      # auto_tag(html) if self.tags.empty?
-      assign_title(html) if title.blank?
+      #auto_tag(html) if self.tags.empty?
+      assign_title(html) if self.title.blank?
     end if need_to_extract_data_from_links
   end
 
@@ -826,8 +832,8 @@ class Protip < ActiveRecord::Base
   # with people, authors, places and other useful dimension.
   #
   def auto_tag(html = nil)
-    if self.link? && topics.blank?
-      self.topics = Taggers.tag(html, links.first)
+    if self.link? and self.topics.blank?
+      self.topics = Taggers.tag(html, self.links.first)
     end
   end
 
@@ -838,7 +844,7 @@ class Protip < ActiveRecord::Base
   alias_method :owner?, :owned_by?
 
   def tag_user
-    self.users = [user.try(:username)] if users.blank?
+    self.users = [self.user.try(:username)] if self.users.blank?
   end
 
   def reassign_to(user)
@@ -851,28 +857,28 @@ class Protip < ActiveRecord::Base
   end
 
   def link
-    links.first
+    self.links.first
   end
 
   def reformat_tags!
-    if topics.count == 1 && topics.first =~ /\s/
-      self.topics = topics.first.split(/\s/)
+    if self.topics.count == 1 && self.topics.first =~ /\s/
+      self.topics = self.topics.first.split(/\s/)
     end
   end
 
   def sanitize_tags!
-    new_topics = topics.reject { |tag| tag.blank? }.map do |topic|
+    new_topics = self.topics.reject { |tag| tag.blank? }.map do |topic|
       sanitized_topic = self.class.preprocess_tag(topic)
-      invalid_topic = topic.match("^((?!#{VALID_TAG}).)*$") && Regexp.last_match[1]
+      invalid_topic = topic.match("^((?!#{VALID_TAG}).)*$") && $1
       errors[:topics] << "The tag '#{topic}' has invalid characters: #{invalid_topic unless invalid_topic.nil?}" if sanitized_topic.nil?
       sanitized_topic
     end
     new_topics = new_topics.compact.uniq
-    self.topics = new_topics if topics.blank? || topics_changed?
+    self.topics = new_topics if topics.blank? or topics_changed?
   end
 
   def topics_changed?
-    topics_tags.map(&:name) != topics
+    self.topics_tags.map(&:name) != self.topics
   end
 
   def viewed_by(viewer)
@@ -919,12 +925,12 @@ class Protip < ActiveRecord::Base
     "protip:#{public_id}:views:anon"
   end
 
-  def viewers(since = 0)
+  def viewers(since=0)
     viewer_ids = viewer_ids(since)
     User.where(id: viewer_ids).all
   end
 
-  def viewer_ids(since = 0)
+  def viewer_ids(since=0)
     epoch_now = Time.now.to_i
     REDIS.zrangebyscore(user_views_key, since, epoch_now)
   end
@@ -948,34 +954,35 @@ class Protip < ActiveRecord::Base
   end
 
   def matching_jobs
-    if user.team && user.team.hiring?
-      user.team.best_positions_for(user)
+    if self.user.team && self.user.team.hiring?
+      self.user.team.best_positions_for(self.user)
     else
-      Opportunity.based_on(topics)
+      Opportunity.based_on(self.topics)
     end
   end
 
   def to_html
-    CFM::Markdown.render body
+    CFM::Markdown.render self.body
   end
 
   protected
   def check_links
-    errors[:body] << 'one or more of the links are invalid or not publicly reachable/require login' unless valid_links?
+    errors[:body] << "one or more of the links are invalid or not publicly reachable/require login" unless valid_links?
   end
 
   private
   def need_to_extract_data_from_links
-    topics.blank? || title.blank?
+    self.topics.blank? || self.title.blank?
   end
 
   def adjust_like_value(user, like_value)
-    user.is_a?(User) && author.team_member_of?(user) ? [like_value / 2, 1].max : like_value
+    user.is_a?(User) && self.author.team_member_of?(user) ? [like_value/2, 1].max : like_value
   end
 
   def analyze_spam
-    Resque.enqueue(AnalyzeSpam,  id: id, klass: self.class.name)
+    Resque.enqueue(AnalyzeSpam, { id: id, klass: self.class.name })
   end
+
 end
 
 # == Schema Information

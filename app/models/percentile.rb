@@ -6,9 +6,9 @@ class Percentile
 
     private
     def ranges
-      @ranges ||= Rails.cache.fetch('percentile') do
+      @ranges ||= Rails.cache.fetch("percentile") do
         hash   = {}
-        scores = Team.all.map(&:score).compact.sort
+        scores = Team.all.collect(&:score).compact.sort
         100.downto(1) do |percent|
           index                 = (scores.length * percent / 100).ceil - 1
           percentile            = scores.sort[index]

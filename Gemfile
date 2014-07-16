@@ -74,6 +74,9 @@ gem 'resque'
 gem 'resque-scheduler'
 gem 'resque_mailer'
 
+gem 'sidekiq'
+gem 'sinatra'
+
 # Payment processing
 gem 'stripe', github: 'stripe/stripe-ruby'
 
@@ -81,7 +84,7 @@ gem 'stripe', github: 'stripe/stripe-ruby'
 gem 'feedjira'
 
 # ElasticSearch client
-gem 'tire', '~> 0.4.1'
+gem 'tire'
 
 # A/B testing
 gem 'split', require: 'split/dashboard'
@@ -140,10 +143,8 @@ group :development do
   gem 'better_errors'
   gem 'flog'
   gem 'fukuzatsu'
-  gem 'git_stats', require: false
   gem 'guard-rspec'
   gem 'rails-erd'
-  gem 'rubocop'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'travis'

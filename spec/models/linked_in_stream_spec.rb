@@ -9,17 +9,18 @@ RSpec.describe LinkedInStream, type: :model, functional: true, pending: 'expecte
     fact = linkedin.facts.first
     expect(fact.identity).to eq('205050716')
     expect(fact.owner).to eq("linkedin:#{username}")
-    expect(fact.name).to eq('Software Developer at Highgroove')
+    expect(fact.name).to eq("Software Developer at Highgroove")
     expect(fact.url).to eq('http://www.linkedin.com/in/srbiv')
-    expect(fact.tags).to include('linkedin', 'job')
-    expect(fact.relevant_on.to_date).to eq(Date.parse('2011-08-01'))
+    expect(fact.tags).to include("linkedin", "job")
+    expect(fact.relevant_on.to_date).to eq(Date.parse("2011-08-01"))
+
 
     fact = linkedin.facts.last
     expect(fact.identity).to eq('15080101')
     expect(fact.owner).to eq("linkedin:#{username}")
-    expect(fact.name).to eq('Studied Management at Georgia Institute of Technology')
+    expect(fact.name).to eq("Studied Management at Georgia Institute of Technology")
     expect(fact.url).to eq('http://www.linkedin.com/in/srbiv')
-    expect(fact.tags).to include('linkedin', 'education')
-    expect(fact.relevant_on.to_date).to eq(Date.parse('1998/01/01'))
+    expect(fact.tags).to include("linkedin", "education")
+    expect(fact.relevant_on.to_date).to eq(Date.parse("1998/01/01"))
   end
 end

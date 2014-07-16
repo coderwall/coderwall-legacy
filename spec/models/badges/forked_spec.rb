@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Forked, type: :model do
+RSpec.describe Forked, :type => :model do
 
   before :all do
     Fact.delete_all
@@ -13,7 +13,7 @@ RSpec.describe Forked, type: :model do
 
   it 'should award user if a repo has been forked once' do
     user = Fabricate(:user, github: 'mdeiters')
-    fact = Fabricate(:github_original_fact, context: user, metadata: { times_forked: 2 })
+    fact = Fabricate(:github_original_fact, context: user, metadata: {times_forked: 2})
 
     badge = Forked.new(user)
     expect(badge.award?).to eq(true)
@@ -22,7 +22,7 @@ RSpec.describe Forked, type: :model do
 
   it 'should not award user if no repo has been forked' do
     user = Fabricate(:user, github: 'mdeiters')
-    fact = Fabricate(:github_original_fact, context: user, metadata: { times_forked: 0 })
+    fact = Fabricate(:github_original_fact, context: user, metadata: {times_forked: 0})
 
     badge = Forked.new(user)
     expect(badge.award?).to eq(false)

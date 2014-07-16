@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe EarlyAdopter, type: :model do
+RSpec.describe EarlyAdopter, :type => :model do
   it 'should have a name and description' do
     expect(EarlyAdopter.name).not_to be_blank
     expect(EarlyAdopter.description).not_to be_blank

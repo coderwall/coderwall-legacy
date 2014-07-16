@@ -1,6 +1,6 @@
 require 'vcr_helper'
 
-RSpec.describe Protip, type: :model do
+RSpec.describe Protip, :type => :model do
 
   describe 'indexing linked content' do
 
@@ -15,7 +15,7 @@ RSpec.describe Protip, type: :model do
       expect(protip.title).not_to be_nil
       expect(protip.body).not_to be_nil
       expect(protip.tags.count).to eq(3)
-      protip.topics =~ %w(Javascript CoffeeScript)
+      protip.topics =~ ["Javascript", "CoffeeScript"]
       protip.users =~ [user.username]
       expect(protip.public_id.size).to eq(6)
       expect(protip).to be_article
@@ -24,8 +24,8 @@ RSpec.describe Protip, type: :model do
 
   describe 'creating and validating link protips' do
     it 'should create a valid link protip' do
-      title = 'A link'
-      link = 'http://www.ruby-doc.org/core/classes/Object.html#M001057'
+      title = "A link"
+      link = "http://www.ruby-doc.org/core/classes/Object.html#M001057"
       protip = Fabricate(:protip, body: link, title: title, user: Fabricate(:user))
       protip.save!
       expect(protip.title).to eq(title)
@@ -39,8 +39,8 @@ RSpec.describe Protip, type: :model do
     end
 
     it 'should indicate an image protip as not being treated as link' do
-      link = '![Picture](https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG)'
-      protip = Fabricate(:protip, body: link, title: 'not a link', user: Fabricate(:user))
+      link = '![Picture](https://coderwall-assets-0.s3.amazonaws.com/development/picture/file/51/photo.JPG)';
+      protip = Fabricate(:protip, body: link, title: "not a link", user: Fabricate(:user))
       expect(protip).not_to be_link
       expect(protip).not_to be_only_link
       expect(protip.images.count).to eq(1)
@@ -75,55 +75,55 @@ RSpec.describe Protip, type: :model do
     end
 
     it 'is reindexed if username or team change' do
-      team = Fabricate(:team, name: 'first-team')
-      user = Fabricate(:user, username: 'initial-username')
+      team = Fabricate(:team, name: "first-team")
+      user = Fabricate(:user, username: "initial-username")
       team.add_user(user)
       protip = Fabricate(:protip, body: 'protip by user on team', title: "content #{rand(100)}", user: user)
       user.reload
-      expect(Protip.search('team.name:first-team').results.first.title).to eq(protip.title)
-      team2 = Fabricate(:team, name: 'second-team')
+      expect(Protip.search("team.name:first-team").results.first.title).to eq(protip.title)
+      team2 = Fabricate(:team, name: "second-team")
       team.remove_user(user)
       user.reload
       team2.add_user(user)
       user.reload
-      expect(Protip.search('team.name:first-team').results.count).to eq(0)
-      expect(Protip.search('team.name:second-team').results.first.title).to eq(protip.title)
+      expect(Protip.search("team.name:first-team").results.count).to eq(0)
+      expect(Protip.search("team.name:second-team").results.first.title).to eq(protip.title)
       expect(Protip.search("author:#{user.username}").results.first.title).to eq(protip.title)
-      user.username = 'second-username'
+      user.username = "second-username"
       user.save!
-      expect(Protip.search('author:initial-username').results.count).to eq(0)
+      expect(Protip.search("author:initial-username").results.count).to eq(0)
       expect(Protip.search("author:#{user.username}").results.first.title).to eq(protip.title)
-      user.github = 'something'
+      user.github = "something"
       expect(user.save).not_to receive(:refresh_index)
     end
   end
 
   describe 'tagging protip' do
     it 'should sanitize tags into normalized form' do
-      protip = Fabricate(:protip, topics: %w(Javascript CoffeeScript), user: Fabricate(:user))
+      protip = Fabricate(:protip, topics: ["Javascript", "CoffeeScript"], user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to match_array(%w(javascript coffeescript))
+      expect(protip.topics).to match_array(["javascript", "coffeescript"])
       expect(protip.topics.count).to eq(2)
     end
 
     it 'should sanitize empty tag' do
-      protip = Fabricate(:protip, topics: 'Javascript, ', user: Fabricate(:user))
+      protip = Fabricate(:protip, topics: "Javascript, ", user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to match_array(['javascript'])
+      expect(protip.topics).to match_array(["javascript"])
       expect(protip.topics.count).to eq(1)
     end
 
     it 'should remove duplicate tags' do
-      protip = Fabricate(:protip, topics: %w(github github Github GitHub), user: Fabricate(:user))
+      protip = Fabricate(:protip, topics: ["github", "github", "Github", "GitHub"], user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to eq(['github'])
+      expect(protip.topics).to eq(["github"])
       expect(protip.topics.count).to eq(1)
     end
 
     it 'should accept tags separated by spaces only' do
-      protip = Fabricate(:protip, topics: 'ruby python heroku', user: Fabricate(:user))
+      protip = Fabricate(:protip, topics: "ruby python heroku", user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to eq(%w(ruby python heroku))
+      expect(protip.topics).to eq(["ruby", "python", "heroku"])
       expect(protip.topics.count).to eq(3)
     end
   end
@@ -159,9 +159,9 @@ RSpec.describe Protip, type: :model do
   end
 
   describe 'protip wrapper' do
-    let(:protip) do
+    let(:protip) {
       Fabricate(:protip, user: Fabricate(:user))
-    end
+    }
 
     it 'provides a consistence api to a protip' do
       wrapper = Protip::SearchWrapper.new(protip)
@@ -194,7 +194,7 @@ RSpec.describe Protip, type: :model do
       expect(wrapper.user.username).to eq(protip.user.username)
       expect(wrapper.user.profile_url).to eq(protip.user.profile_url)
       expect(wrapper.upvotes).to eq(protip.upvotes)
-      expect(wrapper.topics).to eq(protip.topics)
+      expect(wrapper.topics).to match_array(protip.topics)
       expect(wrapper.only_link?).to eq(protip.only_link?)
       expect(wrapper.link).to eq(protip.link)
       expect(wrapper.title).to eq(protip.title)
@@ -204,14 +204,14 @@ RSpec.describe Protip, type: :model do
     end
   end
 
-  describe 'Admin upvoted protips' do
+  describe "Admin upvoted protips" do
     before(:all) do
       @user = Fabricate(:user)
       @author = Fabricate(:user)
       @author.score_cache = 5
       @user.admin = true
       @user.score_cache = 2
-      @protip = Fabricate(:protip, user: @author, body: 'http://www.yahoo.com')
+      @protip = Fabricate(:protip, user: @author, body: "http://www.yahoo.com")
       @initial_score = @protip.score
       @protip.upvote_by(@user, @user.tracking_code, Protip::DEFAULT_IP_ADDRESS)
     end
@@ -248,14 +248,14 @@ RSpec.describe Protip, type: :model do
     end
 
     it 'should weigh team member upvotes less' do
-      protip.author.team_document_id = '4f271930973bf00004000001'
+      protip.author.team_document_id = "4f271930973bf00004000001"
       protip.author.save
       team_member = Fabricate(:user, team_document_id: protip.author.team_document_id)
       team_member.score_cache = 5
       protip.upvote_by(team_member, team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
       expect(protip.upvotes_value).to eq(2)
-      non_team_member = Fabricate(:user, team_document_id: '4f271930973bf00004000002')
+      non_team_member = Fabricate(:user, team_document_id: "4f271930973bf00004000002")
       non_team_member.score_cache = 5
       protip.upvote_by(non_team_member, non_team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
@@ -285,6 +285,7 @@ RSpec.describe Protip, type: :model do
       expect(twin_protip.calculated_score).to be > initial_score
     end
   end
+
 
   context 'counter_cache' do
     describe 'like_'

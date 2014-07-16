@@ -30,9 +30,9 @@ class Forked < BadgeBase
 
   def tag_list
     if skip_forks
-      %w(personal repo original)
+      ['personal', 'repo', 'original']
     else
-      %w(personal repo)
+      ['personal', 'repo']
     end
   end
 

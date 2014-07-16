@@ -1,16 +1,17 @@
 class TeamMembersController < ApplicationController
+
   def destroy
     @user = User.find(params[:id])
     return head(:forbidden) unless signed_in? && (team.admin?(current_user) || current_user == @user)
     team.remove_user(@user)
-    record_event('removed team') unless Team.where(id: team.id.to_s).exists?
+    record_event("removed team") if !Team.where(id: team.id.to_s).exists?
 
     if @user == current_user
       flash[:notice] = "Ok, we've removed you from #{team.name}."
-      record_event('removed themselves from team')
+      record_event("removed themselves from team")
       return redirect_to(teams_url)
     else
-      record_event('removed user from team')
+      record_event("removed user from team")
       respond_to do |format|
         format.js {}
         format.html { redirect_to(teamname_url(slug: team.slug)) }

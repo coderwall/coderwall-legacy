@@ -19,23 +19,23 @@ class Account
   validate :admin_id, :payer_is_team_admin
 
   def payer_is_team_admin
-    if admin_id.nil? # or !team.admin?(admin)
-      errors.add(:admin_id, 'must be team admin to create an account')
+    if admin_id.nil? #or !team.admin?(admin)
+      errors.add(:admin_id, "must be team admin to create an account")
     end
   end
 
-  def subscribe_to!(plan, force = false)
+  def subscribe_to!(plan, force=false)
     self.plan_ids = [plan.id]
     if force || update_on_stripe(plan)
       update_job_post_budget(plan)
-      team.premium     = true unless plan.free?
-      team.analytics   = plan.analytics
-      team.upgraded_at = Time.now
+      self.team.premium     = true unless plan.free?
+      self.team.analytics   = plan.analytics
+      self.team.upgraded_at = Time.now
     end
     team.save!
   end
 
-  def save_with_payment(plan = nil)
+  def save_with_payment(plan=nil)
     if valid?
       create_customer unless plan.try(:one_time?)
       subscribe_to!(plan) unless plan.nil?
@@ -52,17 +52,17 @@ class Account
   rescue Stripe::InvalidRequestError => e
     Honeybadger.notify(e) if Rails.env.production?
     Rails.logger.error "Stripe error while creating customer: #{e.message}"
-    errors.add :base, 'There was a problem with your credit card.'
+    errors.add :base, "There was a problem with your credit card."
     # throw e if Rails.env.development?
     return false
   end
 
   def customer
-    Stripe::Customer.retrieve(stripe_customer_token)
+    Stripe::Customer.retrieve(self.stripe_customer_token)
   end
 
   def admin
-    User.find(admin_id)
+    User.find(self.admin_id)
   end
 
   def create_customer
@@ -71,10 +71,10 @@ class Account
   end
 
   def find_or_create_customer
-    if stripe_customer_token
+    if self.stripe_customer_token
       customer
     else
-      Stripe::Customer.create(description: "#{admin.email} for #{team.name}", card: stripe_card_token)
+      Stripe::Customer.create(description: "#{admin.email} for #{self.team.name}", card: stripe_card_token)
     end
   end
 
@@ -87,14 +87,14 @@ class Account
   end
 
   def update_subscription_on_stripe!(plan)
-    customer && customer.update_subscription(plan: plan.stripe_plan_id, trial_end: trial_end)
+    customer && customer.update_subscription(plan: plan.stripe_plan_id, trial_end: self.trial_end)
   end
 
   def charge_on_stripe!(plan)
     Stripe::Charge.create(
       amount:      plan.amount,
       currency:    plan.currency,
-      card:        stripe_card_token,
+      card:        self.stripe_card_token,
       description: plan.name
     )
   end
@@ -130,26 +130,26 @@ class Account
   end
 
   def send_invoice(invoice_id)
-    Notifier.invoice(team.id, nil, invoice_id).deliver
+    Notifier.invoice(self.team.id, nil, invoice_id).deliver
   end
 
   def send_invoice_for(time = Time.now)
-    Notifier.invoice(team.id, time.to_i).deliver
+    Notifier.invoice(self.team.id, time.to_i).deliver
   end
 
   def invoice_for(time)
-    months_ago = ((Time.now.beginning_of_month - time) / 1.month).round
+    months_ago = ((Time.now.beginning_of_month-time)/1.month).round
     invoices(months_ago).last.to_hash.with_indifferent_access
   end
 
   def invoices(count = 100)
     Stripe::Invoice.all(
-      customer: stripe_customer_token,
+      customer: self.stripe_customer_token,
       count:    count
     ).data
   end
 
   def current_plan
-    Plan.find(plan_ids.first) unless plan_ids.blank?
+    Plan.find(self.plan_ids.first) unless self.plan_ids.blank?
   end
 end

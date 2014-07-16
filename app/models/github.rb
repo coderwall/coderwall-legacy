@@ -1,6 +1,6 @@
 class Github
   @@token     = nil
-  GITHUB_ROOT = 'https://github.com'
+  GITHUB_ROOT = "https://github.com"
   API_ROOT    = 'https://api.github.com/'
 
   GITHUB_REDIRECT_URL = ENV['GITHUB_REDIRECT_URL']
@@ -13,7 +13,7 @@ class Github
     @client = Octokit::Client.new oauth_token: token, auto_traversal: true, client_id: GITHUB_CLIENT_ID, client_secret: GITHUB_SECRET
   end
 
-  REPO_ATTRIBUTES_TO_IGNORE = %w(
+  REPO_ATTRIBUTES_TO_IGNORE = %w{
     open_issues
     description
     ssh_url
@@ -31,12 +31,14 @@ class Github
     watchers
     git_url
     created_at
-  )
+  }
 
-  USER_ATTRIBUTES_TO_IGNORE = %w()
+  USER_ATTRIBUTES_TO_IGNORE = %w{
 
-  def profile(github_username = nil, _since = Time.at(0))
-    (@client.user(github_username) || []).except *%w(followers url public_repos html_url following)
+  }
+
+  def profile(github_username = nil, since=Time.at(0))
+    (@client.user(github_username) || []).except *%w{followers url public_repos html_url following}
   rescue Errno::ECONNREFUSED => e
     retry
   rescue Octokit::NotFound
@@ -46,13 +48,13 @@ class Github
     {}
   end
 
-  def orgs_for(github_username, _since = Time.at(0))
+  def orgs_for(github_username, since=Time.at(0))
     (@client.orgs(github_username, per_page: 100) || [])
   rescue Errno::ECONNREFUSED => e
     retry
   end
 
-  def followers_for(github_username, _since = Time.at(0))
+  def followers_for(github_username, since=Time.at(0))
     (@client.followers(github_username, per_page: 100) || []).map do |user|
       user.except *USER_ATTRIBUTES_TO_IGNORE
     end
@@ -60,7 +62,7 @@ class Github
     retry
   end
 
-  def following_for(github_username, _since = Time.at(0))
+  def following_for(github_username, since=Time.at(0))
     (@client.following(github_username, per_page: 100) || []).map do |user|
       user.except *USER_ATTRIBUTES_TO_IGNORE
     end
@@ -68,7 +70,7 @@ class Github
     retry
   end
 
-  def watched_repos_for(github_username, _since = Time.at(0))
+  def watched_repos_for(github_username, since=Time.at(0))
     (@client.watched(github_username, per_page: 100) || []).map do |repo|
       repo.except *REPO_ATTRIBUTES_TO_IGNORE
     end
@@ -76,7 +78,7 @@ class Github
     retry
   end
 
-  def activities_for(github_username, times = 1)
+  def activities_for(github_username, times=1)
     links = []
     times.times do |index|
       index = index + 1
@@ -98,9 +100,9 @@ class Github
     links
   end
 
-  def repos_for(github_username, _since = Time.at(0))
+  def repos_for(github_username, since=Time.at(0))
     (@client.repositories(github_username, per_page: 100) || []).map do |repo|
-      repo.except *%w(master_branch clone_url ssh_url url svn_url forks)
+      repo.except *%w{master_branch clone_url ssh_url url svn_url forks}
     end
   rescue Octokit::NotFound => e
     Rails.logger.error("Unable to find repos for #{github_username}")
@@ -114,7 +116,7 @@ class Github
     repo(owner, repo_name)[:language]
   end
 
-  def repo(owner, name, _since = Time.at(0))
+  def repo(owner, name, since=Time.at(0))
     (@client.repo("#{owner}/#{name}") || [])
   rescue Octokit::NotFound => e
     Rails.logger.error("Unable to find repo #{owner}/#{name}")
@@ -123,7 +125,7 @@ class Github
     retry
   end
 
-  def repo_languages(owner, name, _since = Time.at(0))
+  def repo_languages(owner, name, since=Time.at(0))
     (@client.languages("#{owner}/#{name}", per_page: 100) || [])
   rescue Octokit::NotFound => e
     Rails.logger.error("Failed to find languages for #{owner}/#{name}")
@@ -132,9 +134,9 @@ class Github
     retry
   end
 
-  def repo_watchers(owner, name, _since = Time.at(0))
+  def repo_watchers(owner, name, since=Time.at(0))
     (@client.stargazers("#{owner}/#{name}", per_page: 100, accept: 'application/vnd.github.beta+json') || []).map do |user|
-      user.select { |k| k == 'login' }.with_indifferent_access
+      user.select { |k| k=='login' }.with_indifferent_access
     end
   rescue Octokit::NotFound => e
     Rails.logger.error("Failed to find watchers for #{owner}/#{name}")
@@ -143,7 +145,7 @@ class Github
     retry
   end
 
-  def repo_contributors(owner, name, _since = Time.at(0))
+  def repo_contributors(owner, name, since=Time.at(0))
     (@client.contributors("#{owner}/#{name}", false, per_page: 100) || []).map do |user|
       user.except *USER_ATTRIBUTES_TO_IGNORE
     end
@@ -157,7 +159,7 @@ class Github
     retry
   end
 
-  def repo_collaborators(owner, name, _since = Time.at(0))
+  def repo_collaborators(owner, name, since=Time.at(0))
     (@client.collaborators("#{owner}/#{name}", per_page: 100) || []).map do |user|
       user.except *USER_ATTRIBUTES_TO_IGNORE
     end
@@ -168,7 +170,7 @@ class Github
     retry
   end
 
-  def repo_forks(owner, name, _since = Time.at(0))
+  def repo_forks(owner, name, since=Time.at(0))
     (@client.forks("#{owner}/#{name}", per_page: 100) || []).map do |user|
       user.except *REPO_ATTRIBUTES_TO_IGNORE
     end

@@ -15,7 +15,7 @@ class TeamLocation
   field :coordinates, type: Array
 
   geocoded_by :address do |obj, results|
-    if geo = results.first and obj.address.downcase.include?(geo.city.try(:downcase) || '')
+    if geo = results.first and obj.address.downcase.include?(geo.city.try(:downcase) || "")
       obj.city       = geo.city
       obj.state_code = geo.state_code
       obj.country    = geo.country

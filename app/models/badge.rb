@@ -52,12 +52,12 @@ class Badge < ActiveRecord::Base
   end
 
   def next
-    Badge.where(user_id: user_id).where('id > ?', id).order('created_at ASC').first
+    Badge.where(user_id: user_id).where("id > ?", self.id).order('created_at ASC').first
   end
 
   def friendly_percent_earned
     if percent_earned <= 0
-      'Less than 1%'
+      "Less than 1%"
     else
       "Only #{percent_earned}%"
     end
@@ -76,7 +76,7 @@ class Badge < ActiveRecord::Base
   end
 
   def fact
-    user.facts.find { |fact| fact.metadata[:award] == badge_class_name }
+    self.user.facts.find { |fact| fact.metadata[:award] == badge_class_name }
   end
 
   def badge_class
@@ -84,19 +84,20 @@ class Badge < ActiveRecord::Base
   end
 
   def generate_event
-    enqueue(GenerateEvent, event_type, Audience.user_reach(user.id), to_event_hash, 30.minutes)
-    enqueue(GenerateEvent, event_type, Audience.user(user.id), to_event_hash, 30.minutes)
+    enqueue(GenerateEvent, self.event_type, Audience.user_reach(self.user.id), self.to_event_hash, 30.minutes)
+    enqueue(GenerateEvent, self.event_type, Audience.user(self.user.id), self.to_event_hash, 30.minutes)
   end
 
   def to_event_hash
-    { achievement: { name:     display_name, description: (try(:for) || try(:description)), percentage_of_achievers: percent_earned,
-                     achiever: { first_name: user.short_name }, image_path: image_path },
-      user:        { username: user.username } }
+    { achievement: { name:     self.display_name, description: (self.try(:for) || self.try(:description)), percentage_of_achievers: self.percent_earned,
+                     achiever: { first_name: self.user.short_name }, image_path: self.image_path },
+      user:        { username: self.user.username } }
   end
 
   def event_type
     :unlocked_achievement
   end
+
 end
 
 # == Schema Information

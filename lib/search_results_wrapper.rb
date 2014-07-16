@@ -1,5 +1,6 @@
 class SearchResultsWrapper
-  def initialize(results = nil, error = nil)
+
+  def initialize(results=nil, error=nil)
     @results = results
     @error = error
   end
@@ -8,7 +9,9 @@ class SearchResultsWrapper
     @results || []
   end
 
-  attr_reader :error
+  def error
+    @error
+  end
 
   def errored?
     !@error.nil?

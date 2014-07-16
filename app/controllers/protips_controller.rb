@@ -1,4 +1,5 @@
 class ProtipsController < ApplicationController
+
   before_filter :access_required, only: [:new, :create, :edit, :update, :destroy, :me]
   before_filter :require_skills_first, only: [:new, :create]
   before_filter :lookup_protip, only: [:show, :edit, :update, :destroy, :upvote, :tag, :flag, :queue, :feature, :delete_tag]
@@ -28,7 +29,7 @@ class ProtipsController < ApplicationController
   end
 
   def trending
-    @context = 'trending'
+    @context = "trending"
     track_discovery
     @protips = cached_version(:trending_score, @scope, search_options)
     find_a_job_for(@protips) unless @protips.empty?
@@ -36,7 +37,7 @@ class ProtipsController < ApplicationController
   end
 
   def popular
-    @context = 'popular'
+    @context = "popular"
     track_discovery
     @protips = cached_version(:popular_score, @scope, search_options)
     find_a_job_for(@protips)
@@ -44,8 +45,8 @@ class ProtipsController < ApplicationController
   end
 
   def fresh
-    redirect_to_signup_if_unauthenticated(protips_path, 'You must login/signup to view fresh protips from coders, teams and networks you follow') do
-      @context = 'fresh'
+    redirect_to_signup_if_unauthenticated(protips_path, "You must login/signup to view fresh protips from coders, teams and networks you follow") do
+      @context = "fresh"
       track_discovery
       @protips = cached_version(:created_at, @scope, search_options)
       find_a_job_for(@protips)
@@ -54,8 +55,8 @@ class ProtipsController < ApplicationController
   end
 
   def liked
-    redirect_to_signup_if_unauthenticated(protips_path, 'You must login/signup to view protips you have liked/upvoted') do
-      @context = 'liked'
+    redirect_to_signup_if_unauthenticated(protips_path, "You must login/signup to view protips you have liked/upvoted") do
+      @context = "liked"
       track_discovery
       @protips = Protip::Search.new(Protip, Protip::Search::Query.new("upvoters:#{current_user.id}"), @scope, Protip::Search::Sort.new(:created_at), nil, search_options).execute
       find_a_job_for(@protips)
@@ -67,9 +68,9 @@ class ProtipsController < ApplicationController
     topic_params = params.permit(:tags, :page, :per_page)
 
     return redirect_to(protips_path) if topic_params[:tags].blank?
-    tags_array  = topic_params[:tags].split('/')
+    tags_array  = topic_params[:tags].split("/")
     @protips    = Protip.search_trending_by_topic_tags(nil, tags_array, topic_params[:page], topic_params[:per_page])
-    @topics     = tags_array.map { |topic| "<span class='topic-tag' style='border-color:##{topic.to_hex};'>##{topic}</span>" }
+    @topics     = tags_array.collect { |topic| "<span class='topic-tag' style='border-color:##{topic.to_hex};'>##{topic}</span>" }
     @topic      = tags_array.join(' + ')
     @topic_user = nil
   end
@@ -79,7 +80,7 @@ class ProtipsController < ApplicationController
 
     user = User.with_username(params[:username]) unless params[:username].blank?
     return redirect_to(protips_path) if user.nil?
-    @protips    = protips_for_user(user, user_params)
+    @protips    = protips_for_user(user,user_params)
     @topics     = [user.username]
     @topic      = "author:#{user.username}"
     @topic_user = user
@@ -102,15 +103,15 @@ class ProtipsController < ApplicationController
   def date
     date_params = params.permit(:date, :query, :page, :per_page)
 
-    date = Date.current if date_params[:date].downcase == 'today'
-    date = Date.current.advance(days: -1) if params[:date].downcase == 'yesterday'
-    date = Date.strptime(date_params[:date], '%m%d%Y') if date.nil?
+    date = Date.current if date_params[:date].downcase == "today"
+    date = Date.current.advance(days: -1) if params[:date].downcase == "yesterday"
+    date = Date.strptime(date_params[:date], "%m%d%Y") if date.nil?
     return redirect_to(protips_path) unless is_admin? and date
     @protips    = Protip.search_trending_by_date(date_params[:query], date, date_params[:page], date_params[:per_page])
     @topics     = [date.to_s]
     @topic      = date.to_s
     @topic_user = nil
-    @query      = "created_at:#{date.to_date}"
+    @query      = "created_at:#{date.to_date.to_s}"
     render :topic
   end
 
@@ -131,7 +132,7 @@ class ProtipsController < ApplicationController
                     params.permit(:reply_to)
                   end
 
-    return redirect_to protip_missing_destination, notice: 'The pro tip you were looking for no longer exists' if @protip.nil?
+    return redirect_to protip_missing_destination, notice: "The pro tip you were looking for no longer exists" if @protip.nil?
     @comments    = @protip.comments
     @reply_to    = show_params[:reply_to]
     @next_protip = Protip.search_next(show_params[:q], show_params[:t], show_params[:i], show_params[:p]) if is_admin?
@@ -149,7 +150,7 @@ class ProtipsController < ApplicationController
   def new
     new_params = params.permit(:topics)
 
-    prefilled_topics = (new_params[:topics] || '').split('+').map(&:strip)
+    prefilled_topics = (new_params[:topics] || '').split('+').collect(&:strip)
     @protip          = Protip.new(topics: prefilled_topics)
     respond_with @protip
   end
@@ -165,6 +166,7 @@ class ProtipsController < ApplicationController
                       {}
                     end
 
+
     @protip      = Protip.new(create_params)
     @protip.user = current_user
     respond_to do |format|
@@ -173,7 +175,7 @@ class ProtipsController < ApplicationController
         format.html { redirect_to protip_path(@protip.public_id), notice: 'Protip was successfully created.' }
         format.json { render json: @protip, status: :created, location: @protip }
       else
-        format.html { render action: 'new' }
+        format.html { render action: "new" }
         format.json { render json: @protip.errors, status: :unprocessable_entity }
       end
     end
@@ -196,7 +198,7 @@ class ProtipsController < ApplicationController
         format.html { redirect_to protip_path(@protip.public_id), notice: 'Protip was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: "edit" }
         format.json { render json: @protip.errors, status: :unprocessable_entity }
       end
     end
@@ -253,7 +255,9 @@ class ProtipsController < ApplicationController
   end
 
   def report_inappropriate
+
     report_inappropriate_params = params.permit(:id)
+
 
     protip_public_id = params.permit(:id)
 
@@ -366,7 +370,7 @@ class ProtipsController < ApplicationController
     page     = by_tags_params[:page] || 1
     per_page = by_tags_params[:per_page] || 100
 
-    @tags = Tag.joins('inner join taggings on taggings.tag_id = tags.id').group('tags.id').order('count(tag_id) desc').page(page).per(per_page)
+    @tags = Tag.joins("inner join taggings on taggings.tag_id = tags.id").group('tags.id').order('count(tag_id) desc').page(page).per(per_page)
   end
 
   def preview
@@ -376,7 +380,7 @@ class ProtipsController < ApplicationController
     protip            = Protip.new(preview_params)
     protip.updated_at = protip.created_at = Time.now
     protip.user       = current_user
-    protip.public_id  = 'xxxxxx'
+    protip.public_id  = "xxxxxx"
 
     render partial: 'protip', locals: { protip: protip, mode: 'preview', include_comments: false, job: nil }
   end
@@ -408,7 +412,7 @@ class ProtipsController < ApplicationController
   # because the tip will have been removed from the search index.
   #
   # @param [ Hash ] params - Should contain :page and :per_page key/values
-  def protips_for_user(user, params)
+  def protips_for_user(user,params)
     if user.banned? then user.protips.page(params[:page]).per(params[:per_page])
     else Protip.search_trending_by_user(user.username, nil, [], params[:page], params[:per_page])
     end
@@ -450,26 +454,26 @@ class ProtipsController < ApplicationController
 
   def reformat_tags
     tags = params[:protip].delete(:topics)
-    params[:protip][:topics] = (tags.is_a?(Array) ? tags : tags.split(',')) unless tags.blank?
+    params[:protip][:topics] = (tags.is_a?(Array) ? tags : tags.split(",")) unless tags.blank?
   end
 
   def tagged_user_or_logged_in
-    User.where(username: params[:tags]).first || ((params[:tags].nil? && signed_in?) ? current_user : nil)
+    User.where(username: params[:tags]).first || ((params[:tags].nil? and signed_in?) ? current_user : nil)
   end
 
   def verify_ownership
     lookup_protip
-    redirect_to(root_url) unless is_admin? || (@protip && @protip.owned_by?(current_user))
+    redirect_to(root_url) unless (is_admin? or (@protip && @protip.owned_by?(current_user)))
   end
 
   def limit_results
-    params[:per_page] = Protip::PAGESIZE if params[:per_page].nil? || (params[:per_page].to_i > Protip::PAGESIZE && !is_admin?)
+    params[:per_page] = Protip::PAGESIZE if params[:per_page].nil? or (params[:per_page].to_i > Protip::PAGESIZE and !is_admin?)
   end
 
   def ensure_single_tag
-    if params[:tags].split('/').size > 1
+    if params[:tags].split("/").size > 1
       respond_to do |format|
-        flash[:error] = 'You cannot subscribe to a group of topics'
+        flash[:error] = "You cannot subscribe to a group of topics"
         format.html { render status: :not_implemented }
       end
     end
@@ -509,11 +513,11 @@ class ProtipsController < ApplicationController
   end
 
   def determine_scope
-    @scope = Protip::Search::Scope.new(:user, current_user) if params[:scope] == 'following' && signed_in?
+    @scope = Protip::Search::Scope.new(:user, current_user) if params[:scope] == "following" && signed_in?
   end
 
   def private_scope?
-    params[:scope] == 'following'
+    params[:scope] == "following"
   end
 
   def track_discovery
@@ -540,24 +544,9 @@ class ProtipsController < ApplicationController
     if @protips.respond_to?(:facets)
       @protips.facets['suggested-networks']['terms'].map { |h| h['term'] }
     else
-      # gets top 10 tags for the protips and picks up associated networks
-      top_tags_for_protips(@protips)
+      #gets top 10 tags for the protips and picks up associated networks
+      Network.tagged_with(@protips.map(&:tags).flatten.reduce(Hash.new(0)) { |h, t| h[t] += 1; h }.sort_by { |k, v| -v }.first(10).flatten.values_at(*(0..20).step(2))).select(:slug).limit(4).map(&:slug)
     end
-  end
-
-  def top_tags_for_protips(protips)
-    tags = Network.tagged_with(
-      protips.
-      map(&:tags).
-      flatten.
-      reduce(Hash.new(0)) { |h, t| h[t] += 1; h }.
-      sort_by { |_k, v| -v }.
-      first(10).
-      flatten.
-      values_at(*(0..20).step(2))
-    )
-
-    tags.select(:slug).limit(4).map(&:slug)
   end
 
   def find_a_job_for(protips)
@@ -582,7 +571,7 @@ class ProtipsController < ApplicationController
 
   def require_skills_first
     if current_user.skills.empty?
-      flash[:error] = 'Please improve your profile by adding some skills before posting Pro Tips'
+      flash[:error] = "Please improve your profile by adding some skills before posting Pro Tips"
       redirect_to badge_path(username: current_user.username, anchor: 'add-skill')
     end
   end

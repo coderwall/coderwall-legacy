@@ -1,4 +1,5 @@
 class ProcessingQueue < ActiveRecord::Base
+
   belongs_to :queueable, polymorphic: true
 
   validates :queueable, presence: true
@@ -40,6 +41,7 @@ class ProcessingQueue < ActiveRecord::Base
     self.dequeued_at = Time.now.utc
     save
   end
+
 end
 
 # == Schema Information

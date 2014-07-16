@@ -127,4 +127,5 @@ class Badges
       yield a
     end
   end
+
 end

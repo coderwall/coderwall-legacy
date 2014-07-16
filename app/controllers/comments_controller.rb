@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+
   before_filter :access_required, only: [:new, :edit, :update, :destroy]
   before_filter :verify_ownership, only: [:edit, :update, :destroy]
   before_filter :require_admin!, only: [:flag, :index]
@@ -16,7 +17,7 @@ class CommentsController < ApplicationController
   def create
     create_comment_params = params.require(:comment).permit(:comment)
 
-    redirect_to_signup_if_unauthenticated(request.referer + '?' + (create_comment_params.try(:to_query) || ''), 'You must signin/signup to add a comment') do
+    redirect_to_signup_if_unauthenticated(request.referer + "?" + (create_comment_params.try(:to_query) || ""), "You must signin/signup to add a comment") do
       @comment      = @protip.comments.build(create_comment_params)
       @comment.user = current_user
       respond_to do |format|
@@ -25,7 +26,7 @@ class CommentsController < ApplicationController
           format.html { redirect_to protip_path(@comment.commentable.try(:public_id)) }
           format.json { render json: @comment, status: :created, location: @comment }
         else
-          format.html { redirect_to protip_path(@comment.commentable.try(:public_id)), error: 'could not add your comment. try again' }
+          format.html { redirect_to protip_path(@comment.commentable.try(:public_id)), error: "could not add your comment. try again" }
           format.json { render json: @comment.errors, status: :unprocessable_entity }
         end
       end
@@ -40,7 +41,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to protip_path(@comment.commentable.try(:public_id)) }
         format.json { head :ok }
       else
-        format.html { redirect_to protip_path(@comment.commentable.try(:public_id)), error: 'could not update your comment. try again' }
+        format.html { redirect_to protip_path(@comment.commentable.try(:public_id)), error: "could not update your comment. try again" }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +57,7 @@ class CommentsController < ApplicationController
   end
 
   def like
-    redirect_to_signup_if_unauthenticated(request.referer, 'You must signin/signup to like a comment') do
+    redirect_to_signup_if_unauthenticated(request.referer, "You must signin/signup to like a comment") do
       @comment.like_by(current_user)
       record_event('liked comment')
       respond_to do |format|
@@ -80,6 +81,6 @@ class CommentsController < ApplicationController
 
   def verify_ownership
     lookup_comment
-    redirect_to(root_url) unless is_admin? || (@comment && @comment.authored_by?(current_user))
+    redirect_to(root_url) unless (is_admin? or (@comment && @comment.authored_by?(current_user)))
   end
 end

@@ -297,8 +297,6 @@
 #        letter_opener_letter          /letter_opener/:id/:style.html(.:format)               letter_opener/letters#show
 #
 
-require 'resque/server'
-
 Badgiy::Application.routes.draw do
 
   # We get 10K's of requests for this route.
@@ -323,7 +321,7 @@ Badgiy::Application.routes.draw do
 
   mount Split::Dashboard, at: 'split'
 
-  resources :protips, path: '/p', constraints: { id: /[\dA-Z\-_]{6}/i } do
+  resources :protips, :path => '/p', :constraints => {id: /[\dA-Z\-_]{6}/i} do
     collection do
       get 'random'
       get 'search' => 'protips#search', as: :search
@@ -353,12 +351,12 @@ Badgiy::Application.routes.draw do
       post 'queue/:queue' => 'protips#queue', as: :queue
       post 'delete_tag/:topic' => 'protips#delete_tag', as: :delete_tag, :topic => topic_regex
     end
-    resources :comments, constraints: { id: /\d+/ } do
+    resources :comments, :constraints => {id: /\d+/} do
       member { post 'like' }
     end
   end
 
-  resources :networks, path: '/n', constraints: { slug: /[\dA-Z\-]/i } do
+  resources :networks, :path => '/n', :constraints => {:slug => /[\dA-Z\-]/i} do
     collection do
       get 'featured' => 'networks#featured', as: :featured
       get '/u/:username' => 'networks#user', as: :user
@@ -375,7 +373,7 @@ Badgiy::Application.routes.draw do
     end
   end
 
-  resources :processing_queues, path: '/q' do
+  resources :processing_queues, :path => '/q' do
     member { post '/dequeue/:item' => 'processing_queues#dequeue', as: :dequeue }
   end
 
@@ -412,7 +410,7 @@ Badgiy::Application.routes.draw do
   get '/alerts' => 'alerts#create', :via => :post
   get '/alerts' => 'alerts#index', :via => :get
 
-  # get '/payment' => 'accounts#new', as: :payment
+  #get '/payment' => 'accounts#new', as: :payment
 
   post '/users/:username/follow' => 'follows#create', as: :follow_user, :type => :user
 
@@ -453,7 +451,7 @@ Badgiy::Application.routes.draw do
   get '/leaderboard' => 'teams#leaderboard', as: :leaderboard
   get '/employers' => 'teams#upgrade', as: :employers
 
-  %w(github twitter forrst dribbble linkedin codeplex bitbucket stackoverflow).each do |provider|
+  ['github', 'twitter', 'forrst', 'dribbble', 'linkedin', 'codeplex', 'bitbucket', 'stackoverflow'].each do |provider|
     post "/#{provider}/unlink" => 'users#unlink_provider', :provider => provider, as: "unlink_#{provider}".to_sym
     get "/#{provider}/:username" => 'users#show', :provider => provider
   end
@@ -480,16 +478,19 @@ Badgiy::Application.routes.draw do
   get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
-  require_admin = ->(_params, req) { User.where(id: req.session[:current_user]).first.try(:admin?) }
+  require_admin = ->(params, req) { User.where(id: req.session[:current_user]).first.try(:admin?) }
 
-  scope :admin, as: :admin, path: '/admin', constraints: require_admin do
+  scope :admin, as: :admin, :path => '/admin', :constraints => require_admin do
     get '/' => 'admin#index', as: :root
     get '/failed_jobs' => 'admin#failed_jobs'
     get '/cache_stats' => 'admin#cache_stats'
     get '/teams' => 'admin#teams', as: :teams
     get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
+    require 'resque/server'
     mount Resque::Server.new, at: '/resque'
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   get '/blog' => 'blog_posts#index', as: :blog

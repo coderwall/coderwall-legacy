@@ -2,7 +2,7 @@
 STATIC_PAGES ||= Dir.glob('app/views/pages/*.html.{erb,haml}')
   .map { |f| File.basename(f, '.html.erb') }
   .map { |f| File.basename(f, '.html.haml') }
-  .reject { |f| f =~ /^_/ }
+  .reject{ |f| f =~ /^_/ }
   .sort
   .uniq
 
@@ -10,6 +10,6 @@ STATIC_PAGES ||= Dir.glob('app/views/pages/*.html.{erb,haml}')
 STATIC_PAGE_LAYOUTS ||= Dir.glob('app/views/layouts/*.html.{erb,haml}')
   .map { |f| File.basename(f, '.html.erb') }
   .map { |f| File.basename(f, '.html.haml') }
-  .reject { |f| f =~ /^_/ }
+  .reject{ |f| f =~ /^_/ }
   .sort
   .uniq

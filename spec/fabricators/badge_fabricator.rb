@@ -1,5 +1,5 @@
 Fabricator(:badge) do
-  badge_class_name { sequence(:badge_name) { |_i| 'Octopussy' } }
+  badge_class_name { sequence(:badge_name) { |i| "Octopussy" } }
 end
 
 # == Schema Information

@@ -1,4 +1,5 @@
 module SessionsHelper
+
   def failed_signin?
     params[:action] == 'failure'
   end
@@ -6,4 +7,5 @@ module SessionsHelper
   def user_was_invited?
     @invitation.present?
   end
+
 end

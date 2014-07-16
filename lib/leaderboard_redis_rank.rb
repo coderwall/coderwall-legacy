@@ -1,10 +1,11 @@
 module LeaderboardRedisRank
+
   def self.included(klass)
     klass.extend(ClassMethods)
   end
 
   module ClassMethods
-    def top(page = 1, total = 50, _country = nil)
+    def top(page = 1, total = 50, country=nil)
       end_range = (page * total) - 1
       start_range = (end_range - total) + 1
       ids = REDIS.zrevrange(Team::LEADERBOARD_KEY, start_range, end_range)
@@ -19,7 +20,7 @@ module LeaderboardRedisRank
   def higher_competitors(number = 1)
     low = [rank - number - 1, 0].max
     high = [rank - 2, 0].max
-    total_member_count >= 3 && rank - 1 != low ? REDIS.zrevrange(Team::LEADERBOARD_KEY, low, high) : []
+    total_member_count >= 3 && rank-1 != low ? REDIS.zrevrange(Team::LEADERBOARD_KEY, low, high) : []
   end
 
   def lower_competitors(number = 1)
@@ -35,4 +36,5 @@ module LeaderboardRedisRank
   def rank
     @rank ||= (REDIS.zrevrank(Team::LEADERBOARD_KEY, id.to_s) || -1).to_i + 1
   end
+
 end

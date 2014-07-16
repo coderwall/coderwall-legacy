@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-RSpec.describe TeamMembersController, type: :controller do
+RSpec.describe TeamMembersController, :type => :controller do
   let(:current_user) { Fabricate(:user) }
   let(:invitee) { Fabricate(:user) }
   let(:team) { Fabricate(:team) }
   before { controller.send :sign_in, current_user }
 
-  describe 'DELETE #destroy' do
-    it 'should remove the team member from the current users team' do
+  describe "DELETE #destroy" do
+    it "should remove the team member from the current users team" do
       member_added = team.add_user(invitee)
       team.add_user(current_user)
 

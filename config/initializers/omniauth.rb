@@ -16,5 +16,5 @@ OmniAuth.config.on_failure do |env|
   Honeybadger::Rack.new(Rack::Request.new(env)).notify_honeybadger(exception, env) if Rails.env.production?
 
   new_path = "#{env['SCRIPT_NAME']}#{OmniAuth.config.path_prefix}/failure?message=#{error_type}"
-  [302, { 'Location' => new_path, 'Content-Type' => 'text/html' }, []]
+  [302, {'Location' => new_path, 'Content-Type' => 'text/html'}, []]
 end

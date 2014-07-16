@@ -1,6 +1,6 @@
 require 'vcr_helper'
 
-RSpec.describe GithubRepo,  type: :model, skip: ENV['TRAVIS']  do
+RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
   before :each do
     register_fake_paths
 
@@ -11,9 +11,9 @@ RSpec.describe GithubRepo,  type: :model, skip: ENV['TRAVIS']  do
   end
 
   def register_fake_paths
-    access_token = '9432ed76b16796ec034670524d8176b3f5fee9aa'
-    client_id = '974695942065a0e00033'
-    client_secret = '7d49c0deb57b5f6c75e6264ca12d20d6a8ffcc68'
+    access_token = "9432ed76b16796ec034670524d8176b3f5fee9aa"
+    client_id = "974695942065a0e00033"
+    client_secret = "7d49c0deb57b5f6c75e6264ca12d20d6a8ffcc68"
 
     stub_request(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100").to_return(body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages.js')), content_type: 'application/json; charset=utf-8')
     stub_request(:get, "https://api.github.com/repos/mdeiters/semr/forks?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100").to_return(body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_forks.js')), content_type: 'application/json; charset=utf-8')
@@ -22,27 +22,27 @@ RSpec.describe GithubRepo,  type: :model, skip: ENV['TRAVIS']  do
   end
 
   let(:data) { JSON.parse(File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'user_repo.js'))).with_indifferent_access }
-  let(:repo) do
+  let(:repo) {
     GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
-  end
-  let(:access_token) { '9432ed76b16796ec034670524d8176b3f5fee9aa' }
-  let(:client_id) { '974695942065a0e00033' }
-  let(:client_secret) { '7d49c0deb57b5f6c75e6264ca12d20d6a8ffcc68' }
+  }
+  let(:access_token) { "9432ed76b16796ec034670524d8176b3f5fee9aa" }
+  let(:client_id) { "974695942065a0e00033" }
+  let(:client_secret) { "7d49c0deb57b5f6c75e6264ca12d20d6a8ffcc68" }
 
-  describe 'contributions' do
-    it 'should filter the repos the user has contributed to' do
+  describe "contributions" do
+    it "should filter the repos the user has contributed to" do
       user = Fabricate(:user)
       org = Fabricate(:github_org)
       profile = Fabricate(:github_profile, github_id: user.github_id, orgs: [org])
 
-      contributed_by_count_repo = Fabricate(:github_repo, owner: { github_id: org.github_id }, contributors: [
-        { 'github_id' => user.github_id, 'contributions' => 10 },
-        { 'github_id' => nil, 'contributions' => 1000 }
+      contributed_by_count_repo = Fabricate(:github_repo, owner: {github_id: org.github_id}, contributors: [
+          {'github_id' => user.github_id, 'contributions' => 10},
+          {'github_id' => nil, 'contributions' => 1000}
       ])
 
-      non_contributed_repo = Fabricate(:github_repo, owner: { github_id: org.github_id }, contributors: [
-        { 'github_id' => user.github_id, 'contributions' => 5 },
-        { 'github_id' => nil, 'contributions' => 18_000 }
+      non_contributed_repo = Fabricate(:github_repo, owner: {github_id: org.github_id}, contributors: [
+          {'github_id' => user.github_id, 'contributions' => 5},
+          {'github_id' => nil, 'contributions' => 18000}
       ])
 
       expect(contributed_by_count_repo.significant_contributions?(user.github_id)).to eq(true)
@@ -104,7 +104,7 @@ RSpec.describe GithubRepo,  type: :model, skip: ENV['TRAVIS']  do
     end
 
     it 'should tag dominant language' do
-      expect(repo.tags).to include('Ruby')
+      expect(repo.tags).to include("Ruby")
     end
 
     it 'does not duplicate tags on refresh' do
@@ -121,18 +121,18 @@ RSpec.describe GithubRepo,  type: :model, skip: ENV['TRAVIS']  do
       end
 
       it 'tags node if dominant lanugage is js and description has nodejs in it' do
-        skip 'Disabled inspecting README because of false positives'
-        # FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', body: 'empty')
-        # FakeWeb.register_uri(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100", body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_js.js')), content_type: 'application/json; charset=utf-8')
+        skip "Disabled inspecting README because of false positives"
+        #FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', body: 'empty')
+        #FakeWeb.register_uri(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100", body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_js.js')), content_type: 'application/json; charset=utf-8')
 
         data[:description] = 'Node Routing'
         expect(repo.tags).to include('Node')
       end
 
       it 'tags node if dominant lanugage is js and readme has node in it' do
-        skip 'Disabled inspecting README because of false positives'
-        # FakeWeb.register_uri(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100", body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_js.js')), content_type: 'application/json; charset=utf-8')
-        # FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', body: 'trying out node')
+        skip "Disabled inspecting README because of false positives"
+        #FakeWeb.register_uri(:get, "https://api.github.com/repos/mdeiters/semr/languages?client_id=#{client_id}&client_secret=#{client_secret}&per_page=100", body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'repo_languages_js.js')), content_type: 'application/json; charset=utf-8')
+        #FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', body: 'trying out node')
         expect(repo.tags).to include('Node')
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe GithubRepo,  type: :model, skip: ENV['TRAVIS']  do
     end
 
     it 'should cache readme for repeat calls' do
-      # FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', [body: 'test readme'])
+      #FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', [body: 'test readme'])
       expect(repo.readme).to eq(repo.readme)
     end
   end

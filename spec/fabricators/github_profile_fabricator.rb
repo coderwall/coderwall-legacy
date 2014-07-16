@@ -27,11 +27,11 @@ Fabricator(:github_repo) do
   after_build { |repo| repo.forks = 1 }
   name { sequence(:repo) { |i| "repo#{i}" } }
   owner { Fabricate.attributes_for(:owner) }
-  html_url { 'https://github.com/mdeiters/semr' }
-  languages do {
-    'Ruby' => 111_435,
-    'JavaScript' => 50_164
-  } end
+  html_url { "https://github.com/mdeiters/semr" }
+  languages { {
+      "Ruby" => 111435,
+      "JavaScript" => 50164
+  } }
 end
 
 Fabricator(:github_org, class_name: 'GithubProfile') do

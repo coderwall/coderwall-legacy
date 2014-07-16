@@ -10,26 +10,26 @@ class Follow < ActiveRecord::Base
   after_create :generate_event
 
   def block!
-    update_attribute(:blocked, true)
+    self.update_attribute(:blocked, true)
   end
 
   def generate_event
-    if followable.kind_of?(User) || followable.kind_of?(Team)
-      enqueue(GenerateEvent, event_type, Audience.user(followable.try(:id)), to_event_hash, 1.minute)
+    if followable.kind_of?(User) or followable.kind_of?(Team)
+      enqueue(GenerateEvent, self.event_type, Audience.user(self.followable.try(:id)), self.to_event_hash, 1.minute)
     end
   end
 
   def event_audience(event_type)
     if event_type == :followed_user
-      Audience.user(followable.try(:id))
+      Audience.user(self.followable.try(:id))
     elsif event_type == :followed_team
-      Audience.team(followable.try(:id))
+      Audience.team(self.followable.try(:id))
     end
   end
 
   def to_event_hash
-    { follow: { followed: followable.try(:name), follower: follower.try(:name) },
-      user:   { username: follower.try(:username) } }
+    { follow: { followed: self.followable.try(:name), follower: self.follower.try(:name) },
+      user:   { username: self.follower.try(:username) } }
   end
 
   def event_type
