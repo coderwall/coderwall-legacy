@@ -3,7 +3,7 @@ module Services
     class DeindexUserProtips
       def self.run(user)
         user.protips.each do |tip|
-          Services::Search::DeindexProtip.run(tip)
+          ProtipIndexer.new(tip).remove
         end
       end
     end
