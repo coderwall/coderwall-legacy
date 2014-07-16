@@ -184,5 +184,5 @@ group :production do
   gem 'rack-attack'
   gem 'rack-cache'
   gem 'rails_12factor'
+  gem 'rack-zippy'
 end
-

@@ -497,6 +497,7 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    rack-zippy (1.2.1)
     rails (3.2.19)
       actionmailer (= 3.2.19)
       actionpack (= 3.2.19)
@@ -779,6 +780,7 @@ DEPENDENCIES
   quiet_assets
   rack-attack
   rack-cache
+  rack-zippy
   rails (~> 3.2)
   rails-erd
   rails_12factor
