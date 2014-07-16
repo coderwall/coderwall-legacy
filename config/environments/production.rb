@@ -32,6 +32,5 @@ Badgiy::Application.configure do
   client = Dalli::Client.new(ENV['MEMCACHIER_SERVERS'], value_max_bytes: 10_485_760)
   config.action_dispatch.rack_cache = { metastore: client, entitystore: client }
 
-  config.middleware.use('Rack::Deflater')
   config.middleware.use('Rack::Attack')
 end

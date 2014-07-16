@@ -176,6 +176,7 @@ group :test do
 end
 
 group :production do
+  gem 'heroku_rails_deflate'
   gem 'honeybadger'
   gem 'newrelic_resque_agent'
   gem 'newrelic_rpm'
@@ -183,6 +184,6 @@ group :production do
   gem 'puma_worker_killer'
   gem 'rack-attack'
   gem 'rack-cache'
-  gem 'rails_12factor'
   gem 'rack-zippy'
+  gem 'rails_12factor'
 end
