@@ -805,8 +805,8 @@ DEPENDENCIES
   strong_parameters
   syntax
   timecop
-  travis
   tire
+  travis
   tweet-button
   twitter
   uglifier (>= 1.0.3)
