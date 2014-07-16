@@ -4,11 +4,11 @@
 staging:
   :concurrency: 10
 production:
-  :concurrency: 20
+  :concurrency: <%= ENV['SIDEKIQ_CONCURRENCY'] || 20 %>
 :queues:
-  - [low, 1]
-  - [default,2]
-  - [medium, 3]
-  - [high, 4]
-  - [urgent, 5]
+  - [low,      1]
+  - [default,  2]
+  - [medium,   3]
+  - [high,     4]
+  - [urgent,   5]
   - [critical, 6]
