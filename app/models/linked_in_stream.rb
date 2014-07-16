@@ -9,7 +9,7 @@ class LinkedInStream < Struct.new(:username)
       name     = build_name(position)
       date     = build_start_date(position)
       url      = profile.public_profile_url
-      tags     = %w(linkedin job)
+      tags     = ['linkedin', 'job']
       metadata = {
         end_date: build_end_date(position),
         summary:  position.summary,
@@ -24,7 +24,7 @@ class LinkedInStream < Struct.new(:username)
       name     = build_education_name(education)
       date     = build_start_date(education)
       url      = profile.public_profile_url
-      tags     = %w(linkedin education)
+      tags     = ['linkedin', 'education']
       metadata = {
         end_date: build_end_date(education),
         degree:   education.degree,

@@ -14,6 +14,7 @@ class AchievementsController < ApplicationController
   end
 
   def award
+
     award_params = params.permit(:badge, :twitter, :linkedin, :github, :date)
 
     provider = pick_a_provider(award_params)
@@ -34,8 +35,8 @@ class AchievementsController < ApplicationController
         return render json: { message: "don't have permission to do that. contact support@coderwall.com", status: 403 }.to_json
       end
     end
-  rescue => e
-    return render json: { message: 'something went wrong with your request or the end point may not be ready. contact support@coderwall.com' }.to_json
+  rescue Exception => e
+    return render json: { message: "something went wrong with your request or the end point may not be ready. contact support@coderwall.com" }.to_json
   end
 
   private
@@ -43,7 +44,7 @@ class AchievementsController < ApplicationController
   def ensure_valid_api_key
     @api_key    = params.permit(:api_key)[:api_key]
     @api_access = ApiAccess.for(@api_key) unless @api_key.nil?
-    return render json: { message: 'no/invalid api_key provided. get your api_key from coderwall.com/settings' }.to_json if @api_access.nil?
+    return render json: { message: "no/invalid api_key provided. get your api_key from coderwall.com/settings" }.to_json if @api_access.nil?
   end
 
   def badge_class_factory(requested_badge_name)
@@ -51,6 +52,6 @@ class AchievementsController < ApplicationController
   end
 
   def pick_a_provider(award_params)
-    (User::LINKABLE_PROVIDERS & award_params.keys.select { |key| %w(twitter linkedin github).include?(key) }).first
+    (User::LINKABLE_PROVIDERS & award_params.keys.select { |key| %w{twitter linkedin github}.include?(key) }).first
   end
 end

@@ -4,15 +4,16 @@ class Event < Struct.new(:data)
   extend Publisher
 
   class << self
+
     VERSION    = 1
     TABLE_SIZE = 50
 
-    def generate_event(event_type, audience, data = {}, drip_rate = :immediately)
+    def generate_event(event_type, audience, data={}, drip_rate=:immediately)
       data.merge!({ event_type: event_type }.with_indifferent_access)
       data = { version: VERSION, event_id: Time.now.utc.to_i }.with_indifferent_access.merge(data)
       data.deep_merge!(extra_information(data))
       drip_rate = :immediately if drip_rate.nil?
-      send_admin_notifications(event_type, data, audience[:admin]) if audience.key? :admin
+      send_admin_notifications(event_type, data, audience[:admin]) if audience.has_key? :admin
       channels           = Audience.to_channels(audience)
       activity_feed_keys = channels.map { |channel| Audience.channel_to_key(channel) }
 
@@ -46,11 +47,12 @@ class Event < Struct.new(:data)
       publish(channel, data.to_json)
     end
 
-    def user_activity(user, from, to, limit, publish = false)
+    def user_activity(user, from, to, limit, publish=false)
+
       activity_feed_keys = user.nil? ? Audience.to_key(Audience.all).to_a : user.subscribed_channels.map { |channel| Audience.channel_to_key(channel) }
       count              = 0
-      from               = from.nil? ? '-inf' : from.to_f
-      to                 = to.nil? ? 'inf' : to.to_f
+      from               = from.nil? ? "-inf" : from.to_f
+      to                 = to.nil? ? "inf" : to.to_f
       activities         = []
 
       activity_feed_keys.each do |activity_feed_key|
@@ -68,7 +70,7 @@ class Event < Struct.new(:data)
           if publish
             publish_event(channel, data) if publish
           else
-            activities << data.merge(timestamp: (data[:event_id] || Time.now.to_i))
+            activities << data.merge({ timestamp: (data[:event_id] || Time.now.to_i) })
           end
           count += 1
         end

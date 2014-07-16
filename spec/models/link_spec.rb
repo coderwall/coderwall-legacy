@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe Link, type: :model do
-  let(:url) { 'http://test.google.com' }
+RSpec.describe Link, :type => :model do
+  let(:url) { "http://test.google.com" }
   before :each do
-    # FakeWeb.register_uri(:get, 'http://test.google.com/', body: 'OK')
+    #FakeWeb.register_uri(:get, 'http://test.google.com/', body: 'OK')
   end
 
   it 'retrieves popular links with score higher then 2 and has at least 2 or mor users' do
@@ -17,7 +17,7 @@ RSpec.describe Link, type: :model do
     before :each do
       @earliest = Link.create!(featured_on: 1.day.ago)
       @latest = Link.create!(featured_on: 1.hour.ago)
-      @not_featured = Link.create!
+      @not_featured = Link.create!()
     end
 
     it 'finds items featured by featured date' do

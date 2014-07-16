@@ -1,4 +1,5 @@
 module AlertsHelper
+
   def alert_data_to_html_for_type(type, data)
     case type
       when :traction

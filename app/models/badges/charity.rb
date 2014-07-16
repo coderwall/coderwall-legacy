@@ -1,5 +1,5 @@
 class Charity < BadgeBase
-  describe 'Charity',
+  describe "Charity",
            skill:       'Open Source',
            description: "Fork and commit to someone's open source project in need",
            for:         "forking and commiting to someone's open source project.",
@@ -10,7 +10,7 @@ class Charity < BadgeBase
     @reasons ||= begin
       links = []
       user.facts.select do |fact|
-        fact.tagged?('repo', 'fork', 'personal')
+        fact.tagged?("repo", "fork", 'personal')
       end.each do |fact|
         links << { fact.name => fact.url }
       end

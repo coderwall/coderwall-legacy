@@ -2,8 +2,8 @@ class GithubProfile
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  index({ login: 1 }, { unique: true, background: true })
-  index({ github_id: 1 }, { unique: true, background: true })
+  index({login: 1}, {unique: true, background: true})
+  index({github_id: 1}, {unique: true, background: true})
 
   field :github_id
   field :name, type: String
@@ -17,12 +17,12 @@ class GithubProfile
 
   has_and_belongs_to_many :orgs, class_name: GithubProfile.name.to_s
 
-  ORGANIZATION = 'Organization'
-  USER         = 'User'
+  ORGANIZATION = "Organization"
+  USER         = "User"
   VALID_TYPES  = [ORGANIZATION, USER]
 
   class << self
-    def for_username(username, since = 1.day.ago)
+    def for_username(username, since=1.day.ago)
       find_or_initialize_by(login: username).tap do |profile|
         if profile.new_record?
           logger.info "ALERT: No cached profile for user #{username}"
@@ -39,13 +39,13 @@ class GithubProfile
         facts << convert_repo_into_fact(repo)
       end
     end
-    GithubRepo.where('contributors.github_id' => github_id, 'owner.github_id' => { '$in' => orgs.map(&:github_id) }).all.each do |repo|
+    GithubRepo.where('contributors.github_id' => github_id, "owner.github_id" => { '$in' => orgs.map(&:github_id) }).all.each do |repo|
       if repo.original? && repo.significant_contributions?(github_id)
         facts << convert_repo_into_fact(repo, orgrepo = true)
       end
     end
-    facts << Fact.append!("github:#{login}", "github:#{login}", 'Joined GitHub', created_at, "https://github.com/#{login}", %w(github account-created))
-    facts
+    facts << Fact.append!("github:#{login}", "github:#{login}", "Joined GitHub", created_at, "https://github.com/#{login}", ['github', 'account-created'])
+    return facts
   end
 
   def convert_repo_into_fact(repo, orgrepo = false)
@@ -64,14 +64,14 @@ class GithubProfile
       languages:    repo.languages_that_meet_threshold,
       original:     repo.original?,
       times_forked: repo.forks ? repo.forks.size : 0,
-      watchers:     repo.followers.map(&:login)
+      watchers:     repo.followers.collect(&:login)
     }
     Fact.append!("#{repo.html_url}:#{login}", "github:#{login}", repo.name, repo.created_at, repo.html_url, tags, metadata)
   end
 
-  def refresh!(client = nil, since)
+  def refresh!(client=nil, since)
     client   ||= Github.new
-    username = login
+    username = self.login
 
     profile   = client.profile(username, since)
     github_id = profile.delete(:id)

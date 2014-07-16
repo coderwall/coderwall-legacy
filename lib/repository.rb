@@ -1,10 +1,11 @@
 module Repository #:nodoc:
+
   def self.included(base)
     base.extend ClassMethods
   end
 
   module ClassMethods
-    def acts_as_a_repository(_options = {})
+    def acts_as_a_repository(options={})
       include Repository::InstanceMethods
     end
   end
@@ -16,26 +17,26 @@ module Repository #:nodoc:
     CONTRIBUTION_PERCENT_THRESHOLD = 0.10
     ACCEPTABLE_LANGUAGE_THRESHOLD = 1.0
     LANGUAGE_THRESHOLD_FOR_README = 10.0
-    MINIMUM_REPOSITORY_SIZE = 3 * 1024
+    MINIMUM_REPOSITORY_SIZE = 3*1024
 
     DISABLE = nil
     REPOSITORY_TYPES = %w(personal org)
     PROJECT_TYPES = {
-      'JQuery' => { matcher: /jquery/i,
-                    readme_matcher: DISABLE,
-                    language: 'JavaScript' },
-      'Node' => { matcher: /(node.js|no.de|nodejs|(\s|\A|^)node(\s|\A|-|_|^))/i,
-                  readme_matcher: DISABLE,
-                  language: 'JavaScript' },
-      'Prototype' => { matcher: /prototype/i,
-                       readme_matcher: DISABLE,
-                       language: 'JavaScript' },
-      'Django' => { matcher: /django/i,
-                    readme_matcher: DISABLE,
-                    language: 'Python' }
+        'JQuery' => {matcher: /jquery/i,
+                     readme_matcher: DISABLE,
+                     language: 'JavaScript'},
+        'Node' => {matcher: /(node.js|no.de|nodejs|(\s|\A|^)node(\s|\A|-|_|^))/i,
+                   readme_matcher: DISABLE,
+                   language: 'JavaScript'},
+        'Prototype' => {matcher: /prototype/i,
+                        readme_matcher: DISABLE,
+                        language: 'JavaScript'},
+        'Django' => {matcher: /django/i,
+                     readme_matcher: DISABLE,
+                     language: 'Python'}
     }
     INTERFACE_METHODS.each do |method|
-      define_method(method) { fail NotImplementedError.new("You must implement #{method} method") }
+      define_method(method) { raise NotImplementedError.new("You must implement #{method} method") }
     end
 
     attr_accessor :tags
@@ -52,10 +53,10 @@ module Repository #:nodoc:
       languages_with_percentage.keys
     end
 
-    # Languages
+    #Languages
     def dominant_language
       return '' if languages.blank?
-      primary_language = languages_with_percentage.sort_by { |_k, v| v }.last
+      primary_language = languages_with_percentage.sort_by { |k, v| v }.last
       if primary_language
         primary_language.first
       else
@@ -64,21 +65,21 @@ module Repository #:nodoc:
     end
 
     def languages_that_meet_threshold
-      languages_with_percentage.map do |key, value|
+      languages_with_percentage.collect do |key, value|
         key if value.to_i >= ACCEPTABLE_LANGUAGE_THRESHOLD
       end.compact
     end
 
     def dominant_language_percentage
-      main_language = dominant_language
-      bytes_of_other_langs = languages_with_percentage.map { |k, v| k != main_language ? v : 0 }.sum
+      main_language = self.dominant_language
+      bytes_of_other_langs = languages_with_percentage.collect { |k, v| k != main_language ? v : 0 }.sum
       bytes_of_main_lang = languages_with_percentage[main_language]
       return 0 if bytes_of_main_lang == 0
       return 100 if bytes_of_other_langs == 0
       100 - (bytes_of_other_langs.quo(bytes_of_main_lang).to_f * 100).round
     end
 
-    # Contributions
+    #Contributions
     def percentage_contributions_of(user_credentials)
       contributions_of(user_credentials) / contributions.to_f
     end
@@ -87,7 +88,7 @@ module Repository #:nodoc:
       contributions_of(user_credentials) >= CONTRIBUTION_COUNT_THRESHOLD || percentage_contributions_of(repo_credentials) > CONTRIBUTION_PERCENT_THRESHOLD
     end
 
-    # Repo Status
+    #Repo Status
     def popularity
       @popularity ||= begin
         rank = forks + watchers
@@ -118,7 +119,7 @@ module Repository #:nodoc:
       @readme ||= raw_readme
     end
 
-    # tags and tagging
+    #tags and tagging
     def update_tags!
       tag_dominant_lanugage!
       tag_project_types!
@@ -153,14 +154,14 @@ module Repository #:nodoc:
 
     def tag_when_project_matches(tag_name, matcher, readme_matcher, language = nil)
       if language && dominant_language.downcase == language.downcase
-        if field_matches?(name, matcher) ||
-            field_matches?(description, matcher) ||
+        if field_matches?(self.name, matcher) ||
+            field_matches?(self.description, matcher) ||
             (readme_matcher && dominant_language_percentage > LANGUAGE_THRESHOLD_FOR_README && readme_matches?(readme_matcher))
           @tags << tag_name
           return true
         end
       end
-      false
+      return false
     end
 
     def field_matches?(field, regex)
@@ -172,3 +173,5 @@ module Repository #:nodoc:
     end
   end
 end
+
+

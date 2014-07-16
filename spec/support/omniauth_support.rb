@@ -1,9 +1,9 @@
 def make_env(path = '/auth/test', props = {})
   {
-    'REQUEST_METHOD' => 'GET',
-    'PATH_INFO' => path,
-    'rack.session' => {},
-    'rack.input' => StringIO.new('test=true')
+      'REQUEST_METHOD' => 'GET',
+      'PATH_INFO' => path,
+      'rack.session' => {},
+      'rack.input' => StringIO.new('test=true')
   }.merge(props)
 end
 
@@ -21,13 +21,13 @@ class ExampleStrategy
     @fail = fail!(options[:failure]) if options[:failure]
     @last_env = env
     return @fail if @fail
-    fail 'Request Phase'
+    raise "Request Phase"
   end
 
   def callback_phase
     @fail = fail!(options[:failure]) if options[:failure]
     @last_env = env
     return @fail if @fail
-    fail 'Callback Phase'
+    raise "Callback Phase"
   end
 end

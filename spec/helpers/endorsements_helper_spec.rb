@@ -1,5 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe EndorsementsHelper, type: :helper do
+RSpec.describe EndorsementsHelper, :type => :helper do
+
 
 end

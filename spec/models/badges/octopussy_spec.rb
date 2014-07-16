@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Octopussy, type: :model do
+RSpec.describe Octopussy, :type => :model do
   let(:repo) { Fabricate(:github_repo) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }

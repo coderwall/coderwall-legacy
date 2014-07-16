@@ -1,17 +1,17 @@
 class Octopussy < BadgeBase
   GITHUB_TEAM_ID_IN_PRODUCTION = '4f27193d973bf0000400029d'
 
-  describe 'Octopussy',
+  describe "Octopussy",
            skill:       'Open Source',
-           description: 'Have a repo followed by a member of the GitHub team',
-           for:         'having a repo followed by a member of the GitHub team.',
+           description: "Have a repo followed by a member of the GitHub team",
+           for:         "having a repo followed by a member of the GitHub team.",
            image_name:  'octopussy.png',
            providers:   :github,
            weight:      0
 
   def self.github_team
-    Rails.cache.fetch('octopussy_github_team_members', expires_in: 1.day) do
-      Team.find(GITHUB_TEAM_ID_IN_PRODUCTION).team_members.map { |user| user.github }.compact
+    Rails.cache.fetch("octopussy_github_team_members", expires_in: 1.day) do
+      Team.find(GITHUB_TEAM_ID_IN_PRODUCTION).team_members.collect { |user| user.github }.compact
     end
   end
 
@@ -44,7 +44,7 @@ class Octopussy < BadgeBase
   def repo_followers
     user.original_repos.map do |repo|
       [repo.html_url, followers_part_of_github(repo.followers)]
-    end.reject do |_url, followers|
+    end.reject do |url, followers|
       followers.empty?
     end
   end

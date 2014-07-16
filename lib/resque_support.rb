@@ -2,11 +2,11 @@ require 'resque/scheduler/tasks'
 
 module ResqueSupport
   module Heroku
-    def after_perform_heroku(*_args)
+    def after_perform_heroku(*args)
       ActiveRecord::Base.connection.disconnect!
     end
 
-    def on_failure_heroku(_e, *_args)
+    def on_failure_heroku(e, *args)
       ActiveRecord::Base.connection.disconnect!
     end
   end
@@ -15,12 +15,12 @@ module ResqueSupport
     include Heroku
 
     def perform(*args)
-      new(*args).perform
+      self.new(*args).perform
     end
 
     def enqueue_in(time, *args)
       klass = args.shift
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.development? or Rails.env.test?
         Rails.logger.debug "Resque#enqueue => #{klass}, #{args}"
         klass.new(*args).perform
       else
@@ -37,12 +37,12 @@ module ResqueSupport
     include Heroku
 
     def perform(id, method, *args)
-      find(id).send(method, *args)
+      self.find(id).send(method, *args)
     end
 
     module Async
       def async(method, *args)
-        Resque.enqueue self.class, id, method, *args
+        Resque.enqueue self.class, self.id, method, *args
       end
     end
 

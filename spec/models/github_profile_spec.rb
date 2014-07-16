@@ -1,13 +1,13 @@
 require 'vcr_helper'
 
-RSpec.describe GithubProfile, type: :model, skip: ENV['TRAVIS']  do
-  let(:languages) do
+RSpec.describe GithubProfile, :type => :model, skip: ENV['TRAVIS']  do
+  let(:languages) {
     {
-      'C' => 194_738,
-      'C++' => 105_902,
-      'Perl' => 2_519_686
+      'C' => 194738,
+      'C++' => 105902,
+      'Perl' => 2519686
     }
-  end
+  }
   ## test we don't create a fact for an empty repo
   let(:access_token) { '9432ed76b16796ec034670524d8176b3f5fee9aa' }
   let(:client_id) { '974695942065a0e00033' }
@@ -20,34 +20,34 @@ RSpec.describe GithubProfile, type: :model, skip: ENV['TRAVIS']  do
   end
 
   def response_body(file)
-    File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', file))
+    File.read(File.join(Rails.root, "spec", 'fixtures', 'githubv3', file))
   end
 
   describe 'facts' do
-    let (:profile) do
+    let (:profile) {
       VCR.use_cassette('github_profile_for_mdeiters') do
         GithubProfile.for_username('mdeiters')
       end
-    end
+    }
 
     it 'creates facts for original repos' do
       expect(profile.facts).not_to be_empty
       fact = profile.facts.select { |fact| fact.identity =~ /mdeiters\/semr:mdeiters$/i }.first
 
       expect(fact.identity).to eq('https://github.com/mdeiters/semr:mdeiters')
-      expect(fact.owner).to eq('github:mdeiters')
+      expect(fact.owner).to eq("github:mdeiters")
       expect(fact.name).to eq('semr')
       expect(fact.relevant_on.to_date).to eq(Date.parse('2008-05-08'))
       expect(fact.url).to eq('https://github.com/mdeiters/semr')
       expect(fact.tags).to include('repo')
-      expect(fact.metadata[:languages]).to include('Ruby', 'JavaScript')
+      expect(fact.metadata[:languages]).to include("Ruby", "JavaScript")
     end
 
     it 'creates facts for when user signed up' do
       expect(profile.facts).not_to be_empty
       fact = profile.facts.last
       expect(fact.identity).to eq('github:mdeiters')
-      expect(fact.owner).to eq('github:mdeiters')
+      expect(fact.owner).to eq("github:mdeiters")
       expect(fact.name).to eq('Joined GitHub')
       expect(fact.relevant_on.to_date).to eq(Date.parse('2008-04-14'))
       expect(fact.url).to eq('https://github.com/mdeiters')
@@ -56,11 +56,11 @@ RSpec.describe GithubProfile, type: :model, skip: ENV['TRAVIS']  do
   end
 
   describe 'profile not on file' do
-    let (:profile) do
+    let (:profile) {
       VCR.use_cassette('github_profile_for_mdeiters') do
         GithubProfile.for_username('mdeiters')
       end
-    end
+    }
 
     it 'will indicate stale if older then an 24 hours', skip: 'timezone is incorrect' do
       expect(profile.updated_at).to be > 1.minute.ago

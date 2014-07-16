@@ -1,11 +1,11 @@
 class Parrot < BadgeBase
   include ActionView::Helpers::TextHelper
 
-  describe 'Parrot',
-           description:    'Give at least one talk at an industry conference',
-           for:            'giving at least one talk at an industry conference.',
+  describe "Parrot",
+           description:    "Give at least one talk at an industry conference",
+           for:            "giving at least one talk at an industry conference.",
            weight:         2,
-           image_name:     'comingsoon.png',
+           image_name:     "comingsoon.png",
            providers:      :twitter,
            min_talk_count: 1
 
@@ -23,6 +23,6 @@ class Parrot < BadgeBase
   end
 
   def award?
-    reasons[:links].size > 0
+    self.reasons[:links].size > 0
   end
 end

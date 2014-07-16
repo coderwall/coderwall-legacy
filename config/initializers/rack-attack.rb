@@ -1,5 +1,6 @@
 if Rails.env.production?
   class Rack::Attack
+
     ### Configure Cache ###
 
     # If you don't want to use Rails.cache (Rack::Attack's default), then
@@ -50,7 +51,7 @@ if Rails.env.production?
     # throttle logins for another user and force their login requests to be
     # denied, but that's not very common and shouldn't happen to you. (Knock on
     # wood!)
-    throttle('logins/email', limit: 5, period: 20.seconds) do |req|
+    throttle("logins/email", limit: 5, period: 20.seconds) do |req|
       if req.path == '/login' && req.post?
         # return the email if present, nil otherwise
         req.params['email'].presence
@@ -72,3 +73,4 @@ if Rails.env.production?
     # end
   end
 end
+

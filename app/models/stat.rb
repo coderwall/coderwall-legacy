@@ -23,7 +23,7 @@ class Stat < Struct.new(:name, :number, :description)
     end
 
     def random_for_user(user)
-      for_user(user).sort_by { rand }.slice(0...3).map do |name, _desc|
+      for_user(user).sort_by { rand }.slice(0...3).collect do |name, desc|
         Stat.new(name)
       end
     end
@@ -59,6 +59,6 @@ class Stat < Struct.new(:name, :number, :description)
   end
 
   def stat_type
-    self.class.all.find { |type| type.first.to_s == name.to_s }
+    self.class.all.detect { |type| type.first.to_s == self.name.to_s }
   end
 end

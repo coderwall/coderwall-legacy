@@ -1,4 +1,5 @@
 module PremiumHelper
+
   def markdown(text)
     return nil if text.nil?
     Kramdown::Document.new(text).to_html.gsub(/<p>|<\/p>/, '').html_safe
@@ -22,7 +23,7 @@ module PremiumHelper
   def admin_hint(&block)
     haml_tag(:div, class: 'hint') do
       haml_tag(:h3) do
-        haml_concat('Pro tip')
+        haml_concat("Pro tip")
       end
       haml_tag(:p) do
         haml_concat(capture_haml(&block))
@@ -33,7 +34,7 @@ module PremiumHelper
   def ideas_list(&block)
     haml_tag(:div, class: 'ideas') do
       haml_tag(:h3) do
-        haml_concat('Some ideas')
+        haml_concat("Some ideas")
       end
       haml_tag(:ul) do
         haml_concat(capture_haml(&block))
@@ -69,7 +70,7 @@ module PremiumHelper
   end
 
   def partialify_html_section_id(section_id)
-    section_id.to_s.gsub('-', '_').gsub('#', '')
+    section_id.to_s.gsub("-", "_").gsub('#', '')
   end
 
   def add_active_class_to_first_member
@@ -97,15 +98,15 @@ module PremiumHelper
   end
 
   def can_edit?
-    admin_of_team? && @edit_mode
+    admin_of_team? and @edit_mode
   end
 
   def section_enabled_class(check)
-    return 'inactive' unless check
+    return 'inactive' if !check
   end
 
   def apply_css(current_user, job)
-    current_user.try(:already_applied_for?, job) ? 'apply applied' : 'apply'
+    current_user.try(:already_applied_for?, job) ? "apply applied" : "apply"
   end
 
   def only_on_first(number, hash)
@@ -113,7 +114,7 @@ module PremiumHelper
   end
 
   def job_activation_css(job)
-    job.active? ? 'active-opportunity' : 'inactive-opportunity'
+    job.active? ? "active-opportunity" : "inactive-opportunity"
   end
 
   def activate_or_deactivate(job)
@@ -121,7 +122,7 @@ module PremiumHelper
   end
 
   def big_quote_or_default(team)
-    !team.big_quote.blank? ? team.big_quote : 'Quotes from a team member about culture or an accomplishment'
+    !team.big_quote.blank? ? team.big_quote : "Quotes from a team member about culture or an accomplishment"
   end
 
   def big_image_or_default(team)
@@ -154,16 +155,16 @@ module PremiumHelper
 
   def office_photos_or_default(team)
     !team.office_photos.blank? ? team.office_photos : [
-      'premium-teams/stock-dogs-ok.jpg',
-      'premium-teams/stock-wall-of-macs.jpeg',
-      'premium-teams/stock-office-upon-office.jpg'
+        'premium-teams/stock-dogs-ok.jpg',
+        'premium-teams/stock-wall-of-macs.jpeg',
+        'premium-teams/stock-office-upon-office.jpg'
     ]
   end
 
   def interview_steps_or_default(team)
     !team.interview_steps.blank? ? team.interview_steps : [
-      'What is the first thing you want candidates to do?',
-      'Arrange a 30 minute phone screen?'
+        'What is the first thing you want candidates to do?',
+        'Arrange a 30 minute phone screen?'
     ]
   end
 
@@ -171,7 +172,7 @@ module PremiumHelper
     !team.hiring_tagline.blank? ? team.hiring_tagline : 'Come build great software with us'
   end
 
-  def jobs_or_default(team, except_job = nil)
+  def jobs_or_default(team, except_job=nil)
     !team.jobs.blank? ? (team.jobs - [except_job]).first(team.number_of_jobs_to_show) : [default_job]
   end
 
@@ -189,13 +190,13 @@ module PremiumHelper
   end
 
   def stack_or_default(team)
-    team.has_stack? ? team.stack.first(8) : ['jQuery', 'Ruby', 'Postgresql', 'Heroku', 'R', 'Machine Learning']
+    team.has_stack? ? team.stack.first(8) : ["jQuery", "Ruby", "Postgresql", "Heroku", "R", "Machine Learning"]
   end
 
   def team_job_size(team)
     return 1 if team.jobs.size == 0
     [team.jobs.size, team.number_of_jobs_to_show].min
-    # 1
+    #1
   end
 
   def your_impact_or_default(team)
@@ -225,28 +226,29 @@ module PremiumHelper
   def link_to_add_fields(name, f, association)
     new_object = f.object.class.reflect_on_association(association).klass.new
     fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
-      render(association.to_s.singularize + '_fields', f: builder)
+      render(association.to_s.singularize + "_fields", f: builder)
     end
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")
   end
 
   def blog_content(entry)
-    truncate(Sanitize.clean(entry.summary || entry.content || '').first(400), length: 300)
+    truncate(Sanitize.clean(entry.summary || entry.content || "").first(400), length: 300)
   end
 
   def application_status_css(job)
-    current_user.already_applied_for?(job) ? 'send-application applied' : 'send-application'
+    current_user.already_applied_for?(job) ? "send-application applied" : "send-application"
   end
 
   def apply_url(job)
-    current_user.already_applied_for?(job) ? '#already-applied' : apply_team_opportunity_path(job.team, job)
+    current_user.already_applied_for?(job) ? "#already-applied" : apply_team_opportunity_path(job.team, job)
   end
 
   def highly_interested?(visitor, team)
-    ((visitor[:time_spent].to_i / 1000).seconds > 60 && team.sections_up_to(visitor[:furthest_scrolled]).count > 5) || visitor[:exit_target_type] == 'job-opportunity'
+    ((visitor[:time_spent].to_i/1000).seconds > 60 && team.sections_up_to(visitor[:furthest_scrolled]).count > 5) || visitor[:exit_target_type] == "job-opportunity"
   end
 
   def can_see_analytics?
-    is_admin? || (@team.analytics? && admin_of_team?)
+    is_admin? or (@team.analytics? && admin_of_team?)
   end
+
 end

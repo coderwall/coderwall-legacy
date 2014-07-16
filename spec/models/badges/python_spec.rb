@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe Python, type: :model do
-  let(:languages) do {
-    'Python' => 2_519_686,
-    'Java' => 76_867
-  } end
+RSpec.describe Python, :type => :model do
+  let(:languages) { {
+      "Python" => 2519686,
+      "Java" => 76867
+  } }
   let(:repo) { Fabricate(:github_repo, languages: languages) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }

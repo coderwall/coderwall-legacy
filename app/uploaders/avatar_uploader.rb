@@ -1,4 +1,5 @@
 class AvatarUploader < CoderwallUploader
+
   process resize_and_pad: [100, 100]
 
   def extension_white_list
@@ -6,6 +7,6 @@ class AvatarUploader < CoderwallUploader
   end
 
   def default_url
-    asset_path 'team-avatar.png'
+    asset_path "team-avatar.png"
   end
 end

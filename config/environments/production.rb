@@ -7,7 +7,7 @@ Badgiy::Application.configure do
   config.force_ssl = true
   config.action_controller.asset_host = ENV['CDN_ASSET_HOST']
   config.action_mailer.asset_host = ENV['CDN_ASSET_HOST']
-  # config.font_assets.origin = ENV['FONT_ASSETS_ORIGIN']
+  #config.font_assets.origin = ENV['FONT_ASSETS_ORIGIN']
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true

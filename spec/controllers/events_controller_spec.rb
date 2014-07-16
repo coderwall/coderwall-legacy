@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-RSpec.describe EventsController, type: :controller do
+RSpec.describe EventsController, :type => :controller do
 
 end

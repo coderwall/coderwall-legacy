@@ -58,7 +58,7 @@ class Audience
     end
 
     def expand(audience)
-      audience.keys.map(&:to_sym).map do |target|
+      audience.keys.map(&:to_sym).collect do |target|
         if target == :user_reach
           user = User.find(audience[target])
           expand_reach(user) unless user.nil?
@@ -130,9 +130,9 @@ class Audience
     end
 
     def to_channel(audience)
-      channel_name = Rails.env + ':' + audience.map { |k, v| "#{k}:#{v}" }.first
-      # obfiscate for production
-      (Rails.env.development? || Rails.env.test?) ? channel_name : Digest::MD5.hexdigest(channel_name)
+      channel_name = Rails.env + ":" + audience.map { |k, v| "#{k}:#{v}" }.first
+      #obfiscate for production
+      (Rails.env.development? or Rails.env.test?) ? channel_name : Digest::MD5.hexdigest(channel_name)
     end
   end
 end

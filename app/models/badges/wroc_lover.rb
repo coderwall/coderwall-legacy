@@ -1,8 +1,8 @@
 class WrocLover < BadgeBase
-  describe 'wroc_love.rb',
+  describe "wroc_love.rb",
            skill:       'Ruby',
-           description: 'Attended the 2012 wroc_love.rb ruby conference.',
-           for:         'attending the 2012 wroc_love.rb ruby conference.',
+           description: "Attended the 2012 wroc_love.rb ruby conference.",
+           for:         "attending the 2012 wroc_love.rb ruby conference.",
            image_name:  'wrocloverb.png'
 
   def reasons

@@ -1,7 +1,8 @@
 class EndorsementsController < ApplicationController
+
   def index
     flash[:notice] = 'You must be signed in to make an endorsement.'
-    # This is called when someone tries to endorse while unauthenticated
+    #This is called when someone tries to endorse while unauthenticated
     return_to_user = badge_url(username: User.find(params[:user_id]).username)
     store_location!(return_to_user)
     redirect_to(signin_path)
@@ -15,12 +16,12 @@ class EndorsementsController < ApplicationController
     @skill.reload
     record_event('endorsed user', speciality: @skill.name)
     render json: {
-      unlocked: !@skill.locked?,
-      message:  "Awesome! #{@skill.endorse_message}"
-    }.to_json
+                   unlocked: !@skill.locked?,
+                   message:  "Awesome! #{@skill.endorse_message}"
+                 }.to_json
   end
 
-  def show # Used by api.coderwall.com
+  def show #Used by api.coderwall.com
     @user = User.with_username(params[:username])
     return head(:not_found) if @user.nil?
     render json: {

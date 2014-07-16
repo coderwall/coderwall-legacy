@@ -31,11 +31,11 @@ RSpec.describe Github, type: :model, functional: true, skip: ENV['TRAVIS']  do
   end
 
   it 'gets languages of a repo' do
-    expect(github.repo_languages('mdeiters', 'semr', 2.years.ago)).to include('Ruby', 'JavaScript')
+    expect(github.repo_languages('mdeiters', 'semr', 2.years.ago)).to include("Ruby", "JavaScript")
   end
 
   it 'gets contributors of a repo' do
-    expect(github.repo_contributors('mdeiters', 'healthy', 2.years.ago).map { |r| r[:login] }).to include('flyingmachine')
+    expect(github.repo_contributors('mdeiters', 'healthy', 2.years.ago).collect { |r| r[:login] }).to include("flyingmachine")
   end
 
   it 'recovers if getting contributors errors out' do
@@ -43,7 +43,7 @@ RSpec.describe Github, type: :model, functional: true, skip: ENV['TRAVIS']  do
   end
 
   it 'gets all forks of a repo' do
-    expect(github.repo_forks('mdeiters', 'semr', 2.years.ago).map { |r| r[:owner][:login] }).to include('derfred')
+    expect(github.repo_forks('mdeiters', 'semr', 2.years.ago).collect { |r| r[:owner][:login] }).to include('derfred')
   end
 
   it 'should scope requests by user' do

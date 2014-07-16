@@ -4,7 +4,7 @@ module Factual
   end
 
   module ClassMethods
-    def acts_as_factual(_options = {})
+    def acts_as_factual(options={})
       include Factual::InstanceMethods
     end
   end
@@ -13,7 +13,7 @@ module Factual
     INTERFACE_METHODS = %w(facts fact_identity, fact_owner, fact_name, fact_date, fact_url, fact_tags fact_meta_data)
 
     INTERFACE_METHODS.each do |method|
-      define_method(method) { fail NotImplementedError.new("You must implement #{method} method") }
+      define_method(method) { raise NotImplementedError.new("You must implement #{method} method") }
     end
 
     def facts
@@ -31,4 +31,5 @@ module Factual
       end
     end
   end
+
 end

@@ -15,7 +15,7 @@ class ReverseGeolocateUser < Struct.new(:username, :ip_address)
       rescue SystemExit
         address = nil
       end
-      # puts "got > #{address}"
+      #puts "got > #{address}"
       unless address.nil?
         user.ip_lat = address[:latitude].to_f
         user.ip_lng = address[:longitude].to_f

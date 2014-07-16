@@ -20,7 +20,7 @@ class Servant
       response = RestClient.get(url, verify_ssl: false)
       response = ServiceResponse.new(response.to_s, response.headers)
       Rails.logger.debug("GitHub requests left: #{response.requests_left}")
-      response
+      return response
     end
   end
 end

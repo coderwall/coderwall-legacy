@@ -17,17 +17,17 @@ class Comment < ActiveRecord::Base
   alias_method :author, :user
   alias_attribute :body, :comment
 
-  rakismet_attrs author: proc { user.name },
-                 author_email: proc { user.email },
-                 content: :comment,
-                 blog: ENV['AKISMET_URL'],
-                 user_ip: proc { user.last_ip },
-                 user_agent: proc { user.last_ua }
+  rakismet_attrs  author: proc { self.user.name },
+    author_email: proc { self.user.email },
+    content: :comment,
+    blog: ENV['AKISMET_URL'],
+    user_ip: proc { self.user.last_ip },
+    user_agent: proc { self.user.last_ua }
 
   validates :comment, length: { minimum: 2 }
 
-  def self.latest_comments_as_strings(count = 5)
-    Comment.unscoped.order('created_at DESC').limit(count).map do |comment|
+  def self.latest_comments_as_strings(count=5)
+    Comment.unscoped.order("created_at DESC").limit(count).collect do |comment|
       "#{comment.comment} - http://coderwall.com/p/#{comment.commentable.try(:public_id)}"
     end
   end
@@ -37,8 +37,8 @@ class Comment < ActiveRecord::Base
   end
 
   def like_by(user)
-    unless self.liked_by?(user) or user.id == author_id
-      likes.create!(user: user, value: user.score)
+    unless self.liked_by?(user) or user.id == self.author_id
+      self.likes.create!(user: user, value: user.score)
       generate_event(liker: user.username)
     end
   end
@@ -67,7 +67,7 @@ class Comment < ActiveRecord::Base
   end
 
   def username_mentions
-    body.scan(/@([a-z0-9_]+)/).flatten
+    self.body.scan(/@([a-z0-9_]+)/).flatten
   end
 
   def mentioned?(username)
@@ -75,40 +75,40 @@ class Comment < ActiveRecord::Base
   end
 
   def to_commentable_public_hash
-    commentable.try(:to_public_hash).merge(
-
-        comments: commentable.comments.count,
-        likes:    likes.count
-
+    self.commentable.try(:to_public_hash).merge(
+      {
+        comments: self.commentable.comments.count,
+        likes:    likes.count,
+      }
     )
   end
 
   def commenting_on_own?
-    author_id == commentable.try(:user_id)
+    self.author_id == self.commentable.try(:user_id)
   end
 
   private
 
-  def generate_event(options = {})
+  def generate_event(options={})
     event_type = event_type(options)
     data       = to_event_hash(options)
     enqueue(GenerateEvent, event_type, event_audience(event_type), data, 1.minute)
 
     if event_type == :new_comment
-      Notifier.new_comment(commentable.try(:user).try(:username), author.username, id).deliver unless commenting_on_own?
+      Notifier.new_comment(self.commentable.try(:user).try(:username), self.author.username, self.id).deliver unless commenting_on_own?
 
-      if (mentioned_users = mentions).any?
+      if (mentioned_users = self.mentions).any?
         enqueue(GenerateEvent, :comment_reply, Audience.users(mentioned_users.map(&:id)), data, 1.minute)
 
         mentioned_users.each do |mention|
-          Notifier.comment_reply(mention.username, author.username, id).deliver
+          Notifier.comment_reply(mention.username, self.author.username, self.id).deliver
         end
       end
     end
   end
 
-  def to_event_hash(options = {})
-    event_hash              = to_commentable_public_hash.merge!(user: { username: user && user.username }, body: {})
+  def to_event_hash(options={})
+    event_hash              = to_commentable_public_hash.merge!({ user: { username: user && user.username }, body: {} })
     event_hash[:created_at] = event_hash[:created_at].to_i
 
     unless options[:liker].nil?
@@ -118,17 +118,17 @@ class Comment < ActiveRecord::Base
     event_hash
   end
 
-  def event_audience(event_type, _options = {})
+  def event_audience(event_type, options ={})
     case event_type
     when :new_comment
-      audience = Audience.user(commentable.try(:user_id))
+      audience = Audience.user(self.commentable.try(:user_id))
     else
-      audience = Audience.user(author_id)
+      audience = Audience.user(self.author_id)
     end
     audience
   end
 
-  def event_type(options = {})
+  def event_type(options={})
     if options[:liker]
       :comment_like
     else
@@ -137,7 +137,7 @@ class Comment < ActiveRecord::Base
   end
 
   def analyze_spam
-    Resque.enqueue(AnalyzeSpam,  id: id, klass: self.class.name)
+    Resque.enqueue(AnalyzeSpam, { id: id, klass: self.class.name })
   end
 end
 

@@ -19,8 +19,8 @@ class ServiceResponse < Struct.new(:result, :headers)
     @next_page ||= begin
       if links = headers[:link]
         Rails.logger.debug("Found multiple links: #{links}")
-        links = links.split(',').map { |parts| normalize_link(parts) }
-        next_link = links.find { |link| link[:name] == 'next' }
+        links = links.split(',').collect { |parts| normalize_link(parts) }
+        next_link = links.detect { |link| link[:name] == 'next' }
         next_link[:url] if next_link
       end
     end
@@ -31,8 +31,9 @@ class ServiceResponse < Struct.new(:result, :headers)
     name_content = name.scan(/rel="(\w*)"/).flatten.first
     url_content = url.to_s.strip.match(/^<([\w|\W]*)>$/)[1]
     {
-      name: name_content,
-      url: url_content
+        name: name_content,
+        url: url_content
     }
   end
+
 end

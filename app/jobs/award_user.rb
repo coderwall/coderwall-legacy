@@ -12,4 +12,5 @@ class AwardUser < Struct.new(:username, :badges)
 
     user.check_achievements!(badges)
   end
+
 end

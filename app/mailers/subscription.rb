@@ -6,7 +6,7 @@ class Subscription < ActionMailer::Base
 
   layout 'email'
 
-  default_url_options[:host] = 'coderwall.com'
+  default_url_options[:host] = "coderwall.com"
   default_url_options[:only_path] = false
   default from: '"Coderwall" <support@coderwall.com>'
 
@@ -16,7 +16,7 @@ class Subscription < ActionMailer::Base
   def team_upgrade(username, plan_id)
     plan = Plan.find(plan_id)
     event = subscription_event(plan)
-    headers['X-Mailgun-Variables'] = { email_type: event }.to_json
+    headers['X-Mailgun-Variables'] = {email_type: event}.to_json
     track_campaign(event)
 
     @user = User.with_username(username)
@@ -30,7 +30,7 @@ class Subscription < ActionMailer::Base
   if Rails.env.development?
     class Preview < MailView
       def team_upgrade
-        user = User.on_team.order('Random()').first
+        user = User.on_team.order("Random()").first
         mail = Subscription.team_upgrade(user.username, Plan.enhanced_team_page_monthly.id)
         mail
       end
@@ -47,11 +47,11 @@ class Subscription < ActionMailer::Base
   end
 
   def plan_capability(plan)
-    message = ''
+    message = ""
     if plan.subscription?
-      message = 'You can now post up to 4 jobs at any time'
+      message = "You can now post up to 4 jobs at any time"
     elsif plan.one_time?
-      message = 'You can now post one job for 30 days'
+      message = "You can now post one job for 30 days"
     end
     message
   end

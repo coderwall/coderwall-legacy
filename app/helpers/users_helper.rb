@@ -1,4 +1,5 @@
 module UsersHelper
+
   def show_private_message?
     if cookies[:identity] == params[:username] && (cookies[:show_private_message] ||= 1).to_i <= 2
       cookies[:show_private_message] = cookies[:show_private_message].to_i + 1
@@ -58,29 +59,29 @@ module UsersHelper
 
   def social_bookmarks(user)
     bookmarks = []
-    bookmarks << social_bookmark('github', 'https://github.com/' + user.github) unless user.github.blank?
+    bookmarks << social_bookmark('github', "https://github.com/" + user.github) unless user.github.blank?
     if viewing_self?
       bookmarks << social_bookmark('linkedin', linkedin_url(user)) unless user.linkedin_token.blank?
-      bookmarks << social_bookmark('twitter', 'https://twitter.com/' + user.twitter, "@#{user.twitter}") unless user.twitter_token.blank?
+      bookmarks << social_bookmark('twitter', "https://twitter.com/" + user.twitter, "@#{user.twitter}") unless user.twitter_token.blank?
     else
       bookmarks << social_bookmark('linkedin', linkedin_url(user)) unless user.linkedin.blank? && user.linkedin_legacy.blank? && user.linkedin_public_url.blank?
-      bookmarks << social_bookmark('twitter', 'https://twitter.com/' + user.twitter, "@#{user.twitter}") unless user.twitter.blank?
+      bookmarks << social_bookmark('twitter', "https://twitter.com/" + user.twitter, "@#{user.twitter}") unless user.twitter.blank?
     end
     bookmarks << social_bookmark('blog', user_blog_url(user.blog)) unless user.blog.blank?
-    bookmarks << social_bookmark('bitbucket', 'https://bitbucket.org/' + user.bitbucket) unless user.bitbucket.blank?
-    bookmarks << social_bookmark('codeplex', 'http://www.codeplex.com/site/users/view/' + user.codeplex) unless user.codeplex.blank?
-    bookmarks << social_bookmark('forrst', 'http://forrst.com/people/' + user.forrst) unless user.forrst.blank?
-    bookmarks << social_bookmark('dribbble', 'http://dribbble.com/' + user.dribbble) unless user.dribbble.blank?
-    bookmarks << social_bookmark('stackoverflow', 'http://stackoverflow.com/users/' + user.stackoverflow) unless user.stackoverflow.blank?
-    bookmarks << social_bookmark('slideshare', 'http://www.slideshare.net/' + user.slideshare) unless user.slideshare.blank?
-    bookmarks << social_bookmark('speakerdeck', 'http://speakerdeck.com/u/' + user.speakerdeck) unless user.speakerdeck.blank?
-    bookmarks << social_bookmark('sourceforge', 'http://sourceforge.net/users/' + user.sourceforge) unless user.sourceforge.blank?
-    bookmarks << social_bookmark('googlecode', 'http://code.google.com/u/' + user.google_code) unless user.google_code.blank?
+    bookmarks << social_bookmark('bitbucket', "https://bitbucket.org/" + user.bitbucket) unless user.bitbucket.blank?
+    bookmarks << social_bookmark('codeplex', "http://www.codeplex.com/site/users/view/" + user.codeplex) unless user.codeplex.blank?
+    bookmarks << social_bookmark('forrst', "http://forrst.com/people/" + user.forrst) unless user.forrst.blank?
+    bookmarks << social_bookmark('dribbble', "http://dribbble.com/" + user.dribbble) unless user.dribbble.blank?
+    bookmarks << social_bookmark('stackoverflow', "http://stackoverflow.com/users/" + user.stackoverflow) unless user.stackoverflow.blank?
+    bookmarks << social_bookmark('slideshare', "http://www.slideshare.net/" + user.slideshare) unless user.slideshare.blank?
+    bookmarks << social_bookmark('speakerdeck', "http://speakerdeck.com/u/" + user.speakerdeck) unless user.speakerdeck.blank?
+    bookmarks << social_bookmark('sourceforge', "http://sourceforge.net/users/" + user.sourceforge) unless user.sourceforge.blank?
+    bookmarks << social_bookmark('googlecode', "http://code.google.com/u/" + user.google_code) unless user.google_code.blank?
     bookmarks
   end
 
-  def social_bookmark(name, link, title = nil, css_class = nil)
-    '<li>' + link_to("<span>#{name}</span>".html_safe, link, class: "tip track #{css_class} #{name}", title: (title || name), target: :new, 'data-action' => "view user's #{name}", rel: 'me') + '</li>'
+  def social_bookmark(name, link, title = nil, css_class=nil)
+    "<li>" + link_to("<span>#{name}</span>".html_safe, link, class: "tip track #{css_class} #{name}", title: (title || name), target: :new, 'data-action' => "view user's #{name}", rel: 'me') + "</li>"
   end
 
   def linkedin_url(user)
@@ -88,7 +89,7 @@ module UsersHelper
       user.linkedin_public_url
     elsif !user.linkedin.blank?
       "http://www.linkedin.com/in/#{user.linkedin}"
-    else # user gave us a url, not a username
+    else #user gave us a url, not a username
       if user.linkedin_legacy
         if user.linkedin_legacy.match(/\Ahttp/)
           user.linkedin_legacy
@@ -103,7 +104,7 @@ module UsersHelper
     if blog.match(/http/)
       blog
     else
-      'http://' + blog
+      "http://" + blog
     end
   end
 
@@ -156,8 +157,8 @@ module UsersHelper
     if (content = user.send(type)).blank?
       nil
     else
-      content_tag(:span, class: 'alias') {
-        content_tag(:span, ' ', class: "social-icon #{type}") +
+      content_tag(:span, class: "alias") {
+        content_tag(:span, " ", class: "social-icon #{type}") +
             content_tag(:span, content)
       }
     end
@@ -177,9 +178,9 @@ module UsersHelper
       return "<li class='date'><div class='datestamp first'>This Month</div></li>"
     elsif @last_date != item.date.strftime("%^b '%y")
       @last_date = item.date.strftime("%^b '%y")
-      return "<li class='date'><div class='datestamp'>" + @last_date + '</div></li>'
+      return "<li class='date'><div class='datestamp'>" + @last_date + "</div></li>"
     end
-    ''
+    return ''
   end
 
   def location_image_tag_credits_for(user)
@@ -212,7 +213,7 @@ module UsersHelper
     if reviewed_all_achievements?
       "Achievements last reviewed #{time_ago_in_words(@user.achievements_checked_at)} ago"
     else
-      'We are still working on awarding you more achievements. Make sure you have link your Twitter, GitHub, and LinkedIn accounts if you have them.'
+      "We are still working on awarding you more achievements. Make sure you have link your Twitter, GitHub, and LinkedIn accounts if you have them."
     end
   end
 

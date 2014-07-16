@@ -1,7 +1,7 @@
 Fabricator(:user) do
   github { 'mdeiters' }
   twitter { 'mdeiters' }
-  username { Faker::Internet.user_name.gsub(/\./, '_') }
+  username { Faker::Internet.user_name.gsub(/\./, "_") }
   name { 'Matthew Deiters' }
   email { 'someone@example.com' }
   location { 'San Francisco' }
@@ -11,7 +11,7 @@ end
 
 Fabricator(:pending_user, from: :user) do
   github { 'bguthrie' }
-  username { Faker::Internet.user_name.gsub(/\./, '_') }
+  username { Faker::Internet.user_name.gsub(/\./, "_") }
   name { 'Brian Guthrie' }
   email { 'someone@example.com' }
   location { 'Mountain View' }

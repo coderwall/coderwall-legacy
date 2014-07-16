@@ -7,7 +7,7 @@ class OpportunitiesController < ApplicationController
   before_filter :stringify_location, only: [:create, :update]
 
   def apply
-    redirect_to_signup_if_unauthenticated(request.referer, 'You must login/signup to apply for an opportunity') do
+    redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to apply for an opportunity") do
       job = Opportunity.find(params[:id])
       if current_user.apply_to(job)
         Notifier.new_applicant(current_user.username, job.id).deliver!
@@ -25,6 +25,7 @@ class OpportunitiesController < ApplicationController
   end
 
   def edit
+
   end
 
   def create
@@ -34,8 +35,8 @@ class OpportunitiesController < ApplicationController
       if @job.save
         format.html { redirect_to teamname_path(@team.slug), notice: "#{@job.name} added" }
       else
-        flash[:error] = @job.errors.full_messages.blank? ? 'There was an issue with your account, please contact support@coderwall.com' : nil
-        format.html { render action: 'new' }
+        flash[:error] = @job.errors.full_messages.blank? ? "There was an issue with your account, please contact support@coderwall.com" : nil
+        format.html { render action: "new" }
       end
     end
   end
@@ -46,7 +47,7 @@ class OpportunitiesController < ApplicationController
       if @job.update_attributes(opportunity_update_params)
         format.html { redirect_to teamname_path(@team.slug), notice: "#{@job.name} updated" }
       else
-        format.html { render action: 'new' }
+        format.html { render action: "new" }
       end
     end
   end
@@ -71,25 +72,26 @@ class OpportunitiesController < ApplicationController
 
   def index
     current_user.seen(:jobs) if signed_in?
-    store_location! unless signed_in?
+    store_location! if !signed_in?
     chosen_location = (params[:location] || closest_to_user(current_user)).try(:titleize)
-    chosen_location = nil if chosen_location == 'Worldwide'
+    chosen_location = nil if chosen_location == "Worldwide"
     @page           = params[:page].try(:to_i) || 1
     tag             = params[:skill].gsub(/\-/, ' ').downcase unless params[:skill].nil?
     @jobs           = get_jobs_for(chosen_location, tag, @page)
     @jobs_left      = @jobs.count
     @jobs           = @jobs.limit(20)
-    chosen_location = 'Worldwide' if chosen_location.nil?
-    @locations      = Rails.cache.fetch("job_locations_#{params[:location]}_#{params[:skill]}", expires_in: 1.hour) { Opportunity.by_tag(tag).map(&:locations).flatten.reject { |loc| loc == 'Worldwide' }.push('Worldwide').uniq.compact }
+    chosen_location = "Worldwide" if chosen_location.nil?
+    @locations      = Rails.cache.fetch("job_locations_#{params[:location]}_#{params[:skill]}", expires_in: 1.hour) { Opportunity.by_tag(tag).map(&:locations).flatten.reject { |loc| loc == "Worldwide" }.push("Worldwide").uniq.compact }
     @locations.delete(chosen_location) unless @locations.frozen?
     params[:location] = chosen_location
     @lat, @lng        = geocode_location(chosen_location)
 
     respond_to do |format|
-      format.html { render layout: 'jobs' }
+      format.html { render layout: "jobs" }
       format.json { render json: @jobs.map(&:to_public_hash).to_json }
       format.js
     end
+
   end
 
   def map
@@ -122,7 +124,7 @@ class OpportunitiesController < ApplicationController
 
   def cleanup_params_to_prevent_rocket_tag_error
     if params[:opportunity] && params[:opportunity][:tags]
-      params[:opportunity][:tags] = "#{params[:opportunity][:tags]}".split(',').map(&:strip).reject(&:empty?).join(',')
+      params[:opportunity][:tags] = "#{params[:opportunity][:tags]}".split(',').map(&:strip).reject(&:empty?).join(",")
       params[:opportunity][:tags] = nil if params[:opportunity][:tags].strip.blank?
     end
   end
@@ -132,11 +134,11 @@ class OpportunitiesController < ApplicationController
   end
 
   def stringify_location
-    params[:opportunity][:location] = params[:opportunity][:location].is_a?(Array) ? params[:opportunity][:location].join('|') : params[:opportunity][:location]
+    params[:opportunity][:location] = params[:opportunity][:location].is_a?(Array) ? params[:opportunity][:location].join("|") : params[:opportunity][:location]
   end
 
   def all_job_locations
-    Rails.cache.fetch('job_locations', expires_in: 23.hours) { Opportunity.all.map(&:locations).flatten.push('Worldwide').uniq.compact }
+    Rails.cache.fetch('job_locations', expires_in: 23.hours) { Opportunity.all.map(&:locations).flatten.push("Worldwide").uniq.compact }
   end
 
   def all_job_skills
@@ -157,6 +159,6 @@ class OpportunitiesController < ApplicationController
     scope = Opportunity
     scope = scope.by_city(chosen_location) unless chosen_location.nil?
     scope = scope.by_tag(tag) unless tag.nil?
-    scope.offset((page - 1) * 20)
+    scope.offset((page-1) * 20)
   end
 end

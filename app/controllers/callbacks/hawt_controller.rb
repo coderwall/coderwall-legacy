@@ -13,7 +13,7 @@ class Callbacks::HawtController < ApplicationController
     feature!(hawt_callback_params[:protip_id], hawt_callback_params[:hawt?])
 
     respond_to do |format|
-      format.json { render json: { token: hawt_callback_params[:token] } }
+      format.json { render json: { token: hawt_callback_params[:token]} }
     end
   end
 
@@ -21,7 +21,7 @@ class Callbacks::HawtController < ApplicationController
     unfeature!(hawt_callback_params[:protip_id], hawt_callback_params[:hawt?])
 
     respond_to do |format|
-      format.json { render json: { token: hawt_callback_params[:token] } }
+      format.json { render json: { token: hawt_callback_params[:token]} }
     end
   end
 
@@ -37,7 +37,7 @@ class Callbacks::HawtController < ApplicationController
     end
   end
 
-  def unfeature!(protip_id, _im_hawt)
+  def unfeature!(protip_id, im_hawt)
     @protip = Protip.find(protip_id)
     @protip.unfeature
     @protip.save!

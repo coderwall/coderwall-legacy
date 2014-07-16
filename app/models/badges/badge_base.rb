@@ -1,6 +1,6 @@
 class BadgeBase
   class << self
-    def describe(name, attrs = {})
+    def describe(name, attrs={})
       @badge_options = if superclass.respond_to?(:badge_options)
                          superclass.badge_options.dup
                        else
@@ -11,7 +11,7 @@ class BadgeBase
         method_impl = v.is_a?(Proc) ? v : lambda { v }
 
         singleton_class.instance_eval { define_method(k, &method_impl) }
-        instance_eval { define_method(k) { |*args| self.class.send(k, *args) } }
+        self.instance_eval { define_method(k) { |*args| self.class.send(k, *args) } }
       end
     end
 
@@ -29,7 +29,7 @@ class BadgeBase
     end
 
     def awarded_badges(user)
-      user.facts.select { |fact| fact.tagged?('award') }.map { |fact|
+      user.facts.select { |fact| fact.tagged?('award') }.collect { |fact|
         fact.metadata[:award].constantize.new(user)
       }
     end
@@ -39,25 +39,25 @@ class BadgeBase
     end
 
     def year
-      date.year
+      self.date.year
     end
   end
 
   cattr_accessor :date
 
-  describe 'Badge base',
+  describe "Badge base",
            weight:      1,
            providers:   nil,
-           image_name:  'not_implemented.png',
-           description: 'Not implemented',
-           for:         'Not implemented',
+           image_name:  "not_implemented.png",
+           description: "Not implemented",
+           for:         "Not implemented",
            image_path:  lambda { "badges/#{image_name}" },
            visible?:    true,
            date:        lambda { Date.today },
            tags:        []
 
   def award?
-    fail 'NOT IMPLEMENTED'
+    raise "NOT IMPLEMENTED"
   end
 
   def reasons
@@ -68,14 +68,14 @@ class BadgeBase
   attr_reader :date
   attr_reader :tags
 
-  def initialize(user, date = nil)
+  def initialize(user, date=nil)
     @user = user
     @date = self.class.date = date
   end
 
   def valid?
     # if providers.nil?
-    true
+    return true
     # else
     # return !user.send(providers).blank?
     # end
@@ -86,6 +86,6 @@ class BadgeBase
   end
 
   def generate_fact!(badge, username, provider)
-    Fact.append!("#{url}/#{badge}:#{username}", "#{provider}:#{username}", description, date, url, (tags || []) << 'award',  award: self.class.name)
+    Fact.append!("#{self.url}/#{badge}:#{username}", "#{provider}:#{username}", self.description, self.date, self.url, (self.tags || []) << "award", { award: self.class.name })
   end
 end

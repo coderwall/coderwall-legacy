@@ -1,4 +1,5 @@
 class MosaicController < ApplicationController
+
   def teams
     if Rails.env.development?
       @teams = Team.limit(400)
@@ -11,7 +12,7 @@ class MosaicController < ApplicationController
     @users = [User.username_in(FEATURED) + User.top(400)].flatten.uniq
   end
 
-  FEATURED = %w(
+  FEATURED = %w{
     naveen
     tobi
     mojombo
@@ -35,5 +36,6 @@ class MosaicController < ApplicationController
     chad
     maccman
     shanselman
-  )
+  }
+
 end

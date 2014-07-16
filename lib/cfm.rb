@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-# coderwall flavored markdown
+#coderwall flavored markdown
 module CFM
   class Markdown
     class << self
       def render(text)
         renderer = Redcarpet::Render::HTML.new
-        extensions = { fenced_code_blocks: true, strikethrough: true, autolink: true }
+        extensions = {fenced_code_blocks: true, strikethrough: true, autolink: true}
         redcarpet = Redcarpet::Markdown.new(renderer, extensions)
         redcarpet.render(render_cfm(text)) unless text.nil?
       end
@@ -23,8 +23,8 @@ module CFM
       end
 
       def inspect_line(line)
-        # hotlink coderwall usernames to their profile, but don't search for @mentions in code blocks
-        line.start_with?('    ') ? line : line.gsub(/((?<!\s{4}).*)@([a-zA-Z_\-0-9]+)/) { Regexp.last_match[1] + coderwall_user_link(Regexp.last_match[2]) }
+        #hotlink coderwall usernames to their profile, but don't search for @mentions in code blocks
+        line.start_with?("    ") ? line : line.gsub(/((?<!\s{4}).*)@([a-zA-Z_\-0-9]+)/) { $1+coderwall_user_link($2) }
       end
     end
   end

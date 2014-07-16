@@ -1,8 +1,8 @@
 class EarlyAdopter < BadgeBase
-  describe 'Opabinia',
+  describe "Opabinia",
            skill:       'Open Source',
-           description: 'Started social coding on GitHub within 6 months of its first signs of life',
-           for:         'starting social coding on GitHub within 6 months of its first signs of life.',
+           description: "Started social coding on GitHub within 6 months of its first signs of life",
+           for:         "starting social coding on GitHub within 6 months of its first signs of life.",
            image_name:  'earlyadopter.png',
            providers:   :github,
            weight:      2
@@ -10,7 +10,7 @@ class EarlyAdopter < BadgeBase
   FOUNDING_DATE = Date.parse('Oct 19, 2007')
 
   def reasons
-    found = user.facts.find do |fact|
+    found = user.facts.detect do |fact|
       fact.tagged?('github', 'account-created')
     end
     if found && found.relevant_on <= FOUNDING_DATE + 6.months

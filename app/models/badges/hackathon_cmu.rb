@@ -1,5 +1,5 @@
 class HackathonCmu < BadgeBase
-  describe 'CMU Hackathon',
+  describe "CMU Hackathon",
            skill:       'Hacking',
            description: "Participated in CMU's Hackathon, organized by ScottyLabs.",
            for:         "participating in CMU's Hackathon, organized by ScottyLabs.",

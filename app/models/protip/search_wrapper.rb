@@ -17,12 +17,12 @@ class Protip::SearchWrapper
     item[:user][:avatar]
   end
 
-  def already_voted?(_current_user, _tracking, _ip_address)
+  def already_voted?(current_user, tracking, ip_address)
     false
   end
 
   def user
-    self # proxy user calls to self
+    self #proxy user calls to self
   end
 
   def owner?(user)
@@ -51,7 +51,7 @@ class Protip::SearchWrapper
   end
 
   def to_s
-    public_id # for url creation
+    public_id #for url creation
   end
 
   def public_id

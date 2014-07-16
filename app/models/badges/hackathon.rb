@@ -1,7 +1,7 @@
 class Hackathon < BadgeBase
-  describe 'Hackathon',
-           description: 'Participated in a hackathon.',
-           for:         'participating in a hackathon.',
+  describe "Hackathon",
+           description: "Participated in a hackathon.",
+           for:         "participating in a hackathon.",
            image_name:  'hackathon.png'
 
   def reasons

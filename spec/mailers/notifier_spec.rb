@@ -1,4 +1,4 @@
-RSpec.describe Notifier, type: :mailer do
+RSpec.describe Notifier, :type => :mailer do
   let(:user) { user = Fabricate(:user, email: 'some.user@example.com') }
 
   it 'should send welcome email to user' do
@@ -12,7 +12,7 @@ RSpec.describe Notifier, type: :mailer do
     expect(user.reload.last_email_sent).not_to be_nil
   end
 
-  it 'should send an email when a user receives an endorsement' do
+  it "should send an email when a user receives an endorsement" do
     endorsements = Fabricate(:user).endorse(user, 'Ruby')
     user.update_attributes last_request_at: 1.day.ago
 
@@ -20,7 +20,7 @@ RSpec.describe Notifier, type: :mailer do
     expect(email.body.encoded).to include("Congrats friend, you've received 1 endorsement")
   end
 
-  it 'should send an email when a user receives an endorsement and achievement' do
+  it "should send an email when a user receives an endorsement and achievement" do
     badge = Fabricate(:badge, user: user, badge_class_name: Badges.all.first.to_s)
     endorsements = Fabricate(:user).endorse(user, 'Ruby')
     user.update_attributes last_request_at: 1.day.ago
@@ -31,17 +31,17 @@ RSpec.describe Notifier, type: :mailer do
 
   describe 'achievement emails' do
 
-    it 'should send an email when a user receives a new achievement' do
+    it "should send an email when a user receives a new achievement" do
       badge = Fabricate(:badge, user: user, badge_class_name: Badges.all.sample.to_s)
       user.update_attributes last_request_at: 1.day.ago
       expect(user.achievements_unlocked_since_last_visit.count).to eq(1)
 
       email = Notifier.new_badge(user.reload.username)
       check_badge_message(email, badge)
-      expect(email.body.encoded).to include(user_achievement_url(username: user.username, id: badge.id, host: 'coderwall.com'))
+      expect(email.body.encoded).to include(user_achievement_url(username: user.username, id: badge.id, host: "coderwall.com"))
     end
 
-    it 'should send one achievement email at a time until user visits' do
+    it "should send one achievement email at a time until user visits" do
       badge1 = Fabricate(:badge, user: user, badge_class_name: Badges.all.first.to_s, created_at: Time.now)
       badge2 = Fabricate(:badge, user: user, badge_class_name: Badges.all.second.to_s, created_at: Time.now + 1.second)
       badge3 = Fabricate(:badge, user: user, badge_class_name: Badges.all.third.to_s, created_at: Time.now + 2.seconds)
@@ -73,7 +73,7 @@ RSpec.describe Notifier, type: :mailer do
     let(:commentor) { Fabricate(:user) }
 
     it 'should send an email when a user receives a comment on their protip' do
-      protip.comments.create(user: commentor, body: 'hello')
+      protip.comments.create(user: commentor, body: "hello")
       expect(ActionMailer::Base.deliveries.size).to eq(1)
       email = ActionMailer::Base.deliveries.first
       expect(email.body.encoded).to include(user.short_name)

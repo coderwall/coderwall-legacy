@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Charity, type: :model do
+RSpec.describe Charity, :type => :model do
 
   it 'should have a name and description' do
     expect(Charity.name).not_to be_blank

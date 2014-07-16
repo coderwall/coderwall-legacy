@@ -1,4 +1,5 @@
 class AdminController < BaseAdminController
+
   def index
   end
 
@@ -11,14 +12,14 @@ class AdminController < BaseAdminController
     @per_page = params[:per_page].try(:to_i) || 10
 
     @total_failed = Delayed::Job.
-      where('last_error IS NOT NULL').
+      where("last_error IS NOT NULL").
       count
 
     @jobs = Delayed::Job.
-      where('last_error IS NOT NULL').
+      where("last_error IS NOT NULL").
       offset((@page - 1) * @per_page).
       limit(@per_page).
-      order('updated_at DESC')
+      order("updated_at DESC")
   end
 
   if Rails.env.development?
@@ -31,12 +32,13 @@ class AdminController < BaseAdminController
       end
       team.premium = !team.premium
       team.save!
-      redirect_to('/')
+      return redirect_to('/')
     end
 
   end
 
   def teams
+
   end
 
   def sections_teams
