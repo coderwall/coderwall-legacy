@@ -96,31 +96,12 @@ $level2: #42a3d3;
         background: $dark-grey;
       }
 
-      &:before {
-        @include icon-font;
-        content: "x";
+      i.fa {
         font-size: 16px;
         margin-right: 5px;
       }
       //before
 
-      &.twitter {
-        &:before {
-          content: "t";
-        }
-      }
-
-      &.github {
-        &:before {
-          content: "g";
-        }
-      }
-
-      &.linkedin {
-        &:before {
-          content: "i";
-        }
-      }
 
     }
     //btn

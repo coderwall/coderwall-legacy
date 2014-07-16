@@ -1,5 +1,4 @@
-@import "base";
-@import "compass/css3/";
+@import "base", "compass/css3";
 .by-tags-list {
   > li {
     width: 18.5%;
@@ -1337,8 +1336,7 @@
 }
 @media screen and (max-width: 768px) {
   .users-top {
-    .min-height:
-    180px;
+    min-height:180px;
     .mainline {
       font-size: 4em;
     }
@@ -1397,8 +1395,7 @@
 }
 @media screen and (max-width: 600px) {
   .users-top {
-    .height:
-    350px;
+    height: 350px;
     .mainline {
       font-size: 2.3em;
       width: 90%;
