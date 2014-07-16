@@ -562,7 +562,6 @@ body.protip-single {
         color: #757575;
         background: #e6e6e6;
         text-align: center;
-        padding: 0;
         height: 25px;
         line-height: 25px;
         @include border-radius(4px);
@@ -623,6 +622,7 @@ body.protip-single {
     //share-this-tip
 
     .tip-header {
+      position: relative;
       max-width: inherit;
       .tip-title {
         width: 75%;
@@ -635,7 +635,14 @@ body.protip-single {
           color: #333;
         }
       }
-      //h1
+      //TODO fix this
+      .timestamp {
+        position:absolute;
+        right: 9px;
+        bottom: -29px;
+        font-size: 1.1em;
+        color: #a2a2a2;
+      }
     }
 
     .views {
@@ -758,6 +765,7 @@ body.protip-single {
 
   .tip-content {
     max-width: inherit;
+    margin-top: 20px;
 
     .links {
       float: right;

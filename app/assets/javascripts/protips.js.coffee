@@ -5,6 +5,7 @@
 #= require  blur
 #= require  jquery.filedrop
 #= require  vendor/jquery.textselection
+#= require local_time
 
 window.handle_redirect = (response)->
   window.location = response.to  if (response.status == "redirect")

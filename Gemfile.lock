@@ -340,6 +340,8 @@ GEM
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
+    local_time (1.0.0)
+      coffee-rails
     loofah (2.0.0)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
@@ -745,6 +747,7 @@ DEPENDENCIES
   launchy
   letter_opener!
   linkedin
+  local_time
   mail
   mail_view
   memcachier
