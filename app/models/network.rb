@@ -119,9 +119,9 @@ class Network < ActiveRecord::Base
 
     candidate = self.in_line_to_the_throne.first
     unless candidate.nil?
-      Rails.logger.debug "finding a mayor among: #{self.tags}"
+      Rails.logger.debug "finding a mayor among: #{self.tags}" if ENV['DEBUG']
       person_with_most_upvoted_protips_on_topic = User.find(candidate.user_id)
-      Rails.logger.debug "mayor for #{name} found: #{person_with_most_upvoted_protips_on_topic.username}"
+      Rails.logger.debug "mayor for #{name} found: #{person_with_most_upvoted_protips_on_topic.username}" if ENV['DEBUG']
 
       #if self.mayor && person_with_most_upvoted_protips_on_topic && person_with_most_upvoted_protips_on_topic.id != self.mayor.id
       #  enqueue(GenerateEvent, :new_mayor, Hash[*[Audience.network(self.id), Audience.admin].map(&:to_a).flatten(2)], self.to_event_hash(:mayor => person_with_most_upvoted_protips_on_topic), 30.minutes)

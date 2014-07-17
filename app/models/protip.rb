@@ -635,18 +635,18 @@ class Protip < ActiveRecord::Base
   end
 
   def upvote_velocity(since = Time.at(0))
-    Rails.logger.ap since
+    Rails.logger.ap since if ENV['DEBUG']
 
     us = upvotes_since(since)
-    Rails.logger.ap us
+    Rails.logger.ap us  if ENV['DEBUG']
 
     more_recent = [self.created_at, since].compact.max
-    Rails.logger.ap more_recent
+    Rails.logger.ap more_recent     if ENV['DEBUG']
 
     us / (((Time.now - more_recent).to_i + 1) / 3600.00)
   rescue => e
-    Rails.logger.ap(e.message, :error)
-    Rails.logger.ap(e.backtrace, :error)
+    Rails.logger.ap(e.message, :error)  if ENV['DEBUG']
+    Rails.logger.ap(e.backtrace, :error) if ENV['DEBUG']
 
     0.0
   end

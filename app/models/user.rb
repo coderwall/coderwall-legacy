@@ -716,7 +716,7 @@ class User < ActiveRecord::Base
       self.city       = geo.city
     end
   rescue Exception => ex
-    Rails.logger.error("Failed geolocating '#{location}': #{ex.message}")
+    Rails.logger.error("Failed geolocating '#{location}': #{ex.message}")  if ENV['DEBUG']
   end
 
   def activity_stats(since=Time.at(0), full=false)
@@ -778,7 +778,7 @@ class User < ActiveRecord::Base
     self.score_cache = [score - penalty, 0.0].max
     save!
   rescue
-    Rails.logger.error "Failed cacluating score for #{username}"
+    Rails.logger.error "Failed cacluating score for #{username}"   if ENV['DEBUG']
   end
 
   def like_value
@@ -946,7 +946,7 @@ class User < ActiveRecord::Base
       Importers::Protips::GithubImporter.import_from_follows(link[:description], link[:link], link[:date], self)
     end
   rescue RestClient::ResourceNotFound
-    Rails.logger.warn("Unable to get activity for github #{github}")
+    Rails.logger.warn("Unable to get activity for github #{github}")   if ENV['DEBUG']
     []
   end
 

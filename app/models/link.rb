@@ -61,7 +61,7 @@ class Link
         return url
       end
     rescue Exception => ex
-      Rails.logger.error(ex.message)
+      Rails.logger.error(ex.message) if ENV['DEBUG']
       raise InvalidUrl
     end
   end
