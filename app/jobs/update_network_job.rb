@@ -1,9 +1,11 @@
-class UpdateNetwork < Struct.new(:update_type, :public_id, :data)
-  extend ResqueSupport::Basic
+class UpdateNetworkJob
+  #TODO move to activejob
+  #OPTIMIZE
+  include Sidekiq::Worker
 
-  @queue = 'HIGH'
+  sidekiq_options queue: :high
 
-  def perform
+  def perform(update_type, public_id, data)
     protip = Protip.with_public_id(public_id)
     unless protip.nil?
       case update_type.to_sym

@@ -355,7 +355,7 @@ class Protip < ActiveRecord::Base
   end
 
   def update_network(event=:new_protip)
-    enqueue(::UpdateNetwork, event, self.public_id, self.score)
+    ::UpdateNetworkJob.perform_async(event, public_id, score)
   end
 
   def generate_event(options={})
