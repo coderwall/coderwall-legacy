@@ -149,7 +149,7 @@ class Protip < ActiveRecord::Base
       filters = []
       filters << {term: {upvoters: bookmarked_by}} unless bookmarked_by.nil?
       filters << {term: {'user.user_id' => author}} unless author.nil?
-      Rails.logger.debug "SEARCH: query=#{query}, tags=#{tags}, team=#{team}, author=#{author}, bookmarked_by=#{bookmarked_by}, execution=#{execution}, sorts=#{sorts} from query-string=#{query_string}, #{options.inspect}"
+      Rails.logger.debug "SEARCH: query=#{query}, tags=#{tags}, team=#{team}, author=#{author}, bookmarked_by=#{bookmarked_by}, execution=#{execution}, sorts=#{sorts} from query-string=#{query_string}, #{options.inspect}"  if ENV['DEBUG']
       begin
         tire.search(options) do
           query { string query, default_operator: 'AND', use_dis_max: true } unless query.blank?

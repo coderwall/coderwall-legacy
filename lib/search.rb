@@ -11,7 +11,9 @@ module SearchModule
     end
   end
 
-  def self.included(base) ; base.extend(ClassMethods) ; end
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
 
   class Search
     def initialize(context, query=nil, scope=nil, sort=nil, facet=nil, options={})
@@ -37,13 +39,17 @@ module SearchModule
           filter *fltr
         end unless filter_criteria.nil?
 
-        sort { by sort_criteria.to_tire } unless sort_criteria.nil?
+        sort do
+          sort_criteria.to_tire.each do |k|
+            by k
+          end
+        end unless sort_criteria.nil?
 
         ap facets
         ap facets.to_tire unless facets.nil?
         eval(facets.to_tire) unless facets.nil?
 
-        Rails.logger.debug "[search](#{context.to_s}):" + JSON.pretty_generate(to_hash)
+        Rails.logger.debug "[search](#{context.to_s}):" + JSON.pretty_generate(to_hash)  if ENV['DEBUG']
       end
     rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED
       if @options[:failover].nil?
@@ -53,9 +59,13 @@ module SearchModule
       end
     end
 
-    def sort_criteria ; @sort ; end
+    def sort_criteria
+      @sort
+    end
 
-    def failover_strategy ; { failover: @context.order('created_at DESC') } ; end
+    def failover_strategy
+      { failover: @context.order('created_at DESC') }
+    end
 
     class Scope
       def initialize(domain, object)
@@ -64,8 +74,13 @@ module SearchModule
         @filter = to_hash
       end
 
-      def to_tire ; @filter ; end
-      def to_hash ; {} ; end
+      def to_tire
+        @filter
+      end
+
+      def to_hash
+        {}
+      end
 
       def <<(other)
         @filter.deep_merge(other.to_tire)
@@ -79,11 +94,19 @@ module SearchModule
         @direction = direction
       end
 
-      def to_tire ; @fields.map { |field| {field => @direction} } ; end
+      def to_tire
+        @fields.map do |field|
+          {field => {order: @direction}}
+        end
+      end
+
+      alias_method :to_s, :to_tire
     end
 
     class Query
-      def default_query ; '' ; end
+      def default_query;
+        '';
+      end
 
       def initialize(query_string, default_operator = 'AND', default_query_string = default_query)
         @query_string = default_query_string + ' ' + query_string
@@ -91,7 +114,7 @@ module SearchModule
       end
 
       def to_tire
-        [:string, "#{@query_string}", { default_operator: "#{@default_operator}" }] unless @query_string.blank?
+        [:string, "#{@query_string}", {default_operator: "#{@default_operator}"}] unless @query_string.blank?
       end
     end
 
@@ -111,7 +134,9 @@ module SearchModule
           "end"
       end
 
-      def to_tire ; @facet ; end
+      def to_tire
+        @facet
+      end
 
       def <<(other_facet)
         @facet << "\n" << other_facet.to_eval_form
