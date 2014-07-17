@@ -46,7 +46,7 @@ class Plan < ActiveRecord::Base
       )
     end
   rescue Stripe::InvalidRequestError => e
-    Rails.logger.error "Stripe error while creating customer: #{e.message}"
+    Rails.logger.error "Stripe error while creating customer: #{e.message}"  if ENV['DEBUG']
     errors.add :base, "There was a problem with the plan"
     self.destroy
   end

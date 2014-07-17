@@ -59,7 +59,7 @@ class Event < Struct.new(:data)
         i = 1
         REDIS.zrangebyscore(activity_feed_key, from, to).each do |activity|
 
-          Rails.logger.warn("[EVAL:#{i}] Event#user_activity(user = #{user.inspect}, from = #{from.inspect}, limit = #{limit.inspect}, publish = #{publish.inspect}) set to eval activity = #{activity.inspect}")
+          Rails.logger.warn("[EVAL:#{i}] Event#user_activity(user = #{user.inspect}, from = #{from.inspect}, limit = #{limit.inspect}, publish = #{publish.inspect}) set to eval activity = #{activity.inspect}") if ENV['DEBUG']
           i += 1
 
           break if count == limit

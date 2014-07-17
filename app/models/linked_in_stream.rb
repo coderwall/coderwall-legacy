@@ -34,10 +34,10 @@ class LinkedInStream < Struct.new(:username)
     end
     facts
   rescue RestClient::Unauthorized => ex
-    Rails.logger.error("Was unable to find linkedin data for #{username}")
+    Rails.logger.error("Was unable to find linkedin data for #{username}")  if ENV['DEBUG']
     return []
   rescue LinkedIn::Unauthorized
-    Rails.logger.error("Was unable to find linkedin data for #{username}")
+    Rails.logger.error("Was unable to find linkedin data for #{username}") if ENV['DEBUG']
     return []
   end
 

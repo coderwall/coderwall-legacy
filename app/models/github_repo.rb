@@ -153,7 +153,7 @@ class GithubRepo
       begin
         return Servant.get("#{html_url}/raw/master/#{file_type}").result
       rescue RestClient::ResourceNotFound
-        Rails.logger.debug("Looking for readme, did not find #{file_type}")
+        Rails.logger.debug("Looking for readme, did not find #{file_type}") if ENV['DEBUG']
       end
     end
     return empty_string = ''

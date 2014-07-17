@@ -45,8 +45,9 @@ module SearchModule
           end
         end unless sort_criteria.nil?
 
-        ap facets
-        ap facets.to_tire unless facets.nil?
+        ap facets if ENV['DEBUG']
+        ap facets.to_tire unless facets.nil?  if ENV['DEBUG']
+        # Eval ? Really ?
         eval(facets.to_tire) unless facets.nil?
 
         Rails.logger.debug "[search](#{context.to_s}):" + JSON.pretty_generate(to_hash)  if ENV['DEBUG']
