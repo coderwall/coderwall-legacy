@@ -1,3 +1,3 @@
-REDIS = Redis.connect(url: ENV['REDIS_URL'])
+REDIS = Redis.new(url: ENV['REDIS_URL'])
 Resque.redis = REDIS
 

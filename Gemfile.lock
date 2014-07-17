@@ -531,8 +531,24 @@ GEM
       json (~> 1.4)
     redcarpet (3.1.2)
     redis (3.1.0)
+    redis-actionpack (3.2.4)
+      actionpack (~> 3.2.0)
+      redis-rack (~> 1.4.4)
+      redis-store (~> 1.1.4)
+    redis-activesupport (3.2.5)
+      activesupport (~> 3.2.0)
+      redis-store (~> 1.1.0)
     redis-namespace (1.5.0)
       redis (~> 3.0, >= 3.0.4)
+    redis-rack (1.4.4)
+      rack (~> 1.4.0)
+      redis-store (~> 1.1.4)
+    redis-rails (3.2.4)
+      redis-actionpack (~> 3.2.4)
+      redis-activesupport (~> 3.2.4)
+      redis-store (~> 1.1.4)
+    redis-store (1.1.4)
+      redis (>= 2.2)
     resque (1.25.2)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -788,6 +804,7 @@ DEPENDENCIES
   rakismet
   redcarpet
   redis
+  redis-rails
   resque
   resque-scheduler
   resque_mailer
