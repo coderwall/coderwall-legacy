@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140713193201) do
+ActiveRecord::Schema.define(:version => 20140717105025) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -392,7 +392,7 @@ ActiveRecord::Schema.define(:version => 20140713193201) do
     t.string   "bitbucket"
     t.string   "codeplex"
     t.integer  "login_count",                   :default => 0
-    t.datetime "last_request_at"
+    t.datetime "last_request_at",               :default => '2014-07-17 13:10:04'
     t.datetime "achievements_checked_at",       :default => '1914-02-20 22:39:10'
     t.text     "claim_code"
     t.integer  "github_id"

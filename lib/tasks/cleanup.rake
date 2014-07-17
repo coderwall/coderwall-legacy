@@ -91,14 +91,6 @@ namespace :cleanup do
 
   end
 
-  namespace :users do
-    task :set_initial_visit => :environment do
-      User.select([:username, :id]).find_each(:batch_size => 1000) do |user|
-        enqueue(SetUserVisit, user.username)
-      end
-    end
-  end
-
   namespace :teams do
     task :remove_deleted_teams_dependencies => :environment do
       valid_team_ids = Team.only(:id).all.map(&:_id).map(&:to_s)
