@@ -21,7 +21,7 @@ module ResqueSupport
     def enqueue_in(time, *args)
       klass = args.shift
       if Rails.env.development? or Rails.env.test?
-        Rails.logger.debug "Resque#enqueue => #{klass}, #{args}"
+        puts("Resque#enqueue => #{klass}, #{args}")
         klass.new(*args).perform
       else
         Resque.enqueue_in(time, klass, *args)

@@ -17,7 +17,7 @@ module Publisher
   def agent_active?
     @@agent_active ||= begin
       active = !ENV['PUBNUB_PUBLISH_KEY'].blank? && !ENV['PUBNUB_SUBSCRIBE_KEY'].blank? && !ENV['PUBNUB_SECRET_KEY'].blank?
-      Rails.logger.warn("Disabling notifications, env settings not present") unless active
+      puts("Disabling notifications, env settings not present") unless active
       active
     end
   end
