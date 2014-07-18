@@ -1,18 +1,14 @@
 # == Route Map
 #
-# RAILS_ENV=development
-# Connecting to database specified by database.yml
-# Removing XML parsing due to security vulernability. Upgrade to rails ASAP
-# Creating scope :near. Overwriting existing method TeamLocation.near.
-#                             GET      /.json(.:format)                                       #<Proc:0x0000010c394308@/Users/mike/assemblymade/coderwall/config/routes.rb:300>
-#                             GET      /teams/.json(.:format)                                 #<Proc:0x0000010c39e1a0@/Users/mike/assemblymade/coderwall/config/routes.rb:301>
+#                             GET      /.json(.:format)                                       #<Proc:0x0000000f22d850@/vagrant/config/routes.rb:302>
+#                             GET      /teams/.json(.:format)                                 #<Proc:0x0000000f233cf0@/vagrant/config/routes.rb:303>
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
 #                        root          /                                                      protips#index
 #                     welcome GET      /welcome(.:format)                                     home#index
-#                                      /fonts                                                 #<ServeFonts app_file="/Users/mike/assemblymade/coderwall/lib/serve_fonts.rb">
-#                    p_dpvbbg GET      /p/dpvbbg(.:format)                                    :controller#:action
-#                          gh GET      /gh(.:format)                                          :controller#:action
+#                                      /fonts                                                 #<ServeFonts app_file="/vagrant/lib/serve_fonts.rb">
+#                    p_dpvbbg GET      /p/dpvbbg(.:format)                                    protips#show {:id=>"devsal"}
+#                          gh GET      /gh(.:format)                                          protips#show {:utm_campaign=>"github_orgs_badges", :utm_source=>"github"}
 #             latest_comments GET      /comments(.:format)                                    comments#index
 #                        jobs GET      /jobs(/:location(/:skill))(.:format)                   opportunities#index
 #                    jobs_map GET      /jobs-map(.:format)                                    opportunities#map
@@ -261,7 +257,8 @@
 #                 admin_teams GET      /admin/teams(.:format)                                 admin#teams
 #        admin_sections_teams GET      /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
 #         admin_section_teams GET      /admin/teams/section/:section(.:format)                admin#section_teams
-#                                      /admin/resque                                          #<Resque::Server app_file="/Users/mike/.rvm/gems/ruby-2.1.2@coderwall/gems/resque-1.25.2/lib/resque/server.rb">
+#                                      /admin/resque                                          #<Resque::Server app_file="/home/vagrant/.rvm/gems/ruby-2.1.2@coderwall/gems/resque-1.25.2/lib/resque/server.rb">
+#           admin_sidekiq_web          /admin/sidekiq                                         Sidekiq::Web
 #                        blog GET      /blog(.:format)                                        blog_posts#index
 #                   blog_post GET      /blog/:id(.:format)                                    blog_posts#show
 #                        atom GET      /articles.atom(.:format)                               blog_posts#index {:format=>:atom}
@@ -309,8 +306,8 @@ Badgiy::Application.routes.draw do
   get 'welcome' => 'home#index', as: :welcome
 
   mount ServeFonts.new, at: '/fonts'
-  get '/p/dpvbbg' => redirect('https://coderwall.com/p/devsal')
-  get '/gh' => redirect('/?utm_campaign=github_orgs_badges&utm_source=github')
+  get '/p/dpvbbg', controller: :protips, action: :show, id: 'devsal'
+  get '/gh' , controller: :protips, action: :show, utm_campaign: 'github_orgs_badges' , utm_source:'github'
 
   topic_regex = /[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/
 
