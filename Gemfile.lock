@@ -482,8 +482,6 @@ GEM
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
     rack (1.4.5)
-    rack-attack (4.1.0)
-      rack
     rack-cache (1.2)
       rack (>= 0.4)
     rack-protection (1.5.3)
@@ -789,7 +787,6 @@ DEPENDENCIES
   puma_worker_killer
   querystring
   quiet_assets
-  rack-attack
   rack-cache
   rails (~> 3.2)
   rails-assets-font-awesome
