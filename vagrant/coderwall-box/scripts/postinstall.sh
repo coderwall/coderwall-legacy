@@ -143,9 +143,6 @@ wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearc
 dpkg -i elasticsearch-$ES_VERSION.deb
 rm -rf ~/elasticsearch-$ES_VERSION.deb
 
-# Memcached
-apt-get -y install memcached
-
 # Add /opt/ruby/bin to the global path as the last resort so
 # Ruby, RubyGems, and Chef/Puppet are visible
 echo 'PATH=$PATH:/opt/ruby/bin' > /etc/profile.d/vagrantruby.sh

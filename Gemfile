@@ -33,10 +33,6 @@ gem 'jquery-rails', '= 2.0.3'
 gem 'haml', '3.1.7'
 gem 'hamlbars', '1.1.0' #haml support for handlebars/ember.js
 
-# Memcached
-gem 'dalli'
-gem 'memcachier'
-
 # Postgres
 gem 'pg'
 
