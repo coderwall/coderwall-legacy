@@ -183,7 +183,6 @@ end
 
 group :production do
   gem 'heroku_rails_deflate'
-  gem 'honeybadger'
   gem 'newrelic_resque_agent'
   gem 'newrelic_rpm'
   gem 'puma'
@@ -193,3 +192,5 @@ group :production do
   gem 'rack-zippy'
   gem 'rails_12factor'
 end
+
+gem 'party_foul'

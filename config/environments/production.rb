@@ -33,4 +33,5 @@ Badgiy::Application.configure do
   config.action_dispatch.rack_cache = { metastore: client, entitystore: client }
 
   config.middleware.use('Rack::Attack')
+  config.middleware.use('PartyFoul::Middleware')
 end
