@@ -1,3 +1,4 @@
+# Postgresed  [WIP] : Teams::Location
 class TeamLocation
   include Mongoid::Document
   include Mongoid::Timestamps

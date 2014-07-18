@@ -1,3 +1,4 @@
+# Postgresed  [WIP] : Teams::Member
 class TeamMember
   include Mongoid::Document
   include Mongoid::Timestamps

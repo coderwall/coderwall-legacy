@@ -1,3 +1,4 @@
+# Postgresed  [WIP] : Teams::Account
 require 'stripe'
 
 class Account
