@@ -356,6 +356,44 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
     t.string "name"
   end
 
+  create_table "teams", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "teams_accounts", :force => true do |t|
+    t.integer  "team_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "teams_links", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.integer  "team_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "teams_locations", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state_code"
+    t.string   "country"
+    t.integer  "team_id",     :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "teams_members", :force => true do |t|
+    t.integer  "team_id",    :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "tokens", :force => true do |t|
     t.string   "token"
     t.string   "secret"
