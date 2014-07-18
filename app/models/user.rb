@@ -66,6 +66,9 @@ class User < ActiveRecord::Base
   has_many :likes
   has_many :comments, dependent: :delete_all
 
+  has_one :github_profile  , class_name: 'Users::Github::Profile', dependent: :destroy
+
+
   geocoded_by :location, latitude: :lat, longitude: :lng, country: :country, state_code: :state_name
   after_validation :geocode_location, if: :location_changed? unless Rails.env.test?
 

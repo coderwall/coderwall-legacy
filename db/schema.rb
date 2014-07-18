@@ -515,4 +515,75 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
   add_index "users", ["twitter_id"], :name => "index_users_on_twitter_id", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
+  create_table "users_github_organizations", :force => true do |t|
+    t.string   "login"
+    t.string   "company"
+    t.string   "blog"
+    t.string   "location"
+    t.string   "url"
+    t.integer  "github_id"
+    t.datetime "github_created_at"
+    t.datetime "github_updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "users_github_organizations_followers", :id => false, :force => true do |t|
+    t.integer  "organization_id", :null => false
+    t.integer  "profile_id",      :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "users_github_profiles", :force => true do |t|
+    t.string   "login"
+    t.string   "name"
+    t.string   "company"
+    t.string   "location"
+    t.integer  "github_id",  :null => false
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users_github_profiles_followers", :id => false, :force => true do |t|
+    t.integer  "follower_id", :null => false
+    t.integer  "profile_id",  :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "users_github_repositories", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "full_name"
+    t.string   "homepage"
+    t.boolean  "fork",                        :default => false
+    t.integer  "forks_count",                 :default => 0
+    t.datetime "forks_count_updated_at",      :default => '2014-07-18 23:03:00'
+    t.integer  "stargazers_count",            :default => 0
+    t.datetime "stargazers_count_updated_at", :default => '2014-07-18 23:03:00'
+    t.string   "language"
+    t.integer  "followers_count",             :default => 0,                     :null => false
+    t.integer  "github_id",                                                      :null => false
+    t.integer  "owner_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
+  end
+
+  create_table "users_github_repositories_contributors", :id => false, :force => true do |t|
+    t.integer  "repository_id", :null => false
+    t.integer  "profile_id",    :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "users_github_repositories_followers", :id => false, :force => true do |t|
+    t.integer  "repository_id", :null => false
+    t.integer  "profile_id",    :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
 end
