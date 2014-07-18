@@ -32,8 +32,4 @@ PartyFoul.configure do |config|
 
   # Limit the number of comments per issue
   # config.comment_limit        = 10
-
-  # Setting your title prefix can help with
-  # distinguising the issue between environments
-  config.title_prefix           = Rails.env
 end
