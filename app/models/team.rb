@@ -162,7 +162,7 @@ class Team
           sort { by [{ score: 'desc', total_member_count: 'desc', '_score' => {} }] }
         end
       rescue Tire::Search::SearchRequestFailed => e
-        ::SearchResultsWrapper.new(nil, "Looks like our teams server is down. Try again soon.")
+        SearchResultsWrapper.new(nil, "Looks like our teams server is down. Try again soon.")
       end
     end
 

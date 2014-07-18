@@ -1,4 +1,5 @@
 require 'resque_support'
+
 module Awards
   include ResqueSupport::Basic
 
