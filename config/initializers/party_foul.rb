@@ -35,5 +35,5 @@ PartyFoul.configure do |config|
 
   # Setting your title prefix can help with
   # distinguising the issue between environments
-  config.title_prefix           = Rails.env
+  # config.title_prefix           = Rails.env
 end
