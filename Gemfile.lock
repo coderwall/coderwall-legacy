@@ -787,7 +787,6 @@ DEPENDENCIES
   puma_worker_killer
   querystring
   quiet_assets
-  rack-cache
   rails (~> 3.2)
   rails-assets-font-awesome
   rails-erd

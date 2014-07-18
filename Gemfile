@@ -184,6 +184,5 @@ group :production do
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'puma_worker_killer'
-  gem 'rack-cache'
   gem 'rails_12factor'
 end
