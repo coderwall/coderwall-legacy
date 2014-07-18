@@ -185,7 +185,6 @@ group :production do
   gem 'puma_worker_killer'
   gem 'rack-attack'
   gem 'rack-cache'
-  gem 'rack-zippy'
   gem 'rails_12factor'
 end
 
