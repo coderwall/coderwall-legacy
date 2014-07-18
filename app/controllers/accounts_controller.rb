@@ -31,7 +31,7 @@ class AccountsController < ApplicationController
       redirect_to new_team_opportunity_path(@team), notice: "You are subscribed to #{@plan.name}." + plan_capability(@plan, @team)
     else
       puts "Error creating account #{@account.errors.inspect}"
-      Honeybadger.notify(error_class: 'Payments', error_message: @account.errors.full_messages.join("\n"), parameters: params) if Rails.env.production?
+      # Honeybadger.notify(error_class: 'Payments', error_message: @account.errors.full_messages.join("\n"), parameters: params) if Rails.env.production?
       flash[:error] = @account.errors.full_messages.join("\n")
       redirect_to employers_path
     end
@@ -98,7 +98,7 @@ class AccountsController < ApplicationController
   end
 
   def paying_user_context
-    Honeybadger.context(user_email: current_user.try(:email)) if current_user
+    # Honeybadger.context(user_email: current_user.try(:email)) if current_user
   end
 
 end
