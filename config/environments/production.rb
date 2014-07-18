@@ -3,7 +3,6 @@ Badgiy::Application.configure do
   config.cache_classes = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.cache_store = :dalli_store
   config.force_ssl = true
   config.action_controller.asset_host = ENV['CDN_ASSET_HOST']
   config.action_mailer.asset_host = ENV['CDN_ASSET_HOST']

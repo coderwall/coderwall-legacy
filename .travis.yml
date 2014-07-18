@@ -3,7 +3,6 @@ rvm:
 - 2.1.2
 bundler_args: "--without development production autotest"
 services:
-- memcached
 - mongodb
 - redis-server
 before_install:
