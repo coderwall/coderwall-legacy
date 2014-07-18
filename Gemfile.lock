@@ -305,7 +305,7 @@ GEM
     hike (1.2.3)
     hirb (0.7.2)
     hiredis (0.5.2)
-    honeybadger (1.16.1)
+    honeybadger (1.16.2)
       json
     http (0.5.1)
       http_parser.rb
