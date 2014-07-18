@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
     t.string   "location_city"
     t.boolean  "apply",            :default => false
     t.string   "public_id"
+    t.integer  "team_id"
   end
 
   create_table "pictures", :force => true do |t|
@@ -388,10 +389,11 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
   end
 
   create_table "teams_members", :force => true do |t|
-    t.integer  "team_id",    :null => false
-    t.integer  "user_id",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "team_id",                   :null => false
+    t.integer  "user_id",                   :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "team_size",  :default => 0
   end
 
   create_table "tokens", :force => true do |t|

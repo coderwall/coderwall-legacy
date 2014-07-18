@@ -756,6 +756,7 @@ class Team
     end
   end
 
+  #Will delete , it not even working
   def upcoming_events
     team_members.collect do |member|
 
@@ -774,6 +775,7 @@ class Team
     all_jobs.valid
   end
 
+  #Replaced with jobs
   def all_jobs
     Opportunity.where(team_document_id: self.id.to_s).order('created_at DESC')
   end
@@ -986,6 +988,7 @@ class Team
     user.is_a?(User) ? user.id : user
   end
 
+  #Replaced with team_size attribute
   def update_team_size!
     self.size = User.where(team_document_id: self.id.to_s).count
   end
