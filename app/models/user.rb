@@ -347,10 +347,6 @@ class User < ActiveRecord::Base
     !achievements_checked_at.nil? && achievements_checked_at > 1.year.ago
   end
 
-  def twitter_profile
-    @twitter_profile ||= TwitterProfile.for_username(twitter) unless twitter.blank?
-  end
-
   def brief
     if about.blank?
       if highlight = highlights.last
