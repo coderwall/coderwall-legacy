@@ -264,7 +264,6 @@ GEM
       rspec (~> 3.0.rc1)
       ruby-progressbar (~> 1.4)
     geocoder (1.2.3)
-    get_process_mem (0.2.0)
     gh (0.13.2)
       addressable
       backports
@@ -472,9 +471,6 @@ GEM
       json
     puma (2.9.0)
       rack (>= 1.1, < 2.0)
-    puma_worker_killer (0.0.3)
-      get_process_mem (~> 0.1)
-      puma (~> 2.7)
     pusher-client (0.6.0)
       json
       websocket (~> 1.0)
@@ -784,7 +780,6 @@ DEPENDENCIES
   pry-byebug
   pubnub (= 0.1.9)
   puma
-  puma_worker_killer
   querystring
   quiet_assets
   rails (~> 3.2)
