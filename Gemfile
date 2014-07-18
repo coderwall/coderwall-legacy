@@ -71,6 +71,7 @@ gem 'chronic'
 # Redis
 gem 'hiredis'
 gem 'redis', require: ['redis', 'redis/connection/hiredis']
+gem 'redis-rails'
 
 # Background Job Processing
 gem 'resque'
