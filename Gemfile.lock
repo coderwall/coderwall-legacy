@@ -83,6 +83,9 @@ GEM
     acts_as_commentable (2.0.1)
     acts_as_follower (0.1.1)
     addressable (2.3.6)
+    airbrake (4.0.0)
+      builder
+      multi_json
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -438,8 +441,6 @@ GEM
     parser (2.1.9)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
-    party_foul (1.3.1)
-      octokit (< 2.0.0)
     pg (0.17.1)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
@@ -719,6 +720,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_commentable (= 2.0.1)
   acts_as_follower (= 0.1.1)
+  airbrake
   annotate
   awesome_print
   backbone-on-rails
@@ -785,7 +787,6 @@ DEPENDENCIES
   omniauth-github
   omniauth-linkedin (~> 0.0.6)
   omniauth-twitter (~> 0.0.16)
-  party_foul
   pg
   pry-byebug
   pubnub (= 0.1.9)

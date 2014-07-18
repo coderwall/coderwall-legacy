@@ -193,4 +193,4 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'party_foul'
+gem 'airbrake'
