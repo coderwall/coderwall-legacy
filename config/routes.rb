@@ -6,7 +6,6 @@
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
 #                        root          /                                                      protips#index
 #                     welcome GET      /welcome(.:format)                                     home#index
-#                                      /fonts                                                 #<ServeFonts app_file="/vagrant/lib/serve_fonts.rb">
 #                    p_dpvbbg GET      /p/dpvbbg(.:format)                                    protips#show {:id=>"devsal"}
 #                          gh GET      /gh(.:format)                                          protips#show {:utm_campaign=>"github_orgs_badges", :utm_source=>"github"}
 #             latest_comments GET      /comments(.:format)                                    comments#index
@@ -305,7 +304,6 @@ Badgiy::Application.routes.draw do
   root to: 'protips#index'
   get 'welcome' => 'home#index', as: :welcome
 
-  mount ServeFonts.new, at: '/fonts'
   get '/p/dpvbbg', controller: :protips, action: :show, id: 'devsal'
   get '/gh' , controller: :protips, action: :show, utm_campaign: 'github_orgs_badges' , utm_source:'github'
 
