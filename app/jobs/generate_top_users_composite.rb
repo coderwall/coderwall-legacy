@@ -45,7 +45,7 @@ class GenerateTopUsersComposite
   end
 
   def sh(command)
-    Rails.logger.info "GenerateTopUsersComposite: executing #{command}"
+    puts("GenerateTopUsersComposite: executing #{command}")
     system command
   end
 

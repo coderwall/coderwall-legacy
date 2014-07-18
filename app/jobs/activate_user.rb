@@ -13,10 +13,10 @@ class ActivateUser < RefreshUser
     return if user.active?
     refresh!
     if activate_user?(user)
-      Rails.logger.debug("Activating user #{username}")
+      puts("Activating user #{username}")
       user.activate!
       Notifier.welcome_email(username).deliver
-      Rails.logger.debug("Welcome email sent #{username}")
+      puts("Welcome email sent #{username}")
     end
   end
 

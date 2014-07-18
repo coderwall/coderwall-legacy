@@ -32,7 +32,7 @@ class RefreshUser
 
       user.calculate_score!
 
-      Rails.logger.debug("Refreshed user #{@username}")
+      puts("Refreshed user #{@username}")
     ensure
       user.touch(:last_refresh_at)
       user.destroy_github_cache

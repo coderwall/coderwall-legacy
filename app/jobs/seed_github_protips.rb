@@ -5,7 +5,7 @@ class SeedGithubProtips < Struct.new(:username)
 
   def perform
     user = User.with_username(username)
-    Rails.logger.debug "Adding protips for #{username}"
+    puts("Adding protips for #{username}")
     user.build_github_proptips_fast
   end
 end

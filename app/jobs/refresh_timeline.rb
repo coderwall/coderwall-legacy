@@ -6,6 +6,6 @@ class RefreshTimeline < Struct.new(:username)
   def perform
     user = User.with_username(username)
     Event.create_timeline_for(user)
-    Rails.logger.debug("Refreshed timeline #{username}")
+    puts("Refreshed timeline #{username}")
   end
 end
