@@ -606,6 +606,8 @@ GEM
     sax-machine (0.2.1)
       nokogiri (~> 1.6.0)
     sexp_processor (4.4.3)
+    shoulda-matchers (2.6.1)
+      activesupport (>= 3.0.0)
     sidekiq (3.2.1)
       celluloid (>= 0.15.2)
       connection_pool (>= 2.0.0)
@@ -805,6 +807,7 @@ DEPENDENCIES
   sanitize
   sass (~> 3.2.9)
   sass-rails (~> 3.2.6)
+  shoulda-matchers
   sidekiq
   simple_form
   simplecov
