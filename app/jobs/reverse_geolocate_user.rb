@@ -7,7 +7,7 @@ class ReverseGeolocateUser < Struct.new(:username, :ip_address)
   @queue = 'HIGH'
 
   def perform
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     unless user.nil? or user.ip_lat
       geocoder = MaxMind.new
       begin

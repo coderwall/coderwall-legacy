@@ -4,7 +4,7 @@ class GithubBadgeOrg < Struct.new(:username, :action)
   @queue = 'HIGH'
 
   def perform
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     unless user.nil? or user.github.nil?
       if action.to_sym == :add
         GithubBadge.new.add_all(user.badges, user.github)

@@ -5,7 +5,7 @@ class FollowsController < ApplicationController
   helper_method :is_viewing_followers?
 
   def index
-    @user = User.with_username(params[:username])
+    @user = User.find_by_username(params[:username])
     return redirect_to(user_follows_url(username: current_user.username)) unless @user == current_user || current_user.admin?
     @network = @user.followers_by_type(User.name) if is_viewing_followers?
     @network = @user.following_by_type(User.name) if is_viewing_following?
@@ -16,7 +16,7 @@ class FollowsController < ApplicationController
     apply_cache_buster
 
     if params[:type] == :user
-      @user = User.with_username(params[:username])
+      @user = User.find_by_username(params[:username])
       if current_user.following?(@user)
         current_user.stop_following(@user)
       else

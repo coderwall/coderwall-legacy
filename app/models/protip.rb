@@ -274,9 +274,9 @@ class Protip < ActiveRecord::Base
         team = query.gsub!(/(team:([0-9A-Z\-]+))/i, "") && $2
         team = (team =~ /^[a-f0-9]+$/i && team.length == 24 ? team : Team.where(slug: team).first.try(:id))
         author = query.gsub!(/author:([^\. ]+)/i, "") && $1.try(:downcase)
-        author = User.with_username(author).try(:id) || 0 unless author.nil? or (author =~ /^\d+$/)
+        author = User.find_by_username(author).try(:id) || 0 unless author.nil? or (author =~ /^\d+$/)
         bookmarked_by = query.gsub!(/bookmark:([^\. ]+)/i, "") && $1
-        bookmarked_by = User.with_username(bookmarked_by).try(:id) unless bookmarked_by.nil? or (bookmarked_by =~ /^\d+$/)
+        bookmarked_by = User.find_by_username(bookmarked_by).try(:id) unless bookmarked_by.nil? or (bookmarked_by =~ /^\d+$/)
         execution = query.gsub!(/execution:(plain|bool|and)/, "") && $1.to_sym
         sorts_string = query.gsub!(/sort:([[\w\d_]+\s+(desc|asc),?]+)/i, "") && $1
         sorts = Hash[sorts_string.split(",").map { |sort| sort.split(/\s/) }] unless sorts_string.nil?

@@ -37,22 +37,22 @@ RSpec.describe User, :type => :model do
 
   it 'should not return incorrect user because of pattern matching' do
     user = Fabricate(:user, username: 'MDEITERS')
-    found = User.with_username('M_EITERS')
+    found = User.find_by_username('M_EITERS')
     expect(found).not_to eq(user)
   end
 
   it 'should find users by username when provider is blank' do
     user = Fabricate(:user, username: 'mdeiters')
-    expect(User.with_username('mdeiters', '')).to eq(user)
-    expect(User.with_username('mdeiters', nil)).to eq(user)
+    expect(User.find_by_username('mdeiters', '')).to eq(user)
+    expect(User.find_by_username('mdeiters', nil)).to eq(user)
   end
 
   it 'should find users ignoring case' do
     user = Fabricate(:user, username: 'MDEITERS', twitter: 'MDEITERS', github: 'MDEITERS', linkedin: 'MDEITERS')
-    expect(User.with_username('mdeiters')).to eq(user)
-    expect(User.with_username('mdeiters', :twitter)).to eq(user)
-    expect(User.with_username('mdeiters', :github)).to eq(user)
-    expect(User.with_username('mdeiters', :linkedin)).to eq(user)
+    expect(User.find_by_username('mdeiters')).to eq(user)
+    expect(User.find_by_username('mdeiters', :twitter)).to eq(user)
+    expect(User.find_by_username('mdeiters', :github)).to eq(user)
+    expect(User.find_by_username('mdeiters', :linkedin)).to eq(user)
   end
 
   it 'should return users with most badges' do

@@ -9,7 +9,7 @@ class ActivateUser < RefreshUser
   end
 
   def perform
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     return if user.active?
     refresh!
     if activate_user?(user)

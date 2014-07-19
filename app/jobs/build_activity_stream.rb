@@ -4,7 +4,7 @@ class BuildActivityStream < Struct.new(:username)
   @queue = 'MEDIUM'
 
   def perform
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     user.build_repo_followed_activity!
   end
 end

@@ -174,19 +174,19 @@ module ApplicationHelper
     endorsements = []
 
     # https://twitter.com/#!/iamdustan/status/104652472181719040
-    endorsements << [User.with_username('iamdustan'), "One of the geekiest (and coolest) things I've seen in quite a while"]
+    endorsements << [User.find_by_username('iamdustan'), "One of the geekiest (and coolest) things I've seen in quite a while"]
 
     # https://twitter.com/#!/ang3lfir3/status/72810316882391040
-    endorsements << [User.with_username('ang3lfir3'), "the companies I *want* to work for... care about the info on @coderwall"]
+    endorsements << [User.find_by_username('ang3lfir3'), "the companies I *want* to work for... care about the info on @coderwall"]
 
     # https://twitter.com/#!/chase_mccarthy/status/75582647396614145
-    endorsements << [User.with_username('ozone1015'), "@coderwall is an awesome idea. It's like having Halo achievements for your resume!!!"]
+    endorsements << [User.find_by_username('ozone1015'), "@coderwall is an awesome idea. It's like having Halo achievements for your resume!!!"]
 
     # https://twitter.com/#!/razorjack/status/75125655322374144
-    endorsements << [User.with_username('RazorJack'), "@coderwall is awesome but everyone already knows it."]
+    endorsements << [User.find_by_username('RazorJack'), "@coderwall is awesome but everyone already knows it."]
 
     # https://twitter.com/#!/kennethkalmer/status/86392260555587584
-    endorsements << [User.with_username('kennethkalmer'), "@coderwall really dishes out some neat achievements, hope this helps motivate even more folks to contribute to FOSS"]
+    endorsements << [User.find_by_username('kennethkalmer'), "@coderwall really dishes out some neat achievements, hope this helps motivate even more folks to contribute to FOSS"]
 
     # endorsements << [User.with_username('jeffhogan'), 'I really dig @coderwall...I see great potential in utilizing @coderwall for portfolio/linkedin/professional ref. for developers!']
 

@@ -80,7 +80,7 @@ class Event < Struct.new(:data)
 
     def extra_information(data)
       extra_info = {}
-      u          = User.with_username(data['user']['username']) unless data['user'].nil?
+      u          = User.find_by_username(data['user']['username']) unless data['user'].nil?
       extra_info.merge!(user_info(u)) unless u.nil?
       extra_info.merge!(team_info(u.team)) unless u.nil? or u.team.nil?
       extra_info.with_indifferent_access

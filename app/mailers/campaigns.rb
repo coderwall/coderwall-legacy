@@ -14,7 +14,7 @@ class Campaigns < ActionMailer::Base
   def asm_badge(username)
     headers['X-Mailgun-Campaign-Id'] = 'asm-badge-2013-12-04'
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
 
     mail to: @user.email, subject: "[Coderwall] Unlock the new Entrepreneur badge"
   end

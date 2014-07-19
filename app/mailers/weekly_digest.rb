@@ -24,7 +24,7 @@ class WeeklyDigest < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: WEEKLY_DIGEST_EVENT}.to_json
     track_campaign(WEEKLY_DIGEST_EVENT)
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     since = [@user.last_request_at || Time.at(0), 1.week.ago].min
 
     benchmark "digest:stats" do
