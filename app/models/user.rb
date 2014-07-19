@@ -939,7 +939,7 @@ class User < ActiveRecord::Base
     REDIS.zremrangebyrank(followed_repo_key, 0, Time.now.to_i) if refresh
     epoch_now  = Time.now.to_i
     first_time = refresh || REDIS.zcount(followed_repo_key, 0, epoch_now) <= 0
-    links      = Github.new.activities_for(self.github, (first_time ? 20 : 1))
+    links      = GithubOld.new.activities_for(self.github, (first_time ? 20 : 1))
     links.each do |link|
       link[:user_id] = self.id
       REDIS.zadd(followed_repo_key, link[:date].to_i, link.to_json)

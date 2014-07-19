@@ -133,6 +133,7 @@ gem 'simple_form'
 gem 'tweet-button'
 gem 'mail_view'
 gem 'local_time'
+gem 'github-api'
 
 # Mongo
 gem 'mongoid'

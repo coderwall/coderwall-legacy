@@ -1,4 +1,5 @@
-class Github
+#@ deprecated
+class GithubOld
   @@token     = nil
   GITHUB_ROOT = "https://github.com"
   API_ROOT    = 'https://api.github.com/'

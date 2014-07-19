@@ -23,7 +23,7 @@ class Entrepreneur < BadgeBase
     repos.each do |repo|
       owner, name = repo.split('/')[-2..-1]
 
-      Github.new.repo_contributors(owner, name).each do |contributor|
+      GithubOld.new.repo_contributors(owner, name).each do |contributor|
         login = contributor[:login]
         add_contributor(repo, login, contributor[:contributions])
       end

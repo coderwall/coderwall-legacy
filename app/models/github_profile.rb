@@ -70,7 +70,7 @@ class GithubProfile
   end
 
   def refresh!(client=nil, since)
-    client   ||= Github.new
+    client   ||= GithubOld.new
     username = self.login
 
     profile   = client.profile(username, since)
