@@ -4,7 +4,7 @@
 - show_ad_every = width*2+width-2
 - items = show_job ? protips.each_slice(show_ad_every).map{|row| row.count == show_ad_every ? row.concat(['show-ad', nil]) : row }.flatten : protips
 
-- if collection.respond_to?(:error)
+- if collection.respond_to?(:error) && !collection.error.nil?
   .error
     ="#{collection.error} Meanwhile you can "
     =link_to 'create a pro tip', new_protip_path
