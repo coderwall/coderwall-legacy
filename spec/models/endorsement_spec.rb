@@ -59,14 +59,13 @@ RSpec.describe Endorsement, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: endorsements
 #
 #  id                :integer          not null, primary key
-#  endorsed_user_id  :integer          indexed, indexed => [endorsing_user_id, specialty]
-#  endorsing_user_id :integer          indexed, indexed => [endorsed_user_id, specialty]
-#  specialty         :string(255)      indexed => [endorsed_user_id, endorsing_user_id]
+#  endorsed_user_id  :integer
+#  endorsing_user_id :integer
+#  specialty         :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
 #  skill_id          :integer

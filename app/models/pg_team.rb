@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: teams
+#
+#  id         :integer          not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 #Rename to Team when Mongodb is dropped
 class PgTeam < ActiveRecord::Base
   self.table_name = 'teams'

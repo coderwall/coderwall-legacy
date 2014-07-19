@@ -1,6 +1,22 @@
+# TODO kill all file
+
 require 'vcr_helper'
 
-RSpec.describe 'profile badges', :type => :model, skip: ENV['TRAVIS'] do
+RSpec.describe 'profile badges', :type => :model, skip: true do
+
+  # def bootstrap(username, token = nil)
+  #   user          = User.new(github: username, github_token: token)
+  #   user.username = username
+  #   profile       = user.refresh_github!
+  #   user.email    = profile[:email] || 'something@test.com'
+  #   user.location = profile[:location] || 'Unknown'
+  #   user.save!
+  #
+  #   user.build_github_facts
+  #   user
+  # end
+
+
   it 'mdeiters', functional: true, slow: true, skip: 'the data bootstrap is incorrect' do
     VCR.use_cassette('github_for_mdeiters') do
       User.delete_all

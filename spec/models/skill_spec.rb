@@ -105,12 +105,11 @@ RSpec.describe Skill, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: skills
 #
 #  id                 :integer          not null, primary key
-#  user_id            :integer          indexed => [deleted], indexed
+#  user_id            :integer
 #  name               :string(255)      not null
 #  endorsements_count :integer          default(0)
 #  created_at         :datetime
@@ -120,7 +119,7 @@ end
 #  repos              :text
 #  speaking_events    :text
 #  attended_events    :text
-#  deleted            :boolean          default(FALSE), not null, indexed => [user_id]
+#  deleted            :boolean          default(FALSE), not null
 #  deleted_at         :datetime
 #
 # Indexes

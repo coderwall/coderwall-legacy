@@ -3,6 +3,18 @@ require "net_validators"
 class User < ActiveRecord::Base
   include ActionController::Caching::Fragments
   include NetValidators
+  include UserStatistics
+  include UserAward
+  include UserFacts
+  include UserGithub
+  include UserLinkedin
+  include UserOauth
+  include UserRedisKeys
+  include UserStatistics
+  include UserTwitter
+
+  # TODO kill
+  include UserWtf
 
   attr_protected :admin, :id, :github_id, :twitter_id, :linkedin_id, :api_key
 
@@ -89,197 +101,53 @@ class User < ActiveRecord::Base
     filter = "#{filter.upcase}%"
     where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
   }
-  scope :admins, where(admin: true)
+  scope :admins, -> { where(admin: true) }
+  scope :active, -> { where(state: ACTIVE) }
+  scope :pending, -> { where(state: PENDING) }
+  scope :abandoned, -> { where(state: 'registration').where('created_at < ?', 1.hour.ago) }
+  scope :random, -> (limit = 1) { active.where("badges_count > 1").order("Random()").limit(limit) }
 
-  class << self
-    def bootstrap(username, token = nil)
-      user          = User.new(github: username, github_token: token)
-      user.username = username
-      profile       = user.refresh_github!
-      user.email    = profile[:email] || 'something@test.com'
-      user.location = profile[:location] || 'Unknown'
-      user.save!
+  #TODO Kill
+  scope :username_in, ->(usernames) { where(["UPPER(username) in (?)", usernames.collect(&:upcase)]) }
 
-      user.build_github_facts
-      user
-    end
-
-    def with_token(token)
-      where(github_token: token).first
-    end
-
-    def username_in(usernames)
-      where(["UPPER(username) in (?)", usernames.collect(&:upcase)])
-    end
-
-    def with_username(username, provider = :username)
-      return nil if username.nil?
-      sql_injection_safe_where_clause = case provider.to_s
-                                        when 'username', ''
-                                          'username'
-                                        when 'linkedin'
-                                          'linkedin'
-                                        when 'twitter'
-                                          'twitter'
-                                        when 'github'
-                                          'github'
-                                        else
-                                          #A user could malicously pass in a provider, thats why we do the string matching above
-                                          raise "Unkown provider type specified, unable to find user by username"
-                                        end
-      where(["UPPER(#{sql_injection_safe_where_clause}) = UPPER(?)", username]).first
-    end
-
-    def with_username_or_email(username_or_email)
-      where(["UPPER(username) = ? OR email like ?", username_or_email.upcase, username_or_email]).first
-    end
-
-    def stalest_github_profile(limit = nil)
-      query = active.order("achievements_checked_at ASC")
-      limit ? query.limit(limit) : query
-    end
-
-    def active
-      where(state: ACTIVE)
-    end
-
-    def pending
-      where(state: PENDING)
-    end
-
-    def abandoned
-      where(state: 'registration').where('created_at < ?', 1.hour.ago)
-    end
-
-    def random(limit = 1)
-      active.where("badges_count > 1").order("Random()").limit(limit)
-    end
-
-    def for_omniauth(auth)
-      if user = find_with_oauth(auth)
-        user.apply_oauth(auth)
-        user.save! if user.changed?
-        return user
-      else
-        user = new(
-          name:          auth[:info][:name],
-          email:         auth[:info][:email],
-          backup_email:  auth[:info][:email],
-          location:      location_from(auth),
-          thumbnail_url: thumbnail_url_for(auth))
-        user.apply_oauth(auth)
-        user.username = auth[:info][:nickname]
-        return user
-      end
-    end
-
-    def find_with_oauth(oauth)
-      case oauth[:provider]
-      when 'github'
-        github_scope = (oauth[:uid] ? where(github_id: oauth[:uid]) : where(github: oauth[:info][:nickname]))
-        raise "Not a unique github credential #{oauth[:uid] || oauth[:info][:nickname]}" if github_scope.count > 1
-        return github_scope.first
-      when 'linkedin'
-        linkedin_scope = where(linkedin_id: oauth[:uid])
-        raise "Not a unique linkedin credential #{oauth[:uid]}" if linkedin_scope.count > 1
-        return linkedin_scope.first
-      when 'twitter'
-        twitter_scope = where(twitter_id: oauth[:uid])
-        raise "Not a unique twitter credential #{oauth[:uid]}" if twitter_scope.count > 1
-        return twitter_scope.first
-      when 'developer'
-        fail 'Developer Strategy must not be used in production.' if Rails.env.production?
-        developer_scope = where(email: oauth[:uid])
-        raise "Looks like there's duplicate users for the email '#{oauth[:uid]}'. Check user ids: #{developer_scope.map(&:id).join(', ')}" if developer_scope.count > 1
-        return developer_scope.first
-      else
-        raise "Unexpected provider: #{oauth[:provider]}"
-      end
-    end
-
-    def location_from(oauth)
-      if oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][:location]
-        (oauth[:extra][:raw_info][:location].is_a?(Hash) && oauth[:extra][:raw_info][:location][:name]) || oauth[:extra][:raw_info][:location]
-      elsif oauth[:info]
-        oauth[:info][:location]
-      end
-    end
-
-    def thumbnail_url_for(oauth)
-      if github = oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][:gravatar_id]
-        "https://secure.gravatar.com/avatar/#{oauth[:extra][:raw_info][:gravatar_id]}"
-      elsif oauth[:info]
-        if oauth['provider'] == 'twitter'
-          oauth[:extra][:raw_info][:profile_image_url_https]
-        else
-          oauth[:info][:image]
-        end
-      end
-    end
-
-    def all_tokens
-      with_tokens.select("github_token").collect(&:github_token)
-    end
-
-    def signups_by_day
-      find_by_sql("SELECT to_char(created_at, 'MM DD') AS day, count(*) AS signups from users group by to_char(created_at, 'MM DD') order by to_char(created_at, 'MM DD')").collect { |u| [u.day, u.signups] }
-    end
-
-    def signups_by_hour
-      find_by_sql("SELECT to_char(created_at, 'HH24') AS hour, count(*) AS signups from users where created_at > NOW() - interval '24 hours' group by to_char(created_at, 'HH24') order by to_char(created_at, 'HH24')").collect { |u| [u.hour, u.signups] }
-    end
-
-    def signups_by_month
-      find_by_sql("SELECT to_char(created_at, 'MON') AS day, count(*) AS signups from users group by to_char(created_at, 'MON') order by to_char(created_at, 'MON') DESC").collect { |u| [u.day, u.signups] }
-    end
-
-    def repeat_visits_by_count
-      find_by_sql("SELECT login_count, count(*) AS visits from users group by login_count").collect { |u| [u.login_count, u.visits] }
-    end
-
-    def monthly_growth
-      prior = where("created_at < ?", 31.days.ago).count
-      month = where("created_at >= ?", 31.days.ago).count
-      ((month.to_f / prior.to_f) * 100)
-    end
-
-    def weekly_growth
-      prior = where("created_at < ?", 7.days.ago).count
-      week  = where("created_at >= ?", 7.days.ago).count
-      ((week.to_f / prior.to_f) * 100)
-    end
-
-    def most_active_by_country(since=1.week.ago)
-      select('country, count(distinct(id))').where('last_request_at > ?', since).group(:country).order('count(distinct(id)) DESC')
-    end
-  end
-
+  # Todo State machine
   def banned?
     banned_at.present?
   end
+
+  def activate!
+    touch(:activated_on)
+    update_attribute(:state, ACTIVE)
+  end
+
+  def unregistered?
+    state == nil
+  end
+
+  def not_active?
+    !active?
+  end
+
+  def active?
+    state == ACTIVE
+  end
+
+  def pending?
+    state == PENDING
+  end
+
 
   def oldest_achievement_since_last_visit
     badges.where("badges.created_at > ?", last_request_at).order('badges.created_at ASC').last
   end
 
-  def correct_ids
-    [:stackoverflow, :slideshare].each do |social_id|
-      if self.try(social_id) =~ /^https?:.*\/([\w_\-]+)\/([\w\-]+|newsfeed)?/
-        self.send("#{social_id}=", $1)
-      end
-    end
-  end
 
-  def correct_urls
-    self.favorite_websites = self.favorite_websites.split(",").collect do |website|
-      correct_url(website.strip)
-    end.join(",") unless self.favorite_websites.nil?
-  end
 
   def company_name
     team.try(:name) || company
   end
 
+  #TODO Kill
   def profile_url
     if !avatar.blank?
       avatar_url
@@ -290,49 +158,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def apply_oauth(oauth)
-    case oauth[:provider]
-    when 'github'
-      self.github           = oauth[:info][:nickname]
-      self.github_id        = oauth[:uid]
-      self.github_token     = oauth[:credentials][:token]
-      self.blog             = oauth[:info][:urls][:Blog] if oauth[:info][:urls] && self.blog.blank?
-      self.joined_github_on = extract_joined_on(oauth) if self.joined_github_on.blank?
-    when 'linkedin'
-      self.linkedin_id         = oauth[:uid]
-      self.linkedin_public_url = oauth[:info][:urls][:public_profile] if oauth[:info][:urls]
-      self.linkedin_token      = oauth[:credentials][:token]
-      self.linkedin_secret     = oauth[:credentials][:secret]
-    when 'twitter'
-      self.twitter           = oauth[:info][:nickname]
-      self.twitter_id        = oauth[:uid]
-      self.twitter_token     = oauth[:credentials][:token]
-      self.twitter_secret    = oauth[:credentials][:secret]
-      self.about             = extract_from_oauth_extras(:description, oauth) if self.about.blank?
-      self.joined_twitter_on = extract_joined_on(oauth) if self.joined_twitter_on.blank?
-    when 'developer'
-      logger.debug "Using the Developer Strategy for OmniAuth"
-      logger.ap oauth, :debug
-    else
-      raise "Unexpected provider: #{oauth[:provider]}"
-    end
-  end
-
-  def extract_joined_on(oauth)
-    val = extract_from_oauth_extras(:created_at, oauth)
-    return Date.parse(val) if val
-  end
-
-  def extract_from_oauth_extras(field, oauth)
-    oauth[:extra][:raw_info][field] if oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][field]
-  end
 
   def can_be_refreshed?
     (achievements_checked_at.nil? || achievements_checked_at < 1.hour.ago)
   end
 
   def display_name
-    name.blank? ? username : name
+    name.presence || username
   end
 
   def short_name
@@ -340,7 +172,7 @@ class User < ActiveRecord::Base
   end
 
   def has_badges?
-    !badges.empty?
+    badges.any?
   end
 
   def has_badge?(badge_class)
@@ -419,68 +251,16 @@ class User < ActiveRecord::Base
     Resque.enqueue(AnalyzeUser, self.username)
   end
 
-  def activate!
-    touch(:activated_on)
-    update_attribute(:state, ACTIVE)
-  end
-
-  def unregistered?
-    state == nil
-  end
-
-  def not_active?
-    !active?
-  end
-
-  def active?
-    state == ACTIVE
-  end
-
-  def pending?
-    state == PENDING
-  end
 
   def total_achievements
     badges_count
   end
 
-  def award(badge)
-    new_badge = self.badges.of_type(badge).first || self.badges.build(badge_class_name: badge.class.name)
+  def has_beta_access?
+    admin? || beta_access
   end
 
-  def add_github_badge(badge)
-    GithubBadge.new.add(badge, self.github)
-  end
 
-  def remove_github_badge(badge)
-    GithubBadge.new.remove(badge, self.github)
-  end
-
-  def add_all_github_badges
-    Resque.enqueue(GithubBadgeOrg, self.username, :add)
-  end
-
-  def remove_all_github_badges
-    Resque.enqueue(GithubBadgeOrg, self.username, :remove)
-  end
-
-  def award_and_add_skill(badge)
-    award badge
-    if badge.respond_to? :skill
-      add_skill(badge.skill)
-    end
-  end
-
-  def assign_badges(new_badges)
-    new_badge_classes = new_badges.map { |b| b.class.name }
-    old_badge_classes = self.badges.map(&:badge_class_name)
-
-    @badges_to_destroy = old_badge_classes - new_badge_classes
-
-    new_badges.each do |badge|
-      award_and_add_skill(badge)
-    end
-  end
 
   def to_csv
     [
@@ -536,32 +316,8 @@ class User < ActiveRecord::Base
     Resque.enqueue(RefreshUser, username, true)
   end
 
-  def clear_github!
-    self.github_id        = nil
-    self.github           = nil
-    self.github_token     = nil
-    self.joined_github_on = nil
-    self.github_failures  = 0
-    save!
-  end
 
-  def clear_linkedin!
-    self.linkedin            = nil
-    self.linkedin_id         = nil
-    self.linkedin_token      = nil
-    self.linkedin_secret     = nil
-    self.linkedin_public_url = nil
-    self.linkedin_legacy     = nil
-    save!
-  end
 
-  def clear_twitter!
-    self.twitter           = nil
-    self.twitter_token     = nil
-    self.twitter_secret    = nil
-    self.joined_twitter_on = nil
-    save!
-  end
 
   def can_unlink_provider?(provider)
     self.respond_to?("clear_#{provider}!") && self.send("#{provider}_identity") && num_linked_accounts > 1
@@ -573,69 +329,10 @@ class User < ActiveRecord::Base
     LINKABLE_PROVIDERS.map { |provider| self.send("#{provider}_identity") }.compact.count
   end
 
-  def linkedin_identity
-    "linkedin:#{linkedin_token}::#{linkedin_secret}" if linkedin_token
-  end
 
-  def twitter_identity
-    "twitter:#{twitter}" if twitter
-  end
 
-  def bitbucket_identity
-    "bitbucket:#{bitbucket}" unless bitbucket.blank?
-  end
 
-  def lanyrd_identity
-    "lanyrd:#{twitter}" if twitter
-  end
 
-  def github_identity
-    "github:#{github}" if github
-  end
-
-  def speakerdeck_identity
-    "speakerdeck:#{speakerdeck}" if speakerdeck
-  end
-
-  def slideshare_identity
-    "slideshare:#{slideshare}" if slideshare
-  end
-
-  def build_facts(all)
-    since = (all ? Time.at(0) : self.last_refresh_at)
-    build_github_facts(since)
-    build_lanyrd_facts
-    build_linkedin_facts
-    build_bitbucket_facts
-    build_speakerdeck_facts
-    build_slideshare_facts
-  end
-
-  def build_speakerdeck_facts
-    Speakerdeck.new(speakerdeck).facts if speakerdeck_identity
-  end
-
-  def build_slideshare_facts
-    Slideshare.new(slideshare).facts if slideshare_identity
-  end
-
-  def build_github_facts(since=Time.at(0))
-    GithubProfile.for_username(github, since).facts if github_identity and github_failures == 0
-  end
-
-  def build_linkedin_facts
-    LinkedInStream.new(linkedin_token + '::' + linkedin_secret).facts if linkedin_identity
-  rescue => e
-    logger.error(e.message + "\n  " + e.backtrace.join("\n  "))
-  end
-
-  def build_lanyrd_facts
-    Lanyrd.new(twitter).facts if lanyrd_identity
-  end
-
-  def build_bitbucket_facts
-    Bitbucket::V1.new(bitbucket).update_facts! unless bitbucket.blank?
-  end
 
   def check_achievements!(badge_list = Badges.all)
     BadgeBase.award!(self, badge_list)
@@ -675,13 +372,6 @@ class User < ActiveRecord::Base
     Skill.deleted?(self.id, skill_name)
   end
 
-  def repo_facts
-    self.facts.select { |fact| fact.tagged?('personal', 'repo', 'original') }
-  end
-
-  def lanyrd_facts
-    self.facts.select { |fact| fact.tagged?('lanyrd') }
-  end
 
   def tokenized_lanyrd_tags
     lanyrd_facts.collect { |fact| fact.tags }.flatten.compact.map { |tag| Skill.tokenize(tag) }
@@ -828,29 +518,6 @@ class User < ActiveRecord::Base
     user.add_skill(specialty).endorsed_by(self)
   end
 
-  def repo_cache_key
-    username
-  end
-
-  def daily_cache_key
-    "#{username}/#{Date.today.to_time.to_i}"
-  end
-
-  def timeline_key
-    @timeline_key ||= "user:#{id}:timeline"
-  end
-
-  def impressions_key
-    "user:#{id}:impressions"
-  end
-
-  def user_views_key
-    "user:#{id}:views"
-  end
-
-  def user_anon_views_key
-    "user:#{id}:views:anon"
-  end
 
   def viewed_by(viewer)
     epoch_now = Time.now.to_i
@@ -1089,37 +756,7 @@ class User < ActiveRecord::Base
                            end
   end
 
-  class FollowedRepo
-    attr_reader :data
 
-    def initialize(data)
-      @data = JSON.parse(data)
-    end
-
-    def description
-      data['description']
-    end
-
-    def repo
-      data['link'].gsub('https://github.com/', '')
-    end
-
-    def date
-      @date ||= Date.parse(data['date'])
-    end
-
-    def link
-      data['link']
-    end
-
-    def user
-      User.find(data['user_id'])
-    end
-  end
-
-  def followed_repo_key
-    "user:#{id}:following:repos"
-  end
 
   #This is a temporary method as we migrate to the new 1.0 profile
   def migrate_to_skills!

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: teams_members
+#
+#  id         :integer          not null, primary key
+#  team_id    :integer          not null
+#  user_id    :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  team_size  :integer          default(0)
+#
+
 require 'rails_helper'
 
 RSpec.describe Teams::Member, :type => :model do
