@@ -1,4 +1,4 @@
-Split.redis = REDIS
+Split.redis = ENV['REDIS_URL']
 Split.redis.namespace = "split:coderwall"
 Split.configure do |config|
   # config.robot_regex = //

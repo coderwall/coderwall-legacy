@@ -50,7 +50,7 @@ namespace :teams do
   #end
 
   #task :killleaderboard => :environment do
-    #REDIS.del(Team::LEADERBOARD_KEY)
+    #Redis.current.del(Team::LEADERBOARD_KEY)
   #end
 
   #task :reindex => :environment do

@@ -1,3 +1,5 @@
+Resque.redis = ENV['REDIS_URL']
+
 Resque.before_fork do
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
