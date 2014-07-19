@@ -446,10 +446,6 @@ class User < ActiveRecord::Base
     badges_count
   end
 
-  def has_beta_access?
-    admin? || beta_access
-  end
-
   def award(badge)
     new_badge = self.badges.of_type(badge).first || self.badges.build(badge_class_name: badge.class.name)
   end
@@ -1366,7 +1362,6 @@ end
 #  linkedin_secret               :string(255)
 #  last_email_sent               :datetime
 #  linkedin_public_url           :string(255)
-#  beta_access                   :boolean          default(FALSE)
 #  redemptions                   :text
 #  endorsements_count            :integer          default(0)
 #  team_document_id              :string(255)      indexed

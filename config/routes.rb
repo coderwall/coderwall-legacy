@@ -247,7 +247,6 @@
 #                             PUT      /users/:id(.:format)                                   users#update
 #                             DELETE   /users/:id(.:format)                                   users#destroy
 #              clear_provider GET      /clear/:id/:provider(.:format)                         users#clear_provider
-#                      visual GET      /visual(.:format)                                      users#beta
 #                     refresh GET      /refresh/:username(.:format)                           users#refresh
 #       random_accomplishment GET      /nextaccomplishment(.:format)                          highlights#random
 #                   add_skill GET      /add-skill(.:format)                                   skills#create
@@ -467,7 +466,6 @@ Badgiy::Application.routes.draw do
   end
 
   get '/clear/:id/:provider' => 'users#clear_provider', as: :clear_provider
-  get '/visual' => 'users#beta'
   get '/refresh/:username' => 'users#refresh', as: :refresh
   get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
