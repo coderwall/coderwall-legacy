@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe User, :type => :model do
+  it { is_expected.to have_one :github_profile }
+  it { is_expected.to have_many :github_repositories }
   before :each do
     User.destroy_all
   end
