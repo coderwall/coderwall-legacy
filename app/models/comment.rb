@@ -43,11 +43,8 @@ class Comment < ActiveRecord::Base
     end
   end
 
-  def liked(how_much)
-    unless how_much.nil?
-      increment_likes_cache(how_much)
-      commented_callback
-    end
+  def liked(how_much=nil)
+    commented_callback unless how_much.nil?
   end
 
   def liked_by?(user)
