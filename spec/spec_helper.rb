@@ -31,8 +31,8 @@ RSpec.configure do |config|
   config.use_transactional_examples = false
 
   config.before(:all) do
-    REDIS.SELECT(testdb = 1)
-    REDIS.flushdb
+    Redis.current.SELECT(testdb = 1)
+    Redis.current.flushdb
 
   end
 

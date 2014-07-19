@@ -149,11 +149,11 @@ class Opportunity < ActiveRecord::Base
 
   def viewed_by(viewer)
     epoch_now = Time.now.to_i
-    REDIS.incr(impressions_key)
+    Redis.current.incr(impressions_key)
     if viewer.is_a?(User)
-      REDIS.zadd(user_views_key, epoch_now, viewer.id)
+      Redis.current.zadd(user_views_key, epoch_now, viewer.id)
     else
-      REDIS.zadd(user_anon_views_key, epoch_now, viewer)
+      Redis.current.zadd(user_anon_views_key, epoch_now, viewer)
     end
   end
 
@@ -171,13 +171,13 @@ class Opportunity < ActiveRecord::Base
 
   def viewers(since = 0)
     epoch_now = Time.now.to_i
-    viewer_ids = REDIS.zrevrange(user_views_key, since, epoch_now)
+    viewer_ids = Redis.current.zrevrange(user_views_key, since, epoch_now)
     User.where(id: viewer_ids).all
   end
 
   def total_views(epoch_since = 0)
     epoch_now = Time.now.to_i
-    REDIS.zcount(user_views_key, epoch_since, epoch_now) + REDIS.zcount(user_anon_views_key, epoch_since, epoch_now)
+    Redis.current.zcount(user_views_key, epoch_since, epoch_now) + Redis.current.zcount(user_anon_views_key, epoch_since, epoch_now)
   end
 
   def team

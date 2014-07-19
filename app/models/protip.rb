@@ -882,15 +882,15 @@ class Protip < ActiveRecord::Base
 
   def viewed_by(viewer)
     epoch_now = Time.now.to_i
-    REDIS.incr(impressions_key)
+    Redis.current.incr(impressions_key)
     if viewer.is_a?(User)
-      REDIS.zadd(user_views_key, epoch_now, viewer.id)
+      Redis.current.zadd(user_views_key, epoch_now, viewer.id)
       generate_event(viewer: viewer.username) unless viewer_ids(5.minutes.ago.to_i).include? viewer.id.to_s
       index_search if viewer.admin?
     else
-      REDIS.zadd(user_anon_views_key, epoch_now, viewer)
-      count = REDIS.zcard(user_anon_views_key)
-      REDIS.zremrangebyrank(user_anon_views_key, -(count - 100), -1) if count > 100
+      Redis.current.zadd(user_anon_views_key, epoch_now, viewer)
+      count = Redis.current.zcard(user_anon_views_key)
+      Redis.current.zremrangebyrank(user_anon_views_key, -(count - 100), -1) if count > 100
     end
 
     update_score! if (total_views % COUNTABLE_VIEWS_CHUNK) == 0
@@ -898,9 +898,9 @@ class Protip < ActiveRecord::Base
 
   def viewed_by?(viewer)
     if viewer.is_a?(User)
-      !REDIS.zrank(user_views_key, viewer.id).nil?
+      !Redis.current.zrank(user_views_key, viewer.id).nil?
     else
-      !REDIS.zrank(user_anon_views_key, viewer).nil?
+      !Redis.current.zrank(user_anon_views_key, viewer).nil?
     end
   end
 
@@ -931,16 +931,16 @@ class Protip < ActiveRecord::Base
 
   def viewer_ids(since=0)
     epoch_now = Time.now.to_i
-    REDIS.zrangebyscore(user_views_key, since, epoch_now)
+    Redis.current.zrangebyscore(user_views_key, since, epoch_now)
   end
 
   def total_views(epoch_since = 0)
     if epoch_since.to_i == 0
-      REDIS.get(impressions_key).to_i
+      Redis.current.get(impressions_key).to_i
     else
       epoch_now = Time.now.to_i
       epoch_since = epoch_since.to_i
-      REDIS.zcount(user_views_key, epoch_since, epoch_now) + REDIS.zcount(user_anon_views_key, epoch_since, epoch_now)
+      Redis.current.zcount(user_views_key, epoch_since, epoch_now) + Redis.current.zcount(user_anon_views_key, epoch_since, epoch_now)
     end
   end
 

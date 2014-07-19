@@ -14,13 +14,13 @@ class GenerateTopUsersComposite
 
   def cache_users
     users = User.top(108).map { |u| {u.username => u.thumbnail_url} }.to_json
-    REDIS.set "top_users", users
+    Redis.current.set 'top_users', users
   end
 
   def cache_images
     IMAGE_PATH.mkpath
 
-    users = JSON.parse(REDIS.get("top_users"))
+    users = JSON.parse(Redis.current.get('top_users'))
     users.each.with_index do |pair, i|
       username, url = pair.keys.first, pair.values.first
 

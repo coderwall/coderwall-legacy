@@ -853,36 +853,36 @@ class User < ActiveRecord::Base
 
   def viewed_by(viewer)
     epoch_now = Time.now.to_i
-    REDIS.incr(impressions_key)
+    Redis.current.incr(impressions_key)
     if viewer.is_a?(User)
-      REDIS.zadd(user_views_key, epoch_now, viewer.id)
+      Redis.current.zadd(user_views_key, epoch_now, viewer.id)
       generate_event(viewer: viewer.username)
     else
-      REDIS.zadd(user_anon_views_key, epoch_now, viewer)
-      count = REDIS.zcard(user_anon_views_key)
-      REDIS.zremrangebyrank(user_anon_views_key, -(count - 100), -1) if count > 100
+      Redis.current.zadd(user_anon_views_key, epoch_now, viewer)
+      count = Redis.current.zcard(user_anon_views_key)
+      Redis.current.zremrangebyrank(user_anon_views_key, -(count - 100), -1) if count > 100
     end
   end
 
   def viewers(since=0)
     epoch_now  = Time.now.to_i
-    viewer_ids = REDIS.zrevrangebyscore(user_views_key, epoch_now, since)
+    viewer_ids = Redis.current.zrevrangebyscore(user_views_key, epoch_now, since)
     User.where(id: viewer_ids).all
   end
 
   def viewed_by_since?(user_id, since=0)
     epoch_now   = Time.now.to_i
-    views_since = Hash[*REDIS.zrevrangebyscore(user_views_key, epoch_now, since, withscores: true)]
+    views_since = Hash[*Redis.current.zrevrangebyscore(user_views_key, epoch_now, since, withscores: true)]
     !views_since[user_id.to_s].nil?
   end
 
   def total_views(epoch_since = 0)
     if epoch_since.to_i == 0
-      REDIS.get(impressions_key).to_i
+      Redis.current.get(impressions_key).to_i
     else
       epoch_now   = Time.now.to_i
       epoch_since = epoch_since.to_i
-      REDIS.zcount(user_views_key, epoch_since, epoch_now) + REDIS.zcount(user_anon_views_key, epoch_since, epoch_now)
+      Redis.current.zcount(user_views_key, epoch_since, epoch_now) + Redis.current.zcount(user_anon_views_key, epoch_since, epoch_now)
     end
   end
 
@@ -929,13 +929,13 @@ class User < ActiveRecord::Base
   end
 
   def build_repo_followed_activity!(refresh=false)
-    REDIS.zremrangebyrank(followed_repo_key, 0, Time.now.to_i) if refresh
+    Redis.current.zremrangebyrank(followed_repo_key, 0, Time.now.to_i) if refresh
     epoch_now  = Time.now.to_i
-    first_time = refresh || REDIS.zcount(followed_repo_key, 0, epoch_now) <= 0
+    first_time = refresh || Redis.current.zcount(followed_repo_key, 0, epoch_now) <= 0
     links      = GithubOld.new.activities_for(self.github, (first_time ? 20 : 1))
     links.each do |link|
       link[:user_id] = self.id
-      REDIS.zadd(followed_repo_key, link[:date].to_i, link.to_json)
+      Redis.current.zadd(followed_repo_key, link[:date].to_i, link.to_json)
       Importers::Protips::GithubImporter.import_from_follows(link[:description], link[:link], link[:date], self)
     end
   rescue RestClient::ResourceNotFound
@@ -986,10 +986,10 @@ class User < ActiveRecord::Base
 
   def build_follow_list!
     if twitter_id
-      REDIS.del(followers_key)
+      Redis.current.del(followers_key)
       people_user_is_following = Twitter.friend_ids(twitter_id.to_i)
       people_user_is_following.each do |id|
-        REDIS.sadd(followers_key, id)
+        Redis.current.sadd(followers_key, id)
         if user = User.where(twitter_id: id.to_s).first
           self.follow(user)
         end
@@ -1027,20 +1027,20 @@ class User < ActiveRecord::Base
 
   def following
     @following ||= begin
-                     ids = REDIS.smembers(followers_key)
+                     ids = Redis.current.smembers(followers_key)
                      User.where(twitter_id: ids).order("badges_count DESC").limit(10)
                    end
   end
 
   def following_in_common(user)
     @following_in_common ||= begin
-                               ids = REDIS.sinter(followers_key, user.followers_key)
+                               ids = Redis.current.sinter(followers_key, user.followers_key)
                                User.where(twitter_id: ids).order("badges_count DESC").limit(10)
                              end
   end
 
   def followed_repos(since=2.months.ago)
-    REDIS.zrevrange(followed_repo_key, 0, since.to_i).collect { |link| FollowedRepo.new(link) }
+    Redis.current.zrevrange(followed_repo_key, 0, since.to_i).collect { |link| FollowedRepo.new(link) }
   end
 
   def networks
@@ -1226,15 +1226,15 @@ class User < ActiveRecord::Base
   end
 
   def seen(feature_name)
-    REDIS.SADD("user:seen:#{feature_name}", self.id.to_s)
+    Redis.current.SADD("user:seen:#{feature_name}", self.id.to_s)
   end
 
   def self.that_have_seen(feature_name)
-    REDIS.SCARD("user:seen:#{feature_name}")
+    Redis.current.SCARD("user:seen:#{feature_name}")
   end
 
   def seen?(feature_name)
-    REDIS.SISMEMBER("user:seen:#{feature_name}", self.id.to_s) == 1 #true
+    Redis.current.SISMEMBER("user:seen:#{feature_name}", self.id.to_s) == 1 #true
   end
 
   def has_resume?
