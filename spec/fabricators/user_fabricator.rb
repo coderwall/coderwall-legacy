@@ -74,7 +74,6 @@ end
 #  linkedin_secret               :string(255)
 #  last_email_sent               :datetime
 #  linkedin_public_url           :string(255)
-#  beta_access                   :boolean          default(FALSE)
 #  redemptions                   :text
 #  endorsements_count            :integer          default(0)
 #  team_document_id              :string(255)      indexed

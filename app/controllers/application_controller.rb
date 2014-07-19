@@ -201,10 +201,6 @@ class ApplicationController < ActionController::Base
     signed_in? && current_user.admin?
   end
 
-  def require_beta_access!
-    return head(:forbidden) unless signed_in? && current_user.has_beta_access?
-  end
-
   def iphone_user_agent?
     request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
   end

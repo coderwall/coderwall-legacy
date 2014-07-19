@@ -66,12 +66,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def beta
-    return head(:forbidden) unless signed_in? && (current_user.beta_access? || current_user.admin?)
-    @user  = current_user
-    @users = User.where('banner is not null')
-  end
-
   def create
     @user = User.for_omniauth(oauth)
     Rails.logger.debug("Creating User: #{@user.inspect}")  if ENV['DEBUG']
