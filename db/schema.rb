@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140717105025) do
+ActiveRecord::Schema.define(:version => 20140719160422) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -424,7 +424,6 @@ ActiveRecord::Schema.define(:version => 20140717105025) do
     t.string   "linkedin_secret"
     t.datetime "last_email_sent"
     t.string   "linkedin_public_url"
-    t.boolean  "beta_access",                   :default => false
     t.text     "redemptions"
     t.integer  "endorsements_count",            :default => 0
     t.string   "team_document_id"
