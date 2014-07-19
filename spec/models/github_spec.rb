@@ -1,5 +1,5 @@
 RSpec.describe Github, type: :model, functional: true, skip: ENV['TRAVIS']  do
-  let(:github) { Github.new }
+  let(:github) { GithubOld.new }
 
   it 'can get profile' do
     expect(github.profile('mdeiters')[:name]).to eq('Matthew Deiters')
@@ -47,12 +47,12 @@ RSpec.describe Github, type: :model, functional: true, skip: ENV['TRAVIS']  do
   end
 
   it 'should scope requests by user' do
-    daniel = Github.new(daniel_h = '697b68755f419b475299873164e3c60fca21ae58')
+    daniel = GithubOld.new(daniel_h = '697b68755f419b475299873164e3c60fca21ae58')
     expect(daniel.profile['login']).to eq('flyingmachine')
   end
 
   it 'should scope requests by user but allow override' do
-    daniel = Github.new(daniel_h = '697b68755f419b475299873164e3c60fca21ae58')
+    daniel = GithubOld.new(daniel_h = '697b68755f419b475299873164e3c60fca21ae58')
     expect(daniel.profile['login']).not_to eq(daniel.profile('bguthrie')['login'])
   end
 end

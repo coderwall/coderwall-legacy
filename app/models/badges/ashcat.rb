@@ -19,7 +19,7 @@ class Ashcat < BadgeBase
   end
 
   def self.perform
-    Github.new.repo_contributors("rails", "rails").each do |contributor|
+    GithubOld.new.repo_contributors("rails", "rails").each do |contributor|
       login = contributor[:login]
       add_contributor(login, contributor[:contributions])
     end

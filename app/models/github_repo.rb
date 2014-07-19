@@ -33,7 +33,7 @@ class GithubRepo
   end
 
   def refresh!(client=nil, repo={})
-    client      ||= Github.new
+    client      ||= GithubOld.new
     owner, name = self.owner.login, self.name
 
     repo        = client.repo(owner, name) if repo.empty?
