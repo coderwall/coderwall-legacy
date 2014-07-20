@@ -66,9 +66,7 @@ gem 'kaminari'
 gem 'chronic'
 
 # Redis
-gem 'hiredis'
-gem 'redis', require: ['redis', 'redis/connection/hiredis']
-gem 'redis-rails'
+gem 'redis-rails' , '~> 3.2'
 
 # Background Job Processing
 gem 'resque'
