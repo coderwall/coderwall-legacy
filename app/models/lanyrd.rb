@@ -10,10 +10,6 @@ class Lanyrd < Struct.new(:username)
     end
   end
 
-  def self.upcoming(username)
-    Lanyrd.new(username).events.select { |event| puts event[:date].to_s }
-  end
-
   def events
     events = []
     profile[:history] && profile[:history].each do |conference|

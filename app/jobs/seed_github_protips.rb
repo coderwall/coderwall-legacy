@@ -5,7 +5,6 @@ class SeedGithubProtips < Struct.new(:username)
 
   def perform
     user = User.with_username(username)
-    puts("Adding protips for #{username}")
     user.build_github_proptips_fast
   end
 end

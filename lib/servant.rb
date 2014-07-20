@@ -16,10 +16,8 @@ class Servant
 
     def get(url)
       increment!
-      puts("Making request: #{url}")
       response = RestClient.get(url, verify_ssl: false)
       response = ServiceResponse.new(response.to_s, response.headers)
-      puts("GitHub requests left: #{response.requests_left}")
       return response
     end
   end

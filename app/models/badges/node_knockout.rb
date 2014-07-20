@@ -58,7 +58,6 @@ class NodeKnockout
     replace_assignments_and_awards(self.innovation, self.MostInnovativeBadge)
     replace_assignments_and_awards(self.completeness, self.MostCompleteBadge)
     replace_assignments_and_awards_for_twitter(self.judges, self.JudgeBadge)
-    puts "DONE"
   end
 
   def replace_assignments_and_awards(github_usernames, badge_class)

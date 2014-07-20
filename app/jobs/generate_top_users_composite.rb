@@ -45,7 +45,6 @@ class GenerateTopUsersComposite
   end
 
   def sh(command)
-    puts("GenerateTopUsersComposite: executing #{command}")
     system command
   end
 

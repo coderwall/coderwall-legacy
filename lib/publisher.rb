@@ -15,11 +15,7 @@ module Publisher
   end
 
   def agent_active?
-    @@agent_active ||= begin
-      active = !ENV['PUBNUB_PUBLISH_KEY'].blank? && !ENV['PUBNUB_SUBSCRIBE_KEY'].blank? && !ENV['PUBNUB_SECRET_KEY'].blank?
-      puts("Disabling notifications, env settings not present") unless active
-      active
-    end
+    @@agent_active ||= !ENV['PUBNUB_PUBLISH_KEY'].blank? && !ENV['PUBNUB_SUBSCRIBE_KEY'].blank? && !ENV['PUBNUB_SECRET_KEY'].blank?
   end
 
 end
