@@ -148,4 +148,9 @@ paboi.blog_feed = 'http://portlandiamom.blogspot.com/feeds/posts/default?alt=rss
 
 paboi.save!
 
-Protip.rebuild_index unless Rails.env.staging? || Rails.env.production?
+unless Rails.env.staging? || Rails.env.production?
+  Network.rebuild_index
+  Opportunity.rebuild_index
+  Protip.rebuild_index
+  Team.rebuild_index
+end

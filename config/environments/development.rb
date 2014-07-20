@@ -25,4 +25,6 @@ Badgiy::Application.configure do
   config.cache_store = [:file_store,"/tmp/codewall-cache/"]
   config.assets.cache_store = [:file_store,"/tmp/codewall-cache/assets/"]
   Rails.application.config.sass.cache_location = "/tmp/codewall-cache/sass/"
+  
+  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
 end
