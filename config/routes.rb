@@ -495,7 +495,6 @@ Badgiy::Application.routes.draw do
 
   get '/dashboard' => 'events#index', as: :dashboard
   get '/roll-the-dice' => 'users#randomize', as: :random_wall
-  get '/trending' => 'links#index', as: :trending
   get '/:username' => 'users#show', as: :badge
   get '/:username/achievements/:id' => 'achievements#show', as: :user_achievement
   get '/:username/endorsements.json' => 'endorsements#show'

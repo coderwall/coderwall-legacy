@@ -9,13 +9,13 @@ class ProcessTeam < Struct.new(:process_type, :team_id)
       when :recalculate
         if team.team_members.size <= 0
           team.destroy
-          REDIS.zrem(Team::LEADERBOARD_KEY, team.id.to_s)
+          Redis.current.zrem(Team::LEADERBOARD_KEY, team.id.to_s)
         else
           team.recalculate!
           if team.team_members.size < 3
-            REDIS.zrem(Team::LEADERBOARD_KEY, team.id.to_s)
+            Redis.current.zrem(Team::LEADERBOARD_KEY, team.id.to_s)
           else
-            REDIS.zadd(Team::LEADERBOARD_KEY, team.score.to_f, team.id.to_s)
+            Redis.current.zadd(Team::LEADERBOARD_KEY, team.score.to_f, team.id.to_s)
           end
         end
       when :reindex

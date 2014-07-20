@@ -25,9 +25,9 @@ class Event < Struct.new(:data)
         activity_feed_keys.each_with_index do |activity_feed_key, index|
           data.merge!({ channel: channels[index] }.with_indifferent_access)
           score_for_event = Time.now.to_f
-          REDIS.zadd(activity_feed_key, score_for_event.to_f, data)
-          count = REDIS.zcard(activity_feed_key)
-          REDIS.zremrangebyrank(activity_feed_key, 0, count - TABLE_SIZE) if count > TABLE_SIZE
+          Redis.current.zadd(activity_feed_key, score_for_event.to_f, data)
+          count = Redis.current.zcard(activity_feed_key)
+          Redis.current.zremrangebyrank(activity_feed_key, 0, count - TABLE_SIZE) if count > TABLE_SIZE
         end
       end
     end
@@ -57,7 +57,7 @@ class Event < Struct.new(:data)
 
       activity_feed_keys.each do |activity_feed_key|
         i = 1
-        REDIS.zrangebyscore(activity_feed_key, from, to).each do |activity|
+        Redis.current.zrangebyscore(activity_feed_key, from, to).each do |activity|
 
           Rails.logger.warn("[EVAL:#{i}] Event#user_activity(user = #{user.inspect}, from = #{from.inspect}, limit = #{limit.inspect}, publish = #{publish.inspect}) set to eval activity = #{activity.inspect}") if ENV['DEBUG']
           i += 1
@@ -80,7 +80,7 @@ class Event < Struct.new(:data)
 
     def extra_information(data)
       extra_info = {}
-      u          = User.with_username(data['user']['username']) unless data['user'].nil?
+      u          = User.find_by_username(data['user']['username']) unless data['user'].nil?
       extra_info.merge!(user_info(u)) unless u.nil?
       extra_info.merge!(team_info(u.team)) unless u.nil? or u.team.nil?
       extra_info.with_indifferent_access

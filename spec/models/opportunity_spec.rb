@@ -107,7 +107,6 @@ RSpec.describe Opportunity, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: opportunities
 #
@@ -130,4 +129,5 @@ end
 #  location_city    :string(255)
 #  apply            :boolean          default(FALSE)
 #  public_id        :string(255)
+#  team_id          :integer
 #

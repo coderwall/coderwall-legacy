@@ -31,7 +31,7 @@ class Notifier < ActionMailer::Base
   def welcome_email(username)
     headers['X-Mailgun-Variables'] = {email_type: WELCOME_EVENT}.to_json
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
 
     if @user.created_at < 2.days.ago
@@ -53,7 +53,7 @@ class Notifier < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: ACTIVITY_EVENT}.to_json
     track_campaign("activity_sent_#{Date.today.wday}")
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
 
     subject, @message = *activity_message_for_user(@user)
@@ -64,7 +64,7 @@ class Notifier < ActionMailer::Base
   def new_badge(username)
     headers['X-Mailgun-Variables'] = {email_type: BADGE_EVENT}.to_json
     track_campaign("new_badge_earned")
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     @user.reload
     @badge = next_badge_to_send(@user)
@@ -82,8 +82,8 @@ class Notifier < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: FOLLOWER_EVENT}.to_json
     track_campaign("new_follower")
 
-    @follower = User.with_username(follower_username)
-    @user = User.with_username(username)
+    @follower = User.find_by_username(follower_username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
 
     congratulation = %w{Awesome Brilliant Epic Sweet}.sample
@@ -95,8 +95,8 @@ class Notifier < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: NEW_COMMENT_EVENT}.to_json
     track_campaign("new_comment")
 
-    @commentor = User.with_username(commentor_username)
-    @user = User.with_username(username)
+    @commentor = User.find_by_username(commentor_username)
+    @user = User.find_by_username(username)
     @comment = Comment.find(comment_id)
     @user.touch(:last_email_sent)
 
@@ -109,8 +109,8 @@ class Notifier < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: NEW_COMMENT_EVENT}.to_json
     track_campaign("new_comment")
 
-    @commentor = User.with_username(commentor_username)
-    @user = User.with_username(username)
+    @commentor = User.find_by_username(commentor_username)
+    @user = User.find_by_username(username)
     @comment = Comment.find(comment_id)
     @user.touch(:last_email_sent)
 
@@ -120,7 +120,7 @@ class Notifier < ActionMailer::Base
   end
 
   def authy(username)
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     congratulation = %w{Awesome Brilliant Epic Sweet}.sample
     name = @user.short_name
     mail to: @user.email, subject: "[Coderwall] #{congratulation} #{name}! You have a new fan and they've sent you a message"
@@ -129,7 +129,7 @@ class Notifier < ActionMailer::Base
   def remind_to_create_team(username)
     track_campaign('remind_to_create_team')
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     @user.touch(:remind_to_create_team)
 
@@ -140,7 +140,7 @@ class Notifier < ActionMailer::Base
   def remind_to_invite_team_members(username)
     track_campaign('remind_to_invite_team_members')
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     @user.touch(:remind_to_invite_team_members)
 
@@ -153,7 +153,7 @@ class Notifier < ActionMailer::Base
 
     track_campaign('remind_to_create_protip')
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     @user.touch(:remind_to_create_protip)
 
@@ -164,7 +164,7 @@ class Notifier < ActionMailer::Base
 
     track_campaign('remind_to_create_skills')
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     @user.touch(:remind_to_create_skills)
 
@@ -175,7 +175,7 @@ class Notifier < ActionMailer::Base
 
     track_campaign('remind_to_link_accounts')
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     @user.touch(:remind_to_link_accounts)
 
@@ -185,7 +185,7 @@ class Notifier < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
     track_campaign("newsletter_delicious_coderwall")
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     mail to: @user.email, subject: "Coderwall just got delicious"
   end
@@ -194,7 +194,7 @@ class Notifier < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: NEWSLETTER_EVENT}.to_json
     track_campaign("newsletter_networks")
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     mail to: @user.email, subject: "Introducing Networks"
   end
@@ -204,7 +204,7 @@ class Notifier < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: NEW_APPLICANT_EVENT}.to_json
     #track_campaign("new_applicant")
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @job = Opportunity.find(job_id)
     @admin = User.find(@job.team.account.admin_id)
 
@@ -345,7 +345,7 @@ class Notifier < ActionMailer::Base
   end
 
   def template_example(username)
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     mail to: @user.email, subject: "This is a sample of all the template styles"
   end if Rails.env.development?
 

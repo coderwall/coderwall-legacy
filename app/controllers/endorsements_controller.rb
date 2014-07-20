@@ -22,7 +22,7 @@ class EndorsementsController < ApplicationController
   end
 
   def show #Used by api.coderwall.com
-    @user = User.with_username(params[:username])
+    @user = User.find_by_username(params[:username])
     return head(:not_found) if @user.nil?
     render json: {
       endorsements:  @user.endorsements_count,

@@ -19,7 +19,7 @@ class Subscription < ActionMailer::Base
     headers['X-Mailgun-Variables'] = {email_type: event}.to_json
     track_campaign(event)
 
-    @user = User.with_username(username)
+    @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
     @plan = plan
     @capability = plan_capability(plan)

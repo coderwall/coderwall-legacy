@@ -4,7 +4,7 @@ class BuildBioAndJoinedDates < Struct.new(:username)
   @queue = 'HIGH'
 
   def perform
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     unless user.github.blank? && user.joined_github_on.blank?
       user.joined_github_on = (user.send(:load_github_profile) || {})[:created_at]
     end

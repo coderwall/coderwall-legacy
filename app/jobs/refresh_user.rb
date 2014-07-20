@@ -17,7 +17,7 @@ class RefreshUser
 
   protected
   def refresh!
-    user = User.with_username(@username)
+    user = User.find_by_username(@username)
 
     if user.github_id
       user.destroy_github_cache

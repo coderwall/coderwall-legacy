@@ -1,5 +1,5 @@
 # encoding: utf-8
-
+# Postgresed  [WIP] : Pg_Team
 require 'search'
 
 class Team
@@ -631,7 +631,7 @@ class Team
   end
 
   def log_history!
-    REDIS.rpush("team:#{id.to_s}:score", {
+    Redis.current.rpush("team:#{id.to_s}:score", {
       date:  Date.today,
         score: self.score,
         size:  self.size
@@ -686,27 +686,27 @@ class Team
 
   def viewed_by(viewer)
     epoch_now = Time.now.to_i
-    REDIS.incr(impressions_key)
+    Redis.current.incr(impressions_key)
     if viewer.is_a?(User)
-      REDIS.zadd(user_views_key, epoch_now, viewer.id)
+      Redis.current.zadd(user_views_key, epoch_now, viewer.id)
     else
-      REDIS.zadd(user_anon_views_key, epoch_now, viewer)
+      Redis.current.zadd(user_anon_views_key, epoch_now, viewer)
     end
   end
 
   def impressions
-    REDIS.get(impressions_key).to_i
+    Redis.current.get(impressions_key).to_i
   end
 
   def viewers(since=0)
     epoch_now  = Time.now.to_i
-    viewer_ids = REDIS.zrevrangebyscore(user_views_key, epoch_now, since)
+    viewer_ids = Redis.current.zrevrangebyscore(user_views_key, epoch_now, since)
     User.where(id: viewer_ids).all
   end
 
   def total_views(epoch_since = 0)
     epoch_now = Time.now.to_i
-    REDIS.zcount(user_views_key, epoch_since, epoch_now) + REDIS.zcount(user_anon_views_key, epoch_since, epoch_now)
+    Redis.current.zcount(user_views_key, epoch_since, epoch_now) + Redis.current.zcount(user_anon_views_key, epoch_since, epoch_now)
   end
 
   def followers
@@ -739,7 +739,7 @@ class Team
 
   def generate_event
     only_member_is_creator = team_members.first.try(:id)
-    GenerateEventJob.perform_async(self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
+    enqueue(GenerateEvent, self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
   end
 
   def to_event_hash
@@ -756,6 +756,7 @@ class Team
     end
   end
 
+  #Will delete , it not even working
   def upcoming_events
     team_members.collect do |member|
 
@@ -774,6 +775,7 @@ class Team
     all_jobs.valid
   end
 
+  #Replaced with jobs
   def all_jobs
     Opportunity.where(team_document_id: self.id.to_s).order('created_at DESC')
   end
@@ -781,11 +783,11 @@ class Team
   def record_exit(viewer, exit_url, exit_target_type, furthest_scrolled, time_spent)
     epoch_now = Time.now.to_i
     data      = visitor_data(exit_url, exit_target_type, furthest_scrolled, time_spent, (viewer.respond_to?(:id) && viewer.try(:id)) || viewer, epoch_now, nil)
-    REDIS.zadd(user_detail_views_key, epoch_now, data)
+    Redis.current.zadd(user_detail_views_key, epoch_now, data)
   end
 
   def detailed_visitors(since = 0)
-    REDIS.zrangebyscore(user_detail_views_key, since, Time.now.to_i).map do |visitor_string|
+    Redis.current.zrangebyscore(user_detail_views_key, since, Time.now.to_i).map do |visitor_string|
       visitor = HashStringParser.better_than_eval(visitor_string)
       visitor[:user] = identify_visitor(visitor[:user_id])
       visitor
@@ -793,7 +795,7 @@ class Team
   end
 
   def simple_visitors(since = 0)
-    all_visitors = REDIS.zrangebyscore(user_views_key, since, Time.now.to_i, withscores: true) + REDIS.zrangebyscore(user_anon_views_key, since, Time.now.to_i, withscores: true)
+    all_visitors = Redis.current.zrangebyscore(user_views_key, since, Time.now.to_i, withscores: true) + fRedis.current.zrangebyscore(user_anon_views_key, since, Time.now.to_i, withscores: true)
     Hash[*all_visitors.flatten].collect do |viewer_id, timestamp|
       visitor_data(nil, nil, nil, 0, viewer_id, timestamp, identify_visitor(viewer_id))
     end
@@ -986,6 +988,7 @@ class Team
     user.is_a?(User) ? user.id : user
   end
 
+  #Replaced with team_size attribute
   def update_team_size!
     self.size = User.where(team_document_id: self.id.to_s).count
   end

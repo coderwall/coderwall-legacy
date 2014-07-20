@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.with_username(user_show_params[:username])
+    @user = User.find_by_username(user_show_params[:username])
 
     respond_to do |format|
       format.html do

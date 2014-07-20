@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   def viewing_user
     @viewing_user ||= current_user || begin
       if cookies[:identity]
-        User.with_username(cookies[:identity])
+        User.find_by_username(cookies[:identity])
       end
     end
   end

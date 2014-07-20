@@ -15,7 +15,7 @@ class ImportProtip < Struct.new(:type, :arg1)
   end
 
   def import_github_follows(username)
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     user.build_github_proptips_fast
   end
 
@@ -25,7 +25,7 @@ class ImportProtip < Struct.new(:type, :arg1)
   end
 
   def autsubscribe_users(username)
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     user.speciality_tags.each do |speciality|
       Tag.find_or_create_by_name(speciality)
       user.subscribe_to(speciality)

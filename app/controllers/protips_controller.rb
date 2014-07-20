@@ -78,7 +78,7 @@ class ProtipsController < ApplicationController
   def user
     user_params = params.permit(:username, :page, :per_page)
 
-    user = User.with_username(params[:username]) unless params[:username].blank?
+    user = User.find_by_username(params[:username]) unless params[:username].blank?
     return redirect_to(protips_path) if user.nil?
     @protips    = protips_for_user(user,user_params)
     @topics     = [user.username]

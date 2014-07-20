@@ -293,16 +293,15 @@ RSpec.describe Protip, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: protips
 #
 #  id                  :integer          not null, primary key
-#  public_id           :string(255)      indexed
+#  public_id           :string(255)
 #  kind                :string(255)
 #  title               :string(255)
 #  body                :text
-#  user_id             :integer          indexed
+#  user_id             :integer
 #  created_at          :datetime
 #  updated_at          :datetime
 #  score               :float

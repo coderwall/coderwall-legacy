@@ -66,9 +66,7 @@ gem 'kaminari'
 gem 'chronic'
 
 # Redis
-gem 'hiredis'
-gem 'redis', require: ['redis', 'redis/connection/hiredis']
-gem 'redis-rails'
+gem 'redis-rails' , '~> 3.2'
 
 # Background Job Processing
 gem 'resque'
@@ -123,7 +121,7 @@ gem 'mail'
 gem 'mini_magick'
 gem 'mixpanel'
 gem 'never_wastes'
-gem 'octokit', '~> 1.23.0'
+gem 'octokit'
 gem 'pubnub', '0.1.9'
 gem 'querystring'
 gem 'rails_autolink'
@@ -134,7 +132,7 @@ gem 'simple_form'
 gem 'tweet-button'
 gem 'mail_view'
 gem 'local_time'
-gem 'github-api'
+gem 'github_api'
 
 # Mongo
 gem 'mongoid'
@@ -163,6 +161,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'syntax'
   gem 'annotate'
+  gem 'rspec-rails'
 end
 
 group :test do
@@ -172,11 +171,11 @@ group :test do
   gem 'database_cleaner'
   gem 'fuubar' , '2.0.0.rc1'
   gem 'resque_spec'
-  gem 'rspec-rails'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'
   gem 'webmock', '<1.16'
+  gem 'shoulda-matchers'
 end
 
 group :production do

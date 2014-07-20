@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   def force
     head(:forbidden) unless Rails.env.test? || Rails.env.development? || current_user.admin?
     sign_out
-    sign_in(@user = User.with_username(params[:username]))
+    sign_in(@user = User.find_by_username(params[:username]))
     return redirect_to(badge_url(username: params[:username]))
   end
 

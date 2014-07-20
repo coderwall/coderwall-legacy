@@ -31,13 +31,12 @@ Fabricator(:github_fork_fact, from: :github_original_fact) do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: facts
 #
 #  id          :integer          not null, primary key
-#  identity    :string(255)      indexed
-#  owner       :string(255)      indexed
+#  identity    :string(255)
+#  owner       :string(255)
 #  name        :string(255)
 #  url         :string(255)
 #  tags        :text

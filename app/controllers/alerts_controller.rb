@@ -21,9 +21,9 @@ class AlertsController < ApplicationController
   def index
     @alerts = []
     [:traction, :google_analytics].each do |type|
-      count = REDIS.get(count_key(type))
+      count = Redis.current.get(count_key(type))
       next if count.nil?
-      @alerts << { type: type, count: count, data: REDIS.zrangebyscore(history_key(type), 0, Time.now.to_i, withscores: true) }
+      @alerts << { type: type, count: count, data: Redis.current.zrangebyscore(history_key(type), 0, Time.now.to_i, withscores: true) }
     end
   end
 
@@ -48,7 +48,7 @@ class AlertsController < ApplicationController
   def process_traction_alert(data)
     if can_report_traction?(data[:url])
       update_history
-      REDIS.set(last_sent_key(:traction, data[:url]), Time.now.to_i)
+      Redis.current.set(last_sent_key(:traction, data[:url]), Time.now.to_i)
       Notifier.alert_admin(:traction, data[:url], data[:message]).deliver
     end
   end
@@ -60,22 +60,22 @@ class AlertsController < ApplicationController
     if can_report_visitors?
       if data[:viewers] > ENV['SITE_VISITORS_MAX_ALERT_LIMIT']
         update_history
-        REDIS.set(last_sent_key(:google_analytics), Time.now.to_i)
+        Redis.current.set(last_sent_key(:google_analytics), Time.now.to_i)
         Notifier.alert_admin(:a_lot_of_visitors, data[:url], message).deliver!
       elsif data[:viewers] < ENV['SITE_VISITORS_MIN_ALERT_LIMIT']
         update_history
-        REDIS.set(last_sent_key(:google_analytics), Time.now.to_i)
+        Redis.current.set(last_sent_key(:google_analytics), Time.now.to_i)
         Notifier.alert_admin(:too_few_visitors, data[:url], message).deliver!
       end
     end
   end
 
   def can_report_visitors?
-    Time.at(REDIS.get(last_sent_key(:google_analytics)).to_i) < GA_VISITORS_ALERT_INTERVAL.ago
+    Time.at(Redis.current.get(last_sent_key(:google_analytics)).to_i) < GA_VISITORS_ALERT_INTERVAL.ago
   end
 
   def can_report_traction?(url)
-    Time.at(REDIS.get(last_sent_key(:traction, url)).to_i) < TRACTION_ALERT_INTERVAL.ago
+    Time.at(Redis.current.get(last_sent_key(:traction, url)).to_i) < TRACTION_ALERT_INTERVAL.ago
   end
 
   def last_sent_key(type, subkey=nil)
@@ -93,10 +93,10 @@ class AlertsController < ApplicationController
   end
 
   def update_stats
-    REDIS.incr(count_key(@alert[:type]))
+    Redis.current.incr(count_key(@alert[:type]))
   end
 
   def update_history
-    REDIS.zadd(history_key(@alert[:type]), Time.now.to_i, @alert[:data])
+    Redis.current.zadd(history_key(@alert[:type]), Time.now.to_i, @alert[:data])
   end
 end

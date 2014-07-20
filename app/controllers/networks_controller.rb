@@ -104,7 +104,7 @@ class NetworksController < ApplicationController
   def user
     redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to view your networks") do
       user      = current_user
-      user      = User.with_username(params[:username]) if is_admin?
+      user      = User.find_by_username(params[:username]) if is_admin?
       @networks = user.networks
       @user     = user
       @index_networks_params = params.permit(:sort, :action)

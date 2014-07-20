@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe User, :type => :model do
+  it { is_expected.to have_one :github_profile }
+  it { is_expected.to have_many :github_repositories }
   before :each do
     User.destroy_all
   end
@@ -35,22 +37,22 @@ RSpec.describe User, :type => :model do
 
   it 'should not return incorrect user because of pattern matching' do
     user = Fabricate(:user, username: 'MDEITERS')
-    found = User.with_username('M_EITERS')
+    found = User.find_by_username('M_EITERS')
     expect(found).not_to eq(user)
   end
 
   it 'should find users by username when provider is blank' do
     user = Fabricate(:user, username: 'mdeiters')
-    expect(User.with_username('mdeiters', '')).to eq(user)
-    expect(User.with_username('mdeiters', nil)).to eq(user)
+    expect(User.find_by_username('mdeiters', '')).to eq(user)
+    expect(User.find_by_username('mdeiters', nil)).to eq(user)
   end
 
   it 'should find users ignoring case' do
     user = Fabricate(:user, username: 'MDEITERS', twitter: 'MDEITERS', github: 'MDEITERS', linkedin: 'MDEITERS')
-    expect(User.with_username('mdeiters')).to eq(user)
-    expect(User.with_username('mdeiters', :twitter)).to eq(user)
-    expect(User.with_username('mdeiters', :github)).to eq(user)
-    expect(User.with_username('mdeiters', :linkedin)).to eq(user)
+    expect(User.find_by_username('mdeiters')).to eq(user)
+    expect(User.find_by_username('mdeiters', :twitter)).to eq(user)
+    expect(User.find_by_username('mdeiters', :github)).to eq(user)
+    expect(User.find_by_username('mdeiters', :linkedin)).to eq(user)
   end
 
   it 'should return users with most badges' do
@@ -328,16 +330,15 @@ RSpec.describe User, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: users
 #
 #  id                            :integer          not null, primary key
-#  username                      :string(255)      indexed
+#  username                      :string(255)
 #  name                          :string(255)
 #  email                         :string(255)
 #  location                      :string(255)
-#  old_github_token              :string(255)      indexed
+#  old_github_token              :string(255)
 #  state                         :string(255)
 #  created_at                    :datetime
 #  updated_at                    :datetime
@@ -350,7 +351,7 @@ end
 #  bitbucket                     :string(255)
 #  codeplex                      :string(255)
 #  login_count                   :integer          default(0)
-#  last_request_at               :datetime
+#  last_request_at               :datetime         default(2014-07-17 13:10:04 UTC)
 #  achievements_checked_at       :datetime         default(1914-02-20 22:39:10 UTC)
 #  claim_code                    :text
 #  github_id                     :integer
@@ -374,18 +375,17 @@ end
 #  zerply                        :string(255)
 #  thumbnail_url                 :text
 #  linkedin                      :string(255)
-#  linkedin_id                   :string(255)      indexed
+#  linkedin_id                   :string(255)
 #  linkedin_token                :string(255)
-#  twitter_id                    :string(255)      indexed
+#  twitter_id                    :string(255)
 #  twitter_token                 :string(255)
 #  twitter_secret                :string(255)
 #  linkedin_secret               :string(255)
 #  last_email_sent               :datetime
 #  linkedin_public_url           :string(255)
-#  beta_access                   :boolean          default(FALSE)
 #  redemptions                   :text
 #  endorsements_count            :integer          default(0)
-#  team_document_id              :string(255)      indexed
+#  team_document_id              :string(255)
 #  speakerdeck                   :string(255)
 #  slideshare                    :string(255)
 #  last_refresh_at               :datetime         default(1970-01-01 00:00:00 UTC)

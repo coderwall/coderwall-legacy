@@ -1,12 +1,11 @@
 if ENV['COVERAGE']
   require 'simplecov'
   SimpleCov.start 'rails'
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
 end
 
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
-
-ENV['RAILS_ENV'] ||= 'test'
+ENV['RAILS_ENV'] = 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
@@ -31,8 +30,8 @@ RSpec.configure do |config|
   config.use_transactional_examples = false
 
   config.before(:all) do
-    REDIS.SELECT(testdb = 1)
-    REDIS.flushdb
+    Redis.current.SELECT(testdb = 1)
+    Redis.current.flushdb
 
   end
 

@@ -4,7 +4,7 @@ class AwardUser < Struct.new(:username, :badges)
   @queue = 'LOW'
 
   def perform
-    user = User.with_username(username)
+    user = User.find_by_username(username)
 
     if badges.first.is_a?(String)
       badges.map!(&:constantize)

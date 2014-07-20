@@ -224,7 +224,7 @@ class Network < ActiveRecord::Base
   def resident_expert_from_env
     ENV['RESIDENT_EXPERTS'].split(",").each do |expert_config|
       network, resident_expert = expert_config.split(/:/).map(&:strip)
-      return User.with_username(resident_expert) if network == self.slug
+      return User.find_by_username(resident_expert) if network == self.slug
     end unless ENV['RESIDENT_EXPERTS'].nil?
     nil
   end

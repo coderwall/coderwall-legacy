@@ -3,16 +3,15 @@ Fabricator(:highlight) do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: highlights
 #
 #  id          :integer          not null, primary key
-#  user_id     :integer          indexed
+#  user_id     :integer
 #  description :text
 #  created_at  :datetime
 #  updated_at  :datetime
-#  featured    :boolean          default(FALSE), indexed
+#  featured    :boolean          default(FALSE)
 #
 # Indexes
 #

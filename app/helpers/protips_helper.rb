@@ -218,7 +218,7 @@ module ProtipsHelper
 
   def protip_topic_page_title(topics)
     username = topics.is_a?(Array) ? (topics.size == 1 ? topics.first : nil) : topics
-    unless username.nil? or (user = User.with_username(username)).blank?
+    unless username.nil? or (user = User.find_by_username(username)).blank?
       "Coderwall - Trending Pro tips by #{user.name}"
     else
       "Coderwall - Trending Pro tips #{"about #{topics_to_sentence(topics)} " unless topics.blank?}by top developers in the world!"

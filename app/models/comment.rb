@@ -139,16 +139,15 @@ class Comment < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: comments
 #
 #  id                :integer          not null, primary key
 #  title             :string(50)       default("")
 #  comment           :text             default("")
-#  commentable_id    :integer          indexed
-#  commentable_type  :string(255)      indexed
-#  user_id           :integer          indexed
+#  commentable_id    :integer
+#  commentable_type  :string(255)
+#  user_id           :integer
 #  likes_cache       :integer          default(0)
 #  likes_value_cache :integer          default(0)
 #  created_at        :datetime

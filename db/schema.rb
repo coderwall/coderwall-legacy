@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140719160422) do
+ActiveRecord::Schema.define(:version => 20140720121419) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -205,6 +205,7 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
     t.string   "location_city"
     t.boolean  "apply",            :default => false
     t.string   "public_id"
+    t.integer  "team_id"
   end
 
   create_table "pictures", :force => true do |t|
@@ -216,13 +217,14 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
 
   create_table "plans", :force => true do |t|
     t.integer  "amount"
-    t.string   "interval"
+    t.string   "interval",            :default => "month"
     t.string   "name"
-    t.string   "currency"
+    t.string   "currency",            :default => "usd"
     t.string   "public_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "analytics",  :default => false
+    t.boolean  "analytics",           :default => false
+    t.integer  "interval_in_seconds", :default => 2592000
   end
 
   create_table "processing_queues", :force => true do |t|
@@ -356,6 +358,54 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
     t.string "name"
   end
 
+  create_table "teams", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "teams_account_plans", :id => false, :force => true do |t|
+    t.integer "plan_id"
+    t.integer "account_id"
+  end
+
+  create_table "teams_accounts", :force => true do |t|
+    t.integer  "team_id",               :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.string   "stripe_card_token",     :null => false
+    t.string   "stripe_customer_token", :null => false
+    t.integer  "admin_id",              :null => false
+    t.datetime "trial_end"
+  end
+
+  create_table "teams_links", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.integer  "team_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "teams_locations", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state_code"
+    t.string   "country"
+    t.integer  "team_id",     :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "teams_members", :force => true do |t|
+    t.integer  "team_id",                   :null => false
+    t.integer  "user_id",                   :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "team_size",  :default => 0
+  end
+
   create_table "tokens", :force => true do |t|
     t.string   "token"
     t.string   "secret"
@@ -474,5 +524,76 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
   add_index "users", ["team_document_id"], :name => "index_users_on_team_document_id"
   add_index "users", ["twitter_id"], :name => "index_users_on_twitter_id", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "users_github_organizations", :force => true do |t|
+    t.string   "login"
+    t.string   "company"
+    t.string   "blog"
+    t.string   "location"
+    t.string   "url"
+    t.integer  "github_id"
+    t.datetime "github_created_at"
+    t.datetime "github_updated_at"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  create_table "users_github_organizations_followers", :id => false, :force => true do |t|
+    t.integer  "organization_id", :null => false
+    t.integer  "profile_id",      :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "users_github_profiles", :force => true do |t|
+    t.string   "login"
+    t.string   "name"
+    t.string   "company"
+    t.string   "location"
+    t.integer  "github_id",  :null => false
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "users_github_profiles_followers", :id => false, :force => true do |t|
+    t.integer  "follower_id", :null => false
+    t.integer  "profile_id",  :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "users_github_repositories", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "full_name"
+    t.string   "homepage"
+    t.boolean  "fork",                        :default => false
+    t.integer  "forks_count",                 :default => 0
+    t.datetime "forks_count_updated_at",      :default => '2014-07-18 23:03:00'
+    t.integer  "stargazers_count",            :default => 0
+    t.datetime "stargazers_count_updated_at", :default => '2014-07-18 23:03:00'
+    t.string   "language"
+    t.integer  "followers_count",             :default => 0,                     :null => false
+    t.integer  "github_id",                                                      :null => false
+    t.integer  "owner_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
+  end
+
+  create_table "users_github_repositories_contributors", :id => false, :force => true do |t|
+    t.integer  "repository_id", :null => false
+    t.integer  "profile_id",    :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "users_github_repositories_followers", :id => false, :force => true do |t|
+    t.integer  "repository_id", :null => false
+    t.integer  "profile_id",    :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
 end

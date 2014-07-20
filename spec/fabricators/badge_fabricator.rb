@@ -3,15 +3,14 @@ Fabricator(:badge) do
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: badges
 #
 #  id               :integer          not null, primary key
 #  created_at       :datetime
 #  updated_at       :datetime
-#  user_id          :integer          indexed, indexed => [badge_class_name]
-#  badge_class_name :string(255)      indexed => [user_id]
+#  user_id          :integer
+#  badge_class_name :string(255)
 #
 # Indexes
 #

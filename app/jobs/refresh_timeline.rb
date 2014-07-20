@@ -4,7 +4,7 @@ class RefreshTimeline < Struct.new(:username)
   @queue = 'MEDIUM'
 
   def perform
-    user = User.with_username(username)
+    user = User.find_by_username(username)
     Event.create_timeline_for(user)
   end
 end

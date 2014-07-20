@@ -36,15 +36,14 @@ class Follow < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140713193201
 #
 # Table name: follows
 #
 #  id              :integer          not null, primary key
-#  followable_id   :integer          not null, indexed => [followable_type], indexed => [followable_type, follower_id]
-#  followable_type :string(255)      not null, indexed => [followable_id], indexed => [followable_id, follower_id]
-#  follower_id     :integer          not null, indexed => [follower_type], indexed => [followable_id, followable_type]
-#  follower_type   :string(255)      not null, indexed => [follower_id]
+#  followable_id   :integer          not null
+#  followable_type :string(255)      not null
+#  follower_id     :integer          not null
+#  follower_type   :string(255)      not null
 #  blocked         :boolean          default(FALSE), not null
 #  created_at      :datetime
 #  updated_at      :datetime
