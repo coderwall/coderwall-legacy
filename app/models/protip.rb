@@ -1000,7 +1000,7 @@ end
 #  created_by          :string(255)      default("self")
 #  featured            :boolean          default(FALSE)
 #  featured_at         :datetime
-#  upvotes_value_cache :integer          default(75)
+#  upvotes_value_cache :integer          default(0), not null
 #  boost_factor        :float            default(1.0)
 #  inappropriate       :integer          default(0)
 #  likes_count         :integer          default(0)

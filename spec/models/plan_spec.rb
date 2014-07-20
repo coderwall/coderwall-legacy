@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Plan, :type => :model do
-  skip "add some examples to (or delete) #{__FILE__}"
+  it {is_expected.to validate_presence_of(:amount)}
+  it {is_expected.to validate_presence_of(:name)}
+  it {is_expected.to validate_presence_of(:currency)}
 end
 
 # == Schema Information

@@ -1,40 +1,40 @@
 require 'stripe'
 
+# TODO
+# rename amount to price_in_cents
+# rename currency to price_currency
+
 class Plan < ActiveRecord::Base
   has_many :subscriptions
 
   after_create :register_on_stripe
-  after_destroy :deregister_on_stripe
+  after_destroy :unregister_from_stripe
 
-  before_validation :set_currency
   before_create :generate_public_id
 
   CURRENCIES = %w(usd)
   MONTHLY    = 'month'
 
-  validate :amount, presence: true
-  validate :name, presence: true
-  validate :currency, inclusion: { in: CURRENCIES }
+  validates :amount, presence: true
+  validates :name, presence: true
+  validates :currency, inclusion: { in: CURRENCIES }, presence: true
 
-  class << self
-    def enhanced_team_page_analytics
-      Plan.where(interval: MONTHLY).where('amount > 0').where(analytics: true).first
-    end
+  scope :enhanced_team_page_analytics, -> { where(interval: MONTHLY).where('amount > 0').where(analytics: true).first }
+  scope :enhanced_team_page_monthly, -> { where(interval: MONTHLY).where('amount > 0').first }
+  scope :enhanced_team_page_one_time, -> { where(interval: nil).where('amount > 0').first }
+  scope :enhanced_team_page_free, -> { where(interval: MONTHLY).where(amount: 0).first }
 
-    def enhanced_team_page_monthly
-      Plan.where(interval: MONTHLY).where('amount > 0').first
-    end
+  alias_attribute :stripe_plan_id, :public_id
 
-    def enhanced_team_page_one_time
-      Plan.where(interval: nil).where('amount > 0').first
-    end
-
-    def enhanced_team_page_free
-      Plan.where(interval: MONTHLY).where(amount: 0).first
-    end
-
+  #copy to sidekiq worker
+  def stripe_plan
+    Stripe::Plan.retrieve(stripe_plan_id)
+  rescue Stripe::InvalidRequestError
+    nil
   end
 
+
+  #sidekiq it
   def register_on_stripe
     if subscription?
       Stripe::Plan.create(
@@ -50,48 +50,36 @@ class Plan < ActiveRecord::Base
     errors.add :base, "There was a problem with the plan"
     self.destroy
   end
+  #sidekiq it
+  def unregister_from_stripe
+    if subscription?
+      plan_on_stripe = stripe_plan
+      plan_on_stripe.delete if plan_on_stripe
+    end
+  end
 
   def price
     amount / 100
   end
 
-  def deregister_on_stripe
-    if subscription?
-      plan_on_stripe = stripe_plan
-      plan_on_stripe.try(:delete)
-    end
-  end
-
-  def stripe_plan
-    Stripe::Plan.retrieve(stripe_plan_id)
-  rescue Stripe::InvalidRequestError
-    nil
-  end
-
-  def stripe_plan_id
-    self.public_id
-  end
-
-  def set_currency
-    self.currency = 'usd'
-  end
 
   def subscription?
-    not one_time?
+    !one_time?
   end
 
   def free?
-    self.amount == 0
+    amount.zero?
   end
 
+  # TODO refactor
+  # We should avoid nil.
   def one_time?
     self.interval.nil?
   end
 
-  def has_analytics?
-    self.analytics
-  end
+  alias_attribute :has_analytics?, :analytics
 
+  #TODO CHANGE with default in rails 4
   def generate_public_id
     self.public_id = SecureRandom.urlsafe_base64(4).downcase
   end

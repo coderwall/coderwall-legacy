@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140719160422) do
+ActiveRecord::Schema.define(:version => 20140720121419) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -217,13 +217,14 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
 
   create_table "plans", :force => true do |t|
     t.integer  "amount"
-    t.string   "interval"
+    t.string   "interval",            :default => "month"
     t.string   "name"
-    t.string   "currency"
+    t.string   "currency",            :default => "usd"
     t.string   "public_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "analytics",  :default => false
+    t.boolean  "analytics",           :default => false
+    t.integer  "interval_in_seconds", :default => 2592000
   end
 
   create_table "processing_queues", :force => true do |t|
@@ -362,10 +363,19 @@ ActiveRecord::Schema.define(:version => 20140719160422) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "teams_account_plans", :id => false, :force => true do |t|
+    t.integer "plan_id"
+    t.integer "account_id"
+  end
+
   create_table "teams_accounts", :force => true do |t|
-    t.integer  "team_id",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "team_id",               :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.string   "stripe_card_token",     :null => false
+    t.string   "stripe_customer_token", :null => false
+    t.integer  "admin_id",              :null => false
+    t.datetime "trial_end"
   end
 
   create_table "teams_links", :force => true do |t|

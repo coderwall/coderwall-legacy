@@ -3,7 +3,7 @@
 # Table name: users_github_organizations_followers
 #
 #  organization_id :integer          not null
-#  follower_id     :integer          not null
+#  profile_id      :integer          not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

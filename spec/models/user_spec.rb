@@ -351,7 +351,7 @@ end
 #  bitbucket                     :string(255)
 #  codeplex                      :string(255)
 #  login_count                   :integer          default(0)
-#  last_request_at               :datetime         default(2014-07-18 23:16:18 UTC)
+#  last_request_at               :datetime         default(2014-07-17 13:10:04 UTC)
 #  achievements_checked_at       :datetime         default(1914-02-20 22:39:10 UTC)
 #  claim_code                    :text
 #  github_id                     :integer
@@ -383,7 +383,6 @@ end
 #  linkedin_secret               :string(255)
 #  last_email_sent               :datetime
 #  linkedin_public_url           :string(255)
-#  beta_access                   :boolean          default(FALSE)
 #  redemptions                   :text
 #  endorsements_count            :integer          default(0)
 #  team_document_id              :string(255)
