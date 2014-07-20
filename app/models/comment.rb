@@ -89,13 +89,13 @@ class Comment < ActiveRecord::Base
   def generate_event(options={})
     event_type = event_type(options)
     data       = to_event_hash(options)
-    enqueue(GenerateEvent, event_type, event_audience(event_type), data, 1.minute)
+    GenerateEventJob.perform_async(event_type, event_audience(event_type), data, 1.minute)
 
     if event_type == :new_comment
       Notifier.new_comment(self.commentable.try(:user).try(:username), self.author.username, self.id).deliver unless commenting_on_own?
 
       if (mentioned_users = self.mentions).any?
-        enqueue(GenerateEvent, :comment_reply, Audience.users(mentioned_users.map(&:id)), data, 1.minute)
+        GenerateEventJob.perform_async(:comment_reply, Audience.users(mentioned_users.map(&:id)), data, 1.minute)
 
         mentioned_users.each do |mention|
           Notifier.comment_reply(mention.username, self.author.username, self.id).deliver

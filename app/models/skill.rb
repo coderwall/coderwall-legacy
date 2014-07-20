@@ -1,6 +1,4 @@
 class Skill < ActiveRecord::Base
-  include ResqueSupport::Basic
-
   never_wastes
 
   SPACE = ' '
@@ -113,7 +111,7 @@ class Skill < ActiveRecord::Base
   end
 
   def generate_event
-    enqueue(GenerateEvent, self.event_type, Audience.user_reach(self.user.id), self.to_event_hash)
+    GenerateEventJob.perform_async(self.event_type, Audience.user_reach(self.user.id), self.to_event_hash)
   end
 
   def to_event_hash

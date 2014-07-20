@@ -718,7 +718,7 @@ DEPENDENCIES
   awesome_print
   backbone-on-rails
   better_errors
-  bson_ext (~> 1.3)
+  bson_ext
   capybara
   carrierwave
   carrierwave-mongoid

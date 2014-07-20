@@ -2,8 +2,6 @@ require "net_validators"
 
 class User < ActiveRecord::Base
   include ActionController::Caching::Fragments
-  extend ResqueSupport::ActiveModel
-  include ResqueSupport::Basic
   include NetValidators
 
   attr_protected :admin, :id, :github_id, :twitter_id, :linkedin_id, :api_key
@@ -459,11 +457,11 @@ class User < ActiveRecord::Base
   end
 
   def add_all_github_badges
-    enqueue(GithubBadgeOrg, self.username, :add)
+    Resque.enqueue(GithubBadgeOrg, self.username, :add)
   end
 
   def remove_all_github_badges
-    enqueue(GithubBadgeOrg, self.username, :remove)
+    Resque.enqueue(GithubBadgeOrg, self.username, :remove)
   end
 
   def award_and_add_skill(badge)
@@ -891,7 +889,7 @@ class User < ActiveRecord::Base
 
   def generate_event(options={})
     event_type = self.event_type(options)
-    enqueue(GenerateEvent, event_type, event_audience(event_type, options), self.to_event_hash(options), 30.seconds)
+    GenerateEventJob.perform_async(event_type, event_audience(event_type, options), self.to_event_hash(options), 30.seconds)
   end
 
   def subscribed_channels

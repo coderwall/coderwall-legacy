@@ -1,6 +1,4 @@
 class Badge < ActiveRecord::Base
-  include ResqueSupport::Basic
-
   belongs_to :user, counter_cache: :badges_count, touch: true
   validates_uniqueness_of :badge_class_name, scope: :user_id
   after_create :generate_event
@@ -84,8 +82,8 @@ class Badge < ActiveRecord::Base
   end
 
   def generate_event
-    enqueue(GenerateEvent, self.event_type, Audience.user_reach(self.user.id), self.to_event_hash, 30.minutes)
-    enqueue(GenerateEvent, self.event_type, Audience.user(self.user.id), self.to_event_hash, 30.minutes)
+    GenerateEventJob.perform_async(self.event_type, Audience.user_reach(self.user.id), self.to_event_hash, 30.minutes)
+    GenerateEventJob.perform_async(self.event_type, Audience.user(self.user.id), self.to_event_hash, 30.minutes)
   end
 
   def to_event_hash

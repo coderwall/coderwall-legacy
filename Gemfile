@@ -139,7 +139,7 @@ gem 'github-api'
 gem 'mongoid'
 gem 'mongo'
 gem 'mongoid_taggable'
-gem 'bson_ext', '~> 1.3'
+gem 'bson_ext'
 
 group :development do
   gem 'better_errors'
