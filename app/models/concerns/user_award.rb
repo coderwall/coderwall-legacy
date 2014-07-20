@@ -2,7 +2,7 @@ module UserAward
   extend ActiveSupport::Concern
   included do
     def award(badge)
-      new_badge = self.badges.of_type(badge).first || self.badges.build(badge_class_name: badge.class.name)
+      badges.of_type(badge).first || badges.build(badge_class_name: badge.class.name)
     end
 
     def add_github_badge(badge)
@@ -14,11 +14,11 @@ module UserAward
     end
 
     def add_all_github_badges
-      enqueue(GithubBadgeOrg, self.username, :add)
+      GithubBadgeOrgJob.perform_async(username, :add)
     end
 
     def remove_all_github_badges
-      enqueue(GithubBadgeOrg, self.username, :remove)
+      GithubBadgeOrgJob.perform_async(username, :remove)
     end
 
     def award_and_add_skill(badge)

@@ -1,9 +1,9 @@
-class GithubBadgeOrg < Struct.new(:username, :action)
-  extend ResqueSupport::Basic
+class GithubBadgeOrgJob
+  include Sidekiq::Worker
 
-  @queue = 'HIGH'
+  sidekiq_options queue: :medium
 
-  def perform
+  def perform(username, action)
     user = User.find_by_username(username)
     unless user.nil? or user.github.nil?
       if action.to_sym == :add
