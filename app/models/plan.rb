@@ -5,8 +5,7 @@ require 'stripe'
 # rename currency to price_currency
 
 class Plan < ActiveRecord::Base
-  #FIXME: this is not working , the subscription model is a mailer
-  # has_many :subscriptions
+  has_many :subscriptions , class_name: 'Teams::AccountPlan'
 
   after_create :register_on_stripe
   after_destroy :unregister_from_stripe
