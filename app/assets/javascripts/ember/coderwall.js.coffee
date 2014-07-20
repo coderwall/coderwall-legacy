@@ -1,7 +1,7 @@
-#= require      ../vendor/ember
-#= require      ../vendor/ember-rest
-#= require      ../vendor/ember-routemanager
-#= require      ../vendor/sorted-array
+#= require      ember
+#= require      ember-rest
+#= require      ember-routemanager
+#= require      sorted-array
 #= require_self
 
 window.Coderwall = Ember.Application.create()

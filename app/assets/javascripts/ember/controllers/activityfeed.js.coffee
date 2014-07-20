@@ -1,6 +1,5 @@
-#= require vendor/history.adapter.jquery
-#= require vendor/history
-#window.console.log = ->
+#= require history.adapter.jquery
+#= require history
 
 Coderwall.activityFeedController = Ember.ArrayController.create(
   resourceType: Coderwall.Event

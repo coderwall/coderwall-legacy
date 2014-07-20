@@ -11,23 +11,24 @@ gem 'compass-rails'
 gem 'sass-rails', '~> 3.2.6'
 gem 'uglifier', '>= 1.0.3'
 # Assets
+gem 'jquery-rails', '= 2.0.3'
 gem 'rails-assets-font-awesome'
+
+# Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
+gem 'backbone-on-rails'
+gem 'ember-rails', github: 'emberjs/ember-rails'
 
 
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
+# Preparing for rails 4 migration
 gem 'strong_parameters'
 
 # Attachements
 gem 'carrierwave'
 gem 'carrierwave_backgrounder', '0.0.8' #background processing of images
 gem 'carrierwave-mongoid',  require: 'carrierwave/mongoid'
-
-# Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
-gem 'backbone-on-rails'
-gem 'ember-rails', github: 'emberjs/ember-rails'
-gem 'jquery-rails', '= 2.0.3'
 
 # HTML
 gem 'haml', '3.1.7'
