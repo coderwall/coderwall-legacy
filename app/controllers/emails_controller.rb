@@ -1,6 +1,6 @@
 class EmailsController < ApplicationController
   def unsubscribe
-    puts("Mailgun Unsubscribe: #{params.inspect}")
+    Rails.logger.info("Mailgun Unsubscribe: #{params.inspect}")
     if mailgun?(ENV['MAILGUN_API_KEY'], params['token'], params['timestamp'], params['signature'])
       if params[:email_type] == Notifier::WELCOME_EVENT
         user = User.where(email: params[:recipient]).first

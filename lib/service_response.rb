@@ -18,7 +18,6 @@ class ServiceResponse < Struct.new(:result, :headers)
   def next_page
     @next_page ||= begin
       if links = headers[:link]
-        puts("Found multiple links: #{links}")
         links = links.split(',').collect { |parts| normalize_link(parts) }
         next_link = links.detect { |link| link[:name] == 'next' }
         next_link[:url] if next_link

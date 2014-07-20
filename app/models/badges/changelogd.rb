@@ -68,7 +68,6 @@
     end
 
     def repos_in(url)
-      puts "url #{url}"
       res = Servant.get(url)
       doc = Nokogiri::HTML(res.to_s)
       doc.xpath('//post/link-description').collect do |element|

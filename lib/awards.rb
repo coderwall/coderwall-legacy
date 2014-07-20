@@ -5,7 +5,7 @@ module Awards
 
   def award_from_file(filename)
     text = File.read(filename)
-    puts "read #{filename}"
+    
     unless text.nil?
       csv = CSV.parse(text, headers: false)
       csv.each do |row|
@@ -13,7 +13,6 @@ module Awards
         date = row.shift
         provider = row.shift
         row.to_a.each do |candidate|
-          puts "award #{badge} to #{candidate}"
           enqueue(Award, badge, date, provider, candidate)
         end
       end

@@ -13,10 +13,8 @@ class ActivateUser < RefreshUser
     return if user.active?
     refresh!
     if activate_user?(user)
-      puts("Activating user #{username}")
       user.activate!
       Notifier.welcome_email(username).deliver
-      puts("Welcome email sent #{username}")
     end
   end
 

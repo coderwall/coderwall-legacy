@@ -20,6 +20,7 @@ require 'sidekiq/testing/inline'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 DatabaseCleaner.logger = Rails.logger
+Rails.logger.level = 5
 
 LOCAL_ELASTIC_SEARCH_SERVER = %r[^http://localhost:9200] unless defined?(LOCAL_ELASTIC_SEARCH_SERVER)
 

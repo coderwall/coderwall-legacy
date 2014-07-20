@@ -718,28 +718,6 @@ class Team
     Country.where(name: User.select([:country, 'count(country) as count']).group(:country).order('count DESC').limit(10).map(&:country)).reverse
   end
 
-  def self.test_scores
-    [
-      'GitHub',
-      'Cubox',
-      'Nodejitsu',
-      'Code for America',
-      'EmberAds',
-      'LivingSocial',
-      'AppDev',
-      'Groupon',
-      'Relevance',
-      'ThoughtWorks',
-      'Heroku',
-      '37signals',
-      'Flattr',
-      'Clock'
-    ].collect { |name| t = Team.where(name: name).first; puts name; t.recalculate!; t }.sort.reverse.each do |t|
-      puts "#{t.score} => #{t.name}"
-    end
-    nil
-  end
-
   def primary_address
     team_locations.first.try(:address) || primary_address_name
   end
