@@ -30,4 +30,5 @@ class SearchResultsWrapper
   end
 
   alias_method :count, :total
+  alias_method :failure?, :errored?
 end
