@@ -739,7 +739,7 @@ class Team
 
   def generate_event
     only_member_is_creator = team_members.first.try(:id)
-    GenerateEventJob.perform_async(self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
+    enqueue(GenerateEvent, self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
   end
 
   def to_event_hash
@@ -795,7 +795,7 @@ class Team
   end
 
   def simple_visitors(since = 0)
-    all_visitors = Redis.current.zrangebyscore(user_views_key, since, Time.now.to_i, withscores: true) + Redis.current.zrangebyscore(user_anon_views_key, since, Time.now.to_i, withscores: true)
+    all_visitors = Redis.current.zrangebyscore(user_views_key, since, Time.now.to_i, withscores: true) + fRedis.current.zrangebyscore(user_anon_views_key, since, Time.now.to_i, withscores: true)
     Hash[*all_visitors.flatten].collect do |viewer_id, timestamp|
       visitor_data(nil, nil, nil, 0, viewer_id, timestamp, identify_visitor(viewer_id))
     end

@@ -5,7 +5,8 @@ require 'stripe'
 # rename currency to price_currency
 
 class Plan < ActiveRecord::Base
-  has_many :subscriptions
+  #FIXME: this is not working , the subscription model is a mailer
+  # has_many :subscriptions
 
   after_create :register_on_stripe
   after_destroy :unregister_from_stripe
@@ -13,16 +14,36 @@ class Plan < ActiveRecord::Base
   before_create :generate_public_id
 
   CURRENCIES = %w(usd)
-  MONTHLY    = 'month'
+  MONTHLY = 'month'
 
   validates :amount, presence: true
   validates :name, presence: true
-  validates :currency, inclusion: { in: CURRENCIES }, presence: true
+  validates :currency, inclusion: {in: CURRENCIES}, presence: true
 
-  scope :enhanced_team_page_analytics, -> { where(interval: MONTHLY).where('amount > 0').where(analytics: true).first }
-  scope :enhanced_team_page_monthly, -> { where(interval: MONTHLY).where('amount > 0').first }
-  scope :enhanced_team_page_one_time, -> { where(interval: nil).where('amount > 0').first }
-  scope :enhanced_team_page_free, -> { where(interval: MONTHLY).where(amount: 0).first }
+  scope :monthly, -> { where(interval: MONTHLY) }
+  scope :one_time, -> { where(interval: nil) }
+  scope :paid, -> { where('amount > 0') }
+  scope :free, -> { where(amount: 0) }
+  scope :with_analytics, -> { where(analytics: true) }
+  scope :without_analytics, -> { where(analytics: false) }
+  class << self
+    def enhanced_team_page_analytics
+      monthly.paid.with_analytics.first
+    end
+
+    def enhanced_team_page_monthly
+      monthly.paid.first
+    end
+
+    def enhanced_team_page_one_time
+      one_time.paid.first
+    end
+
+    def enhanced_team_page_free
+      monthly.free.first
+    end
+  end
+
 
   alias_attribute :stripe_plan_id, :public_id
 
@@ -38,23 +59,24 @@ class Plan < ActiveRecord::Base
   def register_on_stripe
     if subscription?
       Stripe::Plan.create(
-        amount:   self.amount,
-        interval: self.interval,
-        name:     self.name,
-        currency: self.currency,
-        id:       self.stripe_plan_id
+          amount: self.amount,
+          interval: self.interval,
+          name: self.name,
+          currency: self.currency,
+          id: self.stripe_plan_id
       )
     end
   rescue Stripe::InvalidRequestError => e
-    Rails.logger.error "Stripe error while creating customer: #{e.message}"  if ENV['DEBUG']
+    Rails.logger.error "Stripe error while creating customer: #{e.message}" if ENV['DEBUG']
     errors.add :base, "There was a problem with the plan"
     self.destroy
   end
+
   #sidekiq it
   def unregister_from_stripe
     if subscription?
       plan_on_stripe = stripe_plan
-      plan_on_stripe.delete if plan_on_stripe
+      plan_on_stripe.try(:delete)
     end
   end
 
