@@ -297,6 +297,10 @@ body.protip-single {
     z-index: 9999;
     //@include border-radius-bottom(8px);
     width: 70%;
+    // class added when there is no comments
+    &.no-comment {
+      padding-top: 0;
+    }
 
     a {
       color: $dark-grey;

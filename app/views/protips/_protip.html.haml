@@ -108,12 +108,13 @@
         =raw sanitize(protip.to_html)
 
     -if include_comments
-      %section.comments
-        %h2.comments-header
-          %i.fa.fa-comments
-          Comments
-        %ul.comment-list
-          = render protip.comments
+      %section.comments{class:('no-comments' if protip.comments.empty? )}
+        -if protip.comments.empty?
+          %h2.comments-header
+            %i.fa.fa-comments
+            Comments
+          %ul.comment-list
+            = render protip.comments
 
         = render 'comments/add_comment'
 
