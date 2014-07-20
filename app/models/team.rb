@@ -6,7 +6,6 @@ class Team
   include Mongoid::Document
   include Mongoid::Timestamps
   include Tire::Model::Search
-  include ResqueSupport::Basic
   include LeaderboardRedisRank
   include SearchModule
 
@@ -740,7 +739,7 @@ class Team
 
   def generate_event
     only_member_is_creator = team_members.first.try(:id)
-    enqueue(GenerateEvent, self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
+    GenerateEventJob.perform_async(self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
   end
 
   def to_event_hash
@@ -869,7 +868,7 @@ class Team
   end
 
   def rerank!
-    enqueue(ProcessTeam, :recalculate, self.id)
+    Resque.enqueue(ProcessTeam, :recalculate, self.id)
   end
 
   def can_post_job?

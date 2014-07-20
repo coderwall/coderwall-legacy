@@ -1,6 +1,4 @@
 class Endorsement < ActiveRecord::Base
-  include ResqueSupport::Basic
-
   belongs_to :endorsed, class_name: User.name, foreign_key: :endorsed_user_id, counter_cache: :endorsements_count, touch: true
   belongs_to :endorser, class_name: User.name, foreign_key: :endorsing_user_id
   belongs_to :skill, counter_cache: :endorsements_count, touch: :updated_at
@@ -11,7 +9,7 @@ class Endorsement < ActiveRecord::Base
   after_create :generate_event
 
   def generate_event
-    enqueue(GenerateEvent, self.event_type, Audience.user(self.endorsed.id), self.to_event_hash, 1.minute)
+    GenerateEventJob.perform_async(self.event_type, Audience.user(self.endorsed.id), self.to_event_hash, 1.minute)
   end
 
   def to_event_hash

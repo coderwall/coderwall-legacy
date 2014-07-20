@@ -1,6 +1,4 @@
 class Follow < ActiveRecord::Base
-  include ResqueSupport::Basic
-
   extend ActsAsFollower::FollowerLib
   extend ActsAsFollower::FollowScopes
 
@@ -15,7 +13,7 @@ class Follow < ActiveRecord::Base
 
   def generate_event
     if followable.kind_of?(User) or followable.kind_of?(Team)
-      enqueue(GenerateEvent, self.event_type, Audience.user(self.followable.try(:id)), self.to_event_hash, 1.minute)
+      GenerateEventJob.perform_async(self.event_type, Audience.user(self.followable.try(:id)), self.to_event_hash, 1.minute)
     end
   end
 

@@ -11,7 +11,6 @@ class Protip < ActiveRecord::Base
 
   include NetValidators
   include Tire::Model::Search
-  include ResqueSupport::Basic
   include Scoring::HotStream
   include SearchModule
   include Rakismet::Model
@@ -361,7 +360,7 @@ class Protip < ActiveRecord::Base
   def generate_event(options={})
     unless self.created_automagically? and self.topics.include?("github")
       event_type = self.event_type(options)
-      enqueue_in(10.minutes, GenerateEvent, event_type, event_audience(event_type), self.to_event_hash(options), 1.minute)
+      GenerateEventJob.perform_in(10.minutes, event_type, event_audience(event_type), self.to_event_hash(options), 1.minute)
     end
   end
 
