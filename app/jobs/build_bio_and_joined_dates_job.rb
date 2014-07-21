@@ -1,9 +1,9 @@
-class BuildBioAndJoinedDates < Struct.new(:username)
-  extend ResqueSupport::Basic
+class BuildBioAndJoinedDatesJob
+  include Sidekiq::Worker
 
-  @queue = 'HIGH'
+  sidekiq_options queue: :high
 
-  def perform
+  def perform(username)
     user = User.find_by_username(username)
     unless user.github.blank? && user.joined_github_on.blank?
       user.joined_github_on = (user.send(:load_github_profile) || {})[:created_at]

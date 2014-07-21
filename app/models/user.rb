@@ -129,7 +129,7 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
   mount_uploader :banner, BannerUploader
   mount_uploader :resume, ResumeUploader
-  process_in_background :banner, ResizeTiltShiftBanner
+  process_in_background :banner, ResizeTiltShiftBannerJob
 
   RESERVED = %w{
     achievements
@@ -375,8 +375,8 @@ class User < ActiveRecord::Base
 
   def complete_registration!(opts={})
     update_attribute(:state, PENDING)
-    Resque.enqueue(ActivateUser, self.username)
-    Resque.enqueue(AnalyzeUser, self.username)
+    ActivateUserJob.perform_async(username)
+    AnalyzeUserJob.perform_async(username)
   end
 
 
@@ -441,7 +441,7 @@ class User < ActiveRecord::Base
     skills.each { |skill| skill.apply_facts && skill.save }
     self.github_failures = 0
     save!
-    Resque.enqueue(RefreshUser, username, true)
+   RefreshUserJob.perform_async(username, true)
   end
 
 

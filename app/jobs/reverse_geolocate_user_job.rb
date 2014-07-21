@@ -1,12 +1,12 @@
 require_dependency 'reverse_geocoder'
 
-class ReverseGeolocateUser < Struct.new(:username, :ip_address)
-  extend ResqueSupport::Basic
+class ReverseGeolocateUserJob
+  include Sidekiq::Worker
   include ReverseGeocoder
 
-  @queue = 'HIGH'
+  sidekiq_options queue: :high
 
-  def perform
+  def perform(username, ip_address)
     user = User.find_by_username(username)
     unless user.nil? or user.ip_lat
       geocoder = MaxMind.new

@@ -1,7 +1,6 @@
 # encoding: utf-8
 class Network < ActiveRecord::Base
   include Tire::Model::Search
-  include ResqueSupport::Basic
 
   settings analysis: { analyzer: { exact_term_search: { "type"      => "keyword",
                                                         "tokenizer" => "keyword" } } }

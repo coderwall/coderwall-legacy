@@ -68,10 +68,6 @@ gem 'chronic'
 # Redis
 gem 'redis-rails' , '~> 3.2'
 
-# Background Job Processing
-gem 'resque'
-gem 'resque-scheduler'
-gem 'resque_mailer'
 
 gem 'sidekiq'
 gem 'sinatra'
@@ -171,7 +167,6 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'fuubar' , '2.0.0.rc1'
-  gem 'resque_spec'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'
@@ -182,7 +177,6 @@ end
 group :production do
   gem 'airbrake'
   gem 'heroku_rails_deflate'
-  gem 'newrelic_resque_agent'
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'rails_12factor'

@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
   def record_visit
     if viewing_user
       if viewing_user == current_user && (viewing_user.try(:last_request_at) || 1.week.ago) < 1.day.ago && viewing_user.active? && viewing_user.last_refresh_at < 2.days.ago
-        Resque.enqueue(RefreshUser, current_user.username)
+        RefreshUserJob.perform_async(current_user.username)
       end
       viewing_user.visited!
       Usage.page_view(viewing_user.id) unless viewing_user.admin?
@@ -132,7 +132,7 @@ class ApplicationController < ActionController::Base
 
   def record_location
     if viewing_user && viewing_user.ip_lat.nil? && deployment_environment?
-      Resque.enqueue(ReverseGeolocateUser, viewing_user.username, request.ip)
+      ReverseGeolocateUserJob.perform_async(viewing_user.username, request.ip)
     end
   end
 
@@ -243,7 +243,7 @@ class ApplicationController < ActionController::Base
       #options.merge!('signed up on' => current_user.created_at.to_formatted_s(:mixpanel),
       #               'achievements' => current_user.badges_count) if signed_in?
 
-      Resque.enqueue(MixpanelTracker::TrackEventJob, action_name, options, request.ip) if ENABLE_TRACKING
+    TrackEventJob.perform_async(action_name, options, request.ip) if ENABLE_TRACKING
     end
   rescue Exception => ex
     Rails.logger.error("MIXPANEL: Swallowing error when trying to record #{action_name}, #{ex.message}")

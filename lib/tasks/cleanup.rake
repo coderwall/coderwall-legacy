@@ -1,11 +1,10 @@
 namespace :cleanup do
-  include ResqueSupport::Basic
 
   namespace :protips do
     # PRODUCTION: RUNS DAILY
     task :associate_zombie_upvotes => :environment do
       Like.joins('inner join users on users.tracking_code = likes.tracking_code').where('likes.tracking_code is not null').where(:user_id => nil).find_each(:batch_size => 1000) do |like|
-        enqueue(ProcessLike, :associate_to_user, like.id)
+        ProcessLikeJob.perform_async(:associate_to_user, like.id)
       end
     end
 

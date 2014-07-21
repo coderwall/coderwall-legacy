@@ -1,12 +1,12 @@
-class ProcessTeam < Struct.new(:process_type, :team_id)
-  extend ResqueSupport::Basic
+class ProcessTeamJob
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
-  def perform
+  def perform(process_type, team_id)
     team = Team.find(team_id)
-    case process_type.to_sym
-      when :recalculate
+    case process_type
+      when 'recalculate'
         if team.team_members.size <= 0
           team.destroy
           Redis.current.zrem(Team::LEADERBOARD_KEY, team.id.to_s)
@@ -18,9 +18,9 @@ class ProcessTeam < Struct.new(:process_type, :team_id)
             Redis.current.zadd(Team::LEADERBOARD_KEY, team.score.to_f, team.id.to_s)
           end
         end
-      when :reindex
+      when 'reindex'
         Team.all.each do |team|
-          enqueue(IndexTeam, team.id)
+          enqueue(IndexTeamJob, team.id)
         end
     end
   end

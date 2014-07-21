@@ -1,9 +1,9 @@
-class AwardUser < Struct.new(:username, :badges)
-  extend ResqueSupport::Basic
+class AwardUserJob
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
-  def perform
+  def perform(username, badges)
     user = User.find_by_username(username)
 
     if badges.first.is_a?(String)

@@ -478,9 +478,8 @@ Badgiy::Application.routes.draw do
     get '/teams' => 'admin#teams', as: :teams
     get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
-    require 'resque/server'
-    mount Resque::Server.new, at: '/resque'
-    require 'sidekiq/web'
+
+    require 'sdekiq/web'
     mount Sidekiq::Web => '/sidekiq'
   end
 

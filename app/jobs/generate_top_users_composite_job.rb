@@ -1,5 +1,5 @@
-class GenerateTopUsersComposite
-  extend ResqueSupport::Basic
+class GenerateTopUsersCompositeJob
+  include Sidekiq::Worker
 
   IMAGE_PATH = Rails.root.join('public', 'images', 'top')
   WALL_IMAGE = IMAGE_PATH.join("wall.png")

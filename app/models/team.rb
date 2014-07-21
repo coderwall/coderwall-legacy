@@ -858,7 +858,7 @@ class Team
     if Rails.env.development? or Rails.env.test? or self.destroyed?
       self.tire.update_index
     else
-      Resque.enqueue(IndexTeam, self.id)
+      IndexTeamJob.perform_async(id)
     end
   end
 
@@ -870,7 +870,7 @@ class Team
   end
 
   def rerank!
-    Resque.enqueue(ProcessTeam, :recalculate, self.id)
+    ProcessTeamJob.perform_async('recalculate', id)
   end
 
   def can_post_job?

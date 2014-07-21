@@ -8,7 +8,7 @@ namespace :protips do
   # PRODUCTION: RUNS DAILY
   task recalculate_scores: :environment do
     Protip.where('created_at > ?', 25.hours.ago).where(upvotes_value_cache: nil).each do |protip|
-      ProcessProtip.perform_async(:recalculate_score, protip.id)
+      ProcessProtipJob.perform_async(:recalculate_score, protip.id)
     end
   end
 

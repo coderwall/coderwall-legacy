@@ -1,15 +1,15 @@
-class ImportProtip < Struct.new(:type, :arg1)
-  extend ResqueSupport::Basic
+class ImportProtip
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
-  def perform
-    case type.to_sym
-      when :github_follows
+  def perform(type, arg1)
+    case type
+      when 'github_follows'
         import_github_follows(arg1)
-      when :slideshare
+      when 'slideshare'
         import_slideshares(arg1)
-      when :subscriptions
+      when 'subscriptions'
         autosubscribe_users(arg1)
     end
   end
@@ -20,7 +20,7 @@ class ImportProtip < Struct.new(:type, :arg1)
   end
 
   def import_slideshares(fact_id)
-    fact = Fact.find(fact_id)
+    Fact.find(fact_id)
     #Importers::Protips::SlideshareImporter.import_from_fact(fact)
   end
 

@@ -1,9 +1,9 @@
-class CreateNetwork < Struct.new(:tag)
-  extend ResqueSupport::Basic
+class CreateNetworkJob
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
-  def perform
+  def perform(tag)
     top_tags = Protip.trending_topics
     sub_tags = Protip.tagged_with([tag], on: :topics).collect(&:topics).flatten
     sub_tags.delete_if { |sub_tag| top_tags.include? sub_tag }

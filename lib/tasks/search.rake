@@ -1,6 +1,4 @@
 namespace :search do
-  include ResqueSupport::Basic
-
   namespace :rebuild do
     desc 'Reindex all the searchable classes'
     task :all => :environment do
@@ -91,7 +89,7 @@ namespace :search do
       end
 
       unindexed_protips.each do |unindexed_protip_id|
-        enqueue(IndexProtip, unindexed_protip_id)
+        IndexProtip.perform_async(unindexed_protip_id)
       end
 
       puts "removed #{nonexistent_protips.count} protips and added #{unindexed_protips.count} protips"
@@ -103,7 +101,7 @@ namespace :search do
     unless ENV['NETWORK'].blank?
       network = Network.find_by_slug(ENV['NETWORK'])
       network.protips.select(:id).each do |protip|
-        enqueue(ProcessProtip, :recalculate_score, protip.id)
+        enqueue(ProcessProtipJob, :recalculate_score, protip.id)
       end
     end
   end

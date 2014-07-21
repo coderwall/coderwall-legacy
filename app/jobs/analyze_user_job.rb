@@ -1,9 +1,9 @@
-class AnalyzeUser < Struct.new(:username)
-  extend ResqueSupport::Basic
+class AnalyzeUserJob
+  include Sidekiq::Worker
 
-  @queue = 'HIGH'
+  sidekiq_options queue: :high
 
-  def perform
+  def perform(username)
     user = User.find_by_username(username)
     unless user.twitter.nil?
       RestClient.get "#{ENV['TWITTER_ANALYZER_URL']}/#{user.username}/#{user.twitter}"
