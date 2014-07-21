@@ -291,7 +291,7 @@
 #        letter_opener_letter          /letter_opener/:id/:style.html(.:format)               letter_opener/letters#show
 #
 
-CoderWall::Application.routes.draw do
+Coderwall::Application.routes.draw do
 
   # We get 10K's of requests for this route.
   get '/.json',       to: proc { [404, {}, ['']] }
