@@ -1,9 +1,9 @@
-class MergeSkill < Struct.new(:incorrect_skill_id, :correct_skill_name)
-  extend ResqueSupport::Basic
+class MergeSkillJob
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
-  def perform
+  def perform(incorrect_skill_id, correct_skill_name)
     incorrect_skill = Skill.find(incorrect_skill_id)
     correct_skill = incorrect_skill.user.skills.where(name: correct_skill_name).first
 

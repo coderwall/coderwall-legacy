@@ -5,7 +5,7 @@ namespace :award do
     # PRODUCTION: RUNS DAILY
     task :active => :environment do
       User.pending.where('last_request_at > ?', 1.week.ago).find_each(:batch_size => 1000) do |user|
-        Resque.enqueue(ActivateUser, user.username, always_activate=false)
+        ActivateUserJob.perform_async(user.username, always_activate=false)
       end
     end
 

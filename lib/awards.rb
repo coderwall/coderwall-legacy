@@ -1,7 +1,5 @@
-require 'resque_support'
 
 module Awards
-  include ResqueSupport::Basic
 
   def award_from_file(filename)
     text = File.read(filename)
@@ -13,7 +11,7 @@ module Awards
         date = row.shift
         provider = row.shift
         row.to_a.each do |candidate|
-          enqueue(Award, badge, date, provider, candidate)
+          AwardJob.perform_async(badge, date, provider, candidate)
         end
       end
     end

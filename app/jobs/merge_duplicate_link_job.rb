@@ -1,9 +1,9 @@
-class MergeDuplicateLink < Struct.new(:link)
-  extend ResqueSupport::Basic
+class MergeDuplicateLinkJob
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
-  def perform
+  def perform(link)
     all_links = ProtipLink.where(url: link).order('created_at ASC')
     protip_to_keep = all_links.shift.protip
     #merge

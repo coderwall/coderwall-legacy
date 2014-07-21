@@ -1,11 +1,11 @@
 namespace :top_users do
   task :generate => :environment do
-    GenerateTopUsersComposite.perform
+    GenerateTopUsersCompositeJob.new.perform
   end
 
   namespace :generate do
     task :async => :environment do
-      Resque.enqueue GenerateTopUsersComposite
+      GenerateTopUsersCompositeJob.perform_async
     end
   end
 end

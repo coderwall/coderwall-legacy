@@ -1,9 +1,9 @@
-class ResizeTiltShiftBanner < Struct.new(:klass, :id, :column)
-  extend ResqueSupport::Basic
+class ResizeTiltShiftBannerJob
+  include Sidekiq::Worker
 
-  @queue = 'HIGH'
+  sidekiq_options queue: :high
 
-  def perform
+  def perform(klass, id, column)
     image = klass.constantize.find(id)
     unless image.nil?
       image.send(:"#{column}").resize_to_fit(500, 375)

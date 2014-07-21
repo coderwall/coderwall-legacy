@@ -979,7 +979,7 @@ class Protip < ActiveRecord::Base
   end
 
   def analyze_spam
-    Resque.enqueue(AnalyzeSpam, { id: id, klass: self.class.name })
+    AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
   end
 
 end

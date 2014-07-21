@@ -1,5 +1,4 @@
 class Comment < ActiveRecord::Base
-  include ResqueSupport::Basic
   include ActsAsCommentable::Comment
   include Rakismet::Model
 
@@ -134,7 +133,7 @@ class Comment < ActiveRecord::Base
   end
 
   def analyze_spam
-    Resque.enqueue(AnalyzeSpam, { id: id, klass: self.class.name })
+    AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
   end
 end
 

@@ -1,7 +1,7 @@
-class Geolocate
-  extend ResqueSupport::Basic
+class GeolocateJob
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
   def perform
     User.active.not_geocoded.each do |user|

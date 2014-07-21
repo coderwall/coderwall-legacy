@@ -1,9 +1,9 @@
-class AssignNetworks < Struct.new(:username)
-  extend ResqueSupport::Basic
+class AssignNetworksJob
+  include Sidekiq::Worker
 
-  @queue = 'LOW'
+  sidekiq_options queue: :low
 
-  def perform
+  def perform(username)
     user = User.find_by_username(username)
     user.skills.map(&:name).each do |skill|
       Network.all_with_tag(skill).each do |network|

@@ -6,7 +6,7 @@ class RedemptionsController < ApplicationController
         if current_user.pending?
           current_user.activate!
           Notifier.welcome_email(current_user.username).deliver
-          Resque.enqueue(RefreshUser, current_user.username)
+          RefreshUserJob.perform_async(current_user.username)
         end
         redirect_to(destination_url)
       else

@@ -1,12 +1,10 @@
 namespace :teams do
-  include ResqueSupport::Basic
-
   # PRODUCTION: RUNS DAILY
   task :refresh => [:recalculate]
 
   task :recalculate => :environment do
     Team.all.each do |team|
-      enqueue(ProcessTeam, :recalculate, team.id)
+      ProcessTeamJob.perform_async('recalculate', team.id)
     end
   end
 

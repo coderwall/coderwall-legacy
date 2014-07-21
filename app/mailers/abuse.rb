@@ -1,5 +1,4 @@
 class Abuse < ActionMailer::Base
-  include Resque::Mailer if Rails.env.production?
   include ActionView::Helpers::TextHelper
   include ActiveSupport::Benchmarkable
 

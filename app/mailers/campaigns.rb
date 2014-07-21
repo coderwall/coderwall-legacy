@@ -1,5 +1,4 @@
 class Campaigns < ActionMailer::Base
-  include Resque::Mailer if Rails.env.production?
   include ActionView::Helpers::TextHelper
   add_template_helper(ApplicationHelper)
 
