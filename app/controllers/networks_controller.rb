@@ -19,7 +19,7 @@ class NetworksController < ApplicationController
       if @network.save
         format.html { redirect_to networks_path, notice: "#{@network.name} Network was successfully created." }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
       end
     end
   end
@@ -43,42 +43,42 @@ class NetworksController < ApplicationController
     @protips = []
     @topics  = @network.tags
 
-    if (params[:sort].blank? and params[:filter].blank?) or params[:sort] == 'upvotes'
+    if (params[:sort].blank? && params[:filter].blank?) || params[:sort] == 'upvotes'
       @protips      = @network.most_upvoted_protips(@per_page, @page)
-      @query        = "sort:upvotes desc"
+      @query        = 'sort:upvotes desc'
       params[:sort] = 'upvotes'
     elsif params[:sort] == 'new'
       @protips = @network.new_protips(@per_page, @page)
-      @query   = "sort:created_at desc"
+      @query   = 'sort:created_at desc'
     elsif params[:filter] == 'featured'
       @protips = @network.featured_protips(@per_page, @page)
-      @query   = "sort:featured desc"
+      @query   = 'sort:featured desc'
     elsif params[:filter] == 'flagged'
       ensure_admin!
       @protips = @network.flagged_protips(@per_page, @page)
-      @query   = "sort:flagged desc"
+      @query   = 'sort:flagged desc'
     elsif params[:sort] == 'trending'
       @protips = @network.highest_scored_protips(@per_page, @page, :trending_score)
-      @query   = "sort:trending_score desc"
+      @query   = 'sort:trending_score desc'
     elsif params[:sort] == 'hn'
       @protips = @network.highest_scored_protips(@per_page, @page, :trending_hn_score)
-      @query   = "sort:trending_hn_score desc"
+      @query   = 'sort:trending_hn_score desc'
     elsif params[:sort] == 'popular'
       @protips = @network.highest_scored_protips(@per_page, @page, :popular_score)
-      @query   = "sort:popular_score desc"
+      @query   = 'sort:popular_score desc'
     end
   end
 
   def tag
-    redirect_to network_path(@network.slug) unless @network.nil? or params[:id]
+    redirect_to network_path(@network.slug) unless @network.nil? || params[:id]
     @networks   = [@network] unless @network.nil?
-    tags_array  = params[:tags].nil? ? [] : params[:tags].split("/")
-    @query      = "sort:score desc"
+    tags_array  = params[:tags].nil? ? [] : params[:tags].split('/')
+    @query      = 'sort:score desc'
     @protips    = Protip.search_trending_by_topic_tags(@query, tags_array, @page, @per_page)
     @topics     = tags_array
     @topic      = tags_array.join(' + ')
     @topic_user = nil
-    @networks   = tags_array.collect { |tag| Network.networks_for_tag(tag) }.flatten.uniq if @networks.nil?
+    @networks   = tags_array.map { |tag| Network.networks_for_tag(tag) }.flatten.uniq if @networks.nil?
   end
 
   def mayor
@@ -102,7 +102,7 @@ class NetworksController < ApplicationController
   end
 
   def user
-    redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to view your networks") do
+    redirect_to_signup_if_unauthenticated(request.referer, 'You must login/signup to view your networks') do
       user      = current_user
       user      = User.find_by_username(params[:username]) if is_admin?
       @networks = user.networks
@@ -113,7 +113,7 @@ class NetworksController < ApplicationController
   end
 
   def join
-    redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to join a network") do
+    redirect_to_signup_if_unauthenticated(request.referer, 'You must login/signup to join a network') do
       return leave if current_user.member_of?(@network)
       current_user.join(@network)
       respond_to do |format|
@@ -123,8 +123,8 @@ class NetworksController < ApplicationController
   end
 
   def leave
-    redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to leave a network") do
-      return join if !current_user.member_of?(@network)
+    redirect_to_signup_if_unauthenticated(request.referer, 'You must login/signup to leave a network') do
+      return join unless current_user.member_of?(@network)
       current_user.leave(@network)
       respond_to do |format|
         format.js { render js: "$('.follow.#{@network.slug}').removeClass('followed')" }
@@ -143,10 +143,13 @@ class NetworksController < ApplicationController
     tag = params[:tag]
     @network.tags << tag
 
-    if @network.save
-      respond_to do |format|
+    respond_to do |format|
+      if @network.save
         format.html { redirect_to network_path(@network.slug) }
         format.json { head :ok }
+      else
+        format.html { redirect_to network_path(@network.slug) }
+        format.json { head :unprocessable_entity }
       end
     end
   end
@@ -155,22 +158,28 @@ class NetworksController < ApplicationController
     tag           = params[:tag]
     @network.tags = @network.tags.delete(tag)
 
-    if @network.save
-      respond_to do |format|
+    respond_to do |format|
+      if @network.save
         format.html { redirect_to network_path(@network.slug) }
         format.json { head :ok }
+      else
+        format.html { redirect_to network_path(@network.slug) }
+        format.json { head :unprocessable_entity }
       end
     end
   end
 
   def update_tags
     tags          = params[:tags][:tags]
-    @network.tags = tags.split(",").map(&:strip).select { |tag| Tag.exists?(name: tag) }
+    @network.tags = tags.split(',').map(&:strip).select { |tag| Tag.exists?(name: tag) }
 
-    if @network.save
-      respond_to do |format|
+    respond_to do |format|
+      if @network.save
         format.html { redirect_to network_path(@network.slug) }
         format.json { head :ok }
+      else
+        format.html { redirect_to network_path(@network.slug) }
+        format.json { head :unprocessable_entity }
       end
     end
   end
@@ -180,14 +189,15 @@ class NetworksController < ApplicationController
   end
 
   private
+
   def lookup_network
     network_name = params[:id] || params[:tags]
     @network     = Network.find_by_slug(Network.slugify(network_name)) unless network_name.nil?
-    redirect_to networks_path if @network.nil? and params[:action] != 'tag'
+    redirect_to networks_path if @network.nil? && params[:action] != 'tag'
   end
 
   def limit_results
-    params[:per_page] = Protip::PAGESIZE if params[:per_page].nil? or (params[:per_page].to_i > Protip::PAGESIZE and !is_admin?)
+    params[:per_page] = Protip::PAGESIZE if params[:per_page].nil? || (params[:per_page].to_i > Protip::PAGESIZE && !is_admin?)
   end
 
   def set_search_params
@@ -197,7 +207,7 @@ class NetworksController < ApplicationController
   end
 
   def featured_from_env
-    ENV['FEATURED_NETWORKS'].split(",").map(&:strip) unless ENV['FEATURED_NETWORKS'].nil?
+    ENV['FEATURED_NETWORKS'].split(',').map(&:strip) unless ENV['FEATURED_NETWORKS'].nil?
   end
 
   def ensure_admin!
@@ -205,8 +215,8 @@ class NetworksController < ApplicationController
   end
 
   def redirect_to_search
-    tags = @network.try(:slug).try(:to_a) || (params[:tags] && params[:tags].split("/")) || []
-    tags = tags.map { |tag| "##{tag}" }.join(" ")
+    tags = @network.try(:slug).try(:to_a) || (params[:tags] && params[:tags].split('/')) || []
+    tags = tags.map { |tag| "##{tag}" }.join(' ')
     redirect_to protips_path(search: tags, show_all: params[:show_all])
   end
 end

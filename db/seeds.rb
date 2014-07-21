@@ -149,8 +149,10 @@ paboi.blog_feed = 'http://portlandiamom.blogspot.com/feeds/posts/default?alt=rss
 paboi.save!
 
 unless Rails.env.staging? || Rails.env.production?
-  Network.rebuild_index
+  #Network.rebuild_index
   Opportunity.rebuild_index
   Protip.rebuild_index
-  Team.rebuild_index
+  
+  #Team.rebuild_index #TODO: Disabled until switched from mongo
+  Team.all.each { |team| team.tire.update_index }
 end
