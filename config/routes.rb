@@ -479,7 +479,7 @@ Badgiy::Application.routes.draw do
     get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
 
-    require 'sdekiq/web'
+    require 'sidekiq/web'
     mount Sidekiq::Web => '/sidekiq'
   end
 

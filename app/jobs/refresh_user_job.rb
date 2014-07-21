@@ -2,6 +2,7 @@ class RefreshUserJob
   include Sidekiq::Worker
 
   def perform(username, full=false)
+    return if Rails.env.test?
     user = User.find_by_username(username)
 
     if user.github_id

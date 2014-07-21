@@ -4,6 +4,7 @@ class AnalyzeSpamJob
   sidekiq_options queue: :medium
 
   def perform(spammable)
+    return if Rails.env.test?
     thing_to_analyze = spammable['klass'].classify.constantize.find(spammable['id'])
 
     if thing_to_analyze.spam?
