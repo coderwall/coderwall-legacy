@@ -1,5 +1,191 @@
-@import "base";
-@import "compass/css3/";
+@import "base","compass";
+// VARIABLES
+  //Widgets
+  $widget-green:  $green;
+  $widget-blue:  $light-blue;
+  $widget-purple:  #663399; //Rebecca purple DONT CHANGE THIS.
+  $widget-orange:  $orange;
+  $widget-red:  $red;
+  $widget-grey:  $mid-grey;
+
+body#admin {
+  table {
+    &.stats {
+      width: 40%;
+      thead {
+        font-size: 2em;
+      }
+      tbody {
+        tr {
+          td {
+            &:first-child {
+              font-size: 1.5em;
+            }
+          }
+          &.heading td {
+            font-size: 2em;
+            text-align: center;
+            height: 30px;
+          }
+          .goodday {
+            color: green;
+            a:link, a:visited {
+              color: green;
+            }
+          }
+          .badday {
+            color: red;
+            a:link, a:visited {
+              color: red;
+            }
+          }
+        }
+      }
+    }
+  }
+  h4 a {
+    color: $light-blue;
+    text-decoration: underline;
+  }
+  table {
+    margin-bottom: 30px;
+  }
+  .stats, .sections {
+    thead td {
+      font-size: 0.8em;
+    }
+    tr {
+      border-bottom: solid 1px $light-blue-grey;
+    }
+    .heading {
+      border: 0;
+    }
+    td {
+      font-size: 1.5em;
+      padding: 10px;
+      a {
+        color: $light-blue;
+      }
+    }
+  }
+  .comment-admin {
+    li {
+      float: left;
+    }
+    .titles {
+      margin-bottom: 15px;
+      li {
+        font-family: "MuseoSans-500";
+        font-size: 1.5em;
+        &:nth-child(1) {
+          width: 60px;
+        }
+        &:nth-child(2) {
+          width: 60px;
+        }
+      }
+    }
+    .comments-list {
+      li {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+        a {
+          color: $light-blue;
+        }
+        &:nth-child(1) {
+          width: 60px;
+        }
+        &:nth-child(2) {
+          width: 60px;
+        }
+        &:nth-child(3) {
+          width: 560px;
+        }
+      }
+    }
+  }
+
+  .widget-row {
+    width: 100%;
+  }
+
+
+  .widget {
+    &.green {
+      border: 1px solid $widget-green;
+      header {
+        background: $widget-green;
+      }
+    }
+    &.blue {
+      border: 1px solid $widget-blue;
+      header {
+        background: $widget-blue;
+      }
+    }
+    &.purple {
+      border: 1px solid $widget-purple;
+      header {
+        background: $widget-purple;
+      }
+    }
+    &.orange {
+      border: 1px solid $widget-orange;
+      header {
+        background: $widget-orange;
+      }
+    }
+    &.red {
+      border: 1px solid $widget-red;
+      header {
+        background: $widget-red;
+      }
+    }
+    width: 48%;
+    background: #fff;
+    margin: 0 5px 20px;
+    border: 1px solid $widget-grey ;
+    float: left;
+
+    header {
+      background: $widget-grey;
+      height: 36px;
+      > h4 {
+        float: left;
+        font-size: 14px;
+        font-weight: normal;
+        padding: 10px 11px 10px 15px;
+        line-height: 12px;
+        margin: 0;
+        i {
+          font-size: 14px;
+          margin-right: 2px;
+        }
+      }
+    }
+    .body {
+      padding: 15px 15px;
+    }
+  }
+  #links-bar
+  {
+    ul {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    li {
+      margin: 10px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    i{
+      color: $green;
+      font-size:2em;
+      margin-right: 5px;
+    }
+  }
+}
 
 ul.alerts {
   li {

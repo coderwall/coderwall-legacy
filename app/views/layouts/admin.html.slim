@@ -1,0 +1,25 @@
+doctype html
+html.no-js lang=(I18n.locale)
+  head
+    title = page_title(yield(:page_title))
+    = csrf_meta_tag
+    = stylesheet_link_tag 'application', 'admin'
+    = yield :head
+
+  body  id='admin'
+    = render 'layouts/navigation'
+    #main-content
+      - if main_content_wrapper(yield(:content_wrapper))
+        - if flash[:notice] || flash[:error]
+          .notification-bar
+            .notification-bar-inside  class=(flash[:error].blank? ? 'notice' : 'error')
+              p= flash[:notice] || flash[:error]
+              a.close-notification.remove-parent href='/' data-parent='notification-bar'
+                span Close
+        = yield :top_of_main_content
+        .inside-main-content.cf= yield
+      - else
+        = yield
+    = render 'shared/analytics'
+    = render 'shared/footer'
+    = render 'shared/current_user_js'

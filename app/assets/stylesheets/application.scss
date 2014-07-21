@@ -1515,42 +1515,7 @@ body#blog {
   }
 }
 
-#admin {
-  table {
-    &.stats {
-      width: 40%;
-      thead {
-        font-size: 2em;
-      }
-      tbody {
-        tr {
-          td {
-            &:first-child {
-              font-size: 1.5em;
-            }
-          }
-          &.heading td {
-            font-size: 2em;
-            text-align: center;
-            height: 30px;
-          }
-          .goodday {
-            color: green;
-            a:link, a:visited {
-              color: green;
-            }
-          }
-          .badday {
-            color: red;
-            a:link, a:visited {
-              color: red;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+
 
 input[type=file].safari5-upload-hack {
   min-width: 100%;
@@ -1917,71 +1882,6 @@ input[type=file].safari5-upload-hack {
 
   }
   /*phone media query end*/
-}
-
-/*new-home-template body end*/
-body#admin {
-  h4 a {
-    color: $light-blue;
-    text-decoration: underline;
-  }
-  table {
-    margin-bottom: 30px;
-  }
-  .stats, .sections {
-    thead td {
-      font-size: 0.8em;
-    }
-    tr {
-      border-bottom: solid 1px $light-blue-grey;
-    }
-    .heading {
-      border: 0;
-    }
-    td {
-      font-size: 1.5em;
-      padding: 10px;
-      a {
-        color: $light-blue;
-      }
-    }
-  }
-  .comment-admin {
-    li {
-      float: left;
-    }
-    .titles {
-      margin-bottom: 15px;
-      li {
-        font-family: "MuseoSans-500";
-        font-size: 1.5em;
-        &:nth-child(1) {
-          width: 60px;
-        }
-        &:nth-child(2) {
-          width: 60px;
-        }
-      }
-    }
-    .comments-list {
-      li {
-        font-size: 1.3em;
-        margin-bottom: 10px;
-        a {
-          color: $light-blue;
-        }
-        &:nth-child(1) {
-          width: 60px;
-        }
-        &:nth-child(2) {
-          width: 60px;
-        }
-        &:nth-child(3) {
-          width: 560px;
-        }
-      }
-    }
-  }
 }
 
 .analytics {

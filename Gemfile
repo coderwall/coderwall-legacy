@@ -33,6 +33,7 @@ gem 'carrierwave-mongoid',  require: 'carrierwave/mongoid'
 # HTML
 gem 'haml', '3.1.7'
 gem 'hamlbars', '1.1.0' #haml support for handlebars/ember.js
+gem 'slim-rails'
 
 # Postgres
 gem 'pg'
