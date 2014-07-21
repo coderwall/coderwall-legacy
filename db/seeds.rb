@@ -1,3 +1,5 @@
+exit if Rails.env.test?
+
 Protip.skip_callback(:save, :before, :hawt!)
 
 module S
