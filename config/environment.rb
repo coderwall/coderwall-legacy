@@ -1,2 +1,2 @@
 require File.expand_path('../application', __FILE__)
-CoderWall::Application.initialize!
+Coderwall::Application.initialize!

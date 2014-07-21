@@ -1,4 +1,4 @@
-CoderWall::Application.configure do
+Coderwall::Application.configure do
   config.threadsafe! unless $rails_rake_task
 
   config.action_controller.perform_caching = false

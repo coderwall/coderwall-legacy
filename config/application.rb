@@ -7,7 +7,7 @@ I18n.config.enforce_available_locales = false
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-module CoderWall
+module Coderwall
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/app)
 
