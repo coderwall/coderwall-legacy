@@ -13,12 +13,12 @@
 }
 
 .coderwall-root.horizontal .coderwall-logo {
-    margin: 18px 0px 0px 8px;
+    margin: 18px 0 0 8px;
 }
 
 .coderwall-root .coderwall-logo {
     float: left;
-    margin: 14px 0px 0px 0px;
+    margin: 14px 0 0 0;
     border-radius: 5px;
     padding: 8px 10px 8px 8px;
     background: -webkit-gradient(linear, left top, left bottom, from(#6A7176), to(#4D5256));
