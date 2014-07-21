@@ -2,22 +2,26 @@ class SessionsController < ApplicationController
   skip_before_filter :require_registration
 
   def new
-    return redirect_to destination_url if signed_in?
+    #FIXME
+    redirect_to destination_url if signed_in?
   end
 
   def signin
+    #FIXME
     return redirect_to destination_url if signed_in?
     store_location!(params[:return_to]) unless params[:return_to].nil?
   end
 
   def force
-    head(:forbidden) unless Rails.env.test? || Rails.env.development? || current_user.admin?
+    #REMOVEME
+    head(:forbidden) unless current_user.admin?
     sign_out
     sign_in(@user = User.find_by_username(params[:username]))
-    return redirect_to(badge_url(username: params[:username]))
+    redirect_to(badge_url(username: params[:username]))
   end
 
   def create
+    #FIXME
     Rails.logger.debug "Authenticating: #{oauth}"
     raise "OmniAuth returned error #{params[:error]}" unless params[:error].blank?
     if signed_in?
@@ -68,6 +72,7 @@ class SessionsController < ApplicationController
   protected
 
   def oauth
+    #FIXME
     @oauth ||= request.env["omniauth.auth"].with_indifferent_access if request.env["omniauth.auth"]
   end
 end

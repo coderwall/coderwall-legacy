@@ -57,7 +57,7 @@ module TeamsHelper
     if signed_in?
       new_team_path
     else
-      signup_path
+      root_path
     end
   end
 

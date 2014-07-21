@@ -13,7 +13,7 @@
       %a{:href => networks_path, :class => networks_nav_class(:index)}
         All networks
     %li
-      %a{:href => signed_in? ? user_networks_path(current_user.username) : signup_path, :class => networks_nav_class(:user)}
+      %a{:href => signed_in? ? user_networks_path(current_user.username) : root_path, :class => networks_nav_class(:user)}
         %span
           My networks
     -#%li

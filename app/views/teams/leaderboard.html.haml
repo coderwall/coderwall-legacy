@@ -32,7 +32,7 @@
     =render @teams
     -if !signed_in?
       %li.extended
-        =link_to 'Sign in to see the Full Leaderboard', signup_path
+        =link_to 'Sign in to see the Full Leaderboard', root_path
 
 .pagination.cf
   -unless params[:page].to_i <= 1

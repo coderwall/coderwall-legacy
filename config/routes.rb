@@ -291,7 +291,7 @@
 #        letter_opener_letter          /letter_opener/:id/:style.html(.:format)               letter_opener/letters#show
 #
 
-Badgiy::Application.routes.draw do
+CoderWall::Application.routes.draw do
 
   # We get 10K's of requests for this route.
   get '/.json',       to: proc { [404, {}, ['']] }
@@ -470,7 +470,19 @@ Badgiy::Application.routes.draw do
   get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
-  require_admin = ->(params, req) { User.where(id: req.session[:current_user]).first.try(:admin?) }
+
+  get '/blog' => 'blog_posts#index', as: :blog
+  get '/blog/:id' => 'blog_posts#show', as: :blog_post
+  get '/articles.atom' => 'blog_posts#index', as: :atom, :format => :atom
+
+  get '/signin' => 'sessions#signin', as: :signin
+  get '/signout' => 'sessions#destroy', as: :signout
+  get '/goodbye' => 'sessions#destroy', as: :sign_out
+
+  get '/dashboard' => 'events#index', as: :dashboard
+  get '/roll-the-dice' => 'users#randomize', as: :random_wall
+
+  require_admin = ->(params, req) { User.find_by(id: req.session[:current_user], admin: true).exist? }
 
   scope :admin, as: :admin, :path => '/admin', :constraints => require_admin do
     get '/' => 'admin#index', as: :root
@@ -483,17 +495,7 @@ Badgiy::Application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  get '/blog' => 'blog_posts#index', as: :blog
-  get '/blog/:id' => 'blog_posts#show', as: :blog_post
-  get '/articles.atom' => 'blog_posts#index', as: :atom, :format => :atom
 
-  get '/' => 'protips#index', as: :signup
-  get '/signin' => 'sessions#signin', as: :signin
-  get '/signout' => 'sessions#destroy', as: :signout
-  get '/goodbye' => 'sessions#destroy', as: :sign_out
-
-  get '/dashboard' => 'events#index', as: :dashboard
-  get '/roll-the-dice' => 'users#randomize', as: :random_wall
   get '/:username' => 'users#show', as: :badge
   get '/:username/achievements/:id' => 'achievements#show', as: :user_achievement
   get '/:username/endorsements.json' => 'endorsements#show'
@@ -502,15 +504,14 @@ Badgiy::Application.routes.draw do
   get '/:username/events' => 'events#index', as: :user_activity_feed
   get '/:username/events/more' => 'events#more'
 
-  get '/javascripts/*filename.js' => 'legacy#show', extension: 'js'
-  get '/stylesheets/*filename.css' => 'legacy#show', extension: 'css'
-  get '/images/*filename.png' => 'legacy#show', extension: 'png'
-  get '/images/*filename.jpg' => 'legacy#show', extension: 'jpg'
+  # TODO
+  # Admin scope should be here to avoid query to database.
 
   namespace :callbacks do
     post '/hawt/feature' => 'hawt#feature'
     post '/hawt/unfeature' => 'hawt#unfeature'
   end
+
 
   if Rails.env.development?
     mount MailPreview => 'mail_view'

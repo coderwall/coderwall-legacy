@@ -1,3 +1,3 @@
 require ::File.expand_path('../config/environment', __FILE__)
 
-run Badgiy::Application
+run CoderWall::Application
