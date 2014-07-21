@@ -7,7 +7,7 @@ I18n.config.enforce_available_locales = false
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-module Badgiy
+module CoderWall
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/app)
 

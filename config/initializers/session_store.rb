@@ -1,2 +1,2 @@
 # Be sure to restart your server when you modify this file.
-Badgiy::Application.config.session_store :redis_store
+CoderWall::Application.config.session_store :redis_store

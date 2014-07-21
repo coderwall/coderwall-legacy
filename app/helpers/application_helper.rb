@@ -239,7 +239,7 @@ module ApplicationHelper
     elsif signed_in?
       link_to('', follow_team_path(team), method: :post, remote: true, class: 'follow-team add-to-network')
     else
-      link_to('', signup_path(flash: 'You must signin or signup before you can follow a team'), class: 'follow-team add-to-network noauth')
+      link_to('', root_path(flash: 'You must signin or signup before you can follow a team'), class: 'follow-team add-to-network noauth')
     end
   end
 

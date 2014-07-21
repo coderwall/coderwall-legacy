@@ -4,5 +4,5 @@
 #invitations
   %h1==You have earned the #{@redemption.badge.display_name} badge
   %p Before you can accept the achievement you need to create a coderwall account or sign in.
-  =link_to('Sign Up', signup_path, :class => 'button')
+  =link_to('Sign Up', root_path, :class => 'button')
   =link_to('Sign In', signin_path, :id => 'signin')

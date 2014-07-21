@@ -25,7 +25,7 @@
       %p
         =link_to('Share', new_protip_path(:topics => @topic), 'data-action' => 'create protip', 'data-from' => 'user protips page') + " a link, code snippet, post or other pro tip about #{@topic}"
     -else
-      =link_to('Sign in', signup_path)
+      =link_to('Sign in', root_path)
       ==to start sharing your #{@topic} pro tips or
       =link_to('learn more', faq_path, :class => 'track', 'data-action' => 'view faq', 'data-from' => 'user protips page')
 

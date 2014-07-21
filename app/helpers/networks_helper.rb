@@ -42,7 +42,7 @@ module NetworksHelper
     if signed_in?
       current_user.member_of?(network) ? leave_network_path(network.slug) : join_network_path(network.slug)
     else
-      signup_path
+      root_path
     end
   end
 

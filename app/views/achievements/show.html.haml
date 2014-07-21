@@ -36,5 +36,5 @@
         =link_to "See #{@user.display_name}'s other achievements", badge_path(:username => @user.username), :class => 'seeprofile track', 'data-action' => 'view user achievements', 'data-from' => 'achievement', 'data-properties' => {'achievement' =>  @badge.display_name}.to_json
         .clear
       .clear.center
-        #getyourachievements=link_to 'See Your Achievements', signup_path, :class => 'clickme track','data-action' => 'view own achievements', 'data-from' => 'achievement', 'data-properties' => {'achievement' =>  @badge.display_name}.to_json
+        #getyourachievements=link_to 'See Your Achievements', root_path, :class => 'clickme track','data-action' => 'view own achievements', 'data-from' => 'achievement', 'data-properties' => {'achievement' =>  @badge.display_name}.to_json
         .see-all=link_to("View #{@user.display_name}'s profile", badge_path(:username => @user.username), 'data-action' => 'view user profile', 'data-from' => 'achievement', 'data-properties' => {'achievement' =>  @badge.display_name}.to_json)

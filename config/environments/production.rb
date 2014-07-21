@@ -1,4 +1,4 @@
-Badgiy::Application.configure do
+CoderWall::Application.configure do
   config.threadsafe! unless $rails_rake_task
   config.cache_classes = true
   config.consider_all_requests_local = false

@@ -42,7 +42,7 @@
       -if !signed_in?
         .message You must be signed in to make endorsements.
         .join
-          =link_to("or join coderwall", signup_path, :class => 'track', 'data-category' => 'click', 'data-action' => 'endorsement sign up')
+          =link_to("or join coderwall", root_path, :class => 'track', 'data-category' => 'click', 'data-action' => 'endorsement sign up')
         %ul
           %li
             %a.button{:href => link_github_path}
