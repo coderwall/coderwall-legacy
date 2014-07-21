@@ -158,6 +158,7 @@ group :development, :test do
   gem 'launchy'
   gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'pry-byebug'
+  gem 'pry-rescue'
   gem 'quiet_assets'
   gem 'syntax'
   gem 'annotate'
