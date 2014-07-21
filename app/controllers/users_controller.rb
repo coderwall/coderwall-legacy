@@ -157,9 +157,10 @@ class UsersController < ApplicationController
   def refresh
 
     refresh_params = params.permit(:username)
+    @user = User.find_by_username(refresh_params[:username])
 
-    Resque.enqueue(RefreshUser, refresh_params[:username], true)
-    flash[:notice] = "Queued #{refresh_params[:username]} for a refresh"
+    Resque.enqueue(RefreshUser, @user.id, true)
+    flash[:notice] = "Queued #{@user.username} for a refresh"
     redirect_to :back
   end
 

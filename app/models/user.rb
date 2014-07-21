@@ -375,7 +375,7 @@ class User < ActiveRecord::Base
 
   def complete_registration!(opts={})
     update_attribute(:state, PENDING)
-    Resque.enqueue(ActivateUser, self.username)
+    Resque.enqueue(ActivateUser, id)
     Resque.enqueue(AnalyzeUser, self.username)
   end
 
@@ -441,7 +441,7 @@ class User < ActiveRecord::Base
     skills.each { |skill| skill.apply_facts && skill.save }
     self.github_failures = 0
     save!
-    Resque.enqueue(RefreshUser, username, true)
+    Resque.enqueue(RefreshUser, id, true)
   end
 
 
