@@ -52,19 +52,9 @@ tmux send-keys "clear ; bundle exec puma -C ./config/puma.rb" C-m
 
 # Background Jobs
 tmux select-window -t $SESSION:3
-tmux split-window -v
-tmux split-window -v
-tmux split-window -v
-tmux select-layout even-vertical
 
 tmux select-pane -t 0
-tmux send-keys "clear ; env QUEUE=CRITICAL,HIGH,MEDIUM,LOW,LOWER bin/rake resque:work" C-m
-tmux select-pane -t 1
-tmux send-keys "clear ; env bin/rake resque:scheduler" C-m
-tmux select-pane -t 2
-tmux send-keys "clear ; env QUEUE=REFRESH bin/rake resque:work" C-m
-tmux select-pane -t 3
-tmux send-keys "clear ; env QUEUE=mailer,digest_mailer bin/rake resque:work" C-m
+tmux send-keys "clear ; bundle exec sidekiq -C ./config/sidekiq.yml" C-m
 
 # Set the initial working window
 tmux select-window -t $SESSION:1
