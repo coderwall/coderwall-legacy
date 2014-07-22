@@ -12,12 +12,5 @@ group :rspec, halt_on_fail: true do
     watch(%r{^spec/support/(.+)\.rb$}) { "spec" }
     watch('config/routes.rb') { "spec/routing" }
     watch('app/controllers/application_controller.rb') { "spec/controllers" }
-
-    # Capybara features specs
-    watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$}) { |m| "spec/features/#{m[1]}_spec.rb" }
-
-    # Capyfeatures and steps
-    watch(%r{^spec/features/(.+)\.feature$})
-    watch(%r{^spec/features/steps/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/features' }
   end
 end

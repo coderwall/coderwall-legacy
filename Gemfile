@@ -38,8 +38,7 @@ gem 'slim-rails'
 # Postgres
 gem 'pg'
 
-# AREL support for RDBMS queries
-gem 'squeel', '1.0.1'
+
 
 # Authentication
 gem 'omniauth', '~> 1.1.0'
@@ -103,7 +102,9 @@ gem 'faraday', '~> 0.8.1'
 
 # ----------------
 
+#DROP BEFORE RAILS 4
 gem 'rocket_tag'
+gem 'squeel', '1.0.1'
 
 gem 'acts_as_commentable', '2.0.1'
 gem 'acts_as_follower', '0.1.1'
@@ -127,10 +128,10 @@ gem 'ruby-progressbar'
 gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
-gem 'mail_view'
 gem 'local_time'
 gem 'github_api'
 
+# DROP BEFORE RAILS 4
 # Mongo
 gem 'mongoid'
 gem 'mongo'
@@ -146,6 +147,8 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'travis'
+  #TODO DROP IN RAILS 4.1
+  gem 'mail_view'
 end
 
 group :development, :test do

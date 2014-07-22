@@ -293,10 +293,6 @@
 
 Coderwall::Application.routes.draw do
 
-  # We get 10K's of requests for this route.
-  get '/.json',       to: proc { [404, {}, ['']] }
-  get '/teams/.json', to: proc { [404, {}, ['']] }
-
   match 'protips/update', via: %w(get put)
   match 'protip/update' , via: %w(get put)
 
@@ -482,37 +478,34 @@ Coderwall::Application.routes.draw do
   get '/dashboard' => 'events#index', as: :dashboard
   get '/roll-the-dice' => 'users#randomize', as: :random_wall
 
-  require_admin = ->(params, req) { User.find_by(id: req.session[:current_user], admin: true).exist? }
 
-  scope :admin, as: :admin, :path => '/admin', :constraints => require_admin do
-    get '/' => 'admin#index', as: :root
-    get '/failed_jobs' => 'admin#failed_jobs'
-    get '/teams' => 'admin#teams', as: :teams
-    get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
-    get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
-
-    require 'sidekiq/web'
-    mount Sidekiq::Web => '/sidekiq'
+  constraints ->(params, _) { params[:username] != 'admin' } do
+    get '/:username' => 'users#show', as: :badge
+    get '/:username/achievements/:id' => 'achievements#show', as: :user_achievement
+    get '/:username/endorsements.json' => 'endorsements#show'
+    get '/:username/followers' => 'follows#index', as: :followers, :type => :followers
+    get '/:username/following' => 'follows#index', as: :following, :type => :following
+    get '/:username/events' => 'events#index', as: :user_activity_feed
+    get '/:username/events/more' => 'events#more'
   end
-
-
-  get '/:username' => 'users#show', as: :badge
-  get '/:username/achievements/:id' => 'achievements#show', as: :user_achievement
-  get '/:username/endorsements.json' => 'endorsements#show'
-  get '/:username/followers' => 'follows#index', as: :followers, :type => :followers
-  get '/:username/following' => 'follows#index', as: :following, :type => :following
-  get '/:username/events' => 'events#index', as: :user_activity_feed
-  get '/:username/events/more' => 'events#more'
-
-  # TODO
-  # Admin scope should be here to avoid query to database.
 
   namespace :callbacks do
     post '/hawt/feature' => 'hawt#feature'
     post '/hawt/unfeature' => 'hawt#unfeature'
   end
 
+  require_admin = ->(_, req) { User.where(id: req.session[:current_user], admin: true).exists? }
+  scope :admin, as: :admin, :path => '/admin', :constraints => require_admin do
+    get '/' => 'admin#index', as: :root
+    get '/failed_jobs' => 'admin#failed_jobs'
+    get '/teams' => 'admin#teams', as: :teams
+    get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
+    get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
+  #TODO DROP IN RAILS 4.1
   if Rails.env.development?
     mount MailPreview => 'mail_view'
     get '/letter_opener' => 'letter_opener/letters#index', as: :letter_opener_letters
