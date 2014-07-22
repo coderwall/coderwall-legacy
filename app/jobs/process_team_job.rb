@@ -20,7 +20,7 @@ class ProcessTeamJob
         end
       when 'reindex'
         Team.all.each do |team|
-          enqueue(IndexTeamJob, team.id)
+          IndexTeamJob.perform_async(team.id)
         end
     end
   end

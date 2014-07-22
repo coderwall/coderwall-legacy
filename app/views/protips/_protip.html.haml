@@ -109,7 +109,7 @@
 
     -if include_comments
       %section.comments{class:('no-comments' if protip.comments.empty? )}
-        -if protip.comments.empty?
+        -if protip.comments.any?
           %h2.comments-header
             %i.fa.fa-comments
             Comments
