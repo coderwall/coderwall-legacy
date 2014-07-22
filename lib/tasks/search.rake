@@ -101,7 +101,7 @@ namespace :search do
     unless ENV['NETWORK'].blank?
       network = Network.find_by_slug(ENV['NETWORK'])
       network.protips.select(:id).each do |protip|
-        enqueue(ProcessProtipJob, :recalculate_score, protip.id)
+        ProcessProtipJob.perform_async('recalculate_score', protip.id)
       end
     end
   end
