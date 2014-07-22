@@ -64,16 +64,18 @@ class ProtipsController < ApplicationController
     end
   end
 
-  def topic
-    topic_params = params.permit(:tags, :page, :per_page)
-
-    return redirect_to(protips_path) if topic_params[:tags].blank?
-    tags_array  = topic_params[:tags].split("/")
-    @protips    = Protip.search_trending_by_topic_tags(nil, tags_array, topic_params[:page], topic_params[:per_page])
-    @topics     = tags_array.collect { |topic| "<span class='topic-tag' style='border-color:##{topic.to_hex};'>##{topic}</span>" }
-    @topic      = tags_array.join(' + ')
-    @topic_user = nil
-  end
+  # INVESTIGATE
+  # Unused
+  # def topic
+  #   topic_params = params.permit(:tags, :page, :per_page)
+  #
+  #   return redirect_to(protips_path) if topic_params[:tags].blank?
+  #   tags_array  = topic_params[:tags].split("/")
+  #   @protips    = Protip.search_trending_by_topic_tags(nil, tags_array, topic_params[:page], topic_params[:per_page])
+  #   @topics     = tags_array.collect { |topic| "<span class='topic-tag' style='border-color:##{topic.to_hex};'>##{topic}</span>" }
+  #   @topic      = tags_array.join(' + ')
+  #   @topic_user = nil
+  # end
 
   def user
     user_params = params.permit(:username, :page, :per_page)

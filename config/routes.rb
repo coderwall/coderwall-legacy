@@ -1,7 +1,5 @@
 # == Route Map
 #
-#                             GET      /.json(.:format)                                       #<Proc:0x0000000f22d850@/vagrant/config/routes.rb:302>
-#                             GET      /teams/.json(.:format)                                 #<Proc:0x0000000f233cf0@/vagrant/config/routes.rb:303>
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
 #                        root          /                                                      protips#index
@@ -250,23 +248,14 @@
 #                     refresh GET      /refresh/:username(.:format)                           users#refresh
 #       random_accomplishment GET      /nextaccomplishment(.:format)                          highlights#random
 #                   add_skill GET      /add-skill(.:format)                                   skills#create
-#                  admin_root GET      /admin(.:format)                                       admin#index
-#           admin_failed_jobs GET      /admin/failed_jobs(.:format)                           admin#failed_jobs
-#                 admin_teams GET      /admin/teams(.:format)                                 admin#teams
-#        admin_sections_teams GET      /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
-#         admin_section_teams GET      /admin/teams/section/:section(.:format)                admin#section_teams
-#                                      /admin/resque                                          #<Resque::Server app_file="/home/vagrant/.rvm/gems/ruby-2.1.2@coderwall/gems/resque-1.25.2/lib/resque/server.rb">
-#           admin_sidekiq_web          /admin/sidekiq                                         Sidekiq::Web
 #                        blog GET      /blog(.:format)                                        blog_posts#index
 #                   blog_post GET      /blog/:id(.:format)                                    blog_posts#show
 #                        atom GET      /articles.atom(.:format)                               blog_posts#index {:format=>:atom}
-#                      signup GET      /                                                      protips#index
 #                      signin GET      /signin(.:format)                                      sessions#signin
 #                     signout GET      /signout(.:format)                                     sessions#destroy
 #                    sign_out GET      /goodbye(.:format)                                     sessions#destroy
 #                   dashboard GET      /dashboard(.:format)                                   events#index
 #                 random_wall GET      /roll-the-dice(.:format)                               users#randomize
-#                    trending GET      /trending(.:format)                                    links#index
 #                       badge GET      /:username(.:format)                                   users#show
 #            user_achievement GET      /:username/achievements/:id(.:format)                  achievements#show
 #                             GET      /:username/endorsements.json(.:format)                 endorsements#show
@@ -274,12 +263,14 @@
 #                   following GET      /:username/following(.:format)                         follows#index {:type=>:following}
 #          user_activity_feed GET      /:username/events(.:format)                            events#index
 #                             GET      /:username/events/more(.:format)                       events#more
-#                             GET      /javascripts/*filename.js(.:format)                    legacy#show {:extension=>"js"}
-#                             GET      /stylesheets/*filename.css(.:format)                   legacy#show {:extension=>"css"}
-#                             GET      /images/*filename.png(.:format)                        legacy#show {:extension=>"png"}
-#                             GET      /images/*filename.jpg(.:format)                        legacy#show {:extension=>"jpg"}
 #      callbacks_hawt_feature POST     /callbacks/hawt/feature(.:format)                      callbacks/hawt#feature
 #    callbacks_hawt_unfeature POST     /callbacks/hawt/unfeature(.:format)                    callbacks/hawt#unfeature
+#                  admin_root GET      /admin(.:format)                                       admin#index
+#           admin_failed_jobs GET      /admin/failed_jobs(.:format)                           admin#failed_jobs
+#                 admin_teams GET      /admin/teams(.:format)                                 admin#teams
+#        admin_sections_teams GET      /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
+#         admin_section_teams GET      /admin/teams/section/:section(.:format)                admin#section_teams
+#           admin_sidekiq_web          /admin/sidekiq                                         Sidekiq::Web
 #                                      /mail_view                                             MailPreview
 #       letter_opener_letters GET      /letter_opener(.:format)                               letter_opener/letters#index
 #        letter_opener_letter GET      /letter_opener/:id/:style.html(.:format)               letter_opener/letters#show
@@ -412,7 +403,9 @@ Coderwall::Application.routes.draw do
       get 'accept'
       post 'record-exit' => 'teams#record_exit', as: :record_exit
       get 'visitors'
-      post 'follow' => 'follows#create', :type => :team
+      #TODO following and unfollowing should use different HTTP verbs (:post, :delete)
+      # Fix views and specs when changing this.
+      post 'follow'
       post 'join'
       post 'join/:user_id/approve' => 'teams#approve_join', as: :approve_join
       post 'join/:user_id/deny' => 'teams#deny_join', as: :deny_join

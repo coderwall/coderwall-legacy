@@ -131,20 +131,20 @@ class TeamsController < ApplicationController
   end
 
   def follow
-    apply_cache_buster
-
-    follow_params = params.permit(:id)
-
-    @team = Team.find(follow_params[:id])
+    # TODO move to concern
+    if params[:id] =~ /^[0-9A-F]{24}$/i
+      @team = Team.find(params[:id])
+    else
+      @team = Team.where(slug: params[:id]).first
+    end
     if current_user.following_team?(@team)
       current_user.unfollow_team!(@team)
     else
       current_user.follow_team!(@team)
     end
     respond_to do |format|
-      format.json { render :json => { :team_id => dom_id(@team), :following => current_user.following_team?(@team) }.to_json }
-      format.js { render :json => { :team_id => dom_id(@team), :following => current_user.following_team?(@team) }.to_json }
-      format.html { redirect_to(leaderboard_url + "##{dom_id(@team)}") }
+      format.json { render json: { dom_id: dom_id(@team), following: current_user.following_team?(@team) }.to_json }
+      format.js { render json: { dom_id: dom_id(@team), following: current_user.following_team?(@team) }.to_json }
     end
   end
 

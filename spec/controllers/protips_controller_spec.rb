@@ -40,14 +40,14 @@ RSpec.describe ProtipsController, :type => :controller do
     
   end
 
-  describe "GET topic" do
-    it "assigns all protips as @protips" do
-      Protip.rebuild_index
-      protip = Protip.create! valid_attributes
-      get :topic, {tags: "java"}, valid_session
-      expect(assigns(:protips).results.first.title).to eq(protip.title)
-    end
-  end
+  # describe "GET topic" do
+  #   it "assigns all protips as @protips" do
+  #     Protip.rebuild_index
+  #     protip = Protip.create! valid_attributes
+  #     get :topic, {tags: "java"}, valid_session
+  #     expect(assigns(:protips).results.first.title).to eq(protip.title)
+  #   end
+  # end
 
   describe "GET show" do
     it "assigns the requested protip as @protip" do
