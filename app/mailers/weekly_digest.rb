@@ -123,9 +123,9 @@ class WeeklyDigest < ActionMailer::Base
 
   def weekly_digest_utm
     {
-        utm_campaign: "weekly_digest",
-        utm_content: Date.today.midnight,
-        utm_medium: "email"
+      utm_campaign: "weekly_digest",
+      utm_content: Date.today.midnight,
+      utm_medium: "email"
     }
   end
 

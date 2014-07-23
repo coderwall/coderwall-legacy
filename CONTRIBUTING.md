@@ -4,7 +4,7 @@ When committing a Pull Request for non-application/test code please add [`[skip 
 
 # Contributing
 
-Here are the steps for getting setup & started with contributing to CoderWall :
+Here are the steps for getting setup & started with contributing to Coderwall :
 
 1. Go to [https://assemblymade.com/coderwall](https://assemblymade.com/coderwall) and sign up.
 2. Link your GitHub account to your Assembly account in your profile settings.
@@ -16,7 +16,7 @@ Here are the steps for getting setup & started with contributing to CoderWall :
 8. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
 9. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
 
-You're on your way to having a stake in CoderWall.
+You're on your way to having a stake in Coderwall.
 
 ## External Dependencies
 
@@ -68,10 +68,10 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
 2. **Install Vagrant**
 
-    [Vagrant](http://vagrantup.com) is the recommended way to run CoderWall on your own machine. You need to download and install.  
-    Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**. 
+    [Vagrant](http://vagrantup.com) is the recommended way to run Coderwall on your own machine. You need to download and install.
+    Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**.
     _At the time of writing this documentation the current version is Vagrant 1.6.2._
-    
+
      Follow the installation instructions for your platform on the Vagrant download page.
 
     After installing Vagrant we need to add a couple plugins.
@@ -86,11 +86,11 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
     mkdir -p ~/assemblymade
     cd ~/assemblymade
-    
+
     depending on your choice of protocols : _(this will take a while to run so you may want to grab some coffee)_
     * git clone https://github.com/assemblymade/coderwall.git coderwall
-    * git clone git@github.com:assemblymade/coderwall.git coderwall 
-    
+    * git clone git@github.com:assemblymade/coderwall.git coderwall
+
     I am going to assume that the project is cloned into your home directory in and into a directory structure like `~/assemblymade/coderwall`.
 
 4. **Fire it up! Fire it up! Fire it up!**
@@ -120,13 +120,13 @@ If you're running Windows, [here's a guide written by one of our members on how 
         cd ~/web
         rvm current # should be ruby-2.1.2@coderwall
         bundle check # should be 'The Gemfile's dependencies are satisfied'
-        bin/rails s 
+        bin/rails s
 
     If all went well the Rails server should start up on PORT 3000.
 
     Now go open your favorite web browser on you host machine and navigate to [http://localhost:3000](http://localhost:3000).
 
-    If all goes well (and if it doesn't then check if another app is running on port 3000 and if there's any logging output being displayed in the window you were running Vagrant in) then you're going to be looking at the CoderWall homepage.
+    If all goes well (and if it doesn't then check if another app is running on port 3000 and if there's any logging output being displayed in the window you were running Vagrant in) then you're going to be looking at the Coderwall homepage.
 
     Congratulations! NOW GET TO WORK! Enough dilly-dallying with your DEV env.
 
@@ -158,7 +158,7 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
 7. Gems Installation and Database Migration
 
-	Remember that you are using Vagrant, so if you run ```bundle install``` or ```rake db:migrate``` directly in your terminal it will not affect the virtual machine where CoderWall is running.
+	Remember that you are using Vagrant, so if you run ```bundle install``` or ```rake db:migrate``` directly in your terminal it will not affect the virtual machine where Coderwall is running.
 
 	In order to run these commands, in the virtual machine, all you have to do is to run ```vagrant provision```.
 
