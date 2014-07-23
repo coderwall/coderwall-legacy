@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
-  before_filter :access_required
-  before_filter :limit_count, only: [:more]
-  before_filter :track_request, only: [:more], unless: :is_admin?
-  before_filter :find_user, only: [:index, :more]
+  before_action :access_required
+  before_action :limit_count, only: [:more]
+  before_action :track_request, only: [:more], unless: :is_admin?
+  before_action :find_user, only: [:index, :more]
   respond_to :html, :json, :js
 
   def index

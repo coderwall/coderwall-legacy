@@ -1,16 +1,16 @@
 class ProtipsController < ApplicationController
 
-  before_filter :access_required, only: [:new, :create, :edit, :update, :destroy, :me]
-  before_filter :require_skills_first, only: [:new, :create]
-  before_filter :lookup_protip, only: [:show, :edit, :update, :destroy, :upvote, :tag, :flag, :queue, :feature, :delete_tag]
-  before_filter :reformat_tags, only: [:create, :update]
-  before_filter :verify_ownership, only: [:edit, :update, :destroy]
-  before_filter :ensure_single_tag, only: [:subscribe, :unsubscribe]
-  before_filter :limit_results, only: [:topic, :team, :search, :user, :date]
-  before_filter :track_search, only: [:search], unless: :is_admin?
-  before_filter :require_admin!, only: [:queue, :feature, :flag, :delete_tag, :admin]
-  before_filter :determine_scope, only: [:trending, :popular, :fresh, :liked]
-  before_filter :lookup_user_data, only: [:trending, :popular, :fresh, :liked, :search]
+  before_action :access_required, only: [:new, :create, :edit, :update, :destroy, :me]
+  before_action :require_skills_first, only: [:new, :create]
+  before_action :lookup_protip, only: [:show, :edit, :update, :destroy, :upvote, :tag, :flag, :queue, :feature, :delete_tag]
+  before_action :reformat_tags, only: [:create, :update]
+  before_action :verify_ownership, only: [:edit, :update, :destroy]
+  before_action :ensure_single_tag, only: [:subscribe, :unsubscribe]
+  before_action :limit_results, only: [:topic, :team, :search, :user, :date]
+  before_action :track_search, only: [:search], unless: :is_admin?
+  before_action :require_admin!, only: [:queue, :feature, :flag, :delete_tag, :admin]
+  before_action :determine_scope, only: [:trending, :popular, :fresh, :liked]
+  before_action :lookup_user_data, only: [:trending, :popular, :fresh, :liked, :search]
 
   respond_to :html
   respond_to :json, except: [:show]

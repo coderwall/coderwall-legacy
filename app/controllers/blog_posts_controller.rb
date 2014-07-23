@@ -1,5 +1,5 @@
 class BlogPostsController < ApplicationController
-  skip_before_filter :require_registration
+  skip_before_action :require_registration
 
   def index
     @blog_posts = BlogPost.all_public[0..5]

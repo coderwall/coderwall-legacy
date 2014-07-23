@@ -1,5 +1,5 @@
 class FollowsController < ApplicationController
-  before_filter :access_required
+  before_action :access_required
   cache_sweeper :follow_sweeper
 
   helper_method :is_viewing_followers?

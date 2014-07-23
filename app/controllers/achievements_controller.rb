@@ -1,6 +1,6 @@
 class AchievementsController < ApplicationController
-  before_filter :ensure_valid_api_key, only: [:award]
-  skip_before_filter :verify_authenticity_token, only: [:award]
+  before_action :ensure_valid_api_key, only: [:award]
+  skip_before_action :verify_authenticity_token, only: [:award]
   layout 'protip'
 
   respond_to :json, only: [:award]

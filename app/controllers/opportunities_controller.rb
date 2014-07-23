@@ -1,10 +1,10 @@
 class OpportunitiesController < ApplicationController
-  before_filter :lookup_team, only: [:activate, :deactivate, :new, :create, :edit, :update, :visit]
-  before_filter :lookup_opportunity, only: [:edit, :update, :activate, :deactivate, :visit]
-  before_filter :cleanup_params_to_prevent_rocket_tag_error
-  before_filter :validate_permissions, only: [:new, :edit, :create, :update, :activate, :deactivate]
-  before_filter :verify_payment, only: [:new, :create]
-  before_filter :stringify_location, only: [:create, :update]
+  before_action :lookup_team, only: [:activate, :deactivate, :new, :create, :edit, :update, :visit]
+  before_action :lookup_opportunity, only: [:edit, :update, :activate, :deactivate, :visit]
+  before_action :cleanup_params_to_prevent_rocket_tag_error
+  before_action :validate_permissions, only: [:new, :edit, :create, :update, :activate, :deactivate]
+  before_action :verify_payment, only: [:new, :create]
+  before_action :stringify_location, only: [:create, :update]
 
   def apply
     redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to apply for an opportunity") do
