@@ -1,5 +1,5 @@
 class UsernamesController < ApplicationController
-  skip_before_filter :require_registration
+  skip_before_action :require_registration
 
   def show
     # allow validation to pass if it's the user's username that they're trying to validate (for edit username)

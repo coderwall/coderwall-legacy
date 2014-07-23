@@ -1,11 +1,11 @@
 class AccountsController < ApplicationController
   layout 'product_description'
-  skip_before_filter :verify_authenticity_token, only: [:webhook]
-  before_filter :lookup_account, except: [:webhook, :send_invoice]
-  before_filter :ensure_account_admin, except: [:create]
-  before_filter :determine_plan, only: [:create, :update]
-  before_filter :ensure_eligibility, only: [:new]
-  before_filter :paying_user_context, if: ->() { Rails.env.production? }
+  skip_before_action :verify_authenticity_token, only: [:webhook]
+  before_action :lookup_account, except: [:webhook, :send_invoice]
+  before_action :ensure_account_admin, except: [:create]
+  before_action :determine_plan, only: [:create, :update]
+  before_action :ensure_eligibility, only: [:new]
+  before_action :paying_user_context, if: ->() { Rails.env.production? }
 
   def new
     @account ||= current_user.team.build_account

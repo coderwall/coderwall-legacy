@@ -1,10 +1,10 @@
 class CommentsController < ApplicationController
 
-  before_filter :access_required, only: [:new, :edit, :update, :destroy]
-  before_filter :verify_ownership, only: [:edit, :update, :destroy]
-  before_filter :require_admin!, only: [:flag, :index]
-  before_filter :lookup_comment, only: [:edit, :update, :destroy, :like]
-  before_filter :lookup_protip, only: [:create]
+  before_action :access_required, only: [:new, :edit, :update, :destroy]
+  before_action :verify_ownership, only: [:edit, :update, :destroy]
+  before_action :require_admin!, only: [:flag, :index]
+  before_action :lookup_comment, only: [:edit, :update, :destroy, :like]
+  before_action :lookup_protip, only: [:create]
 
   def index
     @comments = Comment.where('created_at > ?', 1.day.ago)

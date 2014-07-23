@@ -1,8 +1,8 @@
 class AlertsController < ApplicationController
-  skip_before_filter :verify_authenticity_token
-  before_filter :get_alert, only: :create
-  before_filter :authenticate_caller, only: :create
-  before_filter :is_admin?, only: :index
+  skip_before_action :verify_authenticity_token
+  before_action :get_alert, only: :create
+  before_action :authenticate_caller, only: :create
+  before_action :is_admin?, only: :index
 
   GA_VISITORS_ALERT_INTERVAL = 30.minutes
   TRACTION_ALERT_INTERVAL    = 30.minutes

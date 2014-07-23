@@ -1,5 +1,5 @@
 class ProcessingQueuesController < BaseAdminController
-  before_filter :lookup_queue, only: [:show, :dequeue]
+  before_action :lookup_queue, only: [:show, :dequeue]
 
   def index
     @queues = ProcessingQueue.select('DISTINCT(queue)')

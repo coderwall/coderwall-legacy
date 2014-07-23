@@ -1,11 +1,11 @@
 class NetworksController < ApplicationController
   include ProtipsHelper
-  before_filter :lookup_network, only: [:show, :members, :join, :leave, :destroy, :add_tag, :remove_tag, :update_tags, :mayor, :expert, :tag, :current_mayor]
-  before_filter :access_required, only: [:new, :create, :edit, :update, :destroy]
-  before_filter :require_admin!, only: [:new, :create, :edit, :update, :destroy, :add_tag, :remove_tag, :update_tags]
-  before_filter :limit_results, only: [:index, :members, :show, :tag]
-  before_filter :set_search_params, only: [:show, :mayor, :expert, :expert, :tag]
-  before_filter :redirect_to_search, only: [:show, :tag]
+  before_action :lookup_network, only: [:show, :members, :join, :leave, :destroy, :add_tag, :remove_tag, :update_tags, :mayor, :expert, :tag, :current_mayor]
+  before_action :access_required, only: [:new, :create, :edit, :update, :destroy]
+  before_action :require_admin!, only: [:new, :create, :edit, :update, :destroy, :add_tag, :remove_tag, :update_tags]
+  before_action :limit_results, only: [:index, :members, :show, :tag]
+  before_action :set_search_params, only: [:show, :mayor, :expert, :expert, :tag]
+  before_action :redirect_to_search, only: [:show, :tag]
   respond_to :html, :json, :js
   cache_sweeper :follow_sweeper, only: [:join, :leave]
 

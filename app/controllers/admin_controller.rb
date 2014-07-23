@@ -19,7 +19,7 @@ class AdminController < BaseAdminController
   end
 
   if Rails.env.development?
-    skip_before_filter :require_admin!, only: [:index, :toggle_premium_team]
+    skip_before_action :require_admin!, only: [:index, :toggle_premium_team]
 
     def toggle_premium_team
       team         = current_user.team || begin

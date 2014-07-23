@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 class Callbacks::HawtController < ApplicationController
-  before_filter :authenticate
-  before_filter :set_default_response_format
+  before_action :authenticate
+  before_action :set_default_response_format
   layout nil
   protect_from_forgery with: :null_session
   respond_to :json

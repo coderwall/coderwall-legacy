@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  after_filter :track_referrer, only: :show
-  skip_before_filter :require_registration, only: [:edit, :update]
+  after_action :track_referrer, only: :show
+  skip_before_action :require_registration, only: [:edit, :update]
 
   def new
     return redirect_to(destination_url) if signed_in?

@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
-  skip_before_filter :require_registration, :only => [:accept, :record_exit]
-  before_filter :access_required, :except => [:index, :leaderboard, :show, :new, :upgrade, :inquiry, :search, :create, :record_exit]
-  before_filter :ensure_analytics_access, :only => [:visitors]
+  skip_before_action :require_registration, :only => [:accept, :record_exit]
+  before_action :access_required, :except => [:index, :leaderboard, :show, :new, :upgrade, :inquiry, :search, :create, :record_exit]
+  before_action :ensure_analytics_access, :only => [:visitors]
   respond_to :js, :only => [:search, :create, :approve_join, :deny_join]
   respond_to :json, :only => [:search]
 

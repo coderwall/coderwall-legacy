@@ -10,16 +10,16 @@ class ApplicationController < ActionController::Base
   helper_method :viewing_user
   helper_method :round
 
-  before_filter :ensure_domain
-  before_filter :apply_flash_message
-  before_filter :require_registration
-  before_filter :clear_expired_cookie_if_session_is_empty
-  before_filter :ensure_and_reconcile_tracking_code
-  before_filter :track_utm
-  before_filter :show_achievement
+  before_action :ensure_domain
+  before_action :apply_flash_message
+  before_action :require_registration
+  before_action :clear_expired_cookie_if_session_is_empty
+  before_action :ensure_and_reconcile_tracking_code
+  before_action :track_utm
+  before_action :show_achievement
 
-  after_filter :record_visit
-  after_filter :record_location
+  after_action :record_visit
+  after_action :record_location
 
   protected
 
@@ -297,7 +297,7 @@ class ApplicationController < ActionController::Base
   end
 
   unless ENV['HTTP_BASICAUTH_ON'].blank?
-    before_filter :require_http_basic
+    before_action :require_http_basic
 
     def require_http_basic
       authenticate_or_request_with_http_basic do |username, password|
