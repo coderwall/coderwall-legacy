@@ -498,15 +498,4 @@ Coderwall::Application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  #TODO DROP IN RAILS 4.1
-  if Rails.env.development?
-    mount MailPreview => 'mail_view'
-    get '/letter_opener' => 'letter_opener/letters#index', as: :letter_opener_letters
-    get '/letter_opener/:id/:style.html' => 'letter_opener/letters#show', as: :letter_opener_letter
-    mount Campaigns::Preview => 'campaigns'
-    mount Notifier::Preview => 'mail'
-    mount WeeklyDigest::Preview => 'digest'
-    mount Subscription::Preview => 'subscription'
-  end
-
 end

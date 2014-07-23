@@ -115,7 +115,6 @@ gem 'fog'
 gem 'geocoder'
 gem 'hashie'
 gem 'linkedin'
-gem 'mail'
 gem 'mini_magick'
 gem 'mixpanel'
 gem 'never_wastes'
@@ -147,8 +146,6 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'travis'
-  #TODO DROP IN RAILS 4.1
-  gem 'mail_view'
 end
 
 group :development, :test do
@@ -156,7 +153,6 @@ group :development, :test do
   gem 'ffaker'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
-  gem 'letter_opener', github: 'alexrothenberg/letter_opener', branch: 'on_a_server'
   gem 'pry-byebug'
   gem 'pry-rescue'
   gem 'quiet_assets'
