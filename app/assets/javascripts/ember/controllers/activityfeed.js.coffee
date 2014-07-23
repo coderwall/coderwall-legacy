@@ -119,7 +119,6 @@ Coderwall.activityFeedController = Ember.ArrayController.create(
   ).observes('window.onfocus')
 
   updateStats: (data)->
-    stats = $.parseJSON(data)
     Coderwall.statsController.set('profileViews', data['profile_views'])
     Coderwall.statsController.set('protips', data['protips_count'])
     Coderwall.statsController.set('protipUpvotes', data['protip_upvotes'])
