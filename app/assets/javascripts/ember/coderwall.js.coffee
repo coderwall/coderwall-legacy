@@ -1,16 +1,17 @@
-#= require      ember
-#= require      ember-rest
-#= require      ember-routemanager
+#= require      handlebars
+#= require      ./ember
+#= require      ./ember-rest
+#= require      ./ember-routemanager
 #= require      sorted-array
 #= require_self
 
 window.Coderwall = Ember.Application.create()
 
 Coderwall.routeManager = Ember.RouteManager.create(
-  protips: Em.ViewState.create(
+  protips: Ember.ViewState.create(
     route: "p/t"
     view: Coderwall.protipsView
-    index: Em.State.create(
+    index: Ember.State.create(
       route: ":tag"
       enter: (stateManager, transition) ->
         @_super stateManager, transition

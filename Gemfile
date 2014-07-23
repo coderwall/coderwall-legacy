@@ -16,6 +16,7 @@ gem 'rails-assets-font-awesome'
 
 # Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
 gem 'backbone-on-rails'
+gem 'handlebars-source'
 gem 'ember-rails', github: 'emberjs/ember-rails'
 
 
