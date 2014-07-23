@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/alexrothenberg/letter_opener.git
-  revision: 50b077315f11872f1173d092ddf81b9176c9badf
-  branch: on_a_server
-  specs:
-    letter_opener (0.0.2)
-      fakefs
-      launchy
-
-GIT
   remote: git://github.com/emberjs/ember-rails.git
   revision: 46ce4ecf3a01d79bcc5c2ddecfe481a5230f0766
   specs:
@@ -216,7 +207,6 @@ GEM
     fabrication-rails (0.0.1)
       fabrication
       railties (>= 3.0)
-    fakefs (0.5.2)
     faraday (0.8.9)
       multipart-post (~> 1.2.0)
     faraday_middleware (0.9.1)
@@ -360,8 +350,6 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mail_view (2.0.4)
-      tilt
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
@@ -748,11 +736,8 @@ DEPENDENCIES
   kaminari
   kramdown
   launchy
-  letter_opener!
   linkedin
   local_time
-  mail
-  mail_view
   mini_magick
   mixpanel
   mongo
