@@ -26,17 +26,8 @@ class Subscription < ActionMailer::Base
     mail to: @user.email, subject: "Your Coderwall Enhanced Team subscription for #{@user.team.name}"
   end
 
-  #if Rails.env.development?
-    #class Preview < MailView
-      #def team_upgrade
-        #user = User.on_team.order("Random()").first
-        #mail = Subscription.team_upgrade(user.username, Plan.enhanced_team_page_monthly.id)
-        #mail
-      #end
-    #end
-  #end
-
   private
+
   def track_campaign(id)
     headers['X-Mailgun-Campaign-Id'] = id
   end

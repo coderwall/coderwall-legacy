@@ -17,17 +17,4 @@ class Campaigns < ActionMailer::Base
 
     mail to: @user.email, subject: "[Coderwall] Unlock the new Entrepreneur badge"
   end
-
-  #if Rails.env.development?
-    #class Preview < MailView
-
-      #def asm_badge
-        #user = User.active.order("Random()").first
-        #mail = ::Campaigns.asm_badge(user.username)
-        #mail
-      #end
-
-    #end
-  #end
-
 end

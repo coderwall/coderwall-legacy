@@ -18,15 +18,4 @@ class Abuse < ActionMailer::Base
 
     mail subject: "Spam Report for Protip: \"#{@protip.title}\" (#{@protip.id})"
   end
-
-  #if Rails.env.development?
-    #class Preview < MailView
-      #def report_inappropriate
-        #user = User.active.order('Random()').first
-        #protip = Protip.last
-        #mail = ::Abuse.report_inappropriate(reporting_user: user, ip_address: '127.0.0.1', protip: protip)
-        #mail
-      #end
-    #end
-  #end
 end

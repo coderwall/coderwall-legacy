@@ -65,19 +65,8 @@ class WeeklyDigest < ActionMailer::Base
     Rails.logger.error "sending bad email:#{message}"
   end
 
-  #if Rails.env.development?
-    #class Preview < MailView
-
-      #def weekly_digest
-        #user = User.active.order("Random()").first
-        #mail = ::WeeklyDigest.weekly_digest(user.username)
-        #mail
-      #end
-
-    #end
-  end
-
   private
+
   def track_campaign(id)
     headers['X-Mailgun-Campaign-Id'] = id
   end
