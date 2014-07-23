@@ -229,119 +229,119 @@ class Notifier < ActionMailer::Base
     mail to: admin_emails, subject: "Coderwall Alert[#{type}]"
   end
 
-  if Rails.env.development?
-    class Preview < MailView
+  #if Rails.env.development?
+    #class Preview < MailView
 
-      def new_follower
-        user = User.active.order("Random()").first
-        follower = User.active.order("Random()").first
-        mail = Notifier.new_follower(user.username, follower.username)
-        mail
-      end
+      #def new_follower
+        #user = User.active.order("Random()").first
+        #follower = User.active.order("Random()").first
+        #mail = Notifier.new_follower(user.username, follower.username)
+        #mail
+      #end
 
-      def new_activity
-        user = User.active.order("Random()").first
-        User.active.order("Random()").first.endorse(user, 'TEST')
-        mail = Notifier.new_activity(user.username)
-        mail
-      end
+      #def new_activity
+        #user = User.active.order("Random()").first
+        #User.active.order("Random()").first.endorse(user, 'TEST')
+        #mail = Notifier.new_activity(user.username)
+        #mail
+      #end
 
-      def new_badge
-        user = User.active.order("Random()").first
-        user.award Forked20.new(user)
-        user.save
-        mail = Notifier.new_badge(user.username)
-        mail
-      end
+      #def new_badge
+        #user = User.active.order("Random()").first
+        #user.award Forked20.new(user)
+        #user.save
+        #mail = Notifier.new_badge(user.username)
+        #mail
+      #end
 
-      def new_comment
-        comment = Comment.order("Random()").first
+      #def new_comment
+        #comment = Comment.order("Random()").first
 
-        mail = Notifier.new_comment(comment.commentable.try(:user).try(:username), comment.author.username, comment.id)
-        mail
-      end
+        #mail = Notifier.new_comment(comment.commentable.try(:user).try(:username), comment.author.username, comment.id)
+        #mail
+      #end
 
-      def comment_reply
-        comment = Comment.order("Random()").where("comment LIKE '@%'").first
+      #def comment_reply
+        #comment = Comment.order("Random()").where("comment LIKE '@%'").first
 
-        mail = Notifier.comment_reply(comment.username_mentions.first, comment.author.username, comment.id)
-        mail
-      end
+        #mail = Notifier.comment_reply(comment.username_mentions.first, comment.author.username, comment.id)
+        #mail
+      #end
 
-      def welcome_email_on_team
-        user = User.on_team.order("Random()").first
-        mail = Notifier.welcome_email(user.username)
-        mail
-      end
+      #def welcome_email_on_team
+        #user = User.on_team.order("Random()").first
+        #mail = Notifier.welcome_email(user.username)
+        #mail
+      #end
 
-      def welcome_email_without_team
-        user = User.not_on_team.order("Random()").first
-        mail = Notifier.welcome_email(user.username)
-        mail
-      end
+      #def welcome_email_without_team
+        #user = User.not_on_team.order("Random()").first
+        #mail = Notifier.welcome_email(user.username)
+        #mail
+      #end
 
-      def remind_to_create_team
-        user = User.not_on_team.order("Random()").first
-        mail = Notifier.remind_to_create_team(user.username)
-        mail
-      end
+      #def remind_to_create_team
+        #user = User.not_on_team.order("Random()").first
+        #mail = Notifier.remind_to_create_team(user.username)
+        #mail
+      #end
 
-      def remind_to_invite_team_members
-        user = User.on_team.order("Random()").first
-        mail = Notifier.remind_to_invite_team_members(user.username)
-        mail
-      end
+      #def remind_to_invite_team_members
+        #user = User.on_team.order("Random()").first
+        #mail = Notifier.remind_to_invite_team_members(user.username)
+        #mail
+      #end
 
-      def remind_to_create_protip
-        user = User.without_protip.order("Random()").first
-        mail = Notifier.remind_to_create_protip(user.username)
-        mail
-      end
+      #def remind_to_create_protip
+        #user = User.without_protip.order("Random()").first
+        #mail = Notifier.remind_to_create_protip(user.username)
+        #mail
+      #end
 
-      def remind_to_create_skills
-        user = User.without_skill.order("Random()").first
-        mail = Notifier.remind_to_create_skills(user.username)
-        mail
-      end
+      #def remind_to_create_skills
+        #user = User.without_skill.order("Random()").first
+        #mail = Notifier.remind_to_create_skills(user.username)
+        #mail
+      #end
 
-      def remind_to_link_accounts
-        user = User.missing_accounts.order("Random()").first
-        mail = Notifier.remind_to_link_accounts(user.username)
-        mail
-      end
+      #def remind_to_link_accounts
+        #user = User.missing_accounts.order("Random()").first
+        #mail = Notifier.remind_to_link_accounts(user.username)
+        #mail
+      #end
 
-      def newsletter_june_18
-        user = User.not_on_team.order("Random()").first
-        mail = Notifier.newsletter_june_18(user.username)
-        mail
-      end
+      #def newsletter_june_18
+        #user = User.not_on_team.order("Random()").first
+        #mail = Notifier.newsletter_june_18(user.username)
+        #mail
+      #end
 
-      def template_example
-        user = User.not_on_team.order("Random()").first
-        mail = Notifier.template_example(user.username)
-        mail
-      end
+      #def template_example
+        #user = User.not_on_team.order("Random()").first
+        #mail = Notifier.template_example(user.username)
+        #mail
+      #end
 
-      def newsletter_networks
-        user = User.active.order("Random()").first
-        mail = Notifier.newsletter_networks(user.username)
-        mail
-      end
+      #def newsletter_networks
+        #user = User.active.order("Random()").first
+        #mail = Notifier.newsletter_networks(user.username)
+        #mail
+      #end
 
-      def new_applicant
-        user = User.active.where('resume IS NOT NULL').order("Random()").first
-        job = Opportunity.order("Random()").first
-        mail = ::Notifier.new_applicant(user.username, job.id)
-        mail
-      end
+      #def new_applicant
+        #user = User.active.where('resume IS NOT NULL').order("Random()").first
+        #job = Opportunity.order("Random()").first
+        #mail = ::Notifier.new_applicant(user.username, job.id)
+        #mail
+      #end
 
-      def invoice
-        team = Team.where(slug: "coderwall").first
-        mail = ::Notifier.invoice(team.id, 1.month.ago, nil)
-        mail
-      end
-    end
-  end
+      #def invoice
+        #team = Team.where(slug: "coderwall").first
+        #mail = ::Notifier.invoice(team.id, 1.month.ago, nil)
+        #mail
+      #end
+    #end
+  #end
 
   def template_example(username)
     @user = User.find_by_username(username)

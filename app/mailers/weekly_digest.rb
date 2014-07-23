@@ -65,16 +65,16 @@ class WeeklyDigest < ActionMailer::Base
     Rails.logger.error "sending bad email:#{message}"
   end
 
-  if Rails.env.development?
-    class Preview < MailView
+  #if Rails.env.development?
+    #class Preview < MailView
 
-      def weekly_digest
-        user = User.active.order("Random()").first
-        mail = ::WeeklyDigest.weekly_digest(user.username)
-        mail
-      end
+      #def weekly_digest
+        #user = User.active.order("Random()").first
+        #mail = ::WeeklyDigest.weekly_digest(user.username)
+        #mail
+      #end
 
-    end
+    #end
   end
 
   private
