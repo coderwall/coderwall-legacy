@@ -29,14 +29,9 @@ module UsersHelper
     image_tag(users_image_path(user), options)
   end
 
+  #TODO Remove
   def users_image_path(user)
-    url = user.profile_url || user.avatar
-    if url.include?('secure.gravatar.com')
-      default_url = (Rails.env.production? || Rails.env.staging?) ? image_path(User::BLANK_PROFILE_URL) : "#{Rails.application.routes.url_helpers.root_url(only_path: true)}#{image_path(User::BLANK_PROFILE_URL)}"
-      "#{url}?d=#{default_url}"
-    else
-      url
-    end
+    user.avatar_url
   end
 
   def user_or_team_image_path(user_or_team)

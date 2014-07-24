@@ -124,7 +124,7 @@
                   %ul.avatars
                     %li.user
                       %a{:href => profile_path(user.username)}
-                        =image_tag(user.profile_url)
+                        =image_tag(user.avatar_url)
                     -if user.on_team?
                       %li.team
                         %a{:href => friendly_team_path(user.team)}

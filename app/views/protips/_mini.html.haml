@@ -25,7 +25,7 @@
       -unless protip.user.nil?
         %li.user
           =link_to profile_path(protip.user.username) do
-            =image_tag(protip.user.profile_url)
+            =image_tag(protip.user.avatar_url)
       -unless protip.team.nil?
         %li.team
           =link_to teamname_path(protip.team.slug) do

@@ -148,6 +148,7 @@ class User < ActiveRecord::Base
     users
   }
 
+  #TODO maybe we don't need this
   BLANK_PROFILE_URL = 'blank-mugshot.png'
 
   REGISTRATION = 'registration'
@@ -277,13 +278,7 @@ class User < ActiveRecord::Base
 
   #TODO Kill
   def profile_url
-    if !avatar.blank?
-      avatar_url
-    elsif thumbnail_url.blank?
-      BLANK_PROFILE_URL
-    else
-      thumbnail_url
-    end
+    avatar_url
   end
 
 

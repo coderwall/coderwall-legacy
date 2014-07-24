@@ -127,18 +127,6 @@ class Team
 
   scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
-  if Rails.env.development? #for Oli
-    def avatar_url
-      url = super
-      url = 'team-avatar.png'
-      if url.include?('http')
-        'team-avatar.png'
-      else
-        url
-      end
-    end
-  end
-
   class << self
 
     def with_name(name)

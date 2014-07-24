@@ -167,7 +167,7 @@ RSpec.describe Protip, :type => :model do
       wrapper = Protip::SearchWrapper.new(protip)
 
       expect(wrapper.user.username).to eq(protip.user.username)
-      expect(wrapper.user.profile_url).to eq(protip.user.profile_url)
+      expect(wrapper.user.profile_url).to eq(protip.user.avatar_url)
       expect(wrapper.upvotes).to eq(protip.upvotes)
       expect(wrapper.topics).to eq(protip.topics)
       expect(wrapper.only_link?).to eq(protip.only_link?)
@@ -192,7 +192,7 @@ RSpec.describe Protip, :type => :model do
       wrapper = Protip::SearchWrapper.new(result)
 
       expect(wrapper.user.username).to eq(protip.user.username)
-      expect(wrapper.user.profile_url).to eq(protip.user.profile_url)
+      expect(wrapper.user.profile_url).to eq(protip.user.avatar_url)
       expect(wrapper.upvotes).to eq(protip.upvotes)
       expect(wrapper.topics).to match_array(protip.topics)
       expect(wrapper.only_link?).to eq(protip.only_link?)

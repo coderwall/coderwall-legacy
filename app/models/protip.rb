@@ -445,8 +445,8 @@ class Protip < ActiveRecord::Base
   def user_hash
     user.public_hash(true).select { |k, v| [:username, :name].include? k }.merge(
       {
-        profile_url:  user.profile_url,
-        avatar:       user.profile_url,
+        profile_url:  user.avatar_url,
+        avatar:       user.avatar_url,
         profile_path: Rails.application.routes.url_helpers.badge_path(user.username),
         about:        user.about
       }
