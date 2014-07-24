@@ -148,6 +148,7 @@ class User < ActiveRecord::Base
     users
   }
 
+  #TODO maybe we don't need this
   BLANK_PROFILE_URL = 'blank-mugshot.png'
 
   REGISTRATION = 'registration'
@@ -277,13 +278,7 @@ class User < ActiveRecord::Base
 
   #TODO Kill
   def profile_url
-    if !avatar.blank?
-      avatar_url
-    elsif thumbnail_url.blank?
-      BLANK_PROFILE_URL
-    else
-      thumbnail_url
-    end
+    avatar_url
   end
 
 
@@ -376,7 +371,6 @@ class User < ActiveRecord::Base
   def complete_registration!(opts={})
     update_attribute(:state, PENDING)
     ActivateUserJob.perform_async(username)
-    AnalyzeUserJob.perform_async(username)
   end
 
 
