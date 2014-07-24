@@ -31,7 +31,6 @@ class Network < ActiveRecord::Base
   before_save :correct_tags
   before_save :cache_counts!
   after_create :assign_members
-  after_save :cleanup_orphans
 
   scope :most_protips, order('protips_count_cache DESC')
   scope :featured, where(featured: true)
@@ -165,8 +164,6 @@ class Network < ActiveRecord::Base
 
   def protips
     @protips ||= Protip.tagged_with(self.tags, on: :topics)
-    #@protips ||= Protip.search(nil, self.tags)
-
   end
 
   def upvotes
@@ -234,13 +231,6 @@ class Network < ActiveRecord::Base
     end
   end
 
-  def cleanup_orphans
-    ProcessingQueue.queue(:orphan_protips).each do |orphan|
-      if orphan.queueable && orphan.queueable.networks.any?
-        ProcessingQueue.unqueue(orphan.queueable, :orphan_protips)
-      end
-    end
-  end
 end
 
 # == Schema Information
