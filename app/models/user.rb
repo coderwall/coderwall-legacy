@@ -376,7 +376,6 @@ class User < ActiveRecord::Base
   def complete_registration!(opts={})
     update_attribute(:state, PENDING)
     ActivateUserJob.perform_async(username)
-    AnalyzeUserJob.perform_async(username)
   end
 
 
