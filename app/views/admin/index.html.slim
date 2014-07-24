@@ -78,7 +78,7 @@
       h4 Pro tips created in networks in past week
     section
       ul.networks
-        -Network.all.each do |network|
+        -Network.where('protips_count_cache =! 0').order('protips_count_cache desc').each do |network|
           li.network
             span.name= link_to network.name, network_path(network)
             span.created_at= network.protips.where('created_at > ?', 1.week.ago).count
@@ -94,9 +94,3 @@
           li
             span.country = user_group.country
             span.count = user_group.count
-
-
--if Rails.env.development?
-  .right.clear
-    h4=link_to('Toggle Premium Team', url_for(:controller => 'admin', :action => :toggle_premium_team))
-  .clear
