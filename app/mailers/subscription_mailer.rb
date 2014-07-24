@@ -1,4 +1,5 @@
-class Subscription < ActionMailer::Base
+# TODO, Write all the specs
+class SubscriptionMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   add_template_helper(UsersHelper)
   add_template_helper(ProtipsHelper)

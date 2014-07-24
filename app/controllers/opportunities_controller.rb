@@ -10,7 +10,7 @@ class OpportunitiesController < ApplicationController
     redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to apply for an opportunity") do
       job = Opportunity.find(params[:id])
       if current_user.apply_to(job)
-        Notifier.new_applicant(current_user.username, job.id).deliver!
+        NotifierMailer.new_applicant(current_user.username, job.id).deliver!
         record_event('applied to job', job_public_id: job.public_id, 'job team' => job.team.slug)
       end
       respond_to do |format|

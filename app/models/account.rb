@@ -131,11 +131,11 @@ class Account
   end
 
   def send_invoice(invoice_id)
-    Notifier.invoice(self.team.id, nil, invoice_id).deliver
+    NotifierMailer.invoice(self.team.id, nil, invoice_id).deliver
   end
 
   def send_invoice_for(time = Time.now)
-    Notifier.invoice(self.team.id, time.to_i).deliver
+    NotifierMailer.invoice(self.team.id, time.to_i).deliver
   end
 
   def invoice_for(time)

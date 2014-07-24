@@ -1,4 +1,6 @@
-class WeeklyDigest < ActionMailer::Base
+# TODO extract this from this project.
+# TODO, Write all the specs
+class WeeklyDigestMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   include ActiveSupport::Benchmarkable
   add_template_helper(UsersHelper)

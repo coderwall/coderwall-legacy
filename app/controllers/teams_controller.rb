@@ -166,7 +166,7 @@ class TeamsController < ApplicationController
 
     current_user.seen(:inquired) if signed_in?
     record_event('inquired about team page')
-    Notifier.new_lead(current_user.try(:username), inquiry_params[:email], inquiry_params[:company]).deliver
+    NotifierMailer.new_lead(current_user.try(:username), inquiry_params[:email], inquiry_params[:company]).deliver
     render :layout => 'product_description'
   end
 

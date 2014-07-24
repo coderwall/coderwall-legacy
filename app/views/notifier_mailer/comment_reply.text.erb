@@ -6,4 +6,4 @@ Hey <%= @user.short_name %>,
 
 View/Reply: <%= protip_url(@comment.commentable.try(:public_id), :reply_to => "@#{@commentor.username}") + "#comment_#{@comment.id}" %>
 
-<%= Notifier::SPAM_NOTICE %>
+<%= NotifierMailer::SPAM_NOTICE %>

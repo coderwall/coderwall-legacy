@@ -1,14 +1,14 @@
-RSpec.describe Notifier, :type => :mailer do
+RSpec.describe NotifierMailer, :type => :mailer do
   let(:user) { user = Fabricate(:user, email: 'some.user@example.com') }
 
   it 'should send welcome email to user' do
-    email = Notifier.welcome_email(user.username).deliver
+    email = NotifierMailer.welcome_email(user.username).deliver
     expect(email.body.encoded).to include("http://coderwall.com/#{user.username}")
   end
 
   it 'should record when welcome email was sent' do
     expect(user.last_email_sent).to be_nil
-    email = Notifier.welcome_email(user.username).deliver
+    email = NotifierMailer.welcome_email(user.username).deliver
     expect(user.reload.last_email_sent).not_to be_nil
   end
 
@@ -16,7 +16,7 @@ RSpec.describe Notifier, :type => :mailer do
     endorsements = Fabricate(:user).endorse(user, 'Ruby')
     user.update_attributes last_request_at: 1.day.ago
 
-    email = Notifier.new_activity(user.reload.username)
+    email = NotifierMailer.new_activity(user.reload.username)
     expect(email.body.encoded).to include("Congrats friend, you've received 1 endorsement")
   end
 
@@ -25,7 +25,7 @@ RSpec.describe Notifier, :type => :mailer do
     endorsements = Fabricate(:user).endorse(user, 'Ruby')
     user.update_attributes last_request_at: 1.day.ago
 
-    email = Notifier.new_activity(user.reload.username)
+    email = NotifierMailer.new_activity(user.reload.username)
     expect(email.body.encoded).to include("Congrats friend, you've unlocked 1 achievement and received 1 endorsement")
   end
 
@@ -36,7 +36,7 @@ RSpec.describe Notifier, :type => :mailer do
       user.update_attributes last_request_at: 1.day.ago
       expect(user.achievements_unlocked_since_last_visit.count).to eq(1)
 
-      email = Notifier.new_badge(user.reload.username)
+      email = NotifierMailer.new_badge(user.reload.username)
       check_badge_message(email, badge)
       expect(email.body.encoded).to include(user_achievement_url(username: user.username, id: badge.id, host: "coderwall.com"))
     end
@@ -48,15 +48,15 @@ RSpec.describe Notifier, :type => :mailer do
       user.update_attributes last_request_at: 1.day.ago
 
       expect(user.achievements_unlocked_since_last_visit.count).to eq(3)
-      email = Notifier.new_badge(user.reload.username)
+      email = NotifierMailer.new_badge(user.reload.username)
       check_badge_message(email, badge1)
       expect(user.achievements_unlocked_since_last_visit.count).to eq(3)
-      email = Notifier.new_badge(user.reload.username)
+      email = NotifierMailer.new_badge(user.reload.username)
       check_badge_message(email, badge2)
       user.last_request_at = Time.now + 3.second
       user.save
       expect(user.achievements_unlocked_since_last_visit.count).to eq(0)
-      expect { Notifier.new_badge(user.reload.username) }.to raise_error(Notifier::NothingToSendException)
+      expect { NotifierMailer.new_badge(user.reload.username) }.to raise_error(NotifierMailer::NothingToSendException)
     end
 
     def check_badge_message(email, badge)

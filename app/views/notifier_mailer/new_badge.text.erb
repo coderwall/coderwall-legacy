@@ -3,4 +3,4 @@ Congrats <%= @user.short_name %>,
 You've earned a new badge for <%= @message %>
 <%= link_to 'See Earned Badge', user_achievement_url(:username => @user.username, :id => @badge.id) %>
 
-<%= Notifier::SPAM_NOTICE %>
+<%= NotifierMailer::SPAM_NOTICE %>

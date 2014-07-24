@@ -49,7 +49,7 @@ class AlertsController < ApplicationController
     if can_report_traction?(data[:url])
       update_history
       Redis.current.set(last_sent_key(:traction, data[:url]), Time.now.to_i)
-      Notifier.alert_admin(:traction, data[:url], data[:message]).deliver
+      NotifierMailer.alert_admin(:traction, data[:url], data[:message]).deliver
     end
   end
 
@@ -61,11 +61,11 @@ class AlertsController < ApplicationController
       if data[:viewers] > ENV['SITE_VISITORS_MAX_ALERT_LIMIT']
         update_history
         Redis.current.set(last_sent_key(:google_analytics), Time.now.to_i)
-        Notifier.alert_admin(:a_lot_of_visitors, data[:url], message).deliver!
+        NotifierMailer.alert_admin(:a_lot_of_visitors, data[:url], message).deliver!
       elsif data[:viewers] < ENV['SITE_VISITORS_MIN_ALERT_LIMIT']
         update_history
         Redis.current.set(last_sent_key(:google_analytics), Time.now.to_i)
-        Notifier.alert_admin(:too_few_visitors, data[:url], message).deliver!
+        NotifierMailer.alert_admin(:too_few_visitors, data[:url], message).deliver!
       end
     end
   end
