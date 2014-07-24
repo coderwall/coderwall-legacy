@@ -77,7 +77,7 @@
       h4 Pro tips created in networks in past week
     section
       ul.networks
-        -Network.where('protips_count_cache =! 0').order('protips_count_cache desc').each do |network|
+        -Network.where('protips_count_cache > 0').order('protips_count_cache desc').each do |network|
           li.network
             span.name= link_to network.name, network_path(network)
             span.created_at= network.protips.where('created_at > ?', 1.week.ago).count

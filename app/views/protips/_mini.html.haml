@@ -4,31 +4,35 @@
     -unless protip.best_stat.nil? || best_stat_value(protip) == 0
       %span{:class => protip_stat_class(protip)}
         = formatted_best_stat_value(protip) unless best_stat_name(protip) =~ /hawt/
+
+    -# We should remove this to cache , deleting should be from dashboard
     -if protip_owner?(protip, current_user)
       =link_to(' ', protip_path(protip.public_id), :method => :delete, :class => 'delete-tip', :title => 'remove protip', :confirm => "Are you sure you permanently want to remove this pro tip?")
+
   = link_to protip.title, protip_or_link_path(protip), 'data-action' => 'view protip', 'data-from' => 'mini protip', :class => "title hyphenate track x-mode-#{mode || 'fullpage'}"
   %footer.cf
+    -# We should remove this to cache
     -if is_admin?
       %ul
         %li.admin
           %p== #{distance_of_time_in_words_to_now(protip.created_at)} ago
     %ul.author
-      -unless protip.user.nil?
+      -if protip.user.present?
         %li.user
           by
           =link_to protip.user.username, profile_path(protip.user.username), 'data-action' => 'view protip author', 'data-from' => 'mini protip', :title => "Authored by: #{protip.user.username}", :class => "track"
-      -unless protip.team.nil?
+      -if protip.team.present?
         %li.team
           of
           =link_to protip.team.name, teamname_path(protip.team.slug), 'data-action' => 'view team', 'data-from' => 'mini protip', :class => "track"
     %ul.avatars
-      -unless protip.user.nil?
+      -if protip.user.present?
         %li.user
           =link_to profile_path(protip.user.username) do
             =image_tag(protip.user.avatar_url)
-      -unless protip.team.nil?
+      -if protip.team.present?
         %li.team
           =link_to teamname_path(protip.team.slug) do
-            =image_tag(protip.team.avatar) unless protip.team.avatar.blank?
+            =image_tag(protip.team.avatar.url)
     -if protip.team && protip.team.hiring
       %a.job{:href => teamname_path(protip.team.slug)}
