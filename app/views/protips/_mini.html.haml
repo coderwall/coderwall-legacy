@@ -30,9 +30,9 @@
         %li.user
           =link_to profile_path(protip.user.username) do
             =image_tag(protip.user.avatar_url)
-      -if protip.team.present?
+      -if protip.team.present? && protip.team.avatar.present?
         %li.team
           =link_to teamname_path(protip.team.slug) do
-            =image_tag(protip.team.avatar.url)
+            =image_tag(protip.team.avatar)
     -if protip.team && protip.team.hiring
       %a.job{:href => teamname_path(protip.team.slug)}
