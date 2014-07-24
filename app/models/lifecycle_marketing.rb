@@ -21,7 +21,7 @@ class LifecycleMarketing
       valid_activity_users.where("team_document_id IS NOT NULL").where(remind_to_invite_team_members: nil).find_each do |user|
         unless Redis.current.sismember(key, user.team_document_id) or Team.find(user.team_document_id).created_at < 1.week.ago
           Redis.current.sadd key, user.team_document_id
-          Notifier.remind_to_invite_team_members(user.username).deliver
+          NotifierMailer.remind_to_invite_team_members(user.username).deliver
         end
       end
     end
@@ -49,7 +49,7 @@ class LifecycleMarketing
 
     def send_new_achievement_reminders
       User.where(id: valid_activity_users.joins("inner join badges on badges.user_id = users.id").where("badges.created_at > users.last_request_at").reorder('badges.created_at ASC').select(:id)).select('DISTINCT(username), id').find_each do |user|
-        Notifier.new_badge(user.username).deliver
+        NotifierMailer.new_badge(user.username).deliver
       end
     end
 

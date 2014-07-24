@@ -2,13 +2,13 @@ class EmailsController < ApplicationController
   def unsubscribe
     Rails.logger.info("Mailgun Unsubscribe: #{params.inspect}")
     if mailgun?(ENV['MAILGUN_API_KEY'], params['token'], params['timestamp'], params['signature'])
-      if params[:email_type] == Notifier::WELCOME_EVENT
+      if params[:email_type] == NotifierMailer::WELCOME_EVENT
         user = User.where(email: params[:recipient]).first
         user.update_attribute(:receive_newsletter, false)
-      elsif params[:email_type] == Notifier::ACTIVITY_EVENT
+      elsif params[:email_type] == NotifierMailer::ACTIVITY_EVENT
         user = User.where(email: params[:recipient]).first
         user.update_attribute(:notify_on_award, false)
-      elsif params[:email_type] == Notifier::WEEKLY_DIGEST_EVENT
+      elsif params[:email_type] == NotifierMailer::WEEKLY_DIGEST_EVENT
         user = User.where(email: params[:recipient]).first
         user.update_attribute(:receive_weekly_digest, false)
       end

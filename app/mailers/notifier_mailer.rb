@@ -1,4 +1,5 @@
-class Notifier < ActionMailer::Base
+# TODO, Extract components
+class NotifierMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   include ActiveSupport::Benchmarkable
   add_template_helper(UsersHelper)

@@ -1,4 +1,4 @@
-class Abuse < ActionMailer::Base
+class AbuseMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   include ActiveSupport::Benchmarkable
 

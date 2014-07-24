@@ -8,7 +8,7 @@ class ActivateUserJob
     RefreshUserJob.new.perform(username)
     unless user.badges.empty?
       user.activate!
-      Notifier.welcome_email(username).deliver
+      NotifierMailer.welcome_email(username).deliver
     end
   end
 end
