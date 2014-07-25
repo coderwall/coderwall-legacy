@@ -284,6 +284,10 @@
 
 Coderwall::Application.routes.draw do
 
+  # We get 10K's of requests for this route. We should configure nginx to drop these.
+  get '/.json',       to: proc { [444, {}, ['']] }
+  get '/teams/.json', to: proc { [444, {}, ['']] }
+
   match 'protips/update', via: %w(get put)
   match 'protip/update' , via: %w(get put)
 
