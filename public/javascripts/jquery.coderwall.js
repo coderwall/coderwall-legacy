@@ -28,24 +28,25 @@
                 width = $(this).attr("data-coderwall-badge-width") || opts.width,
                 orientation = $(this).attr("data-coderwall-orientation") || opts.orientation,
                 url = CODERWALL_API_URL.replace(/:username/, username);
+            if (!jQuery.isEmptyObject(username)) {
+                root.addClass("coderwall-root").addClass(orientation);
 
-            root.addClass("coderwall-root").addClass(orientation);
+                $.getJSON(url, function (response) {
+                    $(response.data.badges).each(function () {
+                        var link = $("<a/>").attr({ href: CODERWALL_USER_URL.replace(/:username/, username) }),
+                            img = $("<img/>")
+                                .addClass("coderwall-badge")
+                                .attr({ src: this.badge, width: width, height: width, alt: this.description });
 
-            $.getJSON(url, function (response) {
-                $(response.data.badges).each(function () {
-                    var link = $("<a/>").attr({ href: CODERWALL_USER_URL.replace(/:username/, username) }),
-                        img = $("<img/>")
-                            .addClass("coderwall-badge")
-                            .attr({ src: this.badge, width: width, height: width, alt: this.description });
+                        link.append(img);
+                        root.append(link);
+                    });
 
-                    link.append(img);
-                    root.append(link);
+                    root.append(LOGO_HTML);
                 });
-
-                root.append(LOGO_HTML);
-            });
+            }
         });
-    }
+    };
 
     $(function () {
         $(".coderwall").coderwall();
