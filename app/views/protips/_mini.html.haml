@@ -1,4 +1,4 @@
--#-protip = Protip::SearchWrapper.new(protip)
+- protip = protip.load  #this is simply a hack, fix ES indexed json
 %article{:class => dom_class(protip), :id => protip.public_id}
   %header
     -unless protip.best_stat.nil? || best_stat_value(protip) == 0
