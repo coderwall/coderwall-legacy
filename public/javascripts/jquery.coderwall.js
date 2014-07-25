@@ -3,7 +3,6 @@
         CODERWALL_USER_URL = "http://coderwall.com/:username";
 
     var DEFAULTS = {
-        username: null,
         width: 65,
         opacity: 0.8,
         orientation: "vertical"
@@ -12,9 +11,9 @@
     var LOGO_HTML = "" +
         "<div class='coderwall-logo'>" +
         "  <a href='http://coderwall.com'>" +
-        "    <img src='http://coderwall.com/images/favicon.png' class='coderwall-icon' />" +
+        "    <img src='http://coderwall.com/favicon.png' class='coderwall-icon' />" +
         "    <div class='coderwall-tag-container'>" +
-        "      <div class='coderwall-tag-name'>coderwall</div>" +
+        "      <div class='coderwall-tag-name'>Coderwall</div>" +
         "    </div>" +
         "  </a>" +
         "</div>";
