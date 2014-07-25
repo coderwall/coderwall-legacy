@@ -12,7 +12,7 @@ Coderwall::Application.configure do
   config.cache_classes = false
   config.consider_all_requests_local = true
   config.host = 'localhost:3000'
-  config.serve_static_assets = false
+  config.serve_static_assets = true
   config.whiny_nils = true
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
