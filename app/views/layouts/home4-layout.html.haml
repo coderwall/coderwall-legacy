@@ -7,6 +7,7 @@
     %title= page_title(yield(:page_title))
     %link{rel: "icon", href: image_url('favicon.ico'), type: 'image/x-icon'}
     %link{rel: 'shortcut icon', href: image_url('favicon.png'), type: 'image/x-icon'}
+    %link{ rel: 'author', href: '/humans.txt' }
     = stylesheet_link_tag 'application'
     = render partial: 'shared/mixpanel'
     = csrf_meta_tag

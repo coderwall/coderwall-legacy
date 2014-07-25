@@ -1,0 +1,16 @@
+<%
+  require "rake"
+  require "json"
+  require "net/http"
+  require "uri"
+
+  repo_name = 'assemblymade/coderwall'
+
+  # TODO: Do in native ruby so that errors may be handled
+	contributors = JSON.parse(`curl https://api.github.com/repos/#{repo_name}/contributors`)
+-%>
+
+/* TEAM */
+<% contributors.each do |contributor| -%>
+<%= JSON.parse(`curl #{contributor['url']}`)['name'] %>
+<% end -%>
