@@ -1,4 +1,5 @@
 
+
 /* TEAM */
 Founder: Matt Deiters
 Contact: mdeiters [at] assembly.com
@@ -21,7 +22,9 @@ GitHub: @seuros
 Location: Morocco
 
 Contributor: Zane Wolfgang Pickett
+Email: Zane.Wolfgang.Pickett [at] Gmail.com
 GitHub: @sirwolfgang
+Location: United States
 
 Contributor: Rex Morgan
 GitHub: @RexMorgan
@@ -44,15 +47,15 @@ Email: justraines [at] gmail.com
 GitHub: @dvito
 Location: Washington, DC
 
-Contributor: Anthony Kosednar
-Email: anthony.kosednar [at] gmail.com
-GitHub: @akosednar
-Location: USA
-
 Contributor: Aaron Raimist
 Email: aaron [at] aaronraimist.com
 GitHub: @aaronraimist
 Location: St. Louis
+
+Contributor: Anthony Kosednar
+Email: anthony.kosednar [at] gmail.com
+GitHub: @akosednar
+Location: USA
 
 Contributor: Drew Blas
 GitHub: @drewblas
@@ -62,10 +65,8 @@ Email: hector.yee [at] gmail.com
 GitHub: @hectorgon
 Location: San Francisco, CA
 
-Contributor: Matej Kramny
-Email: github [at] matej.me
-GitHub: @matejkramny
-Location: Didcot
+Contributor: Jon Khaykin
+GitHub: @jkhaykin
 
 Contributor: Greg Molnar
 GitHub: @gregmolnar
@@ -73,6 +74,11 @@ GitHub: @gregmolnar
 Contributor: Daniel Fone
 Email: daniel [at] fone.net.nz
 GitHub: @danielfone
+
+Contributor: Matej Kramny
+Email: github [at] matej.me
+GitHub: @matejkramny
+Location: Didcot
 
 Contributor: Sachin Mohan
 Email: send.sachin [at] yahoo.com
@@ -90,6 +96,16 @@ Last update: 2014/07/26
 Standards: HTML5, CSS3
 Components: Ruby on Rails, jQuery, Sass, Backbone.js, Ember.js, PostgreSQL, ElasticSearch, MongoDB, Redis, etc.
 Software: Vim, Tmux, Vagrant, Git, etc.
+Language: English
+IDE: Vim
+Doctype: HTML5
+
+   ____          _                         _ _
+  / ___|___   __| | ___ _ ____      ____ _| | |
+ | |   / _ \ / _` |/ _ \ '__\ \ /\ / / _` | | |
+ | |__| (_) | (_| |  __/ |   \ V  V / (_| | | |
+  \____\___/ \__,_|\___|_|    \_/\_/ \__,_|_|_|
+
 
 Coderwall is a professional network for software engineers.
 
