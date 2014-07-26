@@ -1,0 +1,2818 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdkc92GIWGvM
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:49 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364588,
+          "id": "cus_4TNdkc92GIWGvM",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdkc92GIWGvM/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdkc92GIWGvM/cards",
+            "data": [
+              {
+                "id": "card_14KQsB4AnjI1zHWBRaAUrENZ",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdkc92GIWGvM"
+              }
+            ]
+          },
+          "default_card": "card_14KQsB4AnjI1zHWBRaAUrENZ"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:49:49 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdkc92GIWGvM
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:49 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364588,
+          "id": "cus_4TNdkc92GIWGvM",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdkc92GIWGvM/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdkc92GIWGvM/cards",
+            "data": [
+              {
+                "id": "card_14KQsB4AnjI1zHWBRaAUrENZ",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdkc92GIWGvM"
+              }
+            ]
+          },
+          "default_card": "card_14KQsB4AnjI1zHWBRaAUrENZ"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:49:50 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_4TNdkc92GIWGvM/subscription
+    body:
+      encoding: US-ASCII
+      string: plan=e0xbaw
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '11'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:50 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '733'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_4TNdJ2lhA0faFB",
+          "plan": {
+            "interval": "month",
+            "name": "Starter",
+            "created": 1406364588,
+            "amount": 0,
+            "currency": "usd",
+            "id": "e0xbaw",
+            "object": "plan",
+            "livemode": false,
+            "interval_count": 1,
+            "trial_period_days": null,
+            "metadata": {},
+            "statement_description": null
+          },
+          "object": "subscription",
+          "start": 1406364590,
+          "status": "active",
+          "customer": "cus_4TNdkc92GIWGvM",
+          "cancel_at_period_end": false,
+          "current_period_start": 1406364590,
+          "current_period_end": 1409042990,
+          "ended_at": null,
+          "trial_start": null,
+          "trial_end": null,
+          "canceled_at": null,
+          "quantity": 1,
+          "application_fee_percent": null,
+          "discount": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:49:50 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdBL7wMg5gl3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:52 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364591,
+          "id": "cus_4TNdBL7wMg5gl3",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdBL7wMg5gl3/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdBL7wMg5gl3/cards",
+            "data": [
+              {
+                "id": "card_14KQsF4AnjI1zHWBXdzm90Ms",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdBL7wMg5gl3"
+              }
+            ]
+          },
+          "default_card": "card_14KQsF4AnjI1zHWBXdzm90Ms"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:49:52 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdBL7wMg5gl3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:53 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364591,
+          "id": "cus_4TNdBL7wMg5gl3",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdBL7wMg5gl3/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdBL7wMg5gl3/cards",
+            "data": [
+              {
+                "id": "card_14KQsF4AnjI1zHWBXdzm90Ms",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdBL7wMg5gl3"
+              }
+            ]
+          },
+          "default_card": "card_14KQsF4AnjI1zHWBXdzm90Ms"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:49:53 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_4TNdBL7wMg5gl3/subscription
+    body:
+      encoding: US-ASCII
+      string: plan=0a4_rq
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '11'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:54 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '733'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_4TNdjcz54N4fBW",
+          "plan": {
+            "interval": "month",
+            "name": "Starter",
+            "created": 1406364592,
+            "amount": 0,
+            "currency": "usd",
+            "id": "0a4_rq",
+            "object": "plan",
+            "livemode": false,
+            "interval_count": 1,
+            "trial_period_days": null,
+            "metadata": {},
+            "statement_description": null
+          },
+          "object": "subscription",
+          "start": 1406364593,
+          "status": "active",
+          "customer": "cus_4TNdBL7wMg5gl3",
+          "cancel_at_period_end": false,
+          "current_period_start": 1406364593,
+          "current_period_end": 1409042993,
+          "ended_at": null,
+          "trial_start": null,
+          "trial_end": null,
+          "canceled_at": null,
+          "quantity": 1,
+          "application_fee_percent": null,
+          "discount": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:49:54 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdFAlM4jh4r5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:59 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '2224'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364595,
+          "id": "cus_4TNdFAlM4jh4r5",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdFAlM4jh4r5/subscriptions",
+            "data": [
+              {
+                "id": "sub_4TNdruQ8FLO4l3",
+                "plan": {
+                  "interval": "month",
+                  "name": "Starter",
+                  "created": 1406364596,
+                  "amount": 0,
+                  "currency": "usd",
+                  "id": "cjvtbq",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_description": null
+                },
+                "object": "subscription",
+                "start": 1406364598,
+                "status": "active",
+                "customer": "cus_4TNdFAlM4jh4r5",
+                "cancel_at_period_end": false,
+                "current_period_start": 1406364598,
+                "current_period_end": 1409042998,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "usd",
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdFAlM4jh4r5/cards",
+            "data": [
+              {
+                "id": "card_14KQsI4AnjI1zHWBN6qwAjw6",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdFAlM4jh4r5"
+              }
+            ]
+          },
+          "default_card": "card_14KQsI4AnjI1zHWBN6qwAjw6"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:49:59 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdFAlM4jh4r5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:00 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '2224'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364595,
+          "id": "cus_4TNdFAlM4jh4r5",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdFAlM4jh4r5/subscriptions",
+            "data": [
+              {
+                "id": "sub_4TNdruQ8FLO4l3",
+                "plan": {
+                  "interval": "month",
+                  "name": "Starter",
+                  "created": 1406364596,
+                  "amount": 0,
+                  "currency": "usd",
+                  "id": "cjvtbq",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_description": null
+                },
+                "object": "subscription",
+                "start": 1406364598,
+                "status": "active",
+                "customer": "cus_4TNdFAlM4jh4r5",
+                "cancel_at_period_end": false,
+                "current_period_start": 1406364598,
+                "current_period_end": 1409042998,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "usd",
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdFAlM4jh4r5/cards",
+            "data": [
+              {
+                "id": "card_14KQsI4AnjI1zHWBN6qwAjw6",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdFAlM4jh4r5"
+              }
+            ]
+          },
+          "default_card": "card_14KQsI4AnjI1zHWBN6qwAjw6"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:00 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdFAlM4jh4r5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:00 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '2224'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364595,
+          "id": "cus_4TNdFAlM4jh4r5",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdFAlM4jh4r5/subscriptions",
+            "data": [
+              {
+                "id": "sub_4TNdruQ8FLO4l3",
+                "plan": {
+                  "interval": "month",
+                  "name": "Starter",
+                  "created": 1406364596,
+                  "amount": 0,
+                  "currency": "usd",
+                  "id": "cjvtbq",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_description": null
+                },
+                "object": "subscription",
+                "start": 1406364598,
+                "status": "active",
+                "customer": "cus_4TNdFAlM4jh4r5",
+                "cancel_at_period_end": false,
+                "current_period_start": 1406364598,
+                "current_period_end": 1409042998,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "usd",
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdFAlM4jh4r5/cards",
+            "data": [
+              {
+                "id": "card_14KQsI4AnjI1zHWBN6qwAjw6",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdFAlM4jh4r5"
+              }
+            ]
+          },
+          "default_card": "card_14KQsI4AnjI1zHWBN6qwAjw6"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:00 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_4TNdFAlM4jh4r5/subscription
+    body:
+      encoding: US-ASCII
+      string: plan=hptmoq
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '11'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:01 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '747'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_4TNdruQ8FLO4l3",
+          "plan": {
+            "interval": "month",
+            "name": "Recruiting Magnet",
+            "created": 1406364599,
+            "amount": 15000,
+            "currency": "usd",
+            "id": "hptmoq",
+            "object": "plan",
+            "livemode": false,
+            "interval_count": 1,
+            "trial_period_days": null,
+            "metadata": {},
+            "statement_description": null
+          },
+          "object": "subscription",
+          "start": 1406364601,
+          "status": "active",
+          "customer": "cus_4TNdFAlM4jh4r5",
+          "cancel_at_period_end": false,
+          "current_period_start": 1406364601,
+          "current_period_end": 1409043001,
+          "ended_at": null,
+          "trial_start": null,
+          "trial_end": null,
+          "canceled_at": null,
+          "quantity": 1,
+          "application_fee_percent": null,
+          "discount": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:01 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNd4v7FfVoPZB
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:03 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364602,
+          "id": "cus_4TNd4v7FfVoPZB",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNd4v7FfVoPZB/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNd4v7FfVoPZB/cards",
+            "data": [
+              {
+                "id": "card_14KQsQ4AnjI1zHWB3UC3Qs6t",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNd4v7FfVoPZB"
+              }
+            ]
+          },
+          "default_card": "card_14KQsQ4AnjI1zHWB3UC3Qs6t"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:04 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNd4v7FfVoPZB
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:04 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364602,
+          "id": "cus_4TNd4v7FfVoPZB",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNd4v7FfVoPZB/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNd4v7FfVoPZB/cards",
+            "data": [
+              {
+                "id": "card_14KQsQ4AnjI1zHWB3UC3Qs6t",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNd4v7FfVoPZB"
+              }
+            ]
+          },
+          "default_card": "card_14KQsQ4AnjI1zHWB3UC3Qs6t"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:04 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_4TNd4v7FfVoPZB/subscription
+    body:
+      encoding: US-ASCII
+      string: plan=ir3fnq
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '11'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:05 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '733'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_4TNdUQelePgIxb",
+          "plan": {
+            "interval": "month",
+            "name": "Starter",
+            "created": 1406364603,
+            "amount": 0,
+            "currency": "usd",
+            "id": "ir3fnq",
+            "object": "plan",
+            "livemode": false,
+            "interval_count": 1,
+            "trial_period_days": null,
+            "metadata": {},
+            "statement_description": null
+          },
+          "object": "subscription",
+          "start": 1406364605,
+          "status": "active",
+          "customer": "cus_4TNd4v7FfVoPZB",
+          "cancel_at_period_end": false,
+          "current_period_start": 1406364605,
+          "current_period_end": 1409043005,
+          "ended_at": null,
+          "trial_start": null,
+          "trial_end": null,
+          "canceled_at": null,
+          "quantity": 1,
+          "application_fee_percent": null,
+          "discount": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:05 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdjnHIIgSIzT
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:09 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364608,
+          "id": "cus_4TNdjnHIIgSIzT",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdjnHIIgSIzT/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdjnHIIgSIzT/cards",
+            "data": [
+              {
+                "id": "card_14KQsV4AnjI1zHWBBQsjLseP",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdjnHIIgSIzT"
+              }
+            ]
+          },
+          "default_card": "card_14KQsV4AnjI1zHWBBQsjLseP"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:09 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdjnHIIgSIzT
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:09 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364608,
+          "id": "cus_4TNdjnHIIgSIzT",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdjnHIIgSIzT/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdjnHIIgSIzT/cards",
+            "data": [
+              {
+                "id": "card_14KQsV4AnjI1zHWBBQsjLseP",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdjnHIIgSIzT"
+              }
+            ]
+          },
+          "default_card": "card_14KQsV4AnjI1zHWBBQsjLseP"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:09 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_4TNdjnHIIgSIzT/subscription
+    body:
+      encoding: US-ASCII
+      string: plan=y9pwhw
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '11'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:10 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '747'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_4TNd2dHaCMzenk",
+          "plan": {
+            "interval": "month",
+            "name": "Recruiting Magnet",
+            "created": 1406364608,
+            "amount": 15000,
+            "currency": "usd",
+            "id": "y9pwhw",
+            "object": "plan",
+            "livemode": false,
+            "interval_count": 1,
+            "trial_period_days": null,
+            "metadata": {},
+            "statement_description": null
+          },
+          "object": "subscription",
+          "start": 1406364610,
+          "status": "active",
+          "customer": "cus_4TNdjnHIIgSIzT",
+          "cancel_at_period_end": false,
+          "current_period_start": 1406364610,
+          "current_period_end": 1409043010,
+          "ended_at": null,
+          "trial_start": null,
+          "trial_end": null,
+          "canceled_at": null,
+          "quantity": 1,
+          "application_fee_percent": null,
+          "discount": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:10 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdLaGHupFM5P
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:13 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364611,
+          "id": "cus_4TNdLaGHupFM5P",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdLaGHupFM5P/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdLaGHupFM5P/cards",
+            "data": [
+              {
+                "id": "card_14KQsZ4AnjI1zHWBWaCSHSz1",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdLaGHupFM5P"
+              }
+            ]
+          },
+          "default_card": "card_14KQsZ4AnjI1zHWBWaCSHSz1"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:13 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdLaGHupFM5P
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:14 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364611,
+          "id": "cus_4TNdLaGHupFM5P",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdLaGHupFM5P/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdLaGHupFM5P/cards",
+            "data": [
+              {
+                "id": "card_14KQsZ4AnjI1zHWBWaCSHSz1",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdLaGHupFM5P"
+              }
+            ]
+          },
+          "default_card": "card_14KQsZ4AnjI1zHWBWaCSHSz1"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:14 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_4TNdLaGHupFM5P/subscription
+    body:
+      encoding: US-ASCII
+      string: plan=j4f7bw
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '11'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:14 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '747'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_4TNdeOGbUpaVnW",
+          "plan": {
+            "interval": "month",
+            "name": "Recruiting Magnet",
+            "created": 1406364612,
+            "amount": 15000,
+            "currency": "usd",
+            "id": "j4f7bw",
+            "object": "plan",
+            "livemode": false,
+            "interval_count": 1,
+            "trial_period_days": null,
+            "metadata": {},
+            "statement_description": null
+          },
+          "object": "subscription",
+          "start": 1406364614,
+          "status": "active",
+          "customer": "cus_4TNdLaGHupFM5P",
+          "cancel_at_period_end": false,
+          "current_period_start": 1406364614,
+          "current_period_end": 1409043014,
+          "ended_at": null,
+          "trial_start": null,
+          "trial_end": null,
+          "canceled_at": null,
+          "quantity": 1,
+          "application_fee_percent": null,
+          "discount": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:14 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/plans
+    body:
+      encoding: US-ASCII
+      string: amount=15000&interval=month&name=Recruiting%20Magnet&currency=usd&id=xj9meg
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '75'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:21 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '284'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "interval": "month",
+          "name": "Recruiting Magnet",
+          "created": 1406364621,
+          "amount": 15000,
+          "currency": "usd",
+          "id": "xj9meg",
+          "object": "plan",
+          "livemode": false,
+          "interval_count": 1,
+          "trial_period_days": null,
+          "metadata": {},
+          "statement_description": null
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:21 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers
+    body:
+      encoding: US-ASCII
+      string: description=someone%40example.com%20for%20Coderwall&card=tok_14KQsi4AnjI1zHWBPaAy5qjQ
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '85'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:21 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364621,
+          "id": "cus_4TNem1Qjkdh9ft",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/cards",
+            "data": [
+              {
+                "id": "card_14KQsi4AnjI1zHWBMlnioiSW",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNem1Qjkdh9ft"
+              }
+            ]
+          },
+          "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:22 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNem1Qjkdh9ft
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:22 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364621,
+          "id": "cus_4TNem1Qjkdh9ft",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/cards",
+            "data": [
+              {
+                "id": "card_14KQsi4AnjI1zHWBMlnioiSW",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNem1Qjkdh9ft"
+              }
+            ]
+          },
+          "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:22 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNem1Qjkdh9ft
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:22 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364621,
+          "id": "cus_4TNem1Qjkdh9ft",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/cards",
+            "data": [
+              {
+                "id": "card_14KQsi4AnjI1zHWBMlnioiSW",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNem1Qjkdh9ft"
+              }
+            ]
+          },
+          "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:23 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/customers/cus_4TNem1Qjkdh9ft/subscription
+    body:
+      encoding: US-ASCII
+      string: plan=xj9meg
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '11'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:23 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '747'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Max-Age:
+      - '300'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "sub_4TNedQOs35XlY5",
+          "plan": {
+            "interval": "month",
+            "name": "Recruiting Magnet",
+            "created": 1406364621,
+            "amount": 15000,
+            "currency": "usd",
+            "id": "xj9meg",
+            "object": "plan",
+            "livemode": false,
+            "interval_count": 1,
+            "trial_period_days": null,
+            "metadata": {},
+            "statement_description": null
+          },
+          "object": "subscription",
+          "start": 1406364623,
+          "status": "active",
+          "customer": "cus_4TNem1Qjkdh9ft",
+          "cancel_at_period_end": false,
+          "current_period_start": 1406364623,
+          "current_period_end": 1409043023,
+          "ended_at": null,
+          "trial_start": null,
+          "trial_end": null,
+          "canceled_at": null,
+          "quantity": 1,
+          "application_fee_percent": null,
+          "discount": null,
+          "metadata": {}
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:23 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/tokens
+    body:
+      encoding: US-ASCII
+      string: card[number]=4242424242424242&card[cvc]=224&card[exp_month]=12&card[exp_year]=14
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '80'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:26 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '597'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "tok_14KQso4AnjI1zHWB5BMaPNFK",
+          "livemode": false,
+          "created": 1406364626,
+          "used": false,
+          "object": "token",
+          "type": "card",
+          "card": {
+            "id": "card_14KQso4AnjI1zHWBJNP8P8Le",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 12,
+            "exp_year": 2014,
+            "fingerprint": "GuemeI8uOeJZ5eck",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "customer": null
+          }
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:26 GMT
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=30000&currency=usd&card=tok_14KQso4AnjI1zHWB5BMaPNFK&description=Single%20Job%20Post
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+      Content-Length:
+      - '91'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:50:26 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1214'
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Max-Age:
+      - '300'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_14KQso4AnjI1zHWBIWtTIUds",
+          "object": "charge",
+          "created": 1406364626,
+          "livemode": false,
+          "paid": true,
+          "amount": 30000,
+          "currency": "usd",
+          "refunded": false,
+          "card": {
+            "id": "card_14KQso4AnjI1zHWBJNP8P8Le",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 12,
+            "exp_year": 2014,
+            "fingerprint": "GuemeI8uOeJZ5eck",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "customer": null
+          },
+          "captured": true,
+          "refunds": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/charges/ch_14KQso4AnjI1zHWBIWtTIUds/refunds",
+            "data": []
+          },
+          "balance_transaction": "txn_14KQso4AnjI1zHWBQIxoSth5",
+          "failure_message": null,
+          "failure_code": null,
+          "amount_refunded": 0,
+          "customer": null,
+          "invoice": null,
+          "description": "Single Job Post",
+          "dispute": null,
+          "metadata": {},
+          "statement_description": null,
+          "receipt_email": null
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 26 Jul 2014 08:50:27 GMT
+      Expires:
+      - Sun, 27 Jul 2014 08:50:27 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alternate-Protocol:
+      - 80:quic
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "San Francisco",
+                       "short_name" : "SF",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "San Francisco County",
+                       "short_name" : "San Francisco County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "California",
+                       "short_name" : "CA",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "San Francisco, CA, USA",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 37.9297707,
+                          "lng" : -122.3279149
+                       },
+                       "southwest" : {
+                          "lat" : 37.6933354,
+                          "lng" : -123.1077733
+                       }
+                    },
+                    "location" : {
+                       "lat" : 37.7749295,
+                       "lng" : -122.4194155
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 37.812,
+                          "lng" : -122.3482
+                       },
+                       "southwest" : {
+                          "lat" : 37.70339999999999,
+                          "lng" : -122.527
+                       }
+                    }
+                 },
+                 "types" : [ "locality", "political" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNem1Qjkdh9ft
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:55:57 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '2238'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364621,
+          "id": "cus_4TNem1Qjkdh9ft",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/subscriptions",
+            "data": [
+              {
+                "id": "sub_4TNedQOs35XlY5",
+                "plan": {
+                  "interval": "month",
+                  "name": "Recruiting Magnet",
+                  "created": 1406364621,
+                  "amount": 15000,
+                  "currency": "usd",
+                  "id": "xj9meg",
+                  "object": "plan",
+                  "livemode": false,
+                  "interval_count": 1,
+                  "trial_period_days": null,
+                  "metadata": {},
+                  "statement_description": null
+                },
+                "object": "subscription",
+                "start": 1406364623,
+                "status": "active",
+                "customer": "cus_4TNem1Qjkdh9ft",
+                "cancel_at_period_end": false,
+                "current_period_start": 1406364623,
+                "current_period_end": 1409043023,
+                "ended_at": null,
+                "trial_start": null,
+                "trial_end": null,
+                "canceled_at": null,
+                "quantity": 1,
+                "application_fee_percent": null,
+                "discount": null,
+                "metadata": {}
+              }
+            ]
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": "usd",
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNem1Qjkdh9ft/cards",
+            "data": [
+              {
+                "id": "card_14KQsi4AnjI1zHWBMlnioiSW",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNem1Qjkdh9ft"
+              }
+            ]
+          },
+          "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:55:57 GMT
+recorded_with: VCR 2.9.2
