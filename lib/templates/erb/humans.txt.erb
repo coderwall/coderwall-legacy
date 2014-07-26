@@ -7,10 +7,48 @@
   repo_name = 'assemblymade/coderwall'
 
   # TODO: Do in native ruby so that errors may be handled
-	contributors = JSON.parse(`curl https://api.github.com/repos/#{repo_name}/contributors`)
+  curl_cmd = "curl https://api.github.com/repos/#{repo_name}/contributors"
+  contributors = JSON.parse(`#{curl_cmd}`).map do |contributor|
+                   JSON.parse(`curl #{contributor['url']}`)
+                 end.reject do |contributor|
+                   %w{just3ws mdeiters whatupdave}.include?(contributor['login'])
+                 end
 -%>
 
 /* TEAM */
-<% contributors.each do |contributor| -%>
-<%= JSON.parse(`curl #{contributor['url']}`)['name'] %>
+Founder: Matt Deiters
+Contact: mdeiters [at] assembly.com
+GitHub: @mdeiters
+From: San Francisco, CA, United States
+
+Core Team/Assembly: Dave Newman
+Contact: dave [at] assembly.com
+GitHub: @whatupdave
+From: San Francisco, CA, United States
+
+Core Team: Mike Hall
+Contact: mike [at] just3ws.com
+GitHub: @just3ws
+From: Crystal Lake, IL, United States
+
+<% contributors.each do |contributor|
+  output = ''
+  output << "Contributor: #{contributor['name']}\n"
+  output << "Email: #{contributor['email'].gsub(/@/, ' [at] ')}\n" if contributor['email'].present?
+  output << "GitHub: @#{contributor['login']}\n"
+  output << "Location: #{contributor['location']}\n" if contributor['location'].present?
+-%>
+<%= output %>
 <% end -%>
+
+/* SITE */
+Last update: <%= Date.today.strftime('%Y/%m/%d') %>
+Standards: HTML5, CSS3
+Components: Ruby on Rails, jQuery, Sass, Backbone.js, Ember.js, PostgreSQL, ElasticSearch, MongoDB, Redis, etc.
+Software: Vim, Tmux, Vagrant, Git, etc.
+
+Coderwall is a professional network for software engineers.
+
+We're an open-source company on Assembly. Contribute to Coderwall to earn a stake in the company.
+
+Join our chat room at https://assembly.com/coderwall.

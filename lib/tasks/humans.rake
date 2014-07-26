@@ -1,3 +1,4 @@
+desc 'Generate the humans.txt file to publicly acknowledge contributors'
 task :humans do
   begin
     erb = ERB.new(File.read(Rails.root.join('lib', 'templates', 'erb', 'humans.txt.erb')), nil, '-')

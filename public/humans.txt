@@ -1,21 +1,98 @@
 
 /* TEAM */
-Mike Hall
-Abdelkader Boudih
-Britt Mileshosky
-Zane Wolfgang Pickett
-Rex Morgan
-Wesley Lancel
-Nícolas Iensen
-Dave Newman
-Justin Raines
-Anthony Kosednar
-Aaron Raimist
-Drew Blas
-Hector Yee
-Matej Kramny
-Greg Molnar
-Daniel Fone
-Matthew Deiters
-Sachin Mohan
-Silas Sao
+Founder: Matt Deiters
+Contact: mdeiters [at] assembly.com
+GitHub: @mdeiters
+From: San Francisco, CA, United States
+
+Core Team/Assembly: Dave Newman
+Contact: dave [at] assembly.com
+GitHub: @whatupdave
+From: San Francisco, CA, United States
+
+Core Team: Mike Hall
+Contact: mike [at] just3ws.com
+GitHub: @just3ws
+From: Crystal Lake, IL, United States
+
+Contributor: Abdelkader Boudih
+Email: terminale [at] googlemail.com
+GitHub: @seuros
+Location: Morocco
+
+Contributor: Zane Wolfgang Pickett
+GitHub: @sirwolfgang
+
+Contributor: Rex Morgan
+GitHub: @RexMorgan
+Location: Austin, Texas
+
+Contributor: Britt Mileshosky
+GitHub: @Mileshosky
+
+Contributor: Wesley Lancel
+GitHub: @wesleylancel
+Location: Belgium / The Netherlands
+
+Contributor: Nícolas Iensen
+Email: nicolas [at] iensen.me
+GitHub: @nicolasiensen
+Location: Rio de Janeiro
+
+Contributor: Justin Raines
+Email: justraines [at] gmail.com
+GitHub: @dvito
+Location: Washington, DC
+
+Contributor: Anthony Kosednar
+Email: anthony.kosednar [at] gmail.com
+GitHub: @akosednar
+Location: USA
+
+Contributor: Aaron Raimist
+Email: aaron [at] aaronraimist.com
+GitHub: @aaronraimist
+Location: St. Louis
+
+Contributor: Drew Blas
+GitHub: @drewblas
+
+Contributor: Hector Yee
+Email: hector.yee [at] gmail.com
+GitHub: @hectorgon
+Location: San Francisco, CA
+
+Contributor: Matej Kramny
+Email: github [at] matej.me
+GitHub: @matejkramny
+Location: Didcot
+
+Contributor: Greg Molnar
+GitHub: @gregmolnar
+
+Contributor: Daniel Fone
+Email: daniel [at] fone.net.nz
+GitHub: @danielfone
+
+Contributor: Sachin Mohan
+Email: send.sachin [at] yahoo.com
+GitHub: @sachinm
+Location: Atlanta, GA
+
+Contributor: Silas Sao
+Email: silassao [at] gmail.com
+GitHub: @sao
+Location: California
+
+
+/* SITE */
+Last update: 2014/07/26
+Standards: HTML5, CSS3
+Components: Ruby on Rails, jQuery, Sass, Backbone.js, Ember.js, PostgreSQL, ElasticSearch, MongoDB, Redis, etc.
+Software: Vim, Tmux, Vagrant, Git, etc.
+
+Coderwall is a professional network for software engineers.
+
+We're an open-source company on Assembly. Contribute to Coderwall to earn a stake in the company.
+
+Join our chat room at https://assembly.com/coderwall.
