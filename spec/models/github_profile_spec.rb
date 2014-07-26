@@ -26,7 +26,7 @@ RSpec.describe GithubProfile, :type => :model, skip: ENV['TRAVIS']  do
 
   describe 'facts' do
     let (:profile) {
-      VCR.use_cassette('github_profile_for_mdeiters') do
+      VCR.use_cassette('GithubProfile') do
         GithubProfile.for_username('mdeiters')
       end
     }

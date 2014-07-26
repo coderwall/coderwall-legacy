@@ -3,8 +3,8 @@ RSpec.describe Ashcat, type: :model, skip: ENV['TRAVIS'] do
   let(:contributor) { Fabricate(:user, github_id: profile.github_id, github: 'dhh') }
 
   it 'creates facts for each contributor' do
-    VCR.use_cassette('ashcat_creates_facts_for_each_contributor') do
-      # TODO: Refactor to utilize sidekiq job
+    # TODO: Refactor to utilize sidekiq job
+    VCR.use_cassette('Ashcat') do
       Ashcat.perform
 
       contributor.build_github_facts
