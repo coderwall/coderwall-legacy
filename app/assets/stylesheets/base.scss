@@ -118,6 +118,7 @@ $level2: #42a3d3;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  font-smoothing: antialiased;
 }
 
 @mixin border-radius($radius) {

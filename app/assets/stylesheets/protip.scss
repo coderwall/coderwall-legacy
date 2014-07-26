@@ -1313,7 +1313,8 @@ body.protip-single {
   -moz-perspective: 500px;
 
   .card {
-    // Don't remove the browser prefixed tags here or you're goinig to have a bad time.
+    // Don't remove the browser prefixed tags for this class it will
+    //  remove the 3D effect that happens when previewing a protip.
     background: #fff;
     width: 100%;
     @include transform-style(preserve-3d);
