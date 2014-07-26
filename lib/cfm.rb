@@ -15,7 +15,7 @@ module CFM
 
       private
       def render_cfm(text)
-        text.lines.map { |x| inspect_line x }.join("\n")
+        text.lines.map { |x| inspect_line x }.join("")
       end
 
       def coderwall_user_link(username)
