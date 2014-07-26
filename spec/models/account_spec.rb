@@ -57,7 +57,7 @@ RSpec.describe Account, :type => :model do
       end
     end
     
-    # BUG: This request does not produce the same results out of two calls, under the Account cassette.
+    # FIXME: This request does not produce the same results out of two calls, under the Account cassette.
     # 	Something is stomping its request.
     # 	1st call, under record all will pass this test
     # 	2nd call, under new or none will fail, returning a previously recorded request
@@ -128,7 +128,7 @@ RSpec.describe Account, :type => :model do
         end
       end
 
-      # BUG: This request does not produce the same results out of two calls.
+      # FIXME: This request does not produce the same results out of two calls.
       # 	1st call, under record all will pass this test
       # 	2nd call, under non will fail to match with previously recorded request
       # 	3rd call, under new will record a worket set of data for this test
