@@ -1,7 +1,7 @@
 - protip = protip.load  #this is simply a hack, fix ES indexed json
 %article{:class => dom_class(protip), :id => protip.public_id}
-  -if display_protip_stats?(protip)  
-    %header
+  %header
+    -if display_protip_stats?(protip)
       %span{:class => protip_stat_class(protip)}
         = formatted_best_stat_value(protip) unless best_stat_name(protip) =~ /hawt/
 
