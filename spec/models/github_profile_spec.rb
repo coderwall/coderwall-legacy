@@ -1,5 +1,6 @@
 require 'vcr_helper'
 
+# TODO: Deprecate GithubOld, and related testing
 RSpec.describe GithubProfile, :type => :model, skip: ENV['TRAVIS']  do
   let(:languages) {
     {

@@ -4,6 +4,7 @@ RSpec.describe Ashcat, type: :model, skip: ENV['TRAVIS'] do
 
   it 'creates facts for each contributor' do
     VCR.use_cassette('ashcat_creates_facts_for_each_contributor') do
+      # TODO: Refactor to utilize sidekiq job
       Ashcat.perform
 
       contributor.build_github_facts
