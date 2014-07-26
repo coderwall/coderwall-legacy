@@ -74,10 +74,6 @@
   padding: 15px;
   //height: 35px;
   @include cleaner-text;
-  -webkit-border-top-right-radius: 4px;
-  -webkit-border-bottom-right-radius: 4px;
-  -moz-border-radius-topright: 4px;
-  -moz-border-radius-bottomright: 4px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 
@@ -120,7 +116,6 @@ body.protip-single {
   }
 
   .tip-container {
-    -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.1);
   }
 
@@ -324,12 +319,6 @@ body.protip-single {
           background: #f7f7f7;
           //border-top: #0a0a0a solid 1px;
           //border-bottom: #3e3d3d solid 1px;
-          -webkit-border-radius: 44px;
-          -webkit-border-top-right-radius: 6px;
-          -webkit-border-bottom-right-radius: 6px;
-          -moz-border-radius: 44px;
-          -moz-border-radius-topright: 6px;
-          -moz-border-radius-bottomright: 6px;
           border-radius: 44px;
           border-top-right-radius: 6px;
           border-bottom-right-radius: 6px;
@@ -677,7 +666,6 @@ body.protip-single {
         font-size: 1.2em;
         font-family: "MuseoSans-500";
         padding: 0.5em 1em;
-        -webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
         box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);
         @include border-radius(2px);
 
@@ -1077,11 +1065,6 @@ body.protip-single {
           color: #555;
           position: relative;
           background: #f9f9f9; /* Old browsers */
-          background: -moz-linear-gradient(left, #f9f9f9 0%, #ffffff 18%); /* FF3.6+ */
-          background: -webkit-gradient(linear, left top, right top, color-stop(0%, #f9f9f9), color-stop(18%, #ffffff)); /* Chrome,Safari4+ */
-          background: -webkit-linear-gradient(left, #f9f9f9 0%, #ffffff 18%); /* Chrome10+,Safari5.1+ */
-          background: -o-linear-gradient(left, #f9f9f9 0%, #ffffff 18%); /* Opera 11.10+ */
-          background: -ms-linear-gradient(left, #f9f9f9 0%, #ffffff 18%); /* IE10+ */
           background: linear-gradient(to right, #f9f9f9 0%, #ffffff 18%); /* W3C */
           list-style-type: none;
 
@@ -1122,11 +1105,6 @@ body.protip-single {
             }
             padding: 0;
             background: #ffffff; /* Old browsers */
-            background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #f1f1f1)); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top, #ffffff 0%, #f1f1f1 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top, #ffffff 0%, #f1f1f1 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top, #ffffff 0%, #f1f1f1 100%); /* IE10+ */
             background: linear-gradient(to bottom, #ffffff 0%, #f1f1f1 100%); /* W3C */
           }
           //full-list
@@ -1335,7 +1313,8 @@ body.protip-single {
   -moz-perspective: 500px;
 
   .card {
-    //position: absolute;
+    // Don't remove the browser prefixed tags for this class it will
+    //  remove the 3D effect that happens when previewing a protip.
     background: #fff;
     width: 100%;
     @include transform-style(preserve-3d);
@@ -1351,12 +1330,10 @@ body.protip-single {
       top: 0;
       left: 0;
       @include rotateY(180deg);
-      -moz-transform: rotateY(180deg);
     }
 
     .side {
       @include backface-visibility(hidden);
-      -moz-backface-visibility: hidden;
       //@include subtle-box-shadow;
       opacity: 1;
       min-width: 100%;
@@ -1364,7 +1341,6 @@ body.protip-single {
 
     &.rotated {
       @include rotateY(180deg);
-      -moz-transform: rotateY(180deg);
     }
   }
 }

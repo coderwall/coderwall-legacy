@@ -216,9 +216,6 @@
 }
 .blur-screen {
   background: image-url("blur-test.jpg") no-repeat center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   position: fixed;
   height: 100%;
@@ -567,9 +564,6 @@
 .home-top {
   height: 560px;
   background: #000 image-url("home-top-bg.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
   background-size: cover;
   .inside-home-top {
     margin: 0 auto;
@@ -780,7 +774,6 @@
 .filter-bar {
   height: 85px;
   background: #fff;
-  -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.05);
   box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.05);
   .inside {
     max-width: 1180px;
@@ -934,7 +927,6 @@
       height: 35px;
       @include border-radius(4px);
       @include transition-all;
-      -webkit-box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
       box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
     }
   }
@@ -1031,7 +1023,6 @@
     height: 255px;
     float: left;
     background: #fff;
-    -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.05);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.05);
     .unfollow {
       position: absolute;

@@ -192,7 +192,6 @@
     //background: #eee image-url("profile/skills-header-bg.png") repeat;
     background: #474747;
     border-bottom: solid 1px #e0e1db;
-    //-webkit-box-shadow: inset 0px 0px 2px 2px #ffffff;
     //box-shadow: inset 0px 0px 2px 2px #ffffff;
     color: #fff;
 
@@ -770,7 +769,6 @@
           @include border-radius(100px);
           margin-left: 8px;
           text-align: center;
-          -webkit-box-shadow: inset 0px 3px 3px 0px rgba(0, 0, 0, 0.3);
           box-shadow: inset 0px 3px 3px 0px rgba(0, 0, 0, 0.3);
 
           &:first-child {
@@ -901,7 +899,6 @@
           text-align: center;
           @include border-radius(100px);
           color: #fff;
-          -webkit-box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
           box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
           @include blue-tx-shad;
         }
@@ -1343,7 +1340,6 @@
         font-family: "courier", monospace;
         font-size: 1.1em;
         line-height: 1.4em;
-        -webkit-box-shadow: inset 0px 0px 8px 8px rgba(0, 0, 0, 0.2);
         box-shadow: inset 0px 0px 8px 8px rgba(0, 0, 0, 0.2);
       }
 
@@ -1355,7 +1351,6 @@
           padding: 10px 20px;
           font-size: 1.4em;
           @include border-radius(4px);
-          -webkit-box-shadow: inset 0px 1px 1px 0px rgba(105, 135, 156, 0.4);
           box-shadow: inset 0px 1px 1px 0px rgba(105, 135, 156, 0.4);
 
           &:hover {
@@ -1470,7 +1465,6 @@
     font-family: "courier", monospace;
     font-size: 1.1em;
     line-height: 1.4em;
-    -webkit-box-shadow: inset 0px 0px 8px 8px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0px 0px 8px 8px rgba(0, 0, 0, 0.2);
   }
 

@@ -298,8 +298,6 @@ body#protip-multiple {
   //width: 250px;
   white-space: nowrap;
   text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  -ms-text-overflow: ellipsis;
 }
 
 .tips-section {
@@ -739,7 +737,6 @@ body#protip-multiple {
 // 	  width: 30px;
 // 	  padding: 6px 0;
 // 		text-indent: -100px;
-// 	  -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
 // 	  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
 // 	  background: #BACBD8 image-url("protips/mag.png") no-repeat 7px center;
 // 	  @include transition-all;
@@ -766,7 +763,6 @@ body#protip-multiple {
     // 	  @include border-radius(30px);
     // 	  border: 0;
     //     outline: none;
-    // 	  -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
     // 	  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
     // margin-left: -30px;
     //
@@ -892,7 +888,6 @@ body#protip-multiple {
       line-height: 20px;
       text-align: center;
       @include border-radius(100px);
-      -webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
       box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
     }
   }
@@ -914,7 +909,6 @@ body#protip-multiple {
       text-transform: uppercase;
       padding-left: 10px;
       @include border-radius(3px);
-      -webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
       box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
       background: image-url("protips/action-icons.png") no-repeat;
     }
@@ -1038,7 +1032,6 @@ body#protip-multiple {
   border: solid 1px #c8d5da;
   @include border-radius(4px);
   margin-bottom: 20px;
-  -webkit-box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
 
   > a {
@@ -1051,7 +1044,6 @@ body#protip-multiple {
     padding: 10px 45px 10px 15px;
     background: $light-blue-grey;
     //background: #fff;
-    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
     box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.1);
     border-bottom: solid 1px #eaeaea;
     @include border-radius-top(4px);
@@ -1162,7 +1154,6 @@ body#protip-multiple {
     vertical-align: middle;
     text-align: center;
     font-size: 1.4em;
-    -webkit-box-shadow: inset 0px 1px 1px 0px rgba(105, 135, 156, 0.4);
     box-shadow: inset 0px 1px 1px 0px rgba(105, 135, 156, 0.4);
     @include border-radius(4px);
     @include transition-all;
@@ -1181,7 +1172,6 @@ body#protip-multiple {
     @include border-radius(4px);
     margin-bottom: 15px;
     padding: 30px 40px;
-    -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
 
     .new {
@@ -1333,7 +1323,6 @@ body#protip-multiple {
       color: #fff;
       font-family: "MuseoSans-500";
       @include border-radius(3px);
-      -webkit-box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
       box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.1);
       @include transition-all;
     }
