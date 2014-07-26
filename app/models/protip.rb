@@ -78,7 +78,6 @@ class Protip < ActiveRecord::Base
 
   # Begin these three lines fail the test
   after_save :index_search
-  after_save :unqueue_flagged, if: :flagged?
   after_destroy :index_search_after_destroy
   after_create :update_network
   after_create :analyze_spam
@@ -100,7 +99,6 @@ class Protip < ActiveRecord::Base
   scope :with_upvotes, joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id")
   scope :trending, order('score DESC')
   scope :flagged, where(flagged: true)
-  scope :queued_for, ->(queue) { ProcessingQueue.queue_for_type(queue, self.class.name) }
 
   class << self
 
@@ -338,10 +336,6 @@ class Protip < ActiveRecord::Base
 
     def index_search_after_destroy
       self.tire.update_index
-    end
-
-    def unqueue_flagged
-      ProcessingQueue.unqueue(self, :auto_tweet)
     end
 
 
@@ -944,9 +938,6 @@ class Protip < ActiveRecord::Base
     end
   end
 
-  def queued_for?(queue_name)
-    ProcessingQueue.queued?(self, queue_name)
-  end
 
   def best_matching_job
     matching_jobs.first

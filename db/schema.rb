@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140720121419) do
+ActiveRecord::Schema.define(:version => 20140726214006) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -225,14 +225,6 @@ ActiveRecord::Schema.define(:version => 20140720121419) do
     t.datetime "updated_at"
     t.boolean  "analytics",           :default => false
     t.integer  "interval_in_seconds", :default => 2592000
-  end
-
-  create_table "processing_queues", :force => true do |t|
-    t.integer  "queueable_id"
-    t.string   "queueable_type"
-    t.string   "queue"
-    t.datetime "queued_at"
-    t.datetime "dequeued_at"
   end
 
   create_table "protip_links", :force => true do |t|
