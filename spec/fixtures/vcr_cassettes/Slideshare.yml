@@ -1,0 +1,1484 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://www.slideshare.net/ndecrock/presentations
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Verify-Ssl:
+      - 'false'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - text/html; charset=utf-8
+      Status:
+      - 200 OK
+      X-Runtime:
+      - '0.616322'
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-Id:
+      - af53c89919f567e67dd8c68d83eef20d
+      X-Bench-Route:
+      - profile/mySlideshows
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Content-Encoding:
+      - gzip
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '12726'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:39 GMT
+      X-Varnish:
+      - '1358036300'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr4|U9Nr4; path=/
+      - _uv_id=1361947068; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - PROD-ELA4
+      X-Li-Uuid:
+      - a3uLHjBphBMQeG99sioAAA==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        QzSBVu7FgySax473580n8lC88uyhbcHCjj3/QoxC3IiIVsCUcyKNVGHB50oJ
+        7shydsRlHk3xEHVMnzrPj3qtAtE7dgMvlZIAeoCYyF5xczVuisM5kyc9CR15
+        pVyowCgM/5pSuKC7gWwwDlEACwYo5NwkpczUxRMlUYSRidkkqYIE5EJrtFeL
+        YBA0L0i/hVzAZygjhkxM4ANyBl7EBxJFxIoYaPNAO9C8wh0ILLhF2LOxkxlp
+        YKZNwm2mXz+k21qp/n4bTb0ZtDzBds8184Qp2AU/h9IoClJ/lnF8GO+ydvwQ
+        APk73MQ5MOwIEta0PBt0Jiy/vZUcUrEWA1eE5FBh9Pa2Ab3njycYYHPPEMdL
+        zis0xiOmUpvn4pF4O0KB2BaYMQ2/Ds0o0pIqe04RQtvPaSKXFzVCuIlo1dks
+        qVanKdoG382wKLjq4JSjF4KmpTQM0ieWjLMdpCPGL/fy9CPu+HD1WKA/sTFk
+        JxAdZuSbIojH5sbI8sJn4rkSPLMTSLU2U1wEBkqcEH9A0lB9H0s47od2Mjs8
+        shUGDmzR3Hxhl/cVYMz3eTYKbUMBqCcQK+4ZPvNKbM+2KH2swUAKPtAWxOWZ
+        axw/k7+V9rjoKe8jk/KzLtQXJcrXdFCkDwUccSi5EAoMUwr1vickS/V9CPuI
+        KSRLnQFlPVVQzLWDvKW2+2v6lTJyGI2iICBeehKnjJ8hLBdWNRKTE1NggbfB
+        TKkn6+KVqzWVxRyWVJ4cJ13D+QVwIZL24nUxEa3qVkeVcB6eY/GYD1NDZ3QI
+        1W6BNSgNrMkfh+viIFrV4aBKSjg84cP8Qjh47lxYi9dFI2tYh4lWWELmqRrv
+        F8LnFZf5YHdbF5+sYR0+WmEJn6zkF8JHHKzrIiNa1WGiSspocGnyF8LhNHLI
+        K/QVOTWui4netg6fYnkJK1HI+MC/EG65SWddzHRjUJUv66UlrIoWoJV4s3Z+
+        TiHnaGenCX2pJMfQ0YRTPIOp1MI4fkUuq+12zYwu5anlvkjvoG9/3FN7MUZz
+        6AZR6l9661IGnBdlyzqK10tLlHGSNaxZmxVOvIW4/IEkj4U4/AEkjoWw872I
+        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
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:39 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/youre-buying-on-the-wrong-market
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.021502'
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Request-Id:
+      - 98581eda56eee8e303f8dad69b4930e6
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Xss-Protection:
+      - '0'
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1424'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:40 GMT
+      X-Varnish:
+      - '973020237'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r8|U9Nr4|U9Nr4; path=/
+      - _uv_id=652800707; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - prod-lva1
+      X-Li-Uuid:
+      - FGkcVDBphBMQrC3pdSsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"author_url":"http://www.slideshare.net/ndecrock","html":"\u003Ciframe
+        src=\"http://www.slideshare.net/slideshow/embed_code/27018843\" width=\"427\"
+        height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\"
+        style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width:
+        100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/youre-buying-on-the-wrong-market\"
+        title=\"You\u0026#x27;re buying on the wrong market!\" target=\"_blank\"\u003EYou\u0026#x27;re
+        buying on the wrong market!\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","slide_image_baseurl":"//image.slidesharecdn.com/wrongmarket-131009084827-phpapp02/95/slide-","provider_url":"http://www.slideshare.net","height":355,"conversion_version":2,"width":425,"provider_name":"SlideShare","total_slides":18,"type":"rich","version":"1.0","thumbnail_width":170,"thumbnail_height":128,"slideshow_id":27018843,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/wrongmarket-131009084827-phpapp02-thumbnail.jpg?cb=1381474458","version_no":"1381474458","slide_image_baseurl_suffix":"-1024.jpg","title":"You''re
+        buying on the wrong market!","author_name":"Nick Decrock"}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:40 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/terugblik-op-vijf-jaar-kaai16
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Request-Id:
+      - e9c2ef7a9d10dff33994fe9b7a45d984
+      X-Xss-Protection:
+      - '0'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Runtime:
+      - '0.017545'
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1401'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:40 GMT
+      X-Varnish:
+      - '1358036510'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr4|U9Nr4; path=/
+      - _uv_id=107420334; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - prod-lva1
+      X-Li-Uuid:
+      - a0WNXDBphBMQ3jlYTisAAA==
+    body:
+      encoding: UTF-8
+      string: '{"author_url":"http://www.slideshare.net/ndecrock","author_name":"Nick
+        Decrock","version_no":"1372673152","html":"\u003Ciframe src=\"http://www.slideshare.net/slideshow/embed_code/23615445\"
+        width=\"427\" height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\"
+        scrolling=\"no\" style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px;
+        max-width: 100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/terugblik-op-vijf-jaar-kaai16\"
+        title=\"Terugblik op vijf jaar KAAI.16\" target=\"_blank\"\u003ETerugblik
+        op vijf jaar KAAI.16\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","slide_image_baseurl":"//image.slidesharecdn.com/terugblikopkaai16-130628071008-phpapp02/95/slide-","slide_image_baseurl_suffix":"-1024.jpg","title":"Terugblik
+        op vijf jaar KAAI.16","thumbnail_width":170,"thumbnail_height":128,"provider_name":"SlideShare","height":355,"conversion_version":2,"type":"rich","width":425,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/terugblikopkaai16-130628071008-phpapp02-thumbnail.jpg?cb=1372673152","total_slides":20,"version":"1.0","provider_url":"http://www.slideshare.net","slideshow_id":23615445}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:40 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/slideshare-revisited
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Request-Id:
+      - 4b88c7cc126f5d4206dc8b74caeaef83
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Runtime:
+      - '0.020722'
+      X-Xss-Protection:
+      - '0'
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1366'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:40 GMT
+      X-Varnish:
+      - '1358036555'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr4|U9Nr4; path=/
+      - _uv_id=2143129704; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - PROD-ELA4
+      X-Li-Uuid:
+      - M4FlajBphBOQFw5oVSsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"slideshow_id":21512209,"slide_image_baseurl":"//image.slidesharecdn.com/slidesharerevisited-130520061038-phpapp01/95/slide-","conversion_version":2,"version_no":"1369080354","provider_name":"SlideShare","slide_image_baseurl_suffix":"-1024.jpg","thumbnail_width":170,"title":"Slideshare
+        ReVisited","height":355,"html":"\u003Ciframe src=\"http://www.slideshare.net/slideshow/embed_code/21512209\"
+        width=\"427\" height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\"
+        scrolling=\"no\" style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px;
+        max-width: 100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/slideshare-revisited\"
+        title=\"Slideshare ReVisited\" target=\"_blank\"\u003ESlideshare ReVisited\u003C/a\u003E
+        \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca href=\"http://www.slideshare.net/ndecrock\"
+        target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E \u003C/div\u003E\n\n","width":425,"thumbnail_height":128,"total_slides":15,"author_name":"Nick
+        Decrock","provider_url":"http://www.slideshare.net","thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/slidesharerevisited-130520061038-phpapp01-thumbnail.jpg?cb=1369080354","version":"1.0","author_url":"http://www.slideshare.net/ndecrock","type":"rich"}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:40 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/the-comeback-of-the-watch
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.020164'
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Request-Id:
+      - 0345d7b51c034b19d8b8d9e4ba025e5a
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Xss-Protection:
+      - '0'
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1370'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:40 GMT
+      X-Varnish:
+      - '1358036615'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr4|U9Nr4; path=/
+      - _uv_id=1503945199; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - PROD-ELA4
+      X-Li-Uuid:
+      - xexLezBphBMQiAbcqCsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"author_url":"http://www.slideshare.net/ndecrock","html":"\u003Ciframe
+        src=\"http://www.slideshare.net/slideshow/embed_code/16469108\" width=\"427\"
+        height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\"
+        style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width:
+        100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/the-comeback-of-the-watch\"
+        title=\"The Comeback of the Watch\" target=\"_blank\"\u003EThe Comeback of
+        the Watch\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","slide_image_baseurl":"//image.slidesharecdn.com/timetowatch-130211082848-phpapp02/95/slide-","provider_url":"http://www.slideshare.net","height":355,"conversion_version":2,"width":425,"provider_name":"SlideShare","total_slides":21,"type":"rich","version":"1.0","thumbnail_width":170,"thumbnail_height":128,"slideshow_id":16469108,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/timetowatch-130211082848-phpapp02-thumbnail.jpg?cb=1377534222","version_no":"1377534222","slide_image_baseurl_suffix":"-1024.jpg","title":"The
+        Comeback of the Watch","author_name":"Nick Decrock"}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:40 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/kaai16-toekomstperspectief
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Request-Id:
+      - 98177df428d279e076215c755aeb19d0
+      X-Xss-Protection:
+      - '0'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Runtime:
+      - '0.016540'
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1397'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:40 GMT
+      X-Varnish:
+      - '1358036679'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr4|U9Nr4; path=/
+      - _uv_id=541645316; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - PROD-ELA4
+      X-Li-Uuid:
+      - S/upijBphBMQoOzwqCsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"author_url":"http://www.slideshare.net/ndecrock","author_name":"Nick
+        Decrock","version_no":"1350051854","html":"\u003Ciframe src=\"http://www.slideshare.net/slideshow/embed_code/14698076\"
+        width=\"427\" height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\"
+        scrolling=\"no\" style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px;
+        max-width: 100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/kaai16-toekomstperspectief\"
+        title=\"KAAI.16 Toekomstperspectief\" target=\"_blank\"\u003EKAAI.16 Toekomstperspectief\u003C/a\u003E
+        \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca href=\"http://www.slideshare.net/ndecrock\"
+        target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E \u003C/div\u003E\n\n","slide_image_baseurl":"//image.slidesharecdn.com/kaai16presoslideshare-121012043951-phpapp01/95/slide-","slide_image_baseurl_suffix":"-1024.jpg","title":"KAAI.16
+        Toekomstperspectief","thumbnail_width":170,"thumbnail_height":128,"provider_name":"SlideShare","height":355,"conversion_version":2,"type":"rich","width":425,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/kaai16presoslideshare-121012043951-phpapp01-thumbnail.jpg?cb=1350051854","total_slides":27,"version":"1.0","provider_url":"http://www.slideshare.net","slideshow_id":14698076}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:40 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/the-kama-sutra-for-business-pleasures-preview
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Runtime:
+      - '0.019597'
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Xss-Protection:
+      - '0'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Request-Id:
+      - 903eda09057f3bc971ca9b57a42b85b9
+      X-Content-Type-Options:
+      - nosniff
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1476'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:41 GMT
+      X-Varnish:
+      - '1358036720'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr5|U9Nr5; path=/
+      - _uv_id=104958154; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - prod-lva1
+      X-Li-Uuid:
+      - 6ooSlDBphBMQeObodSsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"slideshow_id":11463347,"thumbnail_height":128,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/kamasutrapresentation-120207074819-phpapp01-thumbnail.jpg?cb=1328688383","height":355,"slide_image_baseurl":"//image.slidesharecdn.com/kamasutrapresentation-120207074819-phpapp01/95/slide-","provider_name":"SlideShare","thumbnail_width":170,"version":"1.0","conversion_version":2,"width":425,"author_name":"Nick
+        Decrock","html":"\u003Ciframe src=\"http://www.slideshare.net/slideshow/embed_code/11463347\"
+        width=\"427\" height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\"
+        scrolling=\"no\" style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px;
+        max-width: 100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/the-kama-sutra-for-business-pleasures-preview\"
+        title=\"The Kama Sutra for Business Pleasures - Preview\" target=\"_blank\"\u003EThe
+        Kama Sutra for Business Pleasures - Preview\u003C/a\u003E \u003C/strong\u003E
+        from \u003Cstrong\u003E\u003Ca href=\"http://www.slideshare.net/ndecrock\"
+        target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E \u003C/div\u003E\n\n","version_no":"1328688383","provider_url":"http://www.slideshare.net","author_url":"http://www.slideshare.net/ndecrock","slide_image_baseurl_suffix":"-1024.jpg","type":"rich","title":"The
+        Kama Sutra for Business Pleasures - Preview","total_slides":31}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:41 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/waking-up-in-the-post-social-media-era
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Request-Id:
+      - e947bf7b12cf6d5db22da8b1717e5b9f
+      X-Xss-Protection:
+      - '0'
+      X-Runtime:
+      - '0.016479'
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Content-Type-Options:
+      - nosniff
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1456'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:41 GMT
+      X-Varnish:
+      - '1358036751'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr5|U9Nr5; path=/
+      - _uv_id=238130546; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - prod-lva1
+      X-Li-Uuid:
+      - N2NbnDBphBMQBg14UysAAA==
+    body:
+      encoding: UTF-8
+      string: '{"author_url":"http://www.slideshare.net/ndecrock","provider_name":"SlideShare","title":"Waking
+        up in the Post Social Media Era","slide_image_baseurl_suffix":"-1024.jpg","thumbnail_height":128,"slideshow_id":11055436,"version":"1.0","html":"\u003Ciframe
+        src=\"http://www.slideshare.net/slideshow/embed_code/11055436\" width=\"427\"
+        height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\"
+        style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width:
+        100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/waking-up-in-the-post-social-media-era\"
+        title=\"Waking up in the Post Social Media Era\" target=\"_blank\"\u003EWaking
+        up in the Post Social Media Era\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","slide_image_baseurl":"//image.slidesharecdn.com/postsocialmediaeraslideshare-120115054445-phpapp02/95/slide-","width":425,"type":"rich","total_slides":58,"version_no":"1326865026","provider_url":"http://www.slideshare.net","thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/postsocialmediaeraslideshare-120115054445-phpapp02-thumbnail.jpg?cb=1326865026","height":355,"conversion_version":2,"author_name":"Nick
+        Decrock","thumbnail_width":170}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:41 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/how-to-survive-burning-man
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Request-Id:
+      - 54442eb7b47568ef29030f633470225a
+      X-Content-Type-Options:
+      - nosniff
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Runtime:
+      - '0.017010'
+      X-Xss-Protection:
+      - '0'
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1378'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:41 GMT
+      X-Varnish:
+      - '973020553'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r8|U9Nr5|U9Nr5; path=/
+      - _uv_id=629882058; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - PROD-ELA4
+      X-Li-Uuid:
+      - FwjqqTBphBMQKM4IQSsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"conversion_version":2,"slide_image_baseurl_suffix":"-1024.jpg","thumbnail_width":170,"thumbnail_height":128,"slide_image_baseurl":"//image.slidesharecdn.com/burningmantips-110912095809-phpapp01/95/slide-","title":"How
+        to survive Burning Man","type":"rich","slideshow_id":9226423,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/burningmantips-110912095809-phpapp01-thumbnail.jpg?cb=1315878673","version_no":"1315878673","total_slides":20,"author_name":"Nick
+        Decrock","provider_name":"SlideShare","version":"1.0","author_url":"http://www.slideshare.net/ndecrock","height":355,"width":425,"html":"\u003Ciframe
+        src=\"http://www.slideshare.net/slideshow/embed_code/9226423\" width=\"427\"
+        height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\"
+        style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width:
+        100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/how-to-survive-burning-man\"
+        title=\"How to survive Burning Man\" target=\"_blank\"\u003EHow to survive
+        Burning Man\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","provider_url":"http://www.slideshare.net"}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:41 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/looking-through-a-black-mirror
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Request-Id:
+      - f92cd10a3d287d56dfd8bb4d43424acc
+      X-Content-Type-Options:
+      - nosniff
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Runtime:
+      - '0.021250'
+      X-Xss-Protection:
+      - '0'
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1408'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:41 GMT
+      X-Varnish:
+      - '1358036866'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr5|U9Nr5; path=/
+      - _uv_id=1210403509; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - PROD-ELA4
+      X-Li-Uuid:
+      - FfJJuTBphBMQgg3AqCsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"conversion_version":2,"slide_image_baseurl_suffix":"-1024.jpg","thumbnail_width":170,"thumbnail_height":128,"slide_image_baseurl":"//image.slidesharecdn.com/blackmirrorslideshare-100917020454-phpapp02/95/slide-","title":"Looking
+        through a black mirror","type":"rich","slideshow_id":5220833,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/blackmirrorslideshare-100917020454-phpapp02-thumbnail.jpg?cb=1284898242","version_no":"1284898242","total_slides":49,"author_name":"Nick
+        Decrock","provider_name":"SlideShare","version":"1.0","author_url":"http://www.slideshare.net/ndecrock","height":355,"width":425,"html":"\u003Ciframe
+        src=\"http://www.slideshare.net/slideshow/embed_code/5220833\" width=\"427\"
+        height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\"
+        style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width:
+        100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/looking-through-a-black-mirror\"
+        title=\"Looking through a black mirror\" target=\"_blank\"\u003ELooking through
+        a black mirror\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","provider_url":"http://www.slideshare.net"}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:41 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/engaging-to-social-media
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Runtime:
+      - '0.020809'
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-Id:
+      - 9b082593712c8a0c99bd7baed793e06e
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1423'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:41 GMT
+      X-Varnish:
+      - '1358036933'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr5|U9Nr5; path=/
+      - _uv_id=1800653539; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - PROD-ELA4
+      X-Li-Uuid:
+      - UZU3yDBphBMQwEXQrSoAAA==
+    body:
+      encoding: UTF-8
+      string: '{"conversion_version":2,"slideshow_id":3331949,"width":425,"version":"1.0","author_name":"Nick
+        Decrock","thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/engagingtosocialmedia-100304014843-phpapp02-thumbnail.jpg?cb=1268602180","slide_image_baseurl":"//image.slidesharecdn.com/engagingtosocialmedia-100304014843-phpapp02/95/slide-","thumbnail_height":128,"thumbnail_width":170,"author_url":"http://www.slideshare.net/ndecrock","html":"\u003Ciframe
+        src=\"http://www.slideshare.net/slideshow/embed_code/3331949\" width=\"427\"
+        height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\"
+        style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width:
+        100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/engaging-to-social-media\"
+        title=\"How to get engaged to/in social media\" target=\"_blank\"\u003EHow
+        to get engaged to/in social media\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","slide_image_baseurl_suffix":"-1024.jpg","version_no":"1268602180","provider_name":"SlideShare","height":355,"total_slides":58,"provider_url":"http://www.slideshare.net","title":"How
+        to get engaged to/in social media","type":"rich"}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:42 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/api/oembed/2?format=json&url=http://www.slideshare.net/ndecrock/social-media-the-rainbow-theory
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json; charset=utf-8
+      Status:
+      - 200 OK
+      X-Bench-Route:
+      - oembed/get_oembed_code
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - '0'
+      X-Runtime:
+      - '0.017933'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Request-Id:
+      - 36c8a194fbe96ecf7340087360a26775
+      P3p:
+      - CP="OTI DSP COR CUR ADM DEV PSD IVD CONo OUR IND"
+      Cache-Control:
+      - no-cache, must-revalidate, private, must-revalidate
+      Content-Length:
+      - '1405'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:42 GMT
+      X-Varnish:
+      - '1358036972'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r86|U9Nr5|U9Nr5; path=/
+      - _uv_id=1808563314; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - prod-lva1
+      X-Li-Uuid:
+      - OP7i0TBphBMQmqNDASsAAA==
+    body:
+      encoding: UTF-8
+      string: '{"slideshow_id":3331858,"type":"rich","author_name":"Nick Decrock","thumbnail_width":170,"conversion_version":2,"slide_image_baseurl":"//image.slidesharecdn.com/therainbowtheory-100304011824-phpapp02/95/slide-","version":"1.0","author_url":"http://www.slideshare.net/ndecrock","html":"\u003Ciframe
+        src=\"http://www.slideshare.net/slideshow/embed_code/3331858\" width=\"427\"
+        height=\"356\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\"
+        style=\"border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width:
+        100%;\" allowfullscreen\u003E \u003C/iframe\u003E \u003Cdiv style=\"margin-bottom:5px\"\u003E
+        \u003Cstrong\u003E \u003Ca href=\"https://www.slideshare.net/ndecrock/social-media-the-rainbow-theory\"
+        title=\"Social Media: the Rainbow Theory\" target=\"_blank\"\u003ESocial Media:
+        the Rainbow Theory\u003C/a\u003E \u003C/strong\u003E from \u003Cstrong\u003E\u003Ca
+        href=\"http://www.slideshare.net/ndecrock\" target=\"_blank\"\u003ENick Decrock\u003C/a\u003E\u003C/strong\u003E
+        \u003C/div\u003E\n\n","thumbnail_height":128,"thumbnail":"//cdn.slidesharecdn.com/ss_thumbnails/therainbowtheory-100304011824-phpapp02-thumbnail.jpg?cb=1375345774","provider_name":"SlideShare","total_slides":21,"provider_url":"http://www.slideshare.net","slide_image_baseurl_suffix":"-1024.jpg","version_no":"1375345774","width":425,"title":"Social
+        Media: the Rainbow Theory","height":355}'
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:42 GMT
+- request:
+    method: get
+    uri: http://www.slideshare.net/asfjkdsfkjldsafdskljfdsdsfdsafas/presentations
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Verify-Ssl:
+      - 'false'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - text/html; charset=utf-8
+      Status:
+      - 404 Not Found
+      X-Runtime:
+      - '0.098634'
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      X-Bench-Route:
+      - profile/mySlideshows
+      X-Request-Id:
+      - a97f6bb2cf793bf556b55e92d9736fae
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - '0'
+      Content-Encoding:
+      - gzip
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - '9805'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 26 Jul 2014 08:50:42 GMT
+      X-Varnish:
+      - '973020747'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      Set-Cookie:
+      - SERVERID=r8|U9Nr5|U9Nr5; path=/
+      - _uv_id=1162817258; Path=/; Domain=.slideshare.net
+      Connection:
+      - keep-alive
+      X-Li-Pop:
+      - prod-lva1
+      X-Li-Uuid:
+      - XknP3DBphBMQ8KAxUSsAAA==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:42 GMT
+recorded_with: VCR 2.9.2

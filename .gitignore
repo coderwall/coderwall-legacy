@@ -49,7 +49,6 @@ vagrant/coderwall-box/output-virtualbox-iso/
 vagrant/coderwall-box/packer_cache/
 vagrant/coderwall-box/packer_virtualbox-iso_virtualbox.box
 vagrant/dotfiles
-vcr_cassettes
 erd.pdf
 vagrant.yml
 git_stats

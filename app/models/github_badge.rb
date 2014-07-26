@@ -1,3 +1,6 @@
+# TODO: Refactor API Calls to Sidekiq Workers
+# TODO: Verify that GITHUB_ADMIN_USER is required, and can't be replaced with app based auth
+# TODO: Refactor/Reflow Error Handling, Don't rescue fail. Defer to sidekiq job auto retry
 class GithubBadge
   def initialize
     @client = Octokit::Client.new(

@@ -1,0 +1,130 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://lanyrd.com/partners/coderwall/profile-api/?twitter=mdeiters&view=history
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.7
+      Date:
+      - Sat, 26 Jul 2014 08:50:30 GMT
+      Content-Type:
+      - application/javascript; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Servedby:
+      - softlayer-frontend2
+      X-Instrumented:
+      - fd102384-bda2-4d0b-ae1a-ca873127800e
+      X-Varnish:
+      - '1164525732'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      X-Cache:
+      - MISS
+      X-Varnish-Backend:
+      - default
+      Set-Cookie:
+      - nt=bKj+2lPTa9YYcDSYOdGoAg==; expires=Thu, 31-Dec-37 23:55:55 GMT; domain=.lanyrd.com;
+        path=/
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA82U3WrbQBCF7/MUiy5KC5EluSnGuUpJCRRaKHbTUkIIa2lt
+        iUg7YneEK0LevbMbaS17bWhdU+obY8/fmTOf9HTG6BMsCgguWXADjcyEYrBk
+        V6jausA0X8BP9opdpUCBNS9L9vrHNfuejN+M2Aeejdj7iqNoFLsByAoxCs7Z
+        S0uNHDU1fbI/7RSOKGRWyNVDzTVSLO6Sd6LLBhslduO6FvxxUPx2WOyCm1o7
+        97mXI3llOgakFnOxZpkoUCjt5DaqNOEcsb6MopLLVmWjFKqoVrAsShFVXUXk
+        SuCRKlA1op+RFxpBtfTvnVt6s75dMiOzjCtBkmAeJheYs7moUVQLsn0cJ0nf
+        3TpmKuqSp1b5DCqa9BF52XpJ/XbWBqFSkEtm8k3LsZdNR3gwQkxXMzOMpyTF
+        S9NC6wKkkXt3PzDbyjrol2kYDXSEinQ409xaCHWR2tbOqj62bZmrODjxpVWE
+        Is0llLBqvWmuR+/TV5cbeON7ZPoi832kJA1LXHPlr+8JmneZe+RsCfTugG1t
+        79g57h8RuUL/2slm0HDfQ7QSp+GEWP3MW0IqnnpjHKWfuGbfxIrrc3Yr6RHL
+        2JxeBMT8LkD9KWa8KPW1AXZv421WCdT4XRhPvG7HshpPI2UEmCfGwyY4PaSq
+        WfwGnjPK2kPCjoV/AaaREYIM7e7e3h6dRg8Dyeyt9gg7LaLdkS/+DNGE+AzH
+        8QZSHxIH6RdQSK/47ChG/b47jE4Mo+P4dIxO/j2j/y8c1t1kMoDD0nd/9vwL
+        DHLseMwIAAA=
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:30 GMT
+- request:
+    method: get
+    uri: http://lanyrd.com/partners/coderwall/profile-api/?twitter=asfjkdsfkjldsafdskljfdsdsfdsafas&view=history
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: NOT FOUND
+    headers:
+      Server:
+      - nginx/1.4.7
+      Date:
+      - Sat, 26 Jul 2014 08:50:30 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '191'
+      Connection:
+      - keep-alive
+      X-Servedby:
+      - softlayer-frontend1
+      X-Instrumented:
+      - a39303d7-da6e-4ac7-98da-b5b93375cffb
+      Accept-Ranges:
+      - bytes
+      X-Varnish:
+      - '1164525735'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      X-Cache:
+      - MISS
+      X-Varnish-Backend:
+      - default
+      Set-Cookie:
+      - nt=bKj+2lPTa9YYcDSYOdGrAg==; expires=Thu, 31-Dec-37 23:55:55 GMT; domain=.lanyrd.com;
+        path=/
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "path": "/partners/coderwall/profile-api/?twitter=asfjkdsfkjldsafdskljfdsdsfdsafas&view=history",
+          "version": 1,
+          "ok": false,
+          "error": {
+            "msg": "Not found",
+            "code": 404
+          }
+        }
+    http_version: 
+  recorded_at: Sat, 26 Jul 2014 08:50:30 GMT
+recorded_with: VCR 2.9.2

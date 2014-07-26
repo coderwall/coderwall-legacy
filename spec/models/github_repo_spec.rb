@@ -23,7 +23,12 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
 
   let(:data) { JSON.parse(File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'user_repo.js'))).with_indifferent_access }
   let(:repo) {
-    GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+    repo = nil
+    # TODO: Refactor api calls to Sidekiq job
+		VCR.use_cassette('GithubRepo') do
+    	repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+    end
+    repo
   }
   let(:access_token) { "9432ed76b16796ec034670524d8176b3f5fee9aa" }
   let(:client_id) { "974695942065a0e00033" }
@@ -57,11 +62,16 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
   end
 
   it 'should update repo on second call' do
-    data = JSON.parse(File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'user_repo.js'))).with_indifferent_access
-    2.times do
-      GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
-    end
-    expect(GithubRepo.count).to eq(1)
+    # TODO: Refactor api calls to Sidekiq job
+		VCR.use_cassette('GithubRepo') do
+
+      data = JSON.parse(File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'user_repo.js'))).with_indifferent_access
+      2.times do
+        GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+      end
+      expect(GithubRepo.count).to eq(1)
+
+  	end
   end
 
   it 'should indicate dominant language' do
@@ -144,7 +154,6 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
     end
 
     it 'should cache readme for repeat calls' do
-      #FakeWeb.register_uri(:get, 'https://github.com/mdeiters/semr/raw/master/README', [body: 'test readme'])
       expect(repo.readme).to eq(repo.readme)
     end
   end
