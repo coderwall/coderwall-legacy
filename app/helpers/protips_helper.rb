@@ -298,7 +298,7 @@ module ProtipsHelper
     value =
         case best_stat_name(protip).to_sym
           when :views
-            best_stat_value(protip) * Protip::COUNTABLE_VIEWS_CHUNK
+            views_stat_value(protip)
           else
             best_stat_value(protip)
         end
@@ -347,5 +347,18 @@ module ProtipsHelper
 
   def protip_display_mode
     mobile_device? ? "fullpage" : "popup"
+  end
+
+  def views_stat_value(protip)
+    best_stat_value(protip) * Protip::COUNTABLE_VIEWS_CHUNK
+  end
+
+  def display_protip_stats?(protip)
+    stat_name = best_stat_name(protip)
+    # if stat is present, and the stat we're displaying is views over 50, display.
+    # otherwise, we're showing stats for something other than views.
+    return true if protip.best_stat.present? && stat_name == :views && views_stat_value(protip) > 50
+    return true if protip.best_stat.present? && stat_name != :views
+    return false
   end
 end
