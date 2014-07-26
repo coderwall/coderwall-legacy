@@ -11,6 +11,7 @@ gem 'compass-rails'
 gem 'sass-rails', '~> 3.2.6'
 gem 'uglifier', '>= 1.0.3'
 # Assets
+gem 'autoprefixer-rails'
 gem 'jquery-rails', '= 2.0.3'
 gem 'rails-assets-font-awesome'
 

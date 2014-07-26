@@ -12,16 +12,10 @@ $transition-speed: all 0.2s ease-out;
 
 //Mixins
 @mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
   border-radius: $radius;
 }
 
 @mixin transition-all {
-  -webkit-transition: $transition-speed;
-  -moz-transition: $transition-speed;
-  -ms-transition: $transition-speed;
-  -o-transition: $transition-speed;
   transition: $transition-speed;
 }
 
@@ -57,10 +51,7 @@ body, input[type=text] {
 p, h1, h2, h3, h4, a, li, span {
   //text smoothing
   text-shadow: 0 0 0 rgba(0, 0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: subpixel-antialiased;
-  -moz-font-smoothing: subpixel-antialiased;
   font-smoothing: subpixel-antialiased;
 }
 
@@ -352,9 +343,6 @@ a:hover {
 
     .snazzy-box {
       border-width: 21px;
-      -moz-border-image: url("bundle/corners.png") 21 repeat;
-      -webkit-border-image: url("bundle/corners.png") 21 repeat;
-      -o-border-image: url("bundle/corners.png") 21 repeat;
       border-image: url("bundle/corners.png") 21 repeat;
       position: relative;
       margin-bottom: 25px;
@@ -390,9 +378,6 @@ a:hover {
   width: 500px;
   margin: 0 auto;
   border-width: 24px 23px 27px 26px;
-  -moz-border-image: url("bundle/corners2.png") 24 23 27 26 repeat;
-  -webkit-border-image: url("bundle/corners2.png") 24 23 27 26 repeat;
-  -o-border-image: url("bundle/corners2.png") 24 23 27 26 repeat;
   border-image: url("bundle/corners2.png") 24 23 27 26 repeat;
   position: relative;
 
@@ -598,7 +583,6 @@ a:hover {
         border: 0;
         outline: none;
         width: 290px;
-        -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
         box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
       }
 
@@ -655,11 +639,6 @@ a:hover {
   //height: 800px;
   padding: 40px 0 70px 0;
   //margin-bottom: 40px;
-  background: -moz-linear-gradient(top, rgba(48, 48, 48, 1) 61%, rgba(48, 48, 48, 0) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(61%, rgba(48, 48, 48, 1)), color-stop(100%, rgba(48, 48, 48, 0))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(48, 48, 48, 1) 61%, rgba(48, 48, 48, 0) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(48, 48, 48, 1) 61%, rgba(48, 48, 48, 0) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(48, 48, 48, 1) 61%, rgba(48, 48, 48, 0) 100%); /* IE10+ */
   background: linear-gradient(to bottom, rgba(48, 48, 48, 1) 61%, rgba(48, 48, 48, 0) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#303030', endColorstr='#00303030', GradientType=0); /* IE6-9 */
 

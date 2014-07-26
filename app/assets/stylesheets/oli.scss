@@ -4,30 +4,17 @@ $transition-speed: all 0.2s ease-out;
 
 //Mixins
 @mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
   border-radius: $radius;
 }
 
 @mixin transition-all {
-  -webkit-transition: $transition-speed;
-  -moz-transition: $transition-speed;
-  -ms-transition: $transition-speed;
-  -o-transition: $transition-speed;
   transition: $transition-speed;
 }
 
 @mixin share-button {
   background: #dbe7f5; /* Old browsers */
-  background: -moz-linear-gradient(top, #dbe7f5 0%, #f0f5fb 3%, #dae6f6 4%, #d8e4f2 10%, #d5e1ef 23%, #c8d4e2 52%, #afc1d5 87%, #a8bcd4 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dbe7f5), color-stop(3%, #f0f5fb), color-stop(4%, #dae6f6), color-stop(10%, #d8e4f2), color-stop(23%, #d5e1ef), color-stop(52%, #c8d4e2), color-stop(87%, #afc1d5), color-stop(100%, #a8bcd4)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #dbe7f5 0%, #f0f5fb 3%, #dae6f6 4%, #d8e4f2 10%, #d5e1ef 23%, #c8d4e2 52%, #afc1d5 87%, #a8bcd4 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #dbe7f5 0%, #f0f5fb 3%, #dae6f6 4%, #d8e4f2 10%, #d5e1ef 23%, #c8d4e2 52%, #afc1d5 87%, #a8bcd4 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #dbe7f5 0%, #f0f5fb 3%, #dae6f6 4%, #d8e4f2 10%, #d5e1ef 23%, #c8d4e2 52%, #afc1d5 87%, #a8bcd4 100%); /* IE10+ */
   background: linear-gradient(top, #dbe7f5 0%, #f0f5fb 3%, #dae6f6 4%, #d8e4f2 10%, #d5e1ef 23%, #c8d4e2 52%, #afc1d5 87%, #a8bcd4 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dbe7f5', endColorstr='#a8bcd4', GradientType=0); /* IE6-9 */
-  -webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5);
   display: block;
   height: 33px;
@@ -42,29 +29,15 @@ $transition-speed: all 0.2s ease-out;
 
 @mixin tab-button-up {
   background: #6080b3; /* Old browsers */
-  background: -moz-linear-gradient(top, #6080b3 0%, #375583 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6080b3), color-stop(100%, #375583)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #6080b3 0%, #375583 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #6080b3 0%, #375583 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #6080b3 0%, #375583 100%); /* IE10+ */
   background: linear-gradient(top, #6080b3 0%, #375583 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6080b3', endColorstr='#375583', GradientType=0); /* IE6-9 */
-  -webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 @mixin tab-button-down {
   background: #1e2e49; /* Old browsers */
-  background: -moz-linear-gradient(top, #1e2e49 0%, #2b4164 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1e2e49), color-stop(100%, #2b4164)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #1e2e49 0%, #2b4164 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #1e2e49 0%, #2b4164 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #1e2e49 0%, #2b4164 100%); /* IE10+ */
   background: linear-gradient(top, #1e2e49 0%, #2b4164 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e2e49', endColorstr='#2b4164', GradientType=0); /* IE6-9 */
-  -webkit-box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.4);
   box-shadow: inset 0px 1px 1px 1px rgba(0, 0, 0, 0.4);
 }
 
@@ -84,8 +57,6 @@ $transition-speed: all 0.2s ease-out;
 }
 
 @mixin box-shadow {
-  -webkit-box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 5px 5px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -573,18 +544,3 @@ div.ratio-left {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

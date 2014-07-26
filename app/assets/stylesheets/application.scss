@@ -360,11 +360,6 @@ h4 {
   color: #fff;
 }
 
-::-moz-selection {
-  background: $red;
-  color: #fff;
-}
-
 #footer {
   .inside-footer {
     max-width: 1180px;
@@ -683,7 +678,6 @@ body#member-settings, body#team-settings, body#join-team, body#registration {
   #basic_section {
     img {
       border: 5px solid #fff;
-      -webkit-box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
       box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
       margin-bottom: 15px;
     }
@@ -948,7 +942,6 @@ body#member-settings, body#team-settings, body#join-team, body#registration {
           display: block;
           margin-bottom: 15px;
           border: 5px solid #fff;
-          -webkit-box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
           box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
         }
       }
@@ -1262,7 +1255,6 @@ body#member-settings, body#team-settings, body#join-team, body#registration {
     border: 0;
     font-size: 1.6em;
     text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(225, 225, 225, 0.5);
     box-shadow: inset 0px 1px 0px 0px rgba(225, 225, 225, 0.5);
     &:hover {
       opacity: 0.5;
@@ -1548,8 +1540,6 @@ input[type=file].safari5-upload-hack {
 #new-home-template {
   background: #d5d5d5 image-url("premium-team-description/dot-bg.jpg") repeat;
               * {
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: border-box;
                 box-sizing: border-box;
               }
               #footer {
@@ -1633,7 +1623,6 @@ input[type=file].safari5-upload-hack {
                     line-height: 60px;
                     width: 171px;
                     text-align: center;
-                    -webkit-box-shadow: 0px 3px 0px 0px rgba(53, 103, 163, 0.7);
                     box-shadow: 0px 3px 0px 0px rgba(53, 103, 163, 0.7);
                     &:hover {
                       background: #1c527d;
@@ -1721,9 +1710,6 @@ input[type=file].safari5-upload-hack {
                 }
                 .profile-slide {
                   background: image-url("new-home/profile-bg.jpg") no-repeat;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;
                   background-size: cover;
                   .browser {
                     left: 5%;
@@ -1731,16 +1717,10 @@ input[type=file].safari5-upload-hack {
                 }
                 .protips-slide {
                   background: image-url("new-home/tip-bg.jpg") no-repeat left;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;
                   background-size: cover;
                 }
                 .teams-slide {
                   background: image-url("new-home/team-bg.jpg") no-repeat;
-                  -webkit-background-size: cover;
-                  -moz-background-size: cover;
-                  -o-background-size: cover;
                   background-size: cover;
                 }
               }
