@@ -120,7 +120,7 @@ If you're running Windows, [here's a guide written by one of our members on how 
         cd ~/web
         rvm current # should be ruby-2.1.2@coderwall
         bundle check # should be 'The Gemfile's dependencies are satisfied'
-        bin/rails s
+        bundle exec script/rails.rb server
 
     If all went well the Rails server should start up on PORT 3000.
 
