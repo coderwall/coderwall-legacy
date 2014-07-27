@@ -2,6 +2,13 @@
 
 When committing a Pull Request for non-application/test code please add [`[skip ci]`](http://docs.travis-ci.com/user/how-to-skip-a-build/) to your commit message.
 
+# Code Conventions and Style Guide
+
+Please refer to the community Ruby & Rails Style Guides created by [bbatsov](https://github.com/bbatsov), author of [Rubocop](https://github.com/bbatsov/rubocop).
+
+[Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide/blob/master/README.md)
+[Rails Style Guide](https://github.com/bbatsov/rails-style-guide/blob/master/README.md)
+
 # Contributing
 
 Here are the steps for getting setup & started with contributing to Coderwall :

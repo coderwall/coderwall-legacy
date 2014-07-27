@@ -145,6 +145,7 @@ group :development do
   gem 'fukuzatsu'
   gem 'guard-rspec'
   gem 'rails-erd'
+  gem 'rubocop'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'travis'
