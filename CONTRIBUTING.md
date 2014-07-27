@@ -63,7 +63,7 @@ There's only a VirtualBox basebox right now.
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
-If you're running Windows, [here's a guide written by one of our members on how to get set up.](https://github.com/assemblymade/coderwall/docs/getting_started_on_windows.md)
+If you're running Windows, [here's a guide written by one of our members on how to get set up.](https://github.com/assemblymade/coderwall/blob/master/docs/getting_started_on_windows.md)
 
 1. **Install VirtualBox**
 
@@ -91,12 +91,18 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
 3. **Git assemblymade/coderwall**
 
+    [Fork the code](https://github.com/assemblymade/coderwall) if you haven't already done so.
+
     mkdir -p ~/assemblymade
     cd ~/assemblymade
 
-    depending on your choice of protocols : _(this will take a while to run so you may want to grab some coffee)_
-    * git clone https://github.com/assemblymade/coderwall.git coderwall
-    * git clone git@github.com:assemblymade/coderwall.git coderwall
+    Depending on your choice of protocols: _(this will take a while to run so you may want to grab some coffee)_
+    * git clone https://github.com/your_username/coderwall.git coderwall
+    * git clone git@github.com:your_username/coderwall.git coderwall
+
+    Add upstream:
+    * git remote add upstream https://github.com/assemblymade/coderwall.git
+    * git remote add upstream git@github.com:assemblymade/coderwall.git
 
     I am going to assume that the project is cloned into your home directory in and into a directory structure like `~/assemblymade/coderwall`.
 
@@ -127,7 +133,7 @@ If you're running Windows, [here's a guide written by one of our members on how 
         cd ~/web
         rvm current # should be ruby-2.1.2@coderwall
         bundle check # should be 'The Gemfile's dependencies are satisfied'
-        bundle exec script/rails.rb server
+        rails s
 
     If all went well the Rails server should start up on PORT 3000.
 
