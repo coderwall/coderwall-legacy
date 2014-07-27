@@ -8,7 +8,7 @@ class ProtipsController < ApplicationController
   before_action :ensure_single_tag, only: [:subscribe, :unsubscribe]
   before_action :limit_results, only: [:topic, :team, :search, :user, :date]
   before_action :track_search, only: [:search], unless: :is_admin?
-  before_action :require_admin!, only: [:queue, :feature, :flag, :delete_tag, :admin]
+  before_action :require_admin!, only: [:feature, :flag, :delete_tag, :admin]
   before_action :determine_scope, only: [:trending, :popular, :fresh, :liked]
   before_action :lookup_user_data, only: [:trending, :popular, :fresh, :liked, :search]
 
@@ -318,28 +318,6 @@ class ProtipsController < ApplicationController
         format.json { head :ok }
       else
         format.json { render json: @protip.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def queue
-    queue = params.permit(:queue)
-
-    respond_to do |format|
-      if @protip && queue
-        if ProcessingQueue.queued?(@protip, queue)
-          ProcessingQueue.unqueue(@protip, queue)
-        else
-          queue_entry = ProcessingQueue.enqueue(@protip, queue)
-        end
-      else
-        queue_entry = nil
-      end
-
-      if queue_entry.nil?
-        format.json { render status: :unprocessable_entity }
-      else
-        format.json { head :ok }
       end
     end
   end

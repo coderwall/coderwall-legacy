@@ -53,8 +53,6 @@
               %li
                 =link_to '', flag_protip_path(protip), :method => :post, :remote => true, :class => (protip.flagged? ? 'flagged' : "") + " flag"
               %li
-                =link_to '', queue_protip_path(protip, :queue => 'hackernews'), :method => :post, :remote => true, :class => (protip.queued_for?(:hackernews) ? 'queued' : "") + " queue"
-              %li
                 =link_to '', feature_protip_path(protip), :method => :post, :remote => true, :class => (protip.featured? ? 'featured' : "") + " feature"
               %li
                 %p.reviewed

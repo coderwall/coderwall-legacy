@@ -13,7 +13,6 @@ class Event < Struct.new(:data)
       data = { version: VERSION, event_id: Time.now.utc.to_i }.with_indifferent_access.merge(data)
       data.deep_merge!(extra_information(data))
       drip_rate = :immediately if drip_rate.nil?
-      send_admin_notifications(event_type, data, audience[:admin]) if audience.has_key? :admin
       channels           = Audience.to_channels(audience)
       activity_feed_keys = channels.map { |channel| Audience.channel_to_key(channel) }
 
@@ -28,16 +27,6 @@ class Event < Struct.new(:data)
           Redis.current.zadd(activity_feed_key, score_for_event.to_f, data)
           count = Redis.current.zcard(activity_feed_key)
           Redis.current.zremrangebyrank(activity_feed_key, 0, count - TABLE_SIZE) if count > TABLE_SIZE
-        end
-      end
-    end
-
-    def send_admin_notifications(event_type, data, queue)
-      unless queue.nil?
-        if event_type.to_sym == :new_protip
-          protip = Protip.with_public_id(data[:public_id])
-
-          ProcessingQueue.enqueue(protip, queue) unless protip.nil?
         end
       end
     end

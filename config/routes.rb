@@ -1,5 +1,10 @@
 # == Route Map
 #
+# RAILS_ENV=development
+# Connecting to database specified by database.yml
+# Creating scope :near. Overwriting existing method TeamLocation.near.
+#                             GET      /.json(.:format)                                       #<Proc:0x0000000ce1f440@/vagrant/config/routes.rb:288>
+#                             GET      /teams/.json(.:format)                                 #<Proc:0x0000000ce1ccb8@/vagrant/config/routes.rb:289>
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
 #                        root          /                                                      protips#index
@@ -33,7 +38,6 @@
 #                  tag_protip POST     /p/:id/tag(.:format)                                   protips#tag {:id=>/[\dA-Z\-_]{6}/i}
 #                 flag_protip POST     /p/:id/flag(.:format)                                  protips#flag {:id=>/[\dA-Z\-_]{6}/i}
 #              feature_protip POST     /p/:id/feature(.:format)                               protips#feature {:id=>/[\dA-Z\-_]{6}/i}
-#                queue_protip POST     /p/:id/queue/:queue(.:format)                          protips#queue {:id=>/[\dA-Z\-_]{6}/i}
 #           delete_tag_protip POST     /p/:id/delete_tag/:topic(.:format)                     protips#delete_tag {:id=>/[\dA-Z\-_]{6}/i, :topic=>/[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/}
 #         like_protip_comment POST     /p/:protip_id/comments/:id/like(.:format)              comments#like {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
 #             protip_comments GET      /p/:protip_id/comments(.:format)                       comments#index {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
@@ -67,14 +71,6 @@
 #                     network GET      /n/:id(.:format)                                       networks#show {:slug=>/[\dA-Z\-]/i}
 #                             PUT      /n/:id(.:format)                                       networks#update {:slug=>/[\dA-Z\-]/i}
 #                             DELETE   /n/:id(.:format)                                       networks#destroy {:slug=>/[\dA-Z\-]/i}
-#    dequeue_processing_queue POST     /q/:id/dequeue/:item(.:format)                         processing_queues#dequeue
-#           processing_queues GET      /q(.:format)                                           processing_queues#index
-#                             POST     /q(.:format)                                           processing_queues#create
-#        new_processing_queue GET      /q/new(.:format)                                       processing_queues#new
-#       edit_processing_queue GET      /q/:id/edit(.:format)                                  processing_queues#edit
-#            processing_queue GET      /q/:id(.:format)                                       processing_queues#show
-#                             PUT      /q/:id(.:format)                                       processing_queues#update
-#                             DELETE   /q/:id(.:format)                                       processing_queues#destroy
 #                     protips GET      /trending(.:format)                                    protips#index
 #                         faq GET      /faq(.:format)                                         pages#show {:page=>:faq}
 #                         tos GET      /tos(.:format)                                         pages#show {:page=>:tos}
@@ -132,7 +128,7 @@
 #                 accept_team GET      /teams/:id/accept(.:format)                            teams#accept
 #            record_exit_team POST     /teams/:id/record-exit(.:format)                       teams#record_exit
 #               visitors_team GET      /teams/:id/visitors(.:format)                          teams#visitors
-#                 follow_team POST     /teams/:id/follow(.:format)                            follows#create {:type=>:team}
+#                 follow_team POST     /teams/:id/follow(.:format)                            teams#follow
 #                   join_team POST     /teams/:id/join(.:format)                              teams#join
 #           approve_join_team POST     /teams/:id/join/:user_id/approve(.:format)             teams#approve_join
 #              deny_join_team POST     /teams/:id/join/:user_id/deny(.:format)                teams#deny_join
@@ -266,20 +262,10 @@
 #      callbacks_hawt_feature POST     /callbacks/hawt/feature(.:format)                      callbacks/hawt#feature
 #    callbacks_hawt_unfeature POST     /callbacks/hawt/unfeature(.:format)                    callbacks/hawt#unfeature
 #                  admin_root GET      /admin(.:format)                                       admin#index
-#           admin_failed_jobs GET      /admin/failed_jobs(.:format)                           admin#failed_jobs
 #                 admin_teams GET      /admin/teams(.:format)                                 admin#teams
 #        admin_sections_teams GET      /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
 #         admin_section_teams GET      /admin/teams/section/:section(.:format)                admin#section_teams
 #           admin_sidekiq_web          /admin/sidekiq                                         Sidekiq::Web
-#                                      /mail_view                                             MailPreview
-#       letter_opener_letters GET      /letter_opener(.:format)                               letter_opener/letters#index
-#        letter_opener_letter GET      /letter_opener/:id/:style.html(.:format)               letter_opener/letters#show
-#                                      /campaigns                                             Campaigns::Preview
-#                                      /mail                                                  Notifier::Preview
-#                                      /digest                                                WeeklyDigest::Preview
-#                                      /subscription                                          Subscription::Preview
-#       letter_opener_letters          /letter_opener(.:format)                               letter_opener/letters#index
-#        letter_opener_letter          /letter_opener/:id/:style.html(.:format)               letter_opener/letters#show
 #
 
 Coderwall::Application.routes.draw do
@@ -332,7 +318,6 @@ Coderwall::Application.routes.draw do
       post 'tag'
       post 'flag'
       post 'feature'
-      post 'queue/:queue' => 'protips#queue', as: :queue
       post 'delete_tag/:topic' => 'protips#delete_tag', as: :delete_tag, :topic => topic_regex
     end
     resources :comments, :constraints => {id: /\d+/} do
@@ -355,10 +340,6 @@ Coderwall::Application.routes.draw do
       post '/update-tags' => 'networks#update_tags', as: :update_tags
       get '/current-mayor' => 'networks#current_mayor', as: :current_mayor
     end
-  end
-
-  resources :processing_queues, :path => '/q' do
-    member { post '/dequeue/:item' => 'processing_queues#dequeue', as: :dequeue }
   end
 
   get 'trending' => 'protips#index', as: :protips
