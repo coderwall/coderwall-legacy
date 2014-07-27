@@ -146,7 +146,7 @@ class UsersController < ApplicationController
             name:      user.display_name,
             twitter:   user.twitter,
             github:    user.github,
-            thumbnail: user.thumbnail_url
+            thumbnail: user.avatar.url
           } },
           data:        @users.collect(&:username)
         }.to_json
