@@ -39,13 +39,10 @@
 
             %p.special-p Avatar:
             .special-setting
-              - if @user.avatar.blank?
-                = image_tag(@user.thumbnail_url, class: 'avatar')
-              - else
-                = image_tag(@user.avatar_url, class: 'avatar')
-                .div
-                  = form.check_box :remove_avatar
-                  = form.label :remove_avatar, "Remove Avatar", class: 'checkbox-label'
+              = image_tag(@user.avatar_url, class: 'avatar')
+              .div
+                = form.check_box :remove_avatar
+                = form.label :remove_avatar, "Remove Avatar", class: 'checkbox-label'
               .div
                 = form.file_field :avatar
                 = form.hidden_field :avatar_cache

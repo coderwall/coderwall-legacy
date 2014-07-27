@@ -3,5 +3,5 @@
     .featuredAccomplishment{:class => hide_all_but_first}
       ="\"#{highlight.description}\""
       .author
-        =link_to(image_tag(highlight.user.thumbnail_url), badge_path(:username => highlight.user.username))
+        =link_to(image_tag(highlight.user.avatar.url), badge_path(:username => highlight.user.username))
         %span=link_to(highlight.user.display_name, badge_path(:username => highlight.user.username))

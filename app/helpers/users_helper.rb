@@ -10,7 +10,6 @@ module UsersHelper
   end
 
   def avatar_image_tag(user, options = {})
-    return nil if user.thumbnail_url.blank?
     options['data-user'] = user.username
     link_to(
         users_image_tag(user),
@@ -31,7 +30,7 @@ module UsersHelper
 
   #TODO Remove
   def users_image_path(user)
-    user.avatar_url
+    user.avatar.url
   end
 
   def user_or_team_image_path(user_or_team)

@@ -13,7 +13,7 @@ class GenerateTopUsersCompositeJob
   private
 
   def cache_users
-    users = User.top(108).map { |u| {u.username => u.thumbnail_url} }.to_json
+    users = User.top(108).map { |u| {u.username => u.avatar.url} }.to_json
     Redis.current.set 'top_users', users
   end
 
