@@ -1,5 +1,7 @@
 Coderwall::Application.configure do
   config.threadsafe! unless $rails_rake_task
+  
+  require 'sidekiq/testing/inline'
 
   config.action_controller.perform_caching = false
   config.action_dispatch.best_standards_support = :builtin

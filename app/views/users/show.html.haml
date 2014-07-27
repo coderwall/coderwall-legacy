@@ -92,7 +92,7 @@
                 %ul.repos
                   -skill.repos.each do |repo|
                     %li
-                      =link_to(repo[:name], repo[:url],:class=>'track','data-action' =>'view repo', 'data-from' => 'profile skill')
+                      =link_to(repo[:name], repo[:url],:class=>'track','data-action' =>'view repo', 'data-from' => 'profile skill', :target => '_blank')
               -if skill.has_protips?
                 %h4 Protips shared
                 %ul.protips
