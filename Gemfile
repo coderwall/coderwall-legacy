@@ -101,6 +101,7 @@ gem 'foreman'
 gem 'awesome_print'
 
 gem 'faraday', '~> 0.8.1'
+gem 'metamagic'
 
 # ----------------
 
