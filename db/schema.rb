@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140729091832) do
+ActiveRecord::Schema.define(:version => 20140728214411) do
   add_extension "citext"
 
   create_table "alias_tags", :id => false, :force => true do |t|
@@ -418,6 +418,7 @@ ActiveRecord::Schema.define(:version => 20140729091832) do
     t.integer  "country_id"
     t.string   "name"
     t.string   "github_organization_name"
+    t.integer  "team_size"
   end
 
   create_table "teams_account_plans", :id => false, :force => true do |t|

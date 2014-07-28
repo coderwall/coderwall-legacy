@@ -2,8 +2,8 @@
 #
 # Connecting to database specified by database.yml
 # Creating scope :near. Overwriting existing method TeamLocation.near.
-#                             GET      /.json(.:format)                                       #<Proc:0x0000010d972a58@/Users/mike/assemblymade/coderwall/config/routes.rb:274>
-#                             GET      /teams/.json(.:format)                                 #<Proc:0x0000010d970820@/Users/mike/assemblymade/coderwall/config/routes.rb:275>
+#                             GET      /.json(.:format)                                       #<Proc:0x00000103f7bc38@/Users/mike/assemblymade/coderwall/config/routes.rb:273>
+#                             GET      /teams/.json(.:format)                                 #<Proc:0x00000103f91b50@/Users/mike/assemblymade/coderwall/config/routes.rb:274>
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
 #                        root          /                                                      protips#index
