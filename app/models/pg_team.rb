@@ -14,7 +14,7 @@ end
 #
 
 # == Schema Information
-# Schema version: 20140728205954
+# Schema version: 20140728214411
 #
 # Table name: teams
 #
@@ -85,4 +85,5 @@ end
 #  country_id               :integer
 #  name                     :string(255)
 #  github_organization_name :string(255)
+#  team_size                :integer
 #

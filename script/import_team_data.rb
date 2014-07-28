@@ -1,10 +1,3 @@
-require 'bson'
-
-# process
-#   prepare -> clean
-#   destructure
-#   store
-
 class ImportTeamData
   DATE_FIELDS = %i(updated_at upgraded_at created_at)
 
@@ -32,8 +25,6 @@ class ImportTeamData
 
           save_team_members!(team, data[:team_members])
 
-          require 'pry'; binding.pry
-
           print '.'
         end
       end
@@ -51,6 +42,8 @@ class ImportTeamData
   end
 
   def save_team_members!(team, data)
+    return unless data
+
     data.each do |team_members|
       validate_fields!('Teams::Member', team_members, $pg_teams_member_attrs)
       team.members.build(team_members)

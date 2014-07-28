@@ -234,7 +234,7 @@ class Network < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140728205954
+# Schema version: 20140728214411
 #
 # Table name: networks
 #

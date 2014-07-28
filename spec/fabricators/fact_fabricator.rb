@@ -31,7 +31,7 @@ Fabricator(:github_fork_fact, from: :github_original_fact) do
 end
 
 # == Schema Information
-# Schema version: 20140728205954
+# Schema version: 20140728214411
 #
 # Table name: facts
 #
