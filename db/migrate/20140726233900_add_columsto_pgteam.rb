@@ -79,6 +79,5 @@ class AddColumstoPgteam < ActiveRecord::Migration
     add_column :teams, :number_of_jobs_to_show, :integer, default: 2
     add_column :teams, :location, :string
     add_column :teams, :country_id, :integer
-
   end
 end

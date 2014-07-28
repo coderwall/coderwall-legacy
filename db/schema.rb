@@ -12,7 +12,6 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20140729091832) do
-
   add_extension "citext"
 
   create_table "alias_tags", :id => false, :force => true do |t|
@@ -353,22 +352,22 @@ ActiveRecord::Schema.define(:version => 20140729091832) do
   end
 
   create_table "teams", :force => true do |t|
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.string   "website"
     t.text     "about"
-    t.integer  "total",                  :default => 0
-    t.integer  "size",                   :default => 0
-    t.integer  "mean",                   :default => 0
-    t.integer  "median",                 :default => 0
-    t.integer  "score",                  :default => 0
+    t.integer  "total",                    :default => 0
+    t.integer  "size",                     :default => 0
+    t.integer  "mean",                     :default => 0
+    t.integer  "median",                   :default => 0
+    t.integer  "score",                    :default => 0
     t.string   "twitter"
     t.string   "facebook"
     t.string   "slug"
-    t.boolean  "premium",                :default => false
-    t.boolean  "analytics",              :default => false
-    t.boolean  "valid_jobs",             :default => false
-    t.boolean  "hide_from_featured",     :default => false
+    t.boolean  "premium",                  :default => false
+    t.boolean  "analytics",                :default => false
+    t.boolean  "valid_jobs",               :default => false
+    t.boolean  "hide_from_featured",       :default => false
     t.string   "preview_code"
     t.string   "youtube_url"
     t.string   "github"
@@ -394,29 +393,31 @@ ActiveRecord::Schema.define(:version => 20140729091832) do
     t.text     "organization_way"
     t.text     "organization_way_name"
     t.text     "organization_way_photo"
-    t.string   "office_photos",          :default => "{}"
-    t.string   "upcoming_events",        :default => "{}"
+    t.string   "office_photos",            :default => "{}"
+    t.string   "upcoming_events",          :default => "{}"
     t.string   "featured_links_title"
     t.text     "blog_feed"
     t.text     "our_challenge"
     t.text     "your_impact"
-    t.string   "interview_steps",        :default => "{}"
+    t.string   "interview_steps",          :default => "{}"
     t.text     "hiring_tagline"
     t.text     "link_to_careers_page"
     t.string   "avatar"
-    t.integer  "achievement_count",      :default => 0
-    t.integer  "endorsement_count",      :default => 0
-    t.string   "invited_emails",         :default => "{}"
-    t.string   "admins",                 :default => "{}"
-    t.string   "editors",                :default => "{}"
-    t.string   "pending_join_requests",  :default => "{}"
+    t.integer  "achievement_count",        :default => 0
+    t.integer  "endorsement_count",        :default => 0
+    t.string   "invited_emails",           :default => "{}"
+    t.string   "admins",                   :default => "{}"
+    t.string   "editors",                  :default => "{}"
+    t.string   "pending_join_requests",    :default => "{}"
     t.datetime "upgraded_at"
-    t.integer  "paid_job_posts",         :default => 0
-    t.boolean  "monthly_subscription",   :default => false
-    t.text     "stack_list",             :default => ""
-    t.integer  "number_of_jobs_to_show", :default => 2
+    t.integer  "paid_job_posts",           :default => 0
+    t.boolean  "monthly_subscription",     :default => false
+    t.text     "stack_list",               :default => ""
+    t.integer  "number_of_jobs_to_show",   :default => 2
     t.string   "location"
     t.integer  "country_id"
+    t.string   "name"
+    t.string   "github_organization_name"
   end
 
   create_table "teams_account_plans", :id => false, :force => true do |t|
