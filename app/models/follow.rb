@@ -36,6 +36,7 @@ class Follow < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: follows
 #
@@ -47,10 +48,4 @@ end
 #  blocked         :boolean          default(FALSE), not null
 #  created_at      :datetime
 #  updated_at      :datetime
-#
-# Indexes
-#
-#  fk_followables                            (followable_id,followable_type)
-#  fk_follows                                (follower_id,follower_type)
-#  follows_uniq_followable_id_type_follower  (followable_id,followable_type,follower_id) UNIQUE
 #

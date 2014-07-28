@@ -107,6 +107,7 @@ class Plan < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: plans
 #

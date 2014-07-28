@@ -1,4 +1,12 @@
+require 'rails_helper'
+
+RSpec.describe Users::Github::Organizations::Follower, :type => :model do
+  it {is_expected.to belong_to :profile}
+  it {is_expected.to belong_to :organization}
+end
+
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: users_github_organizations_followers
 #
@@ -7,10 +15,3 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
-
-require 'rails_helper'
-
-RSpec.describe Users::Github::Organizations::Follower, :type => :model do
-  it {is_expected.to belong_to :profile}
-  it {is_expected.to belong_to :organization}
-end

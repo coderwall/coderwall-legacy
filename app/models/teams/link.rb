@@ -1,4 +1,11 @@
+class Teams::Link < ActiveRecord::Base
+  belongs_to :team, class_name: 'PgTeam',
+                    foreign_key: 'team_id',
+                    touch: true
+end
+
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: teams_links
 #
@@ -9,11 +16,3 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
-class Teams::Link < ActiveRecord::Base
-  belongs_to :team, class_name: 'PgTeam',
-                    foreign_key: 'team_id',
-                    touch: true
-end
-
-

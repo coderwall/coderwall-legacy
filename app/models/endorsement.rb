@@ -23,6 +23,7 @@ class Endorsement < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: endorsements
 #
@@ -33,10 +34,4 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #  skill_id          :integer
-#
-# Indexes
-#
-#  index_endorsements_on_endorsed_user_id   (endorsed_user_id)
-#  index_endorsements_on_endorsing_user_id  (endorsing_user_id)
-#  only_unique_endorsements                 (endorsed_user_id,endorsing_user_id,specialty) UNIQUE
 #

@@ -8,6 +8,7 @@ RSpec.describe Plan, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: plans
 #

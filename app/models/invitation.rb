@@ -2,7 +2,7 @@ class Invitation < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140713193201
+# Schema version: 20140728205954
 #
 # Table name: invitations
 #

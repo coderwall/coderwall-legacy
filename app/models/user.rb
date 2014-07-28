@@ -957,6 +957,7 @@ class User < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: users
 #
@@ -1053,12 +1054,4 @@ end
 #  banned_at                     :datetime
 #  last_ip                       :string(255)
 #  last_ua                       :string(255)
-#
-# Indexes
-#
-#  index_users_on_github_token      (old_github_token) UNIQUE
-#  index_users_on_linkedin_id       (linkedin_id) UNIQUE
-#  index_users_on_team_document_id  (team_document_id)
-#  index_users_on_twitter_id        (twitter_id) UNIQUE
-#  index_users_on_username          (username) UNIQUE
 #

@@ -3,6 +3,7 @@ Fabricator(:like) do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: likes
 #
@@ -15,8 +16,4 @@ end
 #  created_at    :datetime
 #  updated_at    :datetime
 #  ip_address    :string(255)
-#
-# Indexes
-#
-#  index_likes_on_user_id  (likable_id,likable_type,user_id) UNIQUE
 #

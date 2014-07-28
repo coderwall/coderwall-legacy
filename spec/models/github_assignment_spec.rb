@@ -5,6 +5,7 @@ RSpec.describe GithubAssignment, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: github_assignments
 #
@@ -15,10 +16,4 @@ end
 #  created_at       :datetime
 #  updated_at       :datetime
 #  badge_class_name :string(255)
-#
-# Indexes
-#
-#  index_assignments_on_repo_url                                    (repo_url)
-#  index_assignments_on_username_and_badge_class_name               (github_username,badge_class_name) UNIQUE
-#  index_assignments_on_username_and_repo_url_and_badge_class_name  (github_username,repo_url,tag) UNIQUE
 #

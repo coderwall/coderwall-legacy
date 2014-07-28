@@ -2,6 +2,7 @@ class AvailableCoupon < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: available_coupons
 #
@@ -9,9 +10,4 @@ end
 #  codeschool_coupon :string(255)
 #  peepcode_coupon   :string(255)
 #  recipes_coupon    :string(255)
-#
-# Indexes
-#
-#  index_available_coupons_on_codeschool_coupon  (codeschool_coupon) UNIQUE
-#  index_available_coupons_on_peepcode_coupon    (peepcode_coupon) UNIQUE
 #

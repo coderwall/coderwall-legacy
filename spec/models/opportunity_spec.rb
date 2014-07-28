@@ -157,6 +157,7 @@ RSpec.describe Opportunity, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: opportunities
 #

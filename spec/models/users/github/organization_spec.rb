@@ -1,4 +1,11 @@
+require 'rails_helper'
+
+RSpec.describe Users::Github::Organization, :type => :model do
+  it {is_expected.to have_many :followers}
+end
+
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: users_github_organizations
 #
@@ -14,9 +21,3 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
-
-require 'rails_helper'
-
-RSpec.describe Users::Github::Organization, :type => :model do
-  it {is_expected.to have_many :followers}
-end

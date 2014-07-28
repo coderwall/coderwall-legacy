@@ -1,4 +1,11 @@
+class Users::Github::Profile < ActiveRecord::Base
+  belongs_to :user
+  has_many :followers, class_name: 'Users::Github::Profiles::Follower' , foreign_key: :follower_id  , dependent: :delete_all
+  has_many :repositories, :class_name => 'Users::Github::Repository' , foreign_key: :owner_id
+end
+
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: users_github_profiles
 #
@@ -12,9 +19,3 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
-class Users::Github::Profile < ActiveRecord::Base
-  belongs_to :user
-  has_many :followers, class_name: 'Users::Github::Profiles::Follower' , foreign_key: :follower_id  , dependent: :delete_all
-  has_many :repositories, :class_name => 'Users::Github::Repository' , foreign_key: :owner_id
-end

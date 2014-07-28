@@ -1,4 +1,10 @@
+class Users::Github::Repositories::Contributor < ActiveRecord::Base
+  belongs_to :profile, class_name: 'Users::Github::Profile'
+  belongs_to :repository, :class_name => 'Users::Github::Repository'
+end
+
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: users_github_repositories_contributors
 #
@@ -7,8 +13,3 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
-
-class Users::Github::Repositories::Contributor < ActiveRecord::Base
-  belongs_to :profile, class_name: 'Users::Github::Profile'
-  belongs_to :repository, :class_name => 'Users::Github::Repository'
-end

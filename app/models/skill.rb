@@ -162,6 +162,7 @@ class Skill < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: skills
 #
@@ -178,9 +179,4 @@ end
 #  attended_events    :text
 #  deleted            :boolean          default(FALSE), not null
 #  deleted_at         :datetime
-#
-# Indexes
-#
-#  index_skills_on_deleted_and_user_id  (deleted,user_id)
-#  index_skills_on_user_id              (user_id)
 #

@@ -293,6 +293,7 @@ RSpec.describe Protip, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: protips
 #
@@ -312,9 +313,4 @@ end
 #  boost_factor        :float            default(1.0)
 #  inappropriate       :integer          default(0)
 #  likes_count         :integer          default(0)
-#
-# Indexes
-#
-#  index_protips_on_public_id  (public_id)
-#  index_protips_on_user_id    (user_id)
 #

@@ -1,4 +1,16 @@
+require 'rails_helper'
+
+RSpec.describe Teams::Account, :type => :model do
+  it { is_expected.to belong_to(:team) }
+  it { is_expected.to have_many(:plans) }
+  it { is_expected.to validate_presence_of(:team_id) }
+  it { is_expected.to validate_presence_of(:stripe_card_token) }
+  it { is_expected.to validate_presence_of(:stripe_customer_token) }
+  # it { is_expected.to validate_uniqueness_of(:team_id) }
+end
+
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: teams_accounts
 #
@@ -11,14 +23,3 @@
 #  admin_id              :integer          not null
 #  trial_end             :datetime
 #
-
-require 'rails_helper'
-
-RSpec.describe Teams::Account, :type => :model do
-  it { is_expected.to belong_to(:team) }
-  it { is_expected.to have_many(:plans) }
-  it { is_expected.to validate_presence_of(:team_id) }
-  it { is_expected.to validate_presence_of(:stripe_card_token) }
-  it { is_expected.to validate_presence_of(:stripe_customer_token) }
-  # it { is_expected.to validate_uniqueness_of(:team_id) }
-end

@@ -18,6 +18,7 @@ RSpec.describe Badge, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: badges
 #
@@ -26,9 +27,4 @@ end
 #  updated_at       :datetime
 #  user_id          :integer
 #  badge_class_name :string(255)
-#
-# Indexes
-#
-#  index_badges_on_user_id                       (user_id)
-#  index_badges_on_user_id_and_badge_class_name  (user_id,badge_class_name) UNIQUE
 #

@@ -1,10 +1,9 @@
 # == Route Map
 #
-# RAILS_ENV=development
 # Connecting to database specified by database.yml
 # Creating scope :near. Overwriting existing method TeamLocation.near.
-#                             GET      /.json(.:format)                                       #<Proc:0x0000000ce1f440@/vagrant/config/routes.rb:288>
-#                             GET      /teams/.json(.:format)                                 #<Proc:0x0000000ce1ccb8@/vagrant/config/routes.rb:289>
+#                             GET      /.json(.:format)                                       #<Proc:0x0000010d972a58@/Users/mike/assemblymade/coderwall/config/routes.rb:274>
+#                             GET      /teams/.json(.:format)                                 #<Proc:0x0000010d970820@/Users/mike/assemblymade/coderwall/config/routes.rb:275>
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
 #                        root          /                                                      protips#index

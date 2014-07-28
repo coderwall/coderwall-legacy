@@ -13,6 +13,7 @@ Fabricator(:job, from: :opportunity, class_name: :opportunity) do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: opportunities
 #

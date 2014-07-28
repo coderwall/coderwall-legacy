@@ -31,6 +31,7 @@ Fabricator(:github_fork_fact, from: :github_original_fact) do
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: facts
 #
@@ -44,9 +45,4 @@ end
 #  relevant_on :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
-#
-# Indexes
-#
-#  index_facts_on_identity  (identity)
-#  index_facts_on_owner     (owner)
 #

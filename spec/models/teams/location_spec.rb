@@ -1,4 +1,11 @@
+require 'rails_helper'
+
+RSpec.describe Teams::Location, :type => :model do
+  it {is_expected.to belong_to(:team)}
+end
+
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: teams_locations
 #
@@ -13,9 +20,3 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-
-require 'rails_helper'
-
-RSpec.describe Teams::Location, :type => :model do
-  it {is_expected.to belong_to(:team)}
-end

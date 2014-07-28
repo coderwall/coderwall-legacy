@@ -138,6 +138,7 @@ class Comment < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20140728205954
 #
 # Table name: comments
 #
@@ -152,10 +153,4 @@ end
 #  created_at        :datetime
 #  updated_at        :datetime
 #  likes_count       :integer          default(0)
-#
-# Indexes
-#
-#  index_comments_on_commentable_id    (commentable_id)
-#  index_comments_on_commentable_type  (commentable_type)
-#  index_comments_on_user_id           (user_id)
 #
