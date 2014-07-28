@@ -307,6 +307,7 @@ class ProtipsController < ApplicationController
   end
 
   def feature
+    #TODO change with @protip.toggle_featured_state!
     if @protip.featured?
       @protip.unfeature!
     else
