@@ -13,6 +13,7 @@ class ImportTeamData
     PgTeam.delete_all
 
     $pg_team_attrs ||= PgTeam.new.attributes.symbolize_keys.keys
+    $pg_teams_member_attrs ||= Teams::Member.new.attributes.symbolize_keys.keys
 
     print PgTeam.count
 
@@ -25,7 +26,13 @@ class ImportTeamData
 
           data = process(MultiJson.load(line, symbolize_keys: true))
 
-          save_team!(data[:team])
+          team = save_team!(data[:team])
+
+          # at this point `team` is a live ActiveRecord model
+
+          save_team_members!(team, data[:team_members])
+
+          require 'pry'; binding.pry
 
           print '.'
         end
@@ -35,11 +42,26 @@ class ImportTeamData
     puts PgTeam.count
   end
 
+  private
+
   def save_team!(data)
-    undefined_keys_on_pg_team = data.keys - $pg_team_attrs
-    fail "Undefined keys for PgTeam found in import data: #{undefined_keys_on_pg_team.inspect}" unless undefined_keys_on_pg_team.empty?
+    validate_fields!('PgTeam', data, $pg_team_attrs)
 
     PgTeam.create!(data)
+  end
+
+  def save_team_members!(team, data)
+    data.each do |team_members|
+      validate_fields!('Teams::Member', team_members, $pg_teams_member_attrs)
+      team.members.build(team_members)
+    end
+
+    team.save!
+  end
+
+  def validate_fields!(klass, data, required_keys)
+    undefined_keys = data.keys - required_keys
+    fail "Undefined keys for #{klass} found in import data: #{undefined_keys.inspect}" unless undefined_keys.empty?
   end
 
   def process(input)
