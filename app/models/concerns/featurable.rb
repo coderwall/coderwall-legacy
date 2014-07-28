@@ -12,7 +12,7 @@ module Featurable
   end
 
   def hawt?
-    @is_hawt ||= hawt_service.hawt?
+    hawt_service.hawt?
   end
 
   def feature!
