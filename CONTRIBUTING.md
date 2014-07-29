@@ -127,6 +127,12 @@ If you're running Windows, [here's a guide written by one of our members on how 
         ls -al
         # We're not in localhost any longer... well, you get what I mean
 
+    The *first* time you create the virtualmachine you will need to create and setup the database.
+
+        # we're still SSH'ed into Vbox
+        cd ~/web
+        rake db:create && rake db:setup
+
     Now that you're SSH'ed into the Vagrant VM it's time to run the app.
 
         # we're still SSH'ed into Vbox
