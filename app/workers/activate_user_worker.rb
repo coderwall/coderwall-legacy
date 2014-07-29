@@ -1,4 +1,6 @@
 # ActivateUserWorker
+# TODO: RefreshUserJob seems to be the blocker, refactor this into sync
+# 	codebase that calls async jobs[RefreshUserJob, ?NotifierMailer?]
 class ActivateUserWorker
   include Sidekiq::Worker
   sidekiq_options queue: :high
@@ -11,7 +13,7 @@ class ActivateUserWorker
     RefreshUserJob.new.perform(user.username)
 
     return if user.badges.empty?
-    
+
     user.activate!
     NotifierMailer.welcome_email(user.username).deliver
   end
