@@ -173,17 +173,11 @@ class ApplicationController < ActionController::Base
     params[:controller] != 'achievements'
   end
 
-  unless Rails.env.development? || Rails.env.test?
-    rescue_from(ActiveRecord::RecordNotFound) { |e| render_404 }
-    rescue_from(ActionController::RoutingError) { |e| render_404 }
-    # rescue_from(RuntimeError) { |e| render_500 }
-  end
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from ActionController::RoutingError, with: :render_404
 
   def render_404
-    respond_to do |type|
-      type.html { render file: File.join(Rails.root, 'public', '404.html'), layout: nil, status: 404 }
-      type.all { render nothing: true, status: 404 }
-    end
+    render template: 'error/not_found', status: :not_found
   end
 
   def render_500

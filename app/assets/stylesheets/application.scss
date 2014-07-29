@@ -4,6 +4,7 @@
 @import "normailze";
 @import "tipTip";
 @import "new-new-home";
+@import "error";
 
 .user-mosaic, .team-mosiac {
   float: left;
@@ -619,7 +620,7 @@ body#sign-in {
   width: 940px;
   margin: 50px auto 75px auto;
   text-align: center;
-  
+
   h2 {
     color: #777;
     text-transform: uppercase;

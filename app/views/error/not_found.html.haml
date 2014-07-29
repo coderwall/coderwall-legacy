@@ -1,0 +1,13 @@
+%div.error-body
+  %section.not-found
+    %header.cf
+      %h2 Uh oh, something went wrong!
+      %p.error-desc
+        Unfortunately, you are looking for something that isn't here. Maybe we can help you find something?
+        Use the links below to check out a few of the most popular protips or
+        #{ link_to "sign up and start submitting your own protips", signin_path }.
+        If you don't believe you should be seeing this error,
+        #{ link_to "please contact us", contact_us_path }!
+
+      = render partial: "error/helpful_links"
+
