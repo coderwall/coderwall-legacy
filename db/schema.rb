@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140726233900) do
+ActiveRecord::Schema.define(:version => 20140729091832) do
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -479,9 +479,9 @@ ActiveRecord::Schema.define(:version => 20140726233900) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "username"
+    t.text     "username"
     t.string   "name"
-    t.string   "email"
+    t.text     "email"
     t.string   "location"
     t.string   "old_github_token"
     t.string   "state"

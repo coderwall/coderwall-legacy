@@ -24,9 +24,9 @@ end
 # Table name: users
 #
 #  id                            :integer          not null, primary key
-#  username                      :string(255)
+#  username                      :text
 #  name                          :string(255)
-#  email                         :string(255)
+#  email                         :text
 #  location                      :string(255)
 #  old_github_token              :string(255)
 #  state                         :string(255)
