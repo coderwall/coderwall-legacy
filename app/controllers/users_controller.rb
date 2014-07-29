@@ -108,7 +108,7 @@ class UsersController < ApplicationController
     return head(:forbidden) unless @user == current_user || admin_of_premium_team?
 
     if @user.update_attributes(user_update_params)
-      @user.activate! if @user.has_badges? && !@user.active?
+      @user.activate if @user.has_badges? && !@user.active?
       flash.now[:notice] = "The changes have been applied to your profile."
       expire_fragment(@user.daily_cache_key)
     end

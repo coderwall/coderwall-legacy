@@ -5,7 +5,7 @@ namespace :award do
     # PRODUCTION: RUNS DAILY
     task :active => :environment do
       User.pending.where('last_request_at > ?', 1.week.ago).find_each(:batch_size => 1000) do |user|
-        ActivateUserWorker.perform_async(user.id, false)
+        user.activate
       end
     end
 

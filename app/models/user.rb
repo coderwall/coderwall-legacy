@@ -136,9 +136,13 @@ class User < ActiveRecord::Base
     banned_at.present?
   end
 
+  def activate
+    UserActivateWorker.perform_async(id)
+  end
+  
   def activate!
-    touch(:activated_on)
-    update_attribute(:state, ACTIVE)
+    # TODO: Switch to update, failing validations?
+    update_attributes!(state: ACTIVE, activated_on: DateTime.now)
   end
 
   def unregistered?
@@ -262,7 +266,7 @@ class User < ActiveRecord::Base
 
   def complete_registration!(opts={})
     update_attribute(:state, PENDING)
-    ActivateUserWorker.perform_async(id)
+    activate
   end
 
 
