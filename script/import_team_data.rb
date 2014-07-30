@@ -25,6 +25,8 @@ class ImportTeamData
 
           save_team_members!(team, data[:team_members])
 
+          save_team_pending_members!(team, data[:pending_team_members])
+
           print '.'
         end
       end
