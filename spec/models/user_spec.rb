@@ -35,6 +35,11 @@ RSpec.describe User, :type => :model do
     }
   end
 
+  it 'should find user by username no matter the case' do
+    user = Fabricate(:user, username: 'seuros')
+    expect(User.find_by_username('Seuros')).to eq(user)
+  end
+
   it 'should not return incorrect user because of pattern matching' do
     user = Fabricate(:user, username: 'MDEITERS')
     found = User.find_by_username('M_EITERS')
@@ -334,9 +339,9 @@ end
 # Table name: users
 #
 #  id                            :integer          not null, primary key
-#  username                      :string(255)
+#  username                      :text
 #  name                          :string(255)
-#  email                         :string(255)
+#  email                         :text
 #  location                      :string(255)
 #  old_github_token              :string(255)
 #  state                         :string(255)

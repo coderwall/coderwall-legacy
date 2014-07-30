@@ -38,6 +38,13 @@ RSpec.describe UsersController, :type => :controller do
                                           "id" => 1310330,
                                           "private_gists" => 0}}}.with_indifferent_access }
 
+  it 'should get user page by ignoring the case' do
+    get :show, username: user.username.downcase
+    expect(response).to be_success
+    get :show, username: user.username.upcase
+    expect(response).to be_success
+    expect(assigns(:user)).to eq(user)
+  end
 
   it 'multiple json requests should have same etag' do
     get :show, username: user.username, format: :json

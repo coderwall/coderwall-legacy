@@ -9,17 +9,12 @@ class UsersController < ApplicationController
     @user = User.for_omniauth(oauth)
   end
 
+  # /:username
   def show
-    @user = User.find_by_username(user_show_params[:username])
+    @user = User.find_by_username!(params[:username])
 
     respond_to do |format|
       format.html do
-        raise ActiveRecord::RecordNotFound if @user.nil?
-
-        if Rails.env.development?
-          @user.migrate_to_skills! if @user.skills.empty?
-        end
-
         @user.skills = Skill.where(user_id: @user.id).order('weight DESC')
 
         if viewing_user && viewing_user == @user
@@ -30,7 +25,7 @@ class UsersController < ApplicationController
 
         @user.viewed_by(viewing_user || session_id) unless is_admin? || (signed_in? && viewing_user == @user)
         if @user.pending?
-          if viewing_self = (signed_in? && viewing_user == @user)
+          if (signed_in? && viewing_user == @user)
             flash.now[:notice] = "We're still working on your achievements but you can already start basking in the awesomeness of your new coderwall!"
           else
             flash.now[:notice] = "We're still working on #{@user.display_name}'s achievements, but its not too early to follow and endorse them."
@@ -39,18 +34,14 @@ class UsersController < ApplicationController
       end
 
       format.json do
-        if @user.nil?
-          return head(:not_found)
-        else
-          if stale?(etag: ['v3', @user, user_show_params[:callback], user_show_params[:full]], last_modified: @user.last_modified_at.utc, public: true)
-            response = Rails.cache.fetch(['v3', @user, :json, user_show_params[:full]]) do
-              @user.public_hash(user_show_params[:full]) do |badge|
-                view_context.image_path(badge.image_path) #fully qualified in product
-              end.to_json
-            end
-            response = "#{user_show_params[:callback]}({\"data\":#{response}})" if user_show_params[:callback]
-            render json: response
+        if stale?(etag: ['v3', @user, user_show_params[:callback], user_show_params[:full]], last_modified: @user.last_modified_at.utc, public: true)
+          response = Rails.cache.fetch(['v3', @user, :json, user_show_params[:full]]) do
+            @user.public_hash(user_show_params[:full]) do |badge|
+              view_context.image_path(badge.image_path) #fully qualified in product
+            end.to_json
           end
+          response = "#{user_show_params[:callback]}({\"data\":#{response}})" if user_show_params[:callback]
+          render json: response
         end
       end
     end

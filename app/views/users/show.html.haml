@@ -121,66 +121,6 @@
 
 .sidebar
   %aside.profile-sidebar
-    -if Rails.env.development?
-      / .coderwall-level
-      /   %p coderwall level 1
-      /
-      / .score-box
-      /   .tip-box
-      /     %p You have 73pts, 18 more needed to level up. blah blah blah blah blah blah blah blah
-      /
-      /   .score-base
-      /     %ul
-      /       %li 1
-      /       %li
-      /       %li
-      /       %li
-      /       %li
-      /       %li
-      /       %li
-      /       %li 2
-      /
-      /   .score-over{:style => 'width: 50%'}
-      /     %ul
-      /       %li 1
-      /       %li
-      /       %li
-      /       %li
-      /       %li
-      /       %li
-      /       %li
-      /       %li 2
-      /
-      /   .label.cf
-      /     %span.current-points
-      /       0 pts
-      /     %span.next-points
-      /       100 pts
-      /
-      / .user-notifications
-      /   %ol
-      /     %li
-      /       Quests
-      /     %li
-      /       %span
-      /         1
-      /       Endorse
-      /       %a.class{:href => '/'}
-      /         Mdeiters
-      /       for Javascript to gain 5pts.
-      /     %li
-      /       %span
-      /         2
-      /       Write your first
-      /       %a.class{:href => '/'}
-      /         Protip
-      /       to gain 5pts.
-      /     %li
-      /       %span
-      /         3
-      /       %a.class{:href => '/'}
-      /         Bashir
-      /       just endorsed you for CSS, awesome!
     %ul.profile-details
       -unless @user.about.blank?
         %li
@@ -258,18 +198,6 @@
               .hint.html
                 %h4 HTML code
               =text_area_tag 'HTML', html_embed_code_with_count
-          -#
-          -#.embed-btn
-            =link_to'Embed in all my Github project READMEs'
-
-  -#-if viewing_self? && @user.has_badges?
-  -#  .hint-box
-  -#    .hint
-  -#      %p
-  -#        Those are some pretty awesome achievements! Did you know you can
-  -#        %a.track{:href => api_path + '#blogbadge', 'data-category' => 'click', 'data-action' => 'embed badges'}
-  -#          easily embed them
-  -#        on your blog in a line or two of html?
 
   -if is_admin?
     .hint-box
@@ -301,8 +229,6 @@
         -if @user.twitter
           %li.admin-action
             =link_to('Clear Twitter!', clear_provider_path(@user, :provider =>  'twitter'), :confirm => 'Are you sure?')
-        / -unless @user.linkedin.blank? && user.linkedin_legacy.blank? && user.linkedin_public_url.blank?
-        /   %li=link_to('Clear Linkedin!', clear_provider_path(@user, :provider => 'linkedin'), :confirm => 'Are you sure?')
         -if @user.github
           %li.admin-action
             =link_to('Clear GitHub!', clear_provider_path(@user, :provider =>  'github'), :confirm => 'Are you sure?')
