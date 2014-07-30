@@ -10,9 +10,6 @@
   }
 }
 
-.columns {
-}
-
 .column {
   display: inline-block;
   &.popular-list {
@@ -52,8 +49,4 @@
       }
     }
   }
-}
-
-.fresh-list {
-  background: red;
 }
