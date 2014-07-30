@@ -1,0 +1,9 @@
+%div.columns
+  %div.column.popular-list
+    %h3="Top 5 Most Popular Protips"
+    %ol
+      - protips_list(:trending, 5).each do |protip|
+        %li
+          =link_to "#{protip.title} by #{protip.user.name}", protip_path(protip.public_id)
+  %div.column.signup-list
+    =render :partial => "sessions/join_buttons", :locals => {:message => "Join to start earning badges for your open source contributions, discover protips and connect with other developers"}
