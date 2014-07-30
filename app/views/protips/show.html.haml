@@ -1,21 +1,20 @@
+- meta title: "#{@protip.user.display_name} : #{sanitize(@protip.title)}"
+- meta description: protip_summary
+- meta og: {description: protip_summary}
+- meta og: {image: users_image_path(@protip.user)}
+
+- if ENV['ENABLE_TWITTER_CARDS']
+  - meta twitter: {card: "summary"}
+  - meta twitter: {site: "@coderwall"}
+  - meta twitter: {title: sanitize(@protip.title)}
+  - meta twitter: {url: protip_url(@protip)}
+  - meta twitter: {description: protip_summary}
+  - meta twitter: {image: @protip.featured_image}
+  - meta twitter: {creator: {id: @protip.author.twitter_id}}
+
 =content_for :head do
-  %title==#{@protip.user.display_name} : #{sanitize(@protip.title)}
   %link{:rel => 'canonical', :href => protip_path(@protip)}
-  %meta{:name => :description, :property => "og:description", :content => protip_summary }
-  %meta{:property => "og:image", :content => users_image_path(@protip.user)}
   %meta{:name => "viewport", :content => "width=device-width,initial-scale=1.0,maximum-scale=1.0"}
-
-  -if ENV['ENABLE_TWITTER_CARDS']
-    %meta{:name => 'twitter:card',         :content => 'summary' }
-    %meta{:name => 'twitter:site',         :content => '@coderwall' }
-    %meta{:name => 'twitter:title',        :content => sanitize(@protip.title) }
-    %meta{:name => 'twitter:url',          :content => protip_url(@protip)}
-    %meta{:name => 'twitter:description',  :content => protip_summary }
-    -if @protip.has_featured_image?
-      %meta{:name => 'twitter:image',      :content => @protip.featured_image }
-    -unless @protip.author.twitter_id.blank?
-      %meta{:name => 'twitter:creator:id', :content => @protip.author.twitter_id }
-
 
 -content_for :mixpanel do
   =record_event("viewed protip", :featured => @protip.featured, :distinction => @protip.best_stat[0])
