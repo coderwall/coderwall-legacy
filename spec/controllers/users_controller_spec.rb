@@ -108,7 +108,7 @@ RSpec.describe UsersController, :type => :controller do
   it 'applies oauth information to user on creation' do
     session["oauth.data"] = github_response
     post :create, user: {location: 'SF'}
-    assigns[:user].thumbnail_url == 'https://secure.gravatar.com/avatar/b08ed2199f8a88360c9679a57c4f9305'
+    # assigns[:user].thumbnail_url == 'https://secure.gravatar.com/avatar/b08ed2199f8a88360c9679a57c4f9305'
     assigns[:user].github == 'throwaway1'
     assigns[:user].github_token == '59cdff603a4e70d47f0a28b5ccaa3935aaa790cf'
   end
@@ -161,11 +161,10 @@ RSpec.describe UsersController, :type => :controller do
       expect(assigns[:user].username).to be_nil
       expect(assigns[:user].location).to be_nil
       expect(assigns[:user].linkedin).to be_nil
-      assigns[:user].linkedin_token == 'acafe540-606a-4f73-aef7-f6eba276603'
-      assigns[:user].linkedin_secret == 'df7427be-3d93-4563-baef-d1d38826686'
-      assigns[:user].linkedin_id == 'DlC5AmUPnM'
-      assigns[:user].linkedin_public_url == 'http://www.linkedin.com/in/matthewdeiters'
-      assigns[:user].thumbnail_url == 'http://media.linkedin.com/mpr/mprx/0_gPLYkP6hYm6ap1Vcxq5TkrTSYulmpzUc0tA3krFxTW5YiluBAvztoKPlKGAlx-sRyKF8wBv2M2QD'
+      expect(assigns[:user].linkedin_token).to eq('acafe540-606a-4f73-aef7-f6eba276603')
+      expect(assigns[:user].linkedin_secret).to eq('df7427be-3d93-4563-baef-d1d38826686')
+      expect(assigns[:user].linkedin_id).to eq('DlC5AmUPnM')
+      expect(assigns[:user].linkedin_public_url ).to eq( 'http://www.linkedin.com/in/matthewdeiters')
     end
   end
 
@@ -243,7 +242,6 @@ RSpec.describe UsersController, :type => :controller do
       post :create, user: {}
 
       expect(assigns[:user].username).to eq('mdeiters')
-      expect(assigns[:user].thumbnail_url).to eq('https://si0.twimg.com/profile_images/1672080012/instagram_profile_normal.jpg')
       expect(assigns[:user].twitter).to eq('mdeiters')
       expect(assigns[:user].twitter_token).to eq('6271932-8erxrXfJykBNMrvsdCEq5WqKd6FIcO97L9BzvPq7')
       expect(assigns[:user].twitter_secret).to eq('8fRS1ZARd6Wm53wvvDwHNrBmZcW0H2aSwmQjuOTHl')
