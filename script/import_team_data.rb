@@ -25,6 +25,11 @@ class ImportTeamData
 
           save_team_members!(team, data[:team_members])
 
+
+          # TODO: FIX that I create a new instance with fields. Remove them from the migration and
+          # just create a new join table instance. Although there might need to be `state` field
+          # for the state of the user being a member or pending member
+
           save_team_pending_members!(team, data[:pending_team_members])
 
           print '.'
