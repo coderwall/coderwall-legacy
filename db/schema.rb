@@ -13,6 +13,8 @@
 
 ActiveRecord::Schema.define(:version => 20140729091832) do
 
+  add_extension "citext"
+
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
     t.integer "alias_id"
@@ -479,9 +481,9 @@ ActiveRecord::Schema.define(:version => 20140729091832) do
   end
 
   create_table "users", :force => true do |t|
-    t.text     "username"
+    t.citext   "username"
     t.string   "name"
-    t.text     "email"
+    t.citext   "email"
     t.string   "location"
     t.string   "old_github_token"
     t.string   "state"

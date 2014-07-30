@@ -26,6 +26,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 # Preparing for rails 4 migration
 gem 'strong_parameters'
+gem 'postgres_ext'
 
 # Attachements
 gem 'carrierwave'
