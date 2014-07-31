@@ -11,7 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140728214411) do
+ActiveRecord::Schema.define(:version => 20140730225739) do
+
   add_extension "citext"
 
   create_table "alias_tags", :id => false, :force => true do |t|
@@ -528,7 +529,6 @@ ActiveRecord::Schema.define(:version => 20140728214411) do
     t.boolean  "notify_on_award",               :default => true
     t.boolean  "receive_newsletter",            :default => true
     t.string   "zerply"
-    t.text     "thumbnail_url"
     t.string   "linkedin"
     t.string   "linkedin_id"
     t.string   "linkedin_token"
