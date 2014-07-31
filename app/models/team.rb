@@ -129,10 +129,6 @@ class Team
 
   class << self
 
-    def with_name(name)
-      where(name: name).first
-    end
-
     def search(query_string, country, page, per_page, search_type = :query_and_fetch)
       country = query_string.gsub!(/country:(.+)/, '') && $1 if country.nil?
       query   = ""
@@ -247,12 +243,9 @@ class Team
   end
 
   def team_members
-    @team_members ||= User.where(team_document_id: self.id.to_s).all
+    User.where(team_document_id: self.id.to_s).all
   end
 
-  def reload_team_members
-    @team_members = nil
-  end
 
   def reach
     team_member_ids = team_members.map(&:id)
@@ -270,26 +263,6 @@ class Team
 
   def branding_hex_color
     branding || DEFAULT_HEX_BRAND
-  end
-
-  def collective_days_on_github
-    @collective_days_on_github ||= begin
-                                     days = team_members.collect { |user| days_since(user.joined_github_on) }.sum
-                                     # [(days / 365), (days % 365)]
-                                   end
-  end
-
-  def collective_days_on_twitter
-    @collective_days_on_twitter ||= begin
-                                      days = team_members.collect { |user| days_since(user.joined_twitter_on) }.sum
-                                      # [(days / 365), (days % 365)]
-                                      # / ==#{@team.collective_days_on_twitter.first} yrs & #{@team.collective_days_on_twitter.last} days
-                                    end
-  end
-
-  def days_since(date)
-    return 0 if date.nil?
-    ((Time.now - date.to_time).abs / 60 / 60 / 24).round
   end
 
   def events
