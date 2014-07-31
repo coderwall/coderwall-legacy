@@ -51,8 +51,9 @@ module UserOauth
             name: auth[:info][:name],
             email: auth[:info][:email],
             backup_email: auth[:info][:email],
-            location: location_from(auth),
-            thumbnail_url: thumbnail_url_for(auth))
+            location: location_from(auth))
+        #FIXME VCR raise an error when we try to download the image
+        user.avatar.download! avatar_url_for(auth)    unless Rails.env.test?
         user.apply_oauth(auth)
         user.username = auth[:info][:nickname]
         return user
@@ -91,8 +92,8 @@ module UserOauth
       end
     end
 
-    def thumbnail_url_for(oauth)
-      if github = oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][:gravatar_id]
+    def avatar_url_for(oauth)
+      if oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][:gravatar_id]
         "https://secure.gravatar.com/avatar/#{oauth[:extra][:raw_info][:gravatar_id]}"
       elsif oauth[:info]
         if oauth['provider'] == 'twitter'
