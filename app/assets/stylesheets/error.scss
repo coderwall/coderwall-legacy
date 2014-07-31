@@ -12,12 +12,17 @@
   }
 }
 
+.columns {
+  overflow: hidden;
+}
+
 .column {
-  display: inline-block;
+  float: left;
   &.popular-list {
     background: #FFF;
     padding: 20px;
     box-sizing: border-box;
+    max-width: 515px;
     h3 {
       margin-bottom: 10px;
     }
