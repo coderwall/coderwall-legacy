@@ -13,8 +13,6 @@ RSpec.describe Team, :type => :model do
     member_that_invited_user = Fabricate(:user, referral_token: 'asdfasdf')
     team.add_user(member_that_invited_user)
 
-    team.reload_team_members
-
     expect(team.has_user_with_referral_token?('asdfasdf')).to eq(true)
     expect(team.has_user_with_referral_token?("something else")).to eq(false)
   end

@@ -84,7 +84,7 @@ class TeamsController < ApplicationController
 
     if @team.valid? and @teams.blank? and @team.new_record?
       @team.add_user(current_user)
-      @team.edited_by(current_user)
+      # @team.edited_by(current_user)
       @team.save
       record_event('created team')
     end
@@ -110,7 +110,7 @@ class TeamsController < ApplicationController
     update_team_params.delete(:_id)
     @team.update_attributes(update_team_params)
     @edit_mode = true
-    @team.edited_by(current_user)
+    # @team.edited_by(current_user)
     @job = if update_params[:job_id].nil?
              @team.jobs.sample
            else
@@ -215,7 +215,6 @@ class TeamsController < ApplicationController
     since = is_admin? ? 0 : 2.weeks.ago.to_i
     full = is_admin? && params[:full] == 'true'
     @visitors = @team.aggregate_visitors(since).reject { |visitor| visitor[:user] && @team.on_team?(visitor[:user]) }
-    @visitors = fake_visitors if @visitors.blank? && Rails.env.development?
     @visitors = @visitors.first(75) if !is_admin? || !full
     @views = @team.total_views
     @impressions = @team.impressions
@@ -255,16 +254,6 @@ class TeamsController < ApplicationController
 
   protected
 
-  def fake_visitors
-    v = []
-    5.times do
-      user = User.uncached do
-        User.random(1).first
-      end
-      v << { :exit_url => "http://heroku.com", :exit_target_type => "company-website", :furthest_scrolled => "challenges", :time_spent => "2016", :user_id => 1736, :visited_at => 1346913596, :user => user, :visits => 3 }
-    end
-    v
-  end
 
   def team_from_params(opts)
     return Team.where(slug: opts[:slug].downcase).first unless opts[:slug].blank?

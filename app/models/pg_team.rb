@@ -9,6 +9,16 @@ class PgTeam < ActiveRecord::Base
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :destroy
   has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
 
+  before_validation :create_slug!
+
+  validates_uniqueness_of :slug
+
+
+  private
+
+  def create_slug!
+    self.slug = name.parameterize
+  end
 
 end
 #
