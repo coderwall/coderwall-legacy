@@ -764,7 +764,6 @@ DEPENDENCIES
   mongoid_taggable
   multi_json
   never_wastes
-  newrelic_rpm
   nokogiri
   octokit
   oj
