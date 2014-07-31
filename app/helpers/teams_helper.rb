@@ -166,4 +166,32 @@ module TeamsHelper
   def exact_team_exists?(teams, team)
     teams.map { |team| Team.slugify(team.name) }.include? team.slug
   end
+
+  def team_connections_url(team)
+    content_tag(:ul, class: 'connections cf') do
+      content_tag(:li, team_website_link(team)) +
+      content_tag(:li, team_github_link(team)) +
+      content_tag(:li, team_facebook_link(team)) +
+      content_tag(:li, team_twitter_link(team))
+    end
+  end
+
+
+  def team_website_link(team)
+    link_to('', url_for(team.website), :class => 'url record-exit', :target => '_blank', 'data-target-type' => 'company-website', :alt => team.name) if team.website.present?
+  end
+
+  def team_github_link(team)
+    link_to('', "https://github.com/#{team.github}", :class => 'github record-exit', :target => '_blank', 'data-target-type' => 'company-github', :alt => 'On GitHub')  if team.github.present?
+  end
+
+  def team_facebook_link(team)
+    link_to('', "https://www.facebook.com/#{team.facebook}", :class => 'facebook record-exit', :target => '_blank', 'data-target-type' => 'company-facebook', :alt => 'On Facebook') if team.facebook.present?
+  end
+
+  def team_twitter_link(team)
+    link_to('', "https://twitter.com/#{team.twitter}", :class => 'twitter record-exit', :target => '_blank', 'data-target-type' => 'company-twitter', :alt => 'On Twitter')   if team.twitter.present?
+  end
+
+
 end

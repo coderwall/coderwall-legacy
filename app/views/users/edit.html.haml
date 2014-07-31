@@ -1,7 +1,7 @@
 = content_for :javascript do
   = javascript_include_tag '//s3.amazonaws.com/cdn.getchute.com/media-chooser.min.js'
-  = javascript_include_tag 'settings.js'
-  = javascript_include_tag 'username-validation.js'
+  = javascript_include_tag 'settings'
+  = javascript_include_tag 'username-validation'
 
 - content_for :mixpanel do
   = record_view_event('settings')
