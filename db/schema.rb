@@ -585,7 +585,7 @@ ActiveRecord::Schema.define(:version => 20140731132710) do
   add_index "users", ["old_github_token"], :name => "index_users_on_github_token", :unique => true
   add_index "users", ["team_document_id"], :name => "index_users_on_team_document_id"
   add_index "users", ["twitter_id"], :name => "index_users_on_twitter_id", :unique => true
-  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username"
 
   create_table "users_github_organizations", :force => true do |t|
     t.string   "login"
