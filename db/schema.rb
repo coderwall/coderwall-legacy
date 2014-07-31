@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140730225739) do
+ActiveRecord::Schema.define(:version => 20140731132710) do
 
   add_extension "citext"
 
@@ -407,8 +407,6 @@ ActiveRecord::Schema.define(:version => 20140730225739) do
     t.integer  "achievement_count",        :default => 0
     t.integer  "endorsement_count",        :default => 0
     t.string   "invited_emails",           :default => "{}"
-    t.string   "admins",                   :default => "{}"
-    t.string   "editors",                  :default => "{}"
     t.string   "pending_join_requests",    :default => "{}"
     t.datetime "upgraded_at"
     t.integer  "paid_job_posts",           :default => 0
