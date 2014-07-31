@@ -36,6 +36,7 @@ window.initializeProtip = ->
   if inEditMode = $(".x-tip-content.preview").length > 0
     setTimeout (->
       animateFloat()), 100
+    registerAutosaver()
     registerTextareaAutoResize()
     registerFlipper()
     enableDragNDrop()
@@ -142,6 +143,11 @@ fetchPreview = ->
         topics: topics
     success: (data, status, xhr) ->
       preview(data)
+
+registerAutosaver = ->
+  window.protip_auto_saver = new Coderwall.Autosaver.TextField({field_id: "protip_body", key_append: window.current_user})
+  $("#protip-save-and-publish-button").on "click" , ()->
+    window.protip_auto_saver.clear()
 
 registerTextareaAutoResize = ->
   $("textarea").keydown (event) ->
