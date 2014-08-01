@@ -957,14 +957,13 @@ class User < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140728214411
 #
 # Table name: users
 #
 #  id                            :integer          not null, primary key
-#  username                      :text
+#  username                      :citext
 #  name                          :string(255)
-#  email                         :text
+#  email                         :citext
 #  location                      :string(255)
 #  old_github_token              :string(255)
 #  state                         :string(255)
@@ -1001,7 +1000,6 @@ end
 #  notify_on_award               :boolean          default(TRUE)
 #  receive_newsletter            :boolean          default(TRUE)
 #  zerply                        :string(255)
-#  thumbnail_url                 :text
 #  linkedin                      :string(255)
 #  linkedin_id                   :string(255)
 #  linkedin_token                :string(255)

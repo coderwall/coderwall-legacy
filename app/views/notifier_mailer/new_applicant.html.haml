@@ -14,7 +14,8 @@
           = @user.email
         %li{:style => "font-size: 14px;line-height: 22px;"}
           =link_to('Coderwall Profile', badge_url(@user.username), {:style => "color: #3D8DCC;"})
-        %li{:style => "font-size: 14px;line-height: 22px;"}
-          =link_to('Resume', @user.resume_url, {:style => "color: #3D8DCC;"})
+        - if @user.resume_url.present?
+          %li{:style => "font-size: 14px;line-height: 22px;"}
+            =link_to('Resume', url_for(@user.resume_url, only_path: false), {:style => "color: #3D8DCC;"})
 
 

@@ -77,15 +77,7 @@
     %h1=@team.name
     =follow_team_link(@team)
 
-    %ul.connections.cf
-      -unless @team.website.blank?
-        %li=link_to('', @team.website, :class => 'url record-exit', :target => :new, 'data-target-type' => 'company-website', :alt => @team.website.to_s.gsub('http://', ''))
-      -unless @team.twitter.blank?
-        %li=link_to('', "https://twitter.com/#{@team.twitter}", :class => 'twitter record-exit', :target => :new, 'data-target-type' => 'company-twitter', :alt => 'On Twitter')
-      -unless @team.facebook.blank?
-        %li=link_to('', "https://www.facebook.com/#{@team.facebook}", :class => 'facebook record-exit', :target => :new, 'data-target-type' => 'company-facebook', :alt => 'On Facebook')
-      -unless @team.github.blank?
-        %li=link_to('', "https://github.com/#{@team.github}", :class => 'github record-exit', :target => :new, 'data-target-type' => 'company-github', :alt => 'On GitHub')
+    = team_connections_urls(@team)
 
   -if @team.has_open_positions?
     .join-us-banner
