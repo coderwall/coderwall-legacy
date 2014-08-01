@@ -167,7 +167,7 @@ module TeamsHelper
     teams.map { |team| Team.slugify(team.name) }.include? team.slug
   end
 
-  def team_connections_url(team)
+  def team_connections_links(team)
     content_tag(:ul, class: 'connections cf') do
       content_tag(:li, team_website_link(team)) +
       content_tag(:li, team_github_link(team)) +

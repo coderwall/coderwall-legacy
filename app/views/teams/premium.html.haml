@@ -75,10 +75,9 @@
   %header.team-header.cf{:style => "background-color:#{@team.branding_hex_color}"}
     .team-logo=image_tag(@team.avatar_url, :width => '104', :height => '104', :class => 'team-page-avatar')
     %h1=@team.name
-    =follow_team_link(@team)
+    = follow_team_link(@team)
 
-    -# TODO this method is undefined as of 2014-08-01
-    -# = team_connections_urls(@team)
+    = team_connections_links(@team)
 
   -if @team.has_open_positions?
     .join-us-banner
