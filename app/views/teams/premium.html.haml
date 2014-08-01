@@ -77,7 +77,8 @@
     %h1=@team.name
     =follow_team_link(@team)
 
-    = team_connections_urls(@team)
+    -# TODO this method is undefined as of 2014-08-01
+    -# = team_connections_urls(@team)
 
   -if @team.has_open_positions?
     .join-us-banner
