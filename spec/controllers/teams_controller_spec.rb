@@ -18,4 +18,25 @@ RSpec.describe TeamsController, :type => :controller do
     expect(current_user.following_team?(team)).to eq(false)
   end
 
+  describe 'GET #index' do
+    it 'responds successfully with an HTTP 200 status code' do
+      get :index
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+  end
+
+
+  describe 'GET #show' do
+    it 'responds successfully with an HTTP 200 status code' do
+      team = Fabricate(:team) do
+        name Faker::Company.name
+        slug Faker::Internet.user_name
+      end
+      get :show, slug: team.slug
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+    end
+  end
+
 end

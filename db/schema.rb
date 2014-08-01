@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140731225657) do
+ActiveRecord::Schema.define(:version => 20140801145543) do
 
   add_extension "citext"
 
@@ -520,7 +520,7 @@ ActiveRecord::Schema.define(:version => 20140731225657) do
     t.string   "title"
     t.string   "company"
     t.string   "blog"
-    t.string   "github"
+    t.citext   "github"
     t.string   "forrst"
     t.string   "dribbble"
     t.text     "specialties"

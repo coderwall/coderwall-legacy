@@ -256,7 +256,7 @@ class TeamsController < ApplicationController
 
 
   def team_from_params(opts)
-    return Team.where(slug: opts[:slug].downcase).first unless opts[:slug].blank?
+    return Team.where(slug: opts[:slug].downcase).first if opts[:slug].present?
 
     Team.find(opts[:id])
   end
