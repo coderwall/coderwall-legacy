@@ -132,7 +132,6 @@ gem 'sanitize'
 gem 'simple_form'
 gem 'tweet-button'
 gem 'local_time'
-gem 'github_api'
 
 # DROP BEFORE RAILS 4
 # Mongo

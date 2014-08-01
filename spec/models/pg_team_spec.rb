@@ -10,7 +10,6 @@ RSpec.describe PgTeam, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140728214411
 #
 # Table name: teams
 #
@@ -69,8 +68,6 @@ end
 #  achievement_count        :integer          default(0)
 #  endorsement_count        :integer          default(0)
 #  invited_emails           :string(255)      default("{}")
-#  admins                   :string(255)      default("{}")
-#  editors                  :string(255)      default("{}")
 #  pending_join_requests    :string(255)      default("{}")
 #  upgraded_at              :datetime
 #  paid_job_posts           :integer          default(0)
