@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140731132710) do
+ActiveRecord::Schema.define(:version => 20140731225657) do
 
   add_extension "citext"
 
@@ -608,14 +608,20 @@ ActiveRecord::Schema.define(:version => 20140731132710) do
   end
 
   create_table "users_github_profiles", :force => true do |t|
-    t.string   "login"
+    t.citext   "login",                                :null => false
     t.string   "name"
     t.string   "company"
     t.string   "location"
-    t.integer  "github_id",  :null => false
+    t.integer  "github_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "hireable",          :default => false
+    t.integer  "followers_count",   :default => 0
+    t.integer  "following_count",   :default => 0
+    t.datetime "github_created_at"
+    t.datetime "github_updated_at"
+    t.datetime "spider_updated_at"
   end
 
   create_table "users_github_profiles_followers", :id => false, :force => true do |t|
