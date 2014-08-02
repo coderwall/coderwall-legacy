@@ -5,7 +5,7 @@ class ExtractGithubProfile
 
   def perform(id)
     client = Octokit::Client.new
-    if  ENV['TRAVIS'].blank? || client.ratelimit[:remaining] < 1000
+    if  ENV['TRAVIS'].blank? && client.ratelimit[:remaining] < 1000
       # If we have less than 1000 request remaining, delay this job
       # We leaving 1000 for more critical tasks
       retry_at = client.ratelimit[:resets_at] + rand(id)
