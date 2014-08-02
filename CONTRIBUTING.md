@@ -35,7 +35,10 @@ You'll need to set up a test account with Stripe for local development until thi
 
 You will need a Github application configured for local development until this dependency is refactored out of development/test.
 
-https://github.com/settings/applications/new
+- Create a new GitHub application at [https://github.com/settings/applications/new](https://github.com/settings/applications/new).
+- Copy the the ENV variables that you'll need from GitHub.
+
+![The .env will need these values](https://www.evernote.com/shard/s13/sh/3f74a2f7-82d1-46a0-af9c-28f983ad22af/6adc72742c10ddd4ff3c1b711b8d0e27/deep/0/OAuth-Application-Settings.png)
 
 ## How to run Coderwall locally.
 
