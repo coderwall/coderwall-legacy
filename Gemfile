@@ -20,7 +20,6 @@ gem 'backbone-on-rails'
 gem 'handlebars-source'
 gem 'ember-rails', github: 'emberjs/ember-rails'
 
-
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
@@ -84,9 +83,6 @@ gem 'feedjira'
 # ElasticSearch client
 gem 'tire'
 
-# A/B testing
-gem 'split', require: 'split/dashboard'
-
 # HTTP client
 gem 'rest-client'
 
@@ -115,7 +111,6 @@ gem 'acts_as_follower', '0.1.1'
 gem 'color'
 gem 'createsend'
 gem 'fog'
-#gem 'font_assets', 'cleanoffer/font_assets'
 gem 'geocoder'
 gem 'hashie'
 gem 'linkedin'

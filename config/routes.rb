@@ -13,7 +13,6 @@
 #             latest_comments GET      /comments(.:format)                                    comments#index
 #                        jobs GET      /jobs(/:location(/:skill))(.:format)                   opportunities#index
 #                    jobs_map GET      /jobs-map(.:format)                                    opportunities#map
-#             split_dashboard          /split                                                 Split::Dashboard
 #              random_protips GET      /p/random(.:format)                                    protips#random {:id=>/[\dA-Z\-_]{6}/i}
 #              search_protips GET      /p/search(.:format)                                    protips#search {:id=>/[\dA-Z\-_]{6}/i}
 #                             POST     /p/search(.:format)                                    protips#search {:id=>/[\dA-Z\-_]{6}/i}
@@ -287,8 +286,6 @@ Coderwall::Application.routes.draw do
   get '/comments' => 'comments#index', as: :latest_comments
   get '/jobs(/:location(/:skill))' => 'opportunities#index', as: :jobs
   get '/jobs-map' => 'opportunities#map', as: :jobs_map
-
-  mount Split::Dashboard, at: 'split'
 
   resources :protips, :path => '/p', :constraints => {id: /[\dA-Z\-_]{6}/i} do
     collection do

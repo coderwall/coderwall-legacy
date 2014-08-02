@@ -66,11 +66,8 @@
             = render partial: "sidebar_featured_team", locals: {job: job, mode: mode, protip: protip}
 
     %article.tip-panel{:id => protip.public_id}
-      -ab_test(TWITTER_SHARE_TEST, 'left', 'right') do |direction|
-        =share_on_twitter(protip, 'share-this-tip direction')
-      -#%a.share-this-tip{:href => '/'}
-      -#  Share this
-      =upvote_link(protip, "upvote")
+      = share_on_twitter(protip, 'share-this-tip direction')
+      = upvote_link(protip, "upvote")
       %header.tip-header
         %h1.tip-title
           -if mode == 'popup'
