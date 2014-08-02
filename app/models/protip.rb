@@ -814,20 +814,8 @@ class Protip < ActiveRecord::Base
   def extract_data_from_links
     self.links.each do |link|
       html = Nokogiri.parse(open(link))
-      #auto_tag(html) if self.tags.empty?
       assign_title(html) if self.title.blank?
     end if need_to_extract_data_from_links
-  end
-
-  #
-  # This should eventually be done inline as they type in a protip. We should utilize natural language processing and
-  # coding/technology jargon domain to determine appropriate tags automatically. Perhaps use AlchemyAPIs to tag protips
-  # with people, authors, places and other useful dimension.
-  #
-  def auto_tag(html = nil)
-    if self.link? and self.topics.blank?
-      self.topics = Taggers.tag(html, self.links.first)
-    end
   end
 
   def owned_by?(user)
