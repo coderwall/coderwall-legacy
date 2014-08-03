@@ -6,7 +6,7 @@ require_relative '../config/environment'
 include Clockwork
 
 
-every(1.day, 'award:activate:active', at: '00:00') {   }
+every(1.day, 'award:activate:active', at: '00:00') { ActivatePendingUsersWorker.perform_async  }
 every(1.day, 'award:fresh:stale', at: '00:00') {}
 every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '00:00') {}
 every(1.day, 'clear_expired_sessions', at: '00:00') {}

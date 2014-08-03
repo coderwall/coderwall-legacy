@@ -5,6 +5,7 @@ class ActivateUserJob
   def perform(username, always_activate=true)
     user = User.find_by_username(username)
     return if user.active? || always_activate
+
     RefreshUserJob.new.perform(username)
     unless user.badges.empty?
       user.activate!
