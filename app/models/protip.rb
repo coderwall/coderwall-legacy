@@ -1,6 +1,5 @@
 require 'net_validators'
 require 'open-uri'
-require 'taggers'
 require 'cfm'
 require 'scoring'
 require 'search'
