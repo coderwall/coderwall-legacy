@@ -757,7 +757,7 @@ class User < ActiveRecord::Base
   end
 
   def average_time_between_visits
-    @average_time_between_visits ||= (self.latest_visits.each_with_index.map { |visit, index| visit - self.latest_visits[index-1] }.reject { |difference| difference < 0 }.reduce(:+) || 0)/self.latest_visits.count
+    @average_time_between_visits ||= (self.latest_visits.each_with_index.map { |visit, index| visit - self.latest_visits[index-1] }.reject { |difference| difference < 0 }.reduce(:+) || 0) / self.latest_visits.count
   end
 
   def calculate_frequency_of_visits!

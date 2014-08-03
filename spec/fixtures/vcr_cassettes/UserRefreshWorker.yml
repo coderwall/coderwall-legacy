@@ -1,0 +1,142 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/users/mdeiters?client_id=<GITHUB_CLIENT_ID>&client_secret=<GITHUB_SECRET>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Coderwall spider
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 03 Aug 2014 15:31:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4997'
+      X-Ratelimit-Reset:
+      - '1407083476'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Last-Modified:
+      - Sat, 02 Aug 2014 18:07:22 GMT
+      Etag:
+      - '"4eb2f4fa1ebb7be00ac06b66af9a6f13"'
+      Vary:
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 36F2EB03:3389:801B279:53DE55C7
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 62a1303ae95931e56e387e87d354bb24
+    body:
+      encoding: UTF-8
+      string: '{"login":"mdeiters","id":7330,"avatar_url":"https://avatars.githubusercontent.com/u/7330?v=1","gravatar_id":"aacb7c97f7452b3ff11f67151469e3b0","url":"https://api.github.com/users/mdeiters","html_url":"https://github.com/mdeiters","followers_url":"https://api.github.com/users/mdeiters/followers","following_url":"https://api.github.com/users/mdeiters/following{/other_user}","gists_url":"https://api.github.com/users/mdeiters/gists{/gist_id}","starred_url":"https://api.github.com/users/mdeiters/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/mdeiters/subscriptions","organizations_url":"https://api.github.com/users/mdeiters/orgs","repos_url":"https://api.github.com/users/mdeiters/repos","events_url":"https://api.github.com/users/mdeiters/events{/privacy}","received_events_url":"https://api.github.com/users/mdeiters/received_events","type":"User","site_admin":false,"name":"Matthew
+        Deiters","company":"Assembly","blog":"http://coderwall.com/mdeiters","location":"San
+        Francisco","email":"mdeiters@gmail.com","hireable":false,"bio":null,"public_repos":24,"public_gists":41,"followers":64,"following":34,"created_at":"2008-04-14T22:53:10Z","updated_at":"2014-08-02T18:07:22Z"}'
+    http_version: 
+  recorded_at: Sun, 03 Aug 2014 15:31:19 GMT
+- request:
+    method: get
+    uri: http://lanyrd.com/partners/coderwall/profile-api/?twitter=mdeiters&view=history
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.7
+      Date:
+      - Sun, 03 Aug 2014 15:31:19 GMT
+      Content-Type:
+      - application/javascript; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Servedby:
+      - softlayer-frontend2
+      X-Instrumented:
+      - 751e66f2-6bde-4d53-9dde-fbc94a09737e
+      X-Varnish:
+      - 1173215660 1173215652
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      X-Cache:
+      - HIT
+      X-Varnish-Backend:
+      - default
+      Set-Cookie:
+      - nt=bKj+2lPeVccYcDSYbNDkAg==; expires=Thu, 31-Dec-37 23:55:55 GMT; domain=.lanyrd.com;
+        path=/
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA82U3WrbQBCF7/MUiy5KC5EluSnGuUpJCRRaKHbTUkIIa2lt
+        iUg7YneEK0LevbMbaS17bWhdU+obY8/fmTOf9HTG6BMsCgguWXADjcyEYrBk
+        V6jausA0X8BP9opdpUCBNS9L9vrHNfuejN+M2Aeejdj7iqNoFLsByAoxCs7Z
+        S0uNHDU1fbI/7RSOKGRWyNVDzTVSLO6Sd6LLBhslduO6FvxxUPx2WOyCm1o7
+        97mXI3llOgakFnOxZpkoUCjt5DaqNOEcsb6MopLLVmWjFKqoVrAsShFVXUXk
+        SuCRKlA1op+RFxpBtfTvnVt6s75dMiOzjCtBkmAeJheYs7moUVQLsn0cJ0nf
+        3TpmKuqSp1b5DCqa9BF52XpJ/XbWBqFSkEtm8k3LsZdNR3gwQkxXMzOMpyTF
+        S9NC6wKkkXt3PzDbyjrol2kYDXSEinQ409xaCHWR2tbOqj62bZmrODjxpVWE
+        Is0llLBqvWmuR+/TV5cbeON7ZPoi832kJA1LXHPlr+8JmneZe+RsCfTugG1t
+        79g57h8RuUL/2slm0HDfQ7QSp+GEWP3MW0IqnnpjHKWfuGbfxIrrc3Yr6RHL
+        2JxeBMT8LkD9KWa8KPW1AXZv421WCdT4XRhPvG7HshpPI2UEmCfGwyY4PaSq
+        WfwGnjPK2kPCjoV/AaaREYIM7e7e3h6dRg8Dyeyt9gg7LaLdkS/+DNGE+AzH
+        8QZSHxIH6RdQSK/47ChG/b47jE4Mo+P4dIxO/j2j/y8c1t1kMoDD0nd/9vwL
+        DHLseMwIAAA=
+    http_version: 
+  recorded_at: Sun, 03 Aug 2014 15:31:19 GMT
+recorded_with: VCR 2.9.2

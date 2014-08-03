@@ -1,7 +1,7 @@
+require 'spec_helper'
 require 'vcr_helper'
-Sidekiq::Testing.inline!
 
-RSpec.describe UserActivateWorker do
+RSpec.describe UserActivateWorker, vcr: { cassette_name: 'UserActivateWorker' }, sidekiq: :inline  do
   let(:worker) { UserActivateWorker.new }
 
   describe('#perform') do

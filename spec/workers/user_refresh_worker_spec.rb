@@ -1,7 +1,7 @@
+require 'spec_helper'
 require 'vcr_helper'
-Sidekiq::Testing.inline!
 
-RSpec.describe UserRefreshWorker do
+RSpec.describe UserRefreshWorker, vcr: { cassette_name: 'UserRefreshWorker' }, sidekiq: :inline do
   let(:worker) { UserRefreshWorker.new }
 
   describe('#perform') do
@@ -15,12 +15,10 @@ RSpec.describe UserRefreshWorker do
       let(:user) { Fabricate(:user) }
 
       it 'should refresh user' do
-        VCR.use_cassette 'UserRefreshWorker' do
-          worker.perform(user.id)
-          user.reload
+        worker.perform(user.id)
+        user.reload
 
-          expect(user.last_refresh_at).not_to eq(nil)
-        end
+        expect(user.last_refresh_at).not_to eq(nil)
       end
     end
   end

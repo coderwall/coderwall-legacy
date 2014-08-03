@@ -1,0 +1,142 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/users/bguthrie?client_id=<GITHUB_CLIENT_ID>&client_secret=<GITHUB_SECRET>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.github.v3+json
+      User-Agent:
+      - Coderwall spider
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 03 Aug 2014 15:31:18 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4998'
+      X-Ratelimit-Reset:
+      - '1407083476'
+      Cache-Control:
+      - public, max-age=60, s-maxage=60
+      Last-Modified:
+      - Tue, 29 Jul 2014 03:38:51 GMT
+      Etag:
+      - '"cbd8e0c3f660d678fcb22ec3fdf08a75"'
+      Vary:
+      - Accept
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3; format=json
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Github-Request-Id:
+      - 36F2EB03:3387:43EC1CE:53DE55C6
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 03d91026ad8428f4d9966d7434f9d82e
+    body:
+      encoding: UTF-8
+      string: '{"login":"bguthrie","id":13945,"avatar_url":"https://avatars.githubusercontent.com/u/13945?v=1","gravatar_id":"a90e7575867bdbb5afca576947432a7e","url":"https://api.github.com/users/bguthrie","html_url":"https://github.com/bguthrie","followers_url":"https://api.github.com/users/bguthrie/followers","following_url":"https://api.github.com/users/bguthrie/following{/other_user}","gists_url":"https://api.github.com/users/bguthrie/gists{/gist_id}","starred_url":"https://api.github.com/users/bguthrie/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/bguthrie/subscriptions","organizations_url":"https://api.github.com/users/bguthrie/orgs","repos_url":"https://api.github.com/users/bguthrie/repos","events_url":"https://api.github.com/users/bguthrie/events{/privacy}","received_events_url":"https://api.github.com/users/bguthrie/received_events","type":"User","site_admin":false,"name":"Brian
+        Guthrie","company":"","blog":"blog.brianguthrie.com","location":"New York,
+        NY","email":"btguthrie@gmail.com","hireable":false,"bio":null,"public_repos":36,"public_gists":30,"followers":91,"following":49,"created_at":"2008-06-16T19:38:00Z","updated_at":"2014-07-29T03:38:51Z"}'
+    http_version: 
+  recorded_at: Sun, 03 Aug 2014 15:31:18 GMT
+- request:
+    method: get
+    uri: http://lanyrd.com/partners/coderwall/profile-api/?twitter=mdeiters&view=history
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.4.7
+      Date:
+      - Sun, 03 Aug 2014 15:31:18 GMT
+      Content-Type:
+      - application/javascript; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Servedby:
+      - softlayer-frontend2
+      X-Instrumented:
+      - 751e66f2-6bde-4d53-9dde-fbc94a09737e
+      X-Varnish:
+      - '1173215652'
+      Age:
+      - '0'
+      Via:
+      - 1.1 varnish
+      X-Cache:
+      - MISS
+      X-Varnish-Backend:
+      - default
+      Set-Cookie:
+      - nt=bKj+2lPeVcYYcDSYbNDeAg==; expires=Thu, 31-Dec-37 23:55:55 GMT; domain=.lanyrd.com;
+        path=/
+      Content-Encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA82U3WrbQBCF7/MUiy5KC5EluSnGuUpJCRRaKHbTUkIIa2lt
+        iUg7YneEK0LevbMbaS17bWhdU+obY8/fmTOf9HTG6BMsCgguWXADjcyEYrBk
+        V6jausA0X8BP9opdpUCBNS9L9vrHNfuejN+M2Aeejdj7iqNoFLsByAoxCs7Z
+        S0uNHDU1fbI/7RSOKGRWyNVDzTVSLO6Sd6LLBhslduO6FvxxUPx2WOyCm1o7
+        97mXI3llOgakFnOxZpkoUCjt5DaqNOEcsb6MopLLVmWjFKqoVrAsShFVXUXk
+        SuCRKlA1op+RFxpBtfTvnVt6s75dMiOzjCtBkmAeJheYs7moUVQLsn0cJ0nf
+        3TpmKuqSp1b5DCqa9BF52XpJ/XbWBqFSkEtm8k3LsZdNR3gwQkxXMzOMpyTF
+        S9NC6wKkkXt3PzDbyjrol2kYDXSEinQ409xaCHWR2tbOqj62bZmrODjxpVWE
+        Is0llLBqvWmuR+/TV5cbeON7ZPoi832kJA1LXHPlr+8JmneZe+RsCfTugG1t
+        79g57h8RuUL/2slm0HDfQ7QSp+GEWP3MW0IqnnpjHKWfuGbfxIrrc3Yr6RHL
+        2JxeBMT8LkD9KWa8KPW1AXZv421WCdT4XRhPvG7HshpPI2UEmCfGwyY4PaSq
+        WfwGnjPK2kPCjoV/AaaREYIM7e7e3h6dRg8Dyeyt9gg7LaLdkS/+DNGE+AzH
+        8QZSHxIH6RdQSK/47ChG/b47jE4Mo+P4dIxO/j2j/y8c1t1kMoDD0nd/9vwL
+        DHLseMwIAAA=
+    http_version: 
+  recorded_at: Sun, 03 Aug 2014 15:31:18 GMT
+recorded_with: VCR 2.9.2
