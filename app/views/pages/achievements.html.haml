@@ -17,8 +17,6 @@
       %li
         %h4 Castor Achievement
         %p Create an accomplishment using the words "created", "coded", "built", or "developed" to earn Castor, the first personal accomplishment achievement.
-
-
   .clear
 
   %h2 28 Language Achievements
@@ -47,16 +45,6 @@
         %li{:class => (index == 0 ? '' : 'stack')}=image_tag(badge_class.image_path, :title => badge_class.description, :class => 'tip')
   .clear
 
-  / %h2
-  /   %em CodePlex Specific Achievements
-  / %ul.badges.achievements=render :collection => [ComingSoonCodeplex], :partial => 'badges/badge'
-  / .clear
-  /
-  / %h2
-  /   %em Bitbucket Specific Achievements
-  / %ul.badges.achievements=render :collection => [ComingSoonBitbucket], :partial => 'badges/badge'
-  / .clear
-
   %h6.center
     Achievement badges are licensed under the
-    =link_to('CC-SA License, Version 3.0','http://creativecommons.org/licenses/by-sa/3.0')
+    = link_to('CC-SA License, Version 3.0', 'https://creativecommons.org/licenses/by-sa/3.0/')
