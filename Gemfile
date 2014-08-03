@@ -40,7 +40,8 @@ gem 'slim-rails'
 # Postgres
 gem 'pg'
 
-
+# Scheduled tasks
+gem 'clockwork'
 
 # Authentication
 gem 'omniauth', '~> 1.1.0'
