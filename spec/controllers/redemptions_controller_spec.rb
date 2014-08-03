@@ -15,7 +15,7 @@ RSpec.describe RedemptionsController, :type => :controller do
     end
 
     it 'should activate a new user' do
-      expect(@current_user).to be_active
+      expect(UserActivateWorker.jobs.size).to_not eq(0)
     end
 
     it 'should redirect the user' do
