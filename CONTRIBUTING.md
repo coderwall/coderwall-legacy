@@ -27,6 +27,10 @@ You're on your way to having a stake in Coderwall.
 
 ## External Dependencies
 
+- Imagemagick
+- Postgresql
+- Redis
+
 ### Stripe configuration
 
 You'll need to set up a test account with Stripe for local development until this dependency is refactored out of development/test.
