@@ -331,7 +331,7 @@ class User < ActiveRecord::Base
     skills.each { |skill| skill.apply_facts && skill.save }
     self.github_failures = 0
     save!
-   RefreshUserJob.perform_async(username, true)
+    UserRefreshWorker.perform_async(id, true)
   end
 
 

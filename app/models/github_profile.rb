@@ -74,6 +74,7 @@ class GithubProfile
     username = self.login
 
     profile   = client.profile(username, since)
+    return if profile.nil? # FIXME: Why do we get to this state sometimes?
     github_id = profile.delete(:id)
 
     repos = client.repos_for(username, since).map do |repo|

@@ -145,6 +145,7 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'travis'
+  gem 'letter_opener'
 end
 
 group :development, :test do

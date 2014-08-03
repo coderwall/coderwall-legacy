@@ -52,8 +52,8 @@ module UserOauth
             email: auth[:info][:email],
             backup_email: auth[:info][:email],
             location: location_from(auth))
-        #FIXME VCR raise an error when we try to download the image
-        user.avatar.download! avatar_url_for(auth)    unless Rails.env.test?
+        # FIXME VCR raise an error when we try to download the image
+        user.avatar.download! avatar_url_for(auth) unless Rails.env.test? # TODO: Should be part of user refresh worker
         user.apply_oauth(auth)
         user.username = auth[:info][:nickname]
         return user
