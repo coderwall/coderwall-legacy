@@ -18,7 +18,7 @@ Here are the steps for getting setup & started with contributing to Coderwall :
 3. [Fork the code](https://github.com/assemblymade/coderwall).
 4. Create a new WIP at [https://assemblymade.com/coderwall/wips](https://assemblymade.com/coderwall/wips).
 5. Get vagrant running
-6. Run the test suite
+6. Run the test suite `TRAVIS=true rspec spec`
 7. If you have any issues, jump into chat, introduce yourself and ask or leave a message if no one is around.
 8. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
 9. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
