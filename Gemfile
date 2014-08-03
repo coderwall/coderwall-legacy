@@ -33,8 +33,8 @@ gem 'carrierwave_backgrounder', '0.0.8' #background processing of images
 gem 'carrierwave-mongoid',  require: 'carrierwave/mongoid'
 
 # HTML
-gem 'haml', '3.1.7'
-gem 'hamlbars', '1.1.0' #haml support for handlebars/ember.js
+gem 'haml'
+gem 'hamlbars' #haml support for handlebars/ember.js
 gem 'slim-rails'
 
 # Postgres

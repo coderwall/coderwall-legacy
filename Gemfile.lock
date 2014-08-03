@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/emberjs/ember-rails.git
-  revision: 46ce4ecf3a01d79bcc5c2ddecfe481a5230f0766
+  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
   specs:
     ember-rails (0.15.0)
       active_model_serializers
@@ -83,7 +83,7 @@ GEM
     ansi (1.4.3)
     arel (3.0.3)
     ast (2.0.0)
-    autoprefixer-rails (2.1.1.20140710)
+    autoprefixer-rails (2.2.0.20140727)
       execjs
     awesome_print (1.2.0)
     backbone-on-rails (1.1.1.0)
@@ -135,6 +135,7 @@ GEM
     choice (0.1.6)
     chronic (0.10.2)
     chunky_png (1.3.1)
+    codeclimate-test-reporter (0.4.0)
     clockwork (0.7.7)
       activesupport
       tzinfo
@@ -206,7 +207,7 @@ GEM
     ethon (0.7.1)
       ffi (>= 1.3.0)
     eventmachine (1.0.3)
-    excon (0.38.0)
+    excon (0.39.0)
     execjs (2.2.1)
     fabrication (2.11.3)
     fabrication-rails (0.0.1)
@@ -216,7 +217,7 @@ GEM
       multipart-post (~> 1.2.0)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
-    feedjira (1.3.0)
+    feedjira (1.3.1)
       curb (~> 0.8.1)
       loofah (~> 2.0.0)
       sax-machine (~> 0.2.1)
@@ -245,7 +246,7 @@ GEM
       net-ssh (>= 2.1.3)
     fog-json (1.0.0)
       multi_json (~> 1.0)
-    fog-softlayer (0.3.10)
+    fog-softlayer (0.3.11)
       fog-core
       fog-json
     foreman (0.74.0)
@@ -270,7 +271,7 @@ GEM
       multi_json (~> 1.0)
       net-http-persistent (>= 2.7)
       net-http-pipeline
-    github-markdown (0.6.5)
+    github-markdown (0.6.6)
     grackle (0.3.0)
       json
       mime-types
@@ -285,14 +286,15 @@ GEM
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
-    guard-rspec (4.2.10)
+    guard-rspec (4.3.1)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
-    haml (3.1.7)
-    hamlbars (1.1.0)
+    haml (4.0.5)
+      tilt
+    hamlbars (2.1.1)
       execjs (>= 1.2)
       haml
-      sprockets
+      sprockets (>= 2.0)
       tilt
     handlebars-source (1.3.0)
     hashie (2.1.2)
@@ -328,7 +330,7 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kramdown (1.4.0)
+    kramdown (1.4.1)
     launchy (2.4.2)
       addressable (~> 2.3)
     linkedin (0.4.7)
@@ -386,7 +388,7 @@ GEM
     never_wastes (1.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-    newrelic_rpm (3.9.0.229)
+    newrelic_rpm (3.9.1.236)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     nokogumbo (1.1.9)
@@ -430,7 +432,7 @@ GEM
       activerecord (~> 3.0)
     polyglot (0.3.5)
     poro_plus (1.0.2)
-    posix-spawn (0.3.8)
+    posix-spawn (0.3.9)
     postgres_ext (1.0.0)
       activerecord (~> 3.2.0)
       pg_array_parser (~> 0.0.9)
@@ -525,7 +527,7 @@ GEM
     redis-activesupport (3.2.5)
       activesupport (~> 3.2.0)
       redis-store (~> 1.1.0)
-    redis-namespace (1.5.0)
+    redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
     redis-rack (1.4.4)
       rack (~> 1.4.0)
@@ -687,7 +689,7 @@ GEM
     webmock (1.15.2)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
-    websocket (1.1.4)
+    websocket (1.2.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
     yard (0.8.7.4)
@@ -710,7 +712,6 @@ DEPENDENCIES
   carrierwave-mongoid
   carrierwave_backgrounder (= 0.0.8)
   chronic
-  clockwork
   codeclimate-test-reporter
   coffee-rails (~> 3.2.1)
   color
@@ -732,8 +733,8 @@ DEPENDENCIES
   github-markdown
   grackle
   guard-rspec
-  haml (= 3.1.7)
-  hamlbars (= 1.1.0)
+  haml
+  hamlbars
   handlebars-source
   hashie
   heroku_rails_deflate
