@@ -18,16 +18,6 @@ class NodeKnockout
     where(["UPPER(github) = ?", github_username.upcase]).first
   end
 
-  def scrap
-    res = Servant.get("http://nodeknockout.com/people")
-    doc = Nokogiri::HTML(res.to_s)
-    doc.css('#inner ul li a').each do |element|
-      if element[:href] =~ /people\//i
-        award_user(*github_for(element[:href]))
-      end
-    end
-  end
-
   def load_from_file
     text = File.read(Rails.root.join('db', 'seeds', "nodeknockout-#{@year}.csv"))
     unless text.nil?
