@@ -11,10 +11,6 @@ Coderwall.Team = Ember.Resource.extend(
   ordinalized_rank: Ember.computed(->
     @get("rank").toString().ordinalize()
   ).property("score", "rank").cacheable()
-#
-#    top_3_members: Ember.computed(->
-#      _.sortBy @get("team_members"), (memmber) -> member.score
-#    ).property("team_members").cacheable()
 
   has_more_than_min_members: Ember.computed(->
     @get("size") > 3

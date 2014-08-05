@@ -105,17 +105,17 @@ Coderwall.activityFeedController = Ember.ArrayController.create(
     console.log("requesting more data from " + window.location.origin + "/" + @.get('resourceUrl'))
     context = @
 
-    $.ajax({
+    $.ajax {
       url: window.location.protocol + "//" + window.location.host + "/" + @.get('resourceUrl')
       dataType: 'json'
       data:
         since: context.viewingSince
         count: Math.floor(Math.random() * 10) + 1
       success: (stats)->
-        context.set('viewingSince', (new Date()).valueOf() / 1000);
-        context.updateStats(stats);
+        context.set('viewingSince', (new Date()).valueOf() / 1000)
+        context.updateStats(stats)
         context.startRequestTimer()
-        })
+      }
   ).observes('window.onfocus')
 
   updateStats: (data)->
@@ -153,12 +153,8 @@ Coderwall.activityFeedController = Ember.ArrayController.create(
 
     return @rateLimit(event)
 
-  rateLimit: (event)->
+  rateLimit: (_)->
     return false
-#    rate = @rateLimitTable[event.event_type]
-#    return false unless rate?
-#    rate['count']++
-#    rate['count'] > rate['limit']
 
   userPresence: (present)->
     console.log(((new Date()).valueOf() - @lastPull))
@@ -176,44 +172,11 @@ Coderwall.activityFeedController = Ember.ArrayController.create(
     clearTimeout @get('reloadTimer')
   ).observes('window.onblur')
 
-#  startRateLimitTimer: (->
-#    console.log("Rate Limit Timer started")
-#    context = @
-#    @set('rateLimitTimer', setTimeout ->
-#      context.resetRateLimits()
-#    , @get('rateLimitInterval'))
-#  )
-#
-#  resetRateLimits: ->
-#    console.log("clearing rate limit table")
-#    @rateLimitTable[event_type]['count'] = 0 for event_type, rate of @rateLimitTable
-
   releaseUnreadActivities: (pushState)->
     console.log("releasing activities ")
     @.activities.unshiftObjects(@.unreadActivities)
     @.unreadActivities.clear()
-#    if pushState
-#      @replaceBrowserState()
 
-#  replaceBrowserState: (->
-#    console.log("updating browser history")
-#    @.set('updating', true)
-#    if @.activities.length > 0
-#      @set('lastPull', (new Date()).valueOf())
-#      History.replaceState({lastPull: @lastPull, events: @.activities, unreadEvents: @.unreadActivities}, "activities", location.href)
-#  )
-
-#  handlePopState: ->
-#    return if @get('updating')
-#
-#    unless History? and (state = History.getState())? and !$.isEmptyObject(state.data) and state.data.events? and state.data.events.length > 0 and ((new Date()).valueOf() - state.data.lastPull) < 5*60*1000
-#      @loadFromHistory()
-#    else
-#      console.log("loading events from browser history")
-#      @addEvent(event) for event in state.data.events
-#      @releaseUnreadActivities(false)
-#      @set('unreadActivities', state.data.unreadEvents)
-#    @set('updating', false)
 )
 
 Coderwall.statsController = Ember.ResourceController.create(
@@ -224,7 +187,3 @@ Coderwall.statsController = Ember.ResourceController.create(
   profileUrl: null
   protipsUrl: null
 )
-
-#window.onpopstate =->
-#  Coderwall.activityFeedController.handlePopState()
-

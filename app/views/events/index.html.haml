@@ -1,8 +1,4 @@
 =content_for :javascript do
-  - unless is_admin?
-    :javascript
-      window.console.log = function(){}
-
   =render :partial => 'shared/pubnub'
   =javascript_include_tag 'protips'
   =javascript_include_tag 'ember/dashboard'
@@ -22,9 +18,6 @@
 
 =content_for :body_id do
   activity
-
--#-content_for :mixpanel do
--#  =record_event('viewed dashboard', :viewing_minutes => 0)
 
 %section.activity
   #activity_feed
