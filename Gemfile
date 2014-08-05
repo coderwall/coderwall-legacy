@@ -23,14 +23,11 @@ gem 'ember-rails', github: 'emberjs/ember-rails'
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
 
-# Preparing for rails 4 migration
-gem 'strong_parameters'
-gem 'postgres_ext'
 
 # Attachements
 gem 'carrierwave'
-gem 'carrierwave_backgrounder', '0.0.8' #background processing of images
-gem 'carrierwave-mongoid',  require: 'carrierwave/mongoid'
+gem 'carrierwave_backgrounder' #background processing of images
+gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
 # HTML
 gem 'haml'
@@ -69,7 +66,7 @@ gem 'kaminari'
 gem 'chronic'
 
 # Redis
-gem 'redis-rails' , '~> 3.2'
+gem 'redis-rails', '~> 3.2'
 
 
 gem 'sidekiq'
@@ -80,9 +77,6 @@ gem 'stripe', github: 'stripe/stripe-ruby'
 
 # RSS parsing
 gem 'feedjira'
-
-# ElasticSearch client
-gem 'tire'
 
 # HTTP client
 gem 'rest-client'
@@ -103,9 +97,6 @@ gem 'metamagic'
 
 # ----------------
 
-#DROP BEFORE RAILS 4
-gem 'rocket_tag'
-gem 'squeel', '1.0.1'
 
 gem 'acts_as_commentable', '2.0.1'
 gem 'acts_as_follower', '0.1.1'
@@ -135,6 +126,17 @@ gem 'mongoid'
 gem 'mongo'
 gem 'mongoid_taggable'
 gem 'bson_ext'
+#Tagging
+gem 'rocket_tag'
+gem 'squeel', '1.0.1'
+gem 'strong_parameters'
+gem 'postgres_ext'
+group :production do
+  gem 'heroku_rails_deflate'
+end
+# ElasticSearch client
+gem 'tire'
+# /DROP BEFORE RAILS 4
 
 group :development do
   gem 'better_errors'
@@ -166,7 +168,7 @@ group :test do
   gem "codeclimate-test-reporter", require: false
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'fuubar' , '2.0.0.rc1'
+  gem 'fuubar', '2.0.0.rc1'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'
@@ -176,7 +178,6 @@ end
 
 group :production do
   gem 'airbrake'
-  gem 'heroku_rails_deflate'
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'rails_12factor'
