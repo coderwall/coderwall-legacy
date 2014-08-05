@@ -5,6 +5,8 @@
 #= require      sorted-array
 #= require_self
 
+Ember.ENV.CP_DEFAULT_CACHEABLE = true
+
 window.Coderwall = Ember.Application.create()
 
 Coderwall.routeManager = Ember.RouteManager.create(
