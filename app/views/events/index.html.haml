@@ -4,17 +4,18 @@
   =javascript_include_tag 'ember/dashboard'
 
   :javascript
-    Coderwall.activityFeedController.loadSubscriptions(#{@subscribed_channels})
-    Coderwall.activityFeedController.set('username', '#{current_user.username}')
-    Coderwall.activityFeedController.set('skills', #{current_user.skills.map(&:name)})
-    Coderwall.activityFeedController.set('achievements', #{current_user.badges.map(&:display_name)})
-    Coderwall.activityFeedController.set('profileUrl', '#{profile_path(current_user.username)}')
-    Coderwall.activityFeedController.set('protipsUrl', '#{my_protips_path}')
-    Coderwall.activityFeedController.set('connectionsUrl', '#{followers_path(current_user.username)}')
-    Coderwall.activityFeedController.loadEvents( #{current_user.activity.to_json})
-    Coderwall.activityFeedController.releaseUnreadActivities()
-    Coderwall.activityFeedController.updateStats(#{@stats})
-    Coderwall.activityFeedController.start()
+    $ ->
+      Coderwall.activityFeedController.loadSubscriptions(#{@subscribed_channels})
+      Coderwall.activityFeedController.set('username', '#{current_user.username}')
+      Coderwall.activityFeedController.set('skills', #{current_user.skills.map(&:name)})
+      Coderwall.activityFeedController.set('achievements', #{current_user.badges.map(&:display_name)})
+      Coderwall.activityFeedController.set('profileUrl', '#{profile_path(current_user.username)}')
+      Coderwall.activityFeedController.set('protipsUrl', '#{my_protips_path}')
+      Coderwall.activityFeedController.set('connectionsUrl', '#{followers_path(current_user.username)}')
+      Coderwall.activityFeedController.loadEvents( #{current_user.activity.to_json})
+      Coderwall.activityFeedController.releaseUnreadActivities()
+      Coderwall.activityFeedController.updateStats(#{@stats})
+      Coderwall.activityFeedController.start()
 
 =content_for :body_id do
   activity
