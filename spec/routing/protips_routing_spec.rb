@@ -25,5 +25,9 @@ RSpec.describe ProtipsController, :type => :routing do
       expect(put("/p/hazc5q")).to route_to("protips#update", id: "hazc5q")
     end
 
+    it 'route to #index' do
+      expect(get '/trending').to route_to(controller: 'protips', action: 'index')
+    end
+
   end
 end

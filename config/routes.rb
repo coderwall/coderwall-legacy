@@ -272,18 +272,16 @@ Coderwall::Application.routes.draw do
   get '/.json',       to: proc { [444, {}, ['']] }
   get '/teams/.json', to: proc { [444, {}, ['']] }
 
+  #TODO: REMOVE
   match 'protips/update', via: %w(get put)
   match 'protip/update' , via: %w(get put)
+  get 'welcome' => 'home#index', as: :welcome
 
   root to: 'protips#index'
-  get 'welcome' => 'home#index', as: :welcome
 
   get '/p/dpvbbg', controller: :protips, action: :show, id: 'devsal'
   get '/gh' , controller: :protips, action: :show, utm_campaign: 'github_orgs_badges' , utm_source:'github'
 
-  topic_regex = /[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/
-
-  get '/comments' => 'comments#index', as: :latest_comments
   get '/jobs(/:location(/:skill))' => 'opportunities#index', as: :jobs
   get '/jobs-map' => 'opportunities#map', as: :jobs_map
 
@@ -314,6 +312,7 @@ Coderwall::Application.routes.draw do
       post 'tag'
       post 'flag'
       post 'feature'
+      topic_regex = /[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/
       post 'delete_tag/:topic' => 'protips#delete_tag', as: :delete_tag, :topic => topic_regex
     end
     resources :comments, :constraints => {id: /\d+/} do
@@ -477,5 +476,8 @@ Coderwall::Application.routes.draw do
     require 'sidekiq/web'
     mount Sidekiq::Web => '/sidekiq'
   end
+  #TODO: namespace inside admin
+  get '/comments' => 'comments#index', as: :latest_comments
+
 
 end
