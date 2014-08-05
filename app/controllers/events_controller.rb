@@ -6,15 +6,7 @@ class EventsController < ApplicationController
   respond_to :html, :json, :js
 
   def index
-    ap @user.subscribed_channels
-    ap @user.subscribed_channels.to_json
-
-
     @subscribed_channels = @user.subscribed_channels.to_json
-
-    ap @user.activity_stats
-    ap @user.activity_stats.to_json
-
     @stats               = @user.activity_stats.to_json
   end
 
