@@ -35,7 +35,7 @@ Coderwall.ActivityListView = Ember.CollectionView.create(
 )
 
 Coderwall.MoreActivityView = Ember.View.create(
-  templateName: "ember/templates/events/more_activity"
+  #templateName: "ember/templates/events/more_activity"
   classNameBindings: ["visibility"]
   tagName: "li"
 
@@ -51,7 +51,6 @@ Coderwall.MoreActivityView = Ember.View.create(
 )
 
 Coderwall.ActivityFeedView = Ember.ContainerView.create(
-#  templateName: "ember/templates/events/activity_feed"
   classNames: ["feed"]
   tagName: "ul"
   childViews: ["unreadActivityView", "activityListView", "previousActivityView"]
@@ -61,7 +60,7 @@ Coderwall.ActivityFeedView = Ember.ContainerView.create(
 )
 
 Coderwall.ActivityStatsView = Ember.View.create(
-  templateName: "ember/templates/events/stats"
+  #templateName: "ember/templates/events/stats"
   tagName: "ul"
   profileViewsBinding: "Coderwall.statsController.profileViews"
   followersBinding: "Coderwall.statsController.followers"

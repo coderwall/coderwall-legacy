@@ -1,5 +1,5 @@
 
 %a.track{:href => 'javascript:;', :event => { :on => 'click', :action => 'showUnreadActivity' }, 'data-action' => 'request more activity' }
   +
-  =hb 'Coderwall.activityFeedController.unreadActivities.length'
+  = hb 'Coderwall.activityFeedController.unreadActivities.length'
   New activity items
