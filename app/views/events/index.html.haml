@@ -1,9 +1,9 @@
-=content_for :javascript do
-  =render :partial => 'shared/pubnub'
-  =javascript_include_tag 'protips'
-  =javascript_include_tag 'ember/dashboard'
+= content_for :javascript do
+  = render :partial => 'shared/pubnub'
+  = javascript_include_tag 'protips'
+  = javascript_include_tag 'ember/dashboard'
 
-  :javascript
+  :coffeescript
     $ ->
       Coderwall.activityFeedController.loadSubscriptions(#{@subscribed_channels})
       Coderwall.activityFeedController.set('username', '#{current_user.username}')
