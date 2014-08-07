@@ -1,5 +1,5 @@
 Coderwall.EventView = Ember.View.extend(
-  templateName: "ember/templates/events/activity_list"
+  templateName: "events/activity_list"
   activityBinding: "Coderwall.activityFeedController.activities"
 
 )

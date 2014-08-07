@@ -1,5 +1,5 @@
 Coderwall.CommentEventView = Ember.View.extend(
-  templateName: "ember/templates/events/comment"
+  templateName: "events/comment"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["commentEvent"]

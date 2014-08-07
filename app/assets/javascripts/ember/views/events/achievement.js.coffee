@@ -1,5 +1,5 @@
 Coderwall.AchievementEventView = Ember.View.extend(
-  templateName: "ember/templates/events/achievement"
+  templateName: "events/achievement"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["protipEvent"]

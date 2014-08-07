@@ -1,5 +1,5 @@
 Coderwall.ListTeamsView = Ember.View.extend(
-  templateName: "ember/templates/teams/index"
+  templateName: "teams/index"
   teamsBinding: "Coderwall.teamsController"
 
   refreshListing: ->

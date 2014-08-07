@@ -7,7 +7,7 @@ Coderwall.AllNetworksView = Ember.View.create(
 
   templateName: (->
     templateName = if @get('sortOrder')? then @get('sortOrder') else "a_z"
-    "ember/templates/networks/all_networks/" + templateName
+    "networks/all_networks/" + templateName
   ).property("sortOrder").cacheable()
 
   sortByAlpyhabet: ->
