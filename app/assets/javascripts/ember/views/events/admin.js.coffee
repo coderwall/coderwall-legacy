@@ -1,5 +1,5 @@
 Coderwall.AdminEventView = Ember.View.extend(
-  templateName: "ember/templates/events/admin"
+  templateName: "events/admin"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["protipEvent"]

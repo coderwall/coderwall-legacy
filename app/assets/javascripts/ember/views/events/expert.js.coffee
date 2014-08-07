@@ -1,5 +1,5 @@
 Coderwall.ExpertEventView = Ember.View.extend(
-  templateName: "ember/templates/events/expert"
+  templateName: "events/expert"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["expertEvent"]

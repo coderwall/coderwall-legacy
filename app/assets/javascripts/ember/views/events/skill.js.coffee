@@ -1,5 +1,5 @@
 Coderwall.SkillEventView = Ember.View.extend(
-  templateName: "ember/templates/events/skill"
+  templateName: "events/skill"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["protipEvent"]

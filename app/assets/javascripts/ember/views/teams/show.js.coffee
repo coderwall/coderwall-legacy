@@ -1,5 +1,5 @@
 Coderwall.ShowTeamView = Ember.View.extend(
-  templateName: "ember/templates/teams/show"
+  templateName: "teams/show"
   classNames: [ "team" ]
   tagName: "tr"
 

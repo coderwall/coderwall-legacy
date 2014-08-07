@@ -1,5 +1,5 @@
 Coderwall.ViewEventView = Ember.View.extend(
-  templateName: "ember/templates/events/view"
+  templateName: "events/view"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["protipEvent"]

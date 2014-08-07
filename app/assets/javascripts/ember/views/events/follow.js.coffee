@@ -1,5 +1,5 @@
 Coderwall.FollowEventView = Ember.View.extend(
-  templateName: "ember/templates/events/follow"
+  templateName: "events/follow"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["followEvent"]

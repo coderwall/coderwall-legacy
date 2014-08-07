@@ -1,5 +1,5 @@
 Coderwall.EndorsementEventView = Ember.View.extend(
-  templateName: "ember/templates/events/endorsement"
+  templateName: "events/endorsement"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["endorsementEvent"]

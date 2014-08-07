@@ -1,5 +1,5 @@
 Coderwall.ProtipEventView = Ember.View.extend(
-  templateName: "ember/templates/events/protip"
+  templateName: "events/protip"
   eventBinding: 'content'
   tagName: "li"
   classNameBindings: ["protipEvent"]
