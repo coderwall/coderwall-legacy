@@ -397,7 +397,6 @@ end
 #  referred_by                   :string(255)
 #  about                         :text
 #  joined_github_on              :date
-#  joined_twitter_on             :date
 #  avatar                        :string(255)
 #  banner                        :string(255)
 #  remind_to_invite_team_members :datetime

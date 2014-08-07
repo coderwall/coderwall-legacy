@@ -20,7 +20,6 @@ module UserOauth
           self.twitter_token     = oauth[:credentials][:token]
           self.twitter_secret    = oauth[:credentials][:secret]
           self.about             = extract_from_oauth_extras(:description, oauth) if self.about.blank?
-          self.joined_twitter_on = extract_joined_on(oauth) if self.joined_twitter_on.blank?
         when 'developer'
           logger.debug "Using the Developer Strategy for OmniAuth"
           logger.ap oauth, :debug
@@ -45,7 +44,6 @@ module UserOauth
       if user = find_with_oauth(auth)
         user.apply_oauth(auth)
         user.save! if user.changed?
-        return user
       else
         user = new(
             name: auth[:info][:name],
@@ -56,31 +54,21 @@ module UserOauth
         user.avatar.download! avatar_url_for(auth)    unless Rails.env.test?
         user.apply_oauth(auth)
         user.username = auth[:info][:nickname]
-        return user
       end
+      user
     end
 
     def find_with_oauth(oauth)
       case oauth[:provider]
         when 'github'
-          github_scope = (oauth[:uid] ? where(github_id: oauth[:uid]) : where(github: oauth[:info][:nickname]))
-          raise "Not a unique github credential #{oauth[:uid] || oauth[:info][:nickname]}" if github_scope.count > 1
-          return github_scope.first
+          (oauth[:uid] ? find_by_github_id(oauth[:uid]) : find_by_github(oauth[:info][:nickname]))
         when 'linkedin'
-          linkedin_scope = where(linkedin_id: oauth[:uid])
-          raise "Not a unique linkedin credential #{oauth[:uid]}" if linkedin_scope.count > 1
-          return linkedin_scope.first
+          find_by_linkedin_id(oauth[:uid])
         when 'twitter'
-          twitter_scope = where(twitter_id: oauth[:uid])
-          raise "Not a unique twitter credential #{oauth[:uid]}" if twitter_scope.count > 1
-          return twitter_scope.first
-        when 'developer'
-          fail 'Developer Strategy must not be used in production.' if Rails.env.production?
-          developer_scope = where(email: oauth[:uid])
-          raise "Looks like there's duplicate users for the email '#{oauth[:uid]}'. Check user ids: #{developer_scope.map(&:id).join(', ')}" if developer_scope.count > 1
-          return developer_scope.first
+          find_by_twitter_id(oauth[:uid])
         else
-          raise "Unexpected provider: #{oauth[:provider]}"
+          fail 'Developer Strategy must not be used in production.' if Rails.env.production?
+          find_by_email(oauth[:uid])
       end
     end
 

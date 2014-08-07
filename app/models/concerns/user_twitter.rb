@@ -14,7 +14,6 @@ module UserTwitter
       self.twitter = nil
       self.twitter_token = nil
       self.twitter_secret = nil
-      self.joined_twitter_on = nil
       save!
     end
   end
