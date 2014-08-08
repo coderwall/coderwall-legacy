@@ -247,7 +247,6 @@ RSpec.describe UsersController, :type => :controller do
       expect(assigns[:user].twitter_secret).to eq('8fRS1ZARd6Wm53wvvDwHNrBmZcW0H2aSwmQjuOTHl')
       expect(assigns[:user].twitter_id).to eq('6271932')
       expect(assigns[:user].location).to eq('San Francisco')
-      expect(assigns[:user].joined_twitter_on).to eq(Date.parse('Wed May 23 21:14:29 +0000 2007'))
       expect(assigns[:user].about).to eq('Dad. Amateur Foodie. Founder Extraordinaire of @coderwall')
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140801145543) do
+ActiveRecord::Schema.define(:version => 20140807214719) do
 
   add_extension "citext"
 
@@ -546,7 +546,6 @@ ActiveRecord::Schema.define(:version => 20140801145543) do
     t.string   "referred_by"
     t.text     "about"
     t.date     "joined_github_on"
-    t.date     "joined_twitter_on"
     t.string   "avatar"
     t.string   "banner"
     t.datetime "remind_to_invite_team_members"
