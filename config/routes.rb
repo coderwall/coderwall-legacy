@@ -248,15 +248,12 @@
 #                      signin GET      /signin(.:format)                                      sessions#signin
 #                     signout GET      /signout(.:format)                                     sessions#destroy
 #                    sign_out GET      /goodbye(.:format)                                     sessions#destroy
-#                   dashboard GET      /dashboard(.:format)                                   events#index
 #                 random_wall GET      /roll-the-dice(.:format)                               users#randomize
 #                       badge GET      /:username(.:format)                                   users#show
 #            user_achievement GET      /:username/achievements/:id(.:format)                  achievements#show
 #                             GET      /:username/endorsements.json(.:format)                 endorsements#show
 #                   followers GET      /:username/followers(.:format)                         follows#index {:type=>:followers}
 #                   following GET      /:username/following(.:format)                         follows#index {:type=>:following}
-#          user_activity_feed GET      /:username/events(.:format)                            events#index
-#                             GET      /:username/events/more(.:format)                       events#more
 #      callbacks_hawt_feature POST     /callbacks/hawt/feature(.:format)                      callbacks/hawt#feature
 #    callbacks_hawt_unfeature POST     /callbacks/hawt/unfeature(.:format)                    callbacks/hawt#unfeature
 #                  admin_root GET      /admin(.:format)                                       admin#index
@@ -448,7 +445,6 @@ Coderwall::Application.routes.draw do
   get '/signout' => 'sessions#destroy', as: :signout
   get '/goodbye' => 'sessions#destroy', as: :sign_out
 
-  get '/dashboard' => 'events#index', as: :dashboard
   get '/roll-the-dice' => 'users#randomize', as: :random_wall
 
 
@@ -458,8 +454,6 @@ Coderwall::Application.routes.draw do
     get '/:username/endorsements.json' => 'endorsements#show'
     get '/:username/followers' => 'follows#index', as: :followers, :type => :followers
     get '/:username/following' => 'follows#index', as: :following, :type => :following
-    get '/:username/events' => 'events#index', as: :user_activity_feed
-    get '/:username/events/more' => 'events#more'
   end
 
   namespace :callbacks do
