@@ -1,5 +1,5 @@
 @import "base";
-@import "compass/css3/";
+@import "compass/css3";
 @import "fonts";
 @import "normailze";
 @import "tipTip";
@@ -103,31 +103,23 @@ h4 {
 #nav {
   float: right;
   li {
-    float: left;
+    display: inline-block;
     line-height: 100px;
     margin-left: 30px;
     &:first-child {
       margin: 0px;
     }
   }
-  .new {
-    a:before {
-      content: "New";
-      padding: 3px 6px 2px 6px;
-      @include border-radius(4px);
-      background: $light-blue;
-      color: #fff;
-      margin-right: 10px;
-      font-size: 0.7em;
-      vertical-align: middle;
-      text-transform: uppercase;
-    }
+  i {
+    font-size: 1.4em;
+    color: $level2;
+    margin-right: 2px;
   }
   a {
     font-size: 1.4em;
     color: #fff;
     @include ts-top-black;
-    display: block;
+    display: inline;
     &:hover {
       color: $light-blue;
     }
@@ -136,6 +128,9 @@ h4 {
     color: $light-grey;
     &:hover {
       color: $light-grey;
+    }
+    i {
+      color: $level1;
     }
   }
 }

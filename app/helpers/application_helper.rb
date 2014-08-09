@@ -124,26 +124,6 @@ module ApplicationHelper
     end
   end
 
-  def team_nav_class
-    if params[:controller] == "teams" && params[:action] != 'index'
-      if signed_in? && current_user.team_document_id == params[:id] || params[:id].blank?
-        'active'
-      else
-        nil
-      end
-    else
-      nil
-    end
-  end
-
-  def teams_nav_class
-    if params[:controller] == "teams" && params[:action] == 'index'
-      'active'
-    else
-      nil
-    end
-  end
-
   def jobs_nav_class
     if params[:controller] == "opportunities" && params[:action] == 'index'
       'active'
