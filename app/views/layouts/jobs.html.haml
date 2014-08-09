@@ -12,8 +12,8 @@
     = render partial: 'shared/mixpanel'
     = csrf_meta_tag
     = yield :head
-  = render partial: 'layouts/navigation'
+  = render partial: 'navigation'
   %body#jobs
-  #main-content
-    =yield
+    #main-content
+      =yield
   =render partial: 'shared/footer'

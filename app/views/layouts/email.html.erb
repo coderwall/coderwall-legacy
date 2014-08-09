@@ -2,10 +2,10 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
-<head style="margin-top: <%= Rails.env.development? ? 120 : 20 %>;margin-bottom: 0;margin-right: 0;margin-left: 0;padding-top: 0;padding-bottom: 0;padding-right: 0;padding-left: 0;background-color: #48494e;margin: 0;padding: 0;-webkit-text-size-adjust:none;">
+<head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>A message from Coderwall</title>
-  <style>
+  <style type="text/css">
       @media only screen and (max-device-width: 480px) {
           div[class="header"] {
               font-size: 16px !important;
@@ -74,7 +74,7 @@
               <tr>
                 <td width="600" bgcolor="#48494e" class="logocell">
                   <center>
-                    <img id='messageLogo' src="<%= image_path('email/email-logo.jpg') %>" height='auto' style="height: auto;line-height: 100%;outline: none;text-decoration: none;display: block;width: 211px;margin: 0 auto;"/>
+                    <img id='messageLogo' src="<%= image_path('email/email-logo.jpg') %>" height='auto' style="height: auto;line-height: 100%;outline: none;text-decoration: none;display: block;width: 211px;margin: 0 auto;" alt=""/>
                   </center>
                 </td>
               </tr>
@@ -99,13 +99,13 @@
           </td>
         </tr>
       </table>
-      <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="15" class="divider"><br>
+      <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="15" class="divider" alt=""><br>
 
       <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#48494e">
         <tr>
           <td>
             <center>
-              <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="0"><br>
+              <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="0" alt=""><br>
 
               <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="table">
                 <tr>
@@ -115,26 +115,24 @@
                         <tr>
                           <td width="380" valign="top" class="footershow">
 
-                            <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="8"><br>
+                            <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="8" alt=""><br>
 
                             <p style="color:#fff;font-size:12px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';margin-top:0;margin-bottom:15px;padding-top:0;padding-bottom:0;line-height:18px;" class="reminder">You're
                               receiving this email because you signed up for Coderwall. We hate spam and make an effort
                               to keep notifications to a minimum.</p>
 
                             <p style="color:#c9c9c9;font-size:12px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';">
-                              <preferences style="color:#3ca7dd;text-decoration:none;">
-                                <strong><a href='https://coderwall.com/settings#email' style="color:#3ca7dd;text-decoration:none;">Edit
-                                  your subscription</a></strong></preferences>
+                              <strong style="color:#3ca7dd;text-decoration:none;"><a href='https://coderwall.com/settings#email' style="color:#3ca7dd;text-decoration:none;">Edit
+                                your subscription</a></strong>
                               &nbsp;&nbsp;|&nbsp;&nbsp;
-                              <unsubscribe style="color:#3ca7dd;text-decoration:none;">
-                                <strong><a href='%unsubscribe_url%' style="color:#3ca7dd;text-decoration:none;">Unsubscribe
-                                  instantly</a></strong></unsubscribe>
+                              <strong style="color:#3ca7dd;text-decoration:none;"><a href='%unsubscribe_url%' style="color:#3ca7dd;text-decoration:none;">Unsubscribe
+                                instantly</a></strong>
                             </p>
                           </td>
                         </tr>
                       </table>
                     </center>
-                    <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="25"><br>
+                    <img border="0" src="<%= image_path('email/spacer.gif') %>" width="1" height="25" alt=""><br>
 
             </center>
           </td>

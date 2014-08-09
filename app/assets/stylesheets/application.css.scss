@@ -111,9 +111,9 @@ h4 {
     }
   }
   i {
-    font-size: 1.4em;
-    color: $level2;
-    margin-right: 2px;
+    font-size: 1.6em;
+    color: $really-light-grey;
+    margin-right: 4px;
   }
   a {
     font-size: 1.4em;
@@ -128,9 +128,6 @@ h4 {
     color: $light-grey;
     &:hover {
       color: $light-grey;
-    }
-    i {
-      color: $level1;
     }
   }
 }
