@@ -57,7 +57,7 @@ class Event < Struct.new(:data)
           data.delete(:channel)
 
           if publish
-            publish_event(channel, data) if publish
+            publish_event(channel, data)
           else
             activities << data.merge({ timestamp: (data[:event_id] || Time.now.to_i) })
           end

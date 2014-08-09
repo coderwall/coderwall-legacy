@@ -1,7 +1,7 @@
 %header#masthead
   .inside-masthead.cf
     .mobile-panel.cf
-      %a.logo{href: '/'}
+      = link_to root_path, class: 'logo'
         %span coderwall
       %a.menu-btn
 
@@ -10,7 +10,6 @@
         %li= link_to('Discover', root_path)
         -if signed_in?
           %li= link_to('Admin', admin_root_path) if is_admin?
-          %li= link_to('Feed', dashboard_path)
           %li= link_to('Profile', badge_path(username: current_user.username), class: mywall_nav_class)
 
         %li= link_to('Teams', teams_path, class: teams_nav_class)
