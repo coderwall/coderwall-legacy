@@ -21,7 +21,7 @@
   %li=link_to 'Protips', by_tags_protips_path
 
 .inside-main-content.cf
-  = render partial: 'navigation', locals: {network: nil}
+  = render partial: 'network_navigation', locals: {network: nil}
   %ul.networks-filter.cf
     %li
       %a{href: networks_path, class: networks_sub_nav_class('') + networks_sub_nav_class('a_z')}
