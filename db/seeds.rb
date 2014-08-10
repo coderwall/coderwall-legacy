@@ -5,7 +5,16 @@ module S
     yield protip = user.protips.build
     protip.save!
   end
+
+  def self.create_network_for(name)
+    Network.find_or_create_by_name(name) do |n|
+      n.create_slug!
+    end
+  end
 end
+
+S.create_network_for('Ruby')
+S.create_network_for('JavaScript')
 
 Plan.find_or_create_by_id(1) do |s|
   s.amount    = 0
@@ -152,7 +161,7 @@ unless Rails.env.staging? || Rails.env.production?
   #Network.rebuild_index
   Opportunity.rebuild_index
   Protip.rebuild_index
-  
+
   #Team.rebuild_index #TODO: Disabled until switched from mongo
   Team.all.each { |team| team.tire.update_index }
 end
