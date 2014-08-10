@@ -7,7 +7,7 @@ html.no-js lang=(I18n.locale)
     = yield :head
 
   body  id='admin'
-    = render 'navigation'
+    = render 'nav_bar'
     #main-content
       - if main_content_wrapper(yield(:content_wrapper))
         - if flash[:notice] || flash[:error]

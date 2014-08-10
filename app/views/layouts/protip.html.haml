@@ -3,14 +3,13 @@
   %head
     = metamagic
     %link{rel: "shortcut icon", href: image_url('favicon.png'), type: 'image/x-icon'}
-    %link{ rel: 'author', href: '/humans.txt' }
     = stylesheet_link_tag 'application'
     = render partial: 'shared/analytics'
     = render partial: 'shared/mixpanel'
     = yield :head
     = csrf_meta_tag
   %body.protip-single
-    = render partial: 'navigation'
+    = render 'nav_bar'
 
     %canvas.blur{src: image_path(users_background_image)}
     =yield

@@ -1,0 +1,26 @@
+header#masthead
+  .inside-masthead.cf
+    .mobile-panel.cf
+      = link_to root_path, class: 'logo'
+        span coderwall
+      a.menu-btn
+
+    nav#nav
+      ul
+        li = link_to(t('protips'), root_path)
+        li = link_to(t('awesome_jobs'), jobs_path, class: jobs_nav_class)
+        -if signed_in?
+          li
+            .account-dropdown
+              a href="#" data-dropdown="#dropdown-profile"
+                = image_tag current_user.avatar.url, class: 'avatar'
+                span.username = current_user.username
+              #dropdown-profile.dropdown.dropdown-tip
+                .dropdown-panel
+                  div = link_to(t('profile'), badge_path(username: current_user.username), class: mywall_nav_class)
+                  div = link_to(t('settings'), settings_path, class: settings_nav_class)
+                  div = link_to(t('sign_out'), sign_out_path)
+        -else
+          li = link_to(t('sign_in'), signin_path, class: signin_nav_class)
+          li = link_to(t('register'), signin_path, class: signup_nav_class)
+

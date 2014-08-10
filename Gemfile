@@ -14,6 +14,7 @@ gem 'uglifier', '>= 1.0.3'
 gem 'autoprefixer-rails'
 gem 'jquery-rails', '= 2.0.3'
 gem 'rails-assets-font-awesome'
+gem 'rails-assets-jquery-dropdown'
 
 # Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
 gem 'backbone-on-rails'
