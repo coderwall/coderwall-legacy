@@ -257,25 +257,16 @@ class ProtipsController < ApplicationController
   end
 
   def report_inappropriate
-
-    report_inappropriate_params = params.permit(:id)
-
-
-    protip_public_id = params.permit(:id)
-
-    logger.info "Report Inappropriate: protip_public_id => '#{protip_public_id}', reporting_user => '#{viewing_user.inspect}', ip_address => '#{request.remote_ip}'"
-
+    protip_public_id = params[:id]
     if cookies["report_inappropriate-#{protip_public_id}"].nil?
-      opts = { reporting_user: viewing_user, ip_address: request.remote_ip, protip_public_id: protip_public_id }
-      report_inappropriate_mailer = ::AbuseMailer.report_inappropriate(opts)
-      report_inappropriate_mailer.deliver
+      opts = { user_id: current_user,
+               ip: request.remote_ip}
+      ::AbuseMailer.report_inappropriate(protip_public_id,opts).deliver
 
       cookies["report_inappropriate-#{protip_public_id}"] = true
     end
 
-    respond_to do |format|
-      format.json { head :ok }
-    end
+    render  nothing: true
   end
 
   def flag

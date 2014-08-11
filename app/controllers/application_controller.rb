@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
     @current_user
   end
 
+  #TODO remove this
   def viewing_user
     @viewing_user ||= current_user || begin
       if cookies[:identity]
