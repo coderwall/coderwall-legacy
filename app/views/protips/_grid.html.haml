@@ -1,30 +1,31 @@
--reset_protip_result_index
--show_job = defined?(opportunity) && !opportunity.nil?
+- reset_protip_result_index
+- show_job = defined?(opportunity) && opportunity.present?
 - width = (defined?(width) && width) || 4
-- show_ad_every = width*2+width-2
-- items = show_job ? protips.each_slice(show_ad_every).map{|row| row.count == show_ad_every ? row.concat(['show-ad', nil]) : row }.flatten : protips
+- show_ad_every = width * 2 + width - 2
+- items = show_job ? protips.each_slice(show_ad_every).map{ |row| row.count == show_ad_every ? row.concat(['show-ad', nil]) : row }.flatten : protips
 
-- if collection.failure?
+- logger.ap(collection, :debug)
+- if collection.respond_to?(:failure?) && collection.failure?
   .error
-    ="#{collection.error} Meanwhile you can "
-    =link_to 'create a pro tip', new_protip_path
+    = "#{collection.error} Meanwhile you can "
+    = link_to 'create a pro tip', new_protip_path
     = "about #{@topic}" unless @topic.nil?
 
--items.in_groups_of(width, nil).each_with_index do |group, row|
-  -if (row > 0) && blur_protips?
+- items.in_groups_of(width, nil).each_with_index do |group, row|
+  - if (row > 0) && blur_protips?
     .blurred-tips
-      =render :partial => "sessions/join_buttons", :locals => {:message => "Join to start earning badges for your open source contributions, discover protips and connect with other developers"}
-    -break
+      = render(partial: 'sessions/join_buttons', locals: { message: 'Join to start earning badges for your open source contributions, discover protips and connect with other developers' })
+    - break
   %ul.protips-grid.cf
-    -group.each do |protip|
-      -if protip == 'show-ad'
-        =render :partial => 'opportunities/mini', :locals => {:opportunity => opportunity}
-      -elsif !protip.nil?
+    - group.each do |protip|
+      - if protip == 'show-ad'
+        = render(partial: 'opportunities/mini', locals: { opportunity: opportunity })
+      -elsif protip.present?
         - if protip = protip.load rescue nil # HACK: User deleted, protip no longer exists. Won't be found.
-          %li{:class => (protip.kind == 'link' ? 'ext-link' : '') }
-            = render :partial => 'protips/mini', :locals => {:protip => protip, :mode => mode}
+          %li{ class: (protip.kind == 'link' ? 'ext-link' : '') }
+            = render(partial: 'protips/mini', locals: { protip: protip, mode: mode })
 
 - unless collection.nil? || !collection.respond_to?(:next_page) || collection.next_page.nil? || hide_more
-  - next_url = url_for(params.merge(:tags=> params[:tags], :q => params[:q], :source => params[:action], :controller =>params[:controller], :page => collection.current_page + 1, :section => (defined?(section) ? section : nil), :width => width, :mode => mode ))
-  %div{:class => ("#{number_to_word(width)}-cols-more" unless width.nil?)}
-    #more=link_to 'More', next_url, :class => 'final-more track' , :rel => 'next', :remote => true, :method => (params[:action] == "search" ? :post : :get), 'data-action' => 'more protips', 'data-from' => params[:action]
+  - next_url = url_for(params.merge(tags: params[:tags], q: params[:q], source: params[:action], controller:params[:controller], page: collection.current_page + 1, section: (defined?(section) ? section : nil), width: width, mode: mode ))
+  %div{ class: ("#{number_to_word(width)}-cols-more" unless width.nil?) }
+    #more= link_to('More', next_url, class: 'final-more track', rel: 'next', remote: true, method: (params[:action] == 'search' ? :post : :get), 'data-action' => 'more protips', 'data-from' => params[:action])
