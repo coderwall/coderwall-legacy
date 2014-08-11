@@ -1,4 +1,3 @@
-# UserActivateWorker
 class UserActivateWorker
   include Sidekiq::Worker
   sidekiq_options queue: :high
