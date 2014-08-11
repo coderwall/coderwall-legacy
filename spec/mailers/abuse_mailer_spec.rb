@@ -1,9 +1,9 @@
 RSpec.describe AbuseMailer, :type => :mailer do
   describe 'report_inappropriate' do
 
-    let(:mail) { AbuseMailer.report_inappropriate({ protip_public_id: protip.to_param }) }
+    let(:mail) { AbuseMailer.report_inappropriate(protip.to_param) }
 
-    let(:current_user) { Fabricate(:user, admin: true) }
+    let!(:current_user) { Fabricate(:user, admin: true) }
 
     let(:protip) {
       Protip.create!(
