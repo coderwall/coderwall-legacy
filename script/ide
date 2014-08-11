@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Define session name
 
@@ -6,7 +6,7 @@ SESSION=coderwall
 
 # Go to working directory
 
-cd ~/assemblymade/coderwall
+#cd ~/assemblymade/coderwall
 
 vagrant up --no-provision
 
@@ -27,7 +27,8 @@ tmux -2 new-session -d -s $SESSION
 # Create windows
 tmux new-window -t $SESSION:1 -n "code"
 tmux new-window -t $SESSION:2 -n "web"
-tmux new-window -t $SESSION:3 -n "background jobs"
+tmux new-window -t $SESSION:3 -n "sidekiq"
+tmux new-window -t $SESSION:4 -n "clock"
 
 # Define window roles
 
@@ -50,11 +51,16 @@ tmux select-pane -t 0
 #tmux send-keys "clear ; env bin/rails server webrick -p3000" C-m
 tmux send-keys "clear ; bundle exec puma -C ./config/puma.rb" C-m
 
-# Background Jobs
+# Sidekiq
 tmux select-window -t $SESSION:3
-
 tmux select-pane -t 0
 tmux send-keys "clear ; bundle exec sidekiq -C ./config/sidekiq.yml" C-m
+
+# Clock
+tmux select-window -t $SESSION:4
+tmux select-pane -t 0
+tmux send-keys "clear ; bundle exec clockwork app/clock.rb" C-m
+
 
 # Set the initial working window
 tmux select-window -t $SESSION:1
