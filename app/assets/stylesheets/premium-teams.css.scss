@@ -54,9 +54,84 @@ body#signed-out {
     background: #fff;
     @include border-radius(6px);
     //overflow: hidden;
-    width: 740px;
+    width: 840px;
     margin: 0 auto 15px auto;
     position: relative;
+
+    .job-details {
+      float: left;
+      width:520px;
+      padding: 30px 0 0 30px;
+    }
+
+    .job-sidebar {
+      float: right;
+      width: 220px;
+      padding: 30px 30px 0 0;
+
+      .section {
+        margin-bottom: 4em;
+        overflow: auto;
+      }
+
+      h4 {
+        margin-bottom: .5em;
+        font-size: 1.6em;
+        text-transform: uppercase;
+      }
+
+      .apply {
+        &:after { content: "Apply";}
+        &.hide-application {
+          background: #9b9b9b;
+          &:after { content: "Hide Application"; }
+        }
+      }
+
+      .apply, .learn-more {
+        margin: 0 auto 15px auto;
+        background: $light-blue;
+        display: block;
+        padding: 8px;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 1.6em;
+        line-height: 1.5em;
+        letter-spacing: 0.15em;
+        text-align: center;
+        @include border-radius(4px);
+
+        &:hover { background: $green; }
+      }
+
+      .skills {
+        overflow: auto;
+      }
+      .skills li {
+        float: left;
+        background: #e2e2e2;
+        @include border-radius(4px);
+        font-size: 1.2em;
+        margin: 0 5px 5px 0;
+        padding: 6px 12px;
+      }
+
+      .job-locations {
+        clear: both;
+
+        .locations li {
+          color: $mid-blue-grey;
+          float: left;
+          text-transform: uppercase;
+          font: 1.4em "MuseoSans-700";
+          margin-right: 10px;
+          margin-bottom: 15px;
+          background: image-url("team/pin.png") no-repeat left;
+          line-height: 19px;
+          padding-left: 20px;
+        }
+      }
+    }
 
     .job-panel-header {
       @include paper-panel;
@@ -65,27 +140,35 @@ body#signed-out {
 
       .job-title {
         font-size: 2.4em;
-        float: left;
         @include ellipsis;
-        width: 489px;
+        width: 650px;
+        color: $light-blue;
       }
-      //job-title
 
+      .job-type {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        font-size: 1.3em;
+        text-transform: uppercase;
+      }
     }
     //job-panel-header
 
     .apply-section {
       background: #eaeaea;
-      padding: 20px 30px;
+      padding: 15px;
       margin-bottom: 10px;
       .status {
         margin-bottom: 10px;
+        font-size: 12px;
+        text-align: center;
       }
       //status
 
       .btn {
         padding: 8px 20px;
-        display: inline-block;
+        display: block;
         background: $light-blue;
         @include border-radius(4px);
         color: #fff;
@@ -97,8 +180,10 @@ body#signed-out {
 
         &.upload {
           margin-right: 15px;
-          background: #9b9b9b;
-          width: 280px;
+          background: transparent;
+          padding: 4px;
+          color: #333;
+          letter-spacing: 0;
         }
 
         &:hover {
@@ -110,12 +195,12 @@ body#signed-out {
       .send-application {
         margin-top: 10px;
         &:after {
-          content: "Send application"
+          content: "Send"
         }
 
         &.applied {
           &:after {
-            content: "Already applied"
+            content: "Already sent"
           }
         }
       }
@@ -123,76 +208,39 @@ body#signed-out {
     //apply-section
 
     .content {
-      padding: 20px 30px 5px 30px;
-
-      .contract {
-        color: $light-blue;
-        font-size: 1.2em;
-        margin-bottom: 15px;
-      }
-
-      .job-text {
-        margin-bottom: 15px;
-      }
-
-      .skills {
-        margin-bottom: 15px;
-        li {
-          float: left;
-          background: #e2e2e2;
-          @include border-radius(4px);
-          font-size: 1.2em;
-          margin-right: 10px;
-          margin-bottom: 5px;
-          padding: 6px 12px;
-        }
-      }
-      //skills
-
-      .locations {
-        li {
-          color: $mid-blue-grey;
-          float: left;
-          text-transform: uppercase;
-          font-family: "MuseoSans-700";
-          margin-right: 10px;
-          margin-bottom: 15px;
-          background: image-url("team/pin.png") no-repeat left;
-          line-height: 19px;
-          padding-left: 20px;
-        }
-      }
-      //locations
-
-      .opportunities {
-        //width: 330px;
-        //float: left;
+      
+      .job-opportunities {
         padding-bottom: 10px;
+        margin-bottom: 50px;
 
         h3 {
           display: block;
-          background: image-url("team/case.png") no-repeat left;
+          background: image-url("team/case.png") no-repeat 0 10%;
           line-height: 21px;
           height: 17px;
           padding-left: 25px;
           font-family: "MuseoSans-700";
-          font-size: 1.1em;
+          font-size: 1.4em;
           text-transform: uppercase;
           color: #5d5d5d;
           margin-bottom: 10px;
+          border-bottom: 1px solid #eee;
+          padding-bottom: .5em;
         }
 
         li {
           float: left;
-          font-size: 1.2em;
+          font-size: 1.4em;
           margin: 0 15px 5px 0;
-          padding-left: 15px;
-          background: image-url("team/bullet.jpg") no-repeat left;
+          padding-left: 26px;
+          background: image-url("team/bullet.jpg") no-repeat 10px 40%;
 
           a {
             color: #5d5d5d;
+            text-decoration: underline;
             &:hover {
               color: $light-blue;
+              text-decoration: none;
             }
           }
         }
@@ -203,6 +251,7 @@ body#signed-out {
     .job-panel-footer {
       border-top: solid 1px #eaeaea;
       padding: 20px 30px;
+      clear: both;
 
       .other-jobs {
         text-align: center;
@@ -211,37 +260,6 @@ body#signed-out {
         display: block;
         color: $light-blue;
         text-decoration: underline;
-      }
-
-      .apply {
-        &:after {
-          content: "Apply";
-        }
-
-        &.hide-application {
-          background: #9b9b9b;
-          &:after {
-            content: "Hide Application";
-          }
-        }
-      }
-      .apply, .learn-more {
-        //float: right;
-        margin: 0 auto 15px auto;
-        background: $light-blue;
-        display: block;
-        width: 320px;
-        padding: 12px;
-        color: #fff;
-        text-transform: uppercase;
-        font-size: 1.8em;
-        letter-spacing: 0.3em;
-        text-align: center;
-        @include border-radius(4px);
-
-        &:hover {
-          background: $green;
-        }
       }
 
       .btn {
@@ -303,7 +321,66 @@ body#signed-out {
 
 }
 
-//job-top
+// job-description markdown styles
+.job-description {
+  margin-bottom: 30px;
+
+  > p:first-child {
+   margin-top: 0; 
+  }
+
+  a {
+    text-decoration: underline;
+    color: $light-blue;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  
+  h2, h3,h4,h5,h6,p,ol,ul {margin-bottom: .75em; margin-top: 25px;}
+  h2 {margin-bottom: 1em; font-size: 2.2em;}
+  h5 {font-size: 1.6em;}
+  p {line-height: 1.4em; margin-top: 1.25em;}
+
+  ol, ul {
+    padding: 0 1em;
+    margin: 0 1em 1em 1em;
+    font-size: 14px;
+
+    p { font-size: inherit; }
+  }
+  ol { list-style: decimal;}
+  ul { list-style: disc;}
+  li { margin-bottom: .4em;}
+
+  p > code {
+    @include border-radius(3px);
+    background: #eee; border: 1px solid #ddd;
+    padding: .1em .5em;
+  }
+  
+  pre {
+    font-size: 14px;
+    background: #eee; border: 1px solid #ddd;
+    @include border-radius(3px);
+    padding: 12px;
+    margin-bottom: 2em;
+  }
+
+  blockquote {
+    background: #f9f9f9;
+    border-left: 6px solid #ccc;
+    margin: 2em 0;
+    padding: 1.5em;
+    quotes: "\201C""\201D""\2018""\2019";
+
+    p {
+      display: inline;
+      font-style: italic;
+    }
+  }
+}
+// End job-description markdown styles
 
 .requested-members {
   margin-bottom: 30px;

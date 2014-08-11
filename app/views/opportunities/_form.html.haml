@@ -1,31 +1,37 @@
 
 
 =form_for [@team, @job] do |j|
-  =render "shared/error_messages", :target => @job
+  =render "shared/error_messages", target: @job
   =j.hidden_field :team_document_id
+  
+  .horizontal
+    %fieldset.job-title
+      =j.label :name, 'Title of Position'
+      =j.text_field :name
+  
+    %fieldset.job-type
+      =j.label :opportunity_type, 'Type of position'
+      =j.select :opportunity_type, Opportunity::OPPORTUNITY_TYPES, selected: "full-time"
+  
   %fieldset
-    =j.label :name, 'Position Title'
-    =j.text_field :name
-  %fieldset
-    =j.label :opportunity_type, 'Type of position'
-    =j.select :opportunity_type, Opportunity::OPPORTUNITY_TYPES, :selected => "full-time"
-  %fieldset
-    =j.label :description, '1 sentence describing what the candidate will do (Role)'
+    =j.label :description, 'Description about this role (Markdown formatting supported)'
     =j.text_area :description
+  
   %fieldset
     =j.label :tags, 'Primary skills the person will use. (comma separated)'
-    =j.text_field :tags, :value => params[:tags] || @job.tags.join(",")
+    =j.text_field :tags, value: params[:tags] || @job.tags.join(",")
+  
   %fieldset
     -if @team.team_locations.any?
       =j.label :location do
         == Select one or more locations where the candidate must be located or #{link_to('add/manage team locations', edit_team_locations_path(@team))}
-      =j.select(:location, @team.cities+["anywhere"], {:selected => (@job.location.blank? ? [] : @job.location.split("|"))}, {:multiple => true})
+      =j.select(:location, @team.cities+["anywhere"], {selected: (@job.location.blank? ? [] : @job.location.split("|"))}, {multiple: true})
     -else
       =j.label :location, 'Specify the city/location where the candidate must be located'
       =j.text_field :location
 
   %fieldset
-    =j.label :link, 'Link to full job posting on your career site'
+    =j.label :link, 'Link to full job posting on your career site (ex: http://example.com/career)'
     =j.text_field :link
   %fieldset
     =j.label :max_salary, "Maximum compensation/salary (remains private)"

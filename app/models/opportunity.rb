@@ -12,14 +12,16 @@ class Opportunity < ActiveRecord::Base
 
   has_many :seized_opportunities
 
-  validates :tags, with: :tags_within_length
+  # Order here dictates the order of validation error messages displayed in views.
   validates :name, presence: true, allow_blank: false
-  validates :location, presence: true, allow_blank: false
-  validates :description, presence: true, length: { minimum: 10, maximum: 600 }
-  validates :team_document_id, presence: true
   validates :opportunity_type, inclusion: { in: OPPORTUNITY_TYPES }
-  validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
+  validates :description, length: { minimum: 100, maximum: 2000 }
+  validates :tags, with: :tags_within_length
+  validates :location, presence: true, allow_blank: false
   validates :location_city, presence: true, allow_blank: false, unless: lambda { location && anywhere?(location) }
+  validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
+  validates :team_document_id, presence: true
+  
 
   before_validation :set_location_city
   before_save :update_cached_tags
@@ -37,7 +39,17 @@ class Opportunity < ActiveRecord::Base
 
   attr_accessor :title
 
+  
+  HUMANIZED_ATTRIBUTES = {
+    name: "Title"
+  }
+
   class << self
+
+    def human_attribute_name(attr,options={})
+      HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+    end
+
     def parse_salary(salary_string)
       salary_string.match(/(\d+)\s*([kK]?)/)
       number, thousands = Regexp.last_match[1], Regexp.last_match[2]
@@ -199,6 +211,10 @@ class Opportunity < ActiveRecord::Base
 
   def alive?
     expires_at.nil? && deleted_at.nil?
+  end
+
+  def to_html
+    CFM::Markdown.render self.description
   end
 
   def to_indexed_json
