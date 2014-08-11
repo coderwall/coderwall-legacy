@@ -2,7 +2,6 @@ class ActivatePendingUsersWorker
   include Sidekiq::Worker
   sidekiq_options queue: :critical
 
-
   def perform
     # Spawning possibly many thousands
     # of workers the order doesn't really matter

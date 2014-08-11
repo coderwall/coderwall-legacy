@@ -18,7 +18,7 @@ RSpec.describe UserActivateWorker do
       it 'should activate user' do
         worker.perform(user.id)
         user.reload
-        
+
         expect(user.active?).to eq(true)
         expect(user.activated_on).not_to eq(nil)
       end
@@ -30,7 +30,7 @@ RSpec.describe UserActivateWorker do
       it 'should do nothing' do
         worker.perform(user.id)
         user.reload
-        
+
         expect(user.updated_at).to eq(user.created_at)
       end
     end
