@@ -1,10 +1,7 @@
-@import "base";
-@import "compass/css3";
-@import "fonts";
-@import "normailze";
-@import "tipTip";
-@import "new-new-home";
-@import "error";
+@import "base", "compass/css3", "fonts",
+"normailze", "tipTip", "new-new-home", "error";
+
+@import 'jquery-dropdown';
 
 .user-mosaic, .team-mosiac {
   float: left;
@@ -418,10 +415,7 @@ h4 {
   }
 }
 
-@import "profile";
-@import "connections";
-@import "protip";
-@import "networks";
+@import "profile", "connections", "protip", "networks";
 body#sign-in {
   #main-content {
     background: image-url("black-texture.jpg") repeat;
@@ -1357,9 +1351,7 @@ body#member-settings, body#team-settings, body#join-team, body#registration {
   }
 }
 
-@import "networks";
-@import "team";
-@import "home";
+@import "networks", "team", "home";
 #simplemodal-overlay {
   background-color: #000;
   cursor: wait;
@@ -1512,8 +1504,7 @@ input[type=file].safari5-upload-hack {
   left: 0;
 }
 
-@import "leader-board";
-@import "dashboard";
+@import "leader-board", "dashboard";
 .queue {
   ol {
     padding-top: 20px;
@@ -1526,10 +1517,7 @@ input[type=file].safari5-upload-hack {
   }
 }
 
-@import "featured-teams";
-@import "jobs";
-@import "protip-phone";
-@import "product_description";
+@import "featured-teams", "jobs", "protip-phone", "product_description";
 #new-home-template {
   background: #d5d5d5 image-url("premium-team-description/dot-bg.jpg") repeat;
               * {
@@ -2038,3 +2026,20 @@ input[type=file].safari5-upload-hack {
   }
 }
 
+
+.account-dropdown {
+  .avatar {
+    height: 32px;
+    width: 32px;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 $blue-grey;
+    margin: -2px 5px 0 0;
+    position: relative;
+    top: 10px;
+  }
+  .dropdown-panel {
+    background-color: $blue-grey;
+    line-height: 2em;
+    min-width: 70px
+  }
+}

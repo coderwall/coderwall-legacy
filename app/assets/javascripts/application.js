@@ -8,6 +8,8 @@
 //= require underscore
 //= require backbone
 
+//= require jquery-dropdown
+
 $(function () {
   $('a.remove-parent').live('click', function (e) {
     $(this).parents('.' + $(this).attr('data-parent')).slideUp();

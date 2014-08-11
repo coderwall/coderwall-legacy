@@ -18,7 +18,7 @@
     = yield :head
 
   %body{ id: yield(:body_id) }
-    = render partial: 'navigation'
+    = render partial: 'nav_bar'
     #main-content
       - if main_content_wrapper(yield(:content_wrapper))
         - if flash[:notice] || flash[:error]
