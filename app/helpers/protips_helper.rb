@@ -1,5 +1,10 @@
 require 'cfm'
+
 module ProtipsHelper
+
+  def protip_search_results_to_render(protips)
+    (protips.results if protips.respond_to?(:results)) || protips.try(:all)
+  end
 
   def protip_summary
     "A protip by #{@protip.user.username} about #{@protip.topics.to_sentence}."
@@ -296,12 +301,12 @@ module ProtipsHelper
 
   def formatted_best_stat_value(protip)
     value =
-        case best_stat_name(protip).to_sym
-          when :views
-            views_stat_value(protip)
-          else
-            best_stat_value(protip)
-        end
+      case best_stat_name(protip).to_sym
+      when :views
+        views_stat_value(protip)
+      else
+        best_stat_value(protip)
+      end
     number_to_human(value, units: {unit: "", thousand: "k"})
   end
 

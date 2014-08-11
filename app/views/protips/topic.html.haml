@@ -1,33 +1,25 @@
--#-content_for :javascript do
--#  -if @topic_user
--#    %script="logUsage('viewed', 'users protips');"
--#  -else
--#    %script="logUsage('viewed', 'topics protips');"
-
-= render :partial => "head", :locals => {:topic => @topic}
+= render(partial: 'head', locals: { topic: @topic })
 
 .secondary-notice
   %p
-    -if @topic_user
-      -if @topic_user && signed_in? && @topic_user == current_user
+    - if @topic_user
+      - if @topic_user && signed_in? && @topic_user == current_user
         These are your links, code snippets, posts and other pro tips you have created or upvoted. Have a quick pro tip to
-        =link_to('share?', new_protip_path, 'data-action' => 'create protip', 'data-from' => 'own protips page')
+        = link_to('share?', new_protip_path, 'data-action' => 'create protip', 'data-from' => 'own protips page')
         or
-        =link_to('learn more', faq_path, :class => 'track', 'data-action' => 'view faq', 'data-from' => 'own protips page')
+        = link_to('learn more', faq_path, class: 'track', 'data-action' => 'view faq', 'data-from' => 'own protips page')
         - if @topic_user.protips.reject(&:created_automagically?).count == 0
           %br Pro tips you currently see here are created automagically from repos you follow/consider useful or slideshares you've created
-      -else
-        ==These are the links, code snippets, posts, and other pro tips #{@topic_user.display_name} has created. Have your own to
-        =link_to('share?', new_protip_path, 'data-action' => 'create protip', 'data-from' => 'user protips page')
+      - else
+        == These are the links, code snippets, posts, and other pro tips #{@topic_user.display_name} has created. Have your own to
+        = link_to('share?', new_protip_path, 'data-action' => 'create protip', 'data-from' => 'user protips page')
         or
-        =link_to('learn more', faq_path, :class => 'track', 'data-action' => 'view faq', 'data-from' => 'user protips page')
-    -elsif signed_in?
-      %p
-        =link_to('Share', new_protip_path(:topics => @topic), 'data-action' => 'create protip', 'data-from' => 'user protips page') + " a link, code snippet, post or other pro tip about #{@topic}"
-    -else
-      =link_to('Sign in', root_path)
-      ==to start sharing your #{@topic} pro tips or
-      =link_to('learn more', faq_path, :class => 'track', 'data-action' => 'view faq', 'data-from' => 'user protips page')
+        = link_to('learn more', faq_path, class: 'track', 'data-action' => 'view faq', 'data-from' => 'user protips page')
+    - elsif signed_in?
+      %p= link_to('Share', new_protip_path(topics: @topic), 'data-action' => 'create protip', 'data-from' => 'user protips page') + " a link, code snippet, post or other pro tip about #{@topic}"
+    - else
+      = link_to('Sign in', root_path)
+      == to start sharing your #{@topic} pro tips or
+      = link_to('learn more', faq_path, class: 'track', 'data-action' => 'view faq', 'data-from' => 'user protips page')
 
-#browse-results
-  = render :partial => "grid", :locals => {:protips => (@protips.results if @protips.respond_to?(:results)) || @protips.try(:all), :collection => @protips, :url => :tagged_protips_path, :hide_more => false, :mode => 'popup'}
+#browse-results= render(partial: 'grid', locals: { protips: protip_search_results_to_render(@protips), collection: @protips, url: :tagged_protips_path, hide_more: false, mode: 'popup' })
