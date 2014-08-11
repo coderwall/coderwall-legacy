@@ -139,7 +139,7 @@ class User < ActiveRecord::Base
   def activate
     UserActivateWorker.perform_async(id)
   end
-  
+
   def activate!
     # TODO: Switch to update, failing validations?
     update_attributes!(state: ACTIVE, activated_on: DateTime.now)
@@ -166,8 +166,6 @@ class User < ActiveRecord::Base
     badges.where("badges.created_at > ?", last_request_at).order('badges.created_at ASC').last
   end
 
-
-
   def company_name
     team.try(:name) || company
   end
@@ -176,7 +174,6 @@ class User < ActiveRecord::Base
   def profile_url
     avatar_url
   end
-
 
   def can_be_refreshed?
     (achievements_checked_at.nil? || achievements_checked_at < 1.hour.ago)
