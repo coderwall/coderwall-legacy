@@ -1,5 +1,6 @@
 require 'vcr'
 require 'rails_helper.rb'
+require 'sidekiq/testing'
 
 def record_mode
   case ENV['VCR_RECORD_MODE']

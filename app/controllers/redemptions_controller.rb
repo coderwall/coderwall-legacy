@@ -3,11 +3,7 @@ class RedemptionsController < ApplicationController
     if @redemption = Redemption.for_code(params[:code])
       if signed_in?
         @redemption.award!(current_user)
-        if current_user.pending?
-          current_user.activate
-          NotifierMailer.welcome_email(current_user.username).deliver
-          RefreshUserJob.perform_async(current_user.username)
-        end
+        current_user.activate if current_user.pending?
         redirect_to(destination_url)
       else
         store_location!

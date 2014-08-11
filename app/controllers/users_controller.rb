@@ -146,12 +146,15 @@ class UsersController < ApplicationController
   end
 
   def refresh
-
     refresh_params = params.permit(:username)
-
-    RefreshUserJob.perform_async(refresh_params[:username], true)
-    flash[:notice] = "Queued #{refresh_params[:username]} for a refresh"
-    redirect_to :back
+    user = User.find_by_username(refresh_params[:username])
+    
+    if user.nil?
+      redirect_to :back, :flash => { :notice => "User #{refresh_params[:username]} not found" }
+    else
+      UserRefreshWorker.perform_async(user.id, true)
+      redirect_to :back, :flash => { :notice => "Queued #{user.username} for a refresh" }
+    end
   end
 
   def randomize
