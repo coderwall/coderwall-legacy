@@ -21,7 +21,7 @@
               %h3=current_user.team.name
               .members
                 -current_user.team.top_three_team_members.each do |member|
-                  =link_to(image_tag(member.thumbnail_url, :class => 'avatar', :alt => member.username), profile_path(member.username))
+                  =link_to(image_tag(member.avatar.url, :class => 'avatar', :alt => member.username), profile_path(member.username))
                 -if current_user.team.size > 3
                   .size="+ #{current_user.team.size - 3}"
               =link_to('Stay with this team', team_path(current_user.team, :flash => "Great, you're still on team #{current_user.team.name}"), :class => 'button stay')
