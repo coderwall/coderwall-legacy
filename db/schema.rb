@@ -394,20 +394,20 @@ ActiveRecord::Schema.define(:version => 20140807214719) do
     t.text     "organization_way"
     t.text     "organization_way_name"
     t.text     "organization_way_photo"
-    t.string   "office_photos",            :default => "{}"
-    t.string   "upcoming_events",          :default => "{}"
+    t.string   "office_photos",            :default => [],                    :array => true
+    t.string   "upcoming_events",          :default => [],                    :array => true
     t.string   "featured_links_title"
     t.text     "blog_feed"
     t.text     "our_challenge"
     t.text     "your_impact"
-    t.string   "interview_steps",          :default => "{}"
+    t.string   "interview_steps",          :default => [],                    :array => true
     t.text     "hiring_tagline"
     t.text     "link_to_careers_page"
     t.string   "avatar"
     t.integer  "achievement_count",        :default => 0
     t.integer  "endorsement_count",        :default => 0
-    t.string   "invited_emails",           :default => "{}"
-    t.string   "pending_join_requests",    :default => "{}"
+    t.string   "invited_emails",           :default => [],                    :array => true
+    t.string   "pending_join_requests",    :default => [],                    :array => true
     t.datetime "upgraded_at"
     t.integer  "paid_job_posts",           :default => 0
     t.boolean  "monthly_subscription",     :default => false

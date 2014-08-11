@@ -66,7 +66,7 @@
             =link_to 'Deny', deny_join_team_path(@team, potential_team_member.id), :method => :post, :remote => true, :class => "action deny"
 
 -if @team.has_open_positions? || can_edit?
-  =render :partial => 'jobs'
+  =render partial: "/teams/jobs", locals: {job: @job}
 
 .page
   #record-exit-path{'data-record-path' => record_exit_team_path(@team)}

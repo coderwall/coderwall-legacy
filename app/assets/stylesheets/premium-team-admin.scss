@@ -458,22 +458,48 @@ a.launch-editor {
 }
 
 #new_opportunity, .edit_opportunity {
-  width: 510px;
+  width: 710px;
   margin: 0 auto;
-  padding: 40px 60px;
+  padding: 30px;
   background: image-url("premium-teams/paper-texture.jpg") repeat;
   @include border-radius(6px);
 
+  fieldset {
+    margin-bottom: 20px;
+  }
+
+  .horizontal {
+    overflow: auto;
+
+    .job-title {
+      float: left;
+      width: 450px;
+
+      input[type=text] {
+        width: 450px;
+      }
+    }
+
+    .job-type {
+      float: right;
+      width: 200px;
+
+      select {
+        width: 185px;
+      }
+    }
+  }
+
   .errors {
-    background: $red;
+    background: #f2dede;
+    border: 1px solid #ebccd1;
     padding: 10px;
     @include border-radius(6px);
-    color: #fff;
-    margin-bottom: 10px;
+    color: #a94442;
+    margin-bottom: 30px;
 
-    li {
-      font-size: 1.2em;
-    }
+    h4 { font-size: 2em; text-transform: none; color: $red; margin-bottom: .5em;}
+    li { font-size: 1.4em; color: $red; line-height: 1.5em; }
   }
 
   label {
@@ -481,7 +507,7 @@ a.launch-editor {
     color: $dark-grey;
     margin-bottom: 10px;
     display: block;
-    font-family: "MuseoSans-500";
+    font-family: "MuseoSans-700";
 
     a {
       color: $light-blue;
@@ -532,6 +558,14 @@ a.launch-editor {
     font-size: 1.4em;
     color: #000;
     margin-bottom: 15px;
+  }
+
+  textarea {
+    width: 680px;
+  }
+
+  textarea#opportunity_description {
+    height: 300px;
   }
 
   select {
