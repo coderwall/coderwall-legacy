@@ -415,6 +415,8 @@ Coderwall::Application.routes.draw do
     get "/#{provider}/:username" => 'users#show', :provider => provider
   end
 
+  resources :resume_uploads, only: [:create]
+
   resources :users do
     collection do
       post 'invite'

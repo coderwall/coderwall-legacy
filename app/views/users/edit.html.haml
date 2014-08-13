@@ -227,12 +227,17 @@
 
         .clear
 
-        #jobs_section.editsection.hide
-          %p Upload your resume. It will be sent automatically to positions you apply for through Coderwall.
-          .left
-            .setting
-              .current-resume
-                - if current_user.has_resume?
-                  = link_to 'Your current resume', current_user.resume_url, class: 'track', 'data-action' => 'upload resume', 'data-from' => 'job application'
+      #jobs_section.editsection.hide
+        %p Upload your resume. It will be sent automatically to positions you apply for through Coderwall.
+        .left
+          .setting
+            .current-resume
+              - if current_user.has_resume?
+                = link_to 'Your current resume', current_user.resume_url, class: 'track', 'data-action' => 'upload resume', 'data-from' => 'job application'
+            
+            = form_tag(resume_uploads_url, method: :post, multipart: true) do
               .upload-resume
-                = form.file_field :resume
+                = file_field_tag :resume
+                = hidden_field_tag :user_id, current_user.id
+                .save
+                  = submit_tag "Save", class: "button"

@@ -104,9 +104,6 @@ $ ->
   #       gutterWidth: gutter
   #       isFitWidth: true
 
-  $('.apply:not(.applied)').on 'click', ->
-    $(@).toggleClass('applied')
-
   $('.active-opportunity, .inactive-opportunity').on 'click', ->
     $(@).toggleClass('active-opportunity')
     $(@).toggleClass('inactive-opportunity')
@@ -183,14 +180,36 @@ registerApplication = ->
     $(this).toggleClass('hide-application')
 
   $('input[type=file]').on 'change', ->
-    theform = $(this).closest('form')
-    file = theform.find('input:file').get(0).files[0]
-    formData = new FormData(theform.get(0))
-    xhr = new XMLHttpRequest()
-    xhr.open('PUT', theform.attr('action'), true)
-    xhr.send(formData)
+    uploading_begin_text = "Your resume is uploading ..."
+    uploading_finished_text = "Send your resume using the button below."
+
+    form      = $(this).closest('form')
+    status    = $(".application p.status")
+    status.text(uploading_begin_text)
+    
+    formData  = new FormData(form.get(0))
+
+    # Using a timeout due to weird behavior with change event
+    # on file input.  In testing, browser would not redraw until this
+    # change function returned, therefore the status text above was never displayed
+    send_request = ()->
+      req = $.ajax
+        url: form.attr('action')
+        data: formData
+        cache: false
+        processData: false
+        contentType: false
+        type: 'POST'
+
+      req.done (data,response,xhr)->
+        $(".send-application.disabled").removeClass("disabled").css("display","block")
+        form.css("display","none")
+        status.text(uploading_finished_text)
+        return
+
+    setTimeout(send_request, 100)
+    return
 
 
   $('a.send-application:not(.applied)').on 'click', (e)->
-    $(this).addClass('applied')
     $(this).href('#already-applied')
