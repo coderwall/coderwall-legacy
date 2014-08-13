@@ -70,16 +70,25 @@
               =link_to('', '#apply', class: 'track apply record-exit', 'data-opportunity-visit-path' => job_visited(job), 'data-target-type' => 'job-opportunity', 'data-action' => 'view job application', 'data-from' => 'job on team page')
 
               .apply-section.application.hide
-                - if current_user.has_resume?
-                  %p.status Upload your resume and click send to apply privately
-                  = link_to current_user.resume_url[current_user.resume_url.rindex('/')+1..-1], current_user.resume_url, :target => "_blank"
-                  = link_to 'change', change_resume_path, :class => 'change'
+                - if already_applied = current_user.already_applied_for?(job)
+                  = link_to '', "#already-applied", class:  "track btn send #{application_status_css(job)}"
+
                 - else
-                  %p.status Upload your resume and click send to apply privately
-                  = form_for current_user, :html => {:multipart => true, :class => "resume"}, :remote => true do |u|
-                    =u.file_field :resume, :class => 'track btn upload', 'data-action' => 'upload resume', 'data-from' => 'job application'
-                    =u.hidden_field :auto_upload, :value => true
-                =link_to('', apply_url(job), :method => :post, :remote => true, :class => "track btn send #{application_status_css(job)}", 'data-action' => 'apply for job', 'data-from' => 'job on team page')
+                  - if current_user.has_resume?
+                    %p.status Upload your resume and click send to apply privately
+                    = link_to current_user.resume_url[current_user.resume_url.rindex('/')+1..-1], current_user.resume_url, :target => "_blank"
+                    = link_to 'change', change_resume_path, class: 'change'
+                  
+                  - else
+                    %p.status Upload your resume and click send to apply privately
+
+                    - # Find javascript for resume auto upload in premium.js.coffee #registerApplication
+                    = form_tag resume_uploads_url, html: {multipart: true, class: "resume"} do
+                      = file_field_tag :resume, :class => 'track btn upload', 'data-action' => 'upload resume', 'data-from' => 'job application'
+                      = hidden_field_tag :user_id, current_user.id
+
+                  - disabled_class = already_applied ? "" : "disabled"
+                  = link_to('', apply_url(job), method: :post, class:  " #{disabled_class} track btn send #{application_status_css(job)}", 'data-action' => 'apply for job', 'data-from' => 'job on team page')
 
               
             -else

@@ -12,9 +12,10 @@ class OpportunitiesController < ApplicationController
       if current_user.apply_to(job)
         NotifierMailer.new_applicant(current_user.username, job.id).deliver!
         record_event('applied to job', job_public_id: job.public_id, 'job team' => job.team.slug)
-      end
-      respond_to do |format|
-        format.json { head :ok }
+        respond_to do |format|
+          format.html { redirect_to :back, notice: "Your resume has been submitted for this job!"}
+          format.json { head :ok }
+        end
       end
     end
   end
