@@ -5,7 +5,6 @@ Coderwall::Application.configure do
 
   config.action_controller.perform_caching = false
   config.action_dispatch.best_standards_support = :builtin
-  config.action_mailer.raise_delivery_errors = false
   config.active_support.deprecation = :log
   config.assets.compile = true
   config.assets.compress = false
@@ -15,6 +14,13 @@ Coderwall::Application.configure do
   config.host = 'localhost:3000'
   config.serve_static_assets = true
   config.whiny_nils = true
+
+  # Mailer settings
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :file
+  config.action_mailer.file_settings = {location: "#{Rails.root}/tmp/mailers"}
+  config.action_mailer.asset_host = "http://#{config.host}"
+
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
 

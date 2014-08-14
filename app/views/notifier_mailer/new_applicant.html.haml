@@ -1,21 +1,21 @@
 # encoding: utf-8
 %tr
-  %td.main-content-grey{:style => "padding: 30px 60px;background: #ffffff;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
-    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+  %td.main-content-grey{style: "padding: 30px 60px;background: #ffffff;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+    %p{style: "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
       = @user.display_name
       has applied for
-      = link_to @job.title, job_path(@job), {:style => "color: #3D8DCC;"}
+      = link_to @job.title, job_path(@job), {style: "color: #3D8DCC;"}
 
-    .divider{:style => "height: 3px;background: #dbd7cd; margin-bottom: 15px;"}
-    %p{:style => "font-size: 14px; font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+    .divider{style: "height: 3px;background: #dbd7cd; margin-bottom: 15px;"}
+    %p{style: "font-size: 14px; font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
       == #{@user.short_name}'s info:
       %ul
-        %li{:style => "font-size: 14px;line-height: 22px;"}
+        %li{style: "font-size: 14px;line-height: 22px;"}
           = @user.email
-        %li{:style => "font-size: 14px;line-height: 22px;"}
-          =link_to('Coderwall Profile', badge_url(@user.username), {:style => "color: #3D8DCC;"})
-        - if @user.resume_url.present?
-          %li{:style => "font-size: 14px;line-height: 22px;"}
-            =link_to('Resume', url_for(@user.resume_url, only_path: false), {:style => "color: #3D8DCC;"})
+        %li{style: "font-size: 14px;line-height: 22px;"}
+          =link_to('Coderwall Profile', badge_url(@user.username), {style: "color: #3D8DCC;"})
+        - if resume_url = @user.resume.url.presence
+          %li{style: "font-size: 14px;line-height: 22px;"}
+            =link_to('Resume', asset_path(resume_url), {style: "color: #3D8DCC;"})
 
 
