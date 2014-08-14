@@ -4,7 +4,7 @@
 - show_ad_every = width * 2 + width - 2
 - items = show_job ? protips.each_slice(show_ad_every).map{ |row| row.count == show_ad_every ? row.concat(['show-ad', nil]) : row }.flatten : protips
 
-- logger.ap(collection, :debug)
+- logger.debug("Grid receiving type: #{collection.class}")
 - if collection.respond_to?(:failure?) && collection.failure?
   .error
     = "#{collection.error} Meanwhile you can "

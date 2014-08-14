@@ -1,9 +1,11 @@
 class RefreshUserJob
   include Sidekiq::Worker
+  sidekiq_options queue: :low
 
-  def perform(username, full=false)
+  def perform(user_id, full=false)
     return if Rails.env.test?
-    user = User.find_by_username(username)
+
+    user = User.find(user_id)
 
     if user.github_id
       user.destroy_github_cache
@@ -17,7 +19,6 @@ class RefreshUserJob
       user.add_skills_for_unbadgified_facts
 
       user.calculate_score!
-
     ensure
       user.touch(:last_refresh_at)
       user.destroy_github_cache
