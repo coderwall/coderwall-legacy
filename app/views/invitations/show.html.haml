@@ -9,13 +9,13 @@
   -if !signed_in?
     %p Before you can accept the invitation you need to create a coderwall account or sign in.
     %ul.sign-btns
-      %li=link_to('Sign Up', root_path, :class => 'join')
-      %li=link_to('Sign In', signin_path, :id => 'signin', :class => 'join')
+      %li=link_to('Sign Up', root_path, class: 'join')
+      %li=link_to('Sign In', signin_path, id: 'signin', class: 'join')
   -else
     -if users_team = current_user.team
       #currentteam
         %h2==You are currently on team #{users_team.name}
-        = render partial: "invitations/team_members", locals: {team: users_team }
+        = render "invitations/team_members", team: users_team
       .clear
     %h2 Team invitations
-    = render partial: "invitations/team_members", locals: {team: @team }
+    = render "invitations/team_members", team: @team
