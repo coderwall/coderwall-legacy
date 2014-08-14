@@ -87,7 +87,7 @@
                       = file_field_tag :resume, :class => 'track btn upload', 'data-action' => 'upload resume', 'data-from' => 'job application'
                       = hidden_field_tag :user_id, current_user.id
 
-                  - disabled_class = already_applied ? "" : "disabled"
+                  - disabled_class = already_applied ? "disabled" : ""
                   = link_to('', apply_url(job), method: :post, class:  " #{disabled_class} track btn send #{application_status_css(job)}", 'data-action' => 'apply for job', 'data-from' => 'job on team page')
 
               
