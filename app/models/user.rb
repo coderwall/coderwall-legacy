@@ -115,17 +115,17 @@ class User < ActiveRecord::Base
   def self.with_username(username, provider = :username)
     return nil if username.nil?
     sql_injection_safe_where_clause = case provider.to_s
-                                        when 'username', ''
-                                          'username'
-                                        when 'linkedin'
-                                          'linkedin'
-                                        when 'twitter'
-                                          'twitter'
-                                        when 'github'
-                                          'github'
-                                        else
-                                          #A user could malicously pass in a provider, thats why we do the string matching above
-                                          raise "Unkown provider type specified, unable to find user by username"
+                                      when 'username', ''
+                                        'username'
+                                      when 'linkedin'
+                                        'linkedin'
+                                      when 'twitter'
+                                        'twitter'
+                                      when 'github'
+                                        'github'
+                                      else
+                                        #A user could malicously pass in a provider, thats why we do the string matching above
+                                        raise "Unkown provider type specified, unable to find user by username"
                                       end
     where(["UPPER(#{sql_injection_safe_where_clause}) = UPPER(?)", username]).first
   end
@@ -328,7 +328,7 @@ class User < ActiveRecord::Base
     skills.each { |skill| skill.apply_facts && skill.save }
     self.github_failures = 0
     save!
-   RefreshUserJob.perform_async(username, true)
+    RefreshUserJob.perform_async(id, true)
   end
 
 
@@ -343,11 +343,6 @@ class User < ActiveRecord::Base
   def num_linked_accounts
     LINKABLE_PROVIDERS.map { |provider| self.send("#{provider}_identity") }.compact.count
   end
-
-
-
-
-
 
   def check_achievements!(badge_list = Badges.all)
     BadgeBase.award!(self, badge_list)
@@ -476,8 +471,8 @@ class User < ActiveRecord::Base
     score            = ((endorsers.count / 6.0) + (achievement_score) + (times_spoken / 1.50) + (times_attended / 4.0)) * activitiy_multipler
     self.score_cache = [score - penalty, 0.0].max
     save!
-  rescue
-    Rails.logger.error "Failed cacluating score for #{username}"   if ENV['DEBUG']
+  rescue => ex
+    Rails.logger.error("Failed cacluating score for #{username} due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
   end
 
   def like_value

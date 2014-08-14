@@ -32,5 +32,4 @@ RSpec.describe EmailsController, :type => :controller do
     expect(user.notify_on_award).to eq(true)
     expect(user.receive_newsletter).to eq(false)
   end
-
 end

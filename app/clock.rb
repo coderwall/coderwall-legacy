@@ -11,7 +11,10 @@ every(1.day, 'award:activate:active', at: '01:01') do
   ActivatePendingUsersWorker.perform_async
 end
 
-every(1.day, 'award:fresh:stale', at: '00:00') {}
+every(1.day, 'award:refresh:stale', at: '00:00') do
+  RefreshStaleUsersWorker.perform_async
+end
+
 every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '00:00') {}
 every(1.day, 'clear_expired_sessions', at: '00:00') {}
 every(1.day, 'facts:system', at: '00:00') {}
