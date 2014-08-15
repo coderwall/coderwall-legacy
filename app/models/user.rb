@@ -218,9 +218,11 @@ class User < ActiveRecord::Base
   def team
     @team ||= team_document_id && Team.find(team_document_id)
   rescue Mongoid::Errors::DocumentNotFound
-    #readonly issue in follows/_user partial from partial iterator
-    User.connection.execute("UPDATE users set team_document_id = NULL where id = #{self.id}")
+    Rails.logger.error("[Mongoid::Errors::DocumentNotFound] - Couldn't find Team using #{team_document_id} for user: #{id}")
     @team = nil
+    #readonly issue in follows/_user partial from partial iterator
+    #User.connection.execute("UPDATE users set team_document_id = NULL where id = #{self.id}")
+    #@team = nil
   end
 
   def on_premium_team?
