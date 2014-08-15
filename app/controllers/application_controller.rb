@@ -41,8 +41,13 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if @current_user.nil? && session[:current_user]
-      @current_user = User.find(session[:current_user])
+      unless @current_user = User.find_by_id(session[:current_user])
+        session[:current_user] = nil
+        store_location!
+        redirect_to signin_path
+      end
     end
+
     @current_user
   end
 
