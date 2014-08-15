@@ -166,15 +166,16 @@ end
 
 group :test do
   # gem 'rspec-its'
-  gem "codeclimate-test-reporter", require: false
   gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'codeclimate-test-reporter', require: false
   gem 'database_cleaner'
   gem 'fuubar', '2.0.0.rc1'
+  gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'timecop'
   gem 'vcr'
   gem 'webmock', '<1.16'
-  gem 'shoulda-matchers'
 end
 
 group :production do
