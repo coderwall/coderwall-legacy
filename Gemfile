@@ -132,9 +132,6 @@ gem 'rocket_tag'
 gem 'squeel', '1.0.1'
 gem 'strong_parameters'
 gem 'postgres_ext'
-group :production do
-  gem 'heroku_rails_deflate'
-end
 # ElasticSearch client
 gem 'tire'
 # /DROP BEFORE RAILS 4
