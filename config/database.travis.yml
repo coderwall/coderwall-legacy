@@ -1,5 +1,5 @@
 test:
   adapter: postgresql
-  database: uglst_test
+  database: coderwall_test
   encoding: unicode
   username: postgres
