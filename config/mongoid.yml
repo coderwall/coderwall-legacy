@@ -1,23 +1,31 @@
 development:
-   sessions:
-    default:
-     database: badgify_development
-     hosts:
-      - localhost
+  sessions:
+  default:
+  database: badgify_development
+  hosts:
+    - localhost
 
 test:
   sessions:
-   default:
-    database: badgify_test
-    hosts:
-     - localhost
+  default:
+  database: badgify_test
+  hosts:
+    - localhost
 
 staging:
   sessions:
-   default:
-    uri: <%= ENV['MONGOLAB_URI'] %>
+  default:
+  uri: <%= ENV['MONGOLAB_URI'] %>
 
 production:
   sessions:
-   default:
-     uri: <%= ENV['MONGOLAB_URI'] %>
+    default:
+    uri: <%= ENV['MONGOLAB_URI'] %>
+    options:
+      consistency: :strong
+      max_retries: 30
+      retry_interval: 1
+      timeout: 15
+
+
+
