@@ -14,7 +14,7 @@ class TwentyFourPullRequests
         Object.const_set "TwentyFourPullRequestsParticipant#{year}", Class.new(BadgeBase) {
           describe "24PullRequests Participant",
                    skill:       'Open Source',
-                   description: "Sent at least one pull request during during the first 24 days of December #{year}",
+                   description: "Sent at least one pull request during the first 24 days of December #{year}",
                    for:         "participating in the 24pullrequest initiative during #{year}",
                    image_name:  "24-participant.png",
                    url:         "http://24pullrequests.com/"
