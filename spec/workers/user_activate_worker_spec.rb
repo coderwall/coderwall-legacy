@@ -22,6 +22,19 @@ RSpec.describe UserActivateWorker do
         expect(user.active?).to eq(true)
         expect(user.activated_on).not_to eq(nil)
       end
+
+      it "should send welcome mail" do
+        mail = double("mail")
+        expect(NotifierMailer).to receive(:welcome_email).with(user.username).and_return(mail)
+        expect(mail).to receive(:deliver)
+        worker.perform(user.id)
+      end
+
+      it "should create refresh job" do
+        expect_any_instance_of(RefreshUserJob).to receive(:perform).with(user.id)
+        worker.perform(user.id)
+      end
+
     end
 
     context 'when activate user' do

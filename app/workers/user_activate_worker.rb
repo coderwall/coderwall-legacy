@@ -6,7 +6,7 @@ class UserActivateWorker
     user = User.find(user_id)
     return if user.active?
 
-    RefreshUserJob.new.perform(user.username)
+    RefreshUserJob.new.perform(user.id)
     NotifierMailer.welcome_email(user.username).deliver
 
     user.activate!
