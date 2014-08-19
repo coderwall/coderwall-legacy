@@ -4,10 +4,15 @@
 
 SESSION=coderwall
 
+rvm use ruby-2.1.2@coderwall
+
 # Go to working directory
 
-#cd ~/assemblymade/coderwall
+cd
+cd $HOME/assemblymade/coderwall
 
+bundle install
+bundle clean --force
 vagrant up --no-provision
 
 # Session Exists?
