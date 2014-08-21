@@ -104,7 +104,6 @@ body#jobs {
     width: 100%;
     height: 226px;
     position: absolute;
-    top: 100px;
     left: 0;
   }
 
@@ -117,6 +116,7 @@ body#jobs {
   }
 
   .jobs-top {
+    position: relative;
     height: 226px;
     background: $dark-grey image-url("jobs/jobs-header.jpg") no-repeat top center;
     color: #fff;
