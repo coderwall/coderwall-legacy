@@ -1,0 +1,18 @@
+<div class="bg-primary" data-dismissable="announcement" style="display:none">
+  <div class="container">
+    <div class="row">
+      <div class="announcement col-md-12">
+        <p class="text-center">
+          <img src="https://treasure.assembly.com/assets/brand/inverse@2x.png" class="asm-brand">
+          Coderwall is an open project on Assembly so now you can help build it!
+          <a href="https://assembly.com/coderwall/chat"> Jump in and get started.</a>
+          <a class="js-dismiss close" href="#close">x</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'dismissable' %>
+<% end %>
