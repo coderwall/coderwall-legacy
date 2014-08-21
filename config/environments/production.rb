@@ -18,4 +18,6 @@ Coderwall::Application.configure do
   config.assets.digest = true
   config.static_cache_control = 'public, max-age=31536000'
   config.host = ENV['HOST_DOMAIN']
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
 end
