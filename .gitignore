@@ -55,3 +55,4 @@ git_stats
 *.iml
 vcr_cassettes
 dump
+BACKUP
