@@ -17,7 +17,31 @@ staging:
    default:
     uri: <%= ENV['MONGOLAB_URI'] %>
 
+# mongoid 3.x
+#
+# As discussed in: http://blog.mongolab.com/2014/02/mongodb-driver-tips-tricks-mongoid-3
+#
 production:
   sessions:
-   default:
-     uri: <%= ENV['MONGOLAB_URI'] %>
+    default:
+      # The standard MongoDB connection URI allows for easy replica set connection setup.
+      # Use environment variables or a config file to keep your credentials safe.
+      uri: <%= ENV['MONGOLAB_URI'] %>
+
+      options:
+        # The default consistency is :eventual, which reads from secondaries when possible.
+        # Strong forces reads to primary. We recommend using strong consistency.
+        consistency: :strong
+
+        # max_retries specifies the number of times to attempt an operation before giving up.
+        max_retries: 30
+
+        # retry_interval specifies the number of seconds to wait before retrying a single operation.
+        retry_interval: 1
+
+        # The default timeout is 5, which is the time in seconds for an operation to time out.
+        # We recommend 15 because it allows for plenty of time in most operating environments.
+        # Mongoid doubles the configured value (known issue) so 15 results in a timeout of 30s.
+        # Note that if you have a long-running query (over 30 seconds), it will time out.
+        # See our example for long-running queries in the blog post referenced above.
+        timeout: 15
