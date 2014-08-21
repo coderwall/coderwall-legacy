@@ -2,9 +2,9 @@
   window.current_user = "#{@current_user ? @current_user.username : "null"}";
   function show_hide_by_current_user(){
     if(window.current_user != null){
-      $('.show-for-user[data-user="' + window.current_user + '"').show();
-      $('.hide-for-user[data-user="' + window.current_user + '"').hide();
-      $('.remove-for-user[data-user="' + window.current_user + '"').remove();
+      $('.show-for-user[data-user="' + window.current_user + '"]').show();
+      $('.hide-for-user[data-user="' + window.current_user + '"]').hide();
+      $('.remove-for-user[data-user="' + window.current_user + '"]').remove();
     }
   }
   $(function(){
