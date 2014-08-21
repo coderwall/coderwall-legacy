@@ -1,0 +1,74 @@
+// Stolen from Bootsrap 3
+.container:before, .container:after {
+  content: " ";
+  display: table;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 1170px;
+}
+
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.row:before, .row:after {
+  content: " ";
+  display: table;
+}
+.row:after {
+  clear: both;
+}
+
+.col-md-12 {
+  width: 100%;
+  float: left;
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.bg-primary {
+  background-color: #428bca;
+  color: #fff;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.announcement {
+  .asm-brand {
+    opacity: 0.3;
+    width: 30px;
+    height: 26px;
+    position: absolute;
+    margin-left: -36px;
+    margin-top: 6px;
+  }
+
+  .close {
+    opacity: 0.4;
+    &:hover {
+      opacity: 1.0;
+    }
+    text-decoration: none;
+
+    padding-left: 15px;
+  }
+
+  p {
+    line-height: 40px;
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+}
