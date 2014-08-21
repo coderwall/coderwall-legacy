@@ -4,15 +4,8 @@
 
 SESSION=coderwall
 
-rvm use ruby-2.1.2@coderwall
-
 # Go to working directory
 
-cd
-cd $HOME/assemblymade/coderwall
-
-bundle install
-bundle clean --force
 vagrant up --no-provision
 
 # Session Exists?
@@ -24,6 +17,16 @@ if [ $? -eq 0 ]; then
   tmux attach -t $SESSION
   exit 0;
 fi
+
+cd - ; cd $HOME/assemblymade/coderwall
+rbenv version
+rbenv gemset active
+
+bundle install
+bundle clean --force
+bundle exec spring binstub --all.
+rbenv rehash
+vagrant up --no-provision
 
 # Pre-flight Configuration
 
