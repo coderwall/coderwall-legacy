@@ -2,6 +2,7 @@
 "normailze", "tipTip", "new-new-home", "error";
 
 @import 'jquery-dropdown';
+@import 'backgrounds';
 
 .user-mosaic, .team-mosiac {
   float: left;
@@ -22,7 +23,8 @@ body, input, submit, textarea, a, span {
 }
 
 .logo {
-  margin-top: 31px;
+  margin-top: 11px;
+  margin-bottom: 15px;
   float: left;
   width: 182px;
   height: 27px;
@@ -101,7 +103,6 @@ h4 {
   float: right;
   li {
     display: inline-block;
-    line-height: 100px;
     margin-left: 30px;
     &:first-child {
       margin: 0px;
