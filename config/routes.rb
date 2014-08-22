@@ -269,6 +269,11 @@ Coderwall::Application.routes.draw do
   get '/.json',       to: proc { [444, {}, ['']] }
   get '/teams/.json', to: proc { [444, {}, ['']] }
 
+
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
+  end
+
   #TODO: REMOVE
   match 'protips/update', via: %w(get put)
   match 'protip/update' , via: %w(get put)

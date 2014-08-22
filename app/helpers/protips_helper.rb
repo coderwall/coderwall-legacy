@@ -294,20 +294,27 @@ module ProtipsHelper
     current_user && current_user_upvotes.include?(protip.public_id)
   end
 
-  def protip_stat_class(protip)
-    class_name = best_stat_name(protip)
-    #class_name << " " << (user_upvoted?(protip) ? "upvoted" : "")
+  def formatted_best_stat_value(protip)
+    value = case best_stat_name(protip).to_sym
+            when :views
+              views_stat_value(protip)
+            else
+              best_stat_value(protip)
+            end
+
+    number_to_human(value, units: { unit: '', thousand: 'k' })
   end
 
-  def formatted_best_stat_value(protip)
-    value =
-      case best_stat_name(protip).to_sym
-      when :views
-        views_stat_value(protip)
-      else
-        best_stat_value(protip)
-      end
-    number_to_human(value, units: {unit: "", thousand: "k"})
+  def best_stat_name(protip)
+    protip.best_stat.is_a?(Tire::Results::Item) ? protip.best_stat.name : protip.best_stat[0]
+  end
+
+  def views_stat_value(protip)
+    best_stat_value(protip) * Protip::COUNTABLE_VIEWS_CHUNK
+  end
+
+  def best_stat_value(protip)
+    protip.best_stat.is_a?(Tire::Results::Item) ? protip.best_stat.value.to_i : protip.best_stat[1]
   end
 
   def blur_protips?
@@ -316,14 +323,6 @@ module ProtipsHelper
 
   def followings_fragment_cache_key(user_id)
     ['v1', 'followings_panel', user_id]
-  end
-
-  def best_stat_value(protip)
-    protip.best_stat.is_a?(Tire::Results::Item) ? protip.best_stat.value.to_i : protip.best_stat[1]
-  end
-
-  def best_stat_name(protip)
-    protip.best_stat.is_a?(Tire::Results::Item) ? protip.best_stat.name : protip.best_stat[0]
   end
 
   def protip_networks(protip)
@@ -352,10 +351,6 @@ module ProtipsHelper
 
   def protip_display_mode
     mobile_device? ? "fullpage" : "popup"
-  end
-
-  def views_stat_value(protip)
-    best_stat_value(protip) * Protip::COUNTABLE_VIEWS_CHUNK
   end
 
   def display_protip_stats?(protip)

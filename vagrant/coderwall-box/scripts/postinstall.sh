@@ -51,7 +51,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java7-installer oracle-
 echo "export JAVA_OPTS=\"-Xmx400m -XX:MaxPermSize=80M -XX:+UseCompressedOops -XX:+AggressiveOpts\"" >> /etc/profile.d/jdk.sh
 echo "setenv JAVA_OPTS \"-Xmx400m -XX:MaxPermSize=80M -XX:+UseCompressedOops -XX:+AggressiveOpts\"" >> /etc/profile.d/jdk.csh
 
-NODEJS_VERSION="0.11.12"
+NODEJS_VERSION="0.10.31"
 git clone https://github.com/joyent/node.git
 cd node
 git checkout v$NODE_VERSION
@@ -61,7 +61,7 @@ make install
 cd ..
 rm -rf node*
 
-RUBY_VERSION="2.1.0"
+RUBY_VERSION="2.1.2"
 wget http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-$RUBY_VERSION.tar.bz2
 tar jxf ruby-$RUBY_VERSION.tar.bz2
 cd ruby-$RUBY_VERSION
@@ -73,7 +73,7 @@ rm -rf ruby-$RUBY_VERSION*
 chown -R root:admin /opt/ruby
 chmod -R g+w /opt/ruby
 
-RUBYGEMS_VERSION="2.2.2"
+RUBYGEMS_VERSION="2.4.1"
 wget http://production.cf.rubygems.org/rubygems/rubygems-$RUBYGEMS_VERSION.tgz
 tar xzf rubygems-$RUBYGEMS_VERSION.tgz
 cd rubygems-$RUBYGEMS_VERSION
@@ -92,7 +92,7 @@ groupadd puppet
 # Install Foreman
 /opt/ruby/bin/gem install foreman --no-ri --no-rdoc
 
-POSTGRES_VERSION="9.3.2"
+POSTGRES_VERSION="9.3.3"
 wget http://ftp.postgresql.org/pub/source/v$POSTGRES_VERSION/postgresql-$POSTGRES_VERSION.tar.bz2
 tar jxf postgresql-$POSTGRES_VERSION.tar.bz2
 cd postgresql-$POSTGRES_VERSION
@@ -126,7 +126,7 @@ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | 
 apt-get -y update
 apt-get -y install mongodb-10gen
 
-REDIS_VERSION="2.8.3"
+REDIS_VERSION="2.8.4"
 wget http://download.redis.io/releases/redis-$REDIS_VERSION.tar.gz
 tar xzf redis-$REDIS_VERSION.tar.gz
 cd redis-$REDIS_VERSION
@@ -138,7 +138,7 @@ yes | sudo ./install_server.sh
 cd ../..
 rm -rf ~/redis-$REDIS_VERSION
 
-ES_VERSION="0.20.5"
+ES_VERSION="0.90.13"
 wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-$ES_VERSION.deb
 dpkg -i elasticsearch-$ES_VERSION.deb
 rm -rf ~/elasticsearch-$ES_VERSION.deb

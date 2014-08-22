@@ -2,7 +2,7 @@
 %article{:class => dom_class(protip), :id => protip.public_id}
   %header
     -if display_protip_stats?(protip)
-      %span{:class => protip_stat_class(protip)}
+      %span{:class => best_stat_name(protip)}
         = formatted_best_stat_value(protip) unless best_stat_name(protip) =~ /hawt/
 
     -# We should remove this to cache , deleting should be from dashboard
