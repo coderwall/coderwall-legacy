@@ -7,4 +7,5 @@ Sidekiq.configure_server do |config|
   end
 end
 
-Sidekiq.app_url = '/admin'
+require 'sidekiq/web'
+Sidekiq::Web.app_url = '/admin'

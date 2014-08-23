@@ -21,6 +21,6 @@ end
 CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
 
 CarrierWave::Backgrounder.configure do |c|
-  c.backend = :sidekiq
+  c.backend  :sidekiq
 end
 
