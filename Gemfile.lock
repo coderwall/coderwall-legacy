@@ -1,4 +1,18 @@
 GIT
+  remote: git://github.com/emberjs/ember-rails.git
+  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
+  specs:
+    ember-rails (0.15.0)
+      active_model_serializers
+      barber (>= 0.4.1)
+      ember-data-source (>= 1.0.0.beta.5)
+      ember-source (>= 1.1.0)
+      execjs (>= 1.2)
+      handlebars-source (> 1.0.0)
+      jquery-rails (>= 1.0.17)
+      railties (>= 3.1)
+
+GIT
   remote: git://github.com/nixme/jazz_hands.git
   revision: 5e4b48f145883ecb14b55bf04eacc28ac9662676
   branch: bring-your-own-debugger
@@ -17,26 +31,12 @@ GIT
 
 GIT
   remote: git://github.com/stripe/stripe-ruby.git
-  revision: 9cf5089dc15534b7ed581e0ce4d84fa82f592efb
+  revision: 2c6f4caa99916c33d3f9af57f66422ff5ea913cf
   specs:
-    stripe (1.14.0)
+    stripe (1.15.0)
       json (~> 1.8.1)
       mime-types (>= 1.25, < 3.0)
       rest-client (~> 1.4)
-
-GIT
-  remote: git://github.com/emberjs/ember-rails.git
-  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
-  specs:
-    ember-rails (0.15.0)
-      active_model_serializers
-      barber (>= 0.4.1)
-      ember-data-source (>= 1.0.0.beta.5)
-      ember-source (>= 1.1.0)
-      execjs (>= 1.2)
-      handlebars-source (> 1.0.0)
-      jquery-rails (>= 1.0.17)
-      railties (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
@@ -55,8 +55,8 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    active_model_serializers (0.8.1)
-      activemodel (>= 3.0)
+    active_model_serializers (0.9.0)
+      activemodel (>= 3.2)
     activemodel (3.2.19)
       activesupport (= 3.2.19)
       builder (~> 3.0.0)
@@ -83,7 +83,7 @@ GEM
     ansi (1.4.3)
     arel (3.0.3)
     ast (2.0.0)
-    autoprefixer-rails (2.2.0.20140727)
+    autoprefixer-rails (3.0.0.20140821)
       execjs
     awesome_print (1.2.0)
     backbone-on-rails (1.1.1.0)
@@ -100,9 +100,10 @@ GEM
       ember-source
       execjs
       handlebars-source
-    better_errors (1.1.0)
+    better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bson (1.10.2)
@@ -132,7 +133,7 @@ GEM
       carrierwave (>= 0.8.0, < 0.11.0)
       mongoid (>= 3.0, < 5.0)
       mongoid-grid_fs (>= 1.3, < 3.0)
-    carrierwave_backgrounder (0.0.8)
+    carrierwave_backgrounder (0.4.1)
       carrierwave (~> 0.5)
     celluloid (0.15.2)
       timers (~> 1.1.0)
@@ -142,7 +143,7 @@ GEM
     clockwork (0.7.7)
       activesupport
       tzinfo
-    codeclimate-test-reporter (0.3.0)
+    codeclimate-test-reporter (0.4.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
     coffee-rails (3.2.2)
@@ -178,7 +179,7 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
-    diffy (3.0.5)
+    diffy (3.0.6)
     docile (1.1.5)
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
@@ -199,9 +200,9 @@ GEM
       http_parser.rb (>= 0.6.0)
     em-socksify (0.3.0)
       eventmachine (>= 1.0.0.beta.4)
-    ember-data-source (1.0.0.beta.8)
+    ember-data-source (1.0.0.beta.9)
       ember-source
-    ember-source (1.6.1)
+    ember-source (1.7.0)
       handlebars-source (~> 1.0)
     ephemeral (2.3.3)
       activesupport
@@ -211,7 +212,7 @@ GEM
     ethon (0.7.1)
       ffi (>= 1.3.0)
     eventmachine (1.0.3)
-    excon (0.39.0)
+    excon (0.39.5)
     execjs (2.2.1)
     fabrication (2.11.3)
     fabrication-rails (0.0.1)
@@ -225,7 +226,7 @@ GEM
       curb (~> 0.8.1)
       loofah (~> 2.0.0)
       sax-machine (~> 0.2.1)
-    ffaker (1.24.0)
+    ffaker (1.25.0)
     ffi (1.9.3)
     flog (4.3.0)
       ruby_parser (~> 3.1, > 3.1.0)
@@ -237,7 +238,7 @@ GEM
       fog-softlayer
       ipaddress (~> 0.5)
       nokogiri (~> 1.5, >= 1.5.11)
-    fog-brightbox (0.1.1)
+    fog-brightbox (0.3.0)
       fog-core (~> 1.22)
       fog-json
       inflecto
@@ -250,7 +251,7 @@ GEM
       net-ssh (>= 2.1.3)
     fog-json (1.0.0)
       multi_json (~> 1.0)
-    fog-softlayer (0.3.11)
+    fog-softlayer (0.3.15)
       fog-core
       fog-json
     foreman (0.74.0)
@@ -267,7 +268,7 @@ GEM
     fuubar (2.0.0.rc1)
       rspec (~> 3.0.rc1)
       ruby-progressbar (~> 1.4)
-    geocoder (1.2.3)
+    geocoder (1.2.4)
     gh (0.13.2)
       addressable
       backports
@@ -343,7 +344,7 @@ GEM
       rb-inotify (>= 0.9)
     local_time (1.0.0)
       coffee-rails
-    loofah (2.0.0)
+    loofah (2.0.1)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
     mail (2.5.4)
@@ -351,7 +352,7 @@ GEM
       treetop (~> 1.4.8)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
-    metamagic (3.1.3)
+    metamagic (3.1.6)
       rails (>= 3.0.0)
     method_source (0.8.2)
     mime-types (1.25.1)
@@ -388,7 +389,7 @@ GEM
     never_wastes (1.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-    newrelic_rpm (3.9.1.236)
+    newrelic_rpm (3.9.2.239)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     nokogumbo (1.1.9)
@@ -400,9 +401,9 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
-    octokit (3.2.0)
+    octokit (3.3.1)
       sawyer (~> 0.5.3)
-    oj (2.9.9)
+    oj (2.10.2)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
@@ -553,12 +554,12 @@ GEM
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
       rspec-mocks (~> 3.0.0)
-    rspec-core (3.0.3)
+    rspec-core (3.0.4)
       rspec-support (~> 3.0.0)
-    rspec-expectations (3.0.3)
+    rspec-expectations (3.0.4)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.0.0)
-    rspec-mocks (3.0.3)
+    rspec-mocks (3.0.4)
       rspec-support (~> 3.0.0)
     rspec-rails (3.0.2)
       actionpack (>= 3.0)
@@ -568,7 +569,7 @@ GEM
       rspec-expectations (~> 3.0.0)
       rspec-mocks (~> 3.0.0)
       rspec-support (~> 3.0.0)
-    rspec-support (3.0.3)
+    rspec-support (3.0.4)
     rubocop (0.23.0)
       json (>= 1.7.7, < 2)
       parser (~> 2.1.9)
@@ -589,15 +590,15 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    sawyer (0.5.4)
+    sawyer (0.5.5)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
     sax-machine (0.2.1)
       nokogiri (~> 1.6.0)
-    sexp_processor (4.4.3)
+    sexp_processor (4.4.4)
     shoulda-matchers (2.6.2)
       activesupport (>= 3.0.0)
-    sidekiq (3.2.1)
+    sidekiq (3.2.2)
       celluloid (>= 0.15.2)
       connection_pool (>= 2.0.0)
       json
@@ -686,7 +687,7 @@ GEM
       simple_oauth (~> 0.2.0)
     typhoeus (0.6.9)
       ethon (>= 0.7.1)
-    tzinfo (0.3.40)
+    tzinfo (0.3.41)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)

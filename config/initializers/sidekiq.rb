@@ -6,3 +6,5 @@ Sidekiq.configure_server do |config|
     ActiveRecord::Base.establish_connection
   end
 end
+
+Sidekiq.app_url = '/admin'

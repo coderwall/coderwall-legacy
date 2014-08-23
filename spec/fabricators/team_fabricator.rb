@@ -1,3 +1,3 @@
 Fabricator(:team) do
-  name { 'Coderwall' }
+  name { Faker::Company.name }
 end
