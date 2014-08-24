@@ -469,7 +469,6 @@ Coderwall::Application.routes.draw do
     get '/teams' => 'admin#teams', as: :teams
     get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
-    require 'sidekiq/web'
     mount Sidekiq::Web => '/sidekiq'
   end
   #TODO: namespace inside admin
