@@ -192,6 +192,19 @@ GEM
       execjs
     eco-source (1.1.0.rc.1)
     ejs (1.1.1)
+    elasticsearch (1.0.4)
+      elasticsearch-api (= 1.0.4)
+      elasticsearch-transport (= 1.0.4)
+    elasticsearch-api (1.0.4)
+      multi_json
+    elasticsearch-model (0.1.4)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.4)
+    elasticsearch-transport (1.0.4)
+      faraday
+      multi_json
     em-http-request (1.1.2)
       addressable (>= 2.3.4)
       cookiejar
@@ -727,6 +740,8 @@ DEPENDENCIES
   createsend
   database_cleaner
   dotenv-rails
+  elasticsearch-model
+  elasticsearch-rails
   ember-rails!
   fabrication-rails
   faraday (~> 0.8.1)

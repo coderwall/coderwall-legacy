@@ -122,6 +122,9 @@ gem 'simple_form'
 gem 'tweet-button'
 gem 'local_time'
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 # DROP BEFORE RAILS 4
 # Mongo
 gem 'mongoid'
