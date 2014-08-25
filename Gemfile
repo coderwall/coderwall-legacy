@@ -177,6 +177,7 @@ group :test do
   gem 'timecop'
   gem 'vcr'
   gem 'webmock', '<1.16'
+  gem 'stripe-ruby-mock', git: 'https://github.com/rebelidealist/stripe-ruby-mock', branch: 'live-tests'
 end
 
 group :production do
