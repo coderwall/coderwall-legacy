@@ -7,10 +7,6 @@ class RefreshUserJob
 
     user = User.find(user_id)
 
-    if user.github_id
-      user.destroy_github_cache
-    end
-
     return if !full && user.last_refresh_at > 3.days.ago
 
     begin
@@ -21,7 +17,6 @@ class RefreshUserJob
       user.calculate_score!
     ensure
       user.touch(:last_refresh_at)
-      user.destroy_github_cache
     end
   end
 end

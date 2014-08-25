@@ -1,9 +1,3 @@
-# TODO, rename to Teams::Follower
-class FollowedTeam < ActiveRecord::Base
-  belongs_to :team, class_name: 'PgTeam'
-  belongs_to :user
-end
-
 # == Schema Information
 #
 # Table name: followed_teams
@@ -14,3 +8,10 @@ end
 #  created_at       :datetime         default(2012-03-12 21:01:09 UTC)
 #  team_id          :integer
 #
+
+require 'rails_helper'
+
+RSpec.describe FollowedTeam, :type => :model do
+  it {is_expected.to belong_to(:team)}
+  it {is_expected.to belong_to(:user)}
+end
