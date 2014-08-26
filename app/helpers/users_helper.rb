@@ -30,6 +30,7 @@ module UsersHelper
 
   #TODO Remove
   def users_image_path(user)
+    return ''
     user.avatar.url
   end
 

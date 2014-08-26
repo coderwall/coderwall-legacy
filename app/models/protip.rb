@@ -551,7 +551,9 @@ class Protip < ActiveRecord::Base
       upvotes:  self.upvotes,
       comments: self.comments.count,
       hawt:     self.hawt? ? 100 : 0
-    }.sort_by { |k, v| -v }.first
+    }.sort_by do |k, v|
+      -v
+    end.first
   end
 
   def upvotes
