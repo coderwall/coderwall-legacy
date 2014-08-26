@@ -6,13 +6,20 @@ RSpec.describe Teams::Member, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140728214411
 #
 # Table name: teams_members
 #
-#  id         :integer          not null, primary key
-#  team_id    :integer          not null
-#  user_id    :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  state      :string(255)      default("pending")
+#  id            :integer          not null, primary key
+#  team_id       :integer          not null
+#  user_id       :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  team_size     :integer          default(0)
+#  badges_count  :integer
+#  email         :string(255)
+#  inviter_id    :integer
+#  name          :string(255)
+#  thumbnail_url :string(255)
+#  username      :string(255)
 #

@@ -3,26 +3,17 @@ class Teams::Location < ActiveRecord::Base
   belongs_to :team, class_name: 'PgTeam',
                     foreign_key: 'team_id',
                     touch: true
-
-  # geocoded_by :address do |obj, results|
-  #   if geo = results.first and obj.address.downcase.include?(geo.city.try(:downcase) || "")
-  #     obj.city       = geo.city
-  #     obj.state_code = geo.state_code
-  #     obj.country    = geo.country
-  #   end
-  # end
-  #
-  # after_validation :geocode, if: lambda { |team_location| team_location.city.nil? }
 end
 
 # == Schema Information
+# Schema version: 20140728214411
 #
 # Table name: teams_locations
 #
 #  id          :integer          not null, primary key
 #  name        :string(255)
-#  description :text
-#  address     :text
+#  description :string(255)
+#  address     :string(255)
 #  city        :string(255)
 #  state_code  :string(255)
 #  country     :string(255)

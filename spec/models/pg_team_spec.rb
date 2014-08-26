@@ -1,14 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe PgTeam, :type => :model do
-  it { is_expected.to have_one :account }
+  it {is_expected.to have_one :account}
 
-  it { is_expected.to have_many :locations }
-  it { is_expected.to have_many :links }
-  it { is_expected.to have_many :members }
-  it { is_expected.to have_many :jobs }
-  it { is_expected.to have_many :followers }
-
+  it {is_expected.to have_many :locations}
+  it {is_expected.to have_many :links}
+  it {is_expected.to have_many :members}
+  it {is_expected.to have_many :jobs}
 end
 
 # == Schema Information
@@ -57,15 +55,20 @@ end
 #  organization_way         :text
 #  organization_way_name    :text
 #  organization_way_photo   :text
+#  office_photos            :string(255)      default("{}")
+#  upcoming_events          :string(255)      default("{}")
 #  featured_links_title     :string(255)
 #  blog_feed                :text
 #  our_challenge            :text
 #  your_impact              :text
+#  interview_steps          :string(255)      default("{}")
 #  hiring_tagline           :text
 #  link_to_careers_page     :text
 #  avatar                   :string(255)
 #  achievement_count        :integer          default(0)
 #  endorsement_count        :integer          default(0)
+#  invited_emails           :string(255)      default("{}")
+#  pending_join_requests    :string(255)      default("{}")
 #  upgraded_at              :datetime
 #  paid_job_posts           :integer          default(0)
 #  monthly_subscription     :boolean          default(FALSE)
@@ -76,11 +79,4 @@ end
 #  name                     :string(255)
 #  github_organization_name :string(255)
 #  team_size                :integer
-#  mongo_id                 :string(255)
-#  office_photos            :string(255)      default([]), is an Array
-#  upcoming_events          :text             default([]), is an Array
-#  interview_steps          :text             default([]), is an Array
-#  invited_emails           :string(255)      default([]), is an Array
-#  pending_join_requests    :string(255)      default([]), is an Array
-#  state                    :string(255)      default("active")
 #
