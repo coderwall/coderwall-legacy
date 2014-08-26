@@ -5,13 +5,14 @@ RSpec.describe Teams::Location, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140728214411
 #
 # Table name: teams_locations
 #
 #  id          :integer          not null, primary key
 #  name        :string(255)
-#  description :text
-#  address     :text
+#  description :string(255)
+#  address     :string(255)
 #  city        :string(255)
 #  state_code  :string(255)
 #  country     :string(255)
