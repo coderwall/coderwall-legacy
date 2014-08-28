@@ -46,6 +46,7 @@ module Coderwall
 end
 
 ENABLE_TRACKING = !ENV['MIXPANEL_TOKEN'].blank?
+SHOW_PROMOTION = !ENV['NEW_RELIC'].blank?
 
 ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
   %(<span class="field_with_errors">#{html_tag}</span>).html_safe
