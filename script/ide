@@ -6,7 +6,12 @@ SESSION=coderwall
 
 # Go to working directory
 
-vagrant up --no-provision
+cd $HOME/assemblymade/coderwall
+
+rbenv version
+rbenv gemset active
+
+vagrant up
 
 # Session Exists?
 
@@ -18,15 +23,13 @@ if [ $? -eq 0 ]; then
   exit 0;
 fi
 
-cd - ; cd $HOME/assemblymade/coderwall
-rbenv version
-rbenv gemset active
+rm -rf log/*.log
+rm -rf tmp/cache
 
-bundle install
+bundle check || bundle install
 bundle clean --force
 bundle exec spring binstub --all
 rbenv rehash
-vagrant up --no-provision
 
 # Pre-flight Configuration
 

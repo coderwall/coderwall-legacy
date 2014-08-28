@@ -350,6 +350,8 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mail_view (2.0.4)
+      tilt
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     metamagic (3.1.6)
@@ -753,6 +755,7 @@ DEPENDENCIES
   launchy
   linkedin
   local_time
+  mail_view (~> 2.0.4)
   metamagic
   mini_magick
   mixpanel

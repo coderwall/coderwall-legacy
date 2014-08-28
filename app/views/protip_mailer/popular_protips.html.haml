@@ -21,6 +21,21 @@
                     %img{alt: "Email Header", height: 159, src: image_url('email/email-popular_protip-header.png'), style: nopad, width: 600}
 
 
+                    %table.outside{border: 0, cellpadding: 0, cellspacing: 0, style: "margin: 0 auto; padding: 0 40px 20px 40px; width: 600px; background: #fff;", width: 600}
+                      %tr{style: nopad}
+                        %td{style: nopad}
+                          %table.top-tip{border: 0, cellpadding: 0, cellspacing: 0, style: nopad}
+                            %tr{style: nopad}
+                              %td.glasses{style: "margin: 0; padding: 0 40px 30px 0;"}
+                                %img{alt: "Assembly", height: 114, src: image_url("email/logo-wordmark-muted@2x.png"), style: nopad}
+                              %td.tip{style: "margin: 0; padding: 0 0 30px 0; text-align: right;"}
+                                %h2{style: "#{nopad} font-weight: normal; #{serif} color: #99958b; margin-bottom: 10px;"}
+                                  Have ideas for us?
+                                %h3{style: "#{nopad} font-weight: bold; #{sans_serif} font-size: 16px; line-height: 22px; color: #48494E;"}
+                                  Coderwall is an open project on Assembly, where you can help build it and earn a share of future revenue.
+                                  %a{href: 'https://assembly.com/coderwall', style: "#{nopad} color: #3d8dcc;"} Jump in and get started!
+
+
               %table.outside{border: 0, cellpadding: 0, cellspacing: 0, style: "margin: 0 auto; padding: 0 40px 20px 40px; width: 600px; background: #fff;", width: 600}
                 %tr{style: nopad}
                   %td{style: nopad}
@@ -120,7 +135,7 @@
                                     %img{alt: "Avatar", height: 36, src: image_url(users_image_path(member)), style: "#{nopad} border: solid 2px #fff; -webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1); box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1); margin-right: 10px;", width: 36}
                                 %td.stack{style: "margin: 0; padding: 0 0 0 25px; border-top: solid 1px #eaeaea;"}
                                   %p{style: "#{nopad} #{serif} font-size: 16px; line-height: 22px;"}
-                                    =truncate(@team.tags_for_jobs.join(", "), length: 35)
+                                    = truncate(@team.tags_for_jobs.join(", "), length: 35)
               %table.outside{border: 0, cellpadding: 0, cellspacing: 0, style: "margin: 0 auto; padding: 0 40px 20px 40px; width: 600px; background: #fff;", width: 600}
                 %tr{style: nopad}
                   %td{style: nopad}
@@ -135,7 +150,7 @@
                             - unless @user.team.nil?
                               -if @user.team.premium?
                                 - if @user.team.hiring?
-                                  The more popular pro tips
+                                  The more popular protips
                                   = @user.team.name
                                   team members author, the more exposure your jobs receive
                                 - else
