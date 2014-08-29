@@ -20,10 +20,12 @@
   = admin_of_team? ? "prem-team" : "signed-out"
 
 -content_for :mixpanel do
-  =record_event('viewed team', :name => @team.name, 'own team' => @team.has_member?(current_user), :premium => @team.premium?, :job => @job.try(:title))
+  = record_event('viewed team', :name => @team.name, 'own team' => @team.has_member?(current_user), :premium => @team.premium?, :job => @job.try(:title))
 
--if SHOW_PROMOTION && @team.slug == 'new-relic'
-  =render :partial => 'new_relic'
+
+- if ENV['NEW_RELIC_PROMOTION']
+  - if @team.slug == 'new-relic'
+    = render(partial: 'new_relic')
 
 -if can_see_analytics?
   %ul.legend

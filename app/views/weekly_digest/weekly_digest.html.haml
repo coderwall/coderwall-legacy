@@ -69,7 +69,8 @@
                           %a.share-tip{:href => new_protip_url(@issue), :style => "margin: 0;padding: 6px 16px;background: #d75959;margin-right: 20px;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;display: inline-block;width: 120px;color: #fff;text-decoration: none;-webkit-border-radius: 4px;border-radius: 4px;text-align: center;"} Share a protip
                           %a.browse-networks{:href => root_url(@issue), :style => "margin: 0;padding: 6px 16px;background: #3d8dcc;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;display: inline-block;width: 120px;color: #fff;text-decoration: none;-webkit-border-radius: 4px;border-radius: 4px;text-align: center;"} Trending protips
 
-              =render :partial => 'new_relic' if SHOW_PROMOTION
+              = render(partial: 'new_relic') if ENV['NEW_RELIC_PROMOTION']
+
 
               - unless @most.nil?
                 %table.outside{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0 40px 20px 40px;width: 600px;background: #fff;", :width => "600"}
