@@ -5,7 +5,6 @@ require_relative '../config/environment'
 
 include Clockwork
 
-
 # Runs as 1:01 AM Pacific
 every(1.day, 'award:activate:active', at: '01:01') do
   ActivatePendingUsersWorker.perform_async
@@ -25,12 +24,23 @@ every(1.day, 'protip_mailer:popular_protips', if: ->(t){ t.day == 1 }) do
   end
 end
 
-every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '03:30') { CleanupProtipsAssociateZombieUpvotesJob.perform_async }
-every(1.day, 'clear_expired_sessions', at: '06:00') {  ClearExpiredSessionsJob.perform_async }
-every(1.day, 'protips:recalculate_scores', at: '00:00') {}
-every(1.day, 'search:sync', at: '00:00') {}
-every(1.day, 'teams:refresh', at: '00:00') {}
+every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '03:30') do
+  CleanupProtipsAssociateZombieUpvotesJob.perform_async
+end
 
+every(1.day, 'clear_expired_sessions', at: '06:00') do
+  ClearExpiredSessionsJob.perform_async
+end
+
+every(1.day, 'protips:recalculate_scores', at: '03:00') do
+  ProtipsRecalculateScoresJob.perform_async
+end
+
+every(1.day, 'search:sync', at: '04:00') do
+  SearchSyncJob.perform_async
+end
+
+every(1.day, 'teams:refresh', at: '00:00') {}
 
 # This is tied with broken code. Probably should delete
 every(1.day, 'facts:system', at: '00:00') {}
