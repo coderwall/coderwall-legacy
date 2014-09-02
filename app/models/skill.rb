@@ -22,16 +22,14 @@ class Skill < ActiveRecord::Base
 
   default_scope where(deleted: false)
 
-  class << self
-    def tokenize(value)
-      v = value.to_s.gsub('&', 'and').downcase.gsub(/\s|\./, BLANK)
-      v = 'nodejs' if v == 'node'
-      Sanitize.clean(v)
-    end
+  def self.tokenize(value)
+    v = value.to_s.gsub('&', 'and').downcase.gsub(/\s|\./, BLANK)
+    v = 'nodejs' if v == 'node'
+    Sanitize.clean(v)
+  end
 
-    def deleted?(user_id, skill_name)
-      Skill.with_deleted.where(user_id: user_id, name: skill_name, deleted: true).any?
-    end
+  def self.deleted?(user_id, skill_name)
+    Skill.with_deleted.where(user_id: user_id, name: skill_name, deleted: true).any?
   end
 
   def merge_with(another_skill)

@@ -9,8 +9,9 @@ class ProcessLikeJob
       when 'associate_to_user'
         begin
           like.user_id = User.find_by_tracking_code(like.tracking_code)
-          like.save
-        rescue ActiveRecord::RecordNotUnique
+          like.save!
+        rescue ActiveRecord::RecordNotUnique => ex
+          ap ex
           like.destroy
         end
     end

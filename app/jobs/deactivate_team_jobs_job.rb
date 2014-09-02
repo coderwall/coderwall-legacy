@@ -9,5 +9,4 @@ class DeactivateTeamJobsJob
       job.deactivate!
     end
   end
-
 end

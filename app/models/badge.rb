@@ -5,21 +5,21 @@ class Badge < ActiveRecord::Base
 
   scope :of_type, ->(badge) { where(badge_class_name: badge.class.name) }
 
-  class << self
-    def rename(old_class_name, new_class_name)
-      Badge.where(badge_class_name: old_class_name).map { |badge| badge.update_attribute(:badge_class_name, new_class_name) }
-      Fact.where('metadata LIKE ?', "%#{old_class_name}%").each do |fact|
-        if fact.metadata[:award] == old_class_name
-          fact.metadata[:award] = new_class_name
-        end
-        fact.save
+  def self.rename(old_class_name, new_class_name)
+    Badge.where(badge_class_name: old_class_name).map { |badge| badge.update_attribute(:badge_class_name, new_class_name) }
+
+    Fact.where('metadata LIKE ?', "%#{old_class_name}%").each do |fact|
+      if fact.metadata[:award] == old_class_name
+        fact.metadata[:award] = new_class_name
       end
-      ApiAccess.where('awards LIKE ?', "%#{old_class_name}%").each do |api_access|
-        if api_access.awards.delete(old_class_name)
-          api_access.awards << new_class_name
-        end
-        api_access.save
+      fact.save
+    end
+
+    ApiAccess.where('awards LIKE ?', "%#{old_class_name}%").each do |api_access|
+      if api_access.awards.delete(old_class_name)
+        api_access.awards << new_class_name
       end
+      api_access.save
     end
   end
 
@@ -41,12 +41,12 @@ class Badge < ActiveRecord::Base
 
   def tokenized_skill_name
     @tokenized_skill_name ||= begin
-      if badge_class.respond_to?(:skill)
-        Skill.tokenize(badge_class.skill)
-      else
-        ''
-      end
-    end
+                                if badge_class.respond_to?(:skill)
+                                  Skill.tokenize(badge_class.skill)
+                                else
+                                  ''
+                                end
+                              end
   end
 
   def next
@@ -89,13 +89,12 @@ class Badge < ActiveRecord::Base
   def to_event_hash
     { achievement: { name:     self.display_name, description: (self.try(:for) || self.try(:description)), percentage_of_achievers: self.percent_earned,
                      achiever: { first_name: self.user.short_name }, image_path: self.image_path },
-      user:        { username: self.user.username } }
+    user:        { username: self.user.username } }
   end
 
   def event_type
     :unlocked_achievement
   end
-
 end
 
 # == Schema Information

@@ -1,9 +1,7 @@
-
 module Awards
-
   def award_from_file(filename)
     text = File.read(filename)
-    
+
     unless text.nil?
       csv = CSV.parse(text, headers: false)
       csv.each do |row|
