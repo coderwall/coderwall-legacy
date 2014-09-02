@@ -6,7 +6,12 @@ SESSION=coderwall
 
 # Go to working directory
 
-vagrant up --no-provision
+cd $HOME/assemblymade/coderwall
+
+rbenv version
+rbenv gemset active
+
+vagrant up
 
 # Session Exists?
 
@@ -18,15 +23,13 @@ if [ $? -eq 0 ]; then
   exit 0;
 fi
 
-cd - ; cd $HOME/assemblymade/coderwall
-rbenv version
-rbenv gemset active
+rm -rf log/*.log
+rm -rf tmp/cache
 
-bundle install
+bundle check || bundle install
 bundle clean --force
-bundle exec spring binstub --all.
+bundle exec spring binstub --all
 rbenv rehash
-vagrant up --no-provision
 
 # Pre-flight Configuration
 
@@ -56,8 +59,8 @@ tmux send-keys "clear ; bundle exec guard -c -g rspec" C-m
 # Web
 tmux select-window -t $SESSION:2
 tmux select-pane -t 0
-#tmux send-keys "clear ; env bin/rails server webrick -p3000" C-m
-tmux send-keys "clear ; bundle exec puma -C ./config/puma.rb" C-m
+tmux send-keys "clear ; bundle exec rails server webrick -p3000" C-m
+#tmux send-keys "clear ; bundle exec puma -C ./config/puma.rb" C-m
 
 # Sidekiq
 tmux select-window -t $SESSION:3

@@ -1,0 +1,163 @@
+!!!
+%html{:style => "margin: 0;padding: 0;"}
+  %head{:style => "margin: 0;padding: 0;"}
+  %body{:style => "margin: 0;padding: 60px 0;background-color: #48494e; -webkit-font-smoothing: antialiased;width:100% !important; -webkit-text-size-adjust:none;"}
+
+    %table{:style => "width: 100%; margin: 0 auto; background: ##48494e;"}
+      %tr
+        %td{:style => "background: ##48494e;"}
+
+        %table{:style => "margin: 0 auto 40px auto;padding: 0;width: 100%;"}
+          %tr
+            %td{:style => "margin: 0 auto;padding: 0;width: 600px;"}
+              %table.logo{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto 40px auto;padding: 0;width: 211px;", :width => "211"}
+                %tr{:style => "margin: 0;padding: 0;"}
+                  %td{:style => "margin: 0;padding: 0;"}
+                    %img{:alt => "Coderwall Logo", :height => "35", :src => image_url('email/coderwall-logo.jpg'), :style => "margin: 0;padding: 0;", :width => "211"}
+              %table.header{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0;width: 600px;background: #fff;-webkit-border-top-left-radius: 6px;-webkit-border-top-right-radius: 6px;border-top-left-radius: 6px;border-top-right-radius: 6px;", :width => "600"}
+                %tr{:style => "margin: 0;padding: 0;"}
+                  %td{:style => "margin: 0;padding: 0;"}
+                    %img{:alt => "Email Header", :height => "159", :src => image_url('email/email-header.png'), :style => "margin: 0;padding: 0;", :width => "600"}
+              - if @stats.map{|stat| stat[1]}.reduce(:+) >= 5
+                %table.stats{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0;width: 600px;background: #fff;height: 140px;background-color: #ece9e2;border-top: solid 2px #cbc9c4;border-bottom: solid 2px #cbc9c4;", :width => "600"}
+                  %tr.stats{:style => "margin: 0 auto;padding: 0;width: 600px;background: #fff;height: 140px;background-color: #ece9e2;border-top: solid 2px #cbc9c4;border-bottom: solid 2px #cbc9c4;"}
+                    -[@stats.second, @stats.first, @stats.third].compact.each do |stat, count|
+                      %td{:style => "margin: 0;padding: 0;width: 120px;background: url(images/dots.png) no-repeat right center;"}
+                        %h2{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;text-align: center;font-size: 70px;color: #48494e;line-height: 72px;"}= count
+                        %h3{:style => "margin: 0;padding: 0;font-weight: bold;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;text-align: center;text-transform: uppercase;color: #99958b;"}= stat.to_s.humanize
+                %table.comment{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 20px 30px;width: 600px;background: #fff;", :width => "600"}
+                  %tr{:style => "margin: 0;padding: 0;"}
+                    %td{:style => "margin: 0;padding: 0;"}
+                      %p{:style => "margin: 0;padding: 0;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;text-align: center;"}
+                        View all your stats
+                        = succeed "." do
+                          %a{:href => dashboard_url(@issue), :style => "margin: 0;padding: 0;color: #3d8dcc;text-decoration: underline;"} on your dashboard
+
+
+              %table.outside{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0 40px 20px 40px;width: 600px;background: #fff;", :width => "600"}
+                %tr{:style => "margin: 0;padding: 0;"}
+                  %td{:style => "margin: 0;padding: 0;"}
+                    %table.tips{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0;padding: 0;width: 520px;border: #cbc9c4 solid 2px;-webkit-border-radius: 6px;border-radius: 6px;overflow: hidden;"}
+                      %tr.title{:style => "margin: 0;padding: 0;height: 50px;line-height: 50px;"}
+                        %td{:colspan => "6", :style => "margin: 0;padding: 0;"}
+                          %h2{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;text-align: center;background: #ECE9E2;font-size: 19px;color: #48494e;margin-bottom: 20px;"} This week's pro tips for you
+
+                      - @protips.first(5).each do |protip|
+                        %tr.tip{:style => "margin: 0;padding: 0;"}
+                          %td.avatar{:style => "margin: 0;padding: 0;padding-left: 30px;width: 36px;padding-bottom: 20px;"}
+                            %img{:alt => "Avatar", :height => "36", :src => image_url(users_image_path(protip.user)), :style => "margin: 0;padding: 0;border: solid 2px #fff;-webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);", :width => "36"}
+                          %td.link{:style => "margin: 0;padding: 0;padding-right: 20px;padding-left: 10px;width: 270px;padding-bottom: 20px;"}
+                            %a{:href => protip_url(protip.public_id, @issue), :style => "margin: 0;padding: 0;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;color: #48494E;text-decoration: none;display: block;"}= protip.title
+                          -if protip.best_stat.value.try(:to_i) == 0
+                            %td.thumb{:style => "margin: 0;padding: 0 5px;width: 15px;padding-bottom: 20px; content: 'u';font-size: 19px;"}
+                          -elsif protip.best_stat.name == "upvotes"
+                            %td.thumb{:style => "margin: 0;padding: 0 5px;width: 15px;padding-bottom: 20px; content: 'u';font-size: 19px;"}
+                              =image_tag("email/upvote.png")
+                          -elsif protip.best_stat.name == "comments"
+                            %td.thumb{:style => "margin: 0;padding: 0 5px;width: 15px;padding-bottom: 20px;font-family: 'oli'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1; -webkit-font-smoothing: antialiased;content: '7';font-size: 19px;"}
+                              =image_tag("email/comment.png")
+                          -elsif protip.best_stat.name == "views"
+                            %td.thumb{:style => "margin: 0;padding: 0 5px;width: 15px;padding-bottom: 20px;content: '6';font-size: 19px;"}
+                              =image_tag("email/eye.png")
+                          -elsif protip.best_stat.name == "hawt"
+                            %td.thumb{:style => "margin: 0;padding: 0 5px;width: 15px;padding-bottom: 20px;content: '2';font-size: 19px; color: #f35e39;"}
+                              =image_tag("email/flame.png")
+                          %td.upvotes{:style => "margin: 0;padding: 0 5px;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;width: 15px;height: 36px;padding-bottom: 20px;"}
+                            %h4{:style => "margin: 0;padding: 0;font-weight: normal;"}= formatted_best_stat_value(protip) unless protip.best_stat.name =~ /hawt/ || protip.best_stat.value.try(:to_i) == 0
+                      %tr.btns{:style => "margin: 0;padding: 0;"}
+                        %td.btns-box{:colspan => "6", :style => "margin: 0;padding: 20px 90px;border-top: solid 1px #cbc9c4;"}
+                          %a.share-tip{:href => new_protip_url(@issue), :style => "margin: 0;padding: 6px 16px;background: #d75959;margin-right: 20px;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;display: inline-block;width: 120px;color: #fff;text-decoration: none;-webkit-border-radius: 4px;border-radius: 4px;text-align: center;"} Share a protip
+                          %a.browse-networks{:href => root_url(@issue), :style => "margin: 0;padding: 6px 16px;background: #3d8dcc;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;display: inline-block;width: 120px;color: #fff;text-decoration: none;-webkit-border-radius: 4px;border-radius: 4px;text-align: center;"} Trending protips
+
+              = render(partial: 'new_relic') if ENV['NEW_RELIC_PROMOTION']
+
+
+              - unless @most.nil?
+                %table.outside{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0 40px 20px 40px;width: 600px;background: #fff;", :width => "600"}
+                  %tr{:style => "margin: 0;padding: 0;"}
+                    %td{:style => "margin: 0;padding: 0;"}
+                      %table.activity{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0;padding: 0;width: 520px;border: #cbc9c4 solid 2px;-webkit-border-radius: 6px;border-radius: 6px;overflow: hidden;"}
+                        %tr.title{:style => "margin: 0;padding: 0;height: 50px;line-height: 50px;"}
+                          %td{:colspan => "2", :style => "margin: 0;padding: 0;"}
+                            %h2{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;text-align: center;background: #ECE9E2;font-size: 19px;color: #48494e;margin-bottom: 20px;"} Activity from your connections
+                        %tr{:style => "margin: 0;padding: 0;"}
+                          %td.activity-title{:style => "margin: 0;padding: 0 0 0 30px;"}
+                            %h2{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;font-size: 20px;background: url(#{image_url('email/big-gold-star.png')}) no-repeat left top;padding-left: 30px;"}== Most #{@star_stat_string}
+                          %td.activity-avatar{:style => "margin: 0;padding: 0;padding-right: 30px;"}
+                            %img{:alt => "User Avatar", :src => image_url(users_image_path(@most[:user])), :style => "margin: 0;padding: 0;border: solid 2px #fff;-webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);"}
+
+                        %tr{:style => "margin: 0;padding: 0;"}
+                          %td.activity-message{:style => "margin: 0;padding: 10px 20px 20px 30px;"}
+                            %p{:style => "margin: 0;padding: 0;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 22px;"}
+                              %a{:href => badge_url(@most[:user].username, @issue), :style => "margin: 0;padding: 0;color: #3d8dcc;"}= @most[:user].short_name
+                              had
+                              = @most[@star_stat] > 1 ? "#{@most[@star_stat]}" : "most"
+                              ==#{@star_stat_string} this week.
+                              = succeed "." do
+                                %a{:href => badge_url(@most[:user].username, @issue), :style => "margin: 0;padding: 0;color: #3d8dcc;"}== View #{@most[:user].username}'s profile
+              - unless @team.nil?
+                %table.outside{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0 40px 20px 40px;width: 600px;background: #fff;", :width => "600"}
+                  %tr{:style => "margin: 0;padding: 0;"}
+                    %td{:style => "margin: 0;padding: 0;"}
+                      %table.team{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0;padding: 0;width: 520px;border: #cbc9c4 solid 2px;-webkit-border-radius: 6px;border-radius: 6px;overflow: hidden;"}
+                        %tr.title{:style => "margin: 0;padding: 0;height: 50px;line-height: 50px;"}
+                          %td{:colspan => "2", :style => "margin: 0;padding: 0;"}
+                            %h2{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;text-align: center;background: #ECE9E2;font-size: 19px;color: #48494e;margin-bottom: 20px;"} Featured engineering team
+                        %tr{:style => "margin: 0;padding: 0;"}
+                          %td.team-avatar{:style => "margin: 0;padding: 10px 0 30px 20px;width: 120px;"}
+                            %img{:alt => "Team Avatar", :height => "89", :src => image_url(@team.avatar_url), :style => "margin: 0;padding: 0;border: solid 3px #eaeaea;", :width => "89"}
+                          %td.job-info{:style => "margin: 0;padding: 25px;"}
+                            %h2{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;font-size: 24px;line-height: 22px;margin-bottom: 6px;"}= @team.name
+                            %h3{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;font-size: 16px;line-height: 22px;margin-bottom: 6px;"}= truncate(@team.hiring_message, :length => 80)
+                            %a{:href => teamname_url(@team.slug, @issue) + "#open-positions", :style => "margin: 0;padding: 0;color: #3d8dcc;"}
+                              = @team.name
+                              is looking for
+                              = @job.title
+                        %tr
+                          %td{:colspan => "2", :style => "width: 100%;"}
+                            %table{:style => "width: 100%;"}
+                              %tr.team-btm{:style => "margin: 0;padding: 0;"}
+                                %td.team-members{:style => "margin: 0;padding: 25px 15px 25px 25px;width: 158px;border-top: solid 1px #eaeaea;border-right: solid 1px #eaeaea;"}
+                                  -@team.most_influential_members_for(@user).first(3).each do |member|
+                                    %img{:alt => "Avatar", :height => "36", :src => image_url(users_image_path(member)), :style => "margin: 0;padding: 0;border: solid 2px #fff;-webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);margin-right: 10px;", :width => "36"}
+                                %td.stack{:style => "margin: 0;padding: 0 0 0 25px;border-top: solid 1px #eaeaea;"}
+                                  %p{:style => "margin: 0;padding: 0;font-family: Georgia, Times, Times New Roman, serif;font-size: 16px;line-height: 22px;"}=truncate(@team.tags_for_jobs.join(", "), :length => 35)
+              %table.outside{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0 40px 20px 40px;width: 600px;background: #fff;", :width => "600"}
+                %tr{:style => "margin: 0;padding: 0;"}
+                  %td{:style => "margin: 0;padding: 0;"}
+                    %table.top-tip{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0;padding: 0;"}
+                      %tr{:style => "margin: 0;padding: 0;"}
+                        %td.glasses{:style => "margin: 0;padding: 0 40px 30px 0;"}
+                          %img{:alt => "Glasses", :height => "114", :src => image_url("email/glasses.png"), :style => "margin: 0;padding: 0;", :width => "155"}
+                        %td.tip{:style => "margin: 0;padding: 0 0 30px 0;text-align: right;"}
+                          %h2{:style => "margin: 0;padding: 0;font-weight: normal;font-family: Georgia, Times, Times New Roman, serif;color: #99958b;margin-bottom: 10px;"} This weeks top tip:
+                          %h3{:style => "margin: 0;padding: 0;font-weight: bold;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 16px;line-height: 22px;color: #48494E;"}
+                            - unless @user.team.nil?
+                              -if @user.team.premium?
+                                - if @user.team.hiring?
+                                  The more popular pro tips
+                                  = @user.team.name
+                                  team members author, the more exposure your jobs receive
+                                - else
+                                  add open positions to your team page and they will get featured here
+                              -else
+                                Want
+                                =@user.team.name
+                                featured here?
+                                %a{:href => employers_url(@issue), :style => "margin: 0;padding: 0;color: #3d8dcc;"} add open positions
+                            - else
+                              Want your team featured here?
+                              %a{:href => employers_url(@issue), :style => "margin: 0;padding: 0;color: #3d8dcc;"} create team
+
+    %table.outside{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "margin: 0 auto;padding: 0 40px 20px 40px;width: 600px;background: #48494e;", :width => "600"}
+      %tr{:style => "margin: 0;padding: 0;"}
+        %td{:style => "margin: 0;padding: 0;text-align:center"}
+          %p.reminder{:style => "color:#fff;font-size:12px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';margin-top:0;margin-bottom:15px;padding-top:0;padding-bottom:0;line-height:18px;"} You're receiving this email because you signed up for Coderwall. We hate spam and make an effort to keep notifications to a minimum.
+          %p{:style => "color:#c9c9c9;font-size:12px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
+            %preferences{:style => "color:#3ca7dd;text-decoration:none;"}>
+              %strong
+                %a{:href => "https://coderwall.com/settings#email", :style => "color:#3ca7dd;text-decoration:none;"} Edit your subscription
+            \  |  
+            %unsubscribe{:style => "color:#3ca7dd;text-decoration:none;"}
+              %strong
+                %a{:href => '%unsubscribe_url%', :style => "color:#3ca7dd;text-decoration:none;"} Unsubscribe instantly

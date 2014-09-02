@@ -30,9 +30,6 @@ module Coderwall
     config.ember.variant = Rails.env.downcase.to_sym
     config.assets.js_compressor = :uglifier
 
-    config.logger = Logger.new(STDOUT)
-    config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
-
     config.after_initialize do
       if %w{development test}.include?(Rails.env)
         Hirb.enable
@@ -53,5 +50,3 @@ ENABLE_TRACKING = !ENV['MIXPANEL_TOKEN'].blank?
 ActionView::Base.field_error_proc = Proc.new { |html_tag, instance|
   %(<span class="field_with_errors">#{html_tag}</span>).html_safe
 }
-
-#require 'font_assets/railtie' # => loads font middleware so cloudfront can serve fonts that render in Firefox

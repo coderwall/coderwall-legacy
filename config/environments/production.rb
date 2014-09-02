@@ -6,7 +6,6 @@ Coderwall::Application.configure do
   config.force_ssl = true
   config.action_controller.asset_host = ENV['CDN_ASSET_HOST']
   config.action_mailer.asset_host = ENV['CDN_ASSET_HOST']
-  #config.font_assets.origin = ENV['FONT_ASSETS_ORIGIN']
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -18,4 +17,5 @@ Coderwall::Application.configure do
   config.assets.digest = true
   config.static_cache_control = 'public, max-age=31536000'
   config.host = ENV['HOST_DOMAIN']
+  config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
 end

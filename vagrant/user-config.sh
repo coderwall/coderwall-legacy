@@ -15,6 +15,7 @@ echo rvm_trust_rvmrcs_flag=1 >> $HOME/.rvmrc
 curl -k -L https://get.rvm.io | bash -s stable --autolibs=enabled
 source "$HOME/.rvm/scripts/rvm"
 [[ -s "$rvm_path/hooks/after_cd_bundle" ]] && chmod +x $rvm_path/hooks/after_cd_bundle
+rvm autolibs enable
 rvm requirements
 rvm reload
 _RUBY_VERSION=ruby-2.1.2

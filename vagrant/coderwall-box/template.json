@@ -1,8 +1,8 @@
 {
   "builders": [{
     "type": "virtualbox-iso",
-    "boot_wait": "10s",
-    "disk_size": 10140,
+    "boot_wait": "15s",
+    "disk_size": 32768,
     "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
     "guest_os_type": "Ubuntu_64",
     "http_directory": "http",
