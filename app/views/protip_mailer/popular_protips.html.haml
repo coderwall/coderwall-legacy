@@ -50,7 +50,7 @@
 
                         %tr.tip{style: nopad}
                           %td.avatar{style: "#{nopad} padding-left: 30px; width: 36px; padding-bottom: 20px;"}
-                            %img{alt: "Avatar", height: 36, src: image_url(users_image_path(protip.user)), style: "#{nopad} border: solid 2px #fff; -webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1); box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);", width: 36}
+                            %img{alt: "Avatar", height: 36, src: image_url(protip.user.avatar.url), style: "#{nopad} border: solid 2px #fff; -webkit-box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1); box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.1);", width: 36}
                           %td.link{style: "#{nopad} padding-right: 20px; padding-left: 10px; width: 270px; padding-bottom: 20px;"}
                             %a{href: protip_url(protip.public_id, @issue), style: "#{nopad} #{sans_serif} font-size: 14px; line-height: 22px; color: #48494E; text-decoration: none; display: block;"}
                               = protip.title
