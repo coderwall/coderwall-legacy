@@ -25,7 +25,7 @@ every(1.day, 'protip_mailer:popular_protips', if: ->(t){ t.day == 1 }) do
   end
 end
 
-every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '00:00') {}
+every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '03:30') { CleanupProtipsAssociateZombieUpvotesJob.perform_async }
 every(1.day, 'clear_expired_sessions', at: '00:00') {}
 every(1.day, 'facts:system', at: '00:00') {}
 every(1.day, 'protips:recalculate_scores', at: '00:00') {}

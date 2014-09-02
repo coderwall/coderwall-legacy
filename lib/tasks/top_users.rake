@@ -1,3 +1,4 @@
+# TODO: The underlying job is broken
 namespace :top_users do
   task :generate => :environment do
     GenerateTopUsersCompositeJob.new.perform

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'net_validators'
 require 'open-uri'
 require 'cfm'
@@ -785,7 +787,7 @@ class Protip < ActiveRecord::Base
   end
 
   def retrieve_title_from_html(html)
-    Nokogiri::XML.fragment(html.xpath("//title").map(&:text).join).text.force_encoding('ASCII-8BIT').gsub(/\P{ASCII}/, '')
+    Nokogiri::XML.fragment(html.xpath("//title").map(&:text).join).text.gsub(/\P{ASCII}/, '')
   end
 
   def upvote_ancestor(link_identifier, link)

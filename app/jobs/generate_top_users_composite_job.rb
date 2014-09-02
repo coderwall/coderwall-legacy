@@ -1,3 +1,5 @@
+# TODO: Broken, generates errors due to changes in `convert` (ImageMagick)
+
 class GenerateTopUsersCompositeJob
   include Sidekiq::Worker
 
