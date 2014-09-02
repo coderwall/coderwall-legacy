@@ -17,8 +17,12 @@ end
 
 # On the first of every month send the popular protips from the previous month.
 every(1.day, 'protip_mailer:popular_protips', if: ->(t){ t.day == 1 }) do
-  last_month = 1.month.ago
-  ProtipMailerPopularProtipsWorker.perform_async(last_month.beginning_of_month, last_month.end_of_month)
+  if ENV['PROTIP_MAILER_POPULAR_PROTIPS']
+    last_month = 1.month.ago
+    ProtipMailerPopularProtipsWorker.perform_async(last_month.beginning_of_month, last_month.end_of_month)
+  else
+    Rails.logger.warn('PROTIP_MAILER_POPULAR_PROTIPS is disabled. Set `heroku config:set PROTIP_MAILER_POPULAR_PROTIPS=true` to allow sending scheduled emails.')
+  end
 end
 
 every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '00:00') {}
