@@ -40,7 +40,9 @@ every(1.day, 'search:sync', at: '04:00') do
   SearchSyncJob.perform_async
 end
 
-every(1.day, 'teams:refresh', at: '00:00') {}
+every(1.day, 'teams:refresh', at: '05:00') do
+  TeamsRefreshJob.perform_async
+end
 
 # This is tied with broken code. Probably should delete
 every(1.day, 'facts:system', at: '00:00') {}
