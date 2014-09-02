@@ -27,7 +27,10 @@ end
 
 every(1.day, 'cleanup:protips:associate_zombie_upvotes', at: '03:30') { CleanupProtipsAssociateZombieUpvotesJob.perform_async }
 every(1.day, 'clear_expired_sessions', at: '06:00') {  ClearExpiredSessionsJob.perform_async }
-every(1.day, 'facts:system', at: '00:00') {}
 every(1.day, 'protips:recalculate_scores', at: '00:00') {}
 every(1.day, 'search:sync', at: '00:00') {}
 every(1.day, 'teams:refresh', at: '00:00') {}
+
+
+# This is tied with broken code. Probably should delete
+every(1.day, 'facts:system', at: '00:00') {}
