@@ -1,3 +1,5 @@
+= render partial: 'shared/assembly_banner'
+
 header#masthead
   .inside-masthead.cf
     .mobile-panel.cf
@@ -7,13 +9,13 @@ header#masthead
 
     - if ENV['NEW_RELIC_PROMOTION']
       - unless mobile_device?
-        a.tee-ribbon.track href="https://coderwall.com/team/new-relic" data-action="clicked tee"
+        a.tee-ribbon.track href="http://newrelic.com/sp/coderwall?utm_source=CWAL&utm_medium=promotion&utm_content=coderwall&utm_campaign=coderwall&mpc=PM-CWAL-web-Signup-100-coderwall-shirtpromo" data-action="clicked tee"
 
     nav#nav
       ul
         li = link_to(t('protips'), root_path)
         li = link_to(t('awesome_jobs'), jobs_path, class: jobs_nav_class)
-        -if signed_in?
+        - if signed_in?
           li
             .account-dropdown
               a href="#" data-dropdown="#dropdown-profile"
@@ -24,8 +26,6 @@ header#masthead
                   div = link_to(t('profile'), badge_path(username: current_user.username), class: mywall_nav_class)
                   div = link_to(t('settings'), settings_path, class: settings_nav_class)
                   div = link_to(t('sign_out'), sign_out_path)
-        -else
+        - else
           li = link_to(t('sign_in'), signin_path, class: signin_nav_class)
           li = link_to(t('register'), signin_path, class: signup_nav_class)
-
-= render partial: 'shared/assembly_banner'
