@@ -41,7 +41,7 @@ class ProtipMailer < ActionMailer::Base
     end.first
     @most = nil if @most && (@most[@star_stat] <= 0)
 
-    mail(to: @user.email, subject: "#{ACTIVITY_SUBJECT_PREFIX} Popular Protips on Coderwall")
+    mail(to: @user.email, subject: "#{ACTIVITY_SUBJECT_PREFIX} protips just for you, algorithmically picked w/:heart:")
   rescue Exception => ex
     abort_delivery(ex)
   end
