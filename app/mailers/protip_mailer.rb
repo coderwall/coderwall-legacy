@@ -17,19 +17,26 @@ class ProtipMailer < ActionMailer::Base
     protips_count: 'protips'
   }
   ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
+  CAMPAIGN_ID = 'protip_mailer-popular_protips'
 
   #################################################################################
   def popular_protips(user, protips, from, to)
-    fail 'Protips are required.' if protips.nil? || protips.empty?
     fail 'User is required.' unless user
+    # Skip if this user has already been sent and email for this campaign id.
+    fail "Already sent email to #{user.id} please check Redis SET #{CAMPAIGN_ID}." unless REDIS.sadd(CAMPAIGN_ID, user.id.to_s)
+
+    fail 'Protips are required.' if protips.nil? || protips.empty?
     fail 'From date is required.' unless from
     fail 'To date is required.' unless to
 
-    headers['X-Mailgun-Campaign-Id'] = 'protip_mailer-popular_protips'
+    headers['X-Mailgun-Campaign-Id'] = CAMPAIGN_ID
 
     @user = user
     @protips = protips
-    @team, @job = get_team_and_job_for(@user)
+    @team, @job = self.class.get_team_and_job_for(@user)
+    unless @job.nil?
+      self.class.mark_sent(@job, @user)
+    end
     @issue = campaign_params
 
     stars = @user.following_users.where('last_request_at > ?', 1.month.ago)
@@ -41,7 +48,7 @@ class ProtipMailer < ActionMailer::Base
     end.first
     @most = nil if @most && (@most[@star_stat] <= 0)
 
-    mail(to: @user.email, subject: "#{ACTIVITY_SUBJECT_PREFIX} protips just for you, algorithmically picked w/:heart:")
+    mail(to: @user.email, subject: "protips just for you, algorithmically picked w/:heart:")
   rescue Exception => ex
     abort_delivery(ex)
   end
@@ -49,6 +56,14 @@ class ProtipMailer < ActionMailer::Base
 
   def abort_delivery(ex)
     Rails.logger.error("[ProtipMailer.popular_protips] Aborted email '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
+  end
+
+  def self.mark_sent(mailable, user)
+    SentMail.create!(user: user, sent_at: user.last_email_sent, mailable: mailable)
+  end
+
+  def self.already_sent?(mailable, user)
+    SentMail.where(user_id: user.id, mailable_id: mailable.id, mailable_type: mailable.class.name).exists?
   end
 
   def campaign_params
@@ -71,22 +86,20 @@ class ProtipMailer < ActionMailer::Base
     Date.today.cweek - Date.today.at_beginning_of_month.cweek
   end
 
-  def get_team_and_job_for(user)
+  def self.get_team_and_job_for(user)
     if user.team.try(:hiring?)
       [user.team, user.team.jobs.sample]
     else
       teams = teams_for_user(user)
       teams.each do |team|
-        best_job = team.best_positions_for(user).detect do |job|
-          job.team_document_id == user.team_document_id
-        end
+        best_job = team.best_positions_for(user).detect{|job| (job.team_document_id == user.team_document_id) or !already_sent?(job, user)}
         return [team, best_job] unless best_job.nil?
       end
     end
     [nil, nil]
   end
 
-  def teams_for_user(user)
+  def self.teams_for_user(user)
     Team.most_relevant_featured_for(user).select do |team|
       team.hiring?
     end
