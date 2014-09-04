@@ -16,7 +16,6 @@ class ProtipMailer < ActionMailer::Base
     endorsements: 'endorsements',
     protips_count: 'protips'
   }
-  ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
   CAMPAIGN_ID = 'protip_mailer-popular_protips'
 
   #################################################################################
