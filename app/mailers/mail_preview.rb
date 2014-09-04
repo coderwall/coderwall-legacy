@@ -5,6 +5,7 @@ class MailPreview < MailView
     from = 60.days.ago
     to = 0.days.ago
     user = User.with_username(USERNAME)
+    REDIS.srem(ProtipMailer::CAMPAIGN_ID, user.id.to_s)
     protips = ProtipMailer::Queries.popular_protips(from, to)
     ProtipMailer.popular_protips(user, protips, from, to).deliver
   end

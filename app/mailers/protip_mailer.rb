@@ -17,15 +17,19 @@ class ProtipMailer < ActionMailer::Base
     protips_count: 'protips'
   }
   ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
+  CAMPAIGN_ID = 'protip_mailer-popular_protips'
 
   #################################################################################
   def popular_protips(user, protips, from, to)
-    fail 'Protips are required.' if protips.nil? || protips.empty?
     fail 'User is required.' unless user
+    # Skip if this user has already been sent and email for this campaign id.
+    fail "Already sent email to #{user.id} please check Redis SET #{CAMPAIGN_ID}." unless REDIS.sadd(CAMPAIGN_ID, user.id.to_s)
+
+    fail 'Protips are required.' if protips.nil? || protips.empty?
     fail 'From date is required.' unless from
     fail 'To date is required.' unless to
 
-    headers['X-Mailgun-Campaign-Id'] = 'protip_mailer-popular_protips'
+    headers['X-Mailgun-Campaign-Id'] = CAMPAIGN_ID
 
     @user = user
     @protips = protips
@@ -44,7 +48,7 @@ class ProtipMailer < ActionMailer::Base
     end.first
     @most = nil if @most && (@most[@star_stat] <= 0)
 
-    mail(to: @user.email, subject: "#{ACTIVITY_SUBJECT_PREFIX} protips just for you, algorithmically picked w/:heart:")
+    mail(to: @user.email, subject: "protips just for you, algorithmically picked w/:heart:")
   rescue Exception => ex
     abort_delivery(ex)
   end
