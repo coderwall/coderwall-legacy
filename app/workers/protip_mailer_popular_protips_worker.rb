@@ -3,6 +3,12 @@ class ProtipMailerPopularProtipsWorker
   sidekiq_options queue: :low
 
   def perform(from, to)
+
+    # In development the arguments are the correct type but in production
+    # they have to be recast from string back to date types :D
+    from = Time.zone.parse(from.to_s)
+    to = Time.zone.parse(to.to_s)
+
     protips = ProtipMailer::Queries.popular_protips(from, to)
 
     User.find_each(batch_size: 100) do |user|
