@@ -9,20 +9,12 @@ class ProtipMailerPopularProtipsWorker
     from = Time.zone.parse(from.to_s)
     to = Time.zone.parse(to.to_s)
 
-    protips = ProtipMailer::Queries.popular_protips(from, to)
+    protip_ids = ProtipMailer::Queries.popular_protips(from, to).map(&:id)
 
-    User.find_each(batch_size: 100) do |user|
-      begin
-        if REDIS.sismember(ProtipMailer::CAMPAIGN_ID, user.id.to_s)
-          Rails.logger.warn("Already sent email to #{user.id} please check Redis SET #{ProtipMailer::CAMPAIGN_ID}.")
-        else
-          Rails.logger.warn("Sending email to #{user.id}.")
-          ProtipMailer.popular_protips(user, protips, from, to).deliver
-        end
-      rescue => ex
-        Rails.logger.error("[ProtipMailer.popular_protips] Unable to send email due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
-        Rails.logger.ap([from, to, user, protips], :error)
-      end
+    fail "Only #{protip_ids.count} protips but expected 10" unless protip_ids.count == 10
+
+    User.order('updated_at desc').find_each(batch_size: 100) do |user|
+      ProtipMailerPopularProtipsSendWorker.perform_async(user.id, protip_ids, from, to)
     end
   end
 end
