@@ -100,7 +100,6 @@ class UsersController < ApplicationController
   end
 
   def update
-
     user_id = params[:id]
 
     @user = user_id.blank? ? current_user : User.find(user_id)
