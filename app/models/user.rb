@@ -318,7 +318,16 @@ class User < ActiveRecord::Base
 
   def facts
     @facts ||= begin
-                 user_identites = [linkedin_identity, bitbucket_identity, lanyrd_identity, twitter_identity, github_identity, speakerdeck_identity, slideshare_identity, id.to_s].compact
+                 user_identites = [
+                   linkedin_identity,
+                   bitbucket_identity,
+                   lanyrd_identity,
+                   twitter_identity,
+                   github_identity,
+                   speakerdeck_identity,
+                   slideshare_identity,
+                   id.to_s
+                 ].compact
                  Fact.where(owner: user_identites.collect(&:downcase)).all
                end
   end

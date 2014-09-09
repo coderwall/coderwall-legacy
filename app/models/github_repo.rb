@@ -21,22 +21,20 @@ class GithubRepo
 
   before_save :update_tags!
 
-  class << self
-    def for_owner_and_name(owner, name, client=nil, prefetched={})
-      (where('owner.login' => owner, 'name' => name).first || new('name' => name, 'owner' => { 'login' => owner })).tap do |repo|
-        if repo.new_record?
-          logger.info "ALERT: No cached repo for #{owner}/#{name}"
-          repo.refresh!(client, prefetched)
-        end
+  def self.for_owner_and_name(owner, name, client, prefetched = {})
+    (where('owner.login' => owner, 'name' => name).first || new('name' => name, 'owner' => { 'login' => owner })).tap do |repo|
+      if repo.new_record?
+        logger.info "ALERT: No cached repo for #{owner}/#{name}"
+        repo.refresh!(client, prefetched)
       end
     end
   end
 
-  def refresh!(client=nil, repo={})
-    client      ||= GithubOld.new
+  def refresh!(client, repo = {})
+    client ||= GithubOld.new
     owner, name = self.owner.login, self.name
 
-    repo        = client.repo(owner, name) if repo.empty?
+    repo = client.repo(owner, name) if repo.empty?
 
     if repo[:fork].blank?
       repo.merge!(
@@ -47,11 +45,11 @@ class GithubRepo
 
     repo.delete(:id)
 
-    update_attributes! repo.merge(
-                         owner:     GithubUser.new(repo[:owner]),
-                         followers: client.repo_watchers(owner, name),
-                         languages: client.repo_languages(owner, name) # needed so we can determine contents
-                       )
+    update_attributes!(repo.merge(
+      owner:     GithubUser.new(repo[:owner]),
+      followers: client.repo_watchers(owner, name),
+      languages: client.repo_languages(owner, name) # needed so we can determine contents
+    ))
   end
 
   def full_name
@@ -127,20 +125,20 @@ class GithubRepo
 
   def popularity
     @popularity ||= begin
-      rank = times_forked + watchers #(times_forked + followers.size)
-      case
-        when rank > 600 then
-          5
-        when rank > 300 then
-          4
-        when rank > 100 then
-          3
-        when rank > 20 then
-          2
-        else
-          1
-      end
-    end
+                      rank = times_forked + watchers #(times_forked + followers.size)
+                      case
+                      when rank > 600 then
+                        5
+                      when rank > 300 then
+                        4
+                      when rank > 100 then
+                        3
+                      when rank > 20 then
+                        2
+                      else
+                        1
+                      end
+                    end
   end
 
   def raw_readme
@@ -189,8 +187,8 @@ class GithubRepo
   def tag_when_project_matches(tag_name, matcher, readme_matcher, language = nil)
     if language && dominant_language.downcase == language.downcase
       if field_matches?('name', matcher) ||
-        field_matches?('description', matcher) ||
-        (readme_matcher && dominant_language_percentage > 90 && readme_matches?(readme_matcher))
+          field_matches?('description', matcher) ||
+          (readme_matcher && dominant_language_percentage > 90 && readme_matches?(readme_matcher))
         tags << tag_name
         return true
       end

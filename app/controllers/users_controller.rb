@@ -142,10 +142,9 @@ class UsersController < ApplicationController
   end
 
   def refresh
-    refresh_params = params.permit(:username)
-    user = User.with_username(refresh_params[:username])
-    RefreshUserJob.perform_async(user.id, true)
-    flash[:notice] = "Queued #{refresh_params[:username]} for a refresh"
+    RefreshUserJob.perform_async(User.with_username(params[:username]).id, true)
+
+    flash[:notice] = "Queued #{params[:username]} for a refresh"
     redirect_to :back
   end
 

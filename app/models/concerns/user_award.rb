@@ -23,7 +23,7 @@ module UserAward
 
     def award_and_add_skill(badge)
       award badge
-      if badge.respond_to? :skill
+      if badge.respond_to?(:skill)
         add_skill(badge.skill)
       end
     end

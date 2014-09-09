@@ -11,6 +11,8 @@ module Coderwall
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/app)
 
+    config.autoload_paths += Dir[Rails.root.join('app', 'coderwall', '**/')]
+
     config.autoload_paths += Dir[Rails.root.join('app', 'models', 'concerns', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '**/')]

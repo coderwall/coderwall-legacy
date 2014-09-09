@@ -11,7 +11,11 @@ class RefreshUserJob
       user.destroy_github_cache
     end
 
-    return if !full && user.last_refresh_at > 3.days.ago
+    unless full
+      if user.last_refresh_at > 3.days.ago
+        return
+      end
+    end
 
     begin
       user.build_facts(full)

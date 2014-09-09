@@ -69,7 +69,7 @@ module UserFacts
       end
     end
 
-    def build_github_facts(since=Time.at(0))
+    def build_github_facts(since = Time.at(0))
       Rails.logger.info("[FACTS] Building GitHub facts for #{username}")
       begin
         if github_identity && github_failures == 0

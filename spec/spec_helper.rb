@@ -32,7 +32,6 @@ RSpec.configure do |config|
   config.before(:all) do
     Redis.current.SELECT(testdb = 1)
     Redis.current.flushdb
-
   end
 
   config.before(:suite) do

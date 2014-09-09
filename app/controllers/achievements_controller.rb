@@ -14,9 +14,7 @@ class AchievementsController < ApplicationController
   end
 
   def award
-
     award_params = params.permit(:badge, :twitter, :linkedin, :github, :date)
-
     provider = pick_a_provider(award_params)
 
     if provider.nil?
@@ -41,6 +39,10 @@ class AchievementsController < ApplicationController
 
   private
 
+  def pick_a_provider(award_params)
+    (User::LINKABLE_PROVIDERS & award_params.keys.select { |key| %w{twitter linkedin github}.include?(key) }).first
+  end
+
   def ensure_valid_api_key
     @api_key    = params.permit(:api_key)[:api_key]
     @api_access = ApiAccess.for(@api_key) unless @api_key.nil?
@@ -48,10 +50,8 @@ class AchievementsController < ApplicationController
   end
 
   def badge_class_factory(requested_badge_name)
-    BADGES_LIST.select { |badge_name| badge_name == requested_badge_name }.first.constantize
-  end
-
-  def pick_a_provider(award_params)
-    (User::LINKABLE_PROVIDERS & award_params.keys.select { |key| %w{twitter linkedin github}.include?(key) }).first
+    BADGES_LIST.select do |badge_name|
+      badge_name == requested_badge_name
+    end.first.constantize
   end
 end
