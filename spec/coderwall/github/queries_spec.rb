@@ -5,7 +5,8 @@ describe Coderwall::Github::Queries do
   let(:user) { Fabricate(:user) }
   let(:client) { Coderwall::Github::Client.new(user.github_token).client }
 
-  describe 'ProfileFor' do
+
+  describe ProfileFor do
     subject { Coderwall::Github::Queries::ProfileFor.new(client, github_username) }
 
     let(:github_username) { 'just3ws' }
@@ -28,4 +29,5 @@ describe Coderwall::Github::Queries do
       end
     end
   end
+
 end
