@@ -17,6 +17,7 @@ class ProtipMailer < ActionMailer::Base
     protips_count: 'protips'
   }
   CAMPAIGN_ID = 'protip_mailer-popular_protips'
+  ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
 
   #################################################################################
   def popular_protips(user, protips, from, to)

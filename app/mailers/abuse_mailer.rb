@@ -2,6 +2,8 @@ class AbuseMailer < ActionMailer::Base
   default_url_options[:host]      = 'coderwall.com'
   default_url_options[:only_path] = false
 
+  ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
+
   default to: -> { User.admins.pluck(:email) },
     from: '"Coderwall" <support@coderwall.com>'
 

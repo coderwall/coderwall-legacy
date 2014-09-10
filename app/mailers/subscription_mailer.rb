@@ -12,6 +12,7 @@ class SubscriptionMailer < ActionMailer::Base
 
   MONTHLY_SUBSCRIPTION_PURCHASED_EVENT = 'monthly_subscription_purchased'
   ONETIME_SUBSCRIPTION_PURCHASED_EVENT = 'onetime_subscription_purchased'
+  ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
 
   def team_upgrade(username, plan_id)
     plan = Plan.find(plan_id)
