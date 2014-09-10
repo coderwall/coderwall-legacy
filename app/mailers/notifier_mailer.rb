@@ -25,6 +25,7 @@ class NotifierMailer < ActionMailer::Base
   NEW_COMMENT_EVENT = 'new_comment'
   NEW_APPLICANT_EVENT = 'new_applicant'
   INVOICE_EVENT = 'invoice'
+  ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
 
   def welcome_email(username)
     headers['X-Mailgun-Variables'] = {email_type: WELCOME_EVENT}.to_json

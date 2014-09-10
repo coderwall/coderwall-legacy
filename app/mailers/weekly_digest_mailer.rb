@@ -19,7 +19,7 @@ class WeeklyDigestMailer < ActionMailer::Base
   SPAM_NOTICE = "You're receiving this email because you signed up for Coderwall. We hate spam and make an effort to keep notifications to a minimum. To change your notification preferences, you can update your email settings here: http://coderwall.com/settings#email or immediately unsubscribe by clicking this link %unsubscribe_url%"
 
   WEEKLY_DIGEST_EVENT = 'weekly_digest'
-  ACTIVITY_SUBJECT_PREFIX = "[Coderwall]"
+  ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
 
   #################################################################################
   def weekly_digest(username)
