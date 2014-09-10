@@ -7,9 +7,9 @@ module Coderwall
         end
 
         def fetch
-          user = client.user(github_username)
+          user = client.user(github_username).try(:to_hash)
           if user
-            return user.to_hash.except(*self.class.exclude_attributes)
+            return user.except(*self.class.exclude_attributes)
           else
             nil
           end

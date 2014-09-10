@@ -3,7 +3,7 @@ module Coderwall
     module Queries
       class WatchedReposFor < BaseWithGithubUsername
         def self.exclude_attributes
-          REPO_ATTRIBUTES_TO_IGNORE
+          Coderwall::Github::Queries::Repo::REPO_ATTRIBUTES_TO_IGNORE
         end
 
         def fetch

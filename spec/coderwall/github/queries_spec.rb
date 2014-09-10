@@ -50,7 +50,7 @@ describe Coderwall::Github::Queries do
       expect(followers.select { |repo| repo[:login] == 'coderwall-admin' }).to_not be_nil
     end
 
-    it 'returns a hash' do
+    it 'returns an array of hashes' do
       expect(followers).to be_a_kind_of(Array)
       expect(followers.first).to be_a_kind_of(Hash)
     end
@@ -68,7 +68,7 @@ describe Coderwall::Github::Queries do
       expect(following.select { |repo| repo[:full_name] == 'assemblymade/coderwall' }).to_not be_nil
     end
 
-    it 'returns a hash' do
+    it 'returns an array of hashes' do
       expect(following).to be_a_kind_of(Array)
       expect(following.first).to be_a_kind_of(Hash)
     end
@@ -87,7 +87,7 @@ describe Coderwall::Github::Queries do
       expect(watched_repos.select { |repo| repo[:full_name] == 'assemblymade/coderwall' }).to_not be_nil
     end
 
-    it 'returns a hash' do
+    it 'returns an array of hashes' do
       expect(watched_repos).to be_a_kind_of(Array)
       expect(watched_repos.first).to be_a_kind_of(Hash)
     end
@@ -112,7 +112,7 @@ describe Coderwall::Github::Queries do
       expect(repos.select { |repo| repo[:full_name] == 'assemblymade/coderwall' }).to_not be_nil
     end
 
-    it 'returns a hash' do
+    it 'returns an array of hashes' do
       expect(repos).to be_a_kind_of(Array)
       expect(repos.first).to be_a_kind_of(Hash)
     end
@@ -124,10 +124,10 @@ describe Coderwall::Github::Queries do
     end
   end
 
-  describe Coderwall::Github::Queries::RepoFor do
+  describe Coderwall::Github::Queries::Repo::RepoFor do
     let(:repo_name) { 'coderwall' }
 
-    subject { Coderwall::Github::Queries::RepoFor.new(client, github_username, repo_name) }
+    subject { Coderwall::Github::Queries::Repo::RepoFor.new(client, github_username, repo_name) }
 
     let(:repo) {
       VCR.use_cassette('fetch just3ws/coderwall repos') do
@@ -139,8 +139,8 @@ describe Coderwall::Github::Queries do
       expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Base)
     end
 
-    it 'inherits from Queries::BaseWithGithubUsernameAndRepoName' do
-      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::BaseWithGithubUsernameAndRepoName)
+    it 'inherits from Queries::Repo::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Repo::Base)
     end
 
     it 'fetchs just3ws coderwall repo' do
@@ -149,6 +149,157 @@ describe Coderwall::Github::Queries do
 
     it 'returns a hash' do
       expect(repo).to be_a_kind_of(Hash)
+    end
+  end
+
+  describe Coderwall::Github::Queries::Repo::LanguagesFor do
+    let(:repo_name) { 'coderwall' }
+
+    subject { Coderwall::Github::Queries::Repo::LanguagesFor.new(client, github_username, repo_name) }
+
+    let(:repo_languages) {
+      VCR.use_cassette('fetch just3ws/coderwall repo languages') do
+        subject.fetch
+      end
+    }
+
+    it 'inherits from Queries::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Base)
+    end
+
+    it 'inherits from Queries::Repo::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Repo::Base)
+    end
+
+    it 'fetchs just3ws coderwall repo languages' do
+      expect(repo_languages).to have_key(:Ruby)
+    end
+
+    it 'returns a hash' do
+      expect(repo_languages).to be_a_kind_of(Hash)
+    end
+  end
+
+  describe Coderwall::Github::Queries::Repo::WatchersFor do
+    let(:github_username) { 'assemblymade' }
+    let(:repo_name) { 'coderwall' }
+
+    subject { Coderwall::Github::Queries::Repo::WatchersFor.new(client, github_username, repo_name) }
+
+    let(:repo_watchers) {
+      VCR.use_cassette('fetch assemblymade/coderwall repo watchers') do
+        subject.fetch
+      end
+    }
+
+    it 'inherits from Queries::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Base)
+    end
+
+    it 'inherits from Queries::Repo::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Repo::Base)
+    end
+
+    it 'fetchs just3ws coderwall repo watchers' do
+      expect(repo_watchers.first).to have_key(:login)
+      expect(repo_watchers.first.keys.count).to eq(1)
+    end
+
+    it 'returns an array of hashes' do
+      expect(repo_watchers).to be_a_kind_of(Array)
+      expect(repo_watchers.first).to be_a_kind_of(Hash)
+    end
+  end
+
+  describe Coderwall::Github::Queries::Repo::ContributorsFor do
+    let(:github_username) { 'assemblymade' }
+    let(:repo_name) { 'coderwall' }
+
+    subject { Coderwall::Github::Queries::Repo::ContributorsFor.new(client, github_username, repo_name) }
+
+    let(:repo_contributors) {
+      VCR.use_cassette('fetch assemblymade/coderwall repo contributors') do
+        subject.fetch
+      end
+    }
+
+    it 'inherits from Queries::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Base)
+    end
+
+    it 'inherits from Queries::Repo::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Repo::Base)
+    end
+
+    it 'fetchs just3ws coderwall repo contributors' do
+      expect(repo_contributors.first).to have_key(:login)
+      expect(repo_contributors.first.keys.count).to eq(18)
+    end
+
+    it 'returns an array of hashes' do
+      expect(repo_contributors).to be_a_kind_of(Array)
+      expect(repo_contributors.first).to be_a_kind_of(Hash)
+    end
+  end
+
+  describe Coderwall::Github::Queries::Repo::CollaboratorsFor do
+    let(:github_username) { 'assemblymade' }
+    let(:repo_name) { 'coderwall' }
+
+    subject { Coderwall::Github::Queries::Repo::CollaboratorsFor.new(client, github_username, repo_name) }
+
+    let(:repo_collaborators) {
+      VCR.use_cassette('fetch assemblymade/coderwall repo collaborators') do
+        subject.fetch
+      end
+    }
+
+    it 'inherits from Queries::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Base)
+    end
+
+    it 'inherits from Queries::Repo::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Repo::Base)
+    end
+
+    it 'fetchs just3ws coderwall repo collaborators' do
+      expect(repo_collaborators.first).to have_key(:login)
+      expect(repo_collaborators.first.keys.count).to eq(17)
+    end
+
+    it 'returns an array of hashes' do
+      expect(repo_collaborators).to be_a_kind_of(Array)
+      expect(repo_collaborators.first).to be_a_kind_of(Hash)
+    end
+  end
+
+  describe Coderwall::Github::Queries::Repo::ForksFor do
+    let(:github_username) { 'assemblymade' }
+    let(:repo_name) { 'coderwall' }
+
+    subject { Coderwall::Github::Queries::Repo::ForksFor.new(client, github_username, repo_name) }
+
+    let(:repo_forks) {
+      VCR.use_cassette('fetch assemblymade/coderwall repo forks') do
+        subject.fetch
+      end
+    }
+
+    it 'inherits from Queries::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Base)
+    end
+
+    it 'inherits from Queries::Repo::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Repo::Base)
+    end
+
+    it 'fetchs just3ws coderwall repo forks' do
+      expect(repo_forks.first.keys.count).to eq(67)
+    end
+
+    it 'returns an array of hashes' do
+      expect(repo_forks).to be_a_kind_of(Array)
+      expect(repo_forks.first).to be_a_kind_of(Hash)
     end
   end
 end

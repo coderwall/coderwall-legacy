@@ -6,6 +6,7 @@ module Coderwall
 
         def initialize(client, github_username)
           @github_username = github_username
+
           super(client)
         end
       end
