@@ -4,6 +4,9 @@
     /[if IE] <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     %meta{ content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
     %title= page_title(yield(:page_title))
+    %link{ rel: 'icon', href: image_url('fav128x128.png'), type: 'image/x-icon' }
+    %link{ rel: 'icon', href: image_url('fav64x64.png'), type: 'image/x-icon' }
+    %link{ rel: 'icon', href: image_url('fav32x32.png'), type: 'image/x-icon' }
     %link{ rel: 'icon', href: image_url('favicon.png'), type: 'image/x-icon' }
     %link{ rel: 'shortcut icon', href: image_url('favicon.png'), type: 'image/x-icon' }
     %link{ rel: 'author', href: '/humans.txt' }
