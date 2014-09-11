@@ -11,6 +11,14 @@ module Coderwall
         @access_token = github_access_token
         @client = Octokit::Client.new(access_token: @access_token, auto_paginate: true)
       end
+
+      def self.instance(access_token = nil)
+        if access_token.blank?
+          Rails.logger.warn("Blank access_token passed to Coderwall::Github::Client.instance so falling back to use Coderwall's access_token.")
+          access_token = Coderwall::Github::ACCESS_TOKEN
+        end
+        Coderwall::Github::Client.new(access_token).client
+      end
     end
 
     class MissingAccessTokenError < StandardError
