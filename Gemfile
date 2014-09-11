@@ -158,6 +158,7 @@ group :development, :test do
   gem 'launchy'
   gem 'pry-byebug'
   gem 'pry-rescue'
+  gem 'pry-stack_explorer'
   gem 'quiet_assets'
   gem 'syntax'
   gem 'annotate'

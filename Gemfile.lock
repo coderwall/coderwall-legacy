@@ -777,6 +777,7 @@ DEPENDENCIES
   postgres_ext
   pry-byebug
   pry-rescue
+  pry-stack_explorer
   pubnub (= 0.1.9)
   puma
   querystring
