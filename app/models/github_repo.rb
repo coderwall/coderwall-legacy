@@ -33,12 +33,14 @@ class GithubRepo
   def refresh!(repo = {})
     owner, name = self.owner.login, self.name
 
+    client = Coderwall::GitHub::Client.instance
+
     repo = Coderwall::GitHub::Queries::Repo::RepoFor.new(client, owner, name).fetch if repo.empty?
 
     if repo[:fork].blank?
       repo.merge!(
-        forks:        client.repo_forks(owner, name),
-        contributors: client.repo_contributors(owner, name),
+        forks:        Coderwall::GitHub::Queries::Repo::ForksFor.new(client, owner, name).fetch,
+        contributors: Coderwall::GitHub::Queries::Repo::ContributorsFor.new(client, owner, name).fetch,
       )
     end
 

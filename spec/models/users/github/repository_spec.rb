@@ -8,7 +8,7 @@ RSpec.describe Users::Github::Repository, :type => :model do
 
   let(:data) { JSON.parse(File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'user_repo.js'))).with_indifferent_access }
   let(:repo) {
-    GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+    GithubRepo.for_owner_and_name('mdeiters', 'semr', data)
   }
   let(:access_token) { "9432ed76b16796ec034670524d8176b3f5fee9aa" }
   let(:client_id) { "974695942065a0e00033" }

@@ -22,6 +22,8 @@ class GithubProfile
   VALID_TYPES  = [ORGANIZATION, USER]
 
   def self.for_username(username)
+    require 'pry'; binding.pry
+
     find_or_initialize_by(login: username).tap do |profile|
       if profile.new_record?
         logger.info "ALERT: No cached profile for user #{username}"
@@ -75,9 +77,9 @@ class GithubProfile
   def refresh!
     username = self.login
 
-    client = Coderwall::GithHub::Client.instance
+    client = Coderwall::GitHub::Client.instance
 
-    profile = Coderwall::GitHub::Queries::GitHubUser::ProfileFor(client, username).fetch
+    profile = Coderwall::GitHub::Queries::GitHubUser::ProfileFor.new(client, username).fetch
 
     if profile
       profile.delete(:id)
@@ -88,13 +90,13 @@ class GithubProfile
     repos = Coderwall::GitHub::Queries::GitHubUser::ReposFor.new(client, username).fetch
     repos.map do |repo|
       owner, name = repo[:owner][:login], repo[:name]
-      GithubRepo.for_owner_and_name(owner, name, client, repo)
+      GithubRepo.for_owner_and_name(owner, name, repo)
     end
 
     update_attributes! profile.merge(
       github_id: github_id,
       followers: Coderwall::GitHub::Queries::GitHubUser::FollowersFor.new(client, username).fetch,
-      following: Coderwall::GitHub::Queries::GitHubUser::FollowingFor(client, username).fetch,
+      following: Coderwall::GitHub::Queries::GitHubUser::FollowingFor.new(client, username).fetch,
       watched:   Coderwall::GitHub::Queries::GitHubUser::WatchedReposFor.new(client, username).fetch,
       orgs:      orgs,
       repos:     repos.map { |r| { id: r.id, name: r.name } }
