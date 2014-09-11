@@ -5,7 +5,7 @@ module Coderwall
         class WatchersFor < Coderwall::GitHub::Queries::Repo::Base
           def fetch
             super do
-              (client.stargazers(repo_full_name, per_page: 100, accept: 'application/vnd.github.beta+json') || []).
+              (client.stargazers(repo_full_name) || []).
                 map(&:to_hash).
                 map do |user|
                   user.select { |k| k == :login }

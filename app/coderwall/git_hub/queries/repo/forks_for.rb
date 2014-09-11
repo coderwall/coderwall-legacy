@@ -5,7 +5,7 @@ module Coderwall
         class ForksFor < Coderwall::GitHub::Queries::Repo::Base
           def fetch
             super do
-              (client.forks(repo_full_name, per_page: 100) || []).
+              (client.forks(repo_full_name) || []).
                 map(&:to_hash).
                 map do |user|
                   user.except(*REPO_ATTRIBUTES_TO_IGNORE)

@@ -8,7 +8,7 @@ module Coderwall
           end
 
           def fetch
-            (client.repositories(github_username, per_page: 100) || []).
+            (client.repositories(github_username) || []).
               map(&:to_hash).
               map do |repo|
                 repo.except(*self.class.exclude_attributes)

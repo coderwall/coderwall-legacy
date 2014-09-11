@@ -22,8 +22,6 @@ class GithubRepo
   before_save :update_tags!
 
   def self.for_owner_and_name(owner, name, prefetched = {})
-    require 'pry'; binding.pry
-
     (where('owner.login' => owner, 'name' => name).first || new(name: name, owner: { login: owner })).tap do |repo|
       if repo.new_record?
         logger.info "ALERT: No cached repo for #{owner}/#{name}"
@@ -33,29 +31,41 @@ class GithubRepo
   end
 
   def refresh!(repo = {})
-    owner = owner.login
+    update_attributes!(self.class.updated_repo_for(owner.login, name, repo))
+  end
+
+  def self.updated_repo_for(repo_owner, repo_name, repo)
+    ap repo_owner
+    ap repo_name
+
+    require 'pry'; binding.pry
+
 
     client = Coderwall::GitHub::Client.instance
 
-    repo = Coderwall::GitHub::Queries::Repo::RepoFor.new(client, owner, name).fetch if repo.empty?
+    repo = Coderwall::GitHub::Queries::Repo::RepoFor.new(client, repo_owner, repo_name).fetch if repo.empty?
 
     if repo[:fork].blank?
-      repo.merge!(
-        forks:        Coderwall::GitHub::Queries::Repo::ForksFor.new(client, owner, name).fetch,
-        contributors: Coderwall::GitHub::Queries::Repo::ContributorsFor.new(client, owner, name).fetch,
-      )
+      repo_params = {
+        forks:        Coderwall::GitHub::Queries::Repo::ForksFor.new(client, repo_owner, repo_name).fetch,
+        contributors: Coderwall::GitHub::Queries::Repo::ContributorsFor.new(client, repo_owner, repo_name).fetch,
+      }
+      repo.merge!(repo_params)
     end
 
-    repo.delete(:id)
+    repo.delete(:id) # why?
 
-    update_attributes!(repo.merge(
+    repo_params = {
       owner:     GithubUser.new(repo[:owner]),
-      followers: Coderwall::GitHub::Queries::Repo::WatchersFor.new(client, owner, name).fetch,
-      languages: Coderwall::GitHub::Queries::Repo::LanguagesFor.new(client, owner, name).fetch # needed so we can determine contents
-    ))
+      followers: Coderwall::GitHub::Queries::Repo::WatchersFor.new(client, repo_owner, repo_name).fetch,
+      languages: Coderwall::GitHub::Queries::Repo::LanguagesFor.new(client, repo_owner, repo_name).fetch # needed so we can determine contents
+    }
+
+    repo.merge(repo_params)
   rescue => ex
     require 'pry'; binding.pry
   end
+
 
   def full_name
     "#{self.owner.login}/#{self.name}"

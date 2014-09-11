@@ -9,7 +9,7 @@ module Coderwall
 
           def fetch
             super do
-              (client.watched(github_username, per_page: 100) || []).
+              (client.watched(github_username) || []).
                 map(&:to_hash).
                 map do |repo|
                   repo.except(*self.class.exclude_attributes)

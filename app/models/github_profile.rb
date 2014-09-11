@@ -74,35 +74,47 @@ class GithubProfile
   end
 
   def refresh!
-    username = login
+    update_attributes!(self.class.updated_profile_for(login))
+  end
+
+  def self.updated_profile_for(github_username)
+    github_id = User.with_username(github_username, :github).github_id
 
     client = Coderwall::GitHub::Client.instance
 
-    profile = Coderwall::GitHub::Queries::GitHubUser::ProfileFor.new(client, username).fetch
+    profile = Coderwall::GitHub::Queries::GitHubUser::ProfileFor.new(client, github_username).fetch
+    profile.delete(:id) if profile # why?
 
-    if profile
-      profile.delete(:id)
-    end
+    repos = map_repos_for(client, github_username)
 
-    github_id = User.with_username(username).github_id
+    followers = Coderwall::GitHub::Queries::GitHubUser::FollowersFor.new(client, github_username).fetch
+    following = Coderwall::GitHub::Queries::GitHubUser::FollowingFor.new(client, github_username).fetch
+    watched   = Coderwall::GitHub::Queries::GitHubUser::WatchedReposFor.new(client, github_username).fetch
 
-    repos = Coderwall::GitHub::Queries::GitHubUser::ReposFor.new(client, username).fetch
-    repos.map do |repo|
-      owner, name = repo[:owner][:login], repo[:name]
-      GithubRepo.for_owner_and_name(owner, name, repo)
-    end
-
-    update_attributes! profile.merge(
+    profile_params = {
       github_id: github_id,
-      followers: Coderwall::GitHub::Queries::GitHubUser::FollowersFor.new(client, username).fetch,
-      following: Coderwall::GitHub::Queries::GitHubUser::FollowingFor.new(client, username).fetch,
-      watched:   Coderwall::GitHub::Queries::GitHubUser::WatchedReposFor.new(client, username).fetch,
+      followers: followers,
+      following: following,
+      watched:   watched,
       orgs:      orgs,
-      repos:     repos.map { |r| { id: r.id, name: r.name } }
-    )
+      repos:     repos
+    }
 
+    profile.merge(profile_params)
   rescue => ex
     require 'pry'; binding.pry
+  end
+
+  def self.map_repos_for(client, github_username)
+    repos = Coderwall::GitHub::Queries::GitHubUser::ReposFor.new(client, github_username).fetch
+    repos.map do |repo|
+      GithubRepo.for_owner_and_name(repo[:owner][:login], repo[:name], repo)
+    end.map do |r|
+      {
+        id: r.id,
+        name: r.name
+      }
+    end
   end
 
   def stale?
