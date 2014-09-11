@@ -1,18 +1,18 @@
 describe Coderwall::Github::Client do
   subject { Coderwall::Github::Client }
 
-  let(:user) { Fabricate(:user) }
+  let(:coderwall_user) { Fabricate(:user) }
 
   describe "#new" do
     context 'valid instance' do
-      let(:valid_instance) { subject.new(user.github_token) }
+      let(:valid_instance) { subject.new(coderwall_user.github_token) }
 
       it 'creates an instance of the client' do
         expect(valid_instance.client).to_not be_nil
       end
 
       it 'sets the access token' do
-        expect(valid_instance.access_token).to be == user.github_token
+        expect(valid_instance.access_token).to be == coderwall_user.github_token
       end
     end
 
