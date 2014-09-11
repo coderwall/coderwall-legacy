@@ -75,7 +75,7 @@ class GithubProfile
   def refresh!
     username = self.login
 
-    client = Github::Coderwall::Client.instance
+    client = Coderwall::GithHub::Client.instance
 
     profile = Coderwall::GitHub::Queries::GitHubUser::ProfileFor(client, username).fetch
 
