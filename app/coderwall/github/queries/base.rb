@@ -11,6 +11,10 @@ module Coderwall
         def fetch
           raise NotImplementedError
         end
+
+        def friendly_thing_name
+          self.class.name.underscore.split('/').last.gsub('_', ' ')
+        end
       end
     end
   end

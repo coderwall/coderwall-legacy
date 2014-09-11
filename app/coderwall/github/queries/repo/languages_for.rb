@@ -4,12 +4,7 @@ module Coderwall
       module Repo
         class LanguagesFor < Coderwall::Github::Queries::Repo::Base
           def fetch
-            client.languages(repo_full_name, per_page: 100).try(:to_hash)
-          rescue Octokit::NotFound => e
-            Rails.logger.error("Failed to find languages for #{repo_full_name}")
-            return []
-          rescue Errno::ECONNREFUSED => e
-            retry
+            super { client.languages(repo_full_name, per_page: 100).try(:to_hash) }
           end
         end
       end

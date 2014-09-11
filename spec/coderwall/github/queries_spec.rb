@@ -6,8 +6,8 @@ describe Coderwall::Github::Queries do
   let(:client) { Coderwall::Github::Client.new(coderwall_user.github_token).client }
   let(:github_username) { 'just3ws' }
 
-  describe Coderwall::Github::Queries::ProfileFor do
-    subject { Coderwall::Github::Queries::ProfileFor.new(client, github_username) }
+  describe Coderwall::Github::Queries::GithubUser::ProfileFor do
+    subject { Coderwall::Github::Queries::GithubUser::ProfileFor.new(client, github_username) }
     let(:user) {
       VCR.use_cassette('fetch github user for just3ws') do
         subject.fetch
@@ -22,8 +22,8 @@ describe Coderwall::Github::Queries do
       expect(subject).to be_a_kind_of(Coderwall::Github::Queries::Base)
     end
 
-    it 'inherits from Queries::BaseWithGithubUsername' do
-      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::BaseWithGithubUsername)
+    it 'inherits from Queries::GithubUser::Base' do
+      expect(subject).to be_a_kind_of(Coderwall::Github::Queries::GithubUser::Base)
     end
 
     it 'returns a hash' do
@@ -31,14 +31,14 @@ describe Coderwall::Github::Queries do
     end
 
     it 'filters the user attribute' do
-      Coderwall::Github::Queries::ProfileFor.exclude_attributes do |exclude_attribute|
+      Coderwall::Github::Queries::GithubUser::ProfileFor.exclude_attributes do |exclude_attribute|
         expect(user.has_key?(exclude_attribute)).to be false
       end
     end
   end
 
-  describe Coderwall::Github::Queries::FollowersFor do
-    subject { Coderwall::Github::Queries::FollowersFor.new(client, github_username) }
+  describe Coderwall::Github::Queries::GithubUser::FollowersFor do
+    subject { Coderwall::Github::Queries::GithubUser::FollowersFor.new(client, github_username) }
 
     let(:followers) {
       VCR.use_cassette('fetch github followers for just3ws') do
@@ -56,8 +56,8 @@ describe Coderwall::Github::Queries do
     end
   end
 
-  describe Coderwall::Github::Queries::FollowingFor do
-    subject { Coderwall::Github::Queries::FollowingFor.new(client, github_username) }
+  describe Coderwall::Github::Queries::GithubUser::FollowingFor do
+    subject { Coderwall::Github::Queries::GithubUser::FollowingFor.new(client, github_username) }
     let(:following) {
       VCR.use_cassette('fetch github just3ws following') do
         subject.fetch
@@ -74,8 +74,8 @@ describe Coderwall::Github::Queries do
     end
   end
 
-  describe Coderwall::Github::Queries::WatchedReposFor do
-    subject { Coderwall::Github::Queries::WatchedReposFor.new(client, github_username) }
+  describe Coderwall::Github::Queries::GithubUser::WatchedReposFor do
+    subject { Coderwall::Github::Queries::GithubUser::WatchedReposFor.new(client, github_username) }
 
     let(:watched_repos) {
       VCR.use_cassette('fetch just3ws watched repos') do
@@ -93,14 +93,14 @@ describe Coderwall::Github::Queries do
     end
 
     it 'filters the repo attribute' do
-      Coderwall::Github::Queries::WatchedReposFor.exclude_attributes do |exclude_attribute|
+      Coderwall::Github::Queries::GithubUser::WatchedReposFor.exclude_attributes do |exclude_attribute|
         expect(watched_repos.first.has_key?(exclude_attribute)).to be false
       end
     end
   end
 
-  describe Coderwall::Github::Queries::ReposFor do
-    subject { Coderwall::Github::Queries::ReposFor.new(client, github_username) }
+  describe Coderwall::Github::Queries::GithubUser::ReposFor do
+    subject { Coderwall::Github::Queries::GithubUser::ReposFor.new(client, github_username) }
 
     let(:repos) {
       VCR.use_cassette('fetch just3ws repos') do
@@ -118,7 +118,7 @@ describe Coderwall::Github::Queries do
     end
 
     it 'filters the repo attribute' do
-      Coderwall::Github::Queries::ReposFor.exclude_attributes do |exclude_attribute|
+      Coderwall::Github::Queries::GithubUser::ReposFor.exclude_attributes do |exclude_attribute|
         expect(repos.first.has_key?(exclude_attribute)).to be false
       end
     end

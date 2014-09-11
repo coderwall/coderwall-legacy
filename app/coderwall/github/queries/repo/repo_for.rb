@@ -4,12 +4,7 @@ module Coderwall
       module Repo
         class RepoFor < Coderwall::Github::Queries::Repo::Base
           def fetch
-            client.repo(repo_full_name).try(:to_hash)
-          rescue Octokit::NotFound => e
-            Rails.logger.error("Unable to find repo #{full_repo_name}")
-            return {}
-          rescue Errno::ECONNREFUSED => e
-            retry
+            super { client.repo(repo_full_name).try(:to_hash) }
           end
         end
       end
