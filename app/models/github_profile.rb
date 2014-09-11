@@ -32,11 +32,13 @@ class GithubProfile
 
   def facts
     facts = []
+
     GithubRepo.where('owner.github_id' => github_id).all.each do |repo|
       if repo.has_contents?
         facts << convert_repo_into_fact(repo)
       end
     end
+
     GithubRepo.where(
       'contributors.github_id' => github_id,
       'owner.github_id' => { '$in' => orgs.map(&:github_id) }

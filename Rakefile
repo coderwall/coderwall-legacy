@@ -15,7 +15,7 @@ task reset_me: :environment do
   GithubRepo.where('owner.github_id' => me.github_id).destroy if me.github_id
   GithubProfile.where('login' => me.github).destroy if me.github
 
-  me.build_facts(true)
+  me.build_facts
   me.reload.check_achievements!
   me.add_skills_for_unbadgified_facts
   me.calculate_score!

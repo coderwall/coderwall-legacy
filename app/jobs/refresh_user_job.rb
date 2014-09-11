@@ -18,7 +18,7 @@ class RefreshUserJob
     end
 
     begin
-      user.build_facts(full)
+      user.build_facts
       user.reload.check_achievements!
       user.add_skills_for_unbadgified_facts
 

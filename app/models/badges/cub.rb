@@ -9,11 +9,13 @@ class Cub < BadgeBase
   def reasons
     @reasons ||= begin
       links = []
+
       user.facts.select do |fact|
         fact.tagged?('personal', 'repo', 'original', 'JQuery') || fact.tagged?('personal', 'repo', 'original', 'Prototype')
       end.each do |fact|
         links << { fact.name => fact.url }
       end
+
       { links: links }
     end
   end
@@ -21,5 +23,4 @@ class Cub < BadgeBase
   def award?
     reasons[:links].size >= 1
   end
-
 end

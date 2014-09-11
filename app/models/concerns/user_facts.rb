@@ -2,10 +2,8 @@ module UserFacts
   extend ActiveSupport::Concern
 
   included do
-    def build_facts(all)
-      since = (all ? Time.at(0) : self.last_refresh_at)
-
-      build_github_facts(since)
+    def build_facts
+      build_github_facts
       build_lanyrd_facts
       build_linkedin_facts
       build_bitbucket_facts
@@ -69,11 +67,11 @@ module UserFacts
       end
     end
 
-    def build_github_facts(since = Time.at(0))
+    def build_github_facts
       Rails.logger.info("[FACTS] Building GitHub facts for #{username}")
       begin
         if github_identity && github_failures == 0
-          GithubProfile.for_username(github, since).facts
+          GithubProfile.for_username(github).facts
           Rails.logger.info("[FACTS] Processed GitHub facts for #{username}")
         else
           Rails.logger.info("[FACTS] Skipped GitHub facts for #{username}")
