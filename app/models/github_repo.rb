@@ -22,7 +22,9 @@ class GithubRepo
   before_save :update_tags!
 
   def self.for_owner_and_name(owner, name, prefetched = {})
-    (where('owner.login' => owner, 'name' => name).first || new('name' => name, 'owner' => { 'login' => owner })).tap do |repo|
+    require 'pry'; binding.pry
+
+    (where('owner.login' => owner, 'name' => name).first || new(name: name, owner: { login: owner })).tap do |repo|
       if repo.new_record?
         logger.info "ALERT: No cached repo for #{owner}/#{name}"
         repo.refresh!(prefetched)
@@ -31,7 +33,7 @@ class GithubRepo
   end
 
   def refresh!(repo = {})
-    owner, name = self.owner.login, self.name
+    owner = owner.login
 
     client = Coderwall::GitHub::Client.instance
 
@@ -51,6 +53,8 @@ class GithubRepo
       followers: Coderwall::GitHub::Queries::Repo::WatchersFor.new(client, owner, name).fetch,
       languages: Coderwall::GitHub::Queries::Repo::LanguagesFor.new(client, owner, name).fetch # needed so we can determine contents
     ))
+  rescue => ex
+    require 'pry'; binding.pry
   end
 
   def full_name

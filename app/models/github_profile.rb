@@ -22,7 +22,6 @@ class GithubProfile
   VALID_TYPES  = [ORGANIZATION, USER]
 
   def self.for_username(username)
-    require 'pry'; binding.pry
 
     find_or_initialize_by(login: username).tap do |profile|
       if profile.new_record?
@@ -75,7 +74,7 @@ class GithubProfile
   end
 
   def refresh!
-    username = self.login
+    username = login
 
     client = Coderwall::GitHub::Client.instance
 
@@ -101,6 +100,9 @@ class GithubProfile
       orgs:      orgs,
       repos:     repos.map { |r| { id: r.id, name: r.name } }
     )
+
+  rescue => ex
+    require 'pry'; binding.pry
   end
 
   def stale?
