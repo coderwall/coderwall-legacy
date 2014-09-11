@@ -95,6 +95,7 @@ gem 'foreman'
 gem 'awesome_print'
 
 gem 'faraday', '~> 0.8.1'
+gem 'faraday-http-cache' # for Octokit caching
 gem 'metamagic'
 
 gem "mail_view", "~> 2.0.4"
