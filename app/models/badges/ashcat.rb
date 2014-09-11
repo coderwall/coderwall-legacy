@@ -19,7 +19,7 @@ class Ashcat < BadgeBase
   end
 
   def self.perform
-    repo_contributors = Coderwall::Github::Queries::Repo::ContributorsFor.new(Coderwall::Github::Client.instance, 'rails', 'rails').fetch
+    repo_contributors = Coderwall::GitHub::Queries::Repo::ContributorsFor.new(Coderwall::GitHub::Client.instance, 'rails', 'rails').fetch
     repo_contributors.each do |contributor|
       login = contributor[:login]
       add_contributor(login, contributor[:contributions])

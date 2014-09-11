@@ -18,7 +18,7 @@ module Importers
           protiplink.protip.upvote_by(owner, owner.tracking_code, Protip::DEFAULT_IP_ADDRESS) unless protiplink.protip.nil?
         else
           Rails.logger.debug "creating protip:#{description}, #{link}"
-          language = Coderwall::Github::Queries::Repo.predominant_repo_language_from_url(link)
+          language = Coderwall::GitHub::Queries::Repo.predominant_repo_language_from_url(link)
           description = (description && description.slice(0, Protip::MAX_TITLE_LENGTH))
           owner.protips.create(title: description, body: link, created_at: date, topics: ["Github", language].compact, created_by: Protip::IMPORTER, user: owner)
         end

@@ -75,7 +75,7 @@ class GithubProfile
 
     client = Github::Coderwall::Client.instance
 
-    profile = Coderwall::Github::Queries::GithubUser::ProfileFor(client, username).fetch
+    profile = Coderwall::GitHub::Queries::GitHubUser::ProfileFor(client, username).fetch
 
     if profile
       profile.delete(:id)
@@ -83,7 +83,7 @@ class GithubProfile
 
     github_id = User.with_username(username).github_id
 
-    repos = Coderwall::Github::Queries::GithubUser::ReposFor.new(client, username).fetch
+    repos = Coderwall::GitHub::Queries::GitHubUser::ReposFor.new(client, username).fetch
     repos.map do |repo|
       owner, name = repo[:owner][:login], repo[:name]
       GithubRepo.for_owner_and_name(owner, name, client, repo)
@@ -91,9 +91,9 @@ class GithubProfile
 
     update_attributes! profile.merge(
       github_id: github_id,
-      followers: Coderwall::Github::Queries::GithubUser::FollowersFor.new(client, username).fetch,
-      following: Coderwall::Github::Queries::GithubUser::FollowingFor(client, username).fetch,
-      watched:   Coderwall::Github::Queries::GithubUser::WatchedReposFor.new(client, username).fetch,
+      followers: Coderwall::GitHub::Queries::GitHubUser::FollowersFor.new(client, username).fetch,
+      following: Coderwall::GitHub::Queries::GitHubUser::FollowingFor(client, username).fetch,
+      watched:   Coderwall::GitHub::Queries::GitHubUser::WatchedReposFor.new(client, username).fetch,
       orgs:      orgs,
       repos:     repos.map { |r| { id: r.id, name: r.name } }
     )

@@ -33,7 +33,7 @@ class GithubRepo
   def refresh!(repo = {})
     owner, name = self.owner.login, self.name
 
-    repo = Coderwall::Github::Queries::Repo::RepoFor.new(client, owner, name).fetch if repo.empty?
+    repo = Coderwall::GitHub::Queries::Repo::RepoFor.new(client, owner, name).fetch if repo.empty?
 
     if repo[:fork].blank?
       repo.merge!(
@@ -45,9 +45,9 @@ class GithubRepo
     repo.delete(:id)
 
     update_attributes!(repo.merge(
-      owner:     ::GithubUser.new(repo[:owner]),
-      followers: Coderwall::Github::Queries::Repo::WatchersFor.new(client, owner, name).fetch,
-      languages: Coderwall::Github::Queries::Repo::LanguagesFor.new(client, owner, name).fetch # needed so we can determine contents
+      owner:     GithubUser.new(repo[:owner]),
+      followers: Coderwall::GitHub::Queries::Repo::WatchersFor.new(client, owner, name).fetch,
+      languages: Coderwall::GitHub::Queries::Repo::LanguagesFor.new(client, owner, name).fetch # needed so we can determine contents
     ))
   end
 

@@ -2,7 +2,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   # http://rubydoc.info/gems/omniauth/OmniAuth/Strategies/Developer
   provider :developer unless Rails.env.production?
 
-  provider :github, Coderwall::Github::CLIENT_ID, Coderwall::Github::SECRET
+  provider :github, Coderwall::GitHub::CLIENT_ID, Coderwall::GitHub::SECRET
   provider :twitter, ENV['TWITTER_CONSUMER_KEY'], ENV['TWITTER_CONSUMER_SECRET']
   provider :linkedin, LinkedInStream::KEY, LinkedInStream::SECRET
 end

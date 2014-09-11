@@ -22,7 +22,7 @@ VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = false
   c.configure_rspec_metadata!
 
-  # Github
+  # GitHub
   c.filter_sensitive_data('<GITHUB_ADMIN_USER_PASSWORD>') { ENV['GITHUB_ADMIN_USER_PASSWORD'] }
   c.filter_sensitive_data('<GITHUB_CLIENT_ID>')						{ ENV['GITHUB_CLIENT_ID'] }
   c.filter_sensitive_data('<GITHUB_SECRET>') 							{ ENV['GITHUB_SECRET'] }

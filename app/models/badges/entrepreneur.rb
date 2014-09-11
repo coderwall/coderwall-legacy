@@ -27,15 +27,15 @@ class Entrepreneur < BadgeBase
   end
 
   def self.contributors(ownership)
-    Coderwall::Github::Queries::Repo::ContributorsFor.new(
-      Coderwall::Github::Client.instance,
+    Coderwall::GitHub::Queries::Repo::ContributorsFor.new(
+      Coderwall::GitHub::Client.instance,
       ownership[:repo_owner],
       ownership[:repo_name]
     ).fetch
   end
 
   def self.ownership(repo_url)
-    Coderwall::Github.extract_repo_owner_and_name_from_url(repo_url)
+    Coderwall::GitHub.extract_repo_owner_and_name_from_url(repo_url)
   end
 
   def self.repo_urls
