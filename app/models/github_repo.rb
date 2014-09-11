@@ -21,20 +21,19 @@ class GithubRepo
 
   before_save :update_tags!
 
-  def self.for_owner_and_name(owner, name, client, prefetched = {})
+  def self.for_owner_and_name(owner, name, prefetched = {})
     (where('owner.login' => owner, 'name' => name).first || new('name' => name, 'owner' => { 'login' => owner })).tap do |repo|
       if repo.new_record?
         logger.info "ALERT: No cached repo for #{owner}/#{name}"
-        repo.refresh!(client, prefetched)
+        repo.refresh!(prefetched)
       end
     end
   end
 
-  def refresh!(client, repo = {})
-    client ||= GithubOld.new
+  def refresh!(repo = {})
     owner, name = self.owner.login, self.name
 
-    repo = client.repo(owner, name) if repo.empty?
+    repo = Coderwall::Github::Queries::Repo::RepoFor.new(client, owner, name).fetch if repo.empty?
 
     if repo[:fork].blank?
       repo.merge!(
@@ -46,9 +45,9 @@ class GithubRepo
     repo.delete(:id)
 
     update_attributes!(repo.merge(
-      owner:     GithubUser.new(repo[:owner]),
-      followers: client.repo_watchers(owner, name),
-      languages: client.repo_languages(owner, name) # needed so we can determine contents
+      owner:     ::GithubUser.new(repo[:owner]),
+      followers: Coderwall::Github::Queries::Repo::WatchersFor.new(client, owner, name).fetch,
+      languages: Coderwall::Github::Queries::Repo::LanguagesFor.new(client, owner, name).fetch # needed so we can determine contents
     ))
   end
 

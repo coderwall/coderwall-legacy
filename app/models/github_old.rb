@@ -1,6 +1,0 @@
-#@ deprecated
-class GithubOld
-
-
-
-end

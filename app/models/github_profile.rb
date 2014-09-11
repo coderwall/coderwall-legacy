@@ -25,9 +25,7 @@ class GithubProfile
     find_or_initialize_by(login: username).tap do |profile|
       if profile.new_record?
         logger.info "ALERT: No cached profile for user #{username}"
-        token = User.with_username(username).try(:github_token)
-        client = GithubOld.new(token)
-        profile.refresh!(client)
+        profile.refresh!
       end
     end
   end
@@ -72,33 +70,30 @@ class GithubProfile
     Fact.append!("#{repo.html_url}:#{login}", "github:#{login}", repo.name, repo.created_at, repo.html_url, tags, metadata)
   end
 
-  def refresh!(client)
+  def refresh!
     username = self.login
 
+    client = Github::Coderwall::Client.instance
 
-    if profile = client.profile(username)
+    profile = Coderwall::Github::Queries::GithubUser::ProfileFor(client, username).fetch
+
+    if profile
       profile.delete(:id)
     end
 
     github_id = User.with_username(username).github_id
 
-    begin
-      raw_repos = client.repos_for(username)
-      ap raw_repos
-      raw_repos.map do |repo|
-        owner, name = repo[:owner][:login], repo[:name]
-        GithubRepo.for_owner_and_name(owner, name, client, repo)
-      end
-    rescue => ex
-      ap ex
-      require 'pry'; binding.pry
+    repos = Coderwall::Github::Queries::GithubUser::ReposFor.new(client, username).fetch
+    repos.map do |repo|
+      owner, name = repo[:owner][:login], repo[:name]
+      GithubRepo.for_owner_and_name(owner, name, client, repo)
     end
 
     update_attributes! profile.merge(
       github_id: github_id,
-      followers: client.followers_for(username),
-      following: client.following_for(username),
-      watched:   client.watched_repos_for(username),
+      followers: Coderwall::Github::Queries::GithubUser::FollowersFor.new(client, username).fetch,
+      following: Coderwall::Github::Queries::GithubUser::FollowingFor(client, username).fetch,
+      watched:   Coderwall::Github::Queries::GithubUser::WatchedReposFor.new(client, username).fetch,
       orgs:      orgs,
       repos:     repos.map { |r| { id: r.id, name: r.name } }
     )

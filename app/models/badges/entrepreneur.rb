@@ -1,17 +1,17 @@
 class Entrepreneur < BadgeBase
   describe 'Entrepreneur',
-           skill:       'Entrepreneur',
-           description: "Help build a product by contributing to an Assembly product",
-           for:         "working on an Assembly product when your commit was accepted.",
-           image_name:  'entrepreneur.png',
-           weight:      3,
-           providers:   :github
+    skill:       'Entrepreneur',
+    description: "Help build a product by contributing to an Assembly product",
+    for:         "working on an Assembly product when your commit was accepted.",
+    image_name:  'entrepreneur.png',
+    weight:      3,
+    providers:   :github
 
   def reasons
     @reasons ||= begin
-      fact = user.facts.detect { |fact| fact.tagged?('assembly', 'contribution') }
-      fact.name if fact
-    end
+                   fact = user.facts.detect { |fact| fact.tagged?('assembly', 'contribution') }
+                   fact.name if fact
+                 end
   end
 
   def award?
@@ -19,15 +19,31 @@ class Entrepreneur < BadgeBase
   end
 
   def self.perform
-    repos = %w(https://github.com/asm-helpful/helpful-web https://github.com/asm-helpful/helpful-ios https://github.com/asm-helpful/helpful-android)
-    repos.each do |repo|
-      owner, name = repo.split('/')[-2..-1]
-
-      GithubOld.new.repo_contributors(owner, name).each do |contributor|
-        login = contributor[:login]
-        add_contributor(repo, login, contributor[:contributions])
+    repo_urls.each do |repo_url|
+      contributors(ownership(repo_url)).each do |contributor|
+        add_contributor(repo_url, contributor[:login], contributor[:contributions])
       end
     end
+  end
+
+  def self.contributors(ownership)
+    Coderwall::Github::Queries::Repo::ContributorsFor.new(
+      Coderwall::Github::Client.instance,
+      ownership[:repo_owner],
+      ownership[:repo_name]
+    ).fetch
+  end
+
+  def self.ownership(repo_url)
+    Coderwall::Github.extract_repo_owner_and_name_from_url(repo_url)
+  end
+
+  def self.repo_urls
+    %w(
+      https://github.com/asm-helpful/helpful-web
+      https://github.com/asm-helpful/helpful-ios
+      https://github.com/asm-helpful/helpful-android
+    )
   end
 
   def self.add_contributor(repo_url, github_username, contributions=1)
