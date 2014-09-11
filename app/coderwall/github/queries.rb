@@ -1,15 +1,12 @@
 module Coderwall
   module Github
+    def self.extract_repo_owner_and_name_from_url(url)
+      val = {}
+      val[:repo_owner], val[:repo_name] = *link.gsub(/https?:\/\/github.com\//i, '').split('/')
+      val
+    end
+
     module Queries
-
-
-      # class PredominantRepoLanugageForLink
-      #   def fetch(link)
-      #     github_username, repo_name = *link.gsub(/https?:\/\/github.com\//i, '').split('/')
-      #     repo(github_username, repo_name)[:language]
-      #   end
-      # end
-
       # def self.orgs_for(github_username)
       #   (client.orgs(github_username, per_page: 100) || []).map(&:to_hash)
       # rescue Errno::ECONNREFUSED => e
