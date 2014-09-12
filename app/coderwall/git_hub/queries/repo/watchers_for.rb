@@ -6,7 +6,7 @@ module Coderwall
           def fetch
             super do
               (client.stargazers(repo_full_name) || []).
-                map(&:to_hash).
+                map(&:to_attrs).
                 map do |user|
                   user.select { |k| k == :login }
                 end

@@ -28,4 +28,12 @@ describe Coderwall::GitHub::Queries::Repo::RepoFor do
   it 'returns a hash' do
     expect(repo).to be_a_kind_of(Hash)
   end
+
+  context 'invalid repo_name' do
+    let(:repo_name) { 'bogusreponame' }
+
+    it 'fetchs just3ws coderwall repo' do
+      expect(repo[:message]).to be == 'Not Found'
+    end
+  end
 end

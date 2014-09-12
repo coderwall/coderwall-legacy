@@ -5,7 +5,7 @@ module Coderwall
         class CollaboratorsFor < Coderwall::GitHub::Queries::Repo::Base
           def fetch
             super do
-              (client.collaborators(repo_full_name) || []).map(&:to_hash)
+              (client.collaborators(repo_full_name) || []).map(&:to_attrs)
             end
           end
         end

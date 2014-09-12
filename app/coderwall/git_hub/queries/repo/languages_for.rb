@@ -4,7 +4,9 @@ module Coderwall
       module Repo
         class LanguagesFor < Coderwall::GitHub::Queries::Repo::Base
           def fetch
-            super { client.languages(repo_full_name).try(:to_hash) }
+            super do
+              client.languages(repo_full_name).to_attrs
+            end
           end
         end
       end

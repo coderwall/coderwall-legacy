@@ -4,7 +4,9 @@ module Coderwall
       module GitHubUser
         class FollowingFor < Coderwall::GitHub::Queries::GitHubUser::Base
           def fetch
-            super { (client.following(github_username) || []).map(&:to_hash) }
+            super do
+              (client.following(github_username) || []).map(&:to_attrs)
+            end
           end
         end
       end
