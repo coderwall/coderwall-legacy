@@ -124,6 +124,9 @@ gem 'simple_form'
 gem 'tweet-button'
 gem 'local_time'
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 # DROP BEFORE RAILS 4
 # Mongo
 gem 'mongoid'
@@ -176,6 +179,7 @@ group :test do
   gem 'timecop'
   gem 'vcr'
   gem 'webmock', '<1.16'
+  gem 'stripe-ruby-mock', git: 'https://github.com/rebelidealist/stripe-ruby-mock', branch: 'live-tests'
 end
 
 group :production do
