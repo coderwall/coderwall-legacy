@@ -4,7 +4,6 @@ class UserEvent < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140728214411
 #
 # Table name: user_events
 #
@@ -12,5 +11,5 @@ end
 #  user_id    :integer
 #  name       :string(255)
 #  data       :text
-#  created_at :datetime         default(2014-02-20 22:39:11 UTC)
+#  created_at :datetime         default(2012-03-12 21:01:10 UTC)
 #
