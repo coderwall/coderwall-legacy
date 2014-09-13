@@ -35,12 +35,6 @@ class GithubRepo
   end
 
   def self.updated_repo_for(repo_owner, repo_name, repo)
-    ap repo_owner
-    ap repo_name
-
-    require 'pry'; binding.pry
-
-
     client = Coderwall::GitHub::Client.instance
 
     repo = Coderwall::GitHub::Queries::Repo::RepoFor.new(client, repo_owner, repo_name).fetch if repo.empty?
@@ -53,7 +47,7 @@ class GithubRepo
       repo.merge!(repo_params)
     end
 
-    repo.delete(:id) # why?
+    repo.delete(:id)
 
     repo_params = {
       owner:     GithubUser.new(repo[:owner]),
@@ -62,8 +56,6 @@ class GithubRepo
     }
 
     repo.merge(repo_params)
-  rescue => ex
-    require 'pry'; binding.pry
   end
 
 

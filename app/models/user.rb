@@ -318,6 +318,9 @@ class User < ActiveRecord::Base
   end
 
   def facts
+    # Most of this is defined in app/models/concerns/user_facts.rb
+    # but some methods have duplicate definitions (eventually to refactor
+    # into one source of truth if possible.
     @facts ||= begin
                  user_identites = [
                    linkedin_identity,
@@ -329,6 +332,7 @@ class User < ActiveRecord::Base
                    slideshare_identity,
                    id.to_s
                  ].compact
+
                  Fact.where(owner: user_identites.collect(&:downcase)).all
                end
   end

@@ -2,6 +2,8 @@ module UserLinkedin
   extend ActiveSupport::Concern
 
   included do
+
+    # Duplicated in app/models/concerns/user_facts.rb
     def linkedin_identity
       "linkedin:#{linkedin_token}::#{linkedin_secret}" if linkedin_token
     end

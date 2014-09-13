@@ -13,9 +13,9 @@ class GithubProfile
   field :location, type: String
   field :type, type: String
 
-  embeds_many :followers, class_name: GithubUser.name.to_s, as: :personable
+  embeds_many :followers, class_name: '::GithubUser', as: :personable
 
-  has_and_belongs_to_many :orgs, class_name: GithubProfile.name.to_s
+  has_and_belongs_to_many :orgs, class_name: '::GithubProfile'
 
   ORGANIZATION = 'Organization'
   USER         = 'User'
@@ -101,8 +101,6 @@ class GithubProfile
     }
 
     profile.merge(profile_params)
-  rescue => ex
-    require 'pry'; binding.pry
   end
 
   def self.map_repos_for(client, github_username)

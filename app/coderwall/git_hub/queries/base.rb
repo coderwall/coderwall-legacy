@@ -13,7 +13,7 @@ module Coderwall
         end
 
         def friendly_thing_name
-          self.class.name.underscore.split('/').last.gsub('_', ' ')
+          @friendly_thing_name ||= self.class.name.underscore.split('/').last.gsub('_', ' ')
         end
       end
     end
