@@ -26,8 +26,8 @@ class PgTeam < ActiveRecord::Base
   validates :slug, uniqueness: true, presence: true
 
   private def create_slug!
-            self.slug = name.parameterize
-          end
+    self.slug = name.parameterize
+  end
 
 end
 #

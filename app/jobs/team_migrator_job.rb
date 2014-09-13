@@ -154,8 +154,7 @@ class TeamMigratorJob
     return if  links.empty?
     return if pgteam.links.any?
     links.each do |link|
-      pgteam.links.create! name: link.name,
-        url: link.url
+      pgteam.links.create!(name: link.name, url: link.url)
     end
   end
 
@@ -188,9 +187,7 @@ class TeamMigratorJob
     return if pending_team_members.empty?
     pending_team_members.each do |pending_team_member|
       user = User.find pending_team_member.user_id
-      pgteam.members.create user: user,
-        created_at: pending_team_member.created_at,
-        updated_at: pending_team_member.updated_at
+      pgteam.members.create(user: user, created_at: pending_team_member.created_at, updated_at: pending_team_member.updated_at)
     end
   end
 end
