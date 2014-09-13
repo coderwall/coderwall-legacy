@@ -1,4 +1,4 @@
-%li.cf{:class => top_comment?(comment, comment_counter) ? "top-comment" : "" , :id => "comment_#{comment.id}"}
+%li.cf.comment{:class => top_comment?(comment, comment_counter) ? "top-comment" : "" , :id => "comment_#{comment.id}"}
   %header.cf
     .comment-avatar
       =image_tag(users_image_path(comment.user), :class => 'avatar')
