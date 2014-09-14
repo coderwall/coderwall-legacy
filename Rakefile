@@ -21,12 +21,19 @@ namespace :team do
     right = mongo.send(attr)
 
     if left != right
-      puts "#{attr}   #{left} != #{right}  (#{pg.id}|#{mongo.id})"
-
-      if fail_if_neq
-        require 'pry'; binding.pry
-      end
+      puts "#{attr} | #{left} != #{right} | pg:#{pg.id} | mongo:#{mongo.id}"
     end
+  rescue => ex
+    puts '*'*80
+    puts
+    puts ex
+    puts
+    puts '-'*80
+    puts
+    ap ex.backtrace
+    puts
+    puts '*'*80
+    require 'pry'; binding.pry
   end
 
   task verify: :environment do
@@ -35,20 +42,36 @@ namespace :team do
         mongo_id = pg_team.mongo_id
         mongo_team = Team.find(mongo_id)
 
-
+        # Team
         %i(updated_at median score total slug mean pending_join_requests).each do |attr|
           neq(attr, pg_team, mongo_team, false)
         end
 
-
         %i(about achievement_count analytics benefit_description_1 benefit_description_2 benefit_description_3 benefit_name_1 benefit_name_2 benefit_name_3 big_image big_quote blog_feed branding country_id created_at endorsement_count facebook featured_banner_image featured_links_title github github_organization_name headline hide_from_featured highlight_tags hiring_tagline interview_steps invited_emails link_to_careers_page location monthly_subscription name number_of_jobs_to_show office_photos organization_way organization_way_name organization_way_photo our_challenge paid_job_posts premium preview_code reason_description_1 reason_description_2 reason_description_3 reason_name_1 reason_name_2 reason_name_3 size stack_list twitter upcoming_events upgraded_at valid_jobs website why_work_image your_impact youtube_url).each do |attr|
           neq(attr, pg_team, mongo_team)
         end
-      rescue => ex
 
-        ap ex
+        # TODO: Account
+        unless mongo_team.account.nil? || pg_team.account.nil?
+          %i(stripe_card_token stripe_customer_token admin_id).each do |attr|
+            neq(attr, pg_team.account, mongo_team.account)
+          end
+        end
 
-        require 'pry'; binding.pry
+        # TODO: Plans
+
+        # TODO: Locations
+
+        # TODO: Links
+
+        # TODO: Members
+
+        # TODO: Jobs
+
+        # TODO: Followers
+
+        # TODO: Pending Requests
+
       end
     end
   end
