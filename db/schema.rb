@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140823174046) do
+ActiveRecord::Schema.define(:version => 20140914051313) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -359,11 +359,11 @@ ActiveRecord::Schema.define(:version => 20140823174046) do
     t.datetime "updated_at",                                     :null => false
     t.string   "website"
     t.text     "about"
-    t.integer  "total",                    :default => 0
+    t.float    "total",                    :default => 0.0
     t.integer  "size",                     :default => 0
-    t.integer  "mean",                     :default => 0
-    t.integer  "median",                   :default => 0
-    t.integer  "score",                    :default => 0
+    t.float    "mean",                     :default => 0.0
+    t.float    "median",                   :default => 0.0
+    t.float    "score",                    :default => 0.0
     t.string   "twitter"
     t.string   "facebook"
     t.string   "slug"

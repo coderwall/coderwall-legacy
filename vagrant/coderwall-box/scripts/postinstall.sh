@@ -24,6 +24,10 @@ apt-get -y install ack-grep autoconf automake bison ca-certificates         \
                    patch pkg-config sqlite3 tmux vim zlib1g zlib1g-dev gawk \
                    libxml2-dev curl libcurl4-openssl-dev        \
                    imagemagick libmagickcore-dev libmagickwand-dev tcl8.5
+apt-get -y install libcurl3 libcurl3-dev libcurl3-gnutls libcurl4-openssl-dev
+apt-get -y install libpq-dev
+apt-get -y install libxml2 libxml2-dev libxslt1-dev
+
 
 # Install NFS client
 apt-get -y install nfs-common portmap
@@ -104,6 +108,7 @@ rm -rf postgresql-$POSTGRES_VERSION*
 
 # Add 'vagrant' role
 su -c 'createuser vagrant -s' postgres
+su -c 'createuser coderwall -s' postgres
 
 # Initialize postgres DB
 useradd -p postgres postgres
