@@ -157,7 +157,6 @@ namespace :team do
         end
 
         # TODO: Pending Requests
-
       end
     end
   end
