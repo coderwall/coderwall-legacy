@@ -26,10 +26,10 @@ $provision = 'vagrant/bootstrap.sh'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = $box
-  config.vm.box_url = $box_url
+  config.vm.box = box
+  #config.vm.box_url = box_url
   config.vm.provision :shell do |s|
-    s.path = $provision
+    s.path = provision
   end
 
   config.ssh.keep_alive = true
@@ -70,6 +70,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   else
     puts "Please install the 'vagrant-vbguest' plugin"
   end
+
+  #if Vagrant.has_plugin?('vagrant-cachier')
+    #config.cache.scope = :box
+  #else
+    #puts "Please install the 'vagrant-cachier' plugin"
+  #end
 end
 
 def set_port_mapping_for(config, service, guest_port, settings, force = false)

@@ -24,6 +24,22 @@ apt-get -y install linux-headers-$(uname -r)
 apt-get -y install build-essential
 
 # General dependencies and tools just... mashed, just mashed all together.
+apt-get -y install ack-grep autoconf automake bison ca-certificates         \
+                   curl g++ gcc git-core htop iotop libc6-dev libffi-dev    \
+                   libgdbm-dev libncurses5-dev libopenssl-ruby libreadline6 \
+                   libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev  \
+                   libtool libxml2-dev libxslt-dev libyaml-dev make openssl \
+                   patch pkg-config sqlite3 tmux vim zlib1g zlib1g-dev gawk \
+                   libxml2-dev curl libcurl4-openssl-dev        \
+                   imagemagick libmagickcore-dev libmagickwand-dev tcl8.5
+apt-get -y install libcurl3 libcurl3-dev libcurl3-gnutls libcurl4-openssl-dev
+apt-get -y install libpq-dev
+apt-get -y install libxml2 libxml2-dev libxslt1-dev
+
+
+# Install NFS client
+apt-get -y install nfs-common portmap
+
 # Apt-install python tools and libraries
 # Install NFS client
 # libpq-dev lets us compile psycopg for Postgres
