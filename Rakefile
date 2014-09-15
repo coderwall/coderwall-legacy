@@ -21,7 +21,10 @@ namespace :team do
     right = mongo.send(attr)
 
     if left != right
-      puts "#{attr} | #{left} != #{right} | pg:#{pg.id} | mongo:#{mongo.id}"
+      puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
+      true
+    else
+      false
     end
   rescue => ex
     puts '*'*80
@@ -42,8 +45,11 @@ namespace :team do
         mongo_id = pg_team.mongo_id
         mongo_team = Team.find(mongo_id)
 
+        # Ignoring:
+        # - updated_at
+
         # Team
-        %i(updated_at median score total slug mean pending_join_requests).each do |attr|
+        %i(median score total slug mean pending_join_requests).each do |attr|
           neq(attr, pg_team, mongo_team, false)
         end
 
@@ -52,13 +58,25 @@ namespace :team do
         end
 
         # TODO: Account
-        unless mongo_team.account.nil? || pg_team.account.nil?
-          %i(stripe_card_token stripe_customer_token admin_id).each do |attr|
-            neq(attr, pg_team.account, mongo_team.account)
-          end
+        if mongo_team.account.present? && pg_team.account.blank?
+          puts "account | pg:#{pg_team.id} | mongo:#{mongo_team.id}| The account was not migrated."
         end
 
-        # TODO: Plans
+        if mongo_team.account.present? && pg_team.account.present?
+          check_plans = %i(stripe_card_token stripe_customer_token admin_id).map do |attr|
+            neq(attr, pg_team.account, mongo_team.account)
+          end.any? { |x| !x }
+
+          # TODO: Plans
+          if check_plans
+            left = pg_team.account.plans.pluck(:id).sort
+            right = mongo_team.account.plan_ids.sort
+
+            if left != right
+              puts "account.plans | pg:#{pg_team.id} | mongo:#{mongo_team.id}| #{left} != #{right}"
+            end
+          end
+        end
 
         # TODO: Locations
 
