@@ -12,8 +12,8 @@ class PgTeam < ActiveRecord::Base
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
   has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
 
-  has_many :follows , class_name: 'FollowedTeam', foreign_key: 'team_id', dependent: :destroy
-  has_many :followers, through: :follows
+  has_many :follows, class_name: 'FollowedTeam', foreign_key: 'team_id', dependent: :destroy
+  has_many :followers, through: :follows, source: :team
 
   accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank
 
