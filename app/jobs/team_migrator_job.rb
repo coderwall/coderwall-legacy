@@ -136,13 +136,14 @@ class TeamMigratorJob
     return unless locations.any?
     return if pgteam.locations.any?
     locations.each do |location|
-      pgteam.locations.create! name: location.name,
+      pgteam.locations.create!(
+        name:        location.name,
         description: location.description,
-        address: location.address,
-        city: location.city,
-        state_code: location.state_code,
-        country: location.country
-
+        address:     location.address,
+        city:        location.city,
+        state_code:  location.state_code,
+        country:     location.country
+      )
     end
   end
 
