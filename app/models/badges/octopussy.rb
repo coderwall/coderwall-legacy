@@ -1,5 +1,6 @@
 class Octopussy < BadgeBase
-  GITHUB_TEAM_ID_IN_PRODUCTION = '4f27193d973bf0000400029d'
+  #
+  # GITHUB_TEAM_ID_IN_PRODUCTION = '4f27193d973bf0000400029d'
 
   describe "Octopussy",
            skill:       'Open Source',
@@ -11,7 +12,8 @@ class Octopussy < BadgeBase
 
   def self.github_team
     Rails.cache.fetch("octopussy_github_team_members", expires_in: 1.day) do
-      Team.find(GITHUB_TEAM_ID_IN_PRODUCTION).team_members.collect { |user| user.github }.compact
+      #Team.find(GITHUB_TEAM_ID_IN_PRODUCTION).members.collect { |user| user.github }.compact
+      Team.where(name: 'Github').members.collect { |user| user.github }.compact
     end
   end
 

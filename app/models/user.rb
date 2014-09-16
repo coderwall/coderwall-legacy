@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
   has_one :github_profile  , class_name: 'Users::Github::Profile', dependent: :destroy
   has_many :github_repositories, through: :github_profile , source: :repositories
 
-  belongs_to :team, class_name: 'PgTeam'
+  belongs_to :team, class_name: 'Team'
 
   geocoded_by :location, latitude: :lat, longitude: :lng, country: :country, state_code: :state_name
   after_validation :geocode_location, if: :location_changed? unless Rails.env.test?
