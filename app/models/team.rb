@@ -1,11 +1,35 @@
+# encoding utf-8
+require 'search'
+
 #Rename to Team when Mongodb is dropped
 class Team < ActiveRecord::Base
-  include LeaderboardRedisRank
   include SearchModule
-  include TeamAnalytics
-  include TeamMapping
-  include TeamMigration
   include TeamSearch
+  mapping team: {
+    properties: {
+      id:                 { type: 'string', index: 'not_analyzed' },
+      slug:               { type: 'string', index: 'not_analyzed' },
+      name:               { type: 'string', boost: 100, analyzer: 'snowball' },
+      score:              { type: 'float', index: 'not_analyzed' },
+      size:               { type: 'integer', index: 'not_analyzed' },
+      avatar:             { type: 'string', index: 'not_analyzed' },
+      country:            { type: 'string', boost: 50, analyzer: 'snowball' },
+      url:                { type: 'string', index: 'not_analyzed' },
+      follow_path:        { type: 'string', index: 'not_analyzed' },
+      hiring:             { type: 'boolean', index: 'not_analyzed' },
+      total_member_count: { type: 'integer', index: 'not_analyzed' },
+      completed_sections: { type: 'integer', index: 'not_analyzed' },
+      team_members:       { type: 'multi_field', fields: {
+        username:    { type: 'string', index: 'not_analyzed' },
+        profile_url: { type: 'string', index: 'not_analyzed' },
+        avatar:      { type: 'string', index: 'not_analyzed' }
+      } }
+    }
+  }
+
+  include LeaderboardRedisRank
+  include TeamAnalytics
+  include TeamMigration
 
   DEFAULT_HEX_BRAND        = '#343131'
   LEADERBOARD_KEY          = 'teams:leaderboard'
@@ -43,22 +67,23 @@ class Team < ActiveRecord::Base
   before_save :update_team_size!
   before_save :clear_cache_if_premium_team
   before_validation :fix_website_url!
-  attr_accessor :skip_validations
   after_create :generate_event
   after_save :reindex_search
   after_destroy :reindex_search
   after_destroy :remove_dependencies
 
+  attr_accessor :skip_validations
 
   def self.search(query_string, country, page, per_page, search_type = :query_and_fetch)
     country = query_string.gsub!(/country:(.+)/, '') && $1 if country.nil?
-    query   = ""
+    query = ''
+
     if query_string.blank? or query_string =~ /:/
       query += query_string
     else
       query += "name:#{query_string}*"
     end
-    #query += "country:#{country}" unless country.nil?
+
     begin
       tire.search(load: false, search_type: search_type, page: page, per_page: per_page) do
         query { string query, default_operator: 'AND' } if query_string.present?
@@ -76,10 +101,6 @@ class Team < ActiveRecord::Base
     else
       name.to_s.gsub(/\s/, "-")
     end
-  end
-
-  def self.has_jobs
-    Team.find(Opportunity.valid.select(:team_document_id).map(&:team_document_id))
   end
 
   def self.most_relevant_featured_for(user)
@@ -132,6 +153,10 @@ class Team < ActiveRecord::Base
 
   def has_protips?
     trending_protips.size > 0
+  end
+
+  def trending_protips(limit=4)
+    Protip.search_trending_by_team(slug, nil, 1, limit)
   end
 
   def company?
@@ -677,9 +702,9 @@ class Team < ActiveRecord::Base
 
   def remove_dependencies
     [FollowedTeam, Invitation, Opportunity, SeizedOpportunity].each do |klass|
-      klass.where(team_document_id: self.id.to_s).delete_all
+      klass.where(team_id: self.id.to_s).delete_all
     end
-    User.where(team_document_id: self.id.to_s).update_all('team_document_id = NULL')
+    User.where(team_id: self.id.to_s).update_all('team_id = NULL')
   end
 
   def rerank!
@@ -794,7 +819,7 @@ class Team < ActiveRecord::Base
 
   #Replaced with team_size attribute
   def update_team_size!
-    self.size = User.where(team_document_id: self.id.to_s).count
+    self.size = User.where(team_id: self.id.to_s).count
   end
 
   def clear_cache_if_premium_team
@@ -805,10 +830,10 @@ class Team < ActiveRecord::Base
     self.slug = self.class.slugify(name)
   end
 end
-end
 #
 
 # == Schema Information
+# Schema version: 20140918031936
 #
 # Table name: teams
 #
@@ -817,11 +842,11 @@ end
 #  updated_at               :datetime         not null
 #  website                  :string(255)
 #  about                    :text
-#  total                    :integer          default(0)
+#  total                    :float            default(0.0)
 #  size                     :integer          default(0)
-#  mean                     :integer          default(0)
-#  median                   :integer          default(0)
-#  score                    :integer          default(0)
+#  mean                     :float            default(0.0)
+#  median                   :float            default(0.0)
+#  score                    :float            default(0.0)
 #  twitter                  :string(255)
 #  facebook                 :string(255)
 #  slug                     :string(255)

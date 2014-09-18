@@ -97,8 +97,8 @@ class User < ActiveRecord::Base
   scope :receives_newsletter, where(receive_newsletter: true)
   scope :receives_digest, where(receive_weekly_digest: true)
   scope :with_tokens, where("github_token IS NOT NULL")
-  scope :on_team, where("team_document_id IS NOT NULL")
-  scope :not_on_team, where("team_document_id IS NULL")
+  scope :on_team, where("team_id IS NOT NULL")
+  scope :not_on_team, where("team_id IS NULL")
   scope :autocomplete, lambda { |filter|
     filter = "#{filter.upcase}%"
     where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
@@ -213,7 +213,7 @@ class User < ActiveRecord::Base
   end
 
   def team_ids
-    [team_document_id]
+    [team_id]
   end
 
 
@@ -222,36 +222,36 @@ class User < ActiveRecord::Base
   end
 
   def following_team?(team)
-    followed_teams.collect(&:team_document_id).include?(team.id.to_s)
+    followed_teams.collect(&:team_id).include?(team.id.to_s)
   end
 
   def follow_team!(team)
-    followed_teams.create!(team_document_id: team.id.to_s)
+    followed_teams.create!(team_id: team.id.to_s)
     generate_event(team: team)
   end
 
   def unfollow_team!(team)
-    followed_teams = self.followed_teams.where(team_document_id: team.id.to_s).all
+    followed_teams = self.followed_teams.where(team_id: team.id.to_s).all
     followed_teams.each(&:destroy)
   end
 
   def teams_being_followed
-    Team.find(followed_teams.collect(&:team_document_id)).sort { |x, y| y.score <=> x.score }
+    Team.find(followed_teams.collect(&:team_id)).sort { |x, y| y.score <=> x.score }
   end
 
   def on_team?
-    !team_document_id.nil?
+    !team_id.nil?
   end
 
   def team_member_of?(user)
-    on_team? && self.team_document_id == user.team_document_id
+    on_team? && self.team_id == user.team_id
   end
 
   def belongs_to_team?(team = nil)
     if self.team && team
       self.team.id.to_s == team.id.to_s
     else
-      !team_document_id.blank?
+      !team_id.blank?
     end
   end
 
@@ -288,7 +288,7 @@ class User < ActiveRecord::Base
              name:         display_name,
              location:     location,
              endorsements: endorsements.count,
-             team:         team_document_id,
+             team:         team_id,
              accounts:     { github: github },
              badges:       badges_hash = [] }
     badges.each do |badge|
@@ -449,11 +449,11 @@ class User < ActiveRecord::Base
   end
 
   def team_members
-    User.where(team_document_id: self.team_document_id.to_s)
+    User.where(team_id: self.team_id.to_s)
   end
 
   def team_member_ids
-    User.select(:id).where(team_document_id: self.team_document_id.to_s).map(&:id)
+    User.select(:id).where(team_id: self.team_id.to_s).map(&:id)
   end
 
   def penalize!(amount=(((team && team.team_members.size) || 6) / 6.0)*activitiy_multipler)
@@ -636,7 +636,7 @@ class User < ActiveRecord::Base
   end
 
   def track_opportunity_view!(opportunity)
-    track!("viewed opportunity", opportunity_id: opportunity.id, team: opportunity.team_document_id)
+    track!("viewed opportunity", opportunity_id: opportunity.id, team: opportunity.team_id)
   end
 
   def track!(name, data = {})
@@ -677,11 +677,11 @@ class User < ActiveRecord::Base
   end
 
   def following_teams_ids
-    self.followed_teams.map(&:team_document_id)
+    self.followed_teams.map(&:team_id)
   end
 
   def following_team_members_ids
-    User.select(:id).where(team_document_id: self.following_teams_ids).map(&:id)
+    User.select(:id).where(team_id: self.following_teams_ids).map(&:id)
   end
 
   def following_networks_ids
@@ -911,7 +911,7 @@ class User < ActiveRecord::Base
   after_destroy :refresh_protips
 
   def refresh_dependencies
-    if username_changed? or avatar_changed? or team_document_id_changed?
+    if username_changed? or avatar_changed? or team_id_changed?
       refresh_protips
     end
   end

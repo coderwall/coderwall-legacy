@@ -92,7 +92,7 @@ class ProtipMailer < ActionMailer::Base
     else
       teams = teams_for_user(user)
       teams.each do |team|
-        best_job = team.best_positions_for(user).detect{|job| (job.team_document_id == user.team_document_id) or !already_sent?(job, user)}
+        best_job = team.best_positions_for(user).detect{|job| (job.team_id == user.team_id) or !already_sent?(job, user)}
         return [team, best_job] unless best_job.nil?
       end
     end

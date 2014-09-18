@@ -1,48 +1,38 @@
--content_for :javascript do
-  =javascript_include_tag 'jobs.js'
+- content_for :javascript do
+  = javascript_include_tag 'jobs.js'
 
--content_for :credits do
-  -cc_attribution_for_location_photo(params[:location])
+- content_for :credits do
+  - cc_attribution_for_location_photo(params[:location])
 
--content_for :mixpanel do
-  =record_view_event('jobs page')
+- content_for :mixpanel do
+  = record_view_event('jobs page')
 
-%section.jobs-top{:style => "background: #343131 url('#{location_photo_path(params[:location])}') no-repeat top center; background-size: 100% 226px;"}
+%section.jobs-top{ style: "background: #343131 url('#{location_photo_path(params[:location])}') no-repeat top center; background-size: 100% 226px;" }
   #dimmer
   .inside
     .filter-outside
-      %a.filter{:href => '/'}
-        %h3
-          =params[:skill].try(:titleize)
+      %a.filter{ href: '/' }
+        %h3= params[:skill].try(:titleize)
         %h1
           Jobs
-          %span
-            =job_location_string(params[:location].titleize)
-
+          %span= job_location_string(params[:location].titleize)
       %ul.location-drop-down.hide
         - @locations.each do |location|
           %li
-            %a{:href => jobs_path(:location => location.parameterize, :skill => params[:skill]), :class => location.downcase, 'data-action' => "view jobs in #{location.downcase}", 'data-from' => 'jobs page', 'data-properties' => {'location' => params[:location]}.to_json}
+            %a{ href: jobs_path(location: location.parameterize, skill: params[:skill]), class: location.downcase, 'data-action' => "view jobs in #{location.downcase}", 'data-from' => 'jobs page', 'data-properties' => { 'location' => params[:location] }.to_json }
               = location
-
-
-
     .top-box
       .post-box.cf
         %p.post-text
           Starting at $99 for 30 days
-        %a.post-job.track{:href => add_job_or_signin_path, 'data-action' => 'add job', 'data-from' => 'jobs page (post a job)', 'data-properties' => {'location' => params[:location]}.to_json}
+        %a.post-job.track{ href: add_job_or_signin_path, 'data-action' => 'add job', 'data-from' => 'jobs page (post a job)', 'data-properties' => { 'location' => params[:location] }.to_json }
           Post a job
       .blurb
         %p
           Jobs at companies attracting the best developers to help them solve unique challenges in an awesome environment.
-
 .inside-main-content.cf
   %ul.jobs
     - @jobs.each do |job|
-      =render job, :locals => {:job => job}
-
+      = render(job, locals: { job: job })
   - if @jobs_left > 20
-    =link_to 'more jobs', jobs_path(:location => params[:location].parameterize, :skill => params[:skill], :page => @page+1), :remote => true, :class => "new-more", 'data-action' => 'view more jobs', 'data-from' => 'jobs page', 'data-properties' => {'location' => params[:location]}.to_json
-
-
+    = link_to 'more jobs', jobs_path(location: params[:location].parameterize, skill: params[:skill], page: @page+1), remote: true, class: "new-more", 'data-action' => 'view more jobs', 'data-from' => 'jobs page', 'data-properties' => {'location' => params[:location]}.to_json

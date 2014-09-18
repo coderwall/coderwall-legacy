@@ -15,7 +15,7 @@ RSpec.describe Opportunity, :type => :model do
         opportunity.save!
         expect(opportunity.name).not_to be_nil
         expect(opportunity.description).not_to be_nil
-        expect(opportunity.team_document_id).not_to be_nil
+        expect(opportunity.team_id).not_to be_nil
         expect(opportunity.tags.size).to eq(tags.size)
         expect(opportunity.cached_tags).to eq(tags.join(","))
 

@@ -20,8 +20,6 @@ class Opportunity < ActiveRecord::Base
   validates :location, presence: true, allow_blank: false
   validates :location_city, presence: true, allow_blank: false, unless: lambda { location && anywhere?(location) }
   validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
-  validates :team_document_id, presence: true
-
 
   before_validation :set_location_city
   before_save :update_cached_tags
@@ -39,32 +37,34 @@ class Opportunity < ActiveRecord::Base
 
   attr_accessor :title
 
+  HUMANIZED_ATTRIBUTES = { name: 'Title' }
 
-  HUMANIZED_ATTRIBUTES = {
-    name: "Title"
-  }
+  #def team
+    #@team ||= Team.find(team_document_id.to_s)
+  #end
 
-  class << self
+  belongs_to :team
 
-    def human_attribute_name(attr,options={})
-      HUMANIZED_ATTRIBUTES[attr.to_sym] || super
-    end
+  def self.human_attribute_name(attr,options={})
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
 
-    def parse_salary(salary_string)
-      salary_string.match(/(\d+)\s*([kK]?)/)
-      number, thousands = Regexp.last_match[1], Regexp.last_match[2]
+  def self.parse_salary(salary_string)
+    salary_string.match(/(\d+)\s*([kK]?)/)
+    number, thousands = Regexp.last_match[1], Regexp.last_match[2]
 
-      if number.nil?
-        0
+    if number.nil?
+      0
+    else
+      salary = number.to_i
+      if thousands.downcase == 'k' or salary < 1000
+        salary * 1000
       else
-        salary = number.to_i
-        if thousands.downcase == 'k' or salary < 1000
-          salary * 1000
-        else
-          salary
-        end
+        salary
       end
     end
+
+
 
     def based_on(tags)
       query_string = "tags:#{tags.join(' OR ')}"
@@ -94,7 +94,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   def seize_by(user)
-    seized_opportunities.create!(user_id: user.id, team_document_id: team_document_id)
+    seized_opportunities.create!(user_id: user.id, team_id: team_id)
   end
 
   def seized_by?(user)
@@ -192,10 +192,6 @@ class Opportunity < ActiveRecord::Base
     Redis.current.zcount(user_views_key, epoch_since, epoch_now) + Redis.current.zcount(user_anon_views_key, epoch_since, epoch_now)
   end
 
-  def team
-    @team ||= Team.find(team_document_id.to_s)
-  end
-
   def ensure_can_afford
     team.can_post_job?
   end
@@ -220,26 +216,26 @@ class Opportunity < ActiveRecord::Base
   def to_indexed_json
     to_public_hash.deep_merge(
 
-        public_id: public_id,
-        name: name,
-        description: description,
-        designation: designation,
-        opportunity_type: opportunity_type,
-        tags: cached_tags,
-        link: link,
-        salary: salary,
-        created_at: created_at,
-        updated_at: updated_at,
-        expires_at: expires_at,
-        apply: apply,
-        team: {
-          slug: team.slug,
-          id: team.id.to_s,
-          featured_banner_image: team.featured_banner_image,
-          big_image: team.big_image,
-          avatar_url: team.avatar_url,
-          name: team.name
-        }
+      public_id: public_id,
+      name: name,
+      description: description,
+      designation: designation,
+      opportunity_type: opportunity_type,
+      tags: cached_tags,
+      link: link,
+      salary: salary,
+      created_at: created_at,
+      updated_at: updated_at,
+      expires_at: expires_at,
+      apply: apply,
+      team: {
+        slug: team.slug,
+        id: team.id.to_s,
+        featured_banner_image: team.featured_banner_image,
+        big_image: team.big_image,
+        avatar_url: team.avatar_url,
+        name: team.name
+      }
     ).to_json(methods: [:to_param])
   end
 
@@ -278,7 +274,7 @@ class Opportunity < ActiveRecord::Base
     location.split('|').each do |location_string|
       # skip if location is anywhere or already exists
       if anywhere?(location_string) || team.locations.where(address: /.*#{location_string}.*/).count > 0
-        geocoded_all = false
+          geocoded_all = false
         next
       end
 

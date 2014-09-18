@@ -2,7 +2,7 @@
 
 =form_for [@team, @job] do |j|
   =render "shared/error_messages", target: @job
-  =j.hidden_field :team_document_id
+  =j.hidden_field :team_id
 
   .horizontal
     %fieldset.job-title

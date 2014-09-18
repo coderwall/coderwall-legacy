@@ -5,7 +5,7 @@ Fabricator(:opportunity) do
   tags ["rails", "sinatra", "JQuery", "Clean, beautiful code"]
   location "San Francisco, CA"
   cached_tags "java, python"
-  team_document_id { Fabricate(:team, paid_job_posts: 1).id }
+  team_id { Fabricate(:team, paid_job_posts: 1).id }
 end
 
 Fabricator(:job, from: :opportunity, class_name: :opportunity) do

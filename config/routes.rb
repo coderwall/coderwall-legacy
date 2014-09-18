@@ -1,7 +1,9 @@
 # == Route Map
 #
-#                             GET      /.json(.:format)                                       #<Proc:0x007f929e108208@/Users/mike/assemblymade/coderwall/config/routes.rb:4>
-#                             GET      /teams/.json(.:format)                                 #<Proc:0x007f929d284ba0@/Users/mike/assemblymade/coderwall/config/routes.rb:5>
+# undefined method `mapping' for #<Class:0x00000105263c38>
+# undefined method `mapping' for #<Class:0x007f9f103a1270>
+#                             GET      /.json(.:format)                                       #<Proc:0x007f9f0f07a700@/Users/mike/assemblymade/coderwall/config/routes.rb:269>
+#                             GET      /teams/.json(.:format)                                 #<Proc:0x007f9f0f083df0@/Users/mike/assemblymade/coderwall/config/routes.rb:270>
 #                                      /mail_view                                             MailPreview
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update

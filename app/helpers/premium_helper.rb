@@ -185,7 +185,7 @@ module PremiumHelper
         cached_tags: 'Skilled, Awesome',
         tags: 'Java, TDD, Heroku',
         location_city: 'San Francisco, CA',
-        team_document_id: @team.id || Team.featured.first.id
+        team_id: @team.id || Team.featured.first.id
     )
   end
 
@@ -220,7 +220,7 @@ module PremiumHelper
   end
 
   def job_visited(job)
-    visit_team_opportunity_path(job.team_document_id, job.id) unless job.new_record?
+    visit_team_opportunity_path(job.team_id, job.id) unless job.new_record?
   end
 
   def link_to_add_fields(name, f, association)

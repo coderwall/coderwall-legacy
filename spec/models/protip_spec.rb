@@ -248,14 +248,14 @@ RSpec.describe Protip, :type => :model do
     end
 
     it 'should weigh team member upvotes less' do
-      protip.author.team_document_id = "4f271930973bf00004000001"
+      protip.author.team_id = "4f271930973bf00004000001"
       protip.author.save
-      team_member = Fabricate(:user, team_document_id: protip.author.team_document_id)
+      team_member = Fabricate(:user, team_id: protip.author.team_id)
       team_member.score_cache = 5
       protip.upvote_by(team_member, team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
       expect(protip.upvotes_value).to eq(2)
-      non_team_member = Fabricate(:user, team_document_id: "4f271930973bf00004000002")
+      non_team_member = Fabricate(:user, team_id: "4f271930973bf00004000002")
       non_team_member.score_cache = 5
       protip.upvote_by(non_team_member, non_team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
