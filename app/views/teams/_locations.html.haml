@@ -38,9 +38,9 @@
       %ul.poi
         -@team.primary_points_of_interest.each do |point|
           %li=point
-    -if @team.team_locations.size > 1
+    -if @team.locations.size > 1
       %ul.locations.cf
-        -@team.team_locations.each do |location|
+        -@team.locations.each do |location|
           %li.team_location
             %a.mapLocation{:href => '#position'}
               .name=location.name

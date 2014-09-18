@@ -1,6 +1,9 @@
 class UsernamesController < ApplicationController
   skip_before_action :require_registration
 
+  # TODO: Clean up the config/routes for /usernames
+  #       There is no UsernamesController#index for example. Why is there a route?
+
   def show
     # allow validation to pass if it's the user's username that they're trying to validate (for edit username)
     if signed_in? && current_user.username.downcase == params[:id].downcase

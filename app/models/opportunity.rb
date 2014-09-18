@@ -21,7 +21,7 @@ class Opportunity < ActiveRecord::Base
   validates :location_city, presence: true, allow_blank: false, unless: lambda { location && anywhere?(location) }
   validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
   validates :team_document_id, presence: true
-  
+
 
   before_validation :set_location_city
   before_save :update_cached_tags
@@ -39,7 +39,7 @@ class Opportunity < ActiveRecord::Base
 
   attr_accessor :title
 
-  
+
   HUMANIZED_ATTRIBUTES = {
     name: "Title"
   }
@@ -277,12 +277,12 @@ class Opportunity < ActiveRecord::Base
     geocoded_all = true
     location.split('|').each do |location_string|
       # skip if location is anywhere or already exists
-      if anywhere?(location_string) || team.team_locations.where(address: /.*#{location_string}.*/).count > 0
+      if anywhere?(location_string) || team.locations.where(address: /.*#{location_string}.*/).count > 0
         geocoded_all = false
         next
       end
 
-      geocoded_all &&= team.team_locations.build(address: location_string, name: location_string).geocode
+      geocoded_all &&= team.locations.build(address: location_string, name: location_string).geocode
     end
     geocoded_all || nil
   end
@@ -305,7 +305,7 @@ class Opportunity < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140728214411
+# Schema version: 20140918031936
 #
 # Table name: opportunities
 #

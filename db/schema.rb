@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140914051313) do
+ActiveRecord::Schema.define(:version => 20140918031936) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20140914051313) do
     t.integer  "inviter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "team_id"
   end
 
   create_table "likes", :force => true do |t|
@@ -293,6 +294,7 @@ ActiveRecord::Schema.define(:version => 20140914051313) do
     t.string   "team_document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "team_id"
   end
 
   create_table "sent_mails", :force => true do |t|

@@ -1,16 +1,14 @@
 # == Route Map
 #
-# Connecting to database specified by database.yml
-# Creating scope :near. Overwriting existing method TeamLocation.near.
-#                             GET      /.json(.:format)                                       #<Proc:0x000001084b5510@/Users/mike/assemblymade/coderwall/config/routes.rb:273>
-#                             GET      /teams/.json(.:format)                                 #<Proc:0x000001084cedf8@/Users/mike/assemblymade/coderwall/config/routes.rb:274>
+#                             GET      /.json(.:format)                                       #<Proc:0x007f929e108208@/Users/mike/assemblymade/coderwall/config/routes.rb:4>
+#                             GET      /teams/.json(.:format)                                 #<Proc:0x007f929d284ba0@/Users/mike/assemblymade/coderwall/config/routes.rb:5>
+#                                      /mail_view                                             MailPreview
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
-#                        root          /                                                      protips#index
 #                     welcome GET      /welcome(.:format)                                     home#index
+#                        root          /                                                      protips#index
 #                    p_dpvbbg GET      /p/dpvbbg(.:format)                                    protips#show {:id=>"devsal"}
 #                          gh GET      /gh(.:format)                                          protips#show {:utm_campaign=>"github_orgs_badges", :utm_source=>"github"}
-#             latest_comments GET      /comments(.:format)                                    comments#index
 #                        jobs GET      /jobs(/:location(/:skill))(.:format)                   opportunities#index
 #                    jobs_map GET      /jobs-map(.:format)                                    opportunities#map
 #              random_protips GET      /p/random(.:format)                                    protips#random {:id=>/[\dA-Z\-_]{6}/i}
@@ -133,20 +131,20 @@
 #               inquiry_teams POST     /teams/inquiry(.:format)                               teams#inquiry
 #              followed_teams GET      /teams/followed(.:format)                              teams#followed
 #                search_teams GET      /teams/search(.:format)                                teams#search
-#           team_team_members GET      /teams/:team_id/team_members(.:format)                 team_members#index
-#                             POST     /teams/:team_id/team_members(.:format)                 team_members#create
-#        new_team_team_member GET      /teams/:team_id/team_members/new(.:format)             team_members#new
-#       edit_team_team_member GET      /teams/:team_id/team_members/:id/edit(.:format)        team_members#edit
-#            team_team_member GET      /teams/:team_id/team_members/:id(.:format)             team_members#show
-#                             PUT      /teams/:team_id/team_members/:id(.:format)             team_members#update
-#                             DELETE   /teams/:team_id/team_members/:id(.:format)             team_members#destroy
-#              team_locations GET      /teams/:team_id/team_locations(.:format)               team_locations#index
-#                             POST     /teams/:team_id/team_locations(.:format)               team_locations#create
-#           new_team_location GET      /teams/:team_id/team_locations/new(.:format)           team_locations#new
-#          edit_team_location GET      /teams/:team_id/team_locations/:id/edit(.:format)      team_locations#edit
-#               team_location GET      /teams/:team_id/team_locations/:id(.:format)           team_locations#show
-#                             PUT      /teams/:team_id/team_locations/:id(.:format)           team_locations#update
-#                             DELETE   /teams/:team_id/team_locations/:id(.:format)           team_locations#destroy
+#                team_members GET      /teams/:team_id/members(.:format)                      members#index
+#                             POST     /teams/:team_id/members(.:format)                      members#create
+#             new_team_member GET      /teams/:team_id/members/new(.:format)                  members#new
+#            edit_team_member GET      /teams/:team_id/members/:id/edit(.:format)             members#edit
+#                 team_member GET      /teams/:team_id/members/:id(.:format)                  members#show
+#                             PUT      /teams/:team_id/members/:id(.:format)                  members#update
+#                             DELETE   /teams/:team_id/members/:id(.:format)                  members#destroy
+#              team_locations GET      /teams/:team_id/locations(.:format)                    locations#index
+#                             POST     /teams/:team_id/locations(.:format)                    locations#create
+#           new_team_location GET      /teams/:team_id/locations/new(.:format)                locations#new
+#          edit_team_location GET      /teams/:team_id/locations/:id/edit(.:format)           locations#edit
+#               team_location GET      /teams/:team_id/locations/:id(.:format)                locations#show
+#                             PUT      /teams/:team_id/locations/:id(.:format)                locations#update
+#                             DELETE   /teams/:team_id/locations/:id(.:format)                locations#destroy
 #      apply_team_opportunity POST     /teams/:team_id/opportunities/:id/apply(.:format)      opportunities#apply
 #   activate_team_opportunity GET      /teams/:team_id/opportunities/:id/activate(.:format)   opportunities#activate
 # deactivate_team_opportunity GET      /teams/:team_id/opportunities/:id/deactivate(.:format) opportunities#deactivate
@@ -190,6 +188,7 @@
 #                             GET      /bitbucket/:username(.:format)                         users#show {:provider=>"bitbucket"}
 #        unlink_stackoverflow POST     /stackoverflow/unlink(.:format)                        users#unlink_provider {:provider=>"stackoverflow"}
 #                             GET      /stackoverflow/:username(.:format)                     users#show {:provider=>"stackoverflow"}
+#              resume_uploads POST     /resume_uploads(.:format)                              resume_uploads#create
 #                invite_users POST     /users/invite(.:format)                                users#invite
 #          autocomplete_users GET      /users/autocomplete(.:format)                          users#autocomplete
 #                status_users GET      /users/status(.:format)                                users#status
@@ -261,6 +260,7 @@
 #        admin_sections_teams GET      /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
 #         admin_section_teams GET      /admin/teams/section/:section(.:format)                admin#section_teams
 #           admin_sidekiq_web          /admin/sidekiq                                         Sidekiq::Web
+#             latest_comments GET      /comments(.:format)                                    comments#index
 #
 
 Coderwall::Application.routes.draw do
@@ -397,8 +397,8 @@ Coderwall::Application.routes.draw do
       get 'followed'
       get 'search'
     end
-    resources :team_members
-    resources :team_locations, as: :locations
+    resources :members
+    resources :locations, as: :locations
     resources :opportunities do
       member do
         post 'apply'

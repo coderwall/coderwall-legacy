@@ -1,21 +1,24 @@
 class Teams::Location < ActiveRecord::Base
-  #Rails 3 is stupid
-  belongs_to :team, class_name: 'Team',
-                    foreign_key: 'team_id',
-                    touch: true
+  include Geocoder::Model::ActiveRecord
 
-  # geocoded_by :address do |obj, results|
-  #   if geo = results.first and obj.address.downcase.include?(geo.city.try(:downcase) || "")
-  #     obj.city       = geo.city
-  #     obj.state_code = geo.state_code
-  #     obj.country    = geo.country
-  #   end
-  # end
-  #
-  # after_validation :geocode, if: lambda { |team_location| team_location.city.nil? }
+  # Rails 3 is stupid
+  belongs_to :team, class_name: 'Team',
+    foreign_key: 'team_id',
+    touch: true
+
+  geocoded_by :address do |obj, results|
+    if geo = results.first and obj.address.downcase.include?(geo.city.try(:downcase) || "")
+      obj.city       = geo.city
+      obj.state_code = geo.state_code
+      obj.country    = geo.country
+    end
+  end
+
+  after_validation :geocode, if: ->(team_location) { team_location.city.nil? }
 end
 
 # == Schema Information
+# Schema version: 20140918031936
 #
 # Table name: teams_locations
 #

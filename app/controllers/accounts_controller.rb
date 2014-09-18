@@ -79,7 +79,7 @@ class AccountsController < ApplicationController
   end
 
   def determine_plan
-    chosen_plan = params[:account].delete(:chosen_plan)
+    chosen_plan = params[:teams_account].delete(:chosen_plan)
     @plan       = Plan.find_by_public_id(chosen_plan)
   end
 

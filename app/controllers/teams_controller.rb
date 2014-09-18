@@ -80,7 +80,8 @@ class TeamsController < ApplicationController
     create_params = params.require(:team).permit(:selected, :slug, :name)
 
     @team, confirmed = selected_or_new(create_params)
-    @teams = Team.any_of({ :name => /#{team_to_regex(@team)}.*/i }).limit(3).to_a unless confirmed
+    #@teams = Team.any_of({ :name => /#{team_to_regex(@team)}.*/i }).limit(3).to_a unless confirmed
+    @teams = Team.where('name ilike ?', "#{@team}%").limit(3) unless confirmed
 
     if @team.valid? and @teams.blank? and @team.new_record?
       @team.add_user(current_user)
@@ -89,6 +90,10 @@ class TeamsController < ApplicationController
       record_event('created team')
     end
   end
+
+  #def team_to_regex(team)
+    #team.name.gsub(/ \-\./, '.*')
+  #end
 
   def edit
     edit_params = params.permit(:slug, :id)
@@ -297,10 +302,6 @@ class TeamsController < ApplicationController
     jobs = job_public_ids
     public_id = job && jobs[(jobs.index(job.public_id) || +1)-1]
     Opportunity.with_public_id(public_id) unless public_id.nil?
-  end
-
-  def team_to_regex(team)
-    team.name.gsub(/ \-\./, '.*')
   end
 
   def selected_or_new(opts)

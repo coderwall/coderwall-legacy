@@ -744,6 +744,7 @@ DEPENDENCIES
   awesome_print
   backbone-on-rails
   better_errors
+  binding_of_caller
   bson_ext
   capybara
   capybara-screenshot
@@ -809,6 +810,7 @@ DEPENDENCIES
   postgres_ext
   pry-byebug
   pry-rescue
+  pry-stack_explorer
   pubnub (= 0.1.9)
   puma
   querystring
