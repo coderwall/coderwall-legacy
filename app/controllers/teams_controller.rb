@@ -39,20 +39,26 @@ class TeamsController < ApplicationController
   end
 
   def show
+
     show_params = params.permit(:job_id, :refresh, :callback, :id, :slug)
 
     respond_to do |format|
       format.html do
         @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
+
         return render_404 if @team.nil?
+
         @team_protips = @team.trending_protips(4)
         @query = "team:#{@team.slug}"
         viewing_user.track_team_view!(@team) if viewing_user
         @team.viewed_by(viewing_user || session_id) unless is_admin?
         @job = show_params[:job_id].nil? ? @team.jobs.sample : Opportunity.with_public_id(show_params[:job_id])
+
         @other_jobs = @team.jobs.reject { |job| job.id == @job.id } unless @job.nil?
+
         return render(:premium) if show_premium_page?
       end
+
       format.json do
         options = { :expires_in => 5.minutes }
         options[:force] = true if !show_params[:refresh].blank?
@@ -92,7 +98,7 @@ class TeamsController < ApplicationController
   end
 
   #def team_to_regex(team)
-    #team.name.gsub(/ \-\./, '.*')
+  #team.name.gsub(/ \-\./, '.*')
   #end
 
   def edit
@@ -259,11 +265,12 @@ class TeamsController < ApplicationController
 
   protected
 
-
   def team_from_params(opts)
-    return Team.where(slug: opts[:slug].downcase).first if opts[:slug].present?
-
-    Team.find(opts[:id])
+    if opts[:slug].present?
+      Team.where(slug: opts[:slug].downcase).first
+    else
+      Team.find(opts[:id])
+    end
   end
 
   def replace_section(section_name)

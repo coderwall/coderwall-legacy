@@ -44,7 +44,21 @@ class Team < ActiveRecord::Base
   has_many :members, class_name: 'Teams::Member', foreign_key: 'team_id', dependent: :delete_all
   has_many :links, class_name: 'Teams::Link', foreign_key: 'team_id', dependent: :delete_all
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
+
+  def featured_links
+    links
+  end
+
   has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
+
+  #def jobs
+  #all_jobs.valid
+  #end
+
+  #Replaced with jobs
+  def all_jobs
+    jobs.order('created_at DESC')
+  end
 
   has_many :follows, class_name: 'FollowedTeam', foreign_key: 'team_id', dependent: :destroy
   has_many :followers, through: :follows, source: :team
@@ -173,7 +187,7 @@ class Team < ActiveRecord::Base
 
   def locations_message
     if premium?
-      team_locations.collect(&:name).join(', ')
+      locations.collect(&:name).join(', ')
     else
       locations.join(', ')
     end
@@ -195,6 +209,11 @@ class Team < ActiveRecord::Base
   def on_team?(user)
     has_member?(user)
   end
+
+  def has_member?(user)
+    team_members.include?(user)
+  end
+
 
   def branding_hex_color
     branding || DEFAULT_HEX_BRAND
@@ -330,7 +349,7 @@ class Team < ActiveRecord::Base
   end
 
   def has_locations?
-    !team_locations.blank?
+    !locations.blank?
   end
 
   def has_featured_links?
@@ -616,23 +635,23 @@ class Team < ActiveRecord::Base
   end
 
   def primary_address
-    team_locations.first.try(:address) || primary_address_name
+    locations.first.try(:address) || primary_address_name
   end
 
   def primary_address_name
-    team_locations.first.try(:name)
+    locations.first.try(:name)
   end
 
   def primary_address_description
-    team_locations.first.try(:description)
+    locations.first.try(:description)
   end
 
   def primary_points_of_interest
-    team_locations.first.try(:points_of_interest).to_a
+    locations.first.try(:points_of_interest).to_a
   end
 
   def cities
-    team_locations.map(&:city).reject { |city| city.blank? }
+    locations.map(&:city).reject { |city| city.blank? }
   end
 
   def generate_event
@@ -662,18 +681,10 @@ class Team < ActiveRecord::Base
     active_jobs.collect(&:title).uniq
   end
 
-  def jobs
-    all_jobs.valid
-  end
-
-  #Replaced with jobs
-  def all_jobs
-    jobs.order('created_at DESC')
-  end
 
 
 
-  SECTION_FIELDS = %w(about headline big_quote our_challenge benefit_description_1 organization_way office_photos stack_list reason_name_1 interview_steps team_locations blog_feed)
+  SECTION_FIELDS = %w(about headline big_quote our_challenge benefit_description_1 organization_way office_photos stack_list reason_name_1 interview_steps locations blog_feed)
 
 
   def visitors_interested_in_jobs

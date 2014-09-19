@@ -1,3 +1,5 @@
+# TODO: Move team_banner to uhhh... the Team. Maybe that would make sense.
+
 class Teams::Member < ActiveRecord::Base
   belongs_to :team, class_name: 'Team',
     foreign_key: 'team_id',
@@ -18,6 +20,18 @@ class Teams::Member < ActiveRecord::Base
 
   def display_name
     name || username
+  end
+
+  %i(
+    banner
+    city
+    username
+    avatar
+    name
+    about
+    team_responsibilities
+  ).each do |user_method|
+    delegate user_method, to: :user
   end
 
   [:badges, :title, :endorsements].each do |m|

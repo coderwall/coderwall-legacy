@@ -1,4 +1,4 @@
-require "net_validators"
+require 'net_validators'
 
 class User < ActiveRecord::Base
   include ActionController::Caching::Fragments
@@ -19,8 +19,9 @@ class User < ActiveRecord::Base
   attr_protected :admin, :id, :github_id, :twitter_id, :linkedin_id, :api_key
 
   mount_uploader :avatar, AvatarUploader
-  mount_uploader :banner, BannerUploader
   mount_uploader :resume, ResumeUploader
+
+  mount_uploader :banner, BannerUploader
   process_in_background :banner, ResizeTiltShiftBannerJob
 
   RESERVED = %w{

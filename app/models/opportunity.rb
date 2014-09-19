@@ -35,15 +35,9 @@ class Opportunity < ActiveRecord::Base
   #remove default scope
   default_scope valid
 
-  attr_accessor :title
-
   HUMANIZED_ATTRIBUTES = { name: 'Title' }
 
-  #def team
-    #@team ||= Team.find(team_document_id.to_s)
-  #end
-
-  belongs_to :team
+  belongs_to :team, class_name: 'Team', touch: true
 
   def self.human_attribute_name(attr,options={})
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
@@ -57,29 +51,27 @@ class Opportunity < ActiveRecord::Base
       0
     else
       salary = number.to_i
-      if thousands.downcase == 'k' or salary < 1000
+      if thousands.downcase == 'k' || salary < 1000
         salary * 1000
       else
         salary
       end
     end
+  end
 
+  def self.based_on(tags)
+    query_string = "tags:#{tags.join(' OR ')}"
+    failover_scope = Opportunity.joins('inner join taggings on taggings.taggable_id = opportunities.id').joins('inner join tags on taggings.tag_id = tags.id').where("taggings.taggable_type = 'Opportunity' AND taggings.context = 'tags'").where('lower(tags.name) in (?)', tags.map(&:downcase)).group('opportunities.id').order('count(opportunities.id) desc')
+    Opportunity::Search.new(Opportunity, Opportunity::Search::Query.new(query_string), nil, nil, nil, failover: failover_scope).execute
+  end
 
+  def self.with_public_id(public_id)
+    where(public_id: public_id).first
+  end
 
-    def based_on(tags)
-      query_string = "tags:#{tags.join(' OR ')}"
-      failover_scope = Opportunity.joins('inner join taggings on taggings.taggable_id = opportunities.id').joins('inner join tags on taggings.tag_id = tags.id').where("taggings.taggable_type = 'Opportunity' AND taggings.context = 'tags'").where('lower(tags.name) in (?)', tags.map(&:downcase)).group('opportunities.id').order('count(opportunities.id) desc')
-      Opportunity::Search.new(Opportunity, Opportunity::Search::Query.new(query_string), nil, nil, nil, failover: failover_scope).execute
-    end
-
-    def with_public_id(public_id)
-      where(public_id: public_id).first
-    end
-
-    def random
-      uncached do
-        order('RANDOM()')
-      end
+  def self.random
+    uncached do
+      order('RANDOM()')
     end
   end
 
@@ -123,14 +115,14 @@ class Opportunity < ActiveRecord::Base
     if force
       super
     else
-      self.deleted = true
-      self.deleted_at = Time.now.utc
+      deleted = true
+      deleted_at = Time.now.utc
       save
     end
   end
 
   def set_expiration
-    self.expires_at = team.has_monthly_subscription? ? 1.year.from_now : 1.month.from_now
+    expires_at = team.has_monthly_subscription? ? 1.year.from_now : 1.month.from_now
   end
 
   def title
@@ -138,7 +130,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   def title=(new_title)
-    self.name = new_title
+    name = new_title
   end
 
   def accepts_applications?
@@ -210,12 +202,11 @@ class Opportunity < ActiveRecord::Base
   end
 
   def to_html
-    CFM::Markdown.render self.description
+    CFM::Markdown.render(self.description)
   end
 
   def to_indexed_json
     to_public_hash.deep_merge(
-
       public_id: public_id,
       name: name,
       description: description,
@@ -260,6 +251,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   protected
+
   def set_location_city
     add_opportunity_locations_to_team
     locations = team.cities.compact.select { |city| location.include?(city) }
