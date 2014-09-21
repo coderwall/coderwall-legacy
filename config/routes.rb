@@ -454,6 +454,8 @@ Coderwall::Application.routes.draw do
 
   get '/roll-the-dice' => 'users#randomize', as: :random_wall
 
+  get '/providers/:provider/:username' => 'provider_user_lookups#show'
+
 
   constraints ->(params, _) { params[:username] != 'admin' } do
     get '/:username' => 'users#show', as: :badge
