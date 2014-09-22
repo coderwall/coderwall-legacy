@@ -1,4 +1,4 @@
-%li.cf{:class => top_comment?(comment, comment_counter) ? "top-comment" : "" , :id => "comment_#{comment.id}"}
+%li.cf.comment{:class => top_comment?(comment, comment_counter) ? "top-comment" : "" , :id => "comment_#{comment.id}"}
   %header.cf
     .comment-avatar
       =image_tag(users_image_path(comment.user), :class => 'avatar')
@@ -7,8 +7,7 @@
     %a.like{:href =>like_protip_comment_path(comment.commentable.try(:public_id), comment.id), 'data-remote' => 'true', 'data-method' => :post, :class => comment_liked_class(comment), :rel => "nofollow"}
       =comment_likes(comment)
   .comment
-    %p
-      =raw sanitize(formatted_comment(comment.body))
+    =raw sanitize(formatted_comment(comment.body))
     - if can_edit_comment?(comment)
       .edit-comment.hidden
         =form_for [comment.commentable, comment] do |f|
