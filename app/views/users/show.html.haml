@@ -148,7 +148,7 @@
             %span.team-avatar=image_tag(@user.team.avatar_url, :width => 22, :height => 22)
             %div{:itemprop => :affiliation}=truncate("#{@user.team.name}", :length => 28)
           -if viewing_self?
-            = link_to 'Leave team', team_members_path([@user.team, @user]), :method => :delete, :confirm => "Are you sure you want to leave team #{@user.team.name}", :class => "leave-team track", 'data-action' => 'leave team', 'data-from' => 'profile page'
+            = link_to 'Leave team', team_member_path(@user.team, @user), :method => :delete, :confirm => "Are you sure you want to leave team #{@user.team.name}", :class => "leave-team track", 'data-action' => 'leave team', 'data-from' => 'profile page'
 
       -elsif viewing_self?
         %li.team-self

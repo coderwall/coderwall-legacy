@@ -90,7 +90,7 @@ class TeamsController < ApplicationController
     @teams = Team.where('name ilike ?', "#{@team}%").limit(3) unless confirmed
 
     if @team.valid? and @teams.blank? and @team.new_record?
-      @team.add_user(current_user)
+      @team.add_member(current_user)
       # @team.edited_by(current_user)
       @team.save
       record_event('created team')
@@ -142,12 +142,17 @@ class TeamsController < ApplicationController
   end
 
   def follow
+
+    require 'pry'; binding.pry
+
+
     # TODO move to concern
-    if params[:id] =~ /^[0-9A-F]{24}$/i
-      @team = Team.find(params[:id])
-    else
-      @team = Team.where(slug: params[:id]).first
-    end
+    @team = if params[:id].present? && (params[:id].to_i rescue nil)
+              Team.find(params[:id].to_i)
+            else
+              Team.where(slug: params[:id]).first
+            end
+
     if current_user.following_team?(@team)
       current_user.unfollow_team!(@team)
     else
@@ -188,7 +193,7 @@ class TeamsController < ApplicationController
 
     @team = Team.find(accept_params[:id])
     if accept_params[:r] && @team.has_user_with_referral_token?(accept_params[:r])
-      @team.add_user(current_user)
+      @team.add_member(current_user)
       current_user.update_attribute(:referred_by, accept_params[:r]) if current_user.referred_by.nil?
       flash[:notice] = "Welcome to team #{@team.name}"
       record_event("accepted team invite")

@@ -77,14 +77,14 @@ RSpec.describe Protip, :type => :model do
     it 'is reindexed if username or team change' do
       team = Fabricate(:team, name: "first-team")
       user = Fabricate(:user, username: "initial-username")
-      team.add_user(user)
+      team.add_member(user)
       protip = Fabricate(:protip, body: 'protip by user on team', title: "content #{rand(100)}", user: user)
       user.reload
       expect(Protip.search("team.name:first-team").results.first.title).to eq(protip.title)
       team2 = Fabricate(:team, name: "second-team")
-      team.remove_user(user)
+      team.remove_member(user)
       user.reload
-      team2.add_user(user)
+      team2.add_member(user)
       user.reload
       expect(Protip.search("team.name:first-team").results.count).to eq(0)
       expect(Protip.search("team.name:second-team").results.first.title).to eq(protip.title)

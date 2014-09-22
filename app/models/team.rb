@@ -434,15 +434,20 @@ class Team < ActiveRecord::Base
     @sorted_team_members = members.order('score_cache DESC')
   end
 
-  def add_user(user)
-    members << user
-    save!
+  def add_member(user)
+    require 'pry'; binding.pry
 
-    user
+    return member if member = members.select { |m| m.user_id == user.id }
+    member = members.create(user_id: user.id)
+    save!
+    member
   end
 
-  def remove_user(user)
-    members.destroy(user)
+  def remove_member(user)
+    require 'pry'; binding.pry
+
+    return nil unless member = members.select { |m| m.user_id == user.id }
+    members.destroy(member)
     save!
   end
 
@@ -796,7 +801,7 @@ class Team < ActiveRecord::Base
   end
 
   def approve_join_request(user)
-    self.add_user(user)
+    self.add_member(user)
     self.pending_join_requests.delete user.id
   end
 
@@ -805,6 +810,7 @@ class Team < ActiveRecord::Base
   end
 
   private
+
   def identify_visitor(visitor_name)
     visitor_id = visitor_name.to_i
     if visitor_id != 0 and visitor_name =~ /^[0-9]+$/i

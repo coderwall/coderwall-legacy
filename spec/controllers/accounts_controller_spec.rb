@@ -4,7 +4,7 @@ RSpec.describe AccountsController, :type => :controller do
   let(:current_user) { Fabricate(:user) }
 
   before do
-    team.add_user(current_user)
+    team.add_member(current_user)
     controller.send :sign_in, current_user
   end
 

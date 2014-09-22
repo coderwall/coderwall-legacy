@@ -1,9 +1,9 @@
-class TeamMembersController < ApplicationController
+class MembersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
     return head(:forbidden) unless signed_in? && (team.admin?(current_user) || current_user == @user)
-    team.remove_user(@user)
+    team.remove_member(@user)
     record_event("removed team") if !Team.where(id: team.id.to_s).exists?
 
     if @user == current_user
@@ -20,6 +20,7 @@ class TeamMembersController < ApplicationController
   end
 
   private
+
   def team
     @team ||= Team.find(params[:team_id])
   end

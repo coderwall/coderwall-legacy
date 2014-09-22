@@ -13,7 +13,7 @@ RSpec.describe Octopussy, :type => :model do
 
   it 'does not award the badge if no followers work at github' do
     create_team_github = Fabricate(:team, _id: Octopussy::GITHUB_TEAM_ID_IN_PRODUCTION)
-    create_team_github.add_user(pjhyett)
+    create_team_github.add_member(pjhyett)
 
     random_dude = repo.followers.create! login: 'jmcneese'
 
@@ -25,7 +25,7 @@ RSpec.describe Octopussy, :type => :model do
 
   it 'awards badge when repo followed by github team' do
     create_team_github = Fabricate(:team, _id: Octopussy::GITHUB_TEAM_ID_IN_PRODUCTION)
-    create_team_github.add_user(pjhyett)
+    create_team_github.add_member(pjhyett)
 
     github_founder = repo.followers.create! login: 'pjhyett'
     repo.save!
@@ -39,11 +39,11 @@ RSpec.describe Octopussy, :type => :model do
 
   it 'should cache github team members' do
     create_team_github = Fabricate(:team, _id: Octopussy::GITHUB_TEAM_ID_IN_PRODUCTION)
-    create_team_github.add_user(pjhyett)
+    create_team_github.add_member(pjhyett)
 
     expect(Octopussy.github_team.size).to eq(1)
 
-    create_team_github.add_user(Fabricate(:user, github: 'defunkt'))
+    create_team_github.add_member(Fabricate(:user, github: 'defunkt'))
 
     expect(Octopussy.github_team.size).to eq(1)
   end

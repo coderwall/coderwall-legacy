@@ -1,0 +1,12 @@
+%fieldset
+  = f.label :name, 'Location Name'
+  = f.text_field :name
+%fieldset
+  = f.label :description, 'Highlights for this office location'
+  = f.text_area :description
+%fieldset
+  = f.label :address, 'Full address of this office location'
+  = f.text_field :address
+%fieldset
+  = f.label :_destroy, "Remove Location"
+  = f.check_box :_destroy

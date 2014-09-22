@@ -30,6 +30,7 @@ class Teams::Member < ActiveRecord::Base
     name
     about
     team_responsibilities
+    speciality_tags
   ).each do |user_method|
     delegate user_method, to: :user
   end

@@ -31,7 +31,7 @@
             %li
               =link_to('Edit Team', edit_team_path(@team), :class => 'edit')
             %li
-              =form_tag team_team_member_path(@team, current_user), :method => :delete do
+              =form_tag team_members_path(@team, current_user), :method => :delete do
                 %input.button.cancel.track{:type => "submit", :value => "Leave Team", :class => 'leave'}
 
         =follow_team_link(@team)

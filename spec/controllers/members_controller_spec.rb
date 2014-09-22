@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe TeamMembersController, :type => :controller do
+RSpec.describe MembersController, :type => :controller do
   let(:current_user) { Fabricate(:user) }
   let(:invitee) { Fabricate(:user) }
   let(:team) { Fabricate(:team) }
@@ -8,8 +8,8 @@ RSpec.describe TeamMembersController, :type => :controller do
 
   describe "DELETE #destroy" do
     it "should remove the team member from the current users team" do
-      member_added = team.add_user(invitee)
-      team.add_user(current_user)
+      member_added = team.add_member(invitee)
+      team.add_member(current_user)
 
       controller.send(:current_user).reload
       delete :destroy, team_id: team.id, id: member_added.id
@@ -19,7 +19,7 @@ RSpec.describe TeamMembersController, :type => :controller do
     end
 
     it 'redirects back to leader board when you remove yourself' do
-      member = team.add_user(current_user)
+      member = team.add_member(current_user)
       controller.send(:current_user).reload
       delete :destroy, team_id: team.id, id: member.id
       expect(response).to redirect_to(teams_url)
