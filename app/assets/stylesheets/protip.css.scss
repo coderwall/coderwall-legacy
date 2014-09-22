@@ -1,6 +1,184 @@
 @import "base";
 @import "compass/css3";
 
+.tip-content-show {
+  strong {
+    font-weight: normal;
+    font-family: "MuseoSans-500";
+  }
+
+  hr {
+    margin-bottom: 30px;
+    border: 0;
+    height: 5px;
+    background-color: #efefef;
+  }
+
+  em {
+    font-weight: normal;
+    font-style: normal;
+    font-family: "MuseoSans-300Italic";
+  }
+
+  code {
+    //white-space:nowrap;
+    //overflow: scroll;
+    background: #f5f2f0;
+
+    a {
+      color: black;
+    }
+  }
+
+  h1 {
+    font-size: 2.2em;
+  }
+
+  h2 {
+    font-size: 2em;
+  }
+
+  h3 {
+    font-size: 1.8em;
+  }
+
+  h4 {
+    font-size: 1.6em;
+    //text-transform: capitalize;
+    //font-family: "MuseoSans-500";
+  }
+
+  h1, h2, h3, h4 {
+    margin-bottom: 15px;
+
+    a {
+      color: $light-blue;
+    }
+  }
+
+  ul {
+    margin-bottom: 15px;
+    li {
+      //background: image-url("gold-star.png") no-repeat left 3px;
+      list-style-type: disc;
+      //list-style-position: inside;
+      font-size: 1.6em;
+      //padding-left: 25px;
+      margin-bottom: 5px;
+
+      li {
+        font-size: 1em;
+        //padding-left: 25px;
+        list-style-position: inside;
+
+      }
+
+      a {
+        color: $light-blue;
+
+        &:hover {
+          border-bottom: 1px dashed $light-blue;
+        }
+      }
+
+      p {
+        font-size: 1em;
+        margin: 0;
+      }
+
+      code {
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  ol {
+    margin-bottom: 15px;
+    li {
+      list-style-type: upper-roman;
+      list-style-position: inside;
+      font-size: 1.6em;
+      //padding-left: 25px;
+      margin-bottom: 5px;
+
+      a {
+        color: $light-blue;
+
+        &:hover {
+          border-bottom: 1px dashed $light-blue;
+        }
+      }
+
+      p {
+        font-size: 1em;
+        margin: 0;
+      }
+
+      code {
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  blockquote {
+    padding-left: 10px;
+    border-left: 5px solid #efefef;
+    //border-bottom: 5px solid #efefef;
+    margin: 0;
+    margin-bottom: 1.6em;
+    //@include border-radius(6px);
+
+    p {
+      margin: 0;
+      font-family: "MuseoSans-500Italic";
+    }
+
+    blockquote {
+      padding: 5px;
+      border: 0;
+      background: #f9f9f9;
+    }
+  }
+
+  p {
+    font-size: 1.6em;
+    line-height: 1.4em;
+    margin-bottom: 1.6em;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    a {
+      color: $light-blue;
+
+      &:hover {
+        border-bottom: 1px dashed $light-blue;
+      }
+    }
+
+    code {
+      font-size: 0.9em;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+
+  code {
+    margin-top: 0px;
+    margin-bottom: 1.6em;
+    font-size: 1.4em;
+    line-height: 1.6em;
+  }
+
+  pre {
+    margin: 0px;
+  }
+}
+
 .next-tip-mob {
   display: none;
 }
@@ -125,7 +303,7 @@ body.protip-single {
   }
 
   .editing {
-    width: 770px;
+    width: 970px;
 
     .vertical-floatable {
       width: 760px;
@@ -749,6 +927,8 @@ body.protip-single {
   }
 
   .tip-content {
+    @extend .tip-content-show;
+
     max-width: inherit;
     margin-top: 20px;
 
@@ -794,182 +974,6 @@ body.protip-single {
     }
     //links
 
-    strong {
-      font-weight: normal;
-      font-family: "MuseoSans-500";
-    }
-
-    hr {
-      margin-bottom: 30px;
-      border: 0;
-      height: 5px;
-      background-color: #efefef;
-    }
-
-    em {
-      font-weight: normal;
-      font-style: normal;
-      font-family: "MuseoSans-300Italic";
-    }
-
-    code {
-      //white-space:nowrap;
-      //overflow: scroll;
-      background: #f5f2f0;
-
-      a {
-        color: black;
-      }
-    }
-
-    h1 {
-      font-size: 2.2em;
-    }
-
-    h2 {
-      font-size: 2em;
-    }
-
-    h3 {
-      font-size: 1.8em;
-    }
-
-    h4 {
-      font-size: 1.6em;
-      //text-transform: capitalize;
-      //font-family: "MuseoSans-500";
-    }
-
-    h1, h2, h3, h4 {
-      margin-bottom: 15px;
-
-      a {
-        color: $light-blue;
-      }
-    }
-
-    ul {
-      margin-bottom: 15px;
-      li {
-        //background: image-url("gold-star.png") no-repeat left 3px;
-        list-style-type: disc;
-        //list-style-position: inside;
-        font-size: 1.6em;
-        //padding-left: 25px;
-        margin-bottom: 5px;
-
-        li {
-          font-size: 1em;
-          //padding-left: 25px;
-          list-style-position: inside;
-
-        }
-
-        a {
-          color: $light-blue;
-
-          &:hover {
-            border-bottom: 1px dashed $light-blue;
-          }
-        }
-
-        p {
-          font-size: 1em;
-          margin: 0;
-        }
-
-        code {
-          font-size: 0.9em;
-        }
-      }
-    }
-
-    ol {
-      margin-bottom: 15px;
-      li {
-        list-style-type: upper-roman;
-        list-style-position: inside;
-        font-size: 1.6em;
-        //padding-left: 25px;
-        margin-bottom: 5px;
-
-        a {
-          color: $light-blue;
-
-          &:hover {
-            border-bottom: 1px dashed $light-blue;
-          }
-        }
-
-        p {
-          font-size: 1em;
-          margin: 0;
-        }
-
-        code {
-          font-size: 0.9em;
-        }
-      }
-    }
-
-    blockquote {
-      padding-left: 10px;
-      border-left: 5px solid #efefef;
-      //border-bottom: 5px solid #efefef;
-      margin: 0;
-      margin-bottom: 1.6em;
-      //@include border-radius(6px);
-
-      p {
-        margin: 0;
-        font-family: "MuseoSans-500Italic";
-      }
-
-      blockquote {
-        padding: 5px;
-        border: 0;
-        background: #f9f9f9;
-      }
-    }
-
-    p {
-      font-size: 1.6em;
-      line-height: 1.4em;
-      margin-bottom: 1.6em;
-
-      &:last-child {
-        margin: 0;
-      }
-
-      a {
-        color: $light-blue;
-
-        &:hover {
-          border-bottom: 1px dashed $light-blue;
-        }
-      }
-
-      code {
-        font-size: 0.9em;
-      }
-    }
-
-    img {
-      max-width: 100%;
-      margin-bottom: 15px;
-    }
-
-    code {
-      margin-top: 0px;
-      margin-bottom: 1.6em;
-      font-size: 1.4em;
-      line-height: 1.6em;
-    }
-
-    pre {
-      margin: 0px;
-    }
-
     //Editing a tip
 
     &.edit {
@@ -999,6 +1003,23 @@ body.protip-single {
         resize: vertical;
         overflow: hidden;
         padding-bottom: 10px;
+        font-size: 1.6em;
+        line-height: 1.4em;
+      }
+
+      .protip_body {
+        display: inline-block;
+        vertical-align: top;
+        width: 49%;
+      }
+
+      .preview-body {
+        @extend .tip-content-show;
+
+        display: inline-block;
+        float: right;
+        margin-left: 3%;
+        width: 48%;
       }
 
       .hint {

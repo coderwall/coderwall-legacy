@@ -1,7 +1,9 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-#= require  showdown
+#= require  marked
+#= require  highlight/highlight
+#= require  highlight/language
 #= require  blur
 #= require  jquery.filedrop
 #= require  jquery.textselection
@@ -30,6 +32,8 @@ $ ->
   $('.submit-on-enter').keydown (event)->
     if event.keyCode == 13
       search(null)
+
+  enablePreviewEditing()
 
 
 window.initializeProtip = ->
@@ -344,3 +348,16 @@ toggleCommentEditMode = (comment)->
   comment.children('p').first().toggleClass('hidden')
   comment.find('.edit-comment').toggleClass('hidden')
   comment.siblings('ul.edit-del').toggleClass('hidden')
+
+marked.setOptions highlight: (code) ->
+  hljs.highlightAuto(code).value
+
+enablePreviewEditing = ->
+  if $('.preview-body').length > 0
+    updatePreview = ->
+      markdown = marked $('#protip_body').val(), gfm: true
+      $('.preview-body').html markdown
+
+    $('#protip_body').on 'keyup', updatePreview
+
+    updatePreview()
