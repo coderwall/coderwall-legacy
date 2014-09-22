@@ -18,6 +18,7 @@ class ProtipMailer < ActionMailer::Base
   }
   CAMPAIGN_ID = 'protip_mailer-popular_protips'
   ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
+  POPULAR_PROTIPS_EVENT = 'coderwall-popular_protips'
 
   #################################################################################
   def popular_protips(user, protips, from, to)
@@ -68,7 +69,7 @@ class ProtipMailer < ActionMailer::Base
 
   def campaign_params
     {
-      utm_campaign: 'coderwall-popular_protips',
+      utm_campaign: POPULAR_PROTIPS_EVENT,
       utm_content: Date.today.midnight,
       utm_medium: 'email'
     }

@@ -8,7 +8,8 @@ class EmailsController < ApplicationController
       elsif params[:email_type] == NotifierMailer::ACTIVITY_EVENT
         user = User.where(email: params[:recipient]).first
         user.update_attribute(:notify_on_award, false)
-      elsif params[:email_type] == NotifierMailer::WEEKLY_DIGEST_EVENT
+      elsif params[:email_type] == NotifierMailer::POPULAR_PROTIPS_EVENT
+        # Piggybacking off the old 'weekly_digest' subscription list
         user = User.where(email: params[:recipient]).first
         user.update_attribute(:receive_weekly_digest, false)
       end
@@ -37,5 +38,4 @@ class EmailsController < ApplicationController
   def encrypt_signature(api_key, timestamp, token)
     OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), api_key, '%s%s' % [timestamp, token])
   end
-
 end

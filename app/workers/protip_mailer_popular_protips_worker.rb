@@ -13,7 +13,7 @@ class ProtipMailerPopularProtipsWorker
 
     fail "Only #{protip_ids.count} protips but expected 10" unless protip_ids.count == 10
 
-    User.order('updated_at desc').find_each(batch_size: 100) do |user|
+    User.receives_digest.order('updated_at desc').find_each(batch_size: 100) do |user|
       ProtipMailerPopularProtipsSendWorker.perform_async(user.id, protip_ids, from, to)
     end
   end
