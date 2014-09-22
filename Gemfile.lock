@@ -1,4 +1,18 @@
 GIT
+  remote: git://github.com/emberjs/ember-rails.git
+  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
+  specs:
+    ember-rails (0.15.0)
+      active_model_serializers
+      barber (>= 0.4.1)
+      ember-data-source (>= 1.0.0.beta.5)
+      ember-source (>= 1.1.0)
+      execjs (>= 1.2)
+      handlebars-source (> 1.0.0)
+      jquery-rails (>= 1.0.17)
+      railties (>= 3.1)
+
+GIT
   remote: git://github.com/nixme/jazz_hands.git
   revision: 5e4b48f145883ecb14b55bf04eacc28ac9662676
   branch: bring-your-own-debugger
@@ -23,20 +37,6 @@ GIT
       json (~> 1.8.1)
       mime-types (>= 1.25, < 3.0)
       rest-client (~> 1.4)
-
-GIT
-  remote: git://github.com/emberjs/ember-rails.git
-  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
-  specs:
-    ember-rails (0.15.0)
-      active_model_serializers
-      barber (>= 0.4.1)
-      ember-data-source (>= 1.0.0.beta.5)
-      ember-source (>= 1.1.0)
-      execjs (>= 1.2)
-      handlebars-source (> 1.0.0)
-      jquery-rails (>= 1.0.17)
-      railties (>= 3.1)
 
 GEM
   remote: https://rubygems.org/
