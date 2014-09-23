@@ -21,7 +21,7 @@
       - if protip == 'show-ad'
         = render(partial: 'opportunities/mini', locals: { opportunity: opportunity })
       -elsif protip.present?
-        - if protip = protip.load rescue nil # HACK: User deleted, protip no longer exists. Won't be found.
+        - if protip.is_a?(Protip) || protip = protip.load rescue nil # HACK: User deleted, protip no longer exists. Won't be found.
           %li{ class: (protip.kind == 'link' ? 'ext-link' : '') }
             = render(partial: 'protips/mini', locals: { protip: protip, mode: mode })
 
