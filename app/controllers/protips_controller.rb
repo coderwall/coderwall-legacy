@@ -424,7 +424,8 @@ class ProtipsController < ApplicationController
 
     {
       page:     (signed_in? && search_options_params[:page].try(:to_i)) || 1,
-      per_page: [(signed_in? && search_options_params[:per_page].try(:to_i)) || 18, Protip::PAGESIZE].min
+      per_page: [(signed_in? && search_options_params[:per_page].try(:to_i)) || 18, Protip::PAGESIZE].min,
+      load: { include: [:user, :likes, :protip_links, :comments] }
     }
   end
 
