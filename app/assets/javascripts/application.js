@@ -20,16 +20,16 @@ $(function () {
 
 $(function () {
   $('[placeholder]').focus(function () {
-    var input = $(this);
-    if (input.val() == input.attr('placeholder')) {
-      input.val('');
-      input.removeClass('placeholder');
+    var $input = $(this);
+    if ($input.val() == $input.attr('placeholder')) {
+      $input.val('');
+      $input.removeClass('placeholder');
     }
   }).blur(function () {
-    var input = $(this);
-    if (input.val() == '' || input.val() == input.attr('placeholder')) {
-      input.addClass('placeholder');
-      input.val(input.attr('placeholder'));
+    var $input = $(this);
+    if ($input.val() == '' || $input.val() == $input.attr('placeholder')) {
+      $input.addClass('placeholder');
+      $input.val($input.attr('placeholder'));
     }
   }).blur();
 
@@ -44,23 +44,29 @@ $(function () {
   $('a.submitEndorsement').live('click', function (e) {
     var form = $(this).parents('form');
     $.post(form.attr('action'), form.serialize()).success(function (response) {
+      var $endorse = $('#endorse');
+      var $endorsementcounter = $('#endorsementcounter');
+
       $.fancybox.close();
+
       setTimeout(function () {
-        $('#endorsementcounter span').slideUp();
+        $endorsementcounter.find('span').slideUp();
       }, 600);
+
       setTimeout(function () {
-        $('#endorsementcounter span').html(response.totalEndorsements).slideDown();
+        $endorsementcounter.find('span').html(response.totalEndorsements).slideDown();
+
         if (response.availableEndorsements <= 0) {
-          $('#endorse .endorsements').remove();
-          $('#endorse .notification').remove();
-          $('#endorse .message').html("You used up all your endorsements. Unlock additional achievements to make more endorsements.");
+          $endorse.find('.endorsements').remove();
+          $endorse.find('.notification').remove();
+          $endorse.find('.message').html("You used up all your endorsements. Unlock additional achievements to make more endorsements.");
         } else if (response.remainingEndoresments <= 0) {
-          $('#endorse .endorsements').remove();
-          $('#endorse .notification').remove();
-          $('#endorse .message').html("There are no more skills to endorse.");
+          $endorse.find('.endorsements').remove();
+          $endorse.find('.notification').remove();
+          $endorse.find('.message').html("There are no more skills to endorse.");
         } else {
-          $('#endorse .notification').html(response.message);
-          $(response.ensorsementsMade).each(function () {
+          $endorse.find('.notification').html(response.message);
+            $(response.ensorsementsMade).each(function () {
             $('#' + this).remove();
           });
         }
@@ -78,7 +84,7 @@ $(function () {
     e.preventDefault();
   });
 
-  $('#achievementcode  a').live('click', function () {
+  $('#achievementcode').find('a').live('click', function () {
     $(this).hide().parents('em').hide();
     $('.claimcode').fadeIn();
     e.preventDefault();
@@ -171,19 +177,23 @@ function readCookie(name) {
 }
 
 function updateCountdown(e) {
-  var remaining = 100 - $('#new_accomplishment').val().length;
+  var $newAccompl = $('#new_accomplishment');
+  var $countdown = $('#countdown');
+
+  var remaining = 100 - $newAccompl.val().length;
   if (remaining <= 0) {
-    $('#new_accomplishment').val($('#new_accomplishment').val().substring(0, 100));
-    $('#countdown').text('0');
+    $newAccompl.val($newAccompl.val().substring(0, 100));
+    $countdown.text('0');
   }
   else
-    $('#countdown').text(remaining);
+    $countdown.text(remaining);
 }
 
 function toggleNewAccomplishment() {
+  var $newAccompl = $('#new_accomplishment');
   $('.accomplishments .featured').toggle();
   $('.accomplishments .addnew').toggle();
-  $('#new_accomplishment').val('');
+  $newAccompl.val('');
 }
 
 function handle_redirect(response) {
