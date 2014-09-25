@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+cd /home/vagrant/web 
+
+rvm current
+bundle check || bundle install
+bundle clean --force
+
+bundle exec foreman check
+
+bundle exec rake db:migrate
+bundle exec rake db:test:prepare
+
+bundle exec foreman start all
