@@ -78,7 +78,7 @@ $(function () {
       }, 1500);
     });
     e.preventDefault();
-  })
+  });
 
   $('#nocount input, #withcount input').live('change', function () {
     $('.endorseButtons .markdown, .endorseButtons .html, .endorseButtons .textile').toggleClass('hide');
