@@ -6,3 +6,4 @@
 
 User-agent: EasouSpider
 Disallow: /
+Sitemap: https://coderwall-assets-0.s3.amazonaws.com/sitemaps/sitemap.xml.gz
