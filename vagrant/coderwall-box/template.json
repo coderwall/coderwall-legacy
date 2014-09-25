@@ -1,8 +1,8 @@
 {
   "builders": [{
     "type": "virtualbox-iso",
-    "boot_wait": "15s",
-    "disk_size": 32768,
+    "boot_wait": "30s",
+    "disk_size": 65536,
     "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
     "guest_os_type": "Ubuntu_64",
     "http_directory": "http",
@@ -13,7 +13,7 @@
     "ssh_password": "vagrant",
     "ssh_port": 22,
     "ssh_username": "vagrant",
-    "ssh_wait_timeout": "10000s",
+    "ssh_wait_timeout": "30000s",
     "virtualbox_version_file": ".vbox_version",
     "boot_command": [
       "<esc><esc><enter><wait>",
@@ -35,7 +35,10 @@
   ],
   "provisioners": [ {
     "type": "shell",
-    "scripts": [ "scripts/postinstall.sh" ],
+    "scripts": [
+      "scripts/postinstall.sh",
+      "scripts/user-config.sh"
+    ],
     "override": {
       "virtualbox-iso": { "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'" }
     }

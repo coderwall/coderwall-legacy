@@ -10,8 +10,8 @@ puts custom_settings.inspect
 
 VAGRANTFILE_API_VERSION = "2"
 
-$box = 'coderwall'
-$box_url = 'https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall.box' # The box is 1GB. Prepare your
+$box = 'coderwall_v2'
+$box_url = 'https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall_v2.box' # The box is 1.4GB.
 $provision = 'vagrant/bootstrap.sh'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|

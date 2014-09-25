@@ -1,6 +1,61 @@
 # postinstall.sh created from Mitchell's official lucid32/64 baseboxes
 # and then further defaced by just3ws to create the Coderwall devenv
 
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+sleep 30
+
+
 set -x
 
 date > /etc/vagrant_box_build_time
@@ -13,24 +68,87 @@ dpkg-reconfigure --frontend noninteractive tzdata
 # etc., and remove optional things to trim down the machine.
 apt-get -y update
 apt-get -y upgrade
-apt-get -y install linux-headers-$(uname -r) build-essential
+apt-get -y install linux-headers-$(uname -r)
+apt-get -y install build-essential
 
 # General dependencies and tools just... mashed, just mashed all together.
-apt-get -y install ack-grep autoconf automake bison ca-certificates         \
-                   curl g++ gcc git-core htop iotop libc6-dev libffi-dev    \
-                   libgdbm-dev libncurses5-dev libopenssl-ruby libreadline6 \
-                   libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev  \
-                   libtool libxml2-dev libxslt-dev libyaml-dev make openssl \
-                   patch pkg-config sqlite3 tmux vim zlib1g zlib1g-dev gawk \
-                   libxml2-dev curl libcurl4-openssl-dev        \
-                   imagemagick libmagickcore-dev libmagickwand-dev tcl8.5
-
-# Install NFS client
-apt-get -y install nfs-common portmap
-
 # Apt-install python tools and libraries
+# Install NFS client
 # libpq-dev lets us compile psycopg for Postgres
-apt-get -y install python-setuptools python-dev libpq-dev pep8
+apt-get -y install ack-grep
+apt-get -y install autoconf
+apt-get -y install automake
+apt-get -y install bash
+apt-get -y install bison
+apt-get -y install bzip2
+apt-get -y install ca-certificates
+apt-get -y install curl
+apt-get -y install g++
+apt-get -y install gawk
+apt-get -y install gcc
+apt-get -y install git-core
+apt-get -y install htop
+apt-get -y install imagemagick
+apt-get -y install iotop
+apt-get -y install libc6-dev
+apt-get -y install libcurl3
+apt-get -y install libcurl3-dev
+apt-get -y install libcurl3-gnutls
+apt-get -y install libcurl4-openssl-dev
+apt-get -y install libffi-dev
+apt-get -y install libgdbm-dev
+apt-get -y install libmagickcore-dev
+apt-get -y install libmagickwand-dev
+apt-get -y install libncurses5-dev
+apt-get -y install libopenssl-ruby
+apt-get -y install libpq-dev
+apt-get -y install libpq-dev
+apt-get -y install libreadline6
+apt-get -y install libreadline6-dev
+apt-get -y install libsqlite3-0
+apt-get -y install libsqlite3-dev
+apt-get -y install libssl-dev
+apt-get -y install libtool
+apt-get -y install libxml2
+apt-get -y install libxml2-dev
+apt-get -y install libxslt-dev
+apt-get -y install libxslt1-dev
+apt-get -y install libyaml-dev
+apt-get -y install make
+apt-get -y install nfs-common
+apt-get -y install openssl
+apt-get -y install patch
+apt-get -y install pep8
+apt-get -y install pkg-config
+apt-get -y install portmap
+apt-get -y install python-dev
+apt-get -y install python-setuptools
+apt-get -y install sqlite3
+apt-get -y install tcl8.5
+apt-get -y install tmux
+apt-get -y install vim
+apt-get -y install zlib1g
+apt-get -y install zlib1g-dev
+
+RUBY_VERSION="2.1.3"
+wget http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-$RUBY_VERSION.tar.bz2
+tar jxf ruby-$RUBY_VERSION.tar.bz2
+cd ruby-$RUBY_VERSION
+./configure --prefix=/opt/ruby
+make
+make install
+cd ..
+rm -rf ruby-$RUBY_VERSION*
+chown -R root:admin /opt/ruby
+chmod -R g+w /opt/ruby
+
+RUBYGEMS_VERSION="2.4.1"
+wget http://production.cf.rubygems.org/rubygems/rubygems-$RUBYGEMS_VERSION.tgz
+tar xzf rubygems-$RUBYGEMS_VERSION.tgz
+cd rubygems-$RUBYGEMS_VERSION
+/opt/ruby/bin/ruby setup.rb
+cd ..
+rm -rf rubygems-$RUBYGEMS_VERSION*
 
 # Setup sudo to allow no-password sudo for "admin"
 cp /etc/sudoers /etc/sudoers.orig
@@ -61,25 +179,6 @@ make install
 cd ..
 rm -rf node*
 
-RUBY_VERSION="2.1.2"
-wget http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-$RUBY_VERSION.tar.bz2
-tar jxf ruby-$RUBY_VERSION.tar.bz2
-cd ruby-$RUBY_VERSION
-./configure --prefix=/opt/ruby
-make
-make install
-cd ..
-rm -rf ruby-$RUBY_VERSION*
-chown -R root:admin /opt/ruby
-chmod -R g+w /opt/ruby
-
-RUBYGEMS_VERSION="2.4.1"
-wget http://production.cf.rubygems.org/rubygems/rubygems-$RUBYGEMS_VERSION.tgz
-tar xzf rubygems-$RUBYGEMS_VERSION.tgz
-cd rubygems-$RUBYGEMS_VERSION
-/opt/ruby/bin/ruby setup.rb
-cd ..
-rm -rf rubygems-$RUBYGEMS_VERSION*
 
 # Installing chef & Puppet
 /opt/ruby/bin/gem install chef --no-ri --no-rdoc
@@ -103,7 +202,8 @@ cd ..
 rm -rf postgresql-$POSTGRES_VERSION*
 
 # Add 'vagrant' role
-su -c 'createuser vagrant -s' postgres
+su -c 'createuser -s vagrant' postgres
+su -c 'createuser -s coderwall' postgres
 
 # Initialize postgres DB
 useradd -p postgres postgres
@@ -112,6 +212,10 @@ chown postgres /var/pgsql/data
 su -c "/usr/bin/initdb -D /var/pgsql/data --locale=en_US.UTF-8 --encoding=UNICODE" postgres
 mkdir /var/pgsql/data/log
 chown postgres /var/pgsql/data/log
+
+# Set the PG instance to listen and accept connections from anywhere
+echo "listen_addresses = '*'" | tee -a /var/pgsql/data/postgresql.conf
+echo host all all  0.0.0.0/0 trust | tee -a  /var/pgsql/data/pg_hba.conf
 
 # Start postgres
 su -c '/usr/bin/pg_ctl start -l /var/pgsql/data/log/logfile -D /var/pgsql/data' postgres
@@ -183,13 +287,65 @@ rm /lib/udev/rules.d/75-persistent-net-generator.rules
 # Install Heroku toolbelt
 wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
+# Set locale
+echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
+
+# Configure the user.
+su postgres -c 'createuser -s vagrant'
+su postgres -c 'createuser -s coderwall'
+
+su postgres -c 'pg_ctl stop -D /var/pgsql/data  2>&1'
+su -c '/usr/bin/pg_ctl start -l /var/pgsql/data/log/logfile -D /var/pgsql/data' postgres
+
+sudo su - vagrant <<-'EOF'
+  echo export EDITOR=vim >> $HOME/.bashrc
+  echo insecure > $HOME/.curlrc
+  echo progress-bar >> $HOME/.curlrc
+
+  echo rvm_install_on_use_flag=1 >> $HOME/.rvmrc
+  echo rvm_project_rvmrc=1 >> $HOME/.rvmrc
+  echo rvm_trust_rvmrcs_flag=1 >> $HOME/.rvmrc
+
+  curl -k -L https://get.rvm.io | bash -s stable --autolibs=install-packages
+  source "$HOME/.rvm/scripts/rvm"
+  [[ -s "$rvm_path/hooks/after_cd_bundle" ]] && chmod +x $rvm_path/hooks/after_cd_bundle
+  rvm autolibs enable
+  rvm requirements
+  rvm reload
+
+  _RUBY_VERSION=ruby-2.1.3
+  rvm install $_RUBY_VERSION
+  rvm gemset create coderwall
+  rvm use $_RUBY_VERSION --default
+  rvm use $_RUBY_VERSION@coderwall
+  gem update --system && gem update bundler
+  gem install curb -v '0.8.6'
+
+  mkdir -p ~/tmp
+
+  git clone https://github.com/assemblymade/coderwall.git ~/bootstrap/coderwall
+  cd ~/bootstrap/coderwall
+  rvm current
+
+  bundle config --global jobs 3
+  bundle install
+
+  echo "IMPORTANT: Set the ENV Keys!!!
+  export ENV_KEYS=somevalue
+
+  bundle exec rake db:drop:all
+  bundle exec rake db:create:all
+  RAILS_ENV=test bundle exec rake db:create
+  bundle exec rake db:schema:load
+  bundle exec rake db:migrate
+  bundle exec rake db:seed
+  bundle exec rake db:test:prepare
+EOF
+
 # Install some libraries
 apt-get -y clean
 apt-get -y autoclean
 apt-get -y autoremove
-
-# Set locale
-echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
 
 echo "==> Installed packages before cleanup"
 dpkg --get-selections | grep -v deinstall
@@ -200,12 +356,12 @@ dpkg --list | awk '{ print $2 }' | grep 'linux-image-3.*-generic' | grep -v $(un
 echo "==> Removing linux source"
 dpkg --list | awk '{ print $2 }' | grep linux-source | xargs apt-get -y purge
 echo "==> Removing development packages"
-dpkg --list | awk '{ print $2 }' | grep -- '-dev$' | xargs apt-get -y purge
+#dpkg --list | awk '{ print $2 }' | grep -- '-dev$' | xargs apt-get -y purge
 echo "==> Removing documentation"
 dpkg --list | awk '{ print $2 }' | grep -- '-doc$' | xargs apt-get -y purge
 echo "==> Removing development tools"
-#dpkg --list | grep -i compiler | awk '{ print $2 }' | xargs apt-get -y purge
-#apt-get -y purge cpp gcc g++
+dpkg --list | grep -i compiler | awk '{ print $2 }' | xargs apt-get -y purge
+apt-get -y purge cpp gcc g++
 apt-get -y purge build-essential
 echo "==> Removing default system Ruby"
 apt-get -y purge ruby ri doc
