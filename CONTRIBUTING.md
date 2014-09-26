@@ -62,7 +62,7 @@ __If you're an experienced Vagrant user then you can fetch the base box and regi
 
 There's only a VirtualBox basebox right now.
 
-        vagrant box add coderwall https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall.box
+        vagrant box add coderwall_v2 https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall_v2.box
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
