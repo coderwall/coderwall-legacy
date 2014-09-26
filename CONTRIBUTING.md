@@ -54,7 +54,7 @@ To save time and headaches we use Vagrant. Vagrant is a automation tool for Virt
 
 Here's everything you need to get started working on Coderwall with Vagrant TODAY!
 
-*At the time of writing this document we were using VirtualBox 4.3.10 and Vagrant 1.6.2.*
+*At the time of writing this document we were using VirtualBox 4.3.12 and Vagrant 1.6.5.*
 
 #### Vagrant! I already know what to do.
 
@@ -72,15 +72,15 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
     Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Downloads)**.
 
-    _At the time of writing this documentation the current version is VirtualBox 4.3.10._
+    _At the time of writing this documentation the current version is VirtualBox 4.3.12._
 
-    You don't have to install the VirtualBox 4.3.10 Oracle VM VirtualBox Extension Pack but I recommend installing it for the extra drivers.
+    You don't have to install the VirtualBox 4.3.12 Oracle VM VirtualBox Extension Pack but I recommend installing it for the extra drivers.
 
 2. **Install Vagrant**
 
     [Vagrant](http://vagrantup.com) is the recommended way to run Coderwall on your own machine. You need to download and install.
     Grab the Vagrant installer from **[here](http://www.vagrantup.com/downloads.html)**.
-    _At the time of writing this documentation the current version is Vagrant 1.6.2._
+    _At the time of writing this documentation the current version is Vagrant 1.6.5._
 
      Follow the installation instructions for your platform on the Vagrant download page.
 
@@ -89,6 +89,7 @@ If you're running Windows, [here's a guide written by one of our members on how 
     If you're on a OS X/Linux system you can install the plugins by running:
 
         vagrant plugin install vagrant-vbguest
+        vagrant plugin install vagrant-cachier
 
     The vagrant-vbguest plugin will each help with keeping the VirtualBox Guest Additions up-to-date.
 
