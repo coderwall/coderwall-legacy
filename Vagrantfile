@@ -2,6 +2,16 @@
 # vi: set ft=ruby :
 
 # Load in custom vagrant settings
+raise <<-EOF unless File.exists?("vagrant.yml")
+
+  Hi! Before getting started with Vagrant and Coderwall
+  you'll need to setup the `vagrant.yml`. There should
+  be a file `vagrant.yml.example` that you can use as
+  a base reference. Copy the `vagrant.yml.example` to
+  `vagrant.yml` to get started.
+
+EOF
+
 require 'yaml'
 custom_settings = File.file?('vagrant.yml') ?  YAML.load_file('vagrant.yml') : {}
 

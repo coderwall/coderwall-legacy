@@ -4,15 +4,10 @@
 # In order to use, create a copy named vagrant.yml
 #
 
-sync:
-  use_nfs: false
+use_nfs: false
 virtualbox:
-  cpus: 4
-  memory: 4096
+  cpus: 2
+  memory: 2048
 network:
   port_mappings:
     rails: 3000
-    postgres: 2200
-    redis: 2201
-    elasticsearch: 9200
-    mongodb: 27017
