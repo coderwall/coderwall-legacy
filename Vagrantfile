@@ -33,9 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   set_port_mapping_for(config, 'redis',         6379,  custom_settings)
   set_port_mapping_for(config, 'rails',         3000,  custom_settings, true)
 
-  if sync_settings = custom_settings['sync']
-    config.vm.synced_folder '.', '/home/vagrant/web', nfs: sync_settings['use_nfs']
-  end
+  config.vm.synced_folder '.', '/home/vagrant/web', nfs: custom_settings['use_nfs']
 
   config.vm.provider :virtualbox do |vb|
     # Use custom settings unless they don't exist
