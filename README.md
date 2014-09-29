@@ -32,3 +32,5 @@ Coderwall is built from the following open source components:
 Plus *lots* of Ruby Gems, a complete list of which is at [/master/Gemfile](https://github.com/assemblymade/coderwall/blob/master/Gemfile).
 
 We use [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) to isolate and simplify the local development process.
+
+See our YouTube videos....
