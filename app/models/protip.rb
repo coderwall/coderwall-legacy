@@ -551,7 +551,7 @@ class Protip < ActiveRecord::Base
     {
       views:    self.total_views/COUNTABLE_VIEWS_CHUNK,
       upvotes:  self.upvotes,
-      comments: self.comments.count,
+      comments: self.comments.size,
       hawt:     self.hawt? ? 100 : 0
     }.sort_by do |k, v|
       -v
@@ -559,7 +559,7 @@ class Protip < ActiveRecord::Base
   end
 
   def upvotes
-    @upvotes ||= likes.count
+    likes.size
   end
 
   def upvotes=(count)
@@ -782,7 +782,7 @@ class Protip < ActiveRecord::Base
     if self.new_record?
       self.links.select { |link| ProtipLink.is_image? link }
     else
-      protip_links.where('kind in (?)', ProtipLink::IMAGE_KINDS).map(&:url)
+      protip_links.loaded? ? protip_links.select { |p| ProtipLink::IMAGE_KINDS.include?(p.kind.to_sym) }.map(&:url) : protip_links.where('kind in (?)', ProtipLink::IMAGE_KINDS).map(&:url)
     end
   end
 
