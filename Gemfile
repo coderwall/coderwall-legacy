@@ -121,6 +121,7 @@ gem 'rakismet'
 gem 'ruby-progressbar'
 gem 'sanitize'
 gem 'simple_form'
+gem 'sitemap_generator'
 gem 'tweet-button'
 gem 'local_time'
 

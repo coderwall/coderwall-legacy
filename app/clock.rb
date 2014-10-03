@@ -44,5 +44,9 @@ every(1.day, 'clear_expired_sessions', at: '05:00') do
   ClearExpiredSessionsJob.perform_async
 end
 
+every(1.day, 'sitemap:refresh', at: '06:00') do
+  SitemapRefreshWorker.perform_async
+end
+
 # This is tied with broken code. Probably should delete
 # every(1.day, 'facts:system', at: '00:00') {}
