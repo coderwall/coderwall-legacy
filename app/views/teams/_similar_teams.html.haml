@@ -12,4 +12,4 @@
 - unless exact_team_exists?(@teams, @team)
   .just-create-team
     %h3 None of the above are my team
-    = link_to "Create team #{@team.name}", teams_path(@team, :team => {:name => @team.name}, :selected => false), :remote => true, :method => :post, :class => "create-team"
+    = link_to "Create team #{@team.name}", teams_path(@team, :team => {:name => @team.name, :selected => false}), :remote => true, :method => :post, :class => "create-team"
