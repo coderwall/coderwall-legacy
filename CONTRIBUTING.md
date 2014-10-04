@@ -14,6 +14,13 @@ Here are the steps for getting setup & started with contributing to Coderwall :
 
 You're on your way to having a stake in Coderwall.
 
+# How to set up the environment
+
+We have videos and text instructions on how to get up and running to develop on Coderwall.
+
+## Check out our video tutorials on how to get started with developing on Coderwall
+
+<iframe width="1280" height="720" src="//www.youtube-nocookie.com/embed/videoseries?list=PLhlPwpqjsgvXK4n8FJBbj7KkvuOw8h3FO" frameborder="0" allowfullscreen></iframe>
 
 ### How to work on Coderwall using Vagrant on VirtualBox
 
