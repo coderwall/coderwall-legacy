@@ -26,36 +26,50 @@ Email: Zane.Wolfgang.Pickett [at] Gmail.com
 GitHub: @sirwolfgang
 Location: United States
 
-Contributor: Rex Morgan
-GitHub: @RexMorgan
-Location: Austin, Texas
-
 Contributor: Britt Mileshosky
 GitHub: @Mileshosky
 
-Contributor: Wesley Lancel
-GitHub: @wesleylancel
-Location: Belgium / The Netherlands
+Contributor: Dane Lyons
+GitHub: @DaneLyons
+Location: SF
+
+Contributor: Rex Morgan
+GitHub: @RexMorgan
+Location: Austin, Texas
 
 Contributor: Nícolas Iensen
 Email: nicolas [at] iensen.me
 GitHub: @nicolasiensen
 Location: Rio de Janeiro
 
+Contributor: Wesley Lancel
+GitHub: @wesleylancel
+Location: Belgium / The Netherlands
+
+Contributor: Silas Sao
+Email: silassao [at] gmail.com
+GitHub: @sao
+Location: California
+
+Contributor: Carl Woodward
+Email: carl [at] 88cartell.com
+GitHub: @carlwoodward
+Location: Sydney
+
 Contributor: Justin Raines
 Email: justraines [at] gmail.com
 GitHub: @dvito
 Location: Washington, DC
 
-Contributor: Aaron Raimist
-Email: aaron [at] aaronraimist.com
-GitHub: @aaronraimist
-Location: St. Louis
-
 Contributor: Anthony Kosednar
 Email: anthony.kosednar [at] gmail.com
 GitHub: @akosednar
 Location: USA
+
+Contributor: Aaron Raimist
+Email: aaron [at] aaronraimist.com
+GitHub: @aaronraimist
+Location: St. Louis
 
 Contributor: Drew Blas
 GitHub: @drewblas
@@ -68,12 +82,30 @@ Location: San Francisco, CA
 Contributor: Jon Khaykin
 GitHub: @jkhaykin
 
-Contributor: Greg Molnar
-GitHub: @gregmolnar
+Contributor: Gosha Arinich
+Email: me [at] goshakkk.name
+GitHub: @goshakkk
+Location: Minsk, Belarus
+
+Contributor: Charles Pletcher
+GitHub: @Pletcher
+Location: San Francisco Bay Area
 
 Contributor: Daniel Fone
 Email: daniel [at] fone.net.nz
 GitHub: @danielfone
+
+Contributor: 
+GitHub: @alxers
+
+Contributor: Greg Molnar
+GitHub: @gregmolnar
+Location: Basingstoke, UK
+
+Contributor: John Haugeland
+Email: stonecypher [at] gmail.com
+GitHub: @StoneCypher
+Location: San Francisco, CA
 
 Contributor: Matej Kramny
 Email: github [at] matej.me
@@ -85,14 +117,13 @@ Email: send.sachin [at] yahoo.com
 GitHub: @sachinm
 Location: Atlanta, GA
 
-Contributor: Silas Sao
-Email: silassao [at] gmail.com
-GitHub: @sao
-Location: California
+Contributor: Sun Liang
+GitHub: @unstop
+Location: China
 
 
 /* SITE */
-Last update: 2014/07/26
+Last update: 2014/09/30
 Standards: HTML5, CSS3
 Components: Ruby on Rails, jQuery, Sass, Backbone.js, Ember.js, PostgreSQL, ElasticSearch, MongoDB, Redis, etc.
 Software: Vim, Tmux, Vagrant, Git, etc.
