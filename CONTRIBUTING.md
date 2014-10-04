@@ -1,14 +1,3 @@
-## **Protip for Contributors**
-
-When committing a Pull Request for non-application/test code please add [`[skip ci]`](http://docs.travis-ci.com/user/how-to-skip-a-build/) to your commit message.
-
-# Code Conventions and Style Guide
-
-Please refer to the community Ruby & Rails Style Guides created by [bbatsov](https://github.com/bbatsov), author of [Rubocop](https://github.com/bbatsov/rubocop).
-
-[Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide/blob/master/README.md)
-[Rails Style Guide](https://github.com/bbatsov/rails-style-guide/blob/master/README.md)
-
 # Contributing
 
 Here are the steps for getting setup & started with contributing to Coderwall :
@@ -25,26 +14,6 @@ Here are the steps for getting setup & started with contributing to Coderwall :
 
 You're on your way to having a stake in Coderwall.
 
-## External Dependencies
-
-### Stripe configuration
-
-You'll need to set up a test account with Stripe for local development until this dependency is refactored out of development/test.
-
-## Github configuration
-
-You will need a Github application configured for local development until this dependency is refactored out of development/test.
-
-- Create a new GitHub application at [https://github.com/settings/applications/new](https://github.com/settings/applications/new).
-- Copy the the ENV variables that you'll need from GitHub.
-
-![The .env will need these values](https://www.evernote.com/shard/s13/sh/3f74a2f7-82d1-46a0-af9c-28f983ad22af/6adc72742c10ddd4ff3c1b711b8d0e27/deep/0/OAuth-Application-Settings.png)
-
-## How to run Coderwall locally.
-
-We use Vagrant to isolate all of our dependencies without polluting your normal working environment.
-
-You're free to not use Vagrant but by the time you're done setting up you'll probably already have given up and installed Vagrant.
 
 ### How to work on Coderwall using Vagrant on VirtualBox
 
@@ -191,3 +160,35 @@ If you're running Windows, [here's a guide written by one of our members on how 
 9. **Thanks**
 
     I hope you enjoy working with Vagrant as much as we do and feel free to ask questions if you get stuck or have a problem. You're probably not alone and even if you're the first to encounter a rough patch you won't be the last.
+
+## External Dependencies
+
+### Stripe configuration
+
+You'll need to set up a test account with Stripe for local development until this dependency is refactored out of development/test.
+
+## Github configuration
+
+You will need a Github application configured for local development until this dependency is refactored out of development/test.
+
+- Create a new GitHub application at [https://github.com/settings/applications/new](https://github.com/settings/applications/new).
+- Copy the the ENV variables that you'll need from GitHub.
+
+![The .env will need these values](https://www.evernote.com/shard/s13/sh/3f74a2f7-82d1-46a0-af9c-28f983ad22af/6adc72742c10ddd4ff3c1b711b8d0e27/deep/0/OAuth-Application-Settings.png)
+
+## How to run Coderwall locally.
+
+We use Vagrant to isolate all of our dependencies without polluting your normal working environment.
+
+You're free to not use Vagrant but by the time you're done setting up you'll probably already have given up and installed Vagrant.
+
+## **Protip for Contributors**
+
+When committing a Pull Request for non-application/test code please add [`[skip ci]`](http://docs.travis-ci.com/user/how-to-skip-a-build/) to your commit message.
+
+# Code Conventions and Style Guide
+
+Please refer to the community Ruby & Rails Style Guides created by [bbatsov](https://github.com/bbatsov), author of [Rubocop](https://github.com/bbatsov/rubocop).
+
+[Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide/blob/master/README.md)
+[Rails Style Guide](https://github.com/bbatsov/rails-style-guide/blob/master/README.md)
