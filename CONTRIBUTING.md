@@ -20,7 +20,7 @@ We have videos and text instructions on how to get up and running to develop on 
 
 ## Check out our video tutorials on how to get started with developing on Coderwall
 
-<iframe width="1280" height="720" src="//www.youtube-nocookie.com/embed/videoseries?list=PLhlPwpqjsgvXK4n8FJBbj7KkvuOw8h3FO" frameborder="0" allowfullscreen></iframe>
+[Coderwall New Developer Guides](http://www.youtube.com/playlist?list=PLhlPwpqjsgvXK4n8FJBbj7KkvuOw8h3FO)
 
 ### How to work on Coderwall using Vagrant on VirtualBox
 
