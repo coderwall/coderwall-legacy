@@ -15,13 +15,13 @@ Here are the steps for getting setup & started with contributing to Coderwall :
 
 1. Go to [https://assemblymade.com/coderwall](https://assemblymade.com/coderwall) and sign up.
 2. Link your GitHub account to your Assembly account in your profile settings.
-3. [Fork the code](https://github.com/assemblymade/coderwall).
-4. Create a new WIP at [https://assemblymade.com/coderwall/wips](https://assemblymade.com/coderwall/wips).
-5. Get vagrant running
-6. Run the test suite
+3. [Fork assemblymade/coderwall](https://github.com/assemblymade/coderwall).
+4. Install Virtualbox and Vagrant
+5. Prepare your vagrant.yml and .env files
+6. Execute `run.sh` (or `run.bat` on Windows)
 7. If you have any issues, jump into chat, introduce yourself and ask or leave a message if no one is around.
 8. Find an [interesting bounty](https://assemblymade.com/coderwall/wips) on Assembly or suggest a new one.
-9. Fork and then issue a PR when you are done referencing the Bounty. (Note: Only PRs from those with valid Assembly account will be merged).
+9. Issue a PR with your work when it is ready for review. (Note: Only PRs from those with valid Assembly account will be merged).
 
 You're on your way to having a stake in Coderwall.
 
@@ -56,6 +56,8 @@ Here's everything you need to get started working on Coderwall with Vagrant TODA
 
 *At the time of writing this document we were using VirtualBox 4.3.12 and Vagrant 1.6.5.*
 
+**WE ARE USING VIRTUALBOX 4.3.12 DUE TO COMPATABILITY ISSUES WITH VBOX GUEST ADDITIONS.**
+
 #### Vagrant! I already know what to do.
 
 __If you're an experienced Vagrant user then you can fetch the base box and register it yourself.__
@@ -70,11 +72,13 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
 1. **Install VirtualBox**
 
-    Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Downloads)**.
+    Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3)**.
+    
+    ![Download the Vbox installer and extensions from here](https://www.evernote.com/shard/s13/sh/68b6a635-7a80-444b-a210-c1aa61405efc/955c950ebafc46f0f1069e27e85bb120)
 
-    _At the time of writing this documentation the current version is VirtualBox 4.3.12._
+    The _required_ version is **VirtualBox 4.3.12.**
 
-    You don't have to install the VirtualBox 4.3.12 Oracle VM VirtualBox Extension Pack but I recommend installing it for the extra drivers.
+    I recommend installing VirtualBox 4.3.12 Oracle VM VirtualBox Extension Pack for the extra drivers.
 
 2. **Install Vagrant**
 
@@ -115,11 +119,9 @@ If you're running Windows, [here's a guide written by one of our members on how 
     Now that you've got VirtualBox and Vagrant installed with the source code cloned in `~/assemblymade/coderwall` we can start up the Vagrant instance.
 
         cd ~/assemblymade/coderwall
-        vagrant up
+        ./run.sh # or run.bat if you're on Windows
 
-    You will likely be prompted for your `sudo` password to allow VirtualBox to mount the shared folder using NFS.
-
-    Since this is probably the first time you're running this command it's going to take a VERY long time (bandwidth willing) to run. This is because Vagrant needs to fetch the Coderwall base box from the Internet and it's about 1GB.  Fortunately that really only has to be done once (unless the base box get's updated but that's another story).
+    Since this is probably the first time you're running this command it's going to take a VERY long time (bandwidth willing) to run. This is because Vagrant needs to fetch the Coderwall base box from the Internet and it's about 1.4GB.  Fortunately that really only has to be done once (unless the base box get's updated but that's another story).
 
     Once Vagrant reports that you're booted up and ready to go then you'll be able to SSH into the local vm similiar to any other remote box.
 
@@ -183,7 +185,7 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
 	If you need to change any environment variable you have to edit ```.env``` file properly and restart Rails server running:
 
-    vagrant ssh -c "sudo restart coderwall"
+    vagrant reload ; ./run.sh
 
 
 9. **Thanks**
