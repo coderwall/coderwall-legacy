@@ -782,7 +782,13 @@ class Protip < ActiveRecord::Base
     if self.new_record?
       self.links.select { |link| ProtipLink.is_image? link }
     else
-      protip_links.loaded? ? protip_links.select { |p| ProtipLink::IMAGE_KINDS.include?(p.kind.to_sym) }.map(&:url) : protip_links.where('kind in (?)', ProtipLink::IMAGE_KINDS).map(&:url)
+      if protip_links.loaded?
+        protip_links.select do |p|
+          ProtipLink::IMAGE_KINDS.include?(p.kind.to_sym) if p.kind
+        end.map(&:url).compact
+      else
+        protip_links.where('kind in (?)', ProtipLink::IMAGE_KINDS).map(&:url)
+      end
     end
   end
 
