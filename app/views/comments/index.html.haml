@@ -2,10 +2,14 @@
   admin
 
 .comment-admin
+  %h2.comments-header
+    %i.fa.fa-comments
+    Comments
+
   %ul.titles.cf
-    %li index
-    %li likes
-    %li comment
+    %li Index
+    %li Likes
+    %li Comment
 
   - @comments.each_with_index do |comment, index|
     %ul.comments-list.cf
