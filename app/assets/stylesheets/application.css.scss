@@ -417,7 +417,7 @@ h4 {
   }
 }
 
-@import "profile", "connections", "protip", "networks";
+@import "profile", "connections", "protip", "networks", "admin";
 body#sign-in {
   #main-content {
     background: image-url("black-texture.jpg") repeat;
