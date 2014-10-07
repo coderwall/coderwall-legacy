@@ -69,6 +69,14 @@ body#admin {
     }
   }
   .comment-admin {
+
+    .comments-header {
+      color: #aeaeae;
+      text-transform: uppercase;
+      font-size: 1.6em;
+      margin-bottom: 1.3em;
+    }
+
     li {
       float: left;
     }
