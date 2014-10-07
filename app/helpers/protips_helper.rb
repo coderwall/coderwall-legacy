@@ -67,8 +67,6 @@ module ProtipsHelper
       location_image_url_for(@user)
     elsif @protip && !@protip.new_record?
       location_image_url_for(@protip.user)
-    else
-      location_image_url_for(current_user)
     end
   end
 
