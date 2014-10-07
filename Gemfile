@@ -179,8 +179,8 @@ group :test do
   gem 'webmock', '<1.16'
 end
 
+gem 'airbrake'
 group :production do
-  gem 'airbrake'
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'rails_12factor'
