@@ -74,7 +74,7 @@ GEM
     acts_as_commentable (2.0.1)
     acts_as_follower (0.1.1)
     addressable (2.3.6)
-    airbrake (4.0.0)
+    airbrake (4.1.0)
       builder
       multi_json
     annotate (2.6.5)
