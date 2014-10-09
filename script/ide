@@ -8,8 +8,7 @@ SESSION=coderwall
 
 cd $HOME/assemblymade/coderwall
 
-rbenv version
-rbenv gemset active
+rvm current
 
 vagrant up
 
