@@ -38,7 +38,7 @@ GitHub: @RexMorgan
 Location: Austin, Texas
 
 Contributor: Nícolas Iensen
-Email: nicolas [at] iensen.me
+Email: nicolas.iensen [at] gmail.com
 GitHub: @nicolasiensen
 Location: Rio de Janeiro
 
@@ -51,15 +51,19 @@ Email: silassao [at] gmail.com
 GitHub: @sao
 Location: California
 
-Contributor: Carl Woodward
-Email: carl [at] 88cartell.com
-GitHub: @carlwoodward
-Location: Sydney
+Contributor: 
+GitHub: @bjfish
+Location: Minneapolis, MN
 
 Contributor: Justin Raines
 Email: justraines [at] gmail.com
 GitHub: @dvito
 Location: Washington, DC
+
+Contributor: Carl Woodward
+Email: carl [at] 88cartell.com
+GitHub: @carlwoodward
+Location: Sydney
 
 Contributor: Anthony Kosednar
 Email: anthony.kosednar [at] gmail.com
@@ -123,7 +127,7 @@ Location: China
 
 
 /* SITE */
-Last update: 2014/09/30
+Last update: 2014/10/06
 Standards: HTML5, CSS3
 Components: Ruby on Rails, jQuery, Sass, Backbone.js, Ember.js, PostgreSQL, ElasticSearch, MongoDB, Redis, etc.
 Software: Vim, Tmux, Vagrant, Git, etc.

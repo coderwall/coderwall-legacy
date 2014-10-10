@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-ruby '2.1.2'
+ruby '2.1.3'
 
 gem 'rails', '~> 3.2'
 
@@ -179,8 +179,8 @@ group :test do
   gem 'webmock', '<1.16'
 end
 
+gem 'airbrake'
 group :production do
-  gem 'airbrake'
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'rails_12factor'

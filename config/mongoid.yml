@@ -3,14 +3,14 @@ development:
     default:
      database: badgify_development
      hosts:
-      - localhost
+       - localhost:27017
 
 test:
   sessions:
    default:
     database: badgify_test
     hosts:
-     - localhost
+     - localhost:27017
 
 staging:
   sessions:
