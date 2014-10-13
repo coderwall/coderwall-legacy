@@ -1,20 +1,30 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: localhost
-  password:
   pool: 5
-  port: <%= ENV['DEV_POSTGRES_PORT'] || 5432 %>
+<% if ENV['DATABASE_URL'] %>
+  # url: <%= ENV['DATABASE_URL'] %> Needs Rails 4
+  # postgresql://user:password@host:port/database
+  username: <%= URI(ENV['DATABASE_URL']).user %>
+  password: <%= URI(ENV['DATABASE_URL']).password %>
+  host: <%= URI(ENV['DATABASE_URL']).host %>
+  port: <%= URI(ENV['DATABASE_URL']).port %>
+  database: <%= URI(ENV['DATABASE_URL']).path[1..-1] %>
+<% else %>
   username: vagrant
+  password:
+  host: localhost
+  port: <%= ENV['DEV_POSTGRES_PORT'] || 5432 %>
+<% end %>
 
 development:
   <<: *default
-  database: coderwall_development
+  database: <%= 'coderwall_development' unless ENV['DATABASE_URL'] %>
 
 test:
   <<: *default
-  database: coderwall_test
+  database: <%= 'coderwall_test' unless ENV['DATABASE_URL'] %>
 
 production:
   <<: *default
-  database: coderwall_production
+  database: <%= 'coderwall_production' unless ENV['DATABASE_URL'] %>
