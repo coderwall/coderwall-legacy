@@ -49,10 +49,20 @@ RSpec.describe ProtipsController, :type => :controller do
   #   end
   # end
 
-  describe "GET show" do
+  describe "GET show using public_id" do
+    it "redirects to GET show using slug" do
+      protip = Protip.create! valid_attributes
+      protip.save
+      get :show, {id: protip.to_param}, valid_session
+      expect(response).to redirect_to slug_protips_path(protip,protip.friendly_id)
+    end
+  end
+  
+  describe "GET show using slug" do
     it "assigns the requested protip as @protip" do
       protip = Protip.create! valid_attributes
-      get :show, {id: protip.to_param}, valid_session
+      protip.save
+      get :show, {id: protip.public_id, slug: protip.friendly_id}, valid_session
       expect(assigns(:protip)).to eq(protip)
     end
   end
