@@ -24,7 +24,7 @@ class SearchSyncJob
       end
 
       unindexed_protips.each do |unindexed_protip_id|
-        IndexProtip.perform_async(unindexed_protip_id)
+        IndexProtipJob.perform_async(unindexed_protip_id)
       end
 
       puts "removed #{nonexistent_protips.count} protips and added #{unindexed_protips.count} protips"
