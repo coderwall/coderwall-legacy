@@ -1,9 +1,11 @@
 class SearchSyncJob
   include Sidekiq::Worker
+  sidekiq_options queue: :search_sync
 
-  sidekiq_options queue: :medium
-
+  # TODO refactor this, when we drop Tire.
   def perform
+    return if duplicate_job? # Skip if there is more enqueued jobs
+
     number_of_protips_in_index = Protip.tire.search { query { all } }.total
     number_of_protips_in_database = Protip.count
 
@@ -13,7 +15,7 @@ class SearchSyncJob
         query { all }
       end.map { |protip| protip.id.to_i }
 
-      protips_in_database = Protip.select(:id).map(&:id)
+      protips_in_database = Protip.pluck(:id)
 
       #now that we know the sets in db and index, calculate the missing records
       nonexistent_protips = (protips_in_index - protips_in_database)
@@ -26,8 +28,10 @@ class SearchSyncJob
       unindexed_protips.each do |unindexed_protip_id|
         IndexProtipJob.perform_async(unindexed_protip_id)
       end
-
-      puts "removed #{nonexistent_protips.count} protips and added #{unindexed_protips.count} protips"
     end
+  end
+
+  def duplicate_job?
+    Sidekiq::Queue.new('search_sync').size > 2
   end
 end
