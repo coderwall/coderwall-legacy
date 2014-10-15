@@ -125,7 +125,6 @@ apt-get -y install libmagickwand-dev
 apt-get -y install libncurses5-dev
 apt-get -y install libopenssl-ruby
 apt-get -y install libpq-dev
-apt-get -y install libpq-dev
 apt-get -y install libreadline6
 apt-get -y install libreadline6-dev
 apt-get -y install libsqlite3-0
