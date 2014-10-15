@@ -7,6 +7,7 @@ production:
 :queues:
   - [low,      1]
   - [default,  2]
+  - [search_sync, 2]
   - [medium,   3]
   - [high,     4]
   - [urgent,   5]
