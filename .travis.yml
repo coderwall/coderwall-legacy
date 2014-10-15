@@ -7,6 +7,7 @@ services:
 - redis-server
 before_install:
 - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb
+- sudo dpkg --purge elasticsearch
 - sudo dpkg -i elasticsearch-0.90.13.deb
 - sudo service elasticsearch start
 - gem update --system
