@@ -1,3 +1,12 @@
+- if ENV['ENABLE_TWITTER_CARDS']
+  - meta twitter: {card: "summary"}
+  - meta twitter: {site: "@coderwall"}
+  - meta twitter: {title: sanitize(@team.name)}
+  - meta twitter: {url: teamname_path(@team.slug)}
+  - meta twitter: {description: @team.about}
+  - meta twitter: {image: @team.avatar_url}
+  - meta twitter: {creator: {id: @team.twitter}}
+
 -content_for :head do
   =stylesheet_link_tag 'premium-teams'
 
