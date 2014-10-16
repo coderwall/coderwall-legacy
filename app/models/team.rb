@@ -174,6 +174,11 @@ class Team
       empty = Team.new.send(section).is_a?(Array) ? [] : nil
       Team.where(section.to_sym.ne => empty)
     end
+
+    def with_similar_names(name)
+      name.gsub!(/ \-\./, '.*')
+      teams = Team.any_of({ :name => /#{name}.*/i }).limit(3).to_a
+    end
   end
 
   def relevancy
@@ -473,10 +478,11 @@ class Team
   end
 
   def add_user(user)
-    user.update_attribute(:team_document_id, id.to_s)
     touch!
-    user.save!
-    user
+    user.tap do |u|
+      u.update_attribute(:team_document_id, id.to_s)
+      u.save!
+    end
   end
 
   def remove_user(user)

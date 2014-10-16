@@ -1,9 +1,9 @@
-<% if @teams.blank? %>
+var notificationBar = $('#main-content').find('.notification-bar');
+notificationBar.find('.notification-bar-inside').find('p').html("<%= flash[:error] || flash[:notice] %>");
+notificationBar.show();
+
 $('section.feature:not(.payment)').hide();
 $('section.feature.payment').append('<%= escape_javascript(render :partial => "payment", :locals => {:account => @team.account || @team.build_account, :plan => @team.account.try(:current_plan)}) %>');
 $('section.feature.payment').show();
 setupPayment();
-<% else %>
-$('section.feature .intro .results').html('<%= escape_javascript(render :partial => 'similar_teams') %>');
-$('section.feature:not(.payment)').addClass('find-team');
-<% end %>
+
