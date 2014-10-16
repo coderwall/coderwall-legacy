@@ -79,31 +79,31 @@ class TeamsController < ApplicationController
 
   def create
     team_params = params.require(:team).permit(:selected, :slug, :name)
-    selected = team_params.fetch(:selected, nil)
-    team_name = team_params.fetch(:name, '')
 
-    @teams = Team.with_similar_names(team_name)
-
-    if selected == 'true'
+    if team_params.fetch(:selected, nil) == 'true'
       @team = Team.where(slug: team_params[:slug]).first
       render :create and return
     end
 
-    unless selected == 'false' || @teams.empty?
-      @new_team_name = team_name
+    @teams = Team.with_similar_names(team_params[:name])
+    unless @teams.empty?
+      @new_team_name = team_params[:name]
       render 'similar_teams' and return
     end
 
-    @team = Team.new(name: team_name)
+    @team = Team.new(name: team_params[:name])
     if @team.save
+    # TODO show flash on success or falure
       record_event('created team')
       @team.add_user(current_user)
-
-      flash.now[:notice] = "Successfully created a team #{@team.name}"
-      render :create
-    else
-      flash[:error] = "There was an error in creating a team #{@team.name}"
     end
+  end
+
+  def get_similar_teams(name)
+    name.gsub!(/ \-\./, '.*')
+    #TODO move to Team scope
+    teams = Team.any_of({ :name => /#{name}.*/i }).limit(3).to_a
+    teams.empty? ? nil : teams
   end
 
   def edit

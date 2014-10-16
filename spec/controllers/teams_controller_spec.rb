@@ -39,24 +39,16 @@ RSpec.describe TeamsController, :type => :controller do
     end
   end
 
-  describe "#create" do
-    let(:team) { Fabricate.build(:team, name: 'team_name') }
+  describe "#create" , focus: true  do
+    let(:team) { Fabricate.build(:team) }
 
-    before do
-      allow(Team).to receive(:with_similar_names).and_return([])
+    it 'renders an error message if action was unsuccessful' do
+
     end
 
     context 'a team is selected from a list of similar teams' do
-      it 'renders a template with a choice of tariff plans when user picks a name from existing names' do
-        allow(Team).to receive(:where).and_return(['team_1', 'team_2'])
+      it 'renders a template with a choice of tariff plans when user selects a team' do
         post :create, :team => { selected: 'true', slug: 'team_name' }, format: :js
-
-        expect(assigns[:team]).to eq('team_1')
-        expect(response).to render_template('create')
-      end
-
-      it 'renders a template with a choice of tariff plans if user picks his own team name' do
-        post :create, :team => { name: 'team_name', selected: 'false' }, format: :js
         expect(response).to render_template('create')
       end
     end
@@ -65,6 +57,8 @@ RSpec.describe TeamsController, :type => :controller do
       let(:response) { post :create, :team => { name: 'team_name' }, format: :js }
 
       before do
+        allow(controller).to receive(:get_similar_teams).and_return(nil)
+
         allow(Team).to receive(:new).and_return(team)
         allow(team).to receive(:save).and_return(true)
         allow(team).to receive(:add_user).and_return(true)
@@ -88,13 +82,6 @@ RSpec.describe TeamsController, :type => :controller do
       it 'renders template with option to join' do
         expect(response).to be_success
         expect(response).to render_template('create')
-        expect(flash[:notice]).to eq("Successfully created a team team_name")
-      end
-
-      it 'renders failure notice' do
-        allow(team).to receive(:save).and_return(false)
-        response
-        expect(flash[:error]).to eq("There was an error in creating a team team_name")
       end
     end
 
@@ -106,8 +93,6 @@ RSpec.describe TeamsController, :type => :controller do
 
       it 'renders a template with a list of similar teams' do
         post :create, :team => { name: 'team_name' }, format: :js
-
-        expect(assigns[:new_team_name]).to eq('team_name')
         expect(response).to render_template('similar_teams')
       end
     end
