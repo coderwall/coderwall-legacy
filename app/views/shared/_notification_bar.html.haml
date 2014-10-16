@@ -1,0 +1,7 @@
+#main-content
+  .notification-bar.hidden
+    .notification-bar-inside{ class: (flash[:error].blank? ? 'notice' : 'error') }
+      %p= flash[:notice] || flash[:error]
+      %a.close-notification{ onclick: "$(this).parent().parent().hide();" }
+        %span Close
+

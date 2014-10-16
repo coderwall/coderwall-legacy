@@ -163,8 +163,8 @@ module TeamsHelper
     settings_path(anchor: 'jobs')
   end
 
-  def exact_team_exists?(teams, team)
-    teams.map { |team| Team.slugify(team.name) }.include? team.slug
+  def exact_team_exists?(teams, name)
+    teams.map { |team| Team.slugify(team.name) }.include? name
   end
 
   def team_connections_links(team)

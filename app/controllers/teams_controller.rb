@@ -77,17 +77,32 @@ class TeamsController < ApplicationController
   end
 
   def create
-    create_params = params.require(:team).permit(:selected, :slug, :name)
+    team_params = params.require(:team).permit(:selected, :slug, :name)
 
-    @team, confirmed = selected_or_new(create_params)
-    @teams = Team.any_of({ :name => /#{team_to_regex(@team)}.*/i }).limit(3).to_a unless confirmed
-
-    if @team.valid? and @teams.blank? and @team.new_record?
-      @team.add_user(current_user)
-      # @team.edited_by(current_user)
-      @team.save
-      record_event('created team')
+    if team_params.fetch(:selected, nil) == 'true'
+      @team = Team.where(slug: team_params[:slug]).first
+      render :create and return
     end
+
+    @teams = Team.with_similar_names(team_params[:name])
+    unless @teams.empty?
+      @new_team_name = team_params[:name]
+      render 'similar_teams' and return
+    end
+
+    @team = Team.new(name: team_params[:name])
+    if @team.save
+    # TODO show flash on success or falure
+      record_event('created team')
+      @team.add_user(current_user)
+    end
+  end
+
+  def get_similar_teams(name)
+    name.gsub!(/ \-\./, '.*')
+    #TODO move to Team scope
+    teams = Team.any_of({ :name => /#{name}.*/i }).limit(3).to_a
+    teams.empty? ? nil : teams
   end
 
   def edit
@@ -297,23 +312,6 @@ class TeamsController < ApplicationController
     jobs = job_public_ids
     public_id = job && jobs[(jobs.index(job.public_id) || +1)-1]
     Opportunity.with_public_id(public_id) unless public_id.nil?
-  end
-
-  def team_to_regex(team)
-    team.name.gsub(/ \-\./, '.*')
-  end
-
-  def selected_or_new(opts)
-    team = Team.new(name: opts[:name])
-    confirm = false
-
-    if opts[:selected]
-      if opts[:selected] == "true"
-        team = Team.where(:slug => opts[:slug]).first
-      end
-      confirm = true
-    end
-    [team, confirm]
   end
 
   def ensure_analytics_access
