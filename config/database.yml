@@ -21,7 +21,6 @@ default: &default
   else
     database_name = 'coderwall'
 %>
-
   username: vagrant
   password:
   host: localhost

@@ -8,7 +8,21 @@ task default: :spec
 
 namespace :team do
   task migrate: :environment do
-    TeamMigratorBatchJob.new.perform
+    puts '--- Beginning team migration ---'
+    success = true
+    begin
+      Team.each do |team|
+        begin
+          puts ">>> Migrating #{team.id}"
+          TeamMigratorJob.new.perform(team.id.to_s)
+        rescue => ex
+          success = false
+          puts "[#{team.id.to_s}] #{ex} >>\n#{ex.backtrace.join("\n  ")}"
+        end
+      end
+    ensure
+      puts "--- #{success ? 'Successful' : 'Unsuccessful'} team migration ---"
+    end
   end
 
   #
@@ -40,6 +54,32 @@ namespace :team do
     require 'pry'; binding.pry
   end
 
+  def neq_dec(attr, pg, mongo, fail_if_neq=true)
+    scale = 7
+    left =  pg.send(attr).to_d.round(scale)
+    right = mongo.send(attr).to_d.round(scale)
+
+
+    if left != right
+      puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
+      true
+    else
+      false
+    end
+  rescue => ex
+    puts '*'*80
+    puts
+    puts ex
+    puts
+    puts '-'*80
+    puts
+    ap ex.backtrace
+    puts
+    puts '*'*80
+
+    require 'pry'; binding.pry
+  end
+
   task verify: :environment do
     PgTeam.find_each(batch_size: 100) do |pg_team|
       begin
@@ -49,12 +89,16 @@ namespace :team do
         # Ignoring:
         # - updated_at
 
-        puts '----------------------------------------------------------------------------------------------------'
-        puts 'TEAM'
-        puts '----------------------------------------------------------------------------------------------------'
+        #puts '----------------------------------------------------------------------------------------------------'
+        #puts 'TEAM'
+        #puts '----------------------------------------------------------------------------------------------------'
 
-        %i(median score total slug mean pending_join_requests).each do |attr|
+        %i(slug pending_join_requests).each do |attr|
           neq(attr, pg_team, mongo_team, false)
+        end
+
+        %i(score size total mean median).each do |attr|
+          neq_dec(attr, pg_team, mongo_team, false)
         end
 
         %i(about achievement_count analytics benefit_description_1 benefit_description_2 benefit_description_3 benefit_name_1 benefit_name_2 benefit_name_3 big_image big_quote blog_feed branding country_id created_at endorsement_count facebook featured_banner_image featured_links_title github github_organization_name headline hide_from_featured highlight_tags hiring_tagline interview_steps invited_emails link_to_careers_page location monthly_subscription name number_of_jobs_to_show office_photos organization_way organization_way_name organization_way_photo our_challenge paid_job_posts premium preview_code reason_description_1 reason_description_2 reason_description_3 reason_name_1 reason_name_2 reason_name_3 size stack_list twitter upcoming_events upgraded_at valid_jobs website why_work_image your_impact youtube_url).each do |attr|
@@ -83,9 +127,9 @@ namespace :team do
         end
 
 
-        puts '----------------------------------------------------------------------------------------------------'
-        puts 'LOCATIONS'
-        puts '----------------------------------------------------------------------------------------------------'
+        #puts '----------------------------------------------------------------------------------------------------'
+        #puts 'LOCATIONS'
+        #puts '----------------------------------------------------------------------------------------------------'
 
         pg_team_locations = pg_team.locations
         mongo_team_locations =  mongo_team.team_locations
@@ -105,9 +149,9 @@ namespace :team do
         end
 
 
-        puts '----------------------------------------------------------------------------------------------------'
-        puts 'LINKS'
-        puts '----------------------------------------------------------------------------------------------------'
+        #puts '----------------------------------------------------------------------------------------------------'
+        #puts 'LINKS'
+        #puts '----------------------------------------------------------------------------------------------------'
 
         pg_team_links = pg_team.links
         mongo_team_links = mongo_team.featured_links
@@ -124,18 +168,18 @@ namespace :team do
           end
         end
 
-        puts '----------------------------------------------------------------------------------------------------'
-        puts 'MEMBERS'
-        puts '----------------------------------------------------------------------------------------------------'
+        #puts '----------------------------------------------------------------------------------------------------'
+        #puts 'MEMBERS'
+        #puts '----------------------------------------------------------------------------------------------------'
 
         if pg_team.members.count != mongo_team.team_members.count
           puts "members | pg:#{pg_team.id} | mongo:#{mongo_team.id}| #{mongo_team.team_members.count} != #{pg_team.members.count}"
         end
 
 
-        puts '----------------------------------------------------------------------------------------------------'
-        puts 'JOBS'
-        puts '----------------------------------------------------------------------------------------------------'
+        #puts '----------------------------------------------------------------------------------------------------'
+        #puts 'JOBS'
+        #puts '----------------------------------------------------------------------------------------------------'
 
         pg_team.jobs.each do |pg_team_job|
           mongo_team_job = Team.where(id: pg_team_job.team_document_id.to_s).first
@@ -143,18 +187,81 @@ namespace :team do
           neq(:name, pg_team_job, mongo_team_job, false)
         end
 
-        puts '----------------------------------------------------------------------------------------------------'
-        puts 'FOLLOWERS'
-        puts '----------------------------------------------------------------------------------------------------'
+        #puts '----------------------------------------------------------------------------------------------------'
+        #puts 'FOLLOWERS'
+        #puts '----------------------------------------------------------------------------------------------------'
 
         pg_team.followers.each do |pg_team_follower|
           mongo_team_follower = Team.where(id: pg_team_follower.mongo_id.to_s).first
           # admins
           # editors
-          %i(about achievement_count analytics avatar benefit_description_1 benefit_description_2 benefit_description_3 benefit_name_1 benefit_name_2 benefit_name_3 big_image big_quote blog_feed branding country_id created_at endorsement_count facebook featured_banner_image featured_links_title github_organization_name headline hide_from_featured highlight_tags hiring_tagline interview_steps invited_emails link_to_careers_page location mean median monthly_subscription name number_of_jobs_to_show office_photos organization_way organization_way_name organization_way_photo our_challenge paid_job_posts pending_join_requests premium preview_code reason_description_1 reason_description_2 reason_description_3 reason_name_1 reason_name_2 reason_name_3 score size slug stack_list total twitter upcoming_events updated_at upgraded_at valid_jobs website why_work_image your_impact youtube_url).each do |attr|
+          %i(
+            about
+            achievement_count
+            analytics
+            avatar
+            benefit_description_1
+            benefit_description_2
+            benefit_description_3
+            benefit_name_1
+            benefit_name_2
+            benefit_name_3
+            big_image
+            big_quote
+            blog_feed
+            branding
+            country_id
+            created_at
+            endorsement_count
+            facebook
+            featured_banner_image
+            featured_links_title
+            github_organization_name
+            headline
+            hide_from_featured
+            highlight_tags
+            hiring_tagline
+            interview_steps
+            invited_emails
+            link_to_careers_page
+            location
+            monthly_subscription
+            name
+            number_of_jobs_to_show
+            office_photos
+            organization_way
+            organization_way_name
+            organization_way_photo
+            our_challenge
+            paid_job_posts
+            pending_join_requests
+            premium
+            preview_code
+            reason_description_1
+            reason_description_2
+            reason_description_3
+            reason_name_1
+            reason_name_2
+            reason_name_3
+            slug
+            stack_list
+            twitter
+            upcoming_events
+            upgraded_at
+            valid_jobs
+            website
+            why_work_image
+            your_impact
+            youtube_url
+          ).each do |attr|
             neq(attr, pg_team_follower, mongo_team_follower, false)
           end
+
+          %i(score size total mean median).each do |attr|
+            neq_dec(attr, pg_team_follower, mongo_team_follower, false)
+          end
         end
+
 
         # TODO: Pending Requests
       end

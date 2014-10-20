@@ -58,8 +58,6 @@ class TeamMigratorJob
         pgteam.invited_emails           = team.invited_emails
         pgteam.link_to_careers_page     = team.link_to_careers_page
         pgteam.location                 = team.location
-        pgteam.mean                     = team.mean
-        pgteam.median                   = team.median
         pgteam.monthly_subscription     = team.monthly_subscription
         pgteam.name                     = team.name
         pgteam.number_of_jobs_to_show   = team.number_of_jobs_to_show
@@ -78,11 +76,9 @@ class TeamMigratorJob
         pgteam.reason_name_1            = team.reason_name_1
         pgteam.reason_name_2            = team.reason_name_2
         pgteam.reason_name_3            = team.reason_name_3
-        pgteam.score                    = team.score
         pgteam.size                     = team.size
         pgteam.slug                     = team.slug
         pgteam.stack_list               = team.stack_list
-        pgteam.total                    = team.total
         pgteam.twitter                  = team.twitter
         pgteam.upcoming_events          = team.upcoming_events
         pgteam.updated_at               = team.updated_at
@@ -92,6 +88,12 @@ class TeamMigratorJob
         pgteam.why_work_image           = team.why_work_image
         pgteam.your_impact              = team.your_impact
         pgteam.youtube_url              = team.youtube_url
+
+        scale = 8
+        pgteam.mean                     = team.mean.to_d.round(scale)
+        pgteam.total                    = team.total.to_d.round(scale)
+        pgteam.median                   = team.median.to_d.round(scale)
+        pgteam.score                    = team.score.to_d.round(scale)
 
         pgteam.save!
       end

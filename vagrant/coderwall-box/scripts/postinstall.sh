@@ -316,7 +316,7 @@ echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
 su postgres -c 'createuser -s vagrant'
 su postgres -c 'createuser -s coderwall'
 
-su postgres -c 'pg_ctl stop -D /var/pgsql/data  2>&1'
+su -c 'pg_ctl stop -D /var/pgsql/data  2>&1' postgres
 su -c '/usr/bin/pg_ctl start -l /var/pgsql/data/log/logfile -D /var/pgsql/data' postgres
 
 sudo su - vagrant <<-'EOF'

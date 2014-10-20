@@ -357,22 +357,22 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
   end
 
   create_table "teams", :force => true do |t|
-    t.datetime "created_at",                                     :null => false
-    t.datetime "updated_at",                                     :null => false
+    t.datetime "created_at",                                                                     :null => false
+    t.datetime "updated_at",                                                                     :null => false
     t.string   "website"
     t.text     "about"
-    t.float    "total",                    :default => 0.0
-    t.integer  "size",                     :default => 0
-    t.float    "mean",                     :default => 0.0
-    t.float    "median",                   :default => 0.0
-    t.float    "score",                    :default => 0.0
+    t.decimal  "total",                    :precision => 40, :scale => 30, :default => 0.0
+    t.integer  "size",                                                     :default => 0
+    t.decimal  "mean",                     :precision => 40, :scale => 30, :default => 0.0
+    t.decimal  "median",                   :precision => 40, :scale => 30, :default => 0.0
+    t.decimal  "score",                    :precision => 40, :scale => 30, :default => 0.0
     t.string   "twitter"
     t.string   "facebook"
     t.string   "slug"
-    t.boolean  "premium",                  :default => false
-    t.boolean  "analytics",                :default => false
-    t.boolean  "valid_jobs",               :default => false
-    t.boolean  "hide_from_featured",       :default => false
+    t.boolean  "premium",                                                  :default => false
+    t.boolean  "analytics",                                                :default => false
+    t.boolean  "valid_jobs",                                               :default => false
+    t.boolean  "hide_from_featured",                                       :default => false
     t.string   "preview_code"
     t.string   "youtube_url"
     t.string   "github"
@@ -405,25 +405,25 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.text     "hiring_tagline"
     t.text     "link_to_careers_page"
     t.string   "avatar"
-    t.integer  "achievement_count",        :default => 0
-    t.integer  "endorsement_count",        :default => 0
+    t.integer  "achievement_count",                                        :default => 0
+    t.integer  "endorsement_count",                                        :default => 0
     t.datetime "upgraded_at"
-    t.integer  "paid_job_posts",           :default => 0
-    t.boolean  "monthly_subscription",     :default => false
-    t.text     "stack_list",               :default => ""
-    t.integer  "number_of_jobs_to_show",   :default => 2
+    t.integer  "paid_job_posts",                                           :default => 0
+    t.boolean  "monthly_subscription",                                     :default => false
+    t.text     "stack_list",                                               :default => ""
+    t.integer  "number_of_jobs_to_show",                                   :default => 2
     t.string   "location"
     t.integer  "country_id"
     t.string   "name"
     t.string   "github_organization_name"
     t.integer  "team_size"
     t.string   "mongo_id"
-    t.string   "office_photos",            :default => [],                       :array => true
-    t.text     "upcoming_events",          :default => [],                       :array => true
-    t.text     "interview_steps",          :default => [],                       :array => true
-    t.string   "invited_emails",           :default => [],                       :array => true
-    t.string   "pending_join_requests",    :default => [],                       :array => true
-    t.string   "state",                    :default => "active"
+    t.string   "office_photos",                                            :default => [],                       :array => true
+    t.text     "upcoming_events",                                          :default => [],                       :array => true
+    t.text     "interview_steps",                                          :default => [],                       :array => true
+    t.string   "invited_emails",                                           :default => [],                       :array => true
+    t.string   "pending_join_requests",                                    :default => [],                       :array => true
+    t.string   "state",                                                    :default => "active"
   end
 
   create_table "teams_account_plans", :id => false, :force => true do |t|

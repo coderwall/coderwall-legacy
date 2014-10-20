@@ -1,12 +1,16 @@
 GIT
-  remote: https://github.com/rebelidealist/stripe-ruby-mock
-  revision: f4229cbe762bc2a5a302cdd83088c283881e9c5a
-  branch: live-tests
+  remote: git://github.com/emberjs/ember-rails.git
+  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
   specs:
-    stripe-ruby-mock (1.10.1.7)
-      dante (>= 0.2.0)
-      jimson-temp
-      stripe (>= 1.15.0)
+    ember-rails (0.15.0)
+      active_model_serializers
+      barber (>= 0.4.1)
+      ember-data-source (>= 1.0.0.beta.5)
+      ember-source (>= 1.1.0)
+      execjs (>= 1.2)
+      handlebars-source (> 1.0.0)
+      jquery-rails (>= 1.0.17)
+      railties (>= 3.1)
 
 GIT
   remote: git://github.com/emberjs/ember-rails.git
@@ -44,18 +48,14 @@ GIT
       rest-client (~> 1.4)
 
 GIT
-  remote: git://github.com/emberjs/ember-rails.git
-  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
+  remote: https://github.com/rebelidealist/stripe-ruby-mock
+  revision: f4229cbe762bc2a5a302cdd83088c283881e9c5a
+  branch: live-tests
   specs:
-    ember-rails (0.15.0)
-      active_model_serializers
-      barber (>= 0.4.1)
-      ember-data-source (>= 1.0.0.beta.5)
-      ember-source (>= 1.1.0)
-      execjs (>= 1.2)
-      handlebars-source (> 1.0.0)
-      jquery-rails (>= 1.0.17)
-      railties (>= 3.1)
+    stripe-ruby-mock (1.10.1.7)
+      dante (>= 0.2.0)
+      jimson-temp
+      stripe (>= 1.15.0)
 
 GEM
   remote: https://rubygems.org/
