@@ -13,15 +13,6 @@ GIT
       railties (>= 3.1)
 
 GIT
-  remote: git://github.com/emberjs/ember-rails.git
-  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
-  specs:
-    stripe-ruby-mock (1.10.1.7)
-      dante (>= 0.2.0)
-      jimson-temp
-      stripe (>= 1.15.0)
-
-GIT
   remote: git://github.com/nixme/jazz_hands.git
   revision: 5e4b48f145883ecb14b55bf04eacc28ac9662676
   branch: bring-your-own-debugger
@@ -49,10 +40,10 @@ GIT
 
 GIT
   remote: https://github.com/rebelidealist/stripe-ruby-mock
-  revision: f4229cbe762bc2a5a302cdd83088c283881e9c5a
+  revision: f694a2792bf817932b3e9c4fe7ec51d00da03b4b
   branch: live-tests
   specs:
-    stripe-ruby-mock (1.10.1.7)
+    stripe-ruby-mock (2.0.0)
       dante (>= 0.2.0)
       jimson-temp
       stripe (>= 1.15.0)

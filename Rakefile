@@ -56,6 +56,7 @@ namespace :team do
 
   def neq_dec(attr, pg, mongo, fail_if_neq=true)
     scale = 7
+
     left =  pg.send(attr).to_d.round(scale)
     right = mongo.send(attr).to_d.round(scale)
 
