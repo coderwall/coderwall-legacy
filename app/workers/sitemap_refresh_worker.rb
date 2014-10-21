@@ -5,9 +5,9 @@ class SitemapRefreshWorker
 
   def perform
     SitemapGenerator::Sitemap.default_host  = 'https://coderwall.com'
-    SitemapGenerator::Sitemap.public_url    = 'tmp/'
+    SitemapGenerator::Sitemap.public_path    = 'tmp/'
     SitemapGenerator::Sitemap.sitemaps_host = "http://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com/"
-    SitemapGenerator::Sitemap.sitemaps_url  = 'sitemaps/'
+    SitemapGenerator::Sitemap.sitemaps_path  = 'sitemaps/'
     SitemapGenerator::Sitemap.adapter       = SitemapGenerator::WaveAdapter.new
 
     SitemapGenerator::Sitemap.create do
