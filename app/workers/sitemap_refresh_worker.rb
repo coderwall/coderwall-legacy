@@ -27,7 +27,7 @@ class SitemapRefreshWorker
       end
 
       Team.all.each do |team|
-        add(teamname_path(slug: team.slug, host: 'coderwall.com', protocol: 'https'), lastmod: team.updated_at, priority: 0.9)
+        add(teamname_path(slug: team.slug), lastmod: team.updated_at, priority: 0.9)
         team.jobs.each do |job|
           add(job_path(slug: team.slug, job_id: job.public_id), lastmod: job.updated_at, priority: 1.0)
         end
