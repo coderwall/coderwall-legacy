@@ -12,15 +12,15 @@ class SitemapRefreshWorker
     SitemapGenerator::Sitemap.adapter       = SitemapGenerator::WaveAdapter.new
 
     SitemapGenerator::Sitemap.create do
-      add('https://coderwall.com/welcome', priority: 0.7, changefreq: 'monthly')
-      add('https://coderwall.com/contact_us', priority: 0.2, changefreq: 'monthly')
-      add('https://coderwall.com/blog', priority: 0.5, changefreq: 'weekly')
-      add('https://coderwall.com/api', priority: 0.2, changefreq: 'monthly')
-      add('https://coderwall.com/faq', priority: 0.2, changefreq: 'monthly')
-      add('https://coderwall.com/privacy_policy', priority: 0.2, changefreq: 'monthly')
-      add('https://coderwall.com/tos', priority: 0.2, changefreq: 'monthly')
-      add('https://coderwall.com/jobs', priority: 0.8, changefreq: 'daily')
-      add('https://coderwall.com/employers', priority: 0.7, changefreq: 'monthly')
+      add('/welcome', priority: 0.7, changefreq: 'monthly')
+      add('/contact_us', priority: 0.2, changefreq: 'monthly')
+      add('/blog', priority: 0.5, changefreq: 'weekly')
+      add('/api', priority: 0.2, changefreq: 'monthly')
+      add('/faq', priority: 0.2, changefreq: 'monthly')
+      add('/privacy_policy', priority: 0.2, changefreq: 'monthly')
+      add('/tos', priority: 0.2, changefreq: 'monthly')
+      add('/jobs', priority: 0.8, changefreq: 'daily')
+      add('/employers', priority: 0.7, changefreq: 'monthly')
 
       Protip.find_each(batch_size: 30) do |protip|
         add(protip_path(protip), lastmod: protip.updated_at, priority: 1.0)
