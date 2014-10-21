@@ -1,8 +1,23 @@
 !!! 5
-%html.no-js{lang: "en"}
+%html.no-js{ lang: 'en' }
   %head
-    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title= page_title(yield(:page_title))
+    %link{ rel: 'author', href: '/humans.txt' }
+
+    %meta{ content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
+
+    = render partial: 'shared/analytics'
+    = render partial: 'shared/mixpanel'
+
+    %link{ rel: 'icon', href: image_url('favicon.png'),    type: 'image/x-icon' }
+    %link{ rel: 'icon', href: image_url('fav32x32.png'), type: 'image/x-icon', sizes: '32x32' }
+    %link{ rel: 'icon', href: image_url('fav64x64.png'), type: 'image/x-icon', sizes: '64x64' }
+    %link{ rel: 'icon', href: image_url('fav128x128.png'), type: 'image/x-icon', sizes: '128x128' }
+    %link{ rel: 'shortcut icon', href: image_url('favicon.png'), type: 'image/x-icon' }
+
     = stylesheet_link_tag 'application'
 
-  %body{style: "background:#bacbd8;"}
+  %body{ style: 'background: #bacbd8;' }
     = yield
+
+<!-- error.html.haml -->
