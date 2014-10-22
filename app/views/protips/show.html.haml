@@ -1,27 +1,27 @@
-- meta title: "#{@protip.user.display_name} : #{sanitize(@protip.title)}"
+- meta title: "#{ @protip.user.display_name } : #{ sanitize(@protip.title) }"
 - meta description: protip_summary
-- meta og: {description: protip_summary}
-- meta og: {image: users_image_path(@protip.user)}
+- meta og: { description: protip_summary }
+- meta og: { image: users_image_path(@protip.user) }
 
 - if ENV['ENABLE_TWITTER_CARDS']
-  - meta twitter: {card: "summary"}
-  - meta twitter: {site: "@coderwall"}
-  - meta twitter: {title: sanitize(@protip.title)}
-  - meta twitter: {url: protip_url(@protip)}
-  - meta twitter: {description: protip_summary}
-  - meta twitter: {image: @protip.featured_image}
-  - meta twitter: {creator: {id: @protip.author.twitter_id}}
+  - meta twitter: { card: 'summary' }
+  - meta twitter: { site: '@coderwall' }
+  - meta twitter: { title: sanitize(@protip.title) }
+  - meta twitter: { url: protip_url(@protip) }
+  - meta twitter: { description: protip_summary }
+  - meta twitter: { image: @protip.featured_image }
+  - meta twitter: { creator: { id: @protip.author.twitter_id } }
 
-=content_for :head do
-  %link{:rel => 'canonical', :href => protip_path(@protip)}
-  %meta{:name => "viewport", :content => "width=device-width,initial-scale=1.0,maximum-scale=1.0"}
+= content_for :head do
+  %link{ rel: 'canonical', href: protip_path(@protip) }
+  %meta{ name: 'viewport', content: 'width=device-width,initial-scale=1.0,maximum-scale=1.0' }
 
--content_for :mixpanel do
-  =record_event("viewed protip", :featured => @protip.featured, :distinction => @protip.best_stat[0])
+- content_for :mixpanel do
+  = record_event('viewed protip', featured: @protip.featured, distinction: @protip.best_stat[0])
 
 #x-active-preview-pane
-  -unless signed_in?
+  - unless signed_in?
     .side-conversion-alert.hide
       %p Where developers come to connect, share, build and be inspired.
-      %a.convert-signup.track{:href => '/', 'data-action' => 'view homepage', 'data-from' => 'convert button on protip'} Join Coderwall
-  =render :partial => 'cacheable_protip', :locals => {:protip => @protip, :mode => 'fullpage', :include_comments => true, :job => @job}
+      %a.convert-signup.track{ href: '/', 'data-action' => 'view homepage', 'data-from' => 'convert button on protip' } Join Coderwall
+  = render partial: 'cacheable_protip', locals: { protip: @protip, mode: 'fullpage', include_comments: true, job: @job }

@@ -1,5 +1,5 @@
--if get_uncached_version?(protip, mode)
-  =render :partial => 'protip', :locals => {:protip => protip, :mode => mode, :include_comments => include_comments, :job => job}
--else
-  -cache(['v2', 'protip', protip.public_id, protip.updated_at.min, protip.score], :expires_in => 1.week) do
-    =render :partial => 'protip', :locals => {:protip => protip, :mode => mode, :include_comments => include_comments, :job => job}
+- if get_uncached_version?(protip, mode)
+  = render partial: 'protip', locals: { protip: protip, mode: mode, include_comments: include_comments, job: job }
+- else
+  - cache(['v2', 'protip', protip.public_id, protip.updated_at.min, protip.score], expires_in: 1.week) do
+    = render partial: 'protip', locals: { protip: protip, mode: mode, include_comments: include_comments, job: job }

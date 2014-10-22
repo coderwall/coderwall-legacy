@@ -1,24 +1,22 @@
--content_for :content_wrapper do
+- content_for :content_wrapper do
   false
 
--content_for :javascript do
-  =javascript_include_tag 'protips-grid'
+- content_for :javascript do
+  = javascript_include_tag 'protips-grid'
 
--content_for :head do
-  =stylesheet_link_tag 'protip'
+- content_for :head do
+  = stylesheet_link_tag 'protip'
 
--content_for :footer_menu do
-  %li=link_to 'Protips', by_tags_protips_path
+- content_for :footer_menu do
+  %li= link_to 'Protips', by_tags_protips_path
 
--unless signed_in?
+- unless signed_in?
   %section.home-top.cf
     .home-top
       .left-panel
         %h1
           A community for developers to unlock and share new skills, join us
-        / %a.sign-up-btn{:href => signin_path}
-        /   Sign up
-        =render :partial => "sessions/join_buttons"
+        = render partial: "sessions/join_buttons"
 
       %ul.features-list
         %li.achievements
@@ -34,54 +32,54 @@
           %h2 Represent your team
           %p Gather your team mates from work to establish your team's geek cred
 
--else
+- else
   #upvoted-protips{'data-protips' => @upvoted_protips_public_ids}
 
 %section.new-main-content#x-protips-grid.cf
 
   //following on
-  .filter-bar#x-scopes-bar{:class => display_scopes_class}
+  .filter-bar#x-scopes-bar{class: display_scopes_class}
     .inside.cf
       %ul.filter-nav#x-scopes
         -if signed_in?
           %li
-            =link_to "Fresh", fresh_protips_path(:scope => params[:scope]), :class => selected_search_context_class("fresh"), :id => "x-scope-fresh"
+            = link_to "Fresh", fresh_protips_path(scope: params[:scope]), class: selected_search_context_class("fresh"), id: "x-scope-fresh"
         %li
-          =link_to "Trending", trending_protips_path(:scope => params[:scope]), :class => selected_search_context_class("trending"), :id => "x-scope-trending"
+          = link_to "Trending", trending_protips_path(scope: params[:scope]), class: selected_search_context_class("trending"), id: "x-scope-trending"
         %li
-          =link_to "Popular", popular_protips_path(:scope => params[:scope]), :class => selected_search_context_class("popular"), :id => "x-scope-popular"
+          = link_to "Popular", popular_protips_path(scope: params[:scope]), class: selected_search_context_class("popular"), id: "x-scope-popular"
         -if signed_in?
           %li
-            =link_to "Liked", liked_protips_path(:scope => params[:scope]), :class => selected_search_context_class("liked"), :id => "x-scope-liked"
+            = link_to "Liked", liked_protips_path(scope: params[:scope]), class: selected_search_context_class("liked"), id: "x-scope-liked"
 
       %ul.toggle-nav
         - if signed_in?
           %li
-            %a.switch#x-scope-toggle{:href => '/', :class => display_scope_class}
+            %a.switch#x-scope-toggle{href: '/', class: display_scope_class}
           %li
-            %a.action.followings#x-followings-toggle{:href => '/'}
+            %a.action.followings#x-followings-toggle{href: '/'}
 
           %li
-            %a.action.share-tip{:href => new_protip_path, :class => "track", 'data-action' => 'create protip', 'data-from' => 'homepage', 'data-properties' => {'context' => @context}.to_json}
+            %a.action.share-tip{href: new_protip_path, class: "track", 'data-action' => 'create protip', 'data-from' => 'homepage', 'data-properties' => {'context' => @context}.to_json}
 
         %li
-          %a.action.search#x-show-search{:href => '/'}
+          %a.action.search#x-show-search{href: '/'}
 
   //search bar
-  .filter-bar.search-bar#x-search{:class => display_search_class}
+  .filter-bar.search-bar#x-search{class: display_search_class}
     .inside.cf
-      %form.search-bar{:href => search_protips_path}
-        %input{:name => "search", :type => "text", :placeholder => "Type here to search, for example: Ruby on Rails", :value => params[:search]}
+      %form.search-bar{href: search_protips_path}
+        %input{name: "search", type: "text", placeholder: "Type here to search, for example: Ruby on Rails", value: params[:search]}
 
       %ul.toggle-nav
         %li
-          %a.action.search#x-hide-search{:href => '/'}
+          %a.action.search#x-hide-search{href: '/'}
 
 
 
   -if signed_in?
     //followings
-    -cache(followings_fragment_cache_key(current_user.id), :expires_in => 15.minutes) do
+    -cache(followings_fragment_cache_key(current_user.id), expires_in: 15.minutes) do
       .following-panel#x-followings.hide
         .inside
           %h1 Following
@@ -93,13 +91,13 @@
               #x-following-networks.hide{'data-networks' => following_networks.map(&:slug)}
 
               - following_networks.limit(11).map(&:slug).each do |slug|
-                %li{:style => "border-color:##{color_signature(slug)}"}
-                  =link_to '', leave_network_path(:id => slug), :class => "unfollow followed #{slug}", :remote => true, :method => :post, :rel => "nofollow"
-                  %a.new-network{:href => network_path(:id => slug)}
+                %li{style: "border-color:##{color_signature(slug)}"}
+                  = link_to '', leave_network_path(id: slug), class: "unfollow followed #{slug}", remote: true, method: :post, rel: 'nofollow'
+                  %a.new-network{href: network_path(id: slug)}
                     = slug.humanize
               - if following_networks.count > 11
                 %li.plus-more
-                  %a{:href => user_networks_path(:username =>current_user.username)}
+                  %a{href: user_networks_path(username:current_user.username)}
 
                     %span.x-follow-count
                       = following_networks.count - 11
@@ -113,26 +111,26 @@
 
               - following_users.limit(11).each do |user|
                 %li
-                  =link_to '', follow_user_path(user.username), :class => "unfollow followed", :remote => true, :method => :post, :rel => "nofollow"
+                  = link_to '', follow_user_path(user.username), class: 'unfollow followed', remote: true, method: :post, rel: 'nofollow'
                   %ul.author
                     %li.user
-                      %a{:href => profile_path(user.username)}= user.username
+                      %a{href: profile_path(user.username)}= user.username
                     -if user.on_team?
                       %li.team
-                        %a{:href => friendly_team_path(user.team)}= user.team.name
+                        %a{href: friendly_team_path(user.team)}= user.team.name
 
                   %ul.avatars
                     %li.user
-                      %a{:href => profile_path(user.username)}
-                        =image_tag(user.avatar_url)
+                      %a{href: profile_path(user.username)}
+                        = image_tag(user.avatar_url)
                     -if user.on_team?
                       %li.team
-                        %a{:href => friendly_team_path(user.team)}
-                          =image_tag(user.team.avatar_url)
+                        %a{href: friendly_team_path(user.team)}
+                          = image_tag(user.team.avatar_url)
 
               - if following_users.count > 11
                 %li.plus-more
-                  %a{:href => following_path(current_user.username)}
+                  %a{href: following_path(current_user.username)}
 
                     %span.x-follow-count
                       = following_users.count - 11
@@ -146,22 +144,22 @@
 
               - following_teams.first(11).each do |team|
                 %li
-                  =link_to '', follow_team_path(team.slug), :class => "unfollow followed", :remote => true, :method => :post, :rel => "nofollow"
+                  = link_to '', follow_team_path(team.slug), class: "unfollow followed", remote: true, method: :post, rel: "nofollow"
                   %ul.author
                     %li.user
-                      %a{:href => friendly_team_path(team)}= team.name
+                      %a{href: friendly_team_path(team)}= team.name
                     - team_protips_count = team.trending_protips(1000).count
                     - if team_protips_count > 0
                       %li.team
-                        %a{:href => team_protips_path(team)}== #{team_protips_count} Protips
+                        %a{href: team_protips_path(team)}== #{team_protips_count} Protips
 
                   %ul.avatars
                     %li.team
-                      %a{:href => friendly_team_path(team)}
-                        =image_tag(team.avatar_url)
+                      %a{href: friendly_team_path(team)}
+                        = image_tag(team.avatar_url)
               - if following_teams.count > 11
                 %li.plus-more
-                  %a{:href => teams_path}
+                  %a{href: teams_path}
 
                     %span.x-follow-count
                       = following_teams.count - 11
@@ -175,16 +173,16 @@
         .inside-panel
           %h2 Suggested networks to follow
           %ul.protips-grid.new-networks-list.cf
-            -@suggested_networks.each do |name|
-              -slug = Network.slugify(name)
-              %li{:style => "border-color:##{color_signature(slug)}"}
-                =link_to '', join_network_path(:id => slug), :class => "follow #{slug} #{signed_in? && current_user.following_networks.exists?(:slug => slug) ? "followed" : ""}", :remote => true, :method => :post, :rel => "nofollow"
-                %a.new-network{:href => network_path(:id => slug)}
+            - @suggested_networks.each do |name|
+              - slug = Network.slugify(name)
+              %li{style: "border-color:##{color_signature(slug)}"}
+                = link_to '', join_network_path(id: slug), class: "follow #{slug} #{signed_in? && current_user.following_networks.exists?(slug: slug) ? "followed" : ""}", remote: true, method: :post, rel: "nofollow"
+                %a.new-network{href: network_path(id: slug)}
                   = name
 
     - if @protips.count == 0
       .no-tips
         %h1 No results
         %p You are not following anything yet. Follow people, teams or networks to see protips from them here. boom.
-    -else
-      = render :partial => "protips/grid", :locals => {:protips => @protips.respond_to?(:results) ? @protips.results : @protips, :collection => @protips, :url => :protips_path, :hide_more => blur_protips?, :width => 4, :mode => protip_display_mode, :opportunity => @job}
+    - else
+      = render partial: 'protips/grid', locals: { protips: @protips.respond_to?(:results) ? @protips.results : @protips, collection: @protips, url: :protips_path, hide_more: blur_protips?, width: 4, mode: protip_display_mode, opportunity: @job }
