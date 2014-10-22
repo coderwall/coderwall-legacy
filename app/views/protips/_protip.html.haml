@@ -70,7 +70,7 @@
 
     %article.tip-panel{ id: protip.public_id }
       = share_on_twitter(protip, 'share-this-tip direction')
-      = upvote_link(protip, "upvote")
+      = upvote_link(protip, 'upvote')
       %header.tip-header
         %h1.tip-title{itemprop: :headline}
           -if mode == 'popup'
@@ -92,7 +92,7 @@
                 = link_to 'delete', delete_tag_protip_path(protip.public_id, CGI.escape(tag)), method: :post, class: "delete"
 
         %div.timestamp.cf{ title: 'Publish time' }
-          %i.fa.fa-clock-o
+          %i.fa.fa-clock-o{ itemprop: 'datePublished' }
           = local_time_ago(protip.created_at)
 
         - if is_admin?
@@ -109,7 +109,7 @@
         = raw sanitize(protip.to_html)
 
     - if include_comments
-      %section.comments{ itemscope: true, itemtype: 'https://schema.org/UserComments', class:('no-comments' if protip.comments.empty? ) }
+      %section.comments{ class:('no-comments' if protip.comments.empty? ) }
         - if protip.comments.any?
           %h2.comments-header
             %i.fa.fa-comments
