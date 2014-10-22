@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe Cub, :type => :model do
+RSpec.describe Cub, type: :model do
   let(:languages) { {
-      "JavaScript" => 111435
+    'JavaScript' => 111435
   } }
   let(:repo) { Fabricate(:github_repo, languages: languages) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
@@ -19,6 +19,7 @@ RSpec.describe Cub, :type => :model do
     user.build_github_facts
 
     badge = Cub.new(user)
+
     expect(badge.award?).to eq(true)
     expect(badge.reasons[:links]).not_to be_empty
   end

@@ -2,10 +2,8 @@ module UserFacts
   extend ActiveSupport::Concern
 
   included do
-    def build_facts(all)
-      since = (all ? Time.at(0) : self.last_refresh_at)
-
-      build_github_facts(since)
+    def build_facts
+      build_github_facts
       build_lanyrd_facts
       build_linkedin_facts
       build_bitbucket_facts
@@ -13,87 +11,54 @@ module UserFacts
       build_slideshare_facts
     end
 
-    def build_speakerdeck_facts
-      Rails.logger.info("[FACTS] Building SpeakerDeck facts for #{username}")
+    def build_generic_facts(thing_name, can_skip, identity)
+      Rails.logger.info("[FACTS] Building #{thing_name} facts for #{username} (identity: '#{identity}', can_skip: #{can_skip}}")
       begin
-        if speakerdeck_identity
-          Speakerdeck.new(speakerdeck).facts
-          Rails.logger.info("[FACTS] Processed SpeakerDeck facts for #{username}")
+        if identity
+          yield if block_given?
+
+          Rails.logger.info("[FACTS] Processed #{thing_name} facts for #{username}")
         else
-          Rails.logger.info("[FACTS] Skipped SpeakerDeck facts for #{username}")
+          Rails.logger.info("[FACTS] Skipped #{thing_name} facts for #{username}")
         end
       rescue => ex
-        Rails.logger.error("[FACTS] Unable to build SpeakerDeck facts due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
+        Rails.logger.error("[FACTS] Unable to build #{thing_name} facts due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
+      end
+    end
+
+    def build_github_facts
+      build_generic_facts('GitHub', (github_identity.present? && github_failures == 0), github_identity) do
+        GithubProfile.for_username(identity).facts
+      end
+    end
+
+    def build_speakerdeck_facts
+      build_generic_facts('SpeakerDeck', (speakerdeck_identity.present?), speakerdeck_identity) do
+        Speakerdeck.new(identity).facts
       end
     end
 
     def build_slideshare_facts
-      Rails.logger.info("[FACTS] Building SlideShare facts for #{username}")
-      begin
-        if slideshare_identity
-          Slideshare.new(slideshare).facts
-          Rails.logger.info("[FACTS] Processed Slideshare facts for #{username}")
-        else
-          Rails.logger.info("[FACTS] Skipped SlideShare facts for #{username}")
-        end
-      rescue => ex
-        Rails.logger.error("[FACTS] Unable to build SlideShare facts due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
+      build_generic_facts('SlideShare', (slideshare_identity.present?), slideshare_identity) do
+        Slideshare.new(identity).facts
       end
     end
 
     def build_lanyrd_facts
-      Rails.logger.info("[FACTS] Building Lanyrd facts for #{username}")
-      begin
-        if lanyrd_identity
-          Lanyrd.new(twitter).facts
-          Rails.logger.info("[FACTS] Processed Lanyrd facts for #{username}")
-        else
-          Rails.logger.info("[FACTS] Skipped Lanyrd facts for #{username}")
-        end
-      rescue => ex
-        Rails.logger.error("[FACTS] Unable to build Lanyrd facts due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
+      build_generic_facts('Lanyrd', (lanyrd_identity.present?), lanyrd_identity) do
+        Lanyrd.new(identity).facts
       end
     end
 
     def build_bitbucket_facts
-      Rails.logger.info("[FACTS] Building Bitbucket facts for #{username}")
-      begin
-        unless bitbucket.blank?
-          Bitbucket::V1.new(bitbucket).update_facts!
-          Rails.logger.info("[FACTS] Processed Bitbucket facts for #{username}")
-        else
-          Rails.logger.info("[FACTS] Skipped Bitbucket facts for #{username}")
-        end
-      rescue => ex
-        Rails.logger.error("[FACTS] Unable to build Bitbucket facts due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
-      end
-    end
-
-    def build_github_facts(since=Time.at(0))
-      Rails.logger.info("[FACTS] Building GitHub facts for #{username}")
-      begin
-        if github_identity && github_failures == 0
-          GithubProfile.for_username(github, since).facts
-          Rails.logger.info("[FACTS] Processed GitHub facts for #{username}")
-        else
-          Rails.logger.info("[FACTS] Skipped GitHub facts for #{username}")
-        end
-      rescue => ex
-        Rails.logger.error("[FACTS] Unable to build GitHub facts due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
+      build_generic_facts('Bitbucket', (bitbucket_identity.present?), bitbucket_identity) do
+        Bitbucket::V1.new(identity).update_facts!
       end
     end
 
     def build_linkedin_facts
-      Rails.logger.info("[FACTS] Building LinkedIn facts for #{username}")
-      begin
-        if linkedin_identity
-          LinkedInStream.new(linkedin_token + '::' + linkedin_secret).facts
-          Rails.logger.info("[FACTS] Processed LinkedIn facts for #{username}")
-        else
-          Rails.logger.info("[FACTS] Skipped LinkedIn facts for #{username}")
-        end
-      rescue => ex
-        Rails.logger.error("[FACTS] Unable to build LinkedIn facts due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
+      build_generic_facts('LinkedIn', (linkedin_identity.present?), linkedin_identity) do
+        LinkedInStream.new(identity + '::' + linkedin_secret).facts
       end
     end
 
@@ -116,6 +81,16 @@ module UserFacts
 
     def slideshare_identity
       "slideshare:#{slideshare}" if slideshare
+    end
+
+    # Duplicated in app/models/concerns/user_github.rb
+    def github_identity
+      "github:#{github}" if github
+    end
+
+    # Duplicated in app/models/concerns/user_linkedin.rb
+    def linkedin_identity
+      "linkedin:#{linkedin_token}::#{linkedin_secret}" if linkedin_token
     end
   end
 end

@@ -21,38 +21,43 @@ class GithubRepo
 
   before_save :update_tags!
 
-  class << self
-    def for_owner_and_name(owner, name, client=nil, prefetched={})
-      (where('owner.login' => owner, 'name' => name).first || new('name' => name, 'owner' => { 'login' => owner })).tap do |repo|
-        if repo.new_record?
-          logger.info "ALERT: No cached repo for #{owner}/#{name}"
-          repo.refresh!(client, prefetched)
-        end
+  def self.for_owner_and_name(owner, name, prefetched = {})
+    (where('owner.login' => owner, 'name' => name).first || new(name: name, owner: { login: owner })).tap do |repo|
+      if repo.new_record?
+        logger.info "ALERT: No cached repo for #{owner}/#{name}"
+        repo.refresh!(prefetched)
       end
     end
   end
 
-  def refresh!(client=nil, repo={})
-    client      ||= GithubOld.new
-    owner, name = self.owner.login, self.name
+  def refresh!(repo = {})
+    update_attributes!(self.class.updated_repo_for(owner.login, name, repo))
+  end
 
-    repo        = client.repo(owner, name) if repo.empty?
+  def self.updated_repo_for(repo_owner, repo_name, repo)
+    client = Coderwall::GitHub::Client.instance
+
+    repo = Coderwall::GitHub::Queries::Repo::RepoFor.new(client, repo_owner, repo_name).fetch if repo.empty?
 
     if repo[:fork].blank?
-      repo.merge!(
-        forks:        client.repo_forks(owner, name),
-        contributors: client.repo_contributors(owner, name),
-      )
+      repo_params = {
+        forks:        Coderwall::GitHub::Queries::Repo::ForksFor.new(client, repo_owner, repo_name).fetch,
+        contributors: Coderwall::GitHub::Queries::Repo::ContributorsFor.new(client, repo_owner, repo_name).fetch,
+      }
+      repo.merge!(repo_params)
     end
 
     repo.delete(:id)
 
-    update_attributes! repo.merge(
-                         owner:     GithubUser.new(repo[:owner]),
-                         followers: client.repo_watchers(owner, name),
-                         languages: client.repo_languages(owner, name) # needed so we can determine contents
-                       )
+    repo_params = {
+      owner:     GithubUser.new(repo[:owner]),
+      followers: Coderwall::GitHub::Queries::Repo::WatchersFor.new(client, repo_owner, repo_name).fetch,
+      languages: Coderwall::GitHub::Queries::Repo::LanguagesFor.new(client, repo_owner, repo_name).fetch # needed so we can determine contents
+    }
+
+    repo.merge(repo_params)
   end
+
 
   def full_name
     "#{self.owner.login}/#{self.name}"
@@ -127,20 +132,20 @@ class GithubRepo
 
   def popularity
     @popularity ||= begin
-      rank = times_forked + watchers #(times_forked + followers.size)
-      case
-        when rank > 600 then
-          5
-        when rank > 300 then
-          4
-        when rank > 100 then
-          3
-        when rank > 20 then
-          2
-        else
-          1
-      end
-    end
+                      rank = times_forked + watchers #(times_forked + followers.size)
+                      case
+                      when rank > 600 then
+                        5
+                      when rank > 300 then
+                        4
+                      when rank > 100 then
+                        3
+                      when rank > 20 then
+                        2
+                      else
+                        1
+                      end
+                    end
   end
 
   def raw_readme
@@ -189,8 +194,8 @@ class GithubRepo
   def tag_when_project_matches(tag_name, matcher, readme_matcher, language = nil)
     if language && dominant_language.downcase == language.downcase
       if field_matches?('name', matcher) ||
-        field_matches?('description', matcher) ||
-        (readme_matcher && dominant_language_percentage > 90 && readme_matches?(readme_matcher))
+          field_matches?('description', matcher) ||
+          (readme_matcher && dominant_language_percentage > 90 && readme_matches?(readme_matcher))
         tags << tag_name
         return true
       end

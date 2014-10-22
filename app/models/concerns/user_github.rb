@@ -3,6 +3,7 @@ module UserGithub
 
   included do
 
+    # Duplicated in app/models/concerns/user_facts.rb
     def github_identity
       "github:#{github}" if github
     end

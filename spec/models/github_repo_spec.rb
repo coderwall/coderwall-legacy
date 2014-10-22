@@ -26,7 +26,7 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
     repo = nil
     # TODO: Refactor api calls to Sidekiq job
 		VCR.use_cassette('GithubRepo') do
-    	repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+    	repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', data)
     end
     repo
   }
@@ -67,7 +67,7 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
 
       data = JSON.parse(File.read(File.join(Rails.root, 'spec', 'fixtures', 'githubv3', 'user_repo.js'))).with_indifferent_access
       2.times do
-        GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+        GithubRepo.for_owner_and_name('mdeiters', 'semr', data)
       end
       expect(GithubRepo.count).to eq(1)
 
@@ -94,7 +94,7 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
   it 'should not modify users on refresh' do
     original_follower = repo.followers.first
 
-    refreshed_repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+    refreshed_repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', data)
     refreshed_follower = refreshed_repo.followers.first
 
     expect(refreshed_follower.login).to eq(original_follower.login)
@@ -109,7 +109,7 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
       modified_repo.add_tag 'b'
       modified_repo.save!
 
-      refreshed_repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data)
+      refreshed_repo = GithubRepo.for_owner_and_name('mdeiters', 'semr', data)
       expect(refreshed_repo.tags).to include('a', 'b')
     end
 
@@ -118,7 +118,7 @@ RSpec.describe GithubRepo,  :type => :model, skip: ENV['TRAVIS']  do
     end
 
     it 'does not duplicate tags on refresh' do
-      expect(repo.tags).to eq(GithubRepo.for_owner_and_name('mdeiters', 'semr', nil, data).tags)
+      expect(repo.tags).to eq(GithubRepo.for_owner_and_name('mdeiters', 'semr', data).tags)
     end
 
     describe 'tags javascript projects' do

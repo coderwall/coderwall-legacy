@@ -1,5 +1,6 @@
 class BadgeBase
   class << self
+
     def describe(name, attrs={})
       @badge_options = if superclass.respond_to?(:badge_options)
                          superclass.badge_options.dup

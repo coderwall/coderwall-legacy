@@ -1,8 +1,8 @@
 -if viewing_self?
-  %a.endorse-you.editing{:href => '#myendorsements', :class => 'fancybox track', 'data-category' => 'click', 'data-action' => 'my endorsements'}
+  %a.endorse-you.editing{ href: '#myendorsements', class: 'fancybox track', 'data-category' => 'click', 'data-action' => 'my endorsements' }
     Your Endorsements
     #endorsementcounter
-      %span=@user.endorsements_count
+      %span= @user.endorsements_count
 
   .hide
     #myendorsements.dialog
@@ -12,64 +12,64 @@
         -if current_user.speciality_tags.empty?
           #declareSpecialties
             Nobody is able to endorse you because you haven't declared any skills.
-        -if current_user.endorsements.empty?
+        - if current_user.endorsements.empty?
           #declareSpecialties
             No endorsements yet. Have you thought about sharing your coderwall on twitter?
             .endorseButtons
               Receive more endorsements by embedding an endorse button in your blog or README files in your GitHub repos.
               .clear
-              =render 'badges/embed_your_buttons'
-        -else
+              = render('badges/embed_your_buttons')
+        - else
           %ul
-            -current_user.endorsements.each do |endorsement|
-              %li=render endorsement
+            - current_user.endorsements.each do |endorsement|
+              %li= render(endorsement)
           #declareSpecialties
             .endorseButtons
-              =link_to('Add an endorse button in your blog or the README files in your github repos.', '#seeMore', :class => 'track seeMore', 'data-category' => 'click', 'data-action' => 'embed buttons')
+              = link_to('Add an endorse button in your blog or the README files in your github repos.', '#seeMore', class: 'track seeMore', 'data-category' => 'click', 'data-action' => 'embed buttons')
               .clear
-              .seeMore.hide=render 'badges/embed_your_buttons'
+              .seeMore.hide= render('badges/embed_your_buttons')
 
 
 -else
-  %a.endorse-you{:href => '#endorse', :class => 'fancybox track', 'data-category' => 'click', 'data-action' => 'endorse'}
+  %a.endorse-you{ href: '#endorse', class: 'fancybox track', 'data-category' => 'click', 'data-action' => 'endorse' }
     ="Endorse #{@user.short_name}"
     #endorsementcounter
       %span=@user.endorsements_count
 
   .hide
     #endorse.dialog
-      .title==Like #{@user.display_name}'s code?
-      -if !signed_in?
+      .title== Like #{@user.display_name}'s code?
+      - unless signed_in?
         .message You must be signed in to make endorsements.
         .join
-          =link_to("or join coderwall", root_path, :class => 'track', 'data-category' => 'click', 'data-action' => 'endorsement sign up')
+          = link_to('or join coderwall', root_path, class: 'track', 'data-category' => 'click', 'data-action' => 'endorsement sign up')
         %ul
           %li
-            %a.button{:href => link_github_path}
+            %a.button{ href: link_github_path }
               .signin.github
               Sign in via GitHub
           %li
-            %a.button{:href => link_twitter_path}
+            %a.button{ href: link_twitter_path }
               .signin.twitter
               Sign in via Twitter
           %li
-            %a.button{:href => link_linkedin_path}
+            %a.button{ href: link_linkedin_path }
               .signin.linkedin
               Sign in via Linkedin
-      -elsif current_user.available_endorsements > 0
-        -notification = current_user.endorsement_message_for(@user)
-        -unless notification.blank?
-          .notification=notification
-        -if current_user.remaining_endorsements_for(@user).empty?
-          .message==You fully endorsed #{@user.display_name}
-        -else
+      - elsif current_user.available_endorsements > 0
+        - notification = current_user.endorsement_message_for(@user)
+        - unless notification.blank?
+          .notification= notification
+        - if current_user.remaining_endorsements_for(@user).empty?
+          .message== You fully endorsed #{@user.display_name}
+        - else
           .message Choose endorsement
           .endorsements
-            -current_user.remaining_endorsements_for(@user).each do |tag|
-              .speciality{:id => sanitize_dom_id(tag)}
-                =form_tag(user_endorsements_path(@user)) do
-                  =hidden_field_tag :speciality, tag
-                  =link_to(tag, '', :class => "button submitEndorsement")
+            - current_user.remaining_endorsements_for(@user).each do |tag|
+              .speciality{id: sanitize_dom_id(tag)}
+                = form_tag(user_endorsements_path(@user)) do
+                  = hidden_field_tag :speciality, tag
+                  = link_to(tag, '', class: "button submitEndorsement")
             .clear
-      -else
+      - else
         .message You used up all your remaining endorsements. Unlock additional achievements to make more endorsements.

@@ -1,5 +1,5 @@
 class Speakerdeck < Struct.new(:username)
-  DOMAIN = "https://speakerdeck.com"
+  DOMAIN = 'https://speakerdeck.com'
 
   def debug
     doc.css('.presentations .presentation').collect(&:to_s).join('<BR>')

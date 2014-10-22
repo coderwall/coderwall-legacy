@@ -1,30 +1,195 @@
 class Tag < ActiveRecord::Base
   acts_as_followable
 
-  VALID_PROGRAMMING_LANGUAGES = ["github", "slideshare", "python", "ruby", "javascript", "php", "objective-c", "java",
-                                 "viml", "perl", "clojure", "coffeescript", "scala", "erlang", "emacslisp", "go",
-                                 "haskell", "actionscript", "lua", "groovy", "git", "commonlisp", "puppet", "hackerdesk",
-                                 "css", "assembly", "ocaml", "haxe", "scheme", "vim", "coldfusion", "d", "rails",
-                                 "powershell", "objective-j", "bash", "ios", "html", "dart", "matlab", "jquery",
-                                 "android", "arduino", "xcode", "osx", "html5", "css3", "visualbasic", "rubyonrails",
-                                 "mysql", "delphi", "smalltalk", "mac", "iphone", "linux", "ipad", "mirah", "nodejs",
-                                 "tcl", "apex", "wordpress", "cocoa", "nodejs", "heroku", "io", "js", "dcpu-16asm",
-                                 "django", "zsh", "rspec", "programming", "vala", "sql", "mongodb", "workspace",
-                                 "racket", "twitter", "terminal", "development", "opensource", "testing", "design",
-                                 "emberjs", "security", "verilog", "net", "blurandpure", "mobile", "sass", "code",
-                                 "webkit", "api", "json", "nginx", "elixir", "agile", "bundler", "emacs", "web",
-                                 "drupal", "unix", "csharp", "photoshop", "nodejs", "facebook", "log", "reference",
-                                 "cli", "sublimetext", "responsive", "tdd", "puredata", "asp", "codeigniter", "maven",
-                                 "rubygems", "gem", "oracle", "nosql", "rvm", "ui", "branch", "responsivedesign",
-                                 "fortran", "postgresql", "latex", "nimrod", "documentation", "rubymotion", "redis",
-                                 "backbone", "ubuntu", "regex", "textmate", "fancy", "ssh", "performance", "spring",
-                                 "sublimetext2", "boo", "flex", "coq", "aliases", "browser", "webdevelopment", "rest",
-                                 "eclipse", "tips", "factor", "commandline", "sublimetext", "ooc", "blog", "unittesting",
-                                 "server", "history", "lion", "tip", "autohotkey", "alias", "prolog", "apple",
-                                 "standardml", "vhdl", "objectivec", "statistics", "impactgameengine", "apache",
-                                 "cucumber", "cpp", "meta", "gist", "dropbox", "gitignore", "rails3", "debug", "flask",
-                                 "cplusplus", "monitoring", "angularjs", "oauth", "oop", "usability", "flexmojos",
-                                 "sentry", "expressionengine", "ee"]
+  VALID_PROGRAMMING_LANGUAGES = %w(
+    actionscript
+    agile
+    alias
+    aliases
+    android
+    angularjs
+    apache
+    apex
+    api
+    apple
+    arduino
+    asp
+    assembly
+    autohotkey
+    backbone
+    bash
+    blog
+    blurandpure
+    boo
+    branch
+    browser
+    bundler
+    cli
+    clojure
+    cocoa
+    code
+    codeigniter
+    coffeescript
+    coldfusion
+    commandline
+    commonlisp
+    coq
+    couchdb
+    cplusplus
+    cpp
+    csharp
+    css
+    css3
+    cucumber
+    d
+    dart
+    dcpu-16asm
+    debug
+    delphi
+    design
+    development
+    django
+    documentation
+    dropbox
+    drupal
+    eclipse
+    ee
+    elixir
+    emacs
+    emacslisp
+    emberjs
+    erlang
+    expressionengine
+    facebook
+    factor
+    fancy
+    flask
+    flex
+    flexmojos
+    fortran
+    gem
+    gist
+    git
+    github
+    gitignore
+    go
+    groovy
+    hackerdesk
+    haskell
+    haxe
+    heroku
+    history
+    html
+    html5
+    impactgameengine
+    io
+    ios
+    ipad
+    iphone
+    java
+    javascript
+    jquery
+    js
+    json
+    latex
+    linux
+    lion
+    log
+    lua
+    mac
+    matlab
+    maven
+    meta
+    mirah
+    mobile
+    mongodb
+    monitoring
+    mysql
+    net
+    nginx
+    nimrod
+    nodejs
+    nosql
+    oauth
+    objective-c
+    objective-j
+    objectivec
+    ocaml
+    ooc
+    oop
+    opensource
+    oracle
+    osx
+    performance
+    perl
+    photoshop
+    php
+    postgresql
+    powershell
+    programming
+    prolog
+    puppet
+    puredata
+    python
+    racket
+    rails
+    rails3
+    redis
+    reference
+    regex
+    responsive
+    responsivedesign
+    rest
+    rspec
+    ruby
+    rubygems
+    rubymotion
+    rubyonrails
+    rust
+    rvm
+    sass
+    scala
+    scheme
+    security
+    sentry
+    server
+    slideshare
+    smalltalk
+    spring
+    sql
+    ssh
+    standardml
+    statistics
+    sublimetext
+    sublimetext2
+    swift
+    tcl
+    tdd
+    terminal
+    testing
+    textmate
+    tip
+    tips
+    twitter
+    ubuntu
+    ui
+    unittesting
+    unix
+    usability
+    vala
+    verilog
+    vhdl
+    vim
+    viml
+    visualbasic
+    web
+    webdevelopment
+    webkit
+    wordpress
+    workspace
+    xcode
+    zsh
+  )
 
   scope :from_topic, lambda { |topic| where(name: topic) }
 

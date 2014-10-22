@@ -5,7 +5,7 @@ Fabricator(:user) do
   name { 'Matthew Deiters' }
   email { 'someone@example.com' }
   location { 'San Francisco' }
-  github_token { Faker::Internet.ip_v4_address }
+  github_token { 'aec11b1283bb04a050cfaac094ab08c6aaba73a0' }
   state { User::ACTIVE }
 end
 

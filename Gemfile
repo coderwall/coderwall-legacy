@@ -95,6 +95,7 @@ gem 'foreman'
 gem 'awesome_print'
 
 gem 'faraday', '~> 0.8.1'
+gem 'faraday-http-cache' # for Octokit caching
 gem 'metamagic'
 
 gem "mail_view", "~> 2.0.4"
@@ -159,6 +160,7 @@ group :development, :test do
   gem 'launchy'
   gem 'pry-byebug'
   gem 'pry-rescue'
+  gem 'pry-stack_explorer'
   gem 'quiet_assets'
   gem 'syntax'
   gem 'annotate'

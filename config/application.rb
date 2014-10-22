@@ -11,6 +11,8 @@ module Coderwall
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/app)
 
+    config.autoload_paths += Dir[Rails.root.join('app', 'coderwall', '**/')]
+
     config.autoload_paths += Dir[Rails.root.join('app', 'models', 'concerns', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '**/')]
@@ -31,7 +33,7 @@ module Coderwall
     config.assets.js_compressor = :uglifier
 
     config.after_initialize do
-      if %w{development test}.include?(Rails.env)
+      if ENV['HIRB_ENABLE'] && %w{development test}.include?(Rails.env)
         Hirb.enable
       end
     end

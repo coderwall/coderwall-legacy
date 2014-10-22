@@ -217,7 +217,8 @@ class User < ActiveRecord::Base
 
   def team
     @team ||= team_document_id && Team.find(team_document_id)
-  rescue Mongoid::Errors::DocumentNotFound
+  rescue Mongoid::Errors::DocumentNotFound => ex
+    Rails.logger.fatal("[TEAMS] Couldn't find Team using '#{team_document_id}' for user: '#{id}' -- '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
     #readonly issue in follows/_user partial from partial iterator
     User.connection.execute("UPDATE users set team_document_id = NULL where id = #{self.id}")
     @team = nil
@@ -317,8 +318,21 @@ class User < ActiveRecord::Base
   end
 
   def facts
+    # Most of this is defined in app/models/concerns/user_facts.rb
+    # but some methods have duplicate definitions (eventually to refactor
+    # into one source of truth if possible.
     @facts ||= begin
-                 user_identites = [linkedin_identity, bitbucket_identity, lanyrd_identity, twitter_identity, github_identity, speakerdeck_identity, slideshare_identity, id.to_s].compact
+                 user_identites = [
+                   linkedin_identity,
+                   bitbucket_identity,
+                   lanyrd_identity,
+                   twitter_identity,
+                   github_identity,
+                   speakerdeck_identity,
+                   slideshare_identity,
+                   id.to_s
+                 ].compact
+
                  Fact.where(owner: user_identites.collect(&:downcase)).all
                end
   end
@@ -604,21 +618,6 @@ class User < ActiveRecord::Base
     repos.each do |repo|
       Importers::Protips::GithubImporter.import_from_follows(repo.description, repo.link, repo.date, self)
     end
-  end
-
-  def build_repo_followed_activity!(refresh=false)
-    Redis.current.zremrangebyrank(followed_repo_key, 0, Time.now.to_i) if refresh
-    epoch_now  = Time.now.to_i
-    first_time = refresh || Redis.current.zcount(followed_repo_key, 0, epoch_now) <= 0
-    links      = GithubOld.new.activities_for(self.github, (first_time ? 20 : 1))
-    links.each do |link|
-      link[:user_id] = self.id
-      Redis.current.zadd(followed_repo_key, link[:date].to_i, link.to_json)
-      Importers::Protips::GithubImporter.import_from_follows(link[:description], link[:link], link[:date], self)
-    end
-  rescue RestClient::ResourceNotFound
-    Rails.logger.warn("Unable to get activity for github #{github}")   if ENV['DEBUG']
-    []
   end
 
   def destroy_github_cache
