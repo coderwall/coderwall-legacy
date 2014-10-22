@@ -120,9 +120,9 @@ module ProtipsHelper
 
   def upvote_link(protip, classname)
     if protip.already_voted?(current_user, current_user.try(:tracking_code), request.remote_ip)
-      content_tag :div, "#{protip.upvotes}", class: "upvoted #{classname}"
+      content_tag :div, "#{protip.upvotes}", class: "upvoted #{classname}", itemprop: 'interactionCount'
     else
-      link_to "#{protip.upvotes}", upvote_protip_path(protip.public_id), class: "#{classname} track", remote: true, method: :post, rel: "nofollow", 'data-action' => "upvote protip", 'data-from' => (classname == "small-upvote" ? 'mini protip' : 'protip')
+      link_to "#{protip.upvotes}", upvote_protip_path(protip.public_id), class: "#{classname} track", remote: true, method: :post, rel: "nofollow", 'data-action' => "upvote protip", 'data-from' => (classname == "small-upvote" ? 'mini protip' : 'protip'), itemprop: 'interactionCount'
     end
   end
 
