@@ -15,7 +15,7 @@
     =location_image_tag_credits_for(@user)
     =link_to(image_tag('cclicense.png'), 'http://creativecommons.org/licenses/by-sa/2.0/', :target => :new)
 
-%section.profile{:itemscope => true, :itemtype => mperson}
+%section.profile{:itemscope => true, :itemtype => meta_person_schema_url}
   .special-image
     =location_image_tag_for(@user)
     .business-card
@@ -23,7 +23,7 @@
       .bc-right
         %h1{:itemprop => :name}=@user.display_name
         -if signed_in?
-          %p.location{:itemscope => true, :itemtype => maddress, :itemprop => :address}=@user.location
+          %p.location{:itemscope => true, :itemtype => meta_address_schema_url, :itemprop => :address}=@user.location
         %p.title{:itemprop => :title}=business_card_for(@user)
       -if !@user.protips.empty? || viewing_self?
         .user-pro-tip.cf

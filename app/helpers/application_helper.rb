@@ -1,6 +1,7 @@
 module ApplicationHelper
   include TweetButton
-
+  include SchemaOrgHelper
+  
   def link_twitter_path
     '/auth/twitter'
   end
@@ -235,14 +236,6 @@ module ApplicationHelper
 
   def admin_stat_class(yesterday, today)
     today > yesterday ? "goodday" : "badday"
-  end
-
-  def mperson
-    "http://data-vocabulary.org/Person"
-  end
-
-  def maddress
-    "http://data-vocabulary.org/Address"
   end
 
   def image_url(source)

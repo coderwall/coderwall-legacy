@@ -1,4 +1,5 @@
-.inside.cf.x-protip-pane
+.inside.cf.x-protip-pane{:itemscope => true, :itemtype => meta_article_schema_url}
+  %meta{:itemprop => :dateCreated, :content => protip.created_at}
   .tip-container.cf.x-protip-content.protip-single#x-protip{:class => mode}
     %aside.tip-sidebar
       .user-box
@@ -6,7 +7,9 @@
           =image_tag(users_image_path(protip.user), :class => 'avatar')
 
         %ul.user-team
-          %li.user
+          %li.user{:itemprop => :author, :itemscope => true ,:itemtype => meta_person_schema_url}
+            %meta{:itemprop => :name, :content => protip.user.display_name}
+            %meta{:itemprop => :alternateName, :content => protip.user.username}
             by
             %a.track{:href => profile_path(protip.user.username), 'data-action' => 'view user profile', 'data-from' => 'protip author name on top', 'data-properties' => {'mode' => mode}.to_json}
               = protip.user.display_name
@@ -69,7 +72,7 @@
       = share_on_twitter(protip, 'share-this-tip direction')
       = upvote_link(protip, "upvote")
       %header.tip-header
-        %h1.tip-title
+        %h1.tip-title{:itemprop => :headline}
           -if mode == 'popup'
             %a.track{:href => protip_path(protip), 'data-action' => 'view protip', 'data-from' => 'popup protip title'}=sanitize(protip.title)
           -else
@@ -80,7 +83,7 @@
             %span
               = protip.total_views
             views
-        %ul#tags.cf
+        %ul#tags.cf{:itemprop => :keywords}
           - protip.topics.each do |tag|
             %li
               %a{:href => "/p/t/#{tag.parameterize}"}=tag
@@ -99,7 +102,7 @@
             %li=link_to('delete', protip_path(protip.public_id), :method => :delete, :class => 'delete-tip del', :rel => 'nofollow', :title => 'remove protip', :confirm => "Are you sure you permanently want to remove this pro tip?")
 
       %hr
-      %div.tip-content
+      %div.tip-content{:itemprop => :articleBody}
         =raw sanitize(protip.to_html)
 
     -if include_comments
