@@ -1,4 +1,4 @@
-$('#x-active-preview-pane').append('<%= escape_javascript(render :partial => 'cacheable_protip', :locals => {:protip => @protip, :mode => (@mode || params[:mode]), :include_comments => true, :job => @job}) %> ');
+$('#x-active-preview-pane').append('<%= escape_javascript(render partial: 'cacheable_protip', locals: { protip: @protip, mode: (@mode || params[:mode]), include_comments: true, job: @job }) %> ');
 $('.dark-screen').height($('#x-active-preview-pane').height());
 registerProtipClickOff();
 protipGrid.markFollowings();

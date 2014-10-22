@@ -5,51 +5,47 @@
 
   :javascript
     Hyphenator.run()
--cache ['v1', 'protip_index_page_meta_data', @topics.to_s], :expires_in => 1.week do
-  -content_for :page_title do
-    =protip_topic_page_title(@topics)
-  -content_for :page_description do
-    =protip_topic_page_description(@topics)
-  -content_for :page_keywords do
-    =protip_topic_page_keywords(@topics)
 
--content_for :body_id do
+- cache ['v1', 'protip_index_page_meta_data', @topics.to_s], expires_in: 1.week do
+  - content_for :page_title do
+    = protip_topic_page_title(@topics)
+  - content_for :page_description do
+    = protip_topic_page_description(@topics)
+  - content_for :page_keywords do
+    = protip_topic_page_keywords(@topics)
+
+- content_for :body_id do
   protip-multiple
 
--#= render :partial => "search_topic", :locals => {:topics => @topic}
 %header.cf.second-level-header
   -if @topic_user
-    %a{:href => user_or_team_profile_path(@topic_user)}
+    %a{href: user_or_team_profile_path(@topic_user)}
       %h1
-        =image_tag(user_or_team_image_path(@topic_user))
-        ="#{@topic_user.display_name}'s Protips"
+        = image_tag(user_or_team_image_path(@topic_user))
+        = "#{@topic_user.display_name}'s Protips"
   -else
     %h1
       - if my_protips?(@topics)
         Your pro tips
       - else
-        -#=link_to('Trending Pro tips', protips_path)
-        -unless @topics.blank?
+        - unless @topics.blank?
           == #{@topics.to_sentence.html_safe}
   %ul.second-level-toplinks
-    -#%li=search_protips_by_topics(@topic)
-    -unless on_trending_page? || unsubscribable_topic?(@topic, @topics) || !signed_in?
+    - unless on_trending_page? || unsubscribable_topic?(@topic, @topics) || !signed_in?
       -if @topic_user.is_a?(Team)
         %li.follow-team-option=follow_team_link(@topic_user)
       -else
-        -if !@networks.blank?
-          -unless @topics.blank?
+        - unless @networks.blank?
+          - unless @topics.blank?
             - if @networks.size > 1
-              .about-networks{:href => network_url(@networks.first.slug)}
+              .about-networks{href: network_url(@networks.first.slug)}
                 Part of the
                 =raw @networks.map {|network| link_to(network.name, network_path(network.slug))}.join(", ")
                 == Network#{"s" if @networks.size > 1}
             - elsif @networks.size != 0
-              %a.about-networks{:href => network_url(@networks.first.slug)}
+              %a.about-networks{href: network_url(@networks.first.slug)}
                 Part of the
                 = @networks.first.name
                 Network
-        -#%li=subscription_link(@topic, 'top-subscribe', 'data-action' => 'subscribed')
     -else
-      -#%li=link_to('My tips', '/p/me', :class => 'my-tips track', 'data-action' => 'my tips')
-      %li=link_to('Share', new_protip_path, :class => 'share-a-tip track', 'data-action' => 'create protip', 'data-from' => @topic_user.nil? ? 'tagged protips page' : 'user protips page')
+      %li= link_to('Share', new_protip_path, class: 'share-a-tip track', 'data-action' => 'create protip', 'data-from' => @topic_user.nil? ? 'tagged protips page' : 'user protips page')

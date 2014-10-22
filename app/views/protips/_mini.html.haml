@@ -1,38 +1,37 @@
--#- protip = protip.load  #this is simply a hack, fix ES indexed json
-%article{:class => dom_class(protip), :id => protip.public_id}
+%article{class: dom_class(protip), id: protip.public_id}
   %header
-    -if display_protip_stats?(protip)
-      %span{:class => best_stat_name(protip)}
+    - if display_protip_stats?(protip)
+      %span{class: best_stat_name(protip)}
         = formatted_best_stat_value(protip) unless best_stat_name(protip) =~ /hawt/
 
-    -# We should remove this to cache , deleting should be from dashboard
-    -if protip_owner?(protip, current_user)
-      =link_to(' ', protip_path(protip.public_id), :method => :delete, :class => 'delete-tip', :title => 'remove protip', :confirm => "Are you sure you permanently want to remove this pro tip?")
+    -# TODO: We should remove this to cache , deleting should be from dashboard
+    - if protip_owner?(protip, current_user)
+      = link_to(' ', protip_path(protip.public_id), method: :delete, class: 'delete-tip', title: 'remove protip', confirm: "Are you sure you permanently want to remove this pro tip?")
 
-  = link_to protip.title, protip_or_link_path(protip), 'data-action' => 'view protip', 'data-from' => 'mini protip', :class => "title hyphenate track x-mode-#{mode || 'fullpage'}"
+  = link_to protip.title, protip_or_link_path(protip), 'data-action' => 'view protip', 'data-from' => 'mini protip', class: "title hyphenate track x-mode-#{mode || 'fullpage'}"
   %footer.cf
-    -# We should remove this to cache
-    -if is_admin?
+    -# TODO: We should remove this to cache
+    - if is_admin?
       %ul
         %li.admin
           %p== #{distance_of_time_in_words_to_now(protip.created_at)} ago
     %ul.author
-      -if protip.user.present?
+      - if protip.user.present?
         %li.user
           by
-          =link_to protip.user.username, profile_path(protip.user.username), 'data-action' => 'view protip author', 'data-from' => 'mini protip', :title => "Authored by: #{protip.user.username}", :class => "track"
-      -if protip.team.present?
+          = link_to protip.user.username, profile_path(protip.user.username), 'data-action' => 'view protip author', 'data-from' => 'mini protip', title: "Authored by: #{protip.user.username}", class: "track"
+      - if protip.team.present?
         %li.team
           of
-          =link_to protip.team.name, teamname_path(protip.team.slug), 'data-action' => 'view team', 'data-from' => 'mini protip', :class => "track"
+          = link_to protip.team.name, teamname_path(protip.team.slug), 'data-action' => 'view team', 'data-from' => 'mini protip', class: "track"
     %ul.avatars
-      -if protip.user.present?
+      - if protip.user.present?
         %li.user
-          =link_to profile_path(protip.user.username) do
-            =image_tag(protip.user.avatar_url)
-      -if protip.team.present? && protip.team.avatar.present?
+          = link_to profile_path(protip.user.username) do
+            = image_tag(protip.user.avatar_url)
+      - if protip.team.present? && protip.team.avatar.present?
         %li.team
-          =link_to teamname_path(protip.team.slug) do
-            =image_tag(protip.team.avatar)
-    -if protip.team && protip.team.hiring
-      %a.job{:href => teamname_path(protip.team.slug)}
+          = link_to teamname_path(protip.team.slug) do
+            = image_tag(protip.team.avatar)
+    - if protip.team && protip.team.hiring
+      %a.job{href: teamname_path(protip.team.slug)}

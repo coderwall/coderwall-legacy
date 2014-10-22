@@ -1,5 +1,6 @@
 %ul.by-tags-list
-  -@tags.each do |tag|
-    %li{:style => right_border_css(tag.name, 14)}=link_to tag.name, tagged_protips_path(tag.name, :show_all => true)
+  - @tags.each do |tag|
+    %li{style: right_border_css(tag.name, 14)}
+      = link_to tag.name, tagged_protips_path(tag.name, show_all: true)
 
-=paginate @tags
+= paginate @tags
