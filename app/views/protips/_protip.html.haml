@@ -105,9 +105,6 @@
       %div.tip-content{itemprop: :articleBody}
         = raw sanitize(protip.to_html)
 
-      %div.tip-content{itemprop: 'articleBody'}
-        = raw sanitize(protip.to_html)
-
     - if include_comments
       %section.comments{ class:('no-comments' if protip.comments.empty? ) }
         - if protip.comments.any?
