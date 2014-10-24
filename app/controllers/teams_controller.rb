@@ -51,6 +51,7 @@ class TeamsController < ApplicationController
         @team.viewed_by(viewing_user || session_id) unless is_admin?
         @job = show_params[:job_id].nil? ? @team.jobs.sample : Opportunity.with_public_id(show_params[:job_id])
         @other_jobs = @team.jobs.reject { |job| job.id == @job.id } unless @job.nil?
+        @job_page = show_params[:job_id].present?
         return render(:premium) if show_premium_page?
       end
       format.json do
