@@ -11,7 +11,7 @@
             %meta{itemprop: :name, content: protip.user.display_name}
             %meta{itemprop: :alternateName, content: protip.user.username}
             by
-            %a.track{ href: profile_path(protip.user.username), 'data-action' => 'view user profile', 'data-from' => 'protip author name on top', 'data-properties' => { 'mode' => mode }.to_json, itemprop: 'author' }
+            %a.track{ href: profile_path(protip.user.username), 'data-action' => 'view user profile', 'data-from' => 'protip author name on top', 'data-properties' => { 'mode' => mode }.to_json }
               = protip.user.display_name
           - unless protip.team.nil?
             %li.team
