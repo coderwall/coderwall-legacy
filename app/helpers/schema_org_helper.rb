@@ -1,9 +1,8 @@
 module SchemaOrgHelper
-
   def meta_person_schema_url
     'http://schema.org/Person'
   end
-  
+
   def meta_address_schema_url
     'http://schema.org/Address'
   end
@@ -13,7 +12,6 @@ module SchemaOrgHelper
   end
 
   def meta_comment_schema_url
-    'http://schema.org/UserComments'
+    'http://schema.org/Comment'
   end
-
 end
