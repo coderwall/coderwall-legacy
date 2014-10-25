@@ -11,6 +11,8 @@ A community for developers to unlock & share new skills.
 
 **IMPORTANT**: Please see our [/master/CONTRIBUTING.md](https://github.com/assemblymade/coderwall/blob/master/CONTRIBUTING.md) for instructions on how to set up your development environment for Coderwall.
 
+[![If you ignore the CONTRIBUTING.md then you're going to have a bad time.](https://d8izdk6bl4gbi.cloudfront.net/https://d1015h9unskp4y.cloudfront.net/attachments/ea8fd905-5069-4377-abbb-9013db3f4507/CONTRIBUTING.jpg)](https://github.com/assemblymade/coderwall/blob/master/CONTRIBUTING.md)
+
 ## Built With
 
 Coderwall is built from the following open source components:

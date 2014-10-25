@@ -1,16 +1,10 @@
 - content_for :javascript do
-  =javascript_include_tag 'history.adapter.jquery.js'
-  =javascript_include_tag 'history.js'
+  = javascript_include_tag 'history.adapter.jquery.js'
+  = javascript_include_tag 'history.js'
 
 .search-container#search
   %section.inside-search-container
     %header.search-header.cf
-    -#  %h1 Search Protips
-    -#  %a=link_to('Close search', '', :class => 'slideup close-search', :id => 'close-search', 'data-target' => 'search')
-    -#=simple_form_for :search, :url => search_protips_path, :remote => true do |s|
-    -#  /=#s.input :q, :label => false, :input_html => {:class => "submit-on-enter delayed-search", 'data-min-match' => 3}
-    -#  =text_field_tag :q, topics_to_query(topics), :label => false, :class => "submit-on-enter delayed-search", 'data-min-match' => 3, :autocomplete=>'off'
-
     %section.tips-section
     %header.cf#search-results
       #more

@@ -1,18 +1,32 @@
 !!! 5
-%html.no-js{lang: "en"}
+%html.no-js{ lang: 'en' }
   %head
-    = metamagic
-    %link{rel: "shortcut icon", href: image_url('favicon.png'), type: 'image/x-icon'}
-    = stylesheet_link_tag 'application'
+    %title= page_title(yield(:page_title))
+    %link{ rel: 'author', href: '/humans.txt' }
+
+    %meta{ content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
+
     = render partial: 'shared/analytics'
     = render partial: 'shared/mixpanel'
-    = yield :head
+
+    %meta{ name: 'twitter:account_id', content: ENV['TWITTER_ACCOUNT_ID'] }
+    = metamagic
+
+    %link{ rel: 'icon', href: image_url('favicon.png'),    type: 'image/x-icon' }
+    %link{ rel: 'icon', href: image_url('fav32x32.png'), type: 'image/x-icon', sizes: '32x32' }
+    %link{ rel: 'icon', href: image_url('fav64x64.png'), type: 'image/x-icon', sizes: '64x64' }
+    %link{ rel: 'icon', href: image_url('fav128x128.png'), type: 'image/x-icon', sizes: '128x128' }
+    %link{ rel: 'shortcut icon', href: image_url('favicon.png'), type: 'image/x-icon' }
+
+    = stylesheet_link_tag 'application'
     = csrf_meta_tag
+
+    = yield :head
   %body.protip-single
     = render 'nav_bar'
 
-    %canvas.blur{src: image_path(users_background_image)}
-    =yield
+    %canvas.blur{ src: image_path(users_background_image) }
+    = yield
 
     - unless is_admin?
       :javascript
@@ -29,3 +43,5 @@
     = yield :javascript
 
     = render partial: 'shared/current_user_js'
+
+<!-- protip.html.haml -->

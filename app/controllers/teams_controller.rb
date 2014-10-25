@@ -51,6 +51,7 @@ class TeamsController < ApplicationController
         @team.viewed_by(viewing_user || session_id) unless is_admin?
         @job = show_params[:job_id].nil? ? @team.jobs.sample : Opportunity.with_public_id(show_params[:job_id])
         @other_jobs = @team.jobs.reject { |job| job.id == @job.id } unless @job.nil?
+        @job_page = show_params[:job_id].present?
         return render(:premium) if show_premium_page?
       end
       format.json do
@@ -77,16 +78,30 @@ class TeamsController < ApplicationController
   end
 
   def create
-    create_params = params.require(:team).permit(:selected, :slug, :name)
+    team_params = params.require(:team).permit(:selected, :slug, :name)
+    selected = team_params.fetch(:selected, nil)
 
-    @team, confirmed = selected_or_new(create_params)
-    @teams = Team.any_of({ :name => /#{team_to_regex(@team)}.*/i }).limit(3).to_a unless confirmed
+    @teams = Team.with_similar_names(team_params[:name])
 
-    if @team.valid? and @teams.blank? and @team.new_record?
-      @team.add_user(current_user)
-      # @team.edited_by(current_user)
-      @team.save
+    unless selected == 'false' || @teams.empty?
+      @new_team_name = team_params[:name]
+      render 'similar_teams' and return
+    end
+
+    if selected == 'true'
+      @team = Team.where(slug: team_params[:slug]).first
+      render :create and return
+    end
+
+    @team = Team.new(name: team_params[:name])
+    if @team.save
       record_event('created team')
+      @team.add_user(current_user)
+
+      flash.now[:notice] = "Successfully created a team #{@team.name}"
+      render :create
+    else
+      flash[:error] = "There was an error in creating a team #{@team.name}"
     end
   end
 
@@ -297,23 +312,6 @@ class TeamsController < ApplicationController
     jobs = job_public_ids
     public_id = job && jobs[(jobs.index(job.public_id) || +1)-1]
     Opportunity.with_public_id(public_id) unless public_id.nil?
-  end
-
-  def team_to_regex(team)
-    team.name.gsub(/ \-\./, '.*')
-  end
-
-  def selected_or_new(opts)
-    team = Team.new(name: opts[:name])
-    confirm = false
-
-    if opts[:selected]
-      if opts[:selected] == "true"
-        team = Team.where(:slug => opts[:slug]).first
-      end
-      confirm = true
-    end
-    [team, confirm]
   end
 
   def ensure_analytics_access

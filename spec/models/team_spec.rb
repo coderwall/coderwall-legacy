@@ -4,6 +4,22 @@ RSpec.describe Team, :type => :model do
   let(:team) { Fabricate(:team) }
   let(:invitee) { Fabricate(:user) }
 
+  describe '#with_similar_names' do
+    let!(:team_1) { Fabricate(:team, name: 'dream_team') }
+    let!(:team_2) { Fabricate(:team, name: 'dream_group') }
+    let!(:team_3) { Fabricate(:team, name: 'test_team') }
+
+    it 'returns teams with similar names' do
+      result = Team.with_similar_names('team')
+      expect(result.count).to eq 2
+    end
+
+    it 'returns teams using wildcards' do
+      result = Team.with_similar_names('dr -.')
+      expect(result).to include(team_1, team_2)
+    end
+  end
+
   it 'adds the team id to the user when they are added to a team' do
     team.add_user(invitee)
     expect(invitee.reload.team).to eq(team)

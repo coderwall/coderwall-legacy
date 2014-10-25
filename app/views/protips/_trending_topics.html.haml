@@ -1,7 +1,7 @@
--cache ['v1','trending_protip_topics', ENV['FEATURED_TOPICS'], count], :expires_in => 1.hour do
+- cache ['v1','trending_protip_topics', ENV['FEATURED_TOPICS'], count], expires_in: 1.hour do
   - trending_protips_topics(count).in_groups_of(4, false) do |group|
     %ul.topics-list
       - group.each do |topic|
-        %li{:style => right_border_css(topic) }
-          %a{:href => topic_protips_path(topic)}
+        %li{style: right_border_css(topic) }
+          %a{href: topic_protips_path(topic)}
             %h3= topic

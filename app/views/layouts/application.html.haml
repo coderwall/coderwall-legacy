@@ -1,25 +1,32 @@
 !!! 5
-%html.no-js{lang: 'en'}
+%html.no-js{ lang: 'en' }
   %head
-    /[if IE] <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    %meta{ content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
     %title= page_title(yield(:page_title))
+    %link{ rel: 'author', href: '/humans.txt' }
+    %meta{ content: page_description(yield(:page_description)), name: 'description', property: 'og:description' }
+    %meta{ content: page_keywords(yield(:page_keywords)), name: 'keywords' }
+
+    %meta{ content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
+
+    = render partial: 'shared/analytics'
+    = render partial: 'shared/mixpanel'
+
+    %meta{ name: 'twitter:account_id', content: ENV['TWITTER_ACCOUNT_ID'] }
+    = metamagic
+
     %link{ rel: 'apple-touch-icon', href: image_url('touch-icon-iphone.png') }
     %link{ rel: 'icon', href: image_url('favicon.png'), type: 'image/x-icon' }
     %link{ rel: 'icon', href: image_url('fav32x32.png'), type: 'image/x-icon', sizes: '32x32' }
     %link{ rel: 'icon', href: image_url('fav64x64.png'), type: 'image/x-icon', sizes: '64x64' }
     %link{ rel: 'icon', href: image_url('fav128x128.png'), type: 'image/x-icon', sizes: '128x128' }
     %link{ rel: 'shortcut icon', href: image_url('favicon.png'), type: 'image/x-icon' }
-    %link{ rel: 'author', href: '/humans.txt' }
-    %meta{ content: page_description(yield(:page_description)), name: 'description', property: 'og:description' }
-    %meta{ content: page_keywords(yield(:page_keywords)), name: 'keywords' }
-    %meta{ name: 'google', value: 'notranslate' }
-    %meta{ name: 'twitter:account_id', content: ENV['TWITTER_ACCOUNT_ID'] }
-    %meta{ name: 'google-site-verification', content: ENV['GOOGLE_SITE_VERIFICATION'] }
+
+    /[if IE] <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="initial-scale=1.0,width=device-width" />
 
     = stylesheet_link_tag 'application'
     = csrf_meta_tag
-    = render partial: 'shared/mixpanel'
+
     = yield :head
 
   %body{ id: yield(:body_id) }
@@ -30,12 +37,13 @@
           .notification-bar
             .notification-bar-inside{ class: (flash[:error].blank? ? 'notice' : 'error') }
               %p= flash[:notice] || flash[:error]
-              %a.close-notification.remove-parent{href: '/', 'data-parent' => 'notification-bar' }
+              %a.close-notification.remove-parent{ href: '/', 'data-parent' => 'notification-bar' }
                 %span Close
         = yield :top_of_main_content
         .inside-main-content.cf= yield
       - else
         = yield
-    = render partial: 'shared/analytics'
     = render partial: 'shared/footer'
     = render partial: 'shared/current_user_js'
+
+<!-- application.html.haml -->
