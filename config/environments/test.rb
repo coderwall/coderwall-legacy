@@ -17,5 +17,5 @@ Coderwall::Application.configure do
   config.middleware.use RackSessionAccess::Middleware # alloes to set session from within Capybara
 
   Rails.logger = Logger.new(STDOUT)
-  Rails.logger.level = Logger::DEBUG # provides more verbose output testing with headless browsers in case of errors
+  Rails.logger.level = Logger::DEBUG # provides more verbose output when testing with headless browsers in case of errors
 end

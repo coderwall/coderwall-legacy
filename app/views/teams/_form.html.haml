@@ -7,5 +7,6 @@
         = f.text_field :name
 
       -if @team.new_record?
+        = hidden_field_tag('team[show_similar]', true)
         .save
           %input.button{ type: 'submit', value: 'Next' }

@@ -1,6 +1,11 @@
 .intro
   - if @team.can_upgrade?
     %h2.plans-heading Select a plan and enter payment details to get started
+  - unless flash[:notice].blank?
+    %span.notice#notice
+      -flash[:notice].split("\n").each do |notice|
+        = notice
+        %br
   - unless flash[:error].blank?
     %span.error#error
       -flash[:error].split("\n").each do |error|
