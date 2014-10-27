@@ -329,7 +329,16 @@ RSpec.describe User, :type => :model do
     it "should not default to banned" do
       expect(user.banned?).to eq(false)
     end
+ end
 
+  describe 'deleting a user', focus: true do
+    it 'deletes asosciated prtotips' do
+      user = Fabricate(:user)
+      protip = Fabricate(:protip, user: user)
+
+      expect(user.reload.protips).to receive(:destroy_all).and_return(false)
+      user.destroy
+    end
   end
 
 end
