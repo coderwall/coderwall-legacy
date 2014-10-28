@@ -1,16 +1,25 @@
 development:
    sessions:
     default:
-     database: badgify_development
+     <% if ENV['MONGO_URL'] %>
+     uri: <%= ENV['MONGO_URL'] %>
+     <% else %>
      hosts:
        - localhost:27017
+     database: badgify_development
+     <% end %>
 
 test:
   sessions:
    default:
-    database: badgify_test
+    <% if ENV['MONGO_URL'] %>
+    uri: <%= ENV['MONGO_URL'] %>
+    <% else %>
     hosts:
-     - localhost:27017
+      - localhost:27017
+    database: badgify_test
+    <% end %>
+
 
 staging:
   sessions:
