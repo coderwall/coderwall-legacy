@@ -49,7 +49,7 @@ class ProtipMailer < ActionMailer::Base
     end.first
     @most = nil if @most && (@most[@star_stat] <= 0)
 
-    mail(to: @user.email, subject: "protips just for you, algorithmically picked w/:heart:")
+    mail(to: @user.email, subject: "It's #{Time.zone.now.strftime('%A')}")
   rescue Exception => ex
     abort_delivery(ex)
   end
