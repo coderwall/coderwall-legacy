@@ -11,6 +11,7 @@
 .idea
 .sass-cache
 .vagrant
+.rspec
 .yardoc
 /.bundle
 /config/application.yml
@@ -56,3 +57,4 @@ git_stats
 vcr_cassettes
 dump
 BACKUP
+Guardfile

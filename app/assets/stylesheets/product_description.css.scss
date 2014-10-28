@@ -211,6 +211,17 @@
         margin: 0 auto 3% auto;
       }
 
+      .notice {
+        font-size: 1.4em;
+        background: $green;
+        color: #fff;
+        padding: 1%;
+        text-align: center;
+        display: block;
+        width: 50%;
+        margin: 0 auto 3% auto;
+      }
+
       .errors {
         width: 90%;
         background: $red;
@@ -422,6 +433,10 @@
             text-transform: none;
             color: #5f5f5f;
             font-family: "MuseoSans-500";
+          }
+
+          @media screen and (min-width: 768px) {
+            min-height: 55px;
           }
         }
 

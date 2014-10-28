@@ -29,25 +29,24 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.use_transactional_examples = false
 
-  config.before(:all) do
+  config.before(:suite) do
     Redis.current.SELECT(testdb = 1)
     Redis.current.flushdb
-
   end
 
   config.before(:suite) do
-
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
-    Mongoid::Sessions.default.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
+  config.before(:example) do
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
+
+    Mongoid::Sessions.default.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
     ActionMailer::Base.deliveries.clear
   end
 
-  config.after(:each) do
+  config.after(:example) do
     DatabaseCleaner.clean
   end
 
