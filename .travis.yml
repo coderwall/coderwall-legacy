@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-- 2.1
+- 2.1.4
 bundler_args: "--without development production autotest"
 services:
 - mongodb
