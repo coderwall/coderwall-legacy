@@ -1,11 +1,11 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: localhost
+  host: <%= ENV['DEV_POSTGRES_HOST'] || 'localhost' %>
   password:
   pool: 5
   port: <%= ENV['DEV_POSTGRES_PORT'] || 5432 %>
-  username: vagrant
+  username: <%= ENV['DEV_POSTGRES_USER'] || 'vagrant' %>
 
 development:
   <<: *default
