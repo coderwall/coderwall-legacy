@@ -3,7 +3,7 @@ development:
     default:
      database: badgify_development
      hosts:
-       - localhost:27017
+       - <%= ENV['MONGO_URL'] || 'localhost:27017' %>
 
 test:
   sessions:
