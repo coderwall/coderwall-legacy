@@ -13,6 +13,7 @@
 
     ga('create', "<%= ENV['GOOGLE_ANALYTICS'] %>", 'auto');
     ga('require', 'linkid', 'linkid.js');
+    ga('require', 'displayfeatures');
     ga('send', 'pageview');
   </script>
 <% end %>
