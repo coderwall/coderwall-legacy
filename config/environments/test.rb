@@ -13,9 +13,8 @@ Coderwall::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
-
-  config.middleware.use RackSessionAccess::Middleware # alloes to set session from within Capybara
+  config.middleware.use RackSessionAccess::Middleware # allows to set session from within Capybara
 
   Rails.logger = Logger.new(STDOUT)
-  Rails.logger.level = Logger::DEBUG # provides more verbose output when testing with headless browsers in case of errors
+  Rails.logger.level = Logger::DEBUG
 end

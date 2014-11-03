@@ -21,6 +21,9 @@ class ApplicationController < ActionController::Base
   after_action :record_visit
   after_action :record_location
 
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404 unless Rails.env.production?
+  rescue_from ActionController::RoutingError, with: :render_404 unless Rails.env.production?
+
   protected
 
   def apply_flash_message
@@ -178,9 +181,6 @@ class ApplicationController < ActionController::Base
   def not_on_achievements?
     params[:controller] != 'achievements'
   end
-
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
-  rescue_from ActionController::RoutingError, with: :render_404
 
   def render_404
     render template: 'error/not_found', status: :not_found

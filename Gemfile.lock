@@ -137,6 +137,8 @@ GEM
       carrierwave (~> 0.5)
     celluloid (0.15.2)
       timers (~> 1.1.0)
+    childprocess (0.5.5)
+      ffi (~> 1.0, >= 1.0.11)
     choice (0.1.6)
     chronic (0.10.2)
     chunky_png (1.3.1)
@@ -277,6 +279,8 @@ GEM
       multi_json (~> 1.0)
       net-http-persistent (>= 2.7)
       net-http-pipeline
+    gherkin (2.12.2)
+      multi_json (~> 1.3)
     github-markdown (0.6.6)
     grackle (0.3.0)
       json
@@ -591,6 +595,7 @@ GEM
     ruby-progressbar (1.5.1)
     ruby_parser (3.6.2)
       sexp_processor (~> 4.1)
+    rubyzip (1.1.6)
     safe_yaml (1.0.3)
     sanitize (3.0.0)
       crass (~> 0.2.0)
@@ -606,6 +611,11 @@ GEM
       faraday (~> 0.8, < 0.10)
     sax-machine (0.2.1)
       nokogiri (~> 1.6.0)
+    selenium-webdriver (2.43.0)
+      childprocess (~> 0.5)
+      multi_json (~> 1.0)
+      rubyzip (~> 1.0)
+      websocket (~> 1.0)
     sexp_processor (4.4.4)
     shoulda-matchers (2.6.2)
       activesupport (>= 3.0.0)
@@ -686,6 +696,9 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    turnip (1.2.4)
+      gherkin (>= 2.5)
+      rspec (>= 2.14.0, < 4.0)
     tweet-button (0.1.0)
     twitter (5.5.1)
       addressable (~> 2.3)
@@ -813,6 +826,7 @@ DEPENDENCIES
   sanitize
   sass (~> 3.2.9)
   sass-rails (~> 3.2.6)
+  selenium-webdriver
   shoulda-matchers
   sidekiq
   simple_form
@@ -829,6 +843,7 @@ DEPENDENCIES
   timecop
   tire
   travis
+  turnip
   tweet-button
   twitter
   uglifier (>= 1.0.3)

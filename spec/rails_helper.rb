@@ -1,6 +1,8 @@
 require 'spec_helper.rb'
 require 'capybara/poltergeist'
+require 'capybara-screenshot/rspec'
 require 'rack_session_access/capybara'
+require 'features/helpers/general_helpers.rb'
 
 Capybara.javascript_driver = :poltergeist
 Capybara.default_wait_time = 5
