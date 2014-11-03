@@ -24,6 +24,8 @@ module Features
         fill_in 'user_location', with: settings[:location]
         click_button 'Finish'
       end
+
+      user
     end
 
     def create_team(name = 'TEST_TEAM')
