@@ -180,7 +180,7 @@
                 %a.new-network{href: network_path(id: slug)}
                   = name
 
-    - if @protips.count == 0
+    - if @protips && @protips.count == 0
       .no-tips
         %h1 No results
         %p You are not following anything yet. Follow people, teams or networks to see protips from them here. boom.
