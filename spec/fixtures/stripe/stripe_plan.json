@@ -1,0 +1,13 @@
+{
+  "interval": "interval",
+  "name": "name",
+  "created": 1351728000,
+  "amount": 29.99,
+  "currency": "usd",
+  "id": "asn53dl",
+  "object": "plan",
+  "livemode": false,
+  "interval_count": 1,
+  "trial_period_days": "",
+  "statement_description": ""
+}

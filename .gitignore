@@ -11,7 +11,7 @@
 .idea
 .sass-cache
 .vagrant
-.rspec
+.rspec-local
 .yardoc
 /.bundle
 /config/application.yml
