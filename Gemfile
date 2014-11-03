@@ -169,8 +169,10 @@ group :test do
   # gem 'rspec-its'
   gem 'capybara'
   gem 'capybara-screenshot'
+  gem 'turnip' # write rspec feature specs in cucumber style
   gem 'rack_session_access' # allows to set session from within Capybara
   gem 'poltergeist' # headless js driver for Capybara that uses phantomJs
+  gem 'selenium-webdriver' # headfull js driver for Capybara
   gem 'codeclimate-test-reporter', require: false
   gem 'database_cleaner'
   gem 'fuubar', '2.0.0.rc1'

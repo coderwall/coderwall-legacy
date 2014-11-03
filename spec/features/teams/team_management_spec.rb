@@ -3,6 +3,7 @@ require "rails_helper"
 feature "Teams management", js: true do
 
   background do
+    stub_request(:post, /api.mixpanel.com/)
     login_as(username: 'alice', bypass_ui_login: true)
   end
 
