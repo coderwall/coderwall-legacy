@@ -30,6 +30,7 @@
     = yield :head
 
   %body{ id: yield(:body_id) }
+    hello
     = render partial: 'nav_bar'
     #main-content
       - if main_content_wrapper(yield(:content_wrapper))

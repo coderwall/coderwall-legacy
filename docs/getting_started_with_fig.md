@@ -6,7 +6,10 @@ Head to [http://www.fig.sh/install.html](http://www.fig.sh/install.html) and ins
 
 ## Git'r done
 
-Now let's bootstrap the database and start up the app:
+fig pull
+fig builu
+
+ let's bootstrap the database and start up the app:
 
     $ fig up
 

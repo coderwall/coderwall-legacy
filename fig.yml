@@ -1,34 +1,40 @@
-web:
-  build: .
-  command: foreman start -p 5000 web
-  volumes:
-    - .:/app
-  ports:
-    - "5000:5000"
-  links:
-    - postgres
-    - redis
-    - elasticsearch
-    - mongo
-  environment:
-    - DEV_POSTGRES_USER=postgres
-    - DEV_POSTGRES_HOST=postgres
-    - STRIPE_SECRET_KEY=sk_test_BQokikJOvBiI2HlWgH4olfQ2
-    - STRIPE_PUBLISHABLE_KEY=
-    - REDIS_URL=redis://redis
-    - ELASTICSEARCH_URL=http://elasticsearch:9200
-    - MONGO_URL=mongo:27017
-
 postgres:
   image: postgres
   ports:
-    - "5432"
+    - "5432:5432"
 
 redis:
-  image: redis
+  image: redis:2.8.13
+  ports:
+    - "6379:6379"
 
 elasticsearch:
-  image: orchardup/elasticsearch
+  image: barnybug/elasticsearch:0.90.13
+  ports:
+    - "9200:9200"
 
 mongo:
-  image: mongo
+  image: mongo:2.4.10
+  ports:
+    - "27017:27017"
+
+#web:
+  #build: .
+  #command: echo hello # foreman start -p 5000 web
+  #volumes:
+    #- .:/app
+  #ports:
+    #- "5000:5000"
+  #links:
+    #- postgres
+    #- redis
+    #- elasticsearch
+    #- mongo
+  #environment:
+    #- DEV_POSTGRES_USER=postgres
+    #- DEV_POSTGRES_HOST=postgres
+    #- STRIPE_SECRET_KEY=sk_test_BQokikJOvBiI2HlWgH4olfQ2
+    #- STRIPE_PUBLISHABLE_KEY=
+    #- REDIS_URL=redis://redis:6379
+    #- ELASTICSEARCH_URL=http://elasticsearch:9200
+    #- MONGO_URL=mongo:27017
