@@ -16,58 +16,69 @@ $(function () {
     e.preventDefault();
   });
   registerButtons();
-})
+});
 
 $(function () {
-  $('[placeholder]').focus(function () {
-    var input = $(this);
-    if (input.val() == input.attr('placeholder')) {
-      input.val('');
-      input.removeClass('placeholder');
+
+  var $newSkill = $('#new_skill');
+  var $skillInput = $newSkill.find('[placeholder]');
+
+  $skillInput.focus(function () { //TODO: Buggy
+    var $input = $(this);
+    if ($input.val() === $input.attr('placeholder')) {
+      $input.val('');
+      $input.removeClass('placeholder');
     }
   }).blur(function () {
-    var input = $(this);
-    if (input.val() == '' || input.val() == input.attr('placeholder')) {
-      input.addClass('placeholder');
-      input.val(input.attr('placeholder'));
+    var $input = $(this);
+    if ($input.val() === '' || $input.val() === $input.attr('placeholder')) {
+      $input.addClass('placeholder');
+      $input.val($input.attr('placeholder'));
     }
   }).blur();
 
   $('.save a').live('click', function (e) {
-    var form = $(this).parents('form');
-    $.post(form.attr('action'), form.serialize()).success(function (response) {
+    var $form = $(this).parents('form');
+    $.post($form.attr('action'), $form.serialize()).success(function (response) {
 
     });
+
     e.preventDefault();
-  })
+  });
 
   $('a.submitEndorsement').live('click', function (e) {
-    var form = $(this).parents('form');
-    $.post(form.attr('action'), form.serialize()).success(function (response) {
+    var $form = $(this).parents('form');
+    $.post($form.attr('action'), $form.serialize()).success(function (response) {
+      var $endorse = $('#endorse');
+      var $endorsementcounter = $('#endorsementcounter');
+
       $.fancybox.close();
+
       setTimeout(function () {
-        $('#endorsementcounter span').slideUp();
+        $endorsementcounter.find('span').slideUp();
       }, 600);
+
       setTimeout(function () {
-        $('#endorsementcounter span').html(response.totalEndorsements).slideDown();
+        $endorsementcounter.find('span').html(response.totalEndorsements).slideDown();
+
         if (response.availableEndorsements <= 0) {
-          $('#endorse .endorsements').remove();
-          $('#endorse .notification').remove();
-          $('#endorse .message').html("You used up all your endorsements. Unlock additional achievements to make more endorsements.");
+          $endorse.find('.endorsements').remove();
+          $endorse.find('.notification').remove();
+          $endorse.find('.message').html("You used up all your endorsements. Unlock additional achievements to make more endorsements.");
         } else if (response.remainingEndoresments <= 0) {
-          $('#endorse .endorsements').remove();
-          $('#endorse .notification').remove();
-          $('#endorse .message').html("There are no more skills to endorse.");
+          $endorse.find('.endorsements').remove();
+          $endorse.find('.notification').remove();
+          $endorse.find('.message').html("There are no more skills to endorse.");
         } else {
-          $('#endorse .notification').html(response.message);
-          $(response.ensorsementsMade).each(function () {
+          $endorse.find('.notification').html(response.message);
+            $(response.ensorsementsMade).each(function () {
             $('#' + this).remove();
           });
         }
       }, 1500);
     });
     e.preventDefault();
-  })
+  });
 
   $('#nocount input, #withcount input').live('change', function () {
     $('.endorseButtons .markdown, .endorseButtons .html, .endorseButtons .textile').toggleClass('hide');
@@ -78,7 +89,7 @@ $(function () {
     e.preventDefault();
   });
 
-  $('#achievementcode  a').live('click', function () {
+  $('#achievementcode').find('a').live('click', function () {
     $(this).hide().parents('em').hide();
     $('.claimcode').fadeIn();
     e.preventDefault();
@@ -93,7 +104,7 @@ $(function () {
     var list = $(this).attr('data-list');
     var filter = $(this).attr('data-filter');
 
-    if (filter == '') {
+    if (filter === '') {
       $(list).removeClass('suppress');
     }
     else {
@@ -145,13 +156,13 @@ $(function () {
 
 function sortListItems(list, value) {
   $(list).sortElements(function (x, y) {
-    if ($(x).hasClass(value) == true && $(y).hasClass(value) == true) {
+    if ($(x).hasClass(value) === true && $(y).hasClass(value) == true) {
       if ($(x).attr('data-popularity') > $(y).attr('data-popularity'))
         return -1;
       else
         return 1;
     }
-    else if ($(x).hasClass(value) == true && $(y).hasClass(value) == false) {
+    else if ($(x).hasClass(value) === true && $(y).hasClass(value) == false) {
       return -1;
     } else {
       return 1;
@@ -164,30 +175,34 @@ function readCookie(name) {
   var ca = document.cookie.split(';');
   for (var i = 0; i < ca.length; i++) {
     var c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
   }
   return null;
 }
 
 function updateCountdown(e) {
-  var remaining = 100 - $('#new_accomplishment').val().length;
+  var $newAccompl = $('#new_accomplishment');
+  var $countdown = $('#countdown');
+
+  var remaining = 100 - $newAccompl.val().length;
   if (remaining <= 0) {
-    $('#new_accomplishment').val($('#new_accomplishment').val().substring(0, 100));
-    $('#countdown').text('0');
+    $newAccompl.val($newAccompl.val().substring(0, 100));
+    $countdown.text('0');
   }
   else
-    $('#countdown').text(remaining);
+    $countdown.text(remaining);
 }
 
 function toggleNewAccomplishment() {
+  var $newAccompl = $('#new_accomplishment');
   $('.accomplishments .featured').toggle();
   $('.accomplishments .addnew').toggle();
-  $('#new_accomplishment').val('');
+  $newAccompl.val('');
 }
 
 function handle_redirect(response) {
-  if (response.status == "redirect")
+  if (response.status === "redirect")
     window.location = response.to
 }
 
