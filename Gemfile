@@ -189,4 +189,5 @@ group :production do
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'rails_12factor'
+  gem 'heroku-deflater'
 end
