@@ -5,7 +5,6 @@ Coderwall::Application.load_tasks
 
 task default: :spec
 
-
 namespace :team do
   task migrate: :environment do
     puts '--- Beginning team migration ---'
@@ -30,58 +29,11 @@ namespace :team do
   # IMPORTANT: pending_join_requests is an array of User#id values
   #
 
-  def neq(attr, pg, mongo, fail_if_neq=true)
-    left =  pg.send(attr)
-    right = mongo.send(attr)
-
-    if left != right
-      puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
-      true
-    else
-      false
-    end
-  rescue => ex
-    puts '*'*80
-    puts
-    puts ex
-    puts
-    puts '-'*80
-    puts
-    ap ex.backtrace
-    puts
-    puts '*'*80
-
-    require 'pry'; binding.pry
-  end
-
-  def neq_dec(attr, pg, mongo, fail_if_neq=true)
-    scale = 7
-
-    left =  pg.send(attr).to_d.round(scale)
-    right = mongo.send(attr).to_d.round(scale)
-
-
-    if left != right
-      puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
-      true
-    else
-      false
-    end
-  rescue => ex
-    puts '*'*80
-    puts
-    puts ex
-    puts
-    puts '-'*80
-    puts
-    ap ex.backtrace
-    puts
-    puts '*'*80
-
-    require 'pry'; binding.pry
-  end
-
   task verify: :environment do
+    ActiveRecord::Base.logger = nil
+    Mongoid.logger = nil
+    Moped.logger = nil
+
     PgTeam.find_each(batch_size: 100) do |pg_team|
       begin
         mongo_id = pg_team.mongo_id
@@ -263,10 +215,54 @@ namespace :team do
           end
         end
 
-
         # TODO: Pending Requests
       end
     end
+  end
+
+  def neq(attr, pg, mongo, fail_if_neq=true)
+    left =  pg.send(attr)
+    right = mongo.send(attr)
+
+    if left != right
+      puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
+      true
+    else
+      false
+    end
+  rescue => ex
+    print_neq_error(ex)
+  end
+
+  def neq_dec(attr, pg, mongo, fail_if_neq=true)
+    scale = 7
+
+    left =  pg.send(attr).to_d.round(scale)
+    right = mongo.send(attr).to_d.round(scale)
+
+
+    if left != right
+      puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
+      true
+    else
+      false
+    end
+  rescue => ex
+    print_neq_error(ex)
+  end
+
+  def print_neq_error(ex)
+    puts '*'*80
+    puts
+    puts ex
+    puts
+    puts '-'*80
+    puts
+    ap ex.backtrace
+    puts
+    puts '*'*80
+
+    require 'pry'; binding.pry
   end
 
   task counts: :environment do

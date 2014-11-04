@@ -15,8 +15,10 @@ EOF
 require 'yaml'
 custom_settings = File.file?('vagrant.yml') ?  YAML.load_file('vagrant.yml') : {}
 
-puts '== Using Custom Vagrant Settings =='
-puts custom_settings.inspect
+if ENV['VAGRANT_DEBUG']
+  puts '== Using Custom Vagrant Settings =='
+  puts custom_settings.inspect
+end
 
 VAGRANTFILE_API_VERSION = "2"
 
@@ -71,23 +73,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puts "Please install the 'vagrant-vbguest' plugin"
   end
 
-  #if Vagrant.has_plugin?('vagrant-cachier')
-    #config.cache.scope = :box
-  #else
-    #puts "Please install the 'vagrant-cachier' plugin"
-  #end
+  if Vagrant.has_plugin?('vagrant-cachier')
+    config.cache.scope = :box
+  else
+    puts "Please install the 'vagrant-cachier' plugin"
+  end
 end
 
 def set_port_mapping_for(config, service, guest_port, settings, force = false)
   if settings['network'] && settings['network']['port_mappings'] && settings['network']['port_mappings'][service]
     host_port = settings['network']['port_mappings'][service]
-    puts " !! Setting up port mapping rule for #{service} host:#{host_port} => guest:#{guest_port}"
+
+    if ENV['VAGRANT_DEBUG']
+      puts " !! Setting up port mapping rule for #{service} host:#{host_port} => guest:#{guest_port}"
+    end
     config.vm.network(:forwarded_port, guest: guest_port,  host: host_port)
   else
     # no host port mapping was defined
     if force
       # but we want to force a mapping for the default ports
-      puts " !! Setting up port mapping rule for #{service} host:#{guest_port} => guest:#{guest_port}"
+      if ENV['VAGRANT_DEBUG']
+        puts " !! Setting up port mapping rule for #{service} host:#{guest_port} => guest:#{guest_port}"
+      end
       config.vm.network(:forwarded_port, guest: guest_port,  host: guest_port)
     end
   end

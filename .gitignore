@@ -58,3 +58,5 @@ vcr_cassettes
 dump
 BACKUP
 Guardfile
+verification.log
+npm-debug.log
