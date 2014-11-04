@@ -152,7 +152,6 @@ namespace :team do
             about
             achievement_count
             analytics
-            avatar
             benefit_description_1
             benefit_description_2
             benefit_description_3
@@ -210,6 +209,8 @@ namespace :team do
             neq(attr, pg_team_follower, mongo_team_follower, false)
           end
 
+          neq_string(:avatar, pg_team_follower, pg_team_follower.avatar.url, mongo_team_follower, mongo_team_follower.avatar.url, false)
+
           %i(score size total mean median).each do |attr|
             neq_dec(attr, pg_team_follower, mongo_team_follower, false)
           end
@@ -224,6 +225,17 @@ namespace :team do
     left =  pg.send(attr)
     right = mongo.send(attr)
 
+    if left != right
+      puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
+      true
+    else
+      false
+    end
+  rescue => ex
+    print_neq_error(ex)
+  end
+
+  def neq_string(attr, pg, left, mongo, right, fail_if_neq=true)
     if left != right
       puts "#{attr} | pg:#{pg.id} | mongo:#{mongo.id}| #{left} != #{right}"
       true

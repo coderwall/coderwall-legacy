@@ -28,7 +28,6 @@ class TeamMigratorJob
 
     begin
       PgTeam.find_or_initialize_by_mongo_id(id) do |pgteam|
-        # pgteam.avatar                 = team.avatar
         pgteam.about                    = team.about
         pgteam.achievement_count        = team.achievement_count
         pgteam.analytics                = team.analytics
@@ -96,6 +95,10 @@ class TeamMigratorJob
         pgteam.score                    = team.score.to_d.round(scale)
 
         pgteam.save!
+
+        if team.avatar && team.avatar.file
+          pgteam.update_column(:avatar, team.avatar.file.filename)
+        end
       end
     rescue ActiveRecord::RecordInvalid => ex
       Rails.logger.error("[find_or_initialize_team(#{id}, #{team.id})] #{ex} >>\n#{ex.backtrace.join("\n  ")}")
