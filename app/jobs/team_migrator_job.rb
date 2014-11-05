@@ -76,8 +76,6 @@ class TeamMigratorJob
         pgteam.reason_name_2            = team.reason_name_2
         pgteam.reason_name_3            = team.reason_name_3
         pgteam.size                     = team.size
-        #pgteam.slug                     = team.slug
-
         pgteam.stack_list               = team.stack_list
         pgteam.twitter                  = team.twitter
         pgteam.upcoming_events          = team.upcoming_events
@@ -89,15 +87,7 @@ class TeamMigratorJob
         pgteam.your_impact              = team.your_impact
         pgteam.youtube_url              = team.youtube_url
 
-        scale = 8
-        #pgteam.mean                     = team.mean.to_d.round(scale)
-        #pgteam.total                    = team.total.to_d.round(scale)
-        #pgteam.median                   = team.median.to_d.round(scale)
-        #pgteam.score                    = team.score.to_d.round(scale)
-
-
         pgteam.save!
-
 
         %i(slug mean total median score).each do |attr|
           pgteam.update_column(attr, team.send(attr))
