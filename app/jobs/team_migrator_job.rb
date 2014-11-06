@@ -161,13 +161,37 @@ class TeamMigratorJob
   end
 
   def add_members(pgteam)
-    Rails.logger.info("add_members(#{pgteam.id})")
+    puts "add_members(#{pgteam.id})"
 
-    users = User.where(team_document_id: pgteam.mongo_id)
+    mongo_user_ids = Team.find(pgteam.mongo_id).team_members.map(&:id).uniq
+    pg_user_ids = User.where(team_document_id: pgteam.mongo_id).map(&:id).uniq
+    user_ids = mongo_user_ids.dup.concat(pg_user_ids).uniq
+
+    puts "-"*80
+    ap mongo_user_ids
+    ap pg_user_ids
+    ap user_ids
+
+    return nil if user_ids.empty?
+
+    users = User.where('id in (?)', user_ids)
+
     users.each do |user|
-      pgteam.members.create! user: user, state: 'active'
+      pgteam.members.create!(user: user, state: 'active')
     end
+
     users.update_all(team_id: pgteam.id)
+
+    puts "#{pgteam.members.count} #{mongo_user_ids.count}"
+
+    if pgteam.members.count != mongo_user_ids.count
+      puts "INCORRECT NUMBER OF MEMBERS MIGRATED"
+      ap pgteam.members.map(&:id) - user_ids
+      ap user_ids - pgteam.members.map(&:id)
+    end
+  rescue => ex
+    puts "THERE WAS AN ERROR ADDING MEMBERS"
+    ap ex
   end
 
   def add_jobs(pgteam)

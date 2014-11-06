@@ -125,8 +125,13 @@ namespace :team do
         #puts 'MEMBERS'
         #puts '----------------------------------------------------------------------------------------------------'
 
-        if pg_team.members.count != mongo_team.team_members.count
-          puts "members | pg:#{pg_team.id} | mongo:#{mongo_team.id}| #{mongo_team.team_members.count} != #{pg_team.members.count}"
+        if pg_team.members.count < mongo_team.team_members.count
+          puts "members | pg:#{pg_team.id} | mongo:#{mongo_team.id}| #{pg_team.members.count} < #{mongo_team.team_members.count}"
+
+          ap pg_team.members.count
+          ap mongo_team.team_members.count
+
+          #require 'pry'; binding.pry
         end
 
 
