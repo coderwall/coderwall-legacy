@@ -42,13 +42,11 @@ namespace :team do
         # Ignoring:
         # - updated_at
 
-        #puts '----------------------------------------------------------------------------------------------------'
-        #puts 'TEAM'
-        #puts '----------------------------------------------------------------------------------------------------'
+        puts 'TEAM'
 
-        %i(slug pending_join_requests).each do |attr|
-          neq(attr, pg_team, mongo_team, false)
-        end
+        neq(:slug, pg_team, mongo_team, false)
+
+        neq_string(:pending_join_requests, pg_team, pg_team.pending_join_requests.map(&:to_i).sort.join(', '), mongo_team, mongo_team.pending_join_requests.map(&:to_i).sort.join(', '), false)
 
         %i(score size total mean median).each do |attr|
           neq_dec(attr, pg_team, mongo_team, false)
@@ -79,32 +77,27 @@ namespace :team do
           end
         end
 
-
-        #puts '----------------------------------------------------------------------------------------------------'
         #puts 'LOCATIONS'
-        #puts '----------------------------------------------------------------------------------------------------'
 
-        pg_team_locations = pg_team.locations
-        mongo_team_locations =  mongo_team.team_locations
+        #pg_team_locations = pg_team.locations
+        #mongo_team_locations =  mongo_team.team_locations
 
-        if mongo_team_locations.count != pg_team_locations.count
-          puts "locations | pg:#{pg_team.id} | mongo:#{mongo_team.id}| #{mongo_team_locations.count} != #{pg_team_locations.count}"
-        end
+        #if mongo_team_locations.count != pg_team_locations.count
+          #puts "locations | pg:#{pg_team.id} | mongo:#{mongo_team.id}| #{mongo_team_locations.count} != #{pg_team_locations.count}"
+        #end
 
-        # Ignoring:
-        # - points_of_interest
-        pg_team.locations.each do |pg_team_location|
-          mongo_team_location = mongo_team.team_locations.select { |tl| tl.name == pg_team_location.name }.first
+        ## Ignoring:
+        ## - points_of_interest
+        #pg_team.locations.each do |pg_team_location|
+          #mongo_team_location = mongo_team.team_locations.select { |tl| tl.name == pg_team_location.name }.first
 
-          %i(address city country description name state_code).each do |attr|
-            neq(attr, pg_team_location, mongo_team_location, false)
-          end
-        end
+          #%i(address city country description name state_code).each do |attr|
+            #neq(attr, pg_team_location, mongo_team_location, false)
+          #end
+        #end
 
 
-        #puts '----------------------------------------------------------------------------------------------------'
         #puts 'LINKS'
-        #puts '----------------------------------------------------------------------------------------------------'
 
         pg_team_links = pg_team.links
         mongo_team_links = mongo_team.featured_links
@@ -121,33 +114,22 @@ namespace :team do
           end
         end
 
-        #puts '----------------------------------------------------------------------------------------------------'
         #puts 'MEMBERS'
-        #puts '----------------------------------------------------------------------------------------------------'
 
-        if pg_team.members.count < mongo_team.team_members.count
+        if pg_team.members.count != mongo_team.team_members.count
           puts "members | pg:#{pg_team.id} | mongo:#{mongo_team.id}| #{pg_team.members.count} < #{mongo_team.team_members.count}"
-
-          ap pg_team.members.count
-          ap mongo_team.team_members.count
-
-          #require 'pry'; binding.pry
         end
 
 
-        #puts '----------------------------------------------------------------------------------------------------'
         #puts 'JOBS'
-        #puts '----------------------------------------------------------------------------------------------------'
 
-        pg_team.jobs.each do |pg_team_job|
-          mongo_team_job = Team.where(id: pg_team_job.team_document_id.to_s).first
+        #pg_team.jobs.each do |pg_team_job|
+          #mongo_team_job = Team.where(id: pg_team_job.team_document_id.to_s).first
 
-          neq(:name, pg_team_job, mongo_team_job, false)
-        end
+          #neq(:name, pg_team_job, mongo_team_job, false)
+        #end
 
-        #puts '----------------------------------------------------------------------------------------------------'
         #puts 'FOLLOWERS'
-        #puts '----------------------------------------------------------------------------------------------------'
 
         pg_team.followers.each do |pg_team_follower|
           mongo_team_follower = Team.where(id: pg_team_follower.mongo_id.to_s).first
@@ -191,7 +173,6 @@ namespace :team do
             organization_way_photo
             our_challenge
             paid_job_posts
-            pending_join_requests
             premium
             preview_code
             reason_description_1
@@ -213,6 +194,7 @@ namespace :team do
           ).each do |attr|
             neq(attr, pg_team_follower, mongo_team_follower, false)
           end
+          neq_string(:pending_join_requests, pg_team_follower, pg_team_follower.pending_join_requests.map(&:to_i).sort.join(', '), mongo_team_follower, mongo_team_follower.pending_join_requests.map(&:to_i).sort.join(', '), false)
 
           neq_string(:avatar, pg_team_follower, pg_team_follower.avatar.url, mongo_team_follower, mongo_team_follower.avatar.url, false)
 
