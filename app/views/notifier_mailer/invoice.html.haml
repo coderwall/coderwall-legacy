@@ -1,11 +1,11 @@
 %tr
   %td.main-content-grey{:style => "padding: 30px 60px; background:#ffffff;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
     %p{:style => "font-size: 16px; font-family:'Helvetica Neue','Helvetica','Arial','sans-serif'; margin-bottom: 10px;"}
-      ==Your card has ending in #{@customer[:active_card][:last4]} been charged
+      ="Your card ending in #{card_for(@customer)[:last4]} has been charged"
     %table{:style => "width:600"}
       %tr
         %td
-          == Bill Date: #{Time.at(@invoice[:date]).strftime("%B %d, %Y")}
+          == Bill Date: #{invoice_date(@invoice)}
       %tr
         %td
       %tr
@@ -20,7 +20,7 @@
       %tr
         %td
           Duration:
-          ==#{Time.at(@invoice[:lines][:subscriptions].first[:period][:start]).strftime("%B %d, %Y")}-#{Time.at(@invoice[:lines][:subscriptions].first[:period][:end]).strftime("%B %d, %Y")}
+          ==#{subscription_period_for(@invoice, :start)}-#{subscription_period_for(@invoice, :end)}
         %td
           Description:
           Enhanced Team Profile (4 job posts anytime)

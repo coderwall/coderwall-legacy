@@ -5,6 +5,7 @@ class NotifierMailer < ActionMailer::Base
   add_template_helper(UsersHelper)
   add_template_helper(ProtipsHelper)
   add_template_helper(ApplicationHelper)
+  add_template_helper(AccountsHelper)
 
   layout 'email', except: [:weekly_digest, :alert_admin]
 

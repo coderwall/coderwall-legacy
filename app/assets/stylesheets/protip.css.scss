@@ -56,21 +56,16 @@
     }
   }
 
-  ul {
+  ol, ul {
     margin-bottom: 15px;
     li {
-      //background: image-url("gold-star.png") no-repeat left 3px;
-      list-style-type: disc;
-      //list-style-position: inside;
+      list-style-position: inside;
       font-size: 1.6em;
-      //padding-left: 25px;
+      padding-left: 25px;
       margin-bottom: 5px;
 
       li {
         font-size: 1em;
-        //padding-left: 25px;
-        list-style-position: inside;
-
       }
 
       a {
@@ -92,32 +87,12 @@
     }
   }
 
-  ol {
-    margin-bottom: 15px;
-    li {
-      list-style-type: upper-roman;
-      list-style-position: inside;
-      font-size: 1.6em;
-      //padding-left: 25px;
-      margin-bottom: 5px;
+  ul li {
+    list-style-type: disc;
+  }
 
-      a {
-        color: $light-blue;
-
-        &:hover {
-          border-bottom: 1px dashed $light-blue;
-        }
-      }
-
-      p {
-        font-size: 1em;
-        margin: 0;
-      }
-
-      code {
-        font-size: 0.9em;
-      }
-    }
+  ol li {
+    list-style-type: upper-roman;
   }
 
   blockquote {

@@ -34,4 +34,6 @@ Coderwall::Application.configure do
   Rails.application.config.sass.cache_location = "/tmp/codewall-cache/sass/"
 
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
+  Rails.logger = Logger.new(STDOUT)
+  Rails.logger.level = Logger::DEBUG
 end

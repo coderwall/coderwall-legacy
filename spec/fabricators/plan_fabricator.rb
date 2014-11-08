@@ -1,4 +1,6 @@
 Fabricator(:plan) do
+  name { sequence(:name) { |i| "plan_no_#{i}" } }
+  amount { rand * 100 }
 end
 
 # == Schema Information

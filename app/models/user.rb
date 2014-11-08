@@ -82,9 +82,11 @@ class User < ActiveRecord::Base
   has_one :github_profile  , class_name: 'Users::Github::Profile', dependent: :destroy
   has_many :github_repositories, through: :github_profile , source: :repositories
 
-
   geocoded_by :location, latitude: :lat, longitude: :lng, country: :country, state_code: :state_name
+  # FIXME: Move to background job
   after_validation :geocode_location, if: :location_changed? unless Rails.env.test?
+
+  before_destroy ->{ protips.destroy_all }, prepend: true
 
   def near
     User.near([lat, lng])
@@ -129,7 +131,6 @@ class User < ActiveRecord::Base
                                       end
     where(["UPPER(#{sql_injection_safe_where_clause}) = UPPER(?)", username]).first
   end
-
 
   # Todo State machine
   def banned?
@@ -923,7 +924,6 @@ class User < ActiveRecord::Base
   end
 
   after_save :refresh_dependencies
-  after_destroy :refresh_protips
 
   def refresh_dependencies
     if username_changed? or avatar_changed? or team_document_id_changed?

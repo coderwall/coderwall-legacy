@@ -7,6 +7,9 @@ require 'scoring'
 require 'search'
 
 class Protip < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_format, :use => :slugged
+    
   include Featurable
   # TODO: Break out the various responsibilities on the Protip into modules/concerns.
 
@@ -951,7 +954,11 @@ class Protip < ActiveRecord::Base
   def to_html
     CFM::Markdown.render self.body
   end
-
+  
+  def slug_format
+    "#{title}"
+  end
+  
   protected
   def check_links
     errors[:body] << "one or more of the links are invalid or not publicly reachable/require login" unless valid_links?
@@ -969,7 +976,7 @@ class Protip < ActiveRecord::Base
   def analyze_spam
     AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
   end
-
+  
 end
 
 # == Schema Information

@@ -82,7 +82,7 @@ apt-get -y install vim
 apt-get -y install zlib1g
 apt-get -y install zlib1g-dev
 
-RUBY_VERSION="2.1.3"
+RUBY_VERSION="2.1.4"
 wget http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-$RUBY_VERSION.tar.bz2
 tar jxf ruby-$RUBY_VERSION.tar.bz2
 cd ruby-$RUBY_VERSION
@@ -265,7 +265,7 @@ sudo su - vagrant <<-'EOF'
   rvm requirements
   rvm reload
 
-  _RUBY_VERSION=ruby-2.1.3
+  _RUBY_VERSION=ruby-2.1.4
   rvm install $_RUBY_VERSION
   rvm gemset create coderwall
   rvm use $_RUBY_VERSION --default

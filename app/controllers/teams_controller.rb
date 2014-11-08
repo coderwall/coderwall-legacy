@@ -78,30 +78,29 @@ class TeamsController < ApplicationController
   end
 
   def create
-    team_params = params.require(:team).permit(:selected, :slug, :name)
-    selected = team_params.fetch(:selected, nil)
+    team_params = params.require(:team).permit(:name, :slug, :show_similar, :join_team)
+    team_name = team_params.fetch(:name, '')
 
-    @teams = Team.with_similar_names(team_params[:name])
-
-    unless selected == 'false' || @teams.empty?
-      @new_team_name = team_params[:name]
+    @teams = Team.with_similar_names(team_name)
+    if team_params[:show_similar] == 'true' && !@teams.empty?
+      @new_team_name = team_name
       render 'similar_teams' and return
     end
 
-    if selected == 'true'
+    if team_params[:join_team] == 'true'
       @team = Team.where(slug: team_params[:slug]).first
       render :create and return
     end
 
-    @team = Team.new(name: team_params[:name])
+    @team = Team.new(name: team_name)
     if @team.save
       record_event('created team')
       @team.add_user(current_user)
 
       flash.now[:notice] = "Successfully created a team #{@team.name}"
-      render :create
     else
-      flash[:error] = "There was an error in creating a team #{@team.name}"
+      message = @team.errors.full_messages.join("\n")
+      flash[:error] = "There was an error in creating a team #{@team.name}\n#{message}"
     end
   end
 

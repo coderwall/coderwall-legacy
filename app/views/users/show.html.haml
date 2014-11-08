@@ -169,7 +169,7 @@
         -elsif signed_in?
           =link_to(defined_in_css = '', follow_user_path(@user.username), :method => :post, :remote => true, :class => 'add-to-network track', 'data-action' => 'follow user', 'data-from' => 'profile sidebar')
         -else
-          =link_to(defined_in_css = '', root_path(:flash => 'You must signin or signup before you can follow someone'), :class => 'add-to-network noauth track', 'data-action' => 'follow user', 'data-from' => 'profile sidebar')
+          =link_to(defined_in_css = '', signin_path(:flash => 'You must signin or signup before you can follow someone'), :class => 'add-to-network noauth track', 'data-action' => 'follow user', 'data-from' => 'profile sidebar')
         -if signed_in? && @user.following?(current_user)
           .followed-back
             %p== #{@user.short_name} is following you

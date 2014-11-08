@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-ruby '2.1.3'
+ruby '2.1.4'
 
 gem 'rails', '~> 3.2'
 
@@ -107,6 +107,7 @@ gem 'acts_as_follower', '0.1.1'
 gem 'color'
 gem 'createsend'
 gem 'fog'
+gem 'friendly_id', '4.0.10.1'
 gem 'geocoder'
 gem 'hashie'
 gem 'linkedin'
@@ -169,6 +170,10 @@ group :test do
   # gem 'rspec-its'
   gem 'capybara'
   gem 'capybara-screenshot'
+  gem 'turnip' # write rspec feature specs in cucumber style
+  gem 'rack_session_access' # allows to set session from within Capybara
+  gem 'poltergeist' # headless js driver for Capybara that uses phantomJs
+  gem 'selenium-webdriver' # headfull js driver for Capybara
   gem 'codeclimate-test-reporter', require: false
   gem 'database_cleaner'
   gem 'fuubar', '2.0.0.rc1'
@@ -184,4 +189,5 @@ group :production do
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'rails_12factor'
+  gem 'heroku-deflater'
 end

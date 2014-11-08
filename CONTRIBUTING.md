@@ -174,6 +174,8 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
 You'll need to set up a test account with Stripe for local development until this dependency is refactored out of development/test.
 
+See [docs/configuration.md](https://github.com/assemblymade/coderwall/blob/master/docs/configuration.md#stripe) for more.
+
 ## Github configuration
 
 You will need a Github application configured for local development until this dependency is refactored out of development/test.

@@ -47,16 +47,16 @@ RSpec.describe TeamsController, :type => :controller do
     end
 
     context 'a team is selected from a list of similar teams' do
-      it 'renders a template with a choice of tariff plans when user picks a name from existing names' do
+      it 'renders a template with a choice of tariff plans when user joins and existing team' do
         allow(Team).to receive(:where).and_return(['team_1', 'team_2'])
-        post :create, :team => { selected: 'true', slug: 'team_name' }, format: :js
+        post :create, :team => { join_team: 'true', slug: 'team_name' }, format: :js
 
         expect(assigns[:team]).to eq('team_1')
         expect(response).to render_template('create')
       end
 
-      it 'renders a template with a choice of tariff plans if user picks his own team name' do
-        post :create, :team => { name: 'team_name', selected: 'false' }, format: :js
+      it 'renders a template with a choice of tariff plans if user picks supplied team name' do
+        post :create, :team => { name: 'team_name' }, format: :js
         expect(response).to render_template('create')
       end
     end
@@ -88,13 +88,13 @@ RSpec.describe TeamsController, :type => :controller do
       it 'renders template with option to join' do
         expect(response).to be_success
         expect(response).to render_template('create')
-        expect(flash[:notice]).to eq("Successfully created a team team_name")
+        expect(flash[:notice]).to include("Successfully created a team team_name")
       end
 
       it 'renders failure notice' do
         allow(team).to receive(:save).and_return(false)
         response
-        expect(flash[:error]).to eq("There was an error in creating a team team_name")
+        expect(flash[:error]).to include("There was an error in creating a team team_name")
       end
     end
 
@@ -105,7 +105,7 @@ RSpec.describe TeamsController, :type => :controller do
       end
 
       it 'renders a template with a list of similar teams' do
-        post :create, :team => { name: 'team_name' }, format: :js
+        post :create, :team => { name: 'team_name', show_similar: 'true' }, format: :js
 
         expect(assigns[:new_team_name]).to eq('team_name')
         expect(response).to render_template('similar_teams')

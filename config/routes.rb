@@ -287,8 +287,9 @@ Coderwall::Application.routes.draw do
   get '/jobs(/:location(/:skill))' => 'opportunities#index', as: :jobs
   get '/jobs-map' => 'opportunities#map', as: :jobs_map
 
-  resources :protips, :path => '/p', :constraints => {id: /[\dA-Z\-_]{6}/i} do
+  resources :protips, :path => '/p' do
     collection do
+      get ':id/:slug' => 'protips#show', as: :slug, :constraints => {:slug => /(?!.*?edit).*/} 
       get 'random'
       get 'search' => 'protips#search', as: :search
       post 'search' => 'protips#search'

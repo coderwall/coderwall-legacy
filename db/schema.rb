@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140807214719) do
+ActiveRecord::Schema.define(:version => 20141015182230) do
 
   add_extension "citext"
 
@@ -254,9 +254,11 @@ ActiveRecord::Schema.define(:version => 20140807214719) do
     t.float    "boost_factor",        :default => 1.0
     t.integer  "inappropriate",       :default => 0
     t.integer  "likes_count",         :default => 0
+    t.string   "slug"
   end
 
   add_index "protips", ["public_id"], :name => "index_protips_on_public_id"
+  add_index "protips", ["slug"], :name => "index_protips_on_slug"
   add_index "protips", ["user_id"], :name => "index_protips_on_user_id"
 
   create_table "purchased_bundles", :force => true do |t|

@@ -1,7 +1,7 @@
 require 'vcr_helper'
 
 RSpec.describe Account, :type => :model do
-  let(:team) { Fabricate(:team) }
+  let(:team) { Fabricate(:team, account: nil) }
   let(:account) { { stripe_card_token: new_token } }
 
   let(:admin) {
@@ -18,7 +18,7 @@ RSpec.describe Account, :type => :model do
   end
 
   def new_token
-		Stripe::Token.create(card: { number: 4242424242424242, cvc: 224, exp_month: 12, exp_year: 14 }).try(:id)
+    Stripe::Token.create(card: { number: 4242424242424242, cvc: 224, exp_month: 12, exp_year: 14 }).try(:id)
   end
 
   def post_job_for(team)
@@ -29,7 +29,7 @@ RSpec.describe Account, :type => :model do
 
     it 'should create a valid account locally and on stripe' do
       # TODO: Refactor api calls to Sidekiq job
-			VCR.use_cassette("Account") do
+      VCR.use_cassette("Account") do
 
         expect(team.account).to be_nil
         team.build_account(account)
@@ -45,8 +45,8 @@ RSpec.describe Account, :type => :model do
 
     it 'should still create an account if account admin not team admin' do
       # TODO: Refactor api calls to Sidekiq job
-			VCR.use_cassette("Account") do
-        
+      VCR.use_cassette("Account") do
+
         team.build_account(account)
         some_random_user = Fabricate(:user)
         team.account.admin_id = some_random_user.id
@@ -56,7 +56,7 @@ RSpec.describe Account, :type => :model do
 
       end
     end
-    
+
     # FIXME: This request does not produce the same results out of two calls, under the Account cassette.
     # 	Something is stomping its request.
     # 	1st call, under record all will pass this test
@@ -77,8 +77,8 @@ RSpec.describe Account, :type => :model do
 
     it 'should not allow stripe_customer_token or admin to be set/updated' do
       # TODO: Refactor api calls to Sidekiq job
-			VCR.use_cassette("Account") do
-        
+      VCR.use_cassette("Account") do
+
         some_random_user = Fabricate(:user)
         account[:stripe_customer_token] = "invalid_customer_token"
         account[:admin_id] = some_random_user.id
@@ -86,7 +86,7 @@ RSpec.describe Account, :type => :model do
         team.account.save_with_payment
         team.reload
         expect(team.account).to be_nil
-        
+
       end
     end
   end
@@ -99,15 +99,15 @@ RSpec.describe Account, :type => :model do
     describe 'free subscription' do
       before(:each) do
         # TODO: Refactor api calls to Sidekiq job
-				VCR.use_cassette("Account") do
-          
+        VCR.use_cassette("Account") do
+
           expect(team.account).to be_nil
           team.build_account(account)
           team.account.admin_id = admin.id
           team.account.save_with_payment
           team.account.subscribe_to!(free_plan)
           team.reload
-          
+
         end
       end
 
@@ -118,13 +118,13 @@ RSpec.describe Account, :type => :model do
 
       it 'should not allow any job posts' do
         # TODO: Refactor api calls to Sidekiq job
-				VCR.use_cassette("Account") do
-        
+        VCR.use_cassette("Account") do
+
           expect(team.can_post_job?).to eq(false)
           expect(team.premium?).to eq(false)
           expect(team.valid_jobs?).to eq(false)
           expect { Fabricate(:opportunity, team_document_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
-          
+
         end
       end
 
@@ -166,8 +166,8 @@ RSpec.describe Account, :type => :model do
     describe 'monthly paid subscription' do
       before(:each) do
         # TODO: Refactor api calls to Sidekiq job
-				VCR.use_cassette("Account") do
-          
+        VCR.use_cassette("Account") do
+
           expect(team.account).to be_nil
           team.build_account(account)
           team.account.admin_id = admin.id
@@ -195,15 +195,15 @@ RSpec.describe Account, :type => :model do
             Fabricate(:opportunity, team_document_id: team.id)
           end
           expect(team.can_post_job?).to eq(true)
-        
-      	end
+
+        end
       end
     end
 
     describe 'one-time job post charge' do
       before(:each) do
         # TODO: Refactor api calls to Sidekiq job
-				VCR.use_cassette("Account") do
+        VCR.use_cassette("Account") do
 
           expect(team.account).to be_nil
           team.build_account(account)
@@ -211,7 +211,7 @@ RSpec.describe Account, :type => :model do
           team.account.save_with_payment(onetime_plan)
           team.reload
 
-      	end
+        end
       end
       it 'should add a one-time job post charge' do
         expect(team.account.plan_ids).to include(onetime_plan.id)
@@ -231,14 +231,14 @@ RSpec.describe Account, :type => :model do
           expect(team.paid_job_posts).to eq(0)
           expect(team.can_post_job?).to eq(false)
           expect { Fabricate(:opportunity, team_document_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
-          
+
         end
       end
 
       it 'should allow upgrade to monthly subscription' do
         # TODO: Refactor api calls to Sidekiq job
-				VCR.use_cassette("Account") do
-        
+        VCR.use_cassette("Account") do
+
           team.account.update_attributes({stripe_card_token: new_token})
           team.account.save_with_payment(monthly_plan)
           team.reload
@@ -258,7 +258,7 @@ RSpec.describe Account, :type => :model do
 
       it 'should allow additional one time job post charges' do
         # TODO: Refactor api calls to Sidekiq job
-				VCR.use_cassette("Account") do
+        VCR.use_cassette("Account") do
 
           team.account.update_attributes({stripe_card_token: new_token})
           team.account.save_with_payment(onetime_plan)
@@ -274,7 +274,7 @@ RSpec.describe Account, :type => :model do
           expect(team.premium?).to eq(true)
           expect(team.valid_jobs?).to eq(true)
 
-      	end
+        end
       end
     end
   end

@@ -62,9 +62,15 @@ class AccountsController < ApplicationController
   end
 
   def send_invoice
-    @team = Team.find(params[:team_id])
-    @team.account.send_invoice_for(1.month.ago)
-    redirect_to teamname_path(slug: @team.slug), notice: "sent invoice for #{1.month.ago.strftime("%B")} to #{@team.account.admin.email}"
+    team, period = Team.find(params[:team_id]), 1.month.ago
+
+    if team.account.send_invoice_for(period)
+      flash[:notice] = "sent invoice for #{period.strftime("%B")} to #{team.account.admin.email}"
+    else
+      flash[:error] = 'There was an error in sending an invoice'
+    end
+
+    redirect_to teamname_path(slug: team.slug)
   end
 
   private
