@@ -1,0 +1,14 @@
+<!-- schema.org markup for Google Search integration (https://developers.google.com/webmasters/richsnippets/sitelinkssearch?utm_source=wmc-blog&utm_medium=direct-referral&utm_campaign=sitelinks-searchbox) -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "<%= root_url %>",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "<%= raw search_protips_url(scope: "everything") %>&search={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
