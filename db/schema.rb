@@ -398,8 +398,6 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.text     "organization_way"
     t.text     "organization_way_name"
     t.text     "organization_way_photo"
-    t.string   "office_photos",            :default => "{}"
-    t.string   "upcoming_events",          :default => "{}"
     t.string   "featured_links_title"
     t.text     "blog_feed"
     t.text     "our_challenge"
@@ -409,14 +407,6 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.string   "avatar"
     t.integer  "achievement_count",                                        :default => 0
     t.integer  "endorsement_count",                                        :default => 0
-    t.string   "interview_steps",          :default => "{}"
-    t.text     "hiring_tagline"
-    t.text     "link_to_careers_page"
-    t.string   "avatar"
-    t.integer  "achievement_count",        :default => 0
-    t.integer  "endorsement_count",        :default => 0
-    t.string   "invited_emails",           :default => "{}"
-    t.string   "pending_join_requests",    :default => "{}"
     t.datetime "upgraded_at"
     t.integer  "paid_job_posts",                                           :default => 0
     t.boolean  "monthly_subscription",                                     :default => false
