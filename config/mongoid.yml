@@ -1,7 +1,7 @@
 development:
    sessions:
     default:
-     database: heroku_app2303161
+     database: <%= ENV['MONGO_DATABASE'] || 'badgify_development' %>
      hosts:
        - <%= ENV['MONGO_URL'] || 'localhost:27017' %>
 
