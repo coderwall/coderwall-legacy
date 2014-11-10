@@ -26,10 +26,10 @@ RSpec.describe Team, :type => :model do
   end
 
   it 'should indicate if team member has referral' do
-    member_that_invited_user = Fabricate(:user, referral_token: 'asdfasdf')
+    member_that_invited_user = Fabricate(:user)
     team.add_user(member_that_invited_user)
 
-    expect(team.has_user_with_referral_token?('asdfasdf')).to eq(true)
+    expect(team.has_user_with_referral_token?(member_that_invited_user.referral_token)).to eq(true)
     expect(team.has_user_with_referral_token?("something else")).to eq(false)
   end
 

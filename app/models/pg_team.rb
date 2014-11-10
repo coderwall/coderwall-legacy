@@ -1,22 +1,31 @@
 #Rename to Team when Mongodb is dropped
 class PgTeam < ActiveRecord::Base
+  include TeamSearch
+  include TeamMigration
+
   self.table_name = 'teams'
   #TODO add inverse_of
-  has_one :account, class_name: 'Teams::Account', foreign_key: 'team_id', dependent: :destroy
+  has_one :account, class_name: 'Teams::Account', foreign_key: 'team_id', dependent: :delete
 
-  has_many :members, class_name: 'Teams::Member', foreign_key: 'team_id', dependent: :destroy
-  has_many :links, class_name: 'Teams::Link', foreign_key: 'team_id', dependent: :destroy
-  has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :destroy
+  has_many :members, class_name: 'Teams::Member', foreign_key: 'team_id', dependent: :delete_all
+  has_many :links, class_name: 'Teams::Link', foreign_key: 'team_id', dependent: :delete_all
+  has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
   has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
+
+  has_many :follows, class_name: 'FollowedTeam', foreign_key: 'team_id', dependent: :destroy
+  has_many :followers, through: :follows, source: :team
+
+  accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank
+
+  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
+
+  mount_uploader :avatar, TeamUploader
 
   before_validation :create_slug!
 
-  validates_uniqueness_of :slug
+  validates :slug, uniqueness: true, presence: true
 
-
-  private
-
-  def create_slug!
+  private def create_slug!
     self.slug = name.parameterize
   end
 
@@ -69,20 +78,15 @@ end
 #  organization_way         :text
 #  organization_way_name    :text
 #  organization_way_photo   :text
-#  office_photos            :string(255)      default("{}")
-#  upcoming_events          :string(255)      default("{}")
 #  featured_links_title     :string(255)
 #  blog_feed                :text
 #  our_challenge            :text
 #  your_impact              :text
-#  interview_steps          :string(255)      default("{}")
 #  hiring_tagline           :text
 #  link_to_careers_page     :text
 #  avatar                   :string(255)
 #  achievement_count        :integer          default(0)
 #  endorsement_count        :integer          default(0)
-#  invited_emails           :string(255)      default("{}")
-#  pending_join_requests    :string(255)      default("{}")
 #  upgraded_at              :datetime
 #  paid_job_posts           :integer          default(0)
 #  monthly_subscription     :boolean          default(FALSE)
@@ -93,4 +97,11 @@ end
 #  name                     :string(255)
 #  github_organization_name :string(255)
 #  team_size                :integer
+#  mongo_id                 :string(255)
+#  office_photos            :string(255)      default([]), is an Array
+#  upcoming_events          :text             default([]), is an Array
+#  interview_steps          :text             default([]), is an Array
+#  invited_emails           :string(255)      default([]), is an Array
+#  pending_join_requests    :string(255)      default([]), is an Array
+#  state                    :string(255)      default("active")
 #

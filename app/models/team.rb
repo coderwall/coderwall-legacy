@@ -73,7 +73,6 @@ class Team
   field :upcoming_events, type: Array, default: [] #just stubbed
 
   field :featured_links_title
-  embeds_many :featured_links, class_name: TeamLink.name
 
   field :blog_feed
   field :our_challenge
@@ -96,7 +95,7 @@ class Team
 
   field :pending_join_requests, type: Array, default: []
 
-  embeds_one :account
+
   field :upgraded_at
   field :paid_job_posts, default: 0
   field :monthly_subscription, default: false
@@ -110,9 +109,13 @@ class Team
   index({ name: 1 }, { unique: true })
   index({ slug: 1 }, { unique: true })
 
-  embeds_many :pending_team_members, class_name: 'TeamMember'
 
+
+  #migrated
   embeds_many :team_locations
+  embeds_one :account
+  embeds_many :featured_links, class_name: TeamLink.name
+  embeds_many :pending_team_members, class_name: 'TeamMember'
 
   accepts_nested_attributes_for :team_locations, :featured_links, allow_destroy: true, reject_if: :all_blank
 
@@ -126,6 +129,7 @@ class Team
   after_destroy :reindex_search
   after_destroy :remove_dependencies
 
+  #migrated
   scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
   class << self
@@ -461,18 +465,27 @@ class Team
     team_members.where(user_id: id_of(user)).first
   end
 
+  #migrated
+  # .members.top
   def top_team_member
     sorted_team_members.first
   end
 
+  #migrated
+  # .members.top(2)
   def top_two_team_members
     sorted_team_members[0...2] || []
   end
 
+
+  #migrated
+  # .members.top(3)
   def top_three_team_members
     sorted_team_members[0...3] || []
   end
 
+  #migrated
+  # .members.sorted
   def sorted_team_members
     @sorted_team_members = User.where(team_document_id: self.id.to_s).order('score_cache DESC')
   end
@@ -898,6 +911,11 @@ class Team
 
   def create_slug!
     self.slug = self.class.slugify(name)
+  end
+
+  after_create  do
+    #'create_pg_team'
+    TeamMigratorJob.new.perform(self.id.to_s)
   end
 
 end

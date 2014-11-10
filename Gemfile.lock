@@ -38,6 +38,16 @@ GIT
       mime-types (>= 1.25, < 3.0)
       rest-client (~> 1.4)
 
+GIT
+  remote: https://github.com/rebelidealist/stripe-ruby-mock
+  revision: f694a2792bf817932b3e9c4fe7ec51d00da03b4b
+  branch: live-tests
+  specs:
+    stripe-ruby-mock (2.0.0)
+      dante (>= 0.2.0)
+      jimson-temp
+      stripe (>= 1.15.0)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -106,6 +116,7 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    blankslate (3.1.3)
     bson (1.10.2)
     bson_ext (1.10.2)
       bson (~> 1.10.2)
@@ -176,6 +187,7 @@ GEM
       httparty (~> 0.10)
       json
     curb (0.8.6)
+    dante (0.2.0)
     database_cleaner (1.3.0)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
@@ -195,6 +207,19 @@ GEM
       execjs
     eco-source (1.1.0.rc.1)
     ejs (1.1.1)
+    elasticsearch (1.0.4)
+      elasticsearch-api (= 1.0.4)
+      elasticsearch-transport (= 1.0.4)
+    elasticsearch-api (1.0.4)
+      multi_json
+    elasticsearch-model (0.1.4)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-rails (0.1.4)
+    elasticsearch-transport (1.0.4)
+      faraday
+      multi_json
     em-http-request (1.1.2)
       addressable (>= 2.3.4)
       cookiejar
@@ -330,6 +355,11 @@ GEM
     jbuilder (2.1.3)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jimson-temp (0.9.5)
+      blankslate (>= 3.1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.4)
+      rest-client (~> 1.0)
     journey (1.0.4)
     jquery-rails (2.0.3)
       railties (>= 3.1.0, < 5.0)
@@ -758,6 +788,8 @@ DEPENDENCIES
   createsend
   database_cleaner
   dotenv-rails
+  elasticsearch-model
+  elasticsearch-rails
   ember-rails!
   fabrication-rails
   faraday (~> 0.8.1)
@@ -844,6 +876,7 @@ DEPENDENCIES
   spring-commands-rspec
   squeel (= 1.0.1)
   stripe!
+  stripe-ruby-mock!
   strong_parameters
   syntax
   timecop

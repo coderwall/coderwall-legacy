@@ -28,7 +28,6 @@ rm -rf tmp/cache
 bundle check || bundle install
 bundle clean --force
 bundle exec spring binstub --all
-rbenv rehash
 
 # Pre-flight Configuration
 

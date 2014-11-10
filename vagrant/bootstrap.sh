@@ -65,4 +65,5 @@ su - vagrant <<-'EOF'
   # Force the app to use the internal Postgres port number and ignore .env
   bundle exec rake db:migrate
   bundle exec rake db:test:prepare
+
 EOF
