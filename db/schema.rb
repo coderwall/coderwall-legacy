@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(:version => 20141015182230) do
 
   add_extension "citext"
+  add_extension "hstore"
 
   create_table "alias_tags", :id => false, :force => true do |t|
     t.integer "tag_id"
@@ -104,7 +105,7 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
   create_table "followed_teams", :force => true do |t|
     t.integer  "user_id"
     t.string   "team_document_id"
-    t.datetime "created_at",       :default => '2014-02-20 22:39:11'
+    t.datetime "created_at",       :default => '2012-03-12 21:01:09'
   end
 
   add_index "followed_teams", ["team_document_id"], :name => "index_followed_teams_on_team_document_id"
@@ -396,20 +397,20 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.text     "organization_way"
     t.text     "organization_way_name"
     t.text     "organization_way_photo"
-    t.string   "office_photos",            :default => [],                    :array => true
-    t.string   "upcoming_events",          :default => [],                    :array => true
+    t.string   "office_photos",            :default => "{}"
+    t.string   "upcoming_events",          :default => "{}"
     t.string   "featured_links_title"
     t.text     "blog_feed"
     t.text     "our_challenge"
     t.text     "your_impact"
-    t.string   "interview_steps",          :default => [],                    :array => true
+    t.string   "interview_steps",          :default => "{}"
     t.text     "hiring_tagline"
     t.text     "link_to_careers_page"
     t.string   "avatar"
     t.integer  "achievement_count",        :default => 0
     t.integer  "endorsement_count",        :default => 0
-    t.string   "invited_emails",           :default => [],                    :array => true
-    t.string   "pending_join_requests",    :default => [],                    :array => true
+    t.string   "invited_emails",           :default => "{}"
+    t.string   "pending_join_requests",    :default => "{}"
     t.datetime "upgraded_at"
     t.integer  "paid_job_posts",           :default => 0
     t.boolean  "monthly_subscription",     :default => false
@@ -486,7 +487,7 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.integer  "user_id"
     t.string   "name"
     t.text     "data"
-    t.datetime "created_at", :default => '2014-02-20 22:39:11'
+    t.datetime "created_at", :default => '2012-03-12 21:01:10'
   end
 
   create_table "users", :force => true do |t|
@@ -507,8 +508,8 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.string   "bitbucket"
     t.string   "codeplex"
     t.integer  "login_count",                   :default => 0
-    t.datetime "last_request_at",               :default => '2014-07-17 13:10:04'
-    t.datetime "achievements_checked_at",       :default => '1914-02-20 22:39:10'
+    t.datetime "last_request_at",               :default => '2014-07-23 03:14:36'
+    t.datetime "achievements_checked_at",       :default => '1911-08-12 21:49:21'
     t.text     "claim_code"
     t.integer  "github_id"
     t.string   "country"
@@ -518,7 +519,7 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.float    "lng"
     t.integer  "http_counter"
     t.string   "github_token"
-    t.datetime "twitter_checked_at",            :default => '1914-02-20 22:39:10'
+    t.datetime "twitter_checked_at",            :default => '1911-08-12 21:49:21'
     t.string   "title"
     t.string   "company"
     t.string   "blog"
@@ -555,6 +556,7 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.string   "tracking_code"
     t.string   "utm_campaign"
     t.float    "score_cache",                   :default => 0.0
+    t.string   "gender"
     t.boolean  "notify_on_follow",              :default => true
     t.string   "api_key"
     t.datetime "remind_to_create_team"
@@ -565,6 +567,12 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.text     "team_responsibilities"
     t.string   "team_avatar"
     t.string   "team_banner"
+    t.string   "stat_name_1"
+    t.string   "stat_number_1"
+    t.string   "stat_name_2"
+    t.string   "stat_number_2"
+    t.string   "stat_name_3"
+    t.string   "stat_number_3"
     t.float    "ip_lat"
     t.float    "ip_lng"
     t.float    "penalty",                       :default => 0.0
@@ -573,9 +581,12 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.string   "resume"
     t.string   "sourceforge"
     t.string   "google_code"
+    t.boolean  "sales_rep",                     :default => false
     t.string   "visits",                        :default => ""
     t.string   "visit_frequency",               :default => "rarely"
+    t.integer  "pitchbox_id"
     t.boolean  "join_badge_orgs",               :default => false
+    t.boolean  "use_social_for_pitchbox",       :default => false
     t.datetime "last_asm_email_at"
     t.datetime "banned_at"
     t.string   "last_ip"
@@ -639,9 +650,9 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.string   "homepage"
     t.boolean  "fork",                        :default => false
     t.integer  "forks_count",                 :default => 0
-    t.datetime "forks_count_updated_at",      :default => '2014-07-18 23:03:00'
+    t.datetime "forks_count_updated_at",      :default => '2014-07-23 03:14:37'
     t.integer  "stargazers_count",            :default => 0
-    t.datetime "stargazers_count_updated_at", :default => '2014-07-18 23:03:00'
+    t.datetime "stargazers_count_updated_at", :default => '2014-07-23 03:14:37'
     t.string   "language"
     t.integer  "followers_count",             :default => 0,                     :null => false
     t.integer  "github_id",                                                      :null => false
