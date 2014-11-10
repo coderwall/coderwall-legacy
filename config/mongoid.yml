@@ -1,7 +1,7 @@
 development:
    sessions:
     default:
-     database: badgify_development
+     database: <%= ENV['MONGO_DATABASE'] || 'badgify_development' %>
      hosts:
        - <%= ENV['MONGO_URL'] || 'localhost:27017' %>
 
