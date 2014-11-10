@@ -242,7 +242,7 @@ class User < ActiveRecord::Base
   end
 
   def on_team?
-    !team_document_id.nil?
+    not team_document_id.nil?
   end
 
   def team_member_of?(user)

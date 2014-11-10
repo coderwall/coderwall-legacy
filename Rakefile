@@ -30,9 +30,9 @@ namespace :team do
   #
 
   task verify: :environment do
-    ActiveRecord::Base.logger = nil
-    Mongoid.logger = nil
-    Moped.logger = nil
+    #ActiveRecord::Base.logger = nil
+    #Mongoid.logger = nil
+    #Moped.logger = nil
 
     PgTeam.find_each(batch_size: 100) do |pg_team|
       begin

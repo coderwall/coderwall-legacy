@@ -98,7 +98,6 @@ module TeamsHelper
     @team.size >= 3 && @team.rank > 0
   end
 
-
   def friendly_team_path(team)
     teamname_path(slug: team.slug)
   end
