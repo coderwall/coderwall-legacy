@@ -77,14 +77,14 @@ RSpec.describe Protip, :type => :model do
     it 'is reindexed if username or team change' do
       team = Fabricate(:team, name: "first-team")
       user = Fabricate(:user, username: "initial-username")
-      team.add_user(user)
+      team.add_member(user)
       protip = Fabricate(:protip, body: 'protip by user on team', title: "content #{rand(100)}", user: user)
       user.reload
       expect(Protip.search("team.name:first-team").results.first.title).to eq(protip.title)
       team2 = Fabricate(:team, name: "second-team")
-      team.remove_user(user)
+      team.remove_member(user)
       user.reload
-      team2.add_user(user)
+      team2.add_member(user)
       user.reload
       expect(Protip.search("team.name:first-team").results.count).to eq(0)
       expect(Protip.search("team.name:second-team").results.first.title).to eq(protip.title)
@@ -248,14 +248,14 @@ RSpec.describe Protip, :type => :model do
     end
 
     it 'should weigh team member upvotes less' do
-      protip.author.team_document_id = "4f271930973bf00004000001"
+      protip.author.team_id = "4f271930973bf00004000001"
       protip.author.save
-      team_member = Fabricate(:user, team_document_id: protip.author.team_document_id)
+      team_member = Fabricate(:user, team_id: protip.author.team_id)
       team_member.score_cache = 5
       protip.upvote_by(team_member, team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
       expect(protip.upvotes_value).to eq(2)
-      non_team_member = Fabricate(:user, team_document_id: "4f271930973bf00004000002")
+      non_team_member = Fabricate(:user, team_id: "4f271930973bf00004000002")
       non_team_member.score_cache = 5
       protip.upvote_by(non_team_member, non_team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
@@ -293,7 +293,7 @@ RSpec.describe Protip, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140728214411
+# Schema version: 20140918031936
 #
 # Table name: protips
 #

@@ -18,9 +18,9 @@ class LifecycleMarketing
     def send_reminders_to_invite_team_members
       key = 'email:team-reminders:teams-emailed'
       Redis.current.del(key)
-      valid_activity_users.where("team_document_id IS NOT NULL").where(remind_to_invite_team_members: nil).find_each do |user|
-        unless Redis.current.sismember(key, user.team_document_id) or Team.find(user.team_document_id).created_at < 1.week.ago
-          Redis.current.sadd key, user.team_document_id
+      valid_activity_users.where("team_id IS NOT NULL").where(remind_to_invite_team_members: nil).find_each do |user|
+        unless Redis.current.sismember(key, user.team_id) or Team.find(user.team_id).created_at < 1.week.ago
+          Redis.current.sadd key, user.team_id
           NotifierMailer.remind_to_invite_team_members(user.username).deliver
         end
       end

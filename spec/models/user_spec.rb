@@ -217,7 +217,7 @@ RSpec.describe User, :type => :model do
 
   it 'should indicate when user is on a premium team' do
     team = Fabricate(:team, premium: true)
-    team.add_user(user = Fabricate(:user))
+    team.add_member(user = Fabricate(:user))
     expect(user.on_premium_team?).to eq(true)
   end
 
@@ -229,7 +229,7 @@ RSpec.describe User, :type => :model do
   it 'should not error if the users team has been deleted' do
     team = Fabricate(:team)
     user = Fabricate(:user)
-    team.add_user(user)
+    team.add_member(user)
     team.destroy
     expect(user.team).to be_nil
   end
@@ -344,6 +344,7 @@ RSpec.describe User, :type => :model do
 end
 
 # == Schema Information
+# Schema version: 20140918031936
 #
 # Table name: users
 #

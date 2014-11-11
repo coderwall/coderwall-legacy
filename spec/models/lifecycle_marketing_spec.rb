@@ -22,13 +22,13 @@ RSpec.describe LifecycleMarketing, :type => :model do
 
   describe 'reminding user to invite team members' do
     it 'should only if they are on a team' do
-      user_on_team = Fabricate(:user, receive_newsletter: true, team_document_id: Fabricate(:team).id.to_s)
+      user_on_team = Fabricate(:user, receive_newsletter: true, team_id: Fabricate(:team).id.to_s)
       LifecycleMarketing.send_reminders_to_invite_team_members
       expect(ActionMailer::Base.deliveries.size).to eq(1)
     end
 
     it 'should not send multiple reminders' do
-      user_on_team = Fabricate(:user, receive_newsletter: true, team_document_id: Fabricate(:team).id.to_s)
+      user_on_team = Fabricate(:user, receive_newsletter: true, team_id: Fabricate(:team).id.to_s)
       LifecycleMarketing.send_reminders_to_invite_team_members
       user_on_team.update_attributes!(last_email_sent: 2.weeks.ago)
       LifecycleMarketing.send_reminders_to_invite_team_members
@@ -36,15 +36,15 @@ RSpec.describe LifecycleMarketing, :type => :model do
     end
 
     it 'should not if they are not on a team' do
-      user_on_team = Fabricate(:user, receive_newsletter: true, team_document_id: nil)
+      user_on_team = Fabricate(:user, receive_newsletter: true, team_id: nil)
       LifecycleMarketing.send_reminders_to_invite_team_members
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it 'should only send email to a team once a day' do
       team_id = Fabricate(:team).id.to_s
-      member1 = Fabricate(:user, email: 'member1@test.com', receive_newsletter: true, team_document_id: team_id)
-      member2 = Fabricate(:user, email: 'member2@test.com', receive_newsletter: true, team_document_id: team_id)
+      member1 = Fabricate(:user, email: 'member1@test.com', receive_newsletter: true, team_id: team_id)
+      member2 = Fabricate(:user, email: 'member2@test.com', receive_newsletter: true, team_id: team_id)
       LifecycleMarketing.send_reminders_to_invite_team_members
       expect(ActionMailer::Base.deliveries.size).to eq(1)
       expect(ActionMailer::Base.deliveries.last.to).to include(member1.email)
@@ -54,7 +54,7 @@ RSpec.describe LifecycleMarketing, :type => :model do
   describe 'reminding users when they get new achievements' do
     it 'should send only one email at a time' do
       team_id = Fabricate(:team).id.to_s
-      user = Fabricate(:user, email: 'member2@test.com', receive_newsletter: true, team_document_id: team_id)
+      user = Fabricate(:user, email: 'member2@test.com', receive_newsletter: true, team_id: team_id)
       badge1 = Fabricate(:badge, user: user, badge_class_name: Badges.all.first.to_s, created_at: Time.now)
       badge2 = Fabricate(:badge, user: user, badge_class_name: Badges.all.second.to_s, created_at: Time.now + 1.second)
       badge3 = Fabricate(:badge, user: user, badge_class_name: Badges.all.third.to_s, created_at: Time.now + 2.seconds)
@@ -68,7 +68,7 @@ RSpec.describe LifecycleMarketing, :type => :model do
 
     it 'should not send email if user visited since earning achievements' do
       team_id = Fabricate(:team).id.to_s
-      user = Fabricate(:user, email: 'member2@test.com', receive_newsletter: true, team_document_id: team_id)
+      user = Fabricate(:user, email: 'member2@test.com', receive_newsletter: true, team_id: team_id)
       badge1 = Fabricate(:badge, user: user, badge_class_name: Badges.all.first.to_s, created_at: Time.now)
       badge2 = Fabricate(:badge, user: user, badge_class_name: Badges.all.second.to_s, created_at: Time.now + 1.second)
       badge3 = Fabricate(:badge, user: user, badge_class_name: Badges.all.third.to_s, created_at: Time.now + 2.seconds)

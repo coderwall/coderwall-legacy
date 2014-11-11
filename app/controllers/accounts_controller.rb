@@ -22,7 +22,7 @@ class AccountsController < ApplicationController
 
     if @account.save_with_payment(@plan)
       unless @team.is_member?(current_user)
-        @team.add_user(current_user)
+        @team.add_member(current_user)
         @team.save
       end
       record_event('upgraded team')
@@ -85,7 +85,7 @@ class AccountsController < ApplicationController
   end
 
   def determine_plan
-    chosen_plan = params[:account].delete(:chosen_plan)
+    chosen_plan = params[:teams_account].delete(:chosen_plan)
     @plan       = Plan.find_by_public_id(chosen_plan)
   end
 

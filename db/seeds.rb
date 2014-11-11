@@ -135,8 +135,8 @@ puts '---- TEAMS ----'
 
 team_name = 'Put a Bird on It'
 paboi = Team.where(name: team_name).try(:first) || Team.create!(name: team_name)
-paboi.add_user(lisa)
-paboi.add_user(bryce)
+paboi.add_member(lisa)
+paboi.add_member(bryce)
 
 paboi.benefit_name_1 = 'Putting birds on things.'
 paboi.big_quote = 'The dream of the 90s is alive in Portland!'

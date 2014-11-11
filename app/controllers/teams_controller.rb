@@ -39,21 +39,26 @@ class TeamsController < ApplicationController
   end
 
   def show
+
     show_params = params.permit(:job_id, :refresh, :callback, :id, :slug)
 
     respond_to do |format|
       format.html do
         @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
+
         return render_404 if @team.nil?
+
         @team_protips = @team.trending_protips(4)
         @query = "team:#{@team.slug}"
         viewing_user.track_team_view!(@team) if viewing_user
         @team.viewed_by(viewing_user || session_id) unless is_admin?
         @job = show_params[:job_id].nil? ? @team.jobs.sample : Opportunity.with_public_id(show_params[:job_id])
+
         @other_jobs = @team.jobs.reject { |job| job.id == @job.id } unless @job.nil?
         @job_page = show_params[:job_id].present?
         return render(:premium) if show_premium_page?
       end
+
       format.json do
         options = { :expires_in => 5.minutes }
         options[:force] = true if !show_params[:refresh].blank?
@@ -104,6 +109,10 @@ class TeamsController < ApplicationController
     end
   end
 
+  #def team_to_regex(team)
+  #team.name.gsub(/ \-\./, '.*')
+  #end
+
   def edit
     edit_params = params.permit(:slug, :id)
 
@@ -145,12 +154,17 @@ class TeamsController < ApplicationController
   end
 
   def follow
+
+    require 'pry'; binding.pry
+
+
     # TODO move to concern
-    if params[:id] =~ /^[0-9A-F]{24}$/i
-      @team = Team.find(params[:id])
-    else
-      @team = Team.where(slug: params[:id]).first
-    end
+    @team = if params[:id].present? && (params[:id].to_i rescue nil)
+              Team.find(params[:id].to_i)
+            else
+              Team.where(slug: params[:id]).first
+            end
+
     if current_user.following_team?(@team)
       current_user.unfollow_team!(@team)
     else
@@ -191,7 +205,7 @@ class TeamsController < ApplicationController
 
     @team = Team.find(accept_params[:id])
     if accept_params[:r] && @team.has_user_with_referral_token?(accept_params[:r])
-      @team.add_user(current_user)
+      @team.add_member(current_user)
       current_user.update_attribute(:referred_by, accept_params[:r]) if current_user.referred_by.nil?
       flash[:notice] = "Welcome to team #{@team.name}"
       record_event("accepted team invite")
@@ -268,11 +282,12 @@ class TeamsController < ApplicationController
 
   protected
 
-
   def team_from_params(opts)
-    return Team.where(slug: opts[:slug].downcase).first if opts[:slug].present?
-
-    Team.find(opts[:id])
+    if opts[:slug].present?
+      Team.where(slug: opts[:slug].downcase).first
+    else
+      Team.find(opts[:id])
+    end
   end
 
   def replace_section(section_name)
@@ -298,7 +313,7 @@ class TeamsController < ApplicationController
   end
 
   def job_public_ids
-    Rails.cache.fetch('all-jobs-public-ids', :expires_in => 1.hour) { Opportunity.select(:public_id).group('team_document_id, created_at, public_id').map(&:public_id) }
+    Rails.cache.fetch('all-jobs-public-ids', :expires_in => 1.hour) { Opportunity.select(:public_id).group('team_id, created_at, public_id').map(&:public_id) }
   end
 
   def next_job(job)

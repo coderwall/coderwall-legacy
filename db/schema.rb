@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.integer  "inviter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "team_id"
   end
 
   create_table "likes", :force => true do |t|
@@ -295,6 +296,7 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.string   "team_document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "team_id"
   end
 
   create_table "sent_mails", :force => true do |t|

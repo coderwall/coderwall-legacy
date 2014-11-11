@@ -1,188 +1,138 @@
-# encoding: utf-8
-# Postgresed  [WIP] : Pg_Team
+# encoding utf-8
 require 'search'
 
-class Team
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Tire::Model::Search
-  include LeaderboardRedisRank
+#Rename to Team when Mongodb is dropped
+class Team < ActiveRecord::Base
   include SearchModule
+  include TeamSearch
+  mapping team: {
+    properties: {
+      id:                 { type: 'string', index: 'not_analyzed' },
+      slug:               { type: 'string', index: 'not_analyzed' },
+      name:               { type: 'string', boost: 100, analyzer: 'snowball' },
+      score:              { type: 'float', index: 'not_analyzed' },
+      size:               { type: 'integer', index: 'not_analyzed' },
+      avatar:             { type: 'string', index: 'not_analyzed' },
+      country:            { type: 'string', boost: 50, analyzer: 'snowball' },
+      url:                { type: 'string', index: 'not_analyzed' },
+      follow_path:        { type: 'string', index: 'not_analyzed' },
+      hiring:             { type: 'boolean', index: 'not_analyzed' },
+      total_member_count: { type: 'integer', index: 'not_analyzed' },
+      completed_sections: { type: 'integer', index: 'not_analyzed' },
+      team_members:       { type: 'multi_field', fields: {
+        username:    { type: 'string', index: 'not_analyzed' },
+        profile_url: { type: 'string', index: 'not_analyzed' },
+        avatar:      { type: 'string', index: 'not_analyzed' }
+      } }
+    }
+  }
+
+  include LeaderboardRedisRank
   include TeamAnalytics
-
-  # Disabled Team indexing because it slows down updates
-  # we should BG this
-  #include Tire::Model::Callbacks
-
-  include TeamMapping
+  include TeamMigration
 
   DEFAULT_HEX_BRAND        = '#343131'
   LEADERBOARD_KEY          = 'teams:leaderboard'
   FEATURED_TEAMS_CACHE_KEY = 'featured_teams_results'
   MAX_TEAM_SCORE           = 400
 
-  field :name
-  field :website
-  field :location
-  field :about
-  field :total, default: 0
-  field :size, default: 0
-  field :mean, default: 0
-  field :median, default: 0
-  field :score, default: 0
-  field :twitter
-  field :facebook
-  field :slug
-  field :premium, default: false, type: Boolean
-  field :analytics, default: false, type: Boolean
-  field :valid_jobs, default: false, type: Boolean
-  field :hide_from_featured, default: false, type: Boolean
-  field :preview_code
-  field :youtube_url
+  self.table_name = 'teams'
 
-  field :github_organization_name
-  alias :github :github_organization_name
+  #TODO add inverse_of
+  has_one :account, class_name: 'Teams::Account', foreign_key: 'team_id', dependent: :delete
 
-  field :highlight_tags
-  field :branding
-  field :headline
-  field :big_quote
-  field :big_image
-  field :featured_banner_image
+  has_many :members, class_name: 'Teams::Member', foreign_key: 'team_id', dependent: :delete_all
+  has_many :links, class_name: 'Teams::Link', foreign_key: 'team_id', dependent: :delete_all
+  has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
 
-  field :benefit_name_1
-  field :benefit_description_1
-  field :benefit_name_2
-  field :benefit_description_2
-  field :benefit_name_3
-  field :benefit_description_3
+  def featured_links
+    links
+  end
 
-  field :reason_name_1
-  field :reason_description_1
-  field :reason_name_2
-  field :reason_description_2
-  field :reason_name_3
-  field :reason_description_3
-  field :why_work_image
+  has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
 
-  field :organization_way
-  field :organization_way_name
-  field :organization_way_photo
+  #def jobs
+  #all_jobs.valid
+  #end
 
-  field :office_photos, type: Array, default: []
-  field :upcoming_events, type: Array, default: [] #just stubbed
+  #Replaced with jobs
+  def all_jobs
+    jobs.order('created_at DESC')
+  end
 
-  field :featured_links_title
+  has_many :follows, class_name: 'FollowedTeam', foreign_key: 'team_id', dependent: :destroy
+  has_many :followers, through: :follows, source: :team
 
-  field :blog_feed
-  field :our_challenge
-  field :your_impact
+  accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank
 
-  field :interview_steps, type: Array, default: []
-  field :hiring_tagline
-  field :link_to_careers_page
+  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
-  field :avatar
-  mount_uploader :avatar, AvatarUploader
+  mount_uploader :avatar, TeamUploader
 
-  field :achievement_count, default: 0
-  field :endorsement_count, default: 0
-  field :invited_emails, type: Array, default: []
-  field :country_id
+  before_validation :create_slug!
 
-  field :admins, type: Array, default: []
-  field :editors, type: Array, default: []
+  validates :slug, uniqueness: true, presence: true
+  validates :name, presence: true
 
-  field :pending_join_requests, type: Array, default: []
-
-
-  field :upgraded_at
-  field :paid_job_posts, default: 0
-  field :monthly_subscription, default: false
-  field :stack_list, default: nil
-  field :number_of_jobs_to_show, default: 2
-
-  validates_presence_of :name
-  validates_uniqueness_of :name
-  validates_uniqueness_of :slug
-
-  index({ name: 1 }, { unique: true })
-  index({ slug: 1 }, { unique: true })
-
-
-
-  #migrated
-  embeds_many :team_locations
-  embeds_one :account
-  embeds_many :featured_links, class_name: TeamLink.name
-  embeds_many :pending_team_members, class_name: 'TeamMember'
-
-  accepts_nested_attributes_for :team_locations, :featured_links, allow_destroy: true, reject_if: :all_blank
+  private def create_slug!
+    self.slug = name.parameterize
+  end
 
   before_save :update_team_size!
   before_save :clear_cache_if_premium_team
-  before_validation :create_slug!
   before_validation :fix_website_url!
-  attr_accessor :skip_validations
   after_create :generate_event
   after_save :reindex_search
   after_destroy :reindex_search
   after_destroy :remove_dependencies
 
-  #migrated
   scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
-  class << self
+  def self.search(query_string, country, page, per_page, search_type = :query_and_fetch)
+    country = query_string.gsub!(/country:(.+)/, '') && $1 if country.nil?
+    query = ''
 
-    def search(query_string, country, page, per_page, search_type = :query_and_fetch)
-      country = query_string.gsub!(/country:(.+)/, '') && $1 if country.nil?
-      query   = ""
-      if query_string.blank? or query_string =~ /:/
-        query += query_string
-      else
-        query += "name:#{query_string}*"
+    if query_string.blank? or query_string =~ /:/
+      query += query_string
+    else
+      query += "name:#{query_string}*"
+    end
+
+    begin
+      tire.search(load: false, search_type: search_type, page: page, per_page: per_page) do
+        query { string query, default_operator: 'AND' } if query_string.present?
+        filter :term, country: country unless country.nil?
+        sort { by [{ score: 'desc', total_member_count: 'desc', '_score' => {} }] }
       end
-      #query += "country:#{country}" unless country.nil?
-      begin
-        tire.search(load: false, search_type: search_type, page: page, per_page: per_page) do
-          query { string query, default_operator: 'AND' } if query_string.present?
-          filter :term, country: country unless country.nil?
-          sort { by [{ score: 'desc', total_member_count: 'desc', '_score' => {} }] }
-        end
-      rescue Tire::Search::SearchRequestFailed => e
-        SearchResultsWrapper.new(nil, "Looks like our teams server is down. Try again soon.")
-      end
+    rescue Tire::Search::SearchRequestFailed => e
+      SearchResultsWrapper.new(nil, "Looks like our teams server is down. Try again soon.")
     end
+  end
 
-    def slugify(name)
-      if !!(name =~ /\p{Latin}/)
-        name.to_s.downcase.gsub(/[^a-z0-9]+/i, '-').chomp('-')
-      else
-        name.to_s.gsub(/\s/, "-")
-      end
+  def self.slugify(name)
+    if !!(name =~ /\p{Latin}/)
+      name.to_s.downcase.gsub(/[^a-z0-9]+/i, '-').chomp('-')
+    else
+      name.to_s.gsub(/\s/, "-")
     end
+  end
 
-    def has_jobs
-      Team.find(Opportunity.valid.select(:team_document_id).map(&:team_document_id))
-    end
+  def self.most_relevant_featured_for(user)
+    Team.featured.sort_by { |team| -team.match_score_for(user) }
+  end
 
-    def most_relevant_featured_for(user)
-      Team.featured.sort_by { |team| -team.match_score_for(user) }
-    end
+  def self.completed_at_least(section_count = 6, page=1, per_page=Team.count, search_type = :query_and_fetch)
+    Team.search("completed_sections:[ #{section_count} TO * ]", nil, page, per_page, search_type)
+  end
 
-    def completed_at_least(section_count = 6, page=1, per_page=Team.count, search_type = :query_and_fetch)
-      Team.search("completed_sections:[ #{section_count} TO * ]", nil, page, per_page, search_type)
-    end
+  def self.with_similar_names(name)
+    name.gsub!(/ \-\./, '.*')
+    teams = Team.any_of({ :name => /#{name}.*/i }).limit(3).to_a
+  end
 
-    def with_completed_section(section)
-      empty = Team.new.send(section).is_a?(Array) ? [] : nil
-      Team.where(section.to_sym.ne => empty)
-    end
-
-    def with_similar_names(name)
-      name.gsub!(/ \-\./, '.*')
-      teams = Team.any_of({ :name => /#{name}.*/i }).limit(3).to_a
-    end
+  def self.with_completed_section(section)
+    empty = Team.new.send(section).is_a?(Array) ? [] : nil
+    Team.where(section.to_sym.ne => empty)
   end
 
   def relevancy
@@ -224,6 +174,10 @@ class Team
     trending_protips.size > 0
   end
 
+  def trending_protips(limit=4)
+    Protip.search_trending_by_team(slug, nil, 1, limit)
+  end
+
   def company?
     true
   end
@@ -232,44 +186,39 @@ class Team
     true
   end
 
-  def trending_protips(limit=4)
-    Protip.search_trending_by_team(self.slug, nil, 1, limit)
-  end
-
   def locations
     (location || '').split(';').collect { |location| location.strip }
   end
 
   def locations_message
     if premium?
-      team_locations.collect(&:name).join(', ')
+      locations.collect(&:name).join(', ')
     else
       locations.join(', ')
     end
   end
 
   def dominant_country_of_members
-    User.where(team_document_id: self.id.to_s).select([:country, 'count(country) as count']).group([:country]).order('count DESC').limit(1).map(&:country)
+    members.select([:country, 'count(country) as count']).group([:country]).order('count DESC').limit(1).map(&:country)
   end
 
   def team_members
-    User.where(team_document_id: self.id.to_s).all
+    members
   end
-
 
   def reach
     team_member_ids = team_members.map(&:id)
     Follow.where(followable_type: 'User', followable_id: team_member_ids).count + Follow.where(follower_id: team_member_ids, follower_type: 'User').count
-    #team_members.collect{|member| member.followers.count + member.following.count }.sum
+  end
+
+  def on_team?(user)
+    has_member?(user)
   end
 
   def has_member?(user)
     team_members.include?(user)
   end
 
-  def on_team?(user)
-    has_member?(user)
-  end
 
   def branding_hex_color
     branding || DEFAULT_HEX_BRAND
@@ -405,7 +354,7 @@ class Team
   end
 
   def has_locations?
-    !team_locations.blank?
+    !locations.blank?
   end
 
   def has_featured_links?
@@ -487,8 +436,9 @@ class Team
   #migrated
   # .members.sorted
   def sorted_team_members
-    @sorted_team_members = User.where(team_document_id: self.id.to_s).order('score_cache DESC')
+    @sorted_team_members = members.order('score_cache DESC')
   end
+
 
   def add_user(user)
     touch!
@@ -498,12 +448,22 @@ class Team
     end
   end
 
-  def remove_user(user)
-    if user.team_document_id.to_s == self.id.to_s
-      user.update_attribute(:team_document_id, nil)
-      touch!
-      self.destroy if self.reload.empty?
-    end
+  def add_member(user)
+    Rails.logger.warn("Called #{self.class.name}#add_member(#{user.inspect}")
+    require 'pry'; binding.pry unless Rails.env.production?
+
+    return member if member = members.select { |m| m.user_id == user.id }
+    member = members.create(user_id: user.id)
+    save!
+    member
+  end
+
+  def remove_member(user)
+    require 'pry'; binding.pry
+
+    return nil unless member = members.select { |m| m.user_id == user.id }
+    members.destroy(member)
+    save!
   end
 
   def touch!
@@ -512,7 +472,7 @@ class Team
   end
 
   def total_member_count
-    User.where(team_document_id: self.id.to_s).count
+    members.count
   end
 
   def total_highlights_count
@@ -690,32 +650,28 @@ class Team
     Redis.current.zcount(user_views_key, epoch_since, epoch_now) + Redis.current.zcount(user_anon_views_key, epoch_since, epoch_now)
   end
 
-  def followers
-    FollowedTeam.where(team_document_id: self.id.to_s)
-  end
-
   def self.most_active_countries
     Country.where(name: User.select([:country, 'count(country) as count']).group(:country).order('count DESC').limit(10).map(&:country)).reverse
   end
 
   def primary_address
-    team_locations.first.try(:address) || primary_address_name
+    locations.first.try(:address) || primary_address_name
   end
 
   def primary_address_name
-    team_locations.first.try(:name)
+    locations.first.try(:name)
   end
 
   def primary_address_description
-    team_locations.first.try(:description)
+    locations.first.try(:description)
   end
 
   def primary_points_of_interest
-    team_locations.first.try(:points_of_interest).to_a
+    locations.first.try(:points_of_interest).to_a
   end
 
   def cities
-    team_locations.map(&:city).reject { |city| city.blank? }
+    locations.map(&:city).reject { |city| city.blank? }
   end
 
   def generate_event
@@ -745,18 +701,10 @@ class Team
     active_jobs.collect(&:title).uniq
   end
 
-  def jobs
-    all_jobs.valid
-  end
-
-  #Replaced with jobs
-  def all_jobs
-    Opportunity.where(team_document_id: self.id.to_s).order('created_at DESC')
-  end
 
 
 
-  SECTION_FIELDS = %w(about headline big_quote our_challenge benefit_description_1 organization_way office_photos stack_list reason_name_1 interview_steps team_locations blog_feed)
+  SECTION_FIELDS = %w(about headline big_quote our_challenge benefit_description_1 organization_way office_photos stack_list reason_name_1 interview_steps locations blog_feed)
 
 
   def visitors_interested_in_jobs
@@ -785,9 +733,9 @@ class Team
 
   def remove_dependencies
     [FollowedTeam, Invitation, Opportunity, SeizedOpportunity].each do |klass|
-      klass.where(team_document_id: self.id.to_s).delete_all
+      klass.where(team_id: self.id.to_s).delete_all
     end
-    User.where(team_document_id: self.id.to_s).update_all('team_document_id = NULL')
+    User.where(team_id: self.id.to_s).update_all('team_id = NULL')
   end
 
   def rerank!
@@ -868,7 +816,7 @@ class Team
   end
 
   def approve_join_request(user)
-    self.add_user(user)
+    self.add_member(user)
     self.pending_join_requests.delete user.id
   end
 
@@ -877,6 +825,7 @@ class Team
   end
 
   private
+
   def identify_visitor(visitor_name)
     visitor_id = visitor_name.to_i
     if visitor_id != 0 and visitor_name =~ /^[0-9]+$/i
@@ -902,7 +851,7 @@ class Team
 
   #Replaced with team_size attribute
   def update_team_size!
-    self.size = User.where(team_document_id: self.id.to_s).count
+    self.size = User.where(team_id: self.id.to_s).count
   end
 
   def clear_cache_if_premium_team
@@ -912,10 +861,80 @@ class Team
   def create_slug!
     self.slug = self.class.slugify(name)
   end
-
-  after_create  do
-    #'create_pg_team'
-    TeamMigratorJob.new.perform(self.id.to_s)
-  end
-
 end
+#
+
+# == Schema Information
+# Schema version: 20140918031936
+#
+# Table name: teams
+#
+#  id                       :integer          not null, primary key
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  website                  :string(255)
+#  about                    :text
+#  total                    :float            default(0.0)
+#  size                     :integer          default(0)
+#  mean                     :float            default(0.0)
+#  median                   :float            default(0.0)
+#  score                    :float            default(0.0)
+#  twitter                  :string(255)
+#  facebook                 :string(255)
+#  slug                     :string(255)
+#  premium                  :boolean          default(FALSE)
+#  analytics                :boolean          default(FALSE)
+#  valid_jobs               :boolean          default(FALSE)
+#  hide_from_featured       :boolean          default(FALSE)
+#  preview_code             :string(255)
+#  youtube_url              :string(255)
+#  github                   :string(255)
+#  highlight_tags           :string(255)
+#  branding                 :text
+#  headline                 :text
+#  big_quote                :text
+#  big_image                :string(255)
+#  featured_banner_image    :string(255)
+#  benefit_name_1           :text
+#  benefit_description_1    :text
+#  benefit_name_2           :text
+#  benefit_description_2    :text
+#  benefit_name_3           :text
+#  benefit_description_3    :text
+#  reason_name_1            :text
+#  reason_description_1     :text
+#  reason_name_2            :text
+#  reason_description_2     :text
+#  reason_name_3            :text
+#  reason_description_3     :text
+#  why_work_image           :text
+#  organization_way         :text
+#  organization_way_name    :text
+#  organization_way_photo   :text
+#  featured_links_title     :string(255)
+#  blog_feed                :text
+#  our_challenge            :text
+#  your_impact              :text
+#  hiring_tagline           :text
+#  link_to_careers_page     :text
+#  avatar                   :string(255)
+#  achievement_count        :integer          default(0)
+#  endorsement_count        :integer          default(0)
+#  upgraded_at              :datetime
+#  paid_job_posts           :integer          default(0)
+#  monthly_subscription     :boolean          default(FALSE)
+#  stack_list               :text             default("")
+#  number_of_jobs_to_show   :integer          default(2)
+#  location                 :string(255)
+#  country_id               :integer
+#  name                     :string(255)
+#  github_organization_name :string(255)
+#  team_size                :integer
+#  mongo_id                 :string(255)
+#  office_photos            :string(255)      default([]), is an Array
+#  upcoming_events          :text             default([]), is an Array
+#  interview_steps          :text             default([]), is an Array
+#  invited_emails           :string(255)      default([]), is an Array
+#  pending_join_requests    :string(255)      default([]), is an Array
+#  state                    :string(255)      default("active")
+#

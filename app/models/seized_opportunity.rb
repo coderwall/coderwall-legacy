@@ -2,7 +2,7 @@ class SeizedOpportunity < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140728214411
+# Schema version: 20140918031936
 #
 # Table name: seized_opportunities
 #
@@ -13,4 +13,5 @@ end
 #  team_document_id :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
+#  team_id          :integer
 #

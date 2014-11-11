@@ -1,4 +1,4 @@
-Fabricator(:pg_team) do
+Fabricator(:team) do
 end
 
 # == Schema Information

@@ -20,8 +20,6 @@ class Opportunity < ActiveRecord::Base
   validates :location, presence: true, allow_blank: false
   validates :location_city, presence: true, allow_blank: false, unless: lambda { location && anywhere?(location) }
   validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
-  validates :team_document_id, presence: true
-  
 
   before_validation :set_location_city
   before_save :update_cached_tags
@@ -37,49 +35,43 @@ class Opportunity < ActiveRecord::Base
   #remove default scope
   default_scope valid
 
-  attr_accessor :title
+  HUMANIZED_ATTRIBUTES = { name: 'Title' }
 
-  
-  HUMANIZED_ATTRIBUTES = {
-    name: "Title"
-  }
+  belongs_to :team, class_name: 'Team', touch: true
 
-  class << self
+  def self.human_attribute_name(attr,options={})
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
 
-    def human_attribute_name(attr,options={})
-      HUMANIZED_ATTRIBUTES[attr.to_sym] || super
-    end
+  def self.parse_salary(salary_string)
+    salary_string.match(/(\d+)\s*([kK]?)/)
+    number, thousands = Regexp.last_match[1], Regexp.last_match[2]
 
-    def parse_salary(salary_string)
-      salary_string.match(/(\d+)\s*([kK]?)/)
-      number, thousands = Regexp.last_match[1], Regexp.last_match[2]
-
-      if number.nil?
-        0
+    if number.nil?
+      0
+    else
+      salary = number.to_i
+      if thousands.downcase == 'k' || salary < 1000
+        salary * 1000
       else
-        salary = number.to_i
-        if thousands.downcase == 'k' or salary < 1000
-          salary * 1000
-        else
-          salary
-        end
+        salary
       end
     end
+  end
 
-    def based_on(tags)
-      query_string = "tags:#{tags.join(' OR ')}"
-      failover_scope = Opportunity.joins('inner join taggings on taggings.taggable_id = opportunities.id').joins('inner join tags on taggings.tag_id = tags.id').where("taggings.taggable_type = 'Opportunity' AND taggings.context = 'tags'").where('lower(tags.name) in (?)', tags.map(&:downcase)).group('opportunities.id').order('count(opportunities.id) desc')
-      Opportunity::Search.new(Opportunity, Opportunity::Search::Query.new(query_string), nil, nil, nil, failover: failover_scope).execute
-    end
+  def self.based_on(tags)
+    query_string = "tags:#{tags.join(' OR ')}"
+    failover_scope = Opportunity.joins('inner join taggings on taggings.taggable_id = opportunities.id').joins('inner join tags on taggings.tag_id = tags.id').where("taggings.taggable_type = 'Opportunity' AND taggings.context = 'tags'").where('lower(tags.name) in (?)', tags.map(&:downcase)).group('opportunities.id').order('count(opportunities.id) desc')
+    Opportunity::Search.new(Opportunity, Opportunity::Search::Query.new(query_string), nil, nil, nil, failover: failover_scope).execute
+  end
 
-    def with_public_id(public_id)
-      where(public_id: public_id).first
-    end
+  def self.with_public_id(public_id)
+    where(public_id: public_id).first
+  end
 
-    def random
-      uncached do
-        order('RANDOM()')
-      end
+  def self.random
+    uncached do
+      order('RANDOM()')
     end
   end
 
@@ -94,7 +86,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   def seize_by(user)
-    seized_opportunities.create!(user_id: user.id, team_document_id: team_document_id)
+    seized_opportunities.create!(user_id: user.id, team_id: team_id)
   end
 
   def seized_by?(user)
@@ -123,14 +115,14 @@ class Opportunity < ActiveRecord::Base
     if force
       super
     else
-      self.deleted = true
-      self.deleted_at = Time.now.utc
+      deleted = true
+      deleted_at = Time.now.utc
       save
     end
   end
 
   def set_expiration
-    self.expires_at = team.has_monthly_subscription? ? 1.year.from_now : 1.month.from_now
+    expires_at = team.has_monthly_subscription? ? 1.year.from_now : 1.month.from_now
   end
 
   def title
@@ -138,7 +130,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   def title=(new_title)
-    self.name = new_title
+    name = new_title
   end
 
   def accepts_applications?
@@ -192,10 +184,6 @@ class Opportunity < ActiveRecord::Base
     Redis.current.zcount(user_views_key, epoch_since, epoch_now) + Redis.current.zcount(user_anon_views_key, epoch_since, epoch_now)
   end
 
-  def team
-    @team ||= Team.find(team_document_id.to_s)
-  end
-
   def ensure_can_afford
     team.can_post_job?
   end
@@ -214,32 +202,31 @@ class Opportunity < ActiveRecord::Base
   end
 
   def to_html
-    CFM::Markdown.render self.description
+    CFM::Markdown.render(self.description)
   end
 
   def to_indexed_json
     to_public_hash.deep_merge(
-
-        public_id: public_id,
-        name: name,
-        description: description,
-        designation: designation,
-        opportunity_type: opportunity_type,
-        tags: cached_tags,
-        link: link,
-        salary: salary,
-        created_at: created_at,
-        updated_at: updated_at,
-        expires_at: expires_at,
-        apply: apply,
-        team: {
-          slug: team.slug,
-          id: team.id.to_s,
-          featured_banner_image: team.featured_banner_image,
-          big_image: team.big_image,
-          avatar_url: team.avatar_url,
-          name: team.name
-        }
+      public_id: public_id,
+      name: name,
+      description: description,
+      designation: designation,
+      opportunity_type: opportunity_type,
+      tags: cached_tags,
+      link: link,
+      salary: salary,
+      created_at: created_at,
+      updated_at: updated_at,
+      expires_at: expires_at,
+      apply: apply,
+      team: {
+        slug: team.slug,
+        id: team.id.to_s,
+        featured_banner_image: team.featured_banner_image,
+        big_image: team.big_image,
+        avatar_url: team.avatar_url,
+        name: team.name
+      }
     ).to_json(methods: [:to_param])
   end
 
@@ -264,6 +251,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   protected
+
   def set_location_city
     add_opportunity_locations_to_team
     locations = team.cities.compact.select { |city| location.include?(city) }
@@ -277,12 +265,12 @@ class Opportunity < ActiveRecord::Base
     geocoded_all = true
     location.split('|').each do |location_string|
       # skip if location is anywhere or already exists
-      if anywhere?(location_string) || team.team_locations.where(address: /.*#{location_string}.*/).count > 0
-        geocoded_all = false
+      if anywhere?(location_string) || team.locations.where(address: /.*#{location_string}.*/).count > 0
+          geocoded_all = false
         next
       end
 
-      geocoded_all &&= team.team_locations.build(address: location_string, name: location_string).geocode
+      geocoded_all &&= team.locations.build(address: location_string, name: location_string).geocode
     end
     geocoded_all || nil
   end
@@ -305,7 +293,7 @@ class Opportunity < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140728214411
+# Schema version: 20140918031936
 #
 # Table name: opportunities
 #

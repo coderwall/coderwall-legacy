@@ -9,13 +9,13 @@ RSpec.describe Opportunity, :type => :model do
     it "should create a valid opportunity" do
      	# TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-    
+
         tags = ["rails", "sinatra", "JQuery", "Clean, beautiful code"]
         opportunity = Fabricate(:opportunity, tags: tags)
         opportunity.save!
         expect(opportunity.name).not_to be_nil
         expect(opportunity.description).not_to be_nil
-        expect(opportunity.team_document_id).not_to be_nil
+        expect(opportunity.team_id).not_to be_nil
         expect(opportunity.tags.size).to eq(tags.size)
         expect(opportunity.cached_tags).to eq(tags.join(","))
 
@@ -25,10 +25,10 @@ RSpec.describe Opportunity, :type => :model do
     it 'can create opportunity with no tags without error' do
       # TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-        
+
       	skip "need to upgrade to latest rocket tag"
       	expect { Fabricate(:opportunity, tags: "") }.not_to raise_error
-        
+
       end
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe Opportunity, :type => :model do
         expect(opportunity).to be_valid
         expect(opportunity.deleted).to be_truthy
         expect(opportunity.deleted_at).not_to be_nil
-        
+
       end
     end
   end
@@ -54,7 +54,7 @@ RSpec.describe Opportunity, :type => :model do
     it "should parse salaries correctly" do
       # TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-        
+
         salary = Opportunity.parse_salary("100000")
         expect(salary).to eq(100000)
         salary = Opportunity.parse_salary("100")
@@ -63,7 +63,7 @@ RSpec.describe Opportunity, :type => :model do
         expect(salary).to eq(100000)
         salary = Opportunity.parse_salary("100 K")
         expect(salary).to eq(100000)
-        
+
       end
     end
   end
@@ -72,21 +72,21 @@ RSpec.describe Opportunity, :type => :model do
     it "should create a valid application" do
       # TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-        
+
         job = Fabricate(:job)
         job.salary = 25000
         user = Fabricate(:user)
         job.apply_for(user)
         expect(job.applicants.size).to eq(1)
         expect(job.applicants.first).to eq(user)
-        
+
       end
     end
 
     it "should not allow multiple applications" do
       # TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-        
+
         job = Fabricate(:job)
         user = Fabricate(:user)
         expect(user.already_applied_for?(job)).to be_falsey
@@ -97,7 +97,7 @@ RSpec.describe Opportunity, :type => :model do
         expect(job.applicants.first).to eq(user)
         expect(user.already_applied_for?(job)).to be_truthy
         expect(job.has_application_from?(user)).to be_truthy
-        
+
       end
     end
   end
@@ -106,31 +106,31 @@ RSpec.describe Opportunity, :type => :model do
     it "should set location_city" do
       # TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-        
+
         job = Fabricate(:job)
         job.location = "Amsterdam|San Francisco"
         job.save
         expect(job.location_city.split("|") - ["Amsterdam", "San Francisco"]).to eq([])
-        
+
       end
     end
 
     it "should not add anywhere to location_city" do
       # TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-        
+
         job = Fabricate(:job)
         job.location = "Amsterdam|San Francisco|anywhere"
         job.save
         expect(job.location_city.split("|") - ["Amsterdam", "San Francisco"]).to eq([])
-        
+
       end
     end
 
     it "should update location_city with changes" do
       # TODO: Refactor api calls to Sidekiq job
 			VCR.use_cassette('Opportunity') do
-        
+
         job = Fabricate(:job)
         job.location = "Amsterdam|San Francisco"
         job.save
@@ -138,7 +138,7 @@ RSpec.describe Opportunity, :type => :model do
         job.location = "Amsterdam"
         job.save
         expect(job.location_city).to eq("Amsterdam")
-        
+
       end
     end
 
@@ -149,7 +149,7 @@ RSpec.describe Opportunity, :type => :model do
         job = Fabricate(:job)
         job.location = "San Francisco"
         job.save
-        expect(job.team.team_locations.count).to be === 1
+        expect(job.team.locations.count).to be === 1
 
       end
     end
@@ -157,7 +157,7 @@ RSpec.describe Opportunity, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140728214411
+# Schema version: 20140918031936
 #
 # Table name: opportunities
 #

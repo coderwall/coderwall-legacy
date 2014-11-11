@@ -5,7 +5,7 @@ RSpec.describe Account, :type => :model do
   let(:account) { { stripe_card_token: new_token } }
 
   let(:admin) {
-    user = Fabricate(:user, team_document_id: team.id.to_s)
+    user = Fabricate(:user, team_id: team.id.to_s)
     team.admins << user.id
     team.save
     user
@@ -22,7 +22,7 @@ RSpec.describe Account, :type => :model do
   end
 
   def post_job_for(team)
-    Fabricate(:opportunity, team_document_id: team.id)
+    Fabricate(:opportunity, team_id: team.id)
   end
 
   describe 'account creation' do
@@ -123,7 +123,7 @@ RSpec.describe Account, :type => :model do
           expect(team.can_post_job?).to eq(false)
           expect(team.premium?).to eq(false)
           expect(team.valid_jobs?).to eq(false)
-          expect { Fabricate(:opportunity, team_document_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
+          expect { Fabricate(:opportunity, team_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
 
         end
       end
@@ -192,7 +192,7 @@ RSpec.describe Account, :type => :model do
 
           expect(team.can_post_job?).to eq(true)
           5.times do
-            Fabricate(:opportunity, team_document_id: team.id)
+            Fabricate(:opportunity, team_id: team.id)
           end
           expect(team.can_post_job?).to eq(true)
 
@@ -226,11 +226,11 @@ RSpec.describe Account, :type => :model do
         VCR.use_cassette("Account") do
 
           expect(team.can_post_job?).to eq(true)
-          Fabricate(:opportunity, team_document_id: team.id)
+          Fabricate(:opportunity, team_id: team.id)
           team.reload
           expect(team.paid_job_posts).to eq(0)
           expect(team.can_post_job?).to eq(false)
-          expect { Fabricate(:opportunity, team_document_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
+          expect { Fabricate(:opportunity, team_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
 
         end
       end
@@ -247,7 +247,7 @@ RSpec.describe Account, :type => :model do
           expect(team.paid_job_posts).to eq(1)
           expect(team.has_monthly_subscription?).to eq(true)
           5.times do
-            Fabricate(:opportunity, team_document_id: team.id)
+            Fabricate(:opportunity, team_id: team.id)
           end
           expect(team.can_post_job?).to eq(true)
           expect(team.paid_job_posts).to eq(1)
@@ -266,7 +266,7 @@ RSpec.describe Account, :type => :model do
           expect(team.paid_job_posts).to eq(2)
           expect(team.can_post_job?).to eq(true)
           2.times do
-            Fabricate(:opportunity, team_document_id: team.id)
+            Fabricate(:opportunity, team_id: team.id)
           end
           team.reload
           expect(team.paid_job_posts).to eq(0)

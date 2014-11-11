@@ -185,7 +185,7 @@ module PremiumHelper
         cached_tags: 'Skilled, Awesome',
         tags: 'Java, TDD, Heroku',
         location_city: 'San Francisco, CA',
-        team_document_id: @team.id || Team.featured.first.id
+        team_id: @team.id || Team.featured.first.id
     )
   end
 
@@ -220,12 +220,12 @@ module PremiumHelper
   end
 
   def job_visited(job)
-    visit_team_opportunity_path(job.team_document_id, job.id) unless job.new_record?
+    visit_team_opportunity_path(job.team_id, job.id) unless job.new_record?
   end
 
-  def link_to_add_fields(name, f, association)
-    new_object = f.object.class.reflect_on_association(association).klass.new
-    fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
+  def link_to_add_fields(name, form, association)
+    new_object = form.object.class.reflect_on_association(association).klass.new
+    fields = form.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
       render(association.to_s.singularize + "_fields", f: builder)
     end
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")

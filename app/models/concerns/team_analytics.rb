@@ -23,7 +23,7 @@ module TeamAnalytics
 
     def simple_visitors(since = 0)
       all_visitors = Redis.current.zrangebyscore(user_views_key, since, Time.now.to_i, withscores: true) +
-          Redis.current.zrangebyscore(user_anon_views_key, since, Time.now.to_i, withscores: true)
+        Redis.current.zrangebyscore(user_anon_views_key, since, Time.now.to_i, withscores: true)
       Hash[*all_visitors.flatten].map do |viewer_id, timestamp|
         visitor_data(nil, nil, nil, 0, viewer_id, timestamp, identify_visitor(viewer_id))
       end
@@ -71,17 +71,18 @@ module TeamAnalytics
       end
       sections.each do |section_complete|
         completed_sections += 1 if self.respond_to?(section_complete) &&
-            public_send(section_complete)
+          public_send(section_complete)
       end
       completed_sections
     end
 
     private
-      def some_crappy_method(hash_string_to_parse)
-        # This code is bad and Mike should feel bad.
-        JSON.parse('{' + hash_string_to_parse.gsub(/^{|}$/, '').split(', ')
+
+    def some_crappy_method(hash_string_to_parse)
+      # This code is bad and Mike should feel bad.
+      JSON.parse('{' + hash_string_to_parse.gsub(/^{|}$/, '').split(', ')
         .map { |pair| pair.split('=>') }
         .map { |k, v| [k.gsub(/^:(\w*)/, '"\1"'), v == 'nil' ? 'null' : v].join(': ') }.join(', ') + '}')
-      end
+    end
   end
 end
