@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141015182230) do
+ActiveRecord::Schema.define(:version => 20141111082038) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -458,9 +458,10 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
     t.string   "city"
     t.string   "state_code"
     t.string   "country"
-    t.integer  "team_id",     :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "team_id",                            :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "points_of_interest", :default => [],                 :array => true
   end
 
   create_table "teams_members", :force => true do |t|
