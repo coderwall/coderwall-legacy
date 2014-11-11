@@ -38,6 +38,16 @@ GIT
       mime-types (>= 1.25, < 3.0)
       rest-client (~> 1.4)
 
+GIT
+  remote: https://github.com/rebelidealist/stripe-ruby-mock
+  revision: f603978fd1a38b1c27ff67cfa7d6ac95b71abe5c
+  branch: live-tests
+  specs:
+    stripe-ruby-mock (2.0.0)
+      dante (>= 0.2.0)
+      jimson-temp
+      stripe (>= 1.15.0)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
