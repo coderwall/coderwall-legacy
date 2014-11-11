@@ -532,7 +532,7 @@ class ProtipsController < ApplicationController
     return Opportunity.random.first unless protips.present?
 
     topics = get_topics_from_protips(protips)
-    @job   = Opportunity.based_on(topics).to_a.sample || Opportunity.random.first
+    @job   = ::Opportunity.based_on(topics).to_a.sample || Opportunity.random.first
   end
 
   def top_tags_facet
