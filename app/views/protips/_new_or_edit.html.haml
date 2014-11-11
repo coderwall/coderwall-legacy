@@ -1,5 +1,5 @@
 .outside.editing
-  %h1.editing Editing...
+  %h1.editing= protip_editing_text
   .wrapper
     = simple_form_for @protip, url: create_or_update_url(@protip) do |p|
       .card-container
