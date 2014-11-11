@@ -106,9 +106,6 @@
 
             %h2 Connections
             %ul.protips-grid.connections-list.cf
-              - ap current_user
-              - ap current_user.following_users
-
               - following_users = current_user.following_users
               #x-following-users.hide{'data-users' => following_users.map(&:username)}
 
