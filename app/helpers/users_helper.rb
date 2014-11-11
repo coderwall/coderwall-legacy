@@ -191,7 +191,7 @@ module UsersHelper
       photo = LocationPhoto.for(user, params[:location])
       asset_path("locations/#{photo.image_name}")
     else
-      user.banner_url
+      user.banner.url
     end
   end
 
