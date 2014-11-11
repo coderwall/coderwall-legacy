@@ -464,11 +464,14 @@ ActiveRecord::Schema.define(:version => 20141015182230) do
   end
 
   create_table "teams_members", :force => true do |t|
-    t.integer  "team_id",                           :null => false
-    t.integer  "user_id",                           :null => false
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.string   "state",      :default => "pending"
+    t.integer  "team_id",                            :null => false
+    t.integer  "user_id",                            :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "state",       :default => "pending"
+    t.float    "score_cache"
+    t.string   "team_banner"
+    t.string   "team_avatar"
   end
 
   create_table "tokens", :force => true do |t|
