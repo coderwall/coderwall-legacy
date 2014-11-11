@@ -41,11 +41,11 @@ end
 #  updated_at               :datetime         not null
 #  website                  :string(255)
 #  about                    :text
-#  total                    :integer          default(0)
+#  total                    :decimal(40, 30)  default(0.0)
 #  size                     :integer          default(0)
-#  mean                     :integer          default(0)
-#  median                   :integer          default(0)
-#  score                    :integer          default(0)
+#  mean                     :decimal(40, 30)  default(0.0)
+#  median                   :decimal(40, 30)  default(0.0)
+#  score                    :decimal(40, 30)  default(0.0)
 #  twitter                  :string(255)
 #  facebook                 :string(255)
 #  slug                     :string(255)

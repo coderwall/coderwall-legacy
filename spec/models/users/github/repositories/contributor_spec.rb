@@ -6,7 +6,6 @@ RSpec.describe Users::Github::Repositories::Contributor, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140918031936
 #
 # Table name: users_github_repositories_contributors
 #

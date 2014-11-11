@@ -6,7 +6,6 @@ RSpec.describe Users::Github::Profiles::Follower, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140918031936
 #
 # Table name: users_github_profiles_followers
 #

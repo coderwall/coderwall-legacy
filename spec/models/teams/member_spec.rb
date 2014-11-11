@@ -9,10 +9,13 @@ end
 #
 # Table name: teams_members
 #
-#  id         :integer          not null, primary key
-#  team_id    :integer          not null
-#  user_id    :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  state      :string(255)      default("pending")
+#  id          :integer          not null, primary key
+#  team_id     :integer          not null
+#  user_id     :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  state       :string(255)      default("pending")
+#  score_cache :float
+#  team_banner :string(255)
+#  team_avatar :string(255)
 #

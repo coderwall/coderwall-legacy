@@ -23,7 +23,6 @@ class Endorsement < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140918031936
 #
 # Table name: endorsements
 #

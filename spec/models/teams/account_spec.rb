@@ -10,7 +10,6 @@ RSpec.describe Teams::Account, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140918031936
 #
 # Table name: teams_accounts
 #

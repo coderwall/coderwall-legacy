@@ -43,7 +43,6 @@ class Teams::Member < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20141015182230
 #
 # Table name: teams_members
 #

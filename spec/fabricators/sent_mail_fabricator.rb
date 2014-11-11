@@ -2,7 +2,6 @@ Fabricator(:sent_mail) do
 end
 
 # == Schema Information
-# Schema version: 20140918031936
 #
 # Table name: sent_mails
 #

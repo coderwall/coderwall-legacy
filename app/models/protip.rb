@@ -980,7 +980,6 @@ class Protip < ActiveRecord::Base
 end
 
 # == Schema Information
-# Schema version: 20140918031936
 #
 # Table name: protips
 #
@@ -1000,4 +999,5 @@ end
 #  boost_factor        :float            default(1.0)
 #  inappropriate       :integer          default(0)
 #  likes_count         :integer          default(0)
+#  slug                :string(255)
 #

@@ -2,9 +2,9 @@ Fabricator(:team) do
   name { Faker::Company.name }
   account { Fabricate.build(:account) }
 end
+>>>>>>> migrate_team_to_activerecord
 
 # == Schema Information
-# Schema version: 20140918031936
 #
 # Table name: teams
 #
@@ -13,11 +13,11 @@ end
 #  updated_at               :datetime         not null
 #  website                  :string(255)
 #  about                    :text
-#  total                    :float            default(0.0)
+#  total                    :decimal(40, 30)  default(0.0)
 #  size                     :integer          default(0)
-#  mean                     :float            default(0.0)
-#  median                   :float            default(0.0)
-#  score                    :float            default(0.0)
+#  mean                     :decimal(40, 30)  default(0.0)
+#  median                   :decimal(40, 30)  default(0.0)
+#  score                    :decimal(40, 30)  default(0.0)
 #  twitter                  :string(255)
 #  facebook                 :string(255)
 #  slug                     :string(255)
@@ -77,4 +77,3 @@ end
 #  pending_join_requests    :string(255)      default([]), is an Array
 #  state                    :string(255)      default("active")
 #
->>>>>>> migrate_team_to_activerecord
