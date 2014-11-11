@@ -260,8 +260,6 @@ namespace :team do
     ap ex.backtrace
     puts
     puts '*'*80
-
-    require 'pry'; binding.pry
   end
 
   task counts: :environment do

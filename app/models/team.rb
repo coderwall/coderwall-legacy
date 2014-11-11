@@ -457,7 +457,6 @@ class Team < ActiveRecord::Base
 
   def add_member(user)
     Rails.logger.warn("Called #{self.class.name}#add_member(#{user.inspect}")
-    require 'pry'; binding.pry unless Rails.env.production?
 
     return member if member = members.select { |m| m.user_id == user.id }
     member = members.create(user_id: user.id)
@@ -466,8 +465,6 @@ class Team < ActiveRecord::Base
   end
 
   def remove_member(user)
-    require 'pry'; binding.pry
-
     return nil unless member = members.select { |m| m.user_id == user.id }
     members.destroy(member)
     save!

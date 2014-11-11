@@ -154,10 +154,6 @@ class TeamsController < ApplicationController
   end
 
   def follow
-
-    require 'pry'; binding.pry
-
-
     # TODO move to concern
     @team = if params[:id].present? && (params[:id].to_i rescue nil)
               Team.find(params[:id].to_i)
