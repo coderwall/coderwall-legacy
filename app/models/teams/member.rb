@@ -31,6 +31,8 @@ class Teams::Member < ActiveRecord::Base
     about
     team_responsibilities
     speciality_tags
+    state_name
+    country
   ).each do |user_method|
     delegate user_method, to: :user
   end
@@ -41,13 +43,17 @@ class Teams::Member < ActiveRecord::Base
 end
 
 # == Schema Information
+# Schema version: 20141015182230
 #
 # Table name: teams_members
 #
-#  id         :integer          not null, primary key
-#  team_id    :integer          not null
-#  user_id    :integer          not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  state      :string(255)      default("pending")
+#  id          :integer          not null, primary key
+#  team_id     :integer          not null
+#  user_id     :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  state       :string(255)      default("pending")
+#  score_cache :float
+#  team_banner :string(255)
+#  team_avatar :string(255)
 #
