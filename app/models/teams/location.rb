@@ -2,9 +2,7 @@ class Teams::Location < ActiveRecord::Base
   include Geocoder::Model::ActiveRecord
 
   # Rails 3 is stupid
-  belongs_to :team, class_name: 'Team',
-    foreign_key: 'team_id',
-    touch: true
+  belongs_to :team, class_name: 'Team', foreign_key: 'team_id', touch: true
 
   geocoded_by :address do |obj, results|
     if geo = results.first and obj.address.downcase.include?(geo.city.try(:downcase) || "")

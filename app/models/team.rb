@@ -3,8 +3,21 @@ require 'search'
 
 #Rename to Team when Mongodb is dropped
 class Team < ActiveRecord::Base
+  DEFAULT_HEX_BRAND        = '#343131'
+  LEADERBOARD_KEY          = 'teams:leaderboard'
+  FEATURED_TEAMS_CACHE_KEY = 'featured_teams_results'
+  MAX_TEAM_SCORE           = 400
+
+  self.table_name = 'teams'
+
   include SearchModule
   include TeamSearch
+  include LeaderboardRedisRank
+  include TeamAnalytics
+  include TeamMigration
+
+  mount_uploader :avatar, TeamUploader
+
   mapping team: {
     properties: {
       id:                 { type: 'string', index: 'not_analyzed' },
@@ -27,23 +40,22 @@ class Team < ActiveRecord::Base
     }
   }
 
-  include LeaderboardRedisRank
-  include TeamAnalytics
-  include TeamMigration
+  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
-  DEFAULT_HEX_BRAND        = '#343131'
-  LEADERBOARD_KEY          = 'teams:leaderboard'
-  FEATURED_TEAMS_CACHE_KEY = 'featured_teams_results'
-  MAX_TEAM_SCORE           = 400
 
-  self.table_name = 'teams'
+  before_validation :create_slug!
 
-  #TODO add inverse_of
-  has_one :account, class_name: 'Teams::Account', foreign_key: 'team_id', dependent: :delete
+  validates :slug, uniqueness: true, presence: true
 
-  has_many :members, class_name: 'Teams::Member', foreign_key: 'team_id', dependent: :delete_all
-  has_many :links, class_name: 'Teams::Link', foreign_key: 'team_id', dependent: :delete_all
+
+  has_many :followers, through: :follows, source: :team
+
+  has_many :follows,   class_name: 'FollowedTeam',    foreign_key: 'team_id', dependent: :destroy
+  has_many :jobs,      class_name: 'Opportunity',     foreign_key: 'team_id', dependent: :destroy
+  has_many :links,     class_name: 'Teams::Link',     foreign_key: 'team_id', dependent: :delete_all
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
+  has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id', dependent: :delete_all
+  has_one :account,    class_name: 'Teams::Account',  foreign_key: 'team_id', dependent: :delete
 
   def featured_links
     links
@@ -51,11 +63,10 @@ class Team < ActiveRecord::Base
 
   has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
 
-  #def jobs
-  #all_jobs.valid
-  #end
+  private def create_slug!
+    self.slug = name.parameterize
+  end
 
-  #Replaced with jobs
   def all_jobs
     jobs.order('created_at DESC')
   end
@@ -184,10 +195,6 @@ class Team < ActiveRecord::Base
 
   def university?
     true
-  end
-
-  def locations
-    (location || '').split(';').collect { |location| location.strip }
   end
 
   def locations_message

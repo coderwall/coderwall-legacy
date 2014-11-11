@@ -1,5 +1,5 @@
 class FollowedTeam < ActiveRecord::Base
-  belongs_to :team, class_name: 'PgTeam'
+  belongs_to :team, class_name: 'Team'
   belongs_to :user
 end
 
