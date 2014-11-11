@@ -1,7 +1,6 @@
 # encoding utf-8
 require 'search'
 
-#Rename to Team when Mongodb is dropped
 class Team < ActiveRecord::Base
   DEFAULT_HEX_BRAND        = '#343131'
   LEADERBOARD_KEY          = 'teams:leaderboard'

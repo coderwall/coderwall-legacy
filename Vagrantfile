@@ -28,10 +28,10 @@ $provision = 'vagrant/bootstrap.sh'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = box
-  #config.vm.box_url = box_url
+  config.vm.box = $box
+  config.vm.box_url = $box_url
   config.vm.provision :shell do |s|
-    s.path = provision
+    s.path = $provision
   end
 
   config.ssh.keep_alive = true
