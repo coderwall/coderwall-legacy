@@ -28,7 +28,7 @@ module Coderwall
     config.assets.js_compressor = :uglifier
 
     config.after_initialize do
-      if %w{development test}.include?(Rails.env)
+      if ENV['ENABLE_HIRB'] && %w{development test}.include?(Rails.env)
         Hirb.enable
       end
     end
