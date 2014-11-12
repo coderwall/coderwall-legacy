@@ -316,9 +316,10 @@ class Protip < ActiveRecord::Base
     end
 
     def valid_reviewers
+      User # Hack to force loading User model before it gets read from cache and explodes in dev.
       Rails.cache.fetch('valid_protip_reviewers', expires_in: 1.month) do
         if ENV['REVIEWERS']
-          User.where(username: YAML.load(ENV['REVIEWERS'])).all
+          User.where(username: YAML.load(ENV['REVIEWERS'])).to_a
         else
           []
         end
