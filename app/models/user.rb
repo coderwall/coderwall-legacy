@@ -710,7 +710,7 @@ class User < ActiveRecord::Base
   end
 
   def followed_repos(since=2.months.ago)
-    Redis.current.zrevrange(followed_repo_key, 0, since.to_i).collect { |link| FollowedRepo.new(link) }
+    Redis.current.zrevrange(followed_repo_key, 0, since.to_i).collect { |link| Users::Github::FollowedRepo.new(link) }
   end
 
   def networks
