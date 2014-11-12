@@ -1,4 +1,4 @@
-Fabricator(:pg_team) do
+Fabricator(:team) do
 end
 
 # == Schema Information
@@ -10,11 +10,11 @@ end
 #  updated_at               :datetime         not null
 #  website                  :string(255)
 #  about                    :text
-#  total                    :integer          default(0)
+#  total                    :decimal(40, 30)  default(0.0)
 #  size                     :integer          default(0)
-#  mean                     :integer          default(0)
-#  median                   :integer          default(0)
-#  score                    :integer          default(0)
+#  mean                     :decimal(40, 30)  default(0.0)
+#  median                   :decimal(40, 30)  default(0.0)
+#  score                    :decimal(40, 30)  default(0.0)
 #  twitter                  :string(255)
 #  facebook                 :string(255)
 #  slug                     :string(255)
@@ -47,20 +47,15 @@ end
 #  organization_way         :text
 #  organization_way_name    :text
 #  organization_way_photo   :text
-#  office_photos            :string(255)      default("{}")
-#  upcoming_events          :string(255)      default("{}")
 #  featured_links_title     :string(255)
 #  blog_feed                :text
 #  our_challenge            :text
 #  your_impact              :text
-#  interview_steps          :string(255)      default("{}")
 #  hiring_tagline           :text
 #  link_to_careers_page     :text
 #  avatar                   :string(255)
 #  achievement_count        :integer          default(0)
 #  endorsement_count        :integer          default(0)
-#  invited_emails           :string(255)      default("{}")
-#  pending_join_requests    :string(255)      default("{}")
 #  upgraded_at              :datetime
 #  paid_job_posts           :integer          default(0)
 #  monthly_subscription     :boolean          default(FALSE)
@@ -71,4 +66,11 @@ end
 #  name                     :string(255)
 #  github_organization_name :string(255)
 #  team_size                :integer
+#  mongo_id                 :string(255)
+#  office_photos            :string(255)      default([]), is an Array
+#  upcoming_events          :text             default([]), is an Array
+#  interview_steps          :text             default([]), is an Array
+#  invited_emails           :string(255)      default([]), is an Array
+#  pending_join_requests    :string(255)      default([]), is an Array
+#  state                    :string(255)      default("active")
 #

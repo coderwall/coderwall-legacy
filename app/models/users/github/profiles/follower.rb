@@ -1,10 +1,15 @@
-class Users::Github::Profiles::Follower < ActiveRecord::Base
-  belongs_to :profile, :class_name => 'Users::Github::Profile'
-  belongs_to :follower, :class_name => 'Users::Github::Profile'
+module Users
+  module Github
+    module Profiles
+      class Follower < ActiveRecord::Base
+        belongs_to :profile, :class_name => 'Users::Github::Profile'
+        belongs_to :follower, :class_name => 'Users::Github::Profile'
+      end
+    end
+  end
 end
 
 # == Schema Information
-# Schema version: 20140728214411
 #
 # Table name: users_github_profiles_followers
 #

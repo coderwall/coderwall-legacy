@@ -1,4 +1,4 @@
-require "net_validators"
+require 'net_validators'
 
 class User < ActiveRecord::Base
   include ActionController::Caching::Fragments
@@ -19,8 +19,9 @@ class User < ActiveRecord::Base
   attr_protected :admin, :id, :github_id, :twitter_id, :linkedin_id, :api_key
 
   mount_uploader :avatar, AvatarUploader
-  mount_uploader :banner, BannerUploader
   mount_uploader :resume, ResumeUploader
+
+  mount_uploader :banner, BannerUploader
   process_in_background :banner, ResizeTiltShiftBannerJob
 
   RESERVED = %w{
@@ -82,6 +83,8 @@ class User < ActiveRecord::Base
   has_one :github_profile  , class_name: 'Users::Github::Profile', dependent: :destroy
   has_many :github_repositories, through: :github_profile , source: :repositories
 
+  belongs_to :team, class_name: 'Team'
+
   geocoded_by :location, latitude: :lat, longitude: :lng, country: :country, state_code: :state_name
   # FIXME: Move to background job
   after_validation :geocode_location, if: :location_changed? unless Rails.env.test?
@@ -98,8 +101,8 @@ class User < ActiveRecord::Base
   scope :receives_newsletter, where(receive_newsletter: true)
   scope :receives_digest, where(receive_weekly_digest: true)
   scope :with_tokens, where("github_token IS NOT NULL")
-  scope :on_team, where("team_document_id IS NOT NULL")
-  scope :not_on_team, where("team_document_id IS NULL")
+  scope :on_team, where("team_id IS NOT NULL")
+  scope :not_on_team, where("team_id IS NULL")
   scope :autocomplete, lambda { |filter|
     filter = "#{filter.upcase}%"
     where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
@@ -213,52 +216,45 @@ class User < ActiveRecord::Base
   end
 
   def team_ids
-    [team_document_id]
+    [team_id]
   end
 
-  def team
-    @team ||= team_document_id && Team.find(team_document_id)
-  rescue Mongoid::Errors::DocumentNotFound
-    #readonly issue in follows/_user partial from partial iterator
-    User.connection.execute("UPDATE users set team_document_id = NULL where id = #{self.id}")
-    @team = nil
-  end
 
   def on_premium_team?
     team.try(:premium?) || false
   end
 
   def following_team?(team)
-    followed_teams.collect(&:team_document_id).include?(team.id.to_s)
+    followed_teams.collect(&:team_id).include?(team.id.to_s)
   end
 
   def follow_team!(team)
-    followed_teams.create!(team_document_id: team.id.to_s)
+    followed_teams.create!(team_id: team.id.to_s)
     generate_event(team: team)
   end
 
   def unfollow_team!(team)
-    followed_teams = self.followed_teams.where(team_document_id: team.id.to_s).all
+    followed_teams = self.followed_teams.where(team_id: team.id.to_s).all
     followed_teams.each(&:destroy)
   end
 
   def teams_being_followed
-    Team.find(followed_teams.collect(&:team_document_id)).sort { |x, y| y.score <=> x.score }
+    Team.find(followed_teams.collect(&:team_id)).sort { |x, y| y.score <=> x.score }
   end
 
   def on_team?
-    !team_document_id.nil?
+    not team_document_id.nil?
   end
 
   def team_member_of?(user)
-    on_team? && self.team_document_id == user.team_document_id
+    on_team? && self.team_id == user.team_id
   end
 
   def belongs_to_team?(team = nil)
     if self.team && team
       self.team.id.to_s == team.id.to_s
     else
-      !team_document_id.blank?
+      !team_id.blank?
     end
   end
 
@@ -295,7 +291,7 @@ class User < ActiveRecord::Base
              name:         display_name,
              location:     location,
              endorsements: endorsements.count,
-             team:         team_document_id,
+             team:         team_id,
              accounts:     { github: github },
              badges:       badges_hash = [] }
     badges.each do |badge|
@@ -456,11 +452,11 @@ class User < ActiveRecord::Base
   end
 
   def team_members
-    User.where(team_document_id: self.team_document_id.to_s)
+    User.where(team_id: self.team_id.to_s)
   end
 
   def team_member_ids
-    User.select(:id).where(team_document_id: self.team_document_id.to_s).map(&:id)
+    User.select(:id).where(team_id: self.team_id.to_s).map(&:id)
   end
 
   def penalize!(amount=(((team && team.team_members.size) || 6) / 6.0)*activitiy_multipler)
@@ -622,11 +618,6 @@ class User < ActiveRecord::Base
     []
   end
 
-  def destroy_github_cache
-    GithubRepo.where('owner.github_id' => github_id).destroy if github_id
-    GithubProfile.where('login' => github).destroy if github
-  end
-
   def track_user_view!(user)
     track!("viewed user", user_id: user.id, username: user.username)
   end
@@ -648,7 +639,7 @@ class User < ActiveRecord::Base
   end
 
   def track_opportunity_view!(opportunity)
-    track!("viewed opportunity", opportunity_id: opportunity.id, team: opportunity.team_document_id)
+    track!("viewed opportunity", opportunity_id: opportunity.id, team: opportunity.team_id)
   end
 
   def track!(name, data = {})
@@ -689,11 +680,11 @@ class User < ActiveRecord::Base
   end
 
   def following_teams_ids
-    self.followed_teams.map(&:team_document_id)
+    self.followed_teams.map(&:team_id)
   end
 
   def following_team_members_ids
-    User.select(:id).where(team_document_id: self.following_teams_ids).map(&:id)
+    User.select(:id).where(team_id: self.following_teams_ids).map(&:id)
   end
 
   def following_networks_ids
@@ -719,7 +710,7 @@ class User < ActiveRecord::Base
   end
 
   def followed_repos(since=2.months.ago)
-    Redis.current.zrevrange(followed_repo_key, 0, since.to_i).collect { |link| FollowedRepo.new(link) }
+    Redis.current.zrevrange(followed_repo_key, 0, since.to_i).collect { |link| Users::Github::FollowedRepo.new(link) }
   end
 
   def networks
@@ -915,18 +906,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  before_create :make_referral_token
-
-  def make_referral_token
-    if self.referral_token.nil?
-      self.referral_token = SecureRandom.hex(8)
-    end
+  before_create do
+      self.referral_token ||= SecureRandom.hex(8)
   end
 
   after_save :refresh_dependencies
 
   def refresh_dependencies
-    if username_changed? or avatar_changed? or team_document_id_changed?
+    if username_changed? or avatar_changed? or team_id_changed?
       refresh_protips
     end
   end
@@ -974,8 +961,8 @@ end
 #  bitbucket                     :string(255)
 #  codeplex                      :string(255)
 #  login_count                   :integer          default(0)
-#  last_request_at               :datetime         default(2014-07-17 13:10:04 UTC)
-#  achievements_checked_at       :datetime         default(1914-02-20 22:39:10 UTC)
+#  last_request_at               :datetime         default(2014-07-23 03:14:36 UTC)
+#  achievements_checked_at       :datetime         default(1911-08-12 21:49:21 UTC)
 #  claim_code                    :text
 #  github_id                     :integer
 #  country                       :string(255)
@@ -985,11 +972,11 @@ end
 #  lng                           :float
 #  http_counter                  :integer
 #  github_token                  :string(255)
-#  twitter_checked_at            :datetime         default(1914-02-20 22:39:10 UTC)
+#  twitter_checked_at            :datetime         default(1911-08-12 21:49:21 UTC)
 #  title                         :string(255)
 #  company                       :string(255)
 #  blog                          :string(255)
-#  github                        :string(255)
+#  github                        :citext
 #  forrst                        :string(255)
 #  dribbble                      :string(255)
 #  specialties                   :text
@@ -1015,7 +1002,6 @@ end
 #  referred_by                   :string(255)
 #  about                         :text
 #  joined_github_on              :date
-#  joined_twitter_on             :date
 #  avatar                        :string(255)
 #  banner                        :string(255)
 #  remind_to_invite_team_members :datetime
@@ -1023,6 +1009,7 @@ end
 #  tracking_code                 :string(255)
 #  utm_campaign                  :string(255)
 #  score_cache                   :float            default(0.0)
+#  gender                        :string(255)
 #  notify_on_follow              :boolean          default(TRUE)
 #  api_key                       :string(255)
 #  remind_to_create_team         :datetime
@@ -1033,6 +1020,12 @@ end
 #  team_responsibilities         :text
 #  team_avatar                   :string(255)
 #  team_banner                   :string(255)
+#  stat_name_1                   :string(255)
+#  stat_number_1                 :string(255)
+#  stat_name_2                   :string(255)
+#  stat_number_2                 :string(255)
+#  stat_name_3                   :string(255)
+#  stat_number_3                 :string(255)
 #  ip_lat                        :float
 #  ip_lng                        :float
 #  penalty                       :float            default(0.0)
@@ -1041,11 +1034,15 @@ end
 #  resume                        :string(255)
 #  sourceforge                   :string(255)
 #  google_code                   :string(255)
+#  sales_rep                     :boolean          default(FALSE)
 #  visits                        :string(255)      default("")
 #  visit_frequency               :string(255)      default("rarely")
+#  pitchbox_id                   :integer
 #  join_badge_orgs               :boolean          default(FALSE)
+#  use_social_for_pitchbox       :boolean          default(FALSE)
 #  last_asm_email_at             :datetime
 #  banned_at                     :datetime
 #  last_ip                       :string(255)
 #  last_ua                       :string(255)
+#  team_id                       :integer
 #

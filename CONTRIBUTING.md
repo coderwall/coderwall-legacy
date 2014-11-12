@@ -49,7 +49,7 @@ If you're running Windows, [here's a guide written by one of our members on how 
 1. **Install VirtualBox**
 
     Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3)**.
-    
+
     ![Download the Vbox installer and extensions from here](https://www.evernote.com/shard/s13/sh/68b6a635-7a80-444b-a210-c1aa61405efc/955c950ebafc46f0f1069e27e85bb120)
 
     The _required_ version is **VirtualBox 4.3.12.**

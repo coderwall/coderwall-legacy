@@ -12,19 +12,19 @@
           .filler
         %fieldset
           %ul.members-admin
-            -@team.sorted_team_members.each do |member|
-              %li{:id => dom_id(member)}
+            - @team.sorted_team_members.each do |member|
+              %li{ :id => dom_id(member) }
                 %p
-                  =member.display_name
+                  = member.display_name
                 %div
                   %ul
                     %li
-                      =link_to('edit bio', edit_user_path(member), :target => :new)
+                      = link_to('edit bio', edit_user_path(member), :target => :new)
                     %li
-                      =form_tag team_team_member_path(@team, member), :method => :delete, :remote => true do
-                        =submit_tag "Remove", :class => 'leave button', :remote => true, :confirm => 'Are you sure?'
+                      = form_tag team_members_path(@team, member), :method => :delete, :remote => true do
+                        = submit_tag 'Remove', :class => 'leave button', :remote => true, :confirm => 'Are you sure?'
 
-                  =users_image_tag(member)
+                  = users_image_tag(member)
 
 
 

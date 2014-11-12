@@ -19,7 +19,7 @@ class ProtipsController < ApplicationController
   layout :choose_protip_layout
 
   def index
-    if !params[:search].blank?
+    if params[:search].present?
       search
     elsif signed_in?
       trending
@@ -136,7 +136,7 @@ class ProtipsController < ApplicationController
 
     return redirect_to protip_missing_destination, notice: "The pro tip you were looking for no longer exists" if @protip.nil?
     return redirect_to protip_path(@protip.public_id<<'/'<<@protip.friendly_id, :p => params[:p], :q => params[:q]) if params[:slug]!=@protip.friendly_id
-    
+
     @comments    = @protip.comments
     @reply_to    = show_params[:reply_to]
     @next_protip = Protip.search_next(show_params[:q], show_params[:t], show_params[:i], show_params[:p]) if is_admin?
@@ -532,7 +532,7 @@ class ProtipsController < ApplicationController
     return Opportunity.random.first unless protips.present?
 
     topics = get_topics_from_protips(protips)
-    @job   = Opportunity.based_on(topics).to_a.sample || Opportunity.random.first
+    @job   = ::Opportunity.based_on(topics).to_a.sample || Opportunity.random.first
   end
 
   def top_tags_facet

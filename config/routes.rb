@@ -1,57 +1,58 @@
 # == Route Map
 #
 # Connecting to database specified by database.yml
-# Creating scope :near. Overwriting existing method TeamLocation.near.
-#                             GET      /.json(.:format)                                       #<Proc:0x000001084b5510@/Users/mike/assemblymade/coderwall/config/routes.rb:273>
-#                             GET      /teams/.json(.:format)                                 #<Proc:0x000001084cedf8@/Users/mike/assemblymade/coderwall/config/routes.rb:274>
+# Creating scope :featured. Overwriting existing method Team.featured.
+#                             GET      /.json(.:format)                                       #<Proc:0x007fce88208600@/Users/mike/assemblymade/coderwall/config/routes.rb:273>
+#                             GET      /teams/.json(.:format)                                 #<Proc:0x007fce88211480@/Users/mike/assemblymade/coderwall/config/routes.rb:274>
+#                                      /mail_view                                             MailPreview
 #              protips_update GET|PUT  /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT  /protip/update(.:format)                               protip#update
-#                        root          /                                                      protips#index
 #                     welcome GET      /welcome(.:format)                                     home#index
+#                        root          /                                                      protips#index
 #                    p_dpvbbg GET      /p/dpvbbg(.:format)                                    protips#show {:id=>"devsal"}
 #                          gh GET      /gh(.:format)                                          protips#show {:utm_campaign=>"github_orgs_badges", :utm_source=>"github"}
-#             latest_comments GET      /comments(.:format)                                    comments#index
 #                        jobs GET      /jobs(/:location(/:skill))(.:format)                   opportunities#index
 #                    jobs_map GET      /jobs-map(.:format)                                    opportunities#map
-#              random_protips GET      /p/random(.:format)                                    protips#random {:id=>/[\dA-Z\-_]{6}/i}
-#              search_protips GET      /p/search(.:format)                                    protips#search {:id=>/[\dA-Z\-_]{6}/i}
-#                             POST     /p/search(.:format)                                    protips#search {:id=>/[\dA-Z\-_]{6}/i}
-#                  my_protips GET      /p/me(.:format)                                        protips#me {:id=>/[\dA-Z\-_]{6}/i}
-#          reviewable_protips GET      /p/admin(.:format)                                     protips#admin {:id=>/[\dA-Z\-_]{6}/i}
-#                team_protips GET      /p/team/:team_slug(.:format)                           protips#team {:id=>/[\dA-Z\-_]{6}/i}
-#                date_protips GET      /p/d/:date(/:start)(.:format)                          protips#date {:id=>/[\dA-Z\-_]{6}/i}
-#     trending_topics_protips GET      /p/t/trending(.:format)                                protips#trending {:id=>/[\dA-Z\-_]{6}/i}
-#             by_tags_protips GET      /p/t/by_tags(.:format)                                 protips#by_tags {:id=>/[\dA-Z\-_]{6}/i}
-#                user_protips GET      /p/u/:username(.:format)                               protips#user {:id=>/[\dA-Z\-_]{6}/i}
-#              tagged_protips GET      /p/t(/*tags)(.:format)                                 networks#tag {:id=>/[\dA-Z\-_]{6}/i}
-#           subscribe_protips PUT      /p/t(/*tags)/subscribe(.:format)                       protips#subscribe {:id=>/[\dA-Z\-_]{6}/i}
-#         unsubscribe_protips PUT      /p/t(/*tags)/unsubscribe(.:format)                     protips#unsubscribe {:id=>/[\dA-Z\-_]{6}/i}
-#               fresh_protips GET      /p/fresh(.:format)                                     protips#fresh {:id=>/[\dA-Z\-_]{6}/i}
-#            trending_protips GET      /p/trending(.:format)                                  protips#trending {:id=>/[\dA-Z\-_]{6}/i}
-#             popular_protips GET      /p/popular(.:format)                                   protips#popular {:id=>/[\dA-Z\-_]{6}/i}
-#               liked_protips GET      /p/liked(.:format)                                     protips#liked {:id=>/[\dA-Z\-_]{6}/i}
-#             preview_protips POST     /p/preview(.:format)                                   protips#preview {:id=>/[\dA-Z\-_]{6}/i}
-#               upvote_protip POST     /p/:id/upvote(.:format)                                protips#upvote {:id=>/[\dA-Z\-_]{6}/i}
-# report_inappropriate_protip POST     /p/:id/report_inappropriate(.:format)                  protips#report_inappropriate {:id=>/[\dA-Z\-_]{6}/i}
-#                  tag_protip POST     /p/:id/tag(.:format)                                   protips#tag {:id=>/[\dA-Z\-_]{6}/i}
-#                 flag_protip POST     /p/:id/flag(.:format)                                  protips#flag {:id=>/[\dA-Z\-_]{6}/i}
-#              feature_protip POST     /p/:id/feature(.:format)                               protips#feature {:id=>/[\dA-Z\-_]{6}/i}
-#           delete_tag_protip POST     /p/:id/delete_tag/:topic(.:format)                     protips#delete_tag {:id=>/[\dA-Z\-_]{6}/i, :topic=>/[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/}
-#         like_protip_comment POST     /p/:protip_id/comments/:id/like(.:format)              comments#like {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#             protip_comments GET      /p/:protip_id/comments(.:format)                       comments#index {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#                             POST     /p/:protip_id/comments(.:format)                       comments#create {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#          new_protip_comment GET      /p/:protip_id/comments/new(.:format)                   comments#new {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#         edit_protip_comment GET      /p/:protip_id/comments/:id/edit(.:format)              comments#edit {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#              protip_comment GET      /p/:protip_id/comments/:id(.:format)                   comments#show {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#                             PUT      /p/:protip_id/comments/:id(.:format)                   comments#update {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#                             DELETE   /p/:protip_id/comments/:id(.:format)                   comments#destroy {:id=>/\d+/, :protip_id=>/[\dA-Z\-_]{6}/i}
-#                     protips GET      /p(.:format)                                           protips#index {:id=>/[\dA-Z\-_]{6}/i}
-#                             POST     /p(.:format)                                           protips#create {:id=>/[\dA-Z\-_]{6}/i}
-#                  new_protip GET      /p/new(.:format)                                       protips#new {:id=>/[\dA-Z\-_]{6}/i}
-#                 edit_protip GET      /p/:id/edit(.:format)                                  protips#edit {:id=>/[\dA-Z\-_]{6}/i}
-#                      protip GET      /p/:id(.:format)                                       protips#show {:id=>/[\dA-Z\-_]{6}/i}
-#                             PUT      /p/:id(.:format)                                       protips#update {:id=>/[\dA-Z\-_]{6}/i}
-#                             DELETE   /p/:id(.:format)                                       protips#destroy {:id=>/[\dA-Z\-_]{6}/i}
+#                slug_protips GET      /p/:id/:slug(.:format)                                 protips#show {:slug=>/(?!.*?edit).*/}
+#              random_protips GET      /p/random(.:format)                                    protips#random
+#              search_protips GET      /p/search(.:format)                                    protips#search
+#                             POST     /p/search(.:format)                                    protips#search
+#                  my_protips GET      /p/me(.:format)                                        protips#me
+#          reviewable_protips GET      /p/admin(.:format)                                     protips#admin
+#                team_protips GET      /p/team/:team_slug(.:format)                           protips#team
+#                date_protips GET      /p/d/:date(/:start)(.:format)                          protips#date
+#     trending_topics_protips GET      /p/t/trending(.:format)                                protips#trending
+#             by_tags_protips GET      /p/t/by_tags(.:format)                                 protips#by_tags
+#                user_protips GET      /p/u/:username(.:format)                               protips#user
+#              tagged_protips GET      /p/t(/*tags)(.:format)                                 networks#tag
+#           subscribe_protips PUT      /p/t(/*tags)/subscribe(.:format)                       protips#subscribe
+#         unsubscribe_protips PUT      /p/t(/*tags)/unsubscribe(.:format)                     protips#unsubscribe
+#               fresh_protips GET      /p/fresh(.:format)                                     protips#fresh
+#            trending_protips GET      /p/trending(.:format)                                  protips#trending
+#             popular_protips GET      /p/popular(.:format)                                   protips#popular
+#               liked_protips GET      /p/liked(.:format)                                     protips#liked
+#             preview_protips POST     /p/preview(.:format)                                   protips#preview
+#               upvote_protip POST     /p/:id/upvote(.:format)                                protips#upvote
+# report_inappropriate_protip POST     /p/:id/report_inappropriate(.:format)                  protips#report_inappropriate
+#                  tag_protip POST     /p/:id/tag(.:format)                                   protips#tag
+#                 flag_protip POST     /p/:id/flag(.:format)                                  protips#flag
+#              feature_protip POST     /p/:id/feature(.:format)                               protips#feature
+#           delete_tag_protip POST     /p/:id/delete_tag/:topic(.:format)                     protips#delete_tag {:topic=>/[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/}
+#         like_protip_comment POST     /p/:protip_id/comments/:id/like(.:format)              comments#like {:id=>/\d+/}
+#             protip_comments GET      /p/:protip_id/comments(.:format)                       comments#index {:id=>/\d+/}
+#                             POST     /p/:protip_id/comments(.:format)                       comments#create {:id=>/\d+/}
+#          new_protip_comment GET      /p/:protip_id/comments/new(.:format)                   comments#new {:id=>/\d+/}
+#         edit_protip_comment GET      /p/:protip_id/comments/:id/edit(.:format)              comments#edit {:id=>/\d+/}
+#              protip_comment GET      /p/:protip_id/comments/:id(.:format)                   comments#show {:id=>/\d+/}
+#                             PUT      /p/:protip_id/comments/:id(.:format)                   comments#update {:id=>/\d+/}
+#                             DELETE   /p/:protip_id/comments/:id(.:format)                   comments#destroy {:id=>/\d+/}
+#                     protips GET      /p(.:format)                                           protips#index
+#                             POST     /p(.:format)                                           protips#create
+#                  new_protip GET      /p/new(.:format)                                       protips#new
+#                 edit_protip GET      /p/:id/edit(.:format)                                  protips#edit
+#                      protip GET      /p/:id(.:format)                                       protips#show
+#                             PUT      /p/:id(.:format)                                       protips#update
+#                             DELETE   /p/:id(.:format)                                       protips#destroy
 #           featured_networks GET      /n/featured(.:format)                                  networks#featured {:slug=>/[\dA-Z\-]/i}
 #               user_networks GET      /n/u/:username(.:format)                               networks#user {:slug=>/[\dA-Z\-]/i}
 #              tagged_network GET      /n/:id/t(/*tags)(.:format)                             networks#tag {:slug=>/[\dA-Z\-]/i}
@@ -133,20 +134,20 @@
 #               inquiry_teams POST     /teams/inquiry(.:format)                               teams#inquiry
 #              followed_teams GET      /teams/followed(.:format)                              teams#followed
 #                search_teams GET      /teams/search(.:format)                                teams#search
-#           team_team_members GET      /teams/:team_id/team_members(.:format)                 team_members#index
-#                             POST     /teams/:team_id/team_members(.:format)                 team_members#create
-#        new_team_team_member GET      /teams/:team_id/team_members/new(.:format)             team_members#new
-#       edit_team_team_member GET      /teams/:team_id/team_members/:id/edit(.:format)        team_members#edit
-#            team_team_member GET      /teams/:team_id/team_members/:id(.:format)             team_members#show
-#                             PUT      /teams/:team_id/team_members/:id(.:format)             team_members#update
-#                             DELETE   /teams/:team_id/team_members/:id(.:format)             team_members#destroy
-#              team_locations GET      /teams/:team_id/team_locations(.:format)               team_locations#index
-#                             POST     /teams/:team_id/team_locations(.:format)               team_locations#create
-#           new_team_location GET      /teams/:team_id/team_locations/new(.:format)           team_locations#new
-#          edit_team_location GET      /teams/:team_id/team_locations/:id/edit(.:format)      team_locations#edit
-#               team_location GET      /teams/:team_id/team_locations/:id(.:format)           team_locations#show
-#                             PUT      /teams/:team_id/team_locations/:id(.:format)           team_locations#update
-#                             DELETE   /teams/:team_id/team_locations/:id(.:format)           team_locations#destroy
+#                team_members GET      /teams/:team_id/members(.:format)                      members#index
+#                             POST     /teams/:team_id/members(.:format)                      members#create
+#             new_team_member GET      /teams/:team_id/members/new(.:format)                  members#new
+#            edit_team_member GET      /teams/:team_id/members/:id/edit(.:format)             members#edit
+#                 team_member GET      /teams/:team_id/members/:id(.:format)                  members#show
+#                             PUT      /teams/:team_id/members/:id(.:format)                  members#update
+#                             DELETE   /teams/:team_id/members/:id(.:format)                  members#destroy
+#              team_locations GET      /teams/:team_id/locations(.:format)                    locations#index
+#                             POST     /teams/:team_id/locations(.:format)                    locations#create
+#           new_team_location GET      /teams/:team_id/locations/new(.:format)                locations#new
+#          edit_team_location GET      /teams/:team_id/locations/:id/edit(.:format)           locations#edit
+#               team_location GET      /teams/:team_id/locations/:id(.:format)                locations#show
+#                             PUT      /teams/:team_id/locations/:id(.:format)                locations#update
+#                             DELETE   /teams/:team_id/locations/:id(.:format)                locations#destroy
 #      apply_team_opportunity POST     /teams/:team_id/opportunities/:id/apply(.:format)      opportunities#apply
 #   activate_team_opportunity GET      /teams/:team_id/opportunities/:id/activate(.:format)   opportunities#activate
 # deactivate_team_opportunity GET      /teams/:team_id/opportunities/:id/deactivate(.:format) opportunities#deactivate
@@ -190,6 +191,7 @@
 #                             GET      /bitbucket/:username(.:format)                         users#show {:provider=>"bitbucket"}
 #        unlink_stackoverflow POST     /stackoverflow/unlink(.:format)                        users#unlink_provider {:provider=>"stackoverflow"}
 #                             GET      /stackoverflow/:username(.:format)                     users#show {:provider=>"stackoverflow"}
+#              resume_uploads POST     /resume_uploads(.:format)                              resume_uploads#create
 #                invite_users POST     /users/invite(.:format)                                users#invite
 #          autocomplete_users GET      /users/autocomplete(.:format)                          users#autocomplete
 #                status_users GET      /users/status(.:format)                                users#status
@@ -249,6 +251,7 @@
 #                     signout GET      /signout(.:format)                                     sessions#destroy
 #                    sign_out GET      /goodbye(.:format)                                     sessions#destroy
 #                 random_wall GET      /roll-the-dice(.:format)                               users#randomize
+#                             GET      /providers/:provider/:username(.:format)               provider_user_lookups#show
 #                       badge GET      /:username(.:format)                                   users#show
 #            user_achievement GET      /:username/achievements/:id(.:format)                  achievements#show
 #                             GET      /:username/endorsements.json(.:format)                 endorsements#show
@@ -261,6 +264,7 @@
 #        admin_sections_teams GET      /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
 #         admin_section_teams GET      /admin/teams/section/:section(.:format)                admin#section_teams
 #           admin_sidekiq_web          /admin/sidekiq                                         Sidekiq::Web
+#             latest_comments GET      /comments(.:format)                                    comments#index
 #
 
 Coderwall::Application.routes.draw do
@@ -398,8 +402,8 @@ Coderwall::Application.routes.draw do
       get 'followed'
       get 'search'
     end
-    resources :team_members
-    resources :team_locations, as: :locations
+    resources :members
+    resources :locations, as: :locations
     resources :opportunities do
       member do
         post 'apply'

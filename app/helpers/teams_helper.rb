@@ -98,7 +98,6 @@ module TeamsHelper
     @team.size >= 3 && @team.rank > 0
   end
 
-
   def friendly_team_path(team)
     teamname_path(slug: team.slug)
   end
@@ -155,7 +154,7 @@ module TeamsHelper
     teamname_path(slug: team.slug) + "#open-positions"
   end
 
-  def edit_team_locations_path(team)
+  def edit_s_path(team)
     teamname_path(slug: team.slug) + "/edit/#locations"
   end
 

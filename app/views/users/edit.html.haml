@@ -74,7 +74,7 @@
             .left
               %p Personalize your profile by uploading your own background photo. Please note hipsterizing your photo can take up to one or two minutes.
               - if !@user.banner.blank?
-                = image_tag(@user.banner_url)
+                = image_tag(@user.banner.url)
                 .div
                   = form.check_box :remove_banner
                   = form.label :remove_banner, "Remove Banner", class: 'checkbox-label'
@@ -234,7 +234,7 @@
             .current-resume
               - if current_user.has_resume?
                 = link_to 'Your current resume', current_user.resume_url, class: 'track', 'data-action' => 'upload resume', 'data-from' => 'job application'
-            
+
             = form_tag(resume_uploads_url, method: :post, multipart: true) do
               .upload-resume
                 = file_field_tag :resume

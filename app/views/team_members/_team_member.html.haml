@@ -1,6 +1,6 @@
 %li.team_member
   =avatar_image_tag(team_member)
   %h3=team_member.display_name
-  = form_tag team_team_member_path(@team, team_member), :method => :delete do
+  = form_tag team_members_path(@team, team_member), :method => :delete do
     %input.button.cancel.track{:type => "submit", :value => "Remove", 'data-action' => 'leave team', 'data-from' => 'team member remove'}
   .clear

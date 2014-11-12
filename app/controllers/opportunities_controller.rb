@@ -21,16 +21,15 @@ class OpportunitiesController < ApplicationController
   end
 
   def new
-    team_id = params.permit(:team_id)[:team_id]
-    @job = Opportunity.new(team_document_id: team_id)
+    team_id = params[:team_id]
+    @job = Opportunity.new(team_id: team_id)
   end
 
   def edit
-
   end
 
   def create
-    opportunity_create_params = params.require(:opportunity).permit(:name, :team_document_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
+    opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
     @job = Opportunity.new(opportunity_create_params)
     respond_to do |format|
       if @job.save
@@ -43,7 +42,7 @@ class OpportunitiesController < ApplicationController
   end
 
   def update
-    opportunity_update_params = params.require(:opportunity).permit(:id, :name, :team_document_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
+    opportunity_update_params = params.require(:opportunity).permit(:id, :name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
     respond_to do |format|
       if @job.update_attributes(opportunity_update_params)
         format.html { redirect_to teamname_path(@team.slug), notice: "#{@job.name} updated" }
@@ -73,22 +72,30 @@ class OpportunitiesController < ApplicationController
 
   def index
     current_user.seen(:jobs) if signed_in?
-    store_location! if !signed_in?
+    store_location! unless signed_in?
     chosen_location = (params[:location] || closest_to_user(current_user)).try(:titleize)
-    chosen_location = nil if chosen_location == "Worldwide"
-    @page           = params[:page].try(:to_i) || 1
-    tag             = params[:skill].gsub(/\-/, ' ').downcase unless params[:skill].nil?
-    @jobs           = get_jobs_for(chosen_location, tag, @page)
-    @jobs_left      = @jobs.count
-    @jobs           = @jobs.limit(20)
-    chosen_location = "Worldwide" if chosen_location.nil?
-    @locations      = Rails.cache.fetch("job_locations_#{params[:location]}_#{params[:skill]}", expires_in: 1.hour) { Opportunity.by_tag(tag).map(&:locations).flatten.reject { |loc| loc == "Worldwide" }.push("Worldwide").uniq.compact }
+    chosen_location = nil if chosen_location == 'Worldwide'
+
+    @page = params[:page].try(:to_i) || 1
+    tag = params[:skill].gsub(/\-/, ' ').downcase unless params[:skill].nil?
+
+
+    @jobs = get_jobs_for(chosen_location, tag, @page)
+    @jobs_left = @jobs.count
+    @jobs = @jobs.limit(20)
+
+
+
+    chosen_location = 'Worldwide' if chosen_location.nil?
+    @locations = Rails.cache.fetch("job_locations_#{params[:location]}_#{params[:skill]}", expires_in: 1.hour) do
+      Opportunity.by_tag(tag).map(&:locations).flatten.reject { |loc| loc == "Worldwide" }.push("Worldwide").uniq.compact
+    end
     @locations.delete(chosen_location) unless @locations.frozen?
     params[:location] = chosen_location
-    @lat, @lng        = geocode_location(chosen_location)
+    @lat, @lng = geocode_location(chosen_location)
 
     respond_to do |format|
-      format.html { render layout: "jobs" }
+      format.html { render layout: 'jobs' }
       format.json { render json: @jobs.map(&:to_public_hash).to_json }
       format.js
     end
@@ -97,10 +104,11 @@ class OpportunitiesController < ApplicationController
 
   def map
     @job_locations = all_job_locations
-    @job_skills    = all_job_skills
+    @job_skills = all_job_skills
   end
 
   private
+
   def validate_permissions
     redirect_to :back unless team_admin?
   end
@@ -160,6 +168,8 @@ class OpportunitiesController < ApplicationController
     scope = Opportunity
     scope = scope.by_city(chosen_location) unless chosen_location.nil?
     scope = scope.by_tag(tag) unless tag.nil?
+    # TODO: Verify that there are no unmigrated teams
+    scope = scope.where('team_id is not null')
     scope.offset((page-1) * 20)
   end
 end

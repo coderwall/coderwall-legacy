@@ -359,4 +359,8 @@ module ProtipsHelper
     return true if protip.best_stat.present? && stat_name != :views
     return false
   end
+
+  def protip_editing_text
+    params[:action] == 'new' ? 'Add new protip' : 'Edit protip'
+  end
 end

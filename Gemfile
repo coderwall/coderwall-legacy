@@ -126,6 +126,9 @@ gem 'sitemap_generator'
 gem 'tweet-button'
 gem 'local_time'
 
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 # DROP BEFORE RAILS 4
 # Mongo
 gem 'mongoid'
@@ -143,6 +146,7 @@ gem 'tire'
 
 group :development do
   gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'flog'
   gem 'fukuzatsu'
   gem 'guard-rspec'
@@ -154,16 +158,17 @@ group :development do
 end
 
 group :development, :test do
+  gem 'annotate'
   gem 'fabrication-rails'
   gem 'ffaker'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
   gem 'pry-byebug'
-  gem 'pry-rescue'
+  #gem 'pry-rescue'
+  #gem 'pry-stack_explorer'
   gem 'quiet_assets'
-  gem 'syntax'
-  gem 'annotate'
   gem 'rspec-rails'
+  gem 'syntax'
 end
 
 group :test do
@@ -182,6 +187,7 @@ group :test do
   gem 'timecop'
   gem 'vcr'
   gem 'webmock', '<1.16'
+  gem 'stripe-ruby-mock', git: 'https://github.com/rebelidealist/stripe-ruby-mock', branch: 'live-tests'
 end
 
 gem 'airbrake'

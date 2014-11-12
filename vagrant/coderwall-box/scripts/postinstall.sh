@@ -8,6 +8,61 @@ done
 sleep 30
 
 
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+echo "Have you set the ENV keys?"
+sleep 30
+
+
 set -x
 
 date > /etc/vagrant_box_build_time
@@ -24,6 +79,22 @@ apt-get -y install linux-headers-$(uname -r)
 apt-get -y install build-essential
 
 # General dependencies and tools just... mashed, just mashed all together.
+apt-get -y install ack-grep autoconf automake bison ca-certificates         \
+                   curl g++ gcc git-core htop iotop libc6-dev libffi-dev    \
+                   libgdbm-dev libncurses5-dev libopenssl-ruby libreadline6 \
+                   libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev  \
+                   libtool libxml2-dev libxslt-dev libyaml-dev make openssl \
+                   patch pkg-config sqlite3 tmux vim zlib1g zlib1g-dev gawk \
+                   libxml2-dev curl libcurl4-openssl-dev        \
+                   imagemagick libmagickcore-dev libmagickwand-dev tcl8.5
+apt-get -y install libcurl3 libcurl3-dev libcurl3-gnutls libcurl4-openssl-dev
+apt-get -y install libpq-dev
+apt-get -y install libxml2 libxml2-dev libxslt1-dev
+
+
+# Install NFS client
+apt-get -y install nfs-common portmap
+
 # Apt-install python tools and libraries
 # Install NFS client
 # libpq-dev lets us compile psycopg for Postgres
@@ -53,7 +124,6 @@ apt-get -y install libmagickcore-dev
 apt-get -y install libmagickwand-dev
 apt-get -y install libncurses5-dev
 apt-get -y install libopenssl-ruby
-apt-get -y install libpq-dev
 apt-get -y install libpq-dev
 apt-get -y install libreadline6
 apt-get -y install libreadline6-dev
@@ -246,7 +316,7 @@ echo 'LC_ALL="en_US.UTF-8"' >> /etc/default/locale
 su postgres -c 'createuser -s vagrant'
 su postgres -c 'createuser -s coderwall'
 
-su postgres -c 'pg_ctl stop -D /var/pgsql/data  2>&1'
+su -c 'pg_ctl stop -D /var/pgsql/data  2>&1' postgres
 su -c '/usr/bin/pg_ctl start -l /var/pgsql/data/log/logfile -D /var/pgsql/data' postgres
 
 sudo su - vagrant <<-'EOF'

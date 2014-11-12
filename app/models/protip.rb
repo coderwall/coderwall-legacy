@@ -9,7 +9,7 @@ require 'search'
 class Protip < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_format, :use => :slugged
-    
+
   include Featurable
   # TODO: Break out the various responsibilities on the Protip into modules/concerns.
 
@@ -316,9 +316,10 @@ class Protip < ActiveRecord::Base
     end
 
     def valid_reviewers
+      User # Hack to force loading User model before it gets read from cache and explodes in dev.
       Rails.cache.fetch('valid_protip_reviewers', expires_in: 1.month) do
         if ENV['REVIEWERS']
-          User.where(username: YAML.load(ENV['REVIEWERS'])).all
+          User.where(username: YAML.load(ENV['REVIEWERS'])).to_a
         else
           []
         end
@@ -331,16 +332,16 @@ class Protip < ActiveRecord::Base
   # Homepage 4.0 rewrite
   #######################
   #TODO REMOVE
-    def deindex_search
-      ProtipIndexer.new(self).remove
-    end
-    def index_search
-      ProtipIndexer.new(self).store
-    end
+  def deindex_search
+    ProtipIndexer.new(self).remove
+  end
+  def index_search
+    ProtipIndexer.new(self).store
+  end
 
-    def index_search_after_destroy
-      self.tire.update_index
-    end
+  def index_search_after_destroy
+    self.tire.update_index
+  end
 
 
   def networks
@@ -954,11 +955,11 @@ class Protip < ActiveRecord::Base
   def to_html
     CFM::Markdown.render self.body
   end
-  
+
   def slug_format
     "#{title}"
   end
-  
+
   protected
   def check_links
     errors[:body] << "one or more of the links are invalid or not publicly reachable/require login" unless valid_links?
@@ -976,11 +977,10 @@ class Protip < ActiveRecord::Base
   def analyze_spam
     AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
   end
-  
+
 end
 
 # == Schema Information
-# Schema version: 20140728214411
 #
 # Table name: protips
 #
@@ -1000,4 +1000,5 @@ end
 #  boost_factor        :float            default(1.0)
 #  inappropriate       :integer          default(0)
 #  likes_count         :integer          default(0)
+#  slug                :string(255)
 #

@@ -8,7 +8,6 @@ RSpec.describe SpamReport, :type => :model do
 end
 
 # == Schema Information
-# Schema version: 20140728214411
 #
 # Table name: spam_reports
 #

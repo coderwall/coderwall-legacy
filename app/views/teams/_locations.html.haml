@@ -1,51 +1,51 @@
 %section.location#locations{:class => section_enabled_class(@team.has_locations?)}
-  -if !@team.has_locations?
-    -inactive_box('#locations', "Office Locations") do
-      =nil
+  - if !@team.has_locations?
+    - inactive_box('#locations', "Office Locations") do
+      = nil
 
-  -if can_edit?
-    -panel_form_for_section('#locations', 'Where do you have offices?') do |f|
+  - if can_edit?
+    - panel_form_for_section('#locations', 'Where do you have offices?') do |f|
       %aside
-        -admin_hint do
+        - admin_hint do
           Specify points of interest (e.g. restaurants, bars, public transportation) and other amenities and highlights for each office location
       .form-inputs
         %fieldset
-          .add-map-location=link_to_add_fields('Add new location', f, :team_locations)
+          .add-map-location= link_to_add_fields('Add new location', f, :locations)
           -if @team.has_locations?
             .location-list
-              =f.fields_for :team_locations do |fields|
+              = f.fields_for :team_locations do |fields|
                 .item
-                  =fields.hidden_field :id
+                  = fields.hidden_field :id
                   %fieldset
-                    =fields.label :name, 'Location Name'
-                    =fields.text_field :name
+                    = fields.label :name, 'Location Name'
+                    = fields.text_field :name
                   %fieldset
-                    =fields.label :description, 'Highlights for this office location'
-                    =fields.text_area :description
+                    = fields.label :description, 'Highlights for this office location'
+                    = fields.text_area :description
                   %fieldset
-                    =fields.label :address, 'Full street address of this office location'
-                    =fields.text_field :address
+                    = fields.label :address, 'Full street address of this office location'
+                    = fields.text_field :address
                   %fieldset.remove-location
-                    =fields.label :_destroy, "Remove Location"
-                    =fields.check_box :_destroy
+                    = fields.label :_destroy, "Remove Location"
+                    = fields.check_box :_destroy
 
   #location-map
   .location-details
     .selected
-      %h3=@team.primary_address_name
-      %p.address=@team.primary_address
-      %p.description=@team.primary_address_description
+      %h3= @team.primary_address_name
+      %p.address= @team.primary_address
+      %p.description= @team.primary_address_description
       %ul.poi
-        -@team.primary_points_of_interest.each do |point|
-          %li=point
-    -if @team.team_locations.size > 1
+        - @team.primary_points_of_interest.each do |point|
+          %li= point
+    -if @team.locations.size > 1
       %ul.locations.cf
-        -@team.team_locations.each do |location|
+        - @team.locations.each do |location|
           %li.team_location
             %a.mapLocation{:href => '#position'}
-              .name=location.name
-              .address.hide=location.address || location.name
-              .description.hide=location.description
+              .name= location.name
+              .address.hide= location.address || location.name
+              .description.hide= location.description
               %ul.poi
-                -location.points_of_interest.each do |point|
-                  %li=point
+                - location.points_of_interest.each do |point|
+                  %li= point
