@@ -2,7 +2,7 @@ class ProtipsController < ApplicationController
 
   before_action :access_required, only: [:new, :create, :edit, :update, :destroy, :me]
   before_action :require_skills_first, only: [:new, :create]
-  before_action :lookup_protip, only: [:show, :edit, :update, :destroy, :upvote, :tag, :flag, :queue, :feature, :delete_tag]
+  before_action :lookup_protip, only: %i(show edit update destroy upvote tag flag queue feature delete_tag)
   before_action :reformat_tags, only: [:create, :update]
   before_action :verify_ownership, only: [:edit, :update, :destroy]
   before_action :ensure_single_tag, only: [:subscribe, :unsubscribe]
@@ -404,8 +404,9 @@ class ProtipsController < ApplicationController
   end
 
   def lookup_protip
-    @protip = if public_id = params[:id]
-                Protip.find_by_public_id(public_id.downcase)
+    @protip = if params[:id].present?
+                public_id = params[:id].to_s.strip.downcase
+                Protip.find_by_public_id(public_id)
               else
                 nil
               end

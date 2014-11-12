@@ -111,9 +111,9 @@
           %h2.comments-header
             %i.fa.fa-comments
             Comments
-          %ul.comment-list
-            = render protip.comments
-
+          -# HACK: Ignore protip comments where the owner is non-existant
+          -# TODO: Clean out old comments where the is no User associated
+          %ul.comment-list= render protip.comments.select { |comment| comment.user }
         = render 'comments/add_comment'
 
     - if defined?(:job) && !job.nil?
