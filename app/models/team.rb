@@ -136,8 +136,7 @@ class Team < ActiveRecord::Base
   end
 
   def self.with_similar_names(name)
-    name.gsub!(/ \-\./, '.*')
-    teams = Team.any_of({ :name => /#{name}.*/i }).limit(3).to_a
+    Team.where('name ilike ?', "#{name.gsub!(/ \-\./, '.*')}%").limit(3).to_a
   end
 
   def self.with_completed_section(section)
