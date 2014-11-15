@@ -71,7 +71,7 @@ class Audience
         end
       elsif target == :team
         team = Team.find(audience[target])
-        team.team_members.map do |team_member|
+        team.members.map do |team_member|
           team_member.id
         end unless team.nil?
       elsif target == :user_followers
@@ -121,7 +121,7 @@ class Audience
 
     if user_or_team.is_a?(Team)
       team = Team.find(user_or_team)
-      team.team_members.each do |team_member|
+      team.members.each do |team_member|
         audiences.concat(expand_followers(team_member))
       end unless team.nil?
     else

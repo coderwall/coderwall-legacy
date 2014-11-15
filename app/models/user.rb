@@ -451,15 +451,11 @@ class User < ActiveRecord::Base
     score_cache
   end
 
-  def team_members
-    User.where(team_id: self.team_id.to_s)
-  end
-
   def team_member_ids
     User.select(:id).where(team_id: self.team_id.to_s).map(&:id)
   end
 
-  def penalize!(amount=(((team && team.team_members.size) || 6) / 6.0)*activitiy_multipler)
+  def penalize!(amount=(((team && team.members.size) || 6) / 6.0)*activitiy_multipler)
     self.penalty = amount
     self.calculate_score!
   end

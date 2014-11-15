@@ -45,16 +45,16 @@ class Team::SearchWrapper
     User::BLANK_PROFILE_URL
   end
 
-  def team_members
-    Array(item[:team_members])
+  def members
+    Array(item[:members])
   end
 
   def top_three_team_members
-    team_members.first(3)
+    members.first(3)
   end
 
   def top_two_team_members
-    team_members.first(2)
+    members.first(2)
   end
 
   def hiring?

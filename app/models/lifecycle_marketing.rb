@@ -32,19 +32,14 @@ class LifecycleMarketing
 
     def send_reminders_to_create_protip
       Rails.logger.info "Skipping :send_reminders_to_create_protip until implemented"
-      # remind_to_create_protip
-      # add scope: without_protip
     end
 
     def send_reminders_to_create_skill
       Rails.logger.info "Skipping :send_reminders_to_create_skill until implemented"
-      # remind_to_create_skills
-      # add scope: without_skill
     end
 
     def send_reminders_to_link_accounts
       Rails.logger.info "Skipping :send_reminders_to_link_accounts until implemented"
-      # remind_to_link_accounts
     end
 
     def send_new_achievement_reminders

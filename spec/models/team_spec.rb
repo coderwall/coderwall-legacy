@@ -54,7 +54,7 @@ RSpec.describe Team, :type => :model do
     VCR.use_cassette('Opportunity') do
       seed_plans!
       Rails.cache.write(Team::FEATURED_TEAMS_CACHE_KEY, 'test')
-      team.team_members << admin = Fabricate(:user)
+      team.members << admin = Fabricate(:user)
       team.build_account
       team.account.admin_id = admin.id
       team.account.subscribe_to!(Plan.enhanced_team_page_monthly, true)

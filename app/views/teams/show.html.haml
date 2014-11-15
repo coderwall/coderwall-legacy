@@ -51,7 +51,7 @@
         %li
           %a.team-url{:href => '#team-top'}
             =@team.name
-        %li=link_to(pluralize(@team.team_members.size, 'Members'), '#team-members', :class => 'team-members')
+        %li=link_to(pluralize(@team.members.size, 'Members'), '#team-members', :class => 'team-members')
         -if display_protips?
           %li=link_to(pluralize(@team_protips.total, 'Protips'), '#team-activity', :class => 'team-activity')
         %li

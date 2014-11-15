@@ -7,12 +7,12 @@ class ProcessTeamJob
     team = Team.find(team_id)
     case process_type
       when 'recalculate'
-        if team.team_members.size <= 0
+        if team.members.size <= 0
           team.destroy
           Redis.current.zrem(Team::LEADERBOARD_KEY, team.id.to_s)
         else
           team.recalculate!
-          if team.team_members.size < 3
+          if team.members.size < 3
             Redis.current.zrem(Team::LEADERBOARD_KEY, team.id.to_s)
           else
             Redis.current.zadd(Team::LEADERBOARD_KEY, team.score.to_f, team.id.to_s)

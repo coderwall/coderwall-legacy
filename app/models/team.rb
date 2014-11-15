@@ -9,43 +9,25 @@ class Team < ActiveRecord::Base
 
   self.table_name = 'teams'
 
-  include SearchModule
-  include TeamSearch
   include LeaderboardRedisRank
   include TeamAnalytics
   include TeamMigration
 
+  include TeamSearch
+  include SearchModule
+
+
   mount_uploader :avatar, TeamUploader
 
-  mapping team: {
-    properties: {
-      id:                 { type: 'string', index: 'not_analyzed' },
-      slug:               { type: 'string', index: 'not_analyzed' },
-      name:               { type: 'string', boost: 100, analyzer: 'snowball' },
-      score:              { type: 'float', index: 'not_analyzed' },
-      size:               { type: 'integer', index: 'not_analyzed' },
-      avatar:             { type: 'string', index: 'not_analyzed' },
-      country:            { type: 'string', boost: 50, analyzer: 'snowball' },
-      url:                { type: 'string', index: 'not_analyzed' },
-      follow_path:        { type: 'string', index: 'not_analyzed' },
-      hiring:             { type: 'boolean', index: 'not_analyzed' },
-      total_member_count: { type: 'integer', index: 'not_analyzed' },
-      completed_sections: { type: 'integer', index: 'not_analyzed' },
-      team_members:       { type: 'multi_field', fields: {
-        username:    { type: 'string', index: 'not_analyzed' },
-        profile_url: { type: 'string', index: 'not_analyzed' },
-        avatar:      { type: 'string', index: 'not_analyzed' }
-      } }
-    }
-  }
-
   scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
-
 
   before_validation :create_slug!
 
   validates :slug, uniqueness: true, presence: true
 
+  def top_three_team_members
+    members.first(3)
+  end
 
   has_many :followers, through: :follows, source: :team
 
@@ -58,6 +40,14 @@ class Team < ActiveRecord::Base
 
   def featured_links
     links
+  end
+
+  def sorted_team_members
+    members.sorted
+  end
+
+  def admins
+    []
   end
 
   has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
@@ -159,8 +149,8 @@ class Team < ActiveRecord::Base
   end
 
   def most_influential_members_for(user)
-    influencers = user.following_by_type(User.name).where('follows.followable_id in (?)', self.team_members.map(&:id))
-    (influencers + self.team_members.first(3)).uniq
+    influencers = user.following_by_type(User.name).where('follows.followable_id in (?)', self.members.map(&:id))
+    (influencers + self.members.first(3)).uniq
   end
 
   def hiring_message
@@ -204,15 +194,18 @@ class Team < ActiveRecord::Base
   end
 
   def dominant_country_of_members
-    members.select([:country, 'count(country) as count']).group([:country]).order('count DESC').limit(1).map(&:country)
-  end
-
-  def team_members
-    members
+    members.map(&:user).map do |user|
+      [user.country, 1]
+    end.reduce(Hash.new(0)) do |memo, pair|
+      memo[pair.first] += pair.last
+      memo
+    end.to_a.sort do |x, y|
+      y[1] <=> x[1]
+    end.map(&:first).compact.first
   end
 
   def reach
-    team_member_ids = team_members.map(&:id)
+    team_member_ids = members.map(&:id)
     Follow.where(followable_type: 'User', followable_id: team_member_ids).count + Follow.where(follower_id: team_member_ids, follower_type: 'User').count
   end
 
@@ -221,7 +214,7 @@ class Team < ActiveRecord::Base
   end
 
   def has_member?(user)
-    team_members.include?(user)
+    members.include?(user)
   end
 
 
@@ -230,13 +223,13 @@ class Team < ActiveRecord::Base
   end
 
   def events
-    @events ||= team_members.collect { |user| user.followed_repos }.flatten.sort { |x, y| y.date <=> x.date }
+    @events ||= members.collect { |user| user.followed_repos }.flatten.sort { |x, y| y.date <=> x.date }
   end
 
   def achievements_with_counts
     @achievements_with_counts ||= begin
                                     achievements = {}
-                                    team_members.each do |user|
+                                    members.each do |user|
                                       user.badges.each do |badge|
                                         achievements[badge.badge_class] = 0 if achievements[badge.badge_class].blank?
                                         achievements[badge.badge_class] += 1
@@ -246,11 +239,11 @@ class Team < ActiveRecord::Base
                                   end
   end
 
-  def top_team_members
-    top_three_team_members.map do |member|
+  def top_members
+    top_three_members.map do |member|
       {
         username:    member.username,
-        profile_url: member.profile_url,
+        profile_url: member.user.profile_url,
         avatar:      ApplicationController.helpers.users_image_path(member)
       }
     end
@@ -262,7 +255,7 @@ class Team < ActiveRecord::Base
       type:               self.class.name.downcase,
       url:                Rails.application.routes.url_helpers.team_path(self),
       follow_path:        Rails.application.routes.url_helpers.follow_team_path(self),
-      team_members:       top_team_members,
+      members:       top_members,
       total_member_count: total_member_count,
       completed_sections: number_of_completed_sections,
       country:            dominant_country_of_members,
@@ -279,7 +272,7 @@ class Team < ActiveRecord::Base
     neighbors = Team.find((higher_competitors(5) + lower_competitors(5)).flatten.uniq)
     summary.merge(
       neighbors:    neighbors.collect(&:summary),
-      team_members: team_members.collect { |user| {
+      members: members.collect { |user| {
         name:               user.display_name,
         username:           user.username,
         badges_count:       user.badges_count,
@@ -385,7 +378,7 @@ class Team < ActiveRecord::Base
   def specialties_with_counts
     @specialties_with_counts ||= begin
                                    specialties = {}
-                                   team_members.each do |user|
+                                   members.each do |user|
                                      user.speciality_tags.each do |tag|
                                        tag              = tag.downcase
                                        specialties[tag] = 0 if specialties[tag].blank?
@@ -400,50 +393,40 @@ class Team < ActiveRecord::Base
   end
 
   def empty?
-    (team_members.size) <= 0
+    (members.size) <= 0
   end
 
   def pending_size
-    team_members.size + invited_emails.size
+    members.size + invited_emails.size
   end
 
   def is_invited?(user)
-    !pending_team_members.where(user_id: id_of(user)).first.nil?
+    !pending_members.where(user_id: id_of(user)).first.nil?
   end
 
   def is_member?(user)
-    team_members.include?(user)
+    members.include?(user)
   end
 
   def membership(user)
-    team_members.where(user_id: id_of(user)).first
+    members.where(user_id: id_of(user)).first
   end
 
-  #migrated
-  # .members.top
   def top_team_member
-    sorted_team_members.first
+    sorted_members.first
   end
 
-  #migrated
-  # .members.top(2)
-  def top_two_team_members
-    sorted_team_members[0...2] || []
+  def top_two_members
+    sorted_members[0...2] || []
   end
 
-
-  #migrated
-  # .members.top(3)
-  def top_three_team_members
-    sorted_team_members[0...3] || []
+  def top_three_members
+    sorted_members[0...3] || []
   end
 
-  #migrated
-  # .members.sorted
-  def sorted_team_members
-    @sorted_team_members = members.order('score_cache DESC')
+  def sorted_members
+    @sorted_members = members.order('score_cache DESC')
   end
-
 
   def add_user(user)
     touch!
@@ -467,7 +450,7 @@ class Team < ActiveRecord::Base
     members.destroy(member)
     save!
   end
-
+  attr_accessor :skip_validations
   def touch!
     self.updated_at = Time.now.utc
     save!(validate: !skip_validations)
@@ -478,7 +461,7 @@ class Team < ActiveRecord::Base
   end
 
   def total_highlights_count
-    team_members.collect { |u| u.highlights.count }.sum
+    members.collect { |u| u.highlights.count }.sum
   end
 
   def team_size_threshold
@@ -506,13 +489,13 @@ class Team < ActiveRecord::Base
   end
 
   def recalculate!
-    return nil if team_members.size <= 0
+    return nil if members.size <= 0
     log_history!
     update_team_size!
-    self.total             = team_members.collect(&:score).sum
-    self.achievement_count = team_members.collect { |t| t.badges.count }.sum
-    self.endorsement_count = team_members.collect { |t| t.endorsements.count }.sum
-    self.mean              = team_members.empty? ? 0 : (total / team_members_with_scores.size).to_f
+    self.total             = members.collect(&:score).sum
+    self.achievement_count = members.collect { |t| t.badges.count }.sum
+    self.endorsement_count = members.collect { |t| t.endorsements.count }.sum
+    self.mean              = members.empty? ? 0 : (total / members_with_scores.size).to_f
     self.median            = calculate_median
     self.score             = [real_score, MAX_TEAM_SCORE].min
     save!
@@ -527,11 +510,11 @@ class Team < ActiveRecord::Base
   end
 
   def leader
-    sorted_team_members.sort { |x, y| x.score <=> y.score }.reverse.first
+    sorted_members.sort { |x, y| x.score <=> y.score }.reverse.first
   end
 
   def multipler
-    team_score = team_members_with_scores.size
+    team_score = members_with_scores.size
     if  team_score <= 3
       0.50
     elsif team_score <= 4
@@ -539,18 +522,12 @@ class Team < ActiveRecord::Base
     elsif team_score <= 5
       0.90
     else
-      Math.log(team_members_with_scores.size - 2, 3)
+      Math.log(members_with_scores.size - 2, 3)
     end
-    # team_size = team_members_with_scores.size
-    # if team_size <= 4
-    #   0.95
-    # else
-    #   1
-    # end
   end
 
   def members_with_score_above(score)
-    team_members.select { |u| u.score >= score }.size
+    members.select { |u| u.score >= score }.size
   end
 
   def size_credit
@@ -562,15 +539,15 @@ class Team < ActiveRecord::Base
   end
 
   def calculate_median
-    sorted = team_members.collect(&:score).sort
+    sorted = members.collect(&:score).sort
     return 0 if sorted.empty?
     lower = sorted[(sorted.size/2) - 1]
     upper = sorted[((sorted.size+1)/2) -1]
     (lower + upper) / 2
   end
 
-  def team_members_with_scores
-    @team_members_with_scores ||= team_members.collect { |t| t.score > 0 }
+  def members_with_scores
+    @members_with_scores ||= members.collect { |t| t.score > 0 }
   end
 
   def log_history!
@@ -583,7 +560,7 @@ class Team < ActiveRecord::Base
 
   def predominant
     skill = {}
-    team_members.each do |member|
+    members.each do |member|
       member.user.repositories.each do |repo|
         repo.tags.each do |tag|
           skill[tag] = (skill[tag] ||= 0) + 1
@@ -597,7 +574,7 @@ class Team < ActiveRecord::Base
     return false if user.nil?
     return true if user.admin?
     if everyone_is_an_admin = admins.empty?
-      team_members.include?(user)
+      members.include?(user)
     else
       admins.include?(user.id)
     end
@@ -608,7 +585,7 @@ class Team < ActiveRecord::Base
   end
 
   def has_user_with_referral_token?(token)
-    team_members.collect(&:referral_token).include?(token)
+    members.collect(&:referral_token).include?(token)
   end
 
   def impressions_key
@@ -677,12 +654,12 @@ class Team < ActiveRecord::Base
   end
 
   def generate_event
-    only_member_is_creator = team_members.first.try(:id)
+    only_member_is_creator = members.first.try(:id)
     GenerateEventJob.perform_async(self.event_type, Audience.following_user(only_member_is_creator), self.to_event_hash, 1.minute) unless only_member_is_creator.nil?
   end
 
   def to_event_hash
-    { user: { username: team_members.any? && team_members.first.username } }
+    { user: { username: members.any? && members.first.username } }
   end
 
   def event_type
@@ -765,7 +742,7 @@ class Team < ActiveRecord::Base
   end
 
   def has_members?
-    team_members.count >= 2
+    members.count >= 2
   end
 
   def stack
@@ -790,7 +767,7 @@ class Team < ActiveRecord::Base
 
   def plan=(plan)
     self.build_account
-    self.account.admin_id = self.admins.first || self.team_members.first.id
+    self.account.admin_id = self.admins.first || self.members.first.id
     self.account.subscribe_to!(plan, true)
   end
 
