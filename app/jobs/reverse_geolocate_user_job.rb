@@ -4,7 +4,7 @@ class ReverseGeolocateUserJob
   include Sidekiq::Worker
   include ReverseGeocoder
 
-  sidekiq_options queue: :high
+  sidekiq_options queue: :user
 
   def perform(username, ip_address)
     user = User.find_by_username(username)

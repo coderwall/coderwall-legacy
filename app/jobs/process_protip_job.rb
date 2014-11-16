@@ -1,7 +1,7 @@
 class ProcessProtipJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :protip
 
   def perform(process_type, protip_id)
     protip = Protip.find(protip_id)

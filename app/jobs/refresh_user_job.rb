@@ -1,6 +1,6 @@
 class RefreshUserJob
   include Sidekiq::Worker
-  sidekiq_options queue: :low
+  sidekiq_options queue: :user
 
   def perform(user_id, full=false)
     return if Rails.env.test?

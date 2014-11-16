@@ -1,7 +1,7 @@
 class GithubBadgeOrgJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :medium
+  sidekiq_options queue: :github
 
   def perform(username, action)
     user = User.with_username(username)

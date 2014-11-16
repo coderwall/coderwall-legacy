@@ -1,7 +1,7 @@
 class BuildActivityStreamJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :medium
+  sidekiq_options queue: :timeline
 
   def perform(username)
     user = User.with_username(username)

@@ -1,6 +1,6 @@
 class RefreshStaleUsersWorker
   include Sidekiq::Worker
-  sidekiq_options queue: :critical
+  sidekiq_options queue: :user
 
   def perform
     user_records.find_each(batch_size: 1000) do |user|

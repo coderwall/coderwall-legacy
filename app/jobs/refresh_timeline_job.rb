@@ -1,7 +1,7 @@
 class RefreshTimelineJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :medium
+  sidekiq_options queue: :timeline
 
   def perform(username)
     user = User.find_by_username(username)

@@ -1,7 +1,7 @@
 class SitemapRefreshWorker
   include Sidekiq::Worker
 
-  sidekiq_options queue: :sitemap_generator
+  sidekiq_options queue: :index
 
   def perform
     # ArgumentError: Missing host to link to! Please provide the :host parameter, set default_path_options[:host], or set :only_path to true

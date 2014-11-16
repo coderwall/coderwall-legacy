@@ -1,7 +1,7 @@
 class GeolocateJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :user
 
   def perform
     User.active.not_geocoded.each do |user|

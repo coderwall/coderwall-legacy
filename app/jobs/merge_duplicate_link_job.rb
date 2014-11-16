@@ -1,7 +1,7 @@
 class MergeDuplicateLinkJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :data_cleanup
 
   def perform(link)
     all_links = ProtipLink.where(url: link).order('created_at ASC')

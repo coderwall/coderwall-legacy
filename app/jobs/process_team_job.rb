@@ -1,7 +1,7 @@
 class ProcessTeamJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :team
 
   def perform(process_type, team_id)
     team = Team.find(team_id)

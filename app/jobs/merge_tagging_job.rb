@@ -1,7 +1,7 @@
 class MergeTaggingJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :data_cleanup
 
   def perform(good_tag_id, bad_tagging_id)
     bad_tagging = Tagging.find(bad_tagging_id)

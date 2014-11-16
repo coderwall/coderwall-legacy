@@ -1,7 +1,7 @@
 class IndexProtipJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :high
+  sidekiq_options queue: :index
 
   def perform(protip_id)
     protip = Protip.find(protip_id)

@@ -1,7 +1,7 @@
-class ImportProtip
+class ImportProtipJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :protip
 
   def perform(type, arg1)
     case type

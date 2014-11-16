@@ -5,6 +5,12 @@ Sidekiq::Testing.inline!
 RSpec.describe UserActivateWorker do
   let(:worker) { UserActivateWorker.new }
 
+  describe 'queueing' do
+    it 'pushes jobs to the correct queue' do
+      expect(UserActivateWorker.get_sidekiq_options["queue"]).to eql :user
+    end
+  end
+
   describe('#perform') do
     context 'when invalid user' do
       let(:user_id) { 1 }

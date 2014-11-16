@@ -2,7 +2,7 @@
 class GenerateEventJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :high
+  sidekiq_options queue: :event_publisher
 
   def perform(event_type, audience, data, drip_rate=:immediately)
     data = HashWithIndifferentAccess.new(data)
