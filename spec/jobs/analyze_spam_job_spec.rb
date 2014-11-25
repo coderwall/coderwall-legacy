@@ -1,5 +1,14 @@
-#FIXME
-#RSpec.describe AnalyzeSpamJob, skip: true do
+require 'sidekiq/testing'
+
+RSpec.describe AnalyzeSpamJob do
+
+  describe 'queueing' do
+    it 'pushes jobs to the correct queue' do
+      expect(AnalyzeSpamJob.get_sidekiq_options["queue"]).to eql :data_cleanup
+    end
+  end
+
+# TODO FIXME
 #  describe '#perform' do
 #    context 'when it is a spam' do
 #      it 'should create a spam report' do
@@ -19,4 +28,4 @@
 #      end
 #    end
 #  end
-#end
+end

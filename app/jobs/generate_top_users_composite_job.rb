@@ -3,6 +3,8 @@
 class GenerateTopUsersCompositeJob
   include Sidekiq::Worker
 
+  sidekiq_options queue: :user
+
   IMAGE_PATH = Rails.root.join('public', 'images', 'top')
   WALL_IMAGE = IMAGE_PATH.join("wall.png")
 

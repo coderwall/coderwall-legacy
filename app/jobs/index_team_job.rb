@@ -1,7 +1,7 @@
 class IndexTeamJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :high
+  sidekiq_options queue: :index
 
   def perform(team_id)
     team = Team.find(team_id)

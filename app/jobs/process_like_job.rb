@@ -1,7 +1,7 @@
 class ProcessLikeJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :high
+  sidekiq_options queue: :user
 
   def perform(process_type, like_id)
     like = Like.find(like_id)

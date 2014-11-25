@@ -1,7 +1,7 @@
 class CleanupProtipsAssociateZombieUpvotesJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :data_cleanup
 
   def perform
     Like.joins('inner join users on users.tracking_code = likes.tracking_code').

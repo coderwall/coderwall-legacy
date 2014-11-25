@@ -3,7 +3,7 @@ class UpdateNetworkJob
   #OPTIMIZE
   include Sidekiq::Worker
 
-  sidekiq_options queue: :high
+  sidekiq_options queue: :network
 
   def perform(update_type, public_id, data)
     protip = Protip.with_public_id(public_id)

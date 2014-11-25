@@ -1,6 +1,6 @@
 class ExtractGithubProfile
   include Sidekiq::Worker
-  sidekiq_options queue: :low
+  sidekiq_options queue: :github
 
 
   def perform(id)

@@ -1,6 +1,6 @@
 class ProtipMailerPopularProtipsSendWorker
   include Sidekiq::Worker
-  sidekiq_options queue: :low
+  sidekiq_options queue: :mailer
 
   def perform(user_id, protip_ids, from, to)
     fail "Only #{protip_ids.count} protips but expected 10" unless protip_ids.count == 10

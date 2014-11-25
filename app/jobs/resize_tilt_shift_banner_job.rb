@@ -1,7 +1,7 @@
 class ResizeTiltShiftBannerJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :high
+  sidekiq_options queue: :user
 
   def perform(klass, id, column)
     image = klass.constantize.find(id)
