@@ -39,6 +39,8 @@ module Coderwall
 
     config.rakismet.key = ENV['AKISMET_KEY']
     config.rakismet.url = ENV['AKISMET_URL']
+
+    config.exceptions_app = self.routes
   end
 end
 

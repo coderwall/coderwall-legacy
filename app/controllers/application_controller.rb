@@ -21,8 +21,7 @@ class ApplicationController < ActionController::Base
   after_action :record_visit
   after_action :record_location
 
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404 unless Rails.env.production?
-  rescue_from ActionController::RoutingError, with: :render_404 unless Rails.env.production?
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   protected
 
@@ -183,7 +182,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404
-    render template: 'error/not_found', status: :not_found
+    render template: 'errors/not_found', status: :not_found
   end
 
   def render_500
