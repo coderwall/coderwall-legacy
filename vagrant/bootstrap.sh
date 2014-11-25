@@ -1,6 +1,8 @@
 #!/bin/bash -x
 export DEBIAN_FRONTEND=noninteractive
 
+apt-get update
+
 apt-get -y install ack-grep
 apt-get -y install autoconf
 apt-get -y install automake
