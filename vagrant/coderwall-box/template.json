@@ -25,8 +25,8 @@
       "initrd=/install/initrd.gz -- <enter><wait>"
     ],
     "vboxmanage": [
-      [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
-      [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
+      [ "modifyvm", "{{.Name}}", "--memory", "4096" ],
+      [ "modifyvm", "{{.Name}}", "--cpus", "4" ]
     ]
   }
   ],
@@ -36,8 +36,7 @@
   "provisioners": [ {
     "type": "shell",
     "scripts": [
-      "scripts/postinstall.sh",
-      "scripts/user-config.sh"
+      "scripts/postinstall.sh"
     ],
     "override": {
       "virtualbox-iso": { "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'" }
