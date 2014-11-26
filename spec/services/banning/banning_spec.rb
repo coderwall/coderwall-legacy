@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'Services::Banning::' do
+RSpec.describe 'Services::Banning::', skip: true do
 
   describe 'User' do
     let(:user) { Fabricate(:user) }
