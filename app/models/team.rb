@@ -125,7 +125,8 @@ class Team < ActiveRecord::Base
   end
 
   def self.with_similar_names(name)
-    Team.where('name ilike ?', "#{name.gsub!(/ \-\./, '.*')}%").limit(3).to_a
+    pattern = "%#{name}%"
+    Team.where('name ilike ?', pattern).limit(3).to_a
   end
 
   def self.with_completed_section(section)
@@ -430,15 +431,6 @@ class Team < ActiveRecord::Base
     @sorted_members = members.order('score_cache DESC')
   end
 
-  def add_user(user)
-    touch!
-
-    user.tap do |u|
-      u.update_attribute(:team_document_id, id.to_s)
-      u.save!
-    end
-  end
-
   def add_member(user)
     Rails.logger.warn("Called #{self.class.name}#add_member(#{user.inspect}")
 
@@ -449,6 +441,7 @@ class Team < ActiveRecord::Base
     save!
     member
   end
+  alias_method :add_user, :add_member
 
   def remove_member(user)
     return nil unless member = members.select { |m| m.user_id == user.id }

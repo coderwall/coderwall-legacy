@@ -1,6 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Team, type: :model, skip: true do
+RSpec.describe Team, type: :model do
+  let(:team)         { Fabricate(:team) }
+  let(:invitee)      { Fabricate(:user) }
+
   it { is_expected.to have_one :account }
 
   it { is_expected.to have_many :locations }
@@ -20,14 +23,14 @@ RSpec.describe Team, type: :model, skip: true do
     end
 
     it 'returns teams using wildcards' do
-      result = Team.with_similar_names('dr -.')
+      result = Team.with_similar_names('dr%')
       expect(result).to include(team_1, team_2)
     end
   end
 
   it 'adds the team id to the user when they are added to a team' do
     team.add_user(invitee)
-    expect(invitee.reload.team).to eq(team)
+    expect(invitee.reload.membership.team).to eq(team)
   end
 
   it 'should indicate if team member has referral' do
@@ -55,7 +58,7 @@ RSpec.describe Team, type: :model, skip: true do
     expect(team.slug).to eq('tilde-inc')
   end
 
-  it 'should clear the cache when a premium team is updated' do
+  skip 'should clear the cache when a premium team is updated' do
     # TODO: Refactor api calls to Sidekiq job
     VCR.use_cassette('Opportunity') do
       seed_plans!
@@ -76,11 +79,7 @@ RSpec.describe Team, type: :model, skip: true do
   end
 
   it 'should be able to add team link' do
-    team.update_attributes(
-      featured_links: [{
-        name: 'Google',
-        url: 'http://www.google.com'
-      }])
+    team.links.create(name: 'Google', url: 'http://www.google.com')
     expect(team.featured_links.size).to eq(1)
   end
 

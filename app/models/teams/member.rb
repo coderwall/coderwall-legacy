@@ -33,6 +33,7 @@ class Teams::Member < ActiveRecord::Base
     speciality_tags
     state_name
     country
+    referral_token
   ).each do |user_method|
     delegate user_method, to: :user
   end
