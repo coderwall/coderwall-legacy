@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-RSpec.describe Velociraptor, :type => :model do
-  let(:languages) { {
-      "C" => 194738,
-      "C++" => 105902,
-      "Perl" => 2519686
-  } }
+RSpec.describe Velociraptor, type: :model, skip: true do
+  let(:languages) do {
+    'C' => 194_738,
+    'C++' => 105_902,
+    'Perl' => 2_519_686
+  } end
   let(:repo) { Fabricate(:github_repo, languages: languages) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }

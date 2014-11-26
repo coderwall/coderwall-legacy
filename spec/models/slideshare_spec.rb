@@ -1,6 +1,6 @@
 require 'vcr_helper'
 
-RSpec.describe 'slideshare', type: :model, functional: true do
+RSpec.describe 'slideshare', type: :model, functional: true, skip: true do
   it 'should pull events for user and create protips' do
     # TODO: Refactor api calls to Sidekiq job
     VCR.use_cassette('Slideshare') do
@@ -14,7 +14,7 @@ RSpec.describe 'slideshare', type: :model, functional: true do
 
       expect(event.identity).to eq('16469108')
       expect(event.owner).to eq('slideshare:ndecrock')
-      expect(event.name).to eq("The Comeback of the Watch")
+      expect(event.name).to eq('The Comeback of the Watch')
       expect(event.relevant_on.to_date.year).to eq(2013)
       expect(event.url).to eq('http://www.slideshare.net/ndecrock/the-comeback-of-the-watch')
       expect(event.tags).to include('slideshare', 'presentation')

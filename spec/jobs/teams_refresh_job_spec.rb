@@ -2,7 +2,7 @@ RSpec.describe TeamsRefreshJob do
 
   describe 'queueing' do
     it 'pushes jobs to the correct queue' do
-      expect(TeamsRefreshJob.get_sidekiq_options["queue"]).to eql :team
+      expect(TeamsRefreshJob.get_sidekiq_options['queue']).to eql :team
     end
   end
 

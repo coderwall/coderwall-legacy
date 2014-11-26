@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-RSpec.describe Cub, :type => :model do
-  let(:languages) { {
-      "JavaScript" => 111435
-  } }
+RSpec.describe Cub, type: :model, skip: true do
+  let(:languages) do {
+    'JavaScript' => 111_435
+  } end
   let(:repo) { Fabricate(:github_repo, languages: languages) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }
@@ -24,8 +24,8 @@ RSpec.describe Cub, :type => :model do
   end
 
   it 'should not award if repo when readme contains text and is less then 90 javascript' do
-    languages["JavaScript"] = 230486
-    languages["Ruby"] = 20364
+    languages['JavaScript'] = 230_486
+    languages['Ruby'] = 20_364
 
     user.build_github_facts
 

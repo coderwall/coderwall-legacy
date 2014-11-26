@@ -2,7 +2,7 @@ RSpec.describe ProcessLikeJob do
 
   describe 'queueing' do
     it 'pushes jobs to the correct queue' do
-      expect(ProcessLikeJob.get_sidekiq_options["queue"]).to eql :user
+      expect(ProcessLikeJob.get_sidekiq_options['queue']).to eql :user
     end
   end
 

@@ -1,6 +1,6 @@
 Fabricator(:api_access) do
-  api_key "MyString"
-  awards "MyText"
+  api_key 'MyString'
+  awards 'MyText'
 end
 
 # == Schema Information

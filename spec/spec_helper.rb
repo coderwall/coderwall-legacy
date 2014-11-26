@@ -1,12 +1,5 @@
-if ENV['COVERAGE']
-  require 'simplecov'
-  SimpleCov.start 'rails'
-  require 'codeclimate-test-reporter'
-  CodeClimate::TestReporter.start
-end
-
 ENV['RAILS_ENV'] = 'test'
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'database_cleaner'
@@ -21,7 +14,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 DatabaseCleaner.logger = Rails.logger
 Rails.logger.level = 5
 
-LOCAL_ELASTIC_SEARCH_SERVER = %r[^http://localhost:9200] unless defined?(LOCAL_ELASTIC_SEARCH_SERVER)
+LOCAL_ELASTIC_SEARCH_SERVER = %r{^http://localhost:9200} unless defined?(LOCAL_ELASTIC_SEARCH_SERVER)
 
 RSpec.configure do |config|
   config.raise_errors_for_deprecations!

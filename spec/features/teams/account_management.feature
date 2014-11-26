@@ -4,7 +4,7 @@ Feature: Generating an invoice
   As a customer
   I would like to receive invoice by email
 
-Background:
+  Background:
     Given a team BOB_TEAM exists
     And team BOB_TEAM is subscribed to plan 'monthly' with card '1234'
 
@@ -12,7 +12,8 @@ Background:
     And I am an administrator
     And I am member of team BOB_TEAM
 
-Scenario: Request an invoice
+  @skip
+  Scenario: Request an invoice
     Given team 'BOB_TEAM' has invoices with data:
       | Field | Value      |
       | Date  | 10/11/2015 |

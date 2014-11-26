@@ -11,7 +11,6 @@ RSpec.describe AvatarUploader do
     end
   end
 
-
   context 'team' do
     describe 'default url' do
       it 'should provide the default url' do
@@ -20,6 +19,5 @@ RSpec.describe AvatarUploader do
       end
     end
   end
-
 
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Changelogd, :type => :model do
+RSpec.describe Changelogd, type: :model, skip: true do
   it 'should award a user if there is a tag' do
     stub_request(:get, Changelogd::API_URI).to_return(body: File.read(File.join(Rails.root, 'spec', 'fixtures', 'changelogd_feed.xml')))
     Changelogd.quick_refresh

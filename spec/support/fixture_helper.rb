@@ -1,10 +1,10 @@
-#def listen_and_respond_with(url, filename)
-  #FakeWeb.register_uri(:get, url, body: response_from_disk(filename))
-#end
+# def listen_and_respond_with(url, filename)
+# FakeWeb.register_uri(:get, url, body: response_from_disk(filename))
+# end
 
-#def listen_and_return(url, contents)
-  #FakeWeb.register_uri(:get, url, body: contents)
-#end
+# def listen_and_return(url, contents)
+# FakeWeb.register_uri(:get, url, body: contents)
+# end
 
 def response_from_disk(name)
   filename = "#{name}.js"

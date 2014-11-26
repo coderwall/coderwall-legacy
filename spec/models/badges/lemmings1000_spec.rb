@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Lemmings1000, :type => :model do
+RSpec.describe Lemmings1000, type: :model, skip: true do
 
   before :all do
     Fact.delete_all
@@ -25,7 +25,7 @@ RSpec.describe Lemmings1000, :type => :model do
     1000.times do
       watchers << Faker::Internet.user_name
     end
-    fact = Fabricate(:github_original_fact, context: user, metadata: {watchers: watchers})
+    fact = Fabricate(:github_original_fact, context: user, metadata: { watchers: watchers })
 
     badge = Lemmings1000.new(user)
     expect(badge.award?).to eq(true)

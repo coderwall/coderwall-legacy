@@ -1,6 +1,6 @@
-require "rails_helper"
+require 'rails_helper'
 
-feature "Custom 500 Page" do
+feature 'Custom 500 Page', skip: true do
   before(:all) do
     Rails.application.config.action_dispatch.show_exceptions = true
     Rails.application.config.consider_all_requests_local = false

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe AccountsHelper, :type => :helper do
+RSpec.describe AccountsHelper, type: :helper do
   it '#invoice_date formats inovoice date from unix time' do
-    invoice = { date: 1068854400 }
+    invoice = { date: 1_068_854_400 }
     expect(helper.invoice_date(invoice)).to eq('November 15th, 2003')
   end
 
@@ -13,11 +13,11 @@ RSpec.describe AccountsHelper, :type => :helper do
 
   it '#subscription_period returns start and end dates for a subscription in the invoice' do
     invoice = {
-      :lines => {
-        :data => [ {
-          :period => {
-            start: 1005523200,
-            end: 1351728000
+      lines: {
+        data: [{
+          period: {
+            start: 1_005_523_200,
+            end: 1_351_728_000
           }
         }]
       }

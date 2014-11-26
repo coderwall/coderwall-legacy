@@ -4,8 +4,7 @@ class Teams::Account < ActiveRecord::Base
   has_many :plans, through: :account_plans
   belongs_to :admin, class_name: 'User'
 
-  validates :team_id, presence: true,
-    uniqueness: true
+  validates :team_id, presence: true, uniqueness: true
   validates_presence_of :stripe_card_token
   validates_presence_of :stripe_customer_token
 
