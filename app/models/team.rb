@@ -16,7 +16,6 @@ class Team < ActiveRecord::Base
   include TeamSearch
   include SearchModule
 
-
   mount_uploader :avatar, TeamUploader
 
   scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
@@ -104,7 +103,7 @@ class Team < ActiveRecord::Base
         filter :term, country: country unless country.nil?
         sort { by [{ score: 'desc', total_member_count: 'desc', '_score' => {} }] }
       end
-    rescue Tire::Search::SearchRequestFailed => e
+    rescue Tire::Search::SearchRequestFailed
       SearchResultsWrapper.new(nil, "Looks like our teams server is down. Try again soon.")
     end
   end
@@ -378,6 +377,7 @@ class Team < ActiveRecord::Base
   def specialties_with_counts
     @specialties_with_counts ||= begin
                                    specialties = {}
+
                                    members.each do |user|
                                      user.speciality_tags.each do |tag|
                                        tag              = tag.downcase
@@ -385,9 +385,11 @@ class Team < ActiveRecord::Base
                                        specialties[tag] += 1
                                      end
                                    end
-                                   unless only_one_occurence_of_each = specialties.values.sum == specialties.values.length
+
+                                   unless specialties.values.sum == specialties.values.length
                                      specialties.reject! { |k, v| v <= 1 }
                                    end
+
                                    specialties.sort_by { |k, v| v }.reverse[0..7]
                                  end
   end
@@ -430,6 +432,7 @@ class Team < ActiveRecord::Base
 
   def add_user(user)
     touch!
+
     user.tap do |u|
       u.update_attribute(:team_document_id, id.to_s)
       u.save!
@@ -439,7 +442,9 @@ class Team < ActiveRecord::Base
   def add_member(user)
     Rails.logger.warn("Called #{self.class.name}#add_member(#{user.inspect}")
 
-    return member if member = members.select { |m| m.user_id == user.id }
+    member = members.select { |m| m.user_id == user.id }.first
+    return member if member
+
     member = members.create(user_id: user.id)
     save!
     member
@@ -450,7 +455,9 @@ class Team < ActiveRecord::Base
     members.destroy(member)
     save!
   end
+
   attr_accessor :skip_validations
+
   def touch!
     self.updated_at = Time.now.utc
     save!(validate: !skip_validations)
@@ -573,7 +580,7 @@ class Team < ActiveRecord::Base
   def admin?(user)
     return false if user.nil?
     return true if user.admin?
-    if everyone_is_an_admin = admins.empty?
+    if admins.empty?
       members.include?(user)
     else
       admins.include?(user.id)
@@ -781,9 +788,12 @@ class Team < ActiveRecord::Base
   end
 
   def video_url
-    if self.youtube_url =~ /vimeo\.com\/(\d+)/
+    youtube_pattern = /(youtube\.com|youtu\.be)\/(watch\?v=)?([\w\-_]{11})/i
+    vimeo_pattern = /vimeo\.com\/(\d+)/
+
+    if self.youtube_url =~ vimeo_pattern
       "https://player.vimeo.com/video/#{$1}"
-    elsif self.youtube_url =~ /(youtube\.com|youtu\.be)\/(watch\?v=)?([\w\-_]{11})/i
+    elsif self.youtube_url =~ youtube_pattern
       "https://www.youtube.com/embed/#{$3}"
     else
       self.youtube_url

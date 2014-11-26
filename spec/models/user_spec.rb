@@ -1,8 +1,7 @@
-require 'spec_helper'
-
-RSpec.describe User, type: :model, skip: true do
+RSpec.describe User, type: :model do
   it { is_expected.to have_one :github_profile }
   it { is_expected.to have_many :github_repositories }
+
   before :each do
     User.destroy_all
   end
@@ -29,7 +28,7 @@ RSpec.describe User, type: :model, skip: true do
   end
 
   it 'should not allow the username in multiple cases to be use on creation' do
-    user = Fabricate(:user, username: 'MDEITERS')
+    Fabricate(:user, username: 'MDEITERS')
     lambda do
       expect(Fabricate(:user, username: 'mdeiters')).to raise_error('Validation failed: Username has already been taken')
     end
@@ -68,7 +67,7 @@ RSpec.describe User, type: :model, skip: true do
     user_with_3_badges = Fabricate :user
     badge1 = user_with_3_badges.badges.create!(badge_class_name: Mongoose3.name)
     badge2 = user_with_3_badges.badges.create!(badge_class_name: Octopussy.name)
-    badge3 = user_with_3_badges.badges.create!(badge_class_name: Mongoose.name)
+    user_with_3_badges.badges.create!(badge_class_name: Mongoose.name)
 
     expect(User.top(1)).to include(user_with_3_badges)
     expect(User.top(1)).not_to include(user_with_2_badges)
@@ -84,7 +83,7 @@ RSpec.describe User, type: :model, skip: true do
   it 'returns badges in order created with latest first' do
     user = Fabricate :user
     badge1 = user.badges.create!(badge_class_name: Mongoose3.name)
-    badge2 = user.badges.create!(badge_class_name: Octopussy.name)
+    user.badges.create!(badge_class_name: Octopussy.name)
     badge3 = user.badges.create!(badge_class_name: Mongoose.name)
 
     expect(user.badges.first).to eq(badge3)
@@ -217,7 +216,8 @@ RSpec.describe User, type: :model, skip: true do
 
   it 'should indicate when user is on a premium team' do
     team = Fabricate(:team, premium: true)
-    team.add_member(user = Fabricate(:user))
+    member = team.add_member(user = Fabricate(:user))
+
     expect(user.on_premium_team?).to eq(true)
   end
 
