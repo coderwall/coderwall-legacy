@@ -24,6 +24,7 @@ Coderwall::Application.routes.draw do
 
   resources :protips, :path => '/p' do
     collection do
+      get 'u/:username' => 'protips#user', as: :user
       get ':id/:slug' => 'protips#show', as: :slug, :constraints => {:slug => /(?!.*?edit).*/}
       get 'random'
       get 'search' => 'protips#search', as: :search
@@ -34,7 +35,6 @@ Coderwall::Application.routes.draw do
       get 'd/:date(/:start)' => 'protips#date', as: :date
       get 't/trending' => 'protips#trending', as: :trending_topics
       get 't/by_tags' => 'protips#by_tags', as: :by_tags
-      get 'u/:username' => 'protips#user', as: :user
       get 't/(/*tags)' => 'networks#tag', as: :tagged
       put 't/(/*tags)/subscribe' => 'protips#subscribe', as: :subscribe
       put 't/(/*tags)/unsubscribe' => 'protips#unsubscribe', as: :unsubscribe
