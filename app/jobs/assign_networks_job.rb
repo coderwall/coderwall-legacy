@@ -1,7 +1,7 @@
 class AssignNetworksJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :network
 
   def perform(username)
     user = User.find_by_username(username)

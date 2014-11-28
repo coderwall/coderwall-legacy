@@ -1,7 +1,7 @@
 class CreateNetworkJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :network
 
   def perform(tag)
     top_tags = Protip.trending_topics

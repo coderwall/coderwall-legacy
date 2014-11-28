@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Endorsement, :type => :model do
+RSpec.describe Endorsement, type: :model, skip: true do
 
   it 'requires a specialty' do
     endorsement = Fabricate.build(:endorsement, specialty: nil)
@@ -27,11 +27,11 @@ RSpec.describe Endorsement, :type => :model do
 
   describe User do
     let(:endorser) { Fabricate(:user) }
-    let(:endorsed) {
+    let(:endorsed) do
       user = Fabricate(:user, username: 'somethingelse')
       endorser.endorse(user, 'ruby')
       user
-    }
+    end
 
     it 'saves the specialty' do
       expect(endorsed.endorsements.first.specialty).to eq('ruby')
@@ -57,16 +57,3 @@ RSpec.describe Endorsement, :type => :model do
   end
 
 end
-
-# == Schema Information
-#
-# Table name: endorsements
-#
-#  id                :integer          not null, primary key
-#  endorsed_user_id  :integer
-#  endorsing_user_id :integer
-#  specialty         :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  skill_id          :integer
-#

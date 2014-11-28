@@ -1,10 +1,10 @@
 Fabricator(:opportunity) do
-  salary 100000
-  name "Senior Rails Web Developer"
-  description "Architect and implement the Ruby and Javascript underpinnings of our various user-facing and internal web apps like api.heroku.com."
-  tags ["rails", "sinatra", "JQuery", "Clean, beautiful code"]
-  location "San Francisco, CA"
-  cached_tags "java, python"
+  salary 100_000
+  name 'Senior Rails Web Developer'
+  description 'Architect and implement the Ruby and Javascript underpinnings of our various user-facing and internal web apps like api.heroku.com.'
+  tags ['rails', 'sinatra', 'JQuery', 'Clean, beautiful code']
+  location 'San Francisco, CA'
+  cached_tags 'java, python'
   team_id { Fabricate(:team, paid_job_posts: 1).id }
 end
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe OpportunitiesController, :type => :controller do
+RSpec.describe OpportunitiesController, type: :controller do
 
   it 'render #index' do
     get :index

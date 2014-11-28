@@ -1,9 +1,16 @@
 require 'vcr_helper'
 require 'sidekiq/testing'
+
 Sidekiq::Testing.inline!
 
 RSpec.describe UserActivateWorker do
   let(:worker) { UserActivateWorker.new }
+
+  describe 'queueing' do
+    it 'pushes jobs to the correct queue' do
+      expect(UserActivateWorker.get_sidekiq_options['queue']).to eql :user
+    end
+  end
 
   describe('#perform') do
     context 'when invalid user' do
@@ -23,14 +30,14 @@ RSpec.describe UserActivateWorker do
         expect(user.activated_on).not_to eq(nil)
       end
 
-      it "should send welcome mail" do
-        mail = double("mail")
+      it 'should send welcome mail' do
+        mail = double('mail')
         expect(NotifierMailer).to receive(:welcome_email).with(user.username).and_return(mail)
         expect(mail).to receive(:deliver)
         worker.perform(user.id)
       end
 
-      it "should create refresh job" do
+      it 'should create refresh job' do
         expect_any_instance_of(RefreshUserJob).to receive(:perform).with(user.id)
         worker.perform(user.id)
       end

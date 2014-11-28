@@ -1,7 +1,7 @@
 class AnalyzeSpamJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :medium
+  sidekiq_options queue: :data_cleanup
 
   def perform(spammable)
     return if Rails.env.test? || Rails.env.development?

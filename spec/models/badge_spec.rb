@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Badge, :type => :model do
+RSpec.describe Badge, type: :model do
   let(:badge) { Badge.new(badge_class_name: 'Polygamous') }
 
   it 'gets name from badge class' do
@@ -16,14 +16,3 @@ RSpec.describe Badge, :type => :model do
   end
 
 end
-
-# == Schema Information
-#
-# Table name: badges
-#
-#  id               :integer          not null, primary key
-#  created_at       :datetime
-#  updated_at       :datetime
-#  user_id          :integer
-#  badge_class_name :string(255)
-#

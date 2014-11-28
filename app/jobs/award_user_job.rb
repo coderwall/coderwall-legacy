@@ -1,7 +1,7 @@
 class AwardUserJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :user
 
   def perform(username, badges)
     user = User.with_username(username)

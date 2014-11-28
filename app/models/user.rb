@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
     users
   }
 
+
   #TODO maybe we don't need this
   BLANK_PROFILE_URL = 'blank-mugshot.png'
 
@@ -84,6 +85,15 @@ class User < ActiveRecord::Base
   has_many :github_repositories, through: :github_profile , source: :repositories
 
   belongs_to :team, class_name: 'Team'
+  has_one :membership, class_name: 'Teams::Member'
+
+  def on_premium_team?
+    if membership
+      membership.team.premium?
+    else
+      false
+    end
+  end
 
   geocoded_by :location, latitude: :lat, longitude: :lng, country: :country, state_code: :state_name
   # FIXME: Move to background job
@@ -217,11 +227,6 @@ class User < ActiveRecord::Base
 
   def team_ids
     [team_id]
-  end
-
-
-  def on_premium_team?
-    team.try(:premium?) || false
   end
 
   def following_team?(team)
@@ -451,15 +456,11 @@ class User < ActiveRecord::Base
     score_cache
   end
 
-  def team_members
-    User.where(team_id: self.team_id.to_s)
-  end
-
   def team_member_ids
     User.select(:id).where(team_id: self.team_id.to_s).map(&:id)
   end
 
-  def penalize!(amount=(((team && team.team_members.size) || 6) / 6.0)*activitiy_multipler)
+  def penalize!(amount=(((team && team.members.size) || 6) / 6.0)*activitiy_multipler)
     self.penalty = amount
     self.calculate_score!
   end
@@ -907,7 +908,7 @@ class User < ActiveRecord::Base
   end
 
   before_create do
-      self.referral_token ||= SecureRandom.hex(8)
+    self.referral_token ||= SecureRandom.hex(8)
   end
 
   after_save :refresh_dependencies

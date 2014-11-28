@@ -1,7 +1,7 @@
 class HawtServiceJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :medium
+  sidekiq_options queue: :protip
 
   def perform(id, action)
     return '{}' unless Rails.env.production?

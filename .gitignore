@@ -48,7 +48,7 @@ tmp
 vagrant/cache
 vagrant/coderwall-box/output-virtualbox-iso/
 vagrant/coderwall-box/packer_cache/
-vagrant/coderwall-box/packer_virtualbox-iso_virtualbox.box
+vagrant/coderwall-box/*.box
 vagrant/dotfiles
 erd.pdf
 vagrant.yml

@@ -1,6 +1,6 @@
-RSpec.describe AccountsController, :type => :controller do
+RSpec.describe AccountsController, type: :controller, skip: true do
   let(:team) { Fabricate(:team, account: nil) }
-  let(:plan) { Plan.create(amount: 20000, interval: Plan::MONTHLY, name: 'Monthly') }
+  let(:plan) { Plan.create(amount: 20_000, interval: Plan::MONTHLY, name: 'Monthly') }
   let(:current_user) { Fabricate(:user) }
 
   before do
@@ -9,7 +9,7 @@ RSpec.describe AccountsController, :type => :controller do
   end
 
   def new_token
-    Stripe::Token.create(card: { number: 4242424242424242, cvc: 224, exp_month: 12, exp_year: 14 }).try(:id)
+    Stripe::Token.create(card: { number: 4_242_424_242_424_242, cvc: 224, exp_month: 12, exp_year: 14 }).try(:id)
   end
 
   def valid_params
@@ -23,7 +23,7 @@ RSpec.describe AccountsController, :type => :controller do
     # TODO: Refactor API call to Sidekiq Job
     VCR.use_cassette('AccountsController') do
 
-      post :create, { team_id: team.id, account: valid_params }
+      post :create,  team_id: team.id, account: valid_params
       expect(ActionMailer::Base.deliveries.size).to eq(1)
       expect(ActionMailer::Base.deliveries.first.body.encoded).to include(team.name)
       expect(ActionMailer::Base.deliveries.first.body.encoded).to include(plan.name)

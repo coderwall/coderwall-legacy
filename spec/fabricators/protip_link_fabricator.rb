@@ -1,6 +1,6 @@
 Fabricator(:protip_link) do
   identifier 1
-  url "MyString"
+  url 'MyString'
 end
 
 # == Schema Information

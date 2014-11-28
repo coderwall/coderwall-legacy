@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Comment, :type => :model do
+RSpec.describe Comment, type: :model, skip: true do
   let(:comment) { Fabricate(:comment) }
 
   describe '#spam_report' do
@@ -13,7 +13,7 @@ RSpec.describe Comment, :type => :model do
     it 'should update count' do
 
       expect(comment.likes_count).to be_zero
-      #Random tests
+      # Random tests
       rand(2..10).times do
         comment.likes.create(user: Fabricate(:user))
       end
@@ -24,20 +24,3 @@ RSpec.describe Comment, :type => :model do
 
   end
 end
-
-# == Schema Information
-#
-# Table name: comments
-#
-#  id                :integer          not null, primary key
-#  title             :string(50)       default("")
-#  comment           :text             default("")
-#  commentable_id    :integer
-#  commentable_type  :string(255)
-#  user_id           :integer
-#  likes_cache       :integer          default(0)
-#  likes_value_cache :integer          default(0)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  likes_count       :integer          default(0)
-#

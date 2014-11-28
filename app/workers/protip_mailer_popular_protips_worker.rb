@@ -1,6 +1,6 @@
 class ProtipMailerPopularProtipsWorker
   include Sidekiq::Worker
-  sidekiq_options queue: :low
+  sidekiq_options queue: :mailer
 
   def perform(from, to)
 

@@ -1,7 +1,7 @@
 class SeedGithubProtipsJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :github
 
   def perform(username)
     user = User.with_username(username)

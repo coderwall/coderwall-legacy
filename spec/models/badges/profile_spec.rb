@@ -2,7 +2,7 @@
 
 require 'vcr_helper'
 
-RSpec.describe 'profile badges', :type => :model, skip: true do
+RSpec.describe 'profile badges', type: :model, skip: true do
 
   # def bootstrap(username, token = nil)
   #   user          = User.new(github: username, github_token: token)

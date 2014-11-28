@@ -1,7 +1,7 @@
 class DeactivateTeamJobsJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :team
 
   def perform(id)
     team = Team.find(id)

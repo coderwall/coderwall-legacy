@@ -5,7 +5,7 @@
       %img.team-avatar{:bind => {:src => 'team.avatar'}}
       %span=hb 'team.name'
   %td.members.span3
-    =hb 'each team.team_members' do
+    =hb 'each team.members' do
       %a{:bind => {:href => 'profile_path' }}
         %img.thumb{:bind => {:src => 'avatar'}}
     =hb 'if team.has_more_than_min_members' do

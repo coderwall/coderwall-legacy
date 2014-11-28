@@ -1,4 +1,5 @@
 require 'spec_helper.rb'
+
 require 'capybara/poltergeist'
 require 'capybara-screenshot/rspec'
 require 'rack_session_access/capybara'

@@ -7,9 +7,11 @@ class TeamsController < ApplicationController
 
   def index
     current_user.seen(:teams) if signed_in?
-    @featured_teams = Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY, :expires_in => 4.hours) do
-      Team.featured.sort_by(&:relevancy).reject { |team| team.jobs.count == 0 }.reverse!
-    end
+    #@featured_teams = Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY, expires_in: 4.hours) do
+    @featured_teams = Team.featured.sort_by(&:relevancy).reject do |team|
+      team.jobs.count == 0
+    end.reverse!
+    #end
     @teams = []
   end
 
@@ -62,6 +64,7 @@ class TeamsController < ApplicationController
       format.json do
         options = { :expires_in => 5.minutes }
         options[:force] = true if !show_params[:refresh].blank?
+        Team
         response = Rails.cache.fetch(['v1', 'team', show_params[:id], :json], options) do
           begin
             @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
@@ -309,6 +312,7 @@ class TeamsController < ApplicationController
   end
 
   def job_public_ids
+    Opportunity
     Rails.cache.fetch('all-jobs-public-ids', :expires_in => 1.hour) { Opportunity.select(:public_id).group('team_id, created_at, public_id').map(&:public_id) }
   end
 

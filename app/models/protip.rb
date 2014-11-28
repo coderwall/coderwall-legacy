@@ -234,7 +234,7 @@ class Protip < ActiveRecord::Base
       Protip.search(query, [], page: page, per_page: per_page)
     rescue Errno::ECONNREFUSED
       team = Team.where(slug: team_id).first
-      team.team_members.collect(&:protips).flatten
+      team.members.collect(&:protips).flatten
     end
 
     def search_trending_by_user(username, query_string, tags, page, per_page)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe ProviderUserLookupsController, :type => :controller do
+RSpec.describe ProviderUserLookupsController, type: :controller, skip: true do
   let(:twitter_username) { 'birdy' }
   let(:github_username) { 'birdy' }
   let(:linked_in_username) { 'birdy' }
@@ -11,9 +11,9 @@ RSpec.describe ProviderUserLookupsController, :type => :controller do
       linkedin: linked_in_username
     }
   end
-  let!(:user) {
+  let!(:user) do
     Fabricate.create(:user, attrs)
-  }
+  end
 
   describe 'GET /providers/:provider/:username' do
     describe 'known user' do

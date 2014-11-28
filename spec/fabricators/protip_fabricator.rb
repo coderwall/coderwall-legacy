@@ -1,12 +1,12 @@
 Fabricator(:protip) do
-  topics ["Javascript", "CoffeeScript"]
+  topics %w(Javascript CoffeeScript)
   title { Faker::Company.catch_phrase }
   body { Faker::Lorem.sentences(8).join(' ') }
   user { Fabricate.build(:user) }
 end
 
 Fabricator(:link_protip, from: :protip) do
-  body "http://www.google.com"
+  body 'http://www.google.com'
 end
 
 # == Schema Information

@@ -30,9 +30,9 @@ To save time and headaches we use Vagrant. Vagrant is a automation tool for Virt
 
 Here's everything you need to get started working on Coderwall with Vagrant TODAY!
 
-*At the time of writing this document we were using VirtualBox 4.3.12 and Vagrant 1.6.5.*
+*At the time of writing this document we were using VirtualBox 4.3.20 and Vagrant 1.6.5.*
 
-**WE ARE USING VIRTUALBOX 4.3.12 DUE TO COMPATABILITY ISSUES WITH VBOX GUEST ADDITIONS.**
+**WE ARE USING VIRTUALBOX 4.3.20 DUE TO COMPATABILITY ISSUES WITH VBOX GUEST ADDITIONS.**
 
 #### Vagrant! I already know what to do.
 
@@ -52,9 +52,9 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
     ![Download the Vbox installer and extensions from here](https://www.evernote.com/shard/s13/sh/68b6a635-7a80-444b-a210-c1aa61405efc/955c950ebafc46f0f1069e27e85bb120)
 
-    The _required_ version is **VirtualBox 4.3.12.**
+    The _required_ version is **VirtualBox 4.3.20.**
 
-    I recommend installing VirtualBox 4.3.12 Oracle VM VirtualBox Extension Pack for the extra drivers.
+    I recommend installing VirtualBox 4.3.20 Oracle VM VirtualBox Extension Pack for the extra drivers.
 
 2. **Install Vagrant**
 

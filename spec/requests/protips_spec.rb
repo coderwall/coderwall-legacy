@@ -1,4 +1,4 @@
-RSpec.describe "Viewing a protip", :type => :request do
+RSpec.describe 'Viewing a protip', type: :request do
 
   describe 'when user coming from topic page' do
     let(:topic) { 'Ruby' }
@@ -13,7 +13,7 @@ RSpec.describe "Viewing a protip", :type => :request do
     it 'returns them to the topic page when they use :back', skip: 'obsolete?' do
       visit tagged_protips_path(tags: topic)
 
-      #save_and_open_page
+      # save_and_open_page
       click_link @protip1.title
       expect(page).to have_content(@protip1.title)
 
@@ -27,7 +27,7 @@ RSpec.describe "Viewing a protip", :type => :request do
       visit tagged_protips_path(tags: topic)
 
       click_link @protip1.title
-      #save_and_open_page
+      # save_and_open_page
       expect(page).to have_content(@protip1.title)
       expect(page).to have_content(protip_path(@protip2))
       expect(page).not_to have_content(protip_path(@protip3))

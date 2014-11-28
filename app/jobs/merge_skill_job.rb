@@ -1,7 +1,7 @@
 class MergeSkillJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :low
+  sidekiq_options queue: :data_cleanup
 
   def perform(incorrect_skill_id, correct_skill_name)
     incorrect_skill = Skill.find(incorrect_skill_id)

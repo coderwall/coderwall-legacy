@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
-ruby '2.1.4'
+ruby '2.1.5'
 
 gem 'rails', '~> 3.2'
 
