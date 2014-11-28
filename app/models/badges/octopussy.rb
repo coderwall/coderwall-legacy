@@ -12,7 +12,7 @@ class Octopussy < BadgeBase
 
   def self.github_team
     Rails.cache.fetch("octopussy_github_team_members", expires_in: 1.day) do
-      Team.where(name: 'Github').members.collect { |user| user.github }.compact
+      Team.find_by_name('Github').members.collect { |user| user.github }.compact
     end
   end
 
