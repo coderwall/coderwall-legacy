@@ -40,7 +40,7 @@ __If you're an experienced Vagrant user then you can fetch the base box and regi
 
 There's only a VirtualBox basebox right now.
 
-        vagrant box add coderwall_v2 https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall_v2.box
+        vagrant box add coderwall_v3 https://s3.amazonaws.com/coderwall-assets-0/vagrant/coderwall_v3.box
 
 #### Vagrant? VirtualBox? Let's take this one step at a time.
 
@@ -48,9 +48,9 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
 1. **Install VirtualBox**
 
-    Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3)**.
+    Grab the VirtualBox installer from **[here](https://www.virtualbox.org/wiki/Downloads)**.
 
-    ![Download the Vbox installer and extensions from here](https://www.evernote.com/shard/s13/sh/68b6a635-7a80-444b-a210-c1aa61405efc/955c950ebafc46f0f1069e27e85bb120)
+    [![Download the Vbox installer and extensions from here](https://cloud.githubusercontent.com/assets/987305/5224101/af7ed37c-7689-11e4-949b-5116138f49f7.png)](https://www.virtualbox.org/wiki/Downloads)
 
     The _required_ version is **VirtualBox 4.3.20.**
 
