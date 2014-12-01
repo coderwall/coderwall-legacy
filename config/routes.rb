@@ -4,28 +4,31 @@ Coderwall::Application.routes.draw do
   get '/.json',       to: proc { [444, {}, ['']] }
   get '/teams/.json', to: proc { [444, {}, ['']] }
 
-
   if Rails.env.development?
     mount MailPreview => 'mail_view'
   end
 
-  #TODO: REMOVE
+  namespace :api, path: '/', constraints: { subdomain: 'api' } do
+  end
+
+  # TODO: REMOVE
   match 'protips/update', via: %w(get put)
   match 'protip/update' , via: %w(get put)
+
   get 'welcome' => 'home#index', as: :welcome
 
   root to: 'protips#index'
 
   get '/p/dpvbbg', controller: :protips, action: :show, id: 'devsal'
-  get '/gh' , controller: :protips, action: :show, utm_campaign: 'github_orgs_badges' , utm_source:'github'
+  get '/gh' , controller: :protips, action: :show, utm_campaign: 'github_orgs_badges' , utm_source: 'github'
 
   get '/jobs(/:location(/:skill))' => 'opportunities#index', as: :jobs
   get '/jobs-map' => 'opportunities#map', as: :jobs_map
 
-  resources :protips, :path => '/p' do
+  resources :protips, path: '/p' do
     collection do
       get 'u/:username' => 'protips#user', as: :user
-      get ':id/:slug' => 'protips#show', as: :slug, :constraints => {:slug => /(?!.*?edit).*/}
+      get ':id/:slug' => 'protips#show', as: :slug, :constraints => { slug: /(?!.*?edit).*/ }
       get 'random'
       get 'search' => 'protips#search', as: :search
       post 'search' => 'protips#search'
@@ -44,6 +47,7 @@ Coderwall::Application.routes.draw do
       get 'liked'
       post 'preview'
     end
+
     member do
       post 'upvote'
       post 'report_inappropriate'
@@ -53,16 +57,17 @@ Coderwall::Application.routes.draw do
       topic_regex = /[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/
       post 'delete_tag/:topic' => 'protips#delete_tag', as: :delete_tag, :topic => topic_regex
     end
-    resources :comments, :constraints => {id: /\d+/} do
+    resources :comments, constraints: { id: /\d+/ } do
       member { post 'like' }
     end
   end
 
-  resources :networks, :path => '/n', :constraints => {:slug => /[\dA-Z\-]/i} do
+  resources :networks, path: '/n', constraints: { slug: /[\dA-Z\-]/i } do
     collection do
       get 'featured' => 'networks#featured', as: :featured
       get '/u/:username' => 'networks#user', as: :user
     end
+
     member do
       get '/t/(/*tags)' => 'networks#tag', as: :tagged
       get '/members' => 'networks#members', as: :members
@@ -108,7 +113,7 @@ Coderwall::Application.routes.draw do
   get '/alerts' => 'alerts#create', :via => :post
   get '/alerts' => 'alerts#index', :via => :get
 
-  #get '/payment' => 'accounts#new', as: :payment
+  # get '/payment' => 'accounts#new', as: :payment
 
   post '/users/:username/follow' => 'follows#create', as: :follow_user, :type => :user
 
@@ -121,7 +126,7 @@ Coderwall::Application.routes.draw do
       get 'accept'
       post 'record-exit' => 'teams#record_exit', as: :record_exit
       get 'visitors'
-      #TODO following and unfollowing should use different HTTP verbs (:post, :delete)
+      # TODO following and unfollowing should use different HTTP verbs (:post, :delete)
       # Fix views and specs when changing this.
       post 'follow'
       post 'join'
@@ -151,7 +156,7 @@ Coderwall::Application.routes.draw do
   get '/leaderboard' => 'teams#leaderboard', as: :leaderboard
   get '/employers' => 'teams#upgrade', as: :employers
 
-  ['github', 'twitter', 'forrst', 'dribbble', 'linkedin', 'codeplex', 'bitbucket', 'stackoverflow'].each do |provider|
+  %w(github twitter forrst dribbble linkedin codeplex bitbucket stackoverflow).each do |provider|
     post "/#{provider}/unlink" => 'users#unlink_provider', :provider => provider, as: "unlink_#{provider}".to_sym
     get "/#{provider}/:username" => 'users#show', :provider => provider
   end
@@ -179,7 +184,6 @@ Coderwall::Application.routes.draw do
   get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
-
   get '/blog' => 'blog_posts#index', as: :blog
   get '/blog/:id' => 'blog_posts#show', as: :blog_post
   get '/articles.atom' => 'blog_posts#index', as: :atom, :format => :atom
@@ -192,9 +196,9 @@ Coderwall::Application.routes.draw do
 
   get '/providers/:provider/:username' => 'provider_user_lookups#show'
 
-  match '/404' => 'errors#not_found', via: [ :get, :post, :patch, :delete ]
-  match "/422" => "errors#unacceptable", via: [ :get, :post, :patch, :delete ]
-  match "/500" => "errors#internal_error", via: [ :get, :post, :patch, :delete ]
+  match '/404' => 'errors#not_found', via: [:get, :post, :patch, :delete]
+  match '/422' => 'errors#unacceptable', via: [:get, :post, :patch, :delete]
+  match '/500' => 'errors#internal_error', via: [:get, :post, :patch, :delete]
 
   constraints ->(params, _) { params[:username] != 'admin' } do
     get '/:username' => 'users#show', as: :badge
@@ -210,16 +214,15 @@ Coderwall::Application.routes.draw do
   end
 
   require_admin = ->(_, req) { User.where(id: req.session[:current_user], admin: true).exists? }
-  scope :admin, as: :admin, :path => '/admin', :constraints => require_admin do
+  scope :admin, as: :admin, path: '/admin', constraints: require_admin do
     get '/' => 'admin#index', as: :root
     get '/teams' => 'admin#teams', as: :teams
     get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
     mount Sidekiq::Web => '/sidekiq'
   end
-  #TODO: namespace inside admin
+  # TODO: namespace inside admin
   get '/comments' => 'comments#index', as: :latest_comments
-
 
 end
 
