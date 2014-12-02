@@ -78,7 +78,7 @@ class NetworksController < ApplicationController
     @topics     = tags_array
     @topic      = tags_array.join(' + ')
     @topic_user = nil
-    @networks   = tags_array.map { |tag| Network.networks_for_tag(tag) }.flatten.uniq if @networks.nil?
+    @networks   = tags_array.flat_map { |tag| Network.networks_for_tag(tag) }.uniq if @networks.nil?
   end
 
   def mayor

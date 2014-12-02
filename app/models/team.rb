@@ -112,7 +112,7 @@ class Team < ActiveRecord::Base
     if !!(name =~ /\p{Latin}/)
       name.to_s.downcase.gsub(/[^a-z0-9]+/i, '-').chomp('-')
     else
-      name.to_s.gsub(/\s/, "-")
+      name.to_s.tr(' ', '-')
     end
   end
 

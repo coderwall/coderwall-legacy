@@ -113,7 +113,7 @@ class GithubOld
   end
 
   def predominant_repo_lanugage_for_link(link)
-    owner, repo_name = *link.gsub(/https?:\/\/github.com\//i, '').split('/')
+    owner, repo_name = *link.sub(/https?:\/\/github.com\//i, '').split('/')
     repo(owner, repo_name)[:language]
   end
 

@@ -9,9 +9,9 @@ class Polygamous < BadgeBase
   def reasons
     @reasons ||= begin
       facts = user.facts.select { |fact| fact.tagged?('personal', 'repo', 'original') }
-      facts.collect do |fact|
+      facts.flat_map do |fact|
         fact.metadata[:languages]
-      end.flatten.uniq
+      end.uniq
     end
   end
 

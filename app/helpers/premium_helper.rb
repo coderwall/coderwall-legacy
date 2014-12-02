@@ -70,7 +70,7 @@ module PremiumHelper
   end
 
   def partialify_html_section_id(section_id)
-    section_id.to_s.gsub("-", "_").gsub('#', '')
+    section_id.to_s.tr("-", "_").gsub('#', '')
   end
 
   def add_active_class_to_first_member

@@ -67,7 +67,7 @@ module TeamAnalytics
       completed_sections = 0
 
       sections = (SECTIONS - excluded_sections).map do |section|
-        "has_#{section.gsub(/-/, '_')}?"
+        "has_#{section.tr('-', '_')}?"
       end
       sections.each do |section_complete|
         completed_sections += 1 if self.respond_to?(section_complete) &&

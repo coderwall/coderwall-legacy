@@ -12,7 +12,7 @@ module Users
       end
 
       def repo
-        data['link'].gsub('https://github.com/', '')
+        data['link'].sub('https://github.com/', '')
       end
 
       def date

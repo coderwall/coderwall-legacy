@@ -386,7 +386,7 @@ class User < ActiveRecord::Base
 
 
   def tokenized_lanyrd_tags
-    lanyrd_facts.collect { |fact| fact.tags }.flatten.compact.map { |tag| Skill.tokenize(tag) }
+    lanyrd_facts.flat_map { |fact| fact.tags }.compact.map { |tag| Skill.tokenize(tag) }
   end
 
   def last_modified_at
@@ -426,11 +426,11 @@ class User < ActiveRecord::Base
   end
 
   def upvoted_protips
-    Protip.where(id: Like.where(likable_type: "Protip").where(user_id: self.id).select(:likable_id).map(&:likable_id))
+    Protip.where(id: Like.where(likable_type: "Protip").where(user_id: self.id).pluck(:likable_id))
   end
 
   def upvoted_protips_public_ids
-    upvoted_protips.select(:public_id).map(&:public_id)
+    upvoted_protips.pluck(:public_id)
   end
 
   def followers_since(since=Time.at(0))
@@ -457,7 +457,7 @@ class User < ActiveRecord::Base
   end
 
   def team_member_ids
-    User.select(:id).where(team_id: self.team_id.to_s).map(&:id)
+    User.where(team_id: self.team_id.to_s).pluck(:id)
   end
 
   def penalize!(amount=(((team && team.members.size) || 6) / 6.0)*activitiy_multipler)
@@ -677,19 +677,19 @@ class User < ActiveRecord::Base
   end
 
   def following_users_ids
-    self.following_users.select(:id).map(&:id)
+    self.following_users.pluck(:id)
   end
 
   def following_teams_ids
-    self.followed_teams.map(&:team_id)
+    self.followed_teams.pluck(:team_id)
   end
 
   def following_team_members_ids
-    User.select(:id).where(team_id: self.following_teams_ids).map(&:id)
+    User.where(team_id: self.following_teams_ids).pluck(:id)
   end
 
   def following_networks_ids
-    self.following_networks.select(:id).map(&:id)
+    self.following_networks.pluck(:id)
   end
 
   def following_networks_tags
@@ -723,7 +723,7 @@ class User < ActiveRecord::Base
   end
 
   def networks_based_on_skills
-    self.skills.collect { |skill| Network.all_with_tag(skill.name) }.flatten.uniq
+    self.skills.flat_map { |skill| Network.all_with_tag(skill.name) }.uniq
   end
 
   def visited!
