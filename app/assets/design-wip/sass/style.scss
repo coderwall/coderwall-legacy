@@ -1,0 +1,626 @@
+/*------------------------------------*\
+    #About the File
+\*------------------------------------*/
+/*
+
+  Copyright 2014 Coderwall
+  Author Helen Tran @tranhelen
+  Built with Sass - http://sass-lang.com
+
+  Table of Contents
+  #Variables
+  #Basic Styles
+  #Navigations
+  #Pagination
+  #Protips
+
+ */
+
+
+@import "normalize";
+
+@import "commons/mixins";
+@import "commons/grids";
+
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/*============================================================================
+  #Variables
+==============================================================================*/
+
+// Colours
+$colorBrandBlue: #11A1BB;
+$colorBrandOrange: #F6563C;
+$colorBrandGreen: #94BA00;
+
+$colorBG: #fff;
+$colorBGPage: #F0F5F6;
+$colorBGProtip: #fff;
+$colorBGProtipJob: #F2F2F2;
+
+$colorTextBody: #666;
+
+$colorLink: #999;
+$colorLinkHover: $colorBrandGreen;
+$colorLinkActive: $colorLinkHover;
+
+$colorBorder: #E2ECED;
+
+$colorButton: $colorBrandBlue;
+
+// Type
+$stack: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+// Misc variables
+$baseFontSize: 16px;
+$unit: 30px;
+$medium: 486px;
+$large: 770px;
+
+@mixin at-query ($bp) {
+  @media screen and (min-width: $bp) {
+    @content;
+  }
+}
+
+/*============================================================================
+  #Typography
+==============================================================================*/
+
+@font-face {
+  font-family: 'icomoon';
+  src:url('icomoon.eot?-a8rj9i');
+  src:url('icomoon.eot?#iefix-a8rj9i') format('embedded-opentype'),
+    url('icomoon.woff?-a8rj9i') format('woff'),
+    url('icomoon.ttf?-a8rj9i') format('truetype'),
+    url('icomoon.svg?-a8rj9i#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-comment:before { content: "\e600"; }
+.icon-plus:before { content: "\e601"; }
+.icon-arrow-up-upload:before { content: "\e602"; }
+.icon-arrow-left:before { content: "\e603"; }
+.icon-arrow-right:before { content: "\e604"; }
+
+h1 {
+  font-size: em(36px);
+  line-height: em(20px);
+}
+
+h2 {
+  font-size: em(24px);
+  line-height: em(20px);
+}
+
+h3 {
+  font-size: em(18px);
+  line-height: em(24px);
+}
+
+h4 {
+  font-size: em(16px);
+  line-height: em(18px);
+}
+
+h5 {
+  font-size: em(14px);
+  line-height: em(18px);
+}
+
+h6 {
+  font-size: em(13px);
+  line-height: em(18px);
+}
+
+.h1 { @extend h1; }
+.h2 { @extend h2; }
+.h3 { @extend h3; }
+.h4 { @extend h4; }
+.h5 { @extend h5; }
+.h6 { @extend h6; }
+
+p {
+  font-size: em(16px);
+  line-height: em(28px);
+  margin: 0 0 ($unit / 2);
+}
+
+a {
+  color: $colorTextBody;
+  text-decoration: none;
+
+  @include transition;
+
+  &:hover,
+  &:active {
+    color: $colorLinkHover;
+  }
+}
+
+/*============================================================================
+  #Basic Styles
+==============================================================================*/
+
+html,
+body {
+  background-color: $colorBG;
+  color: $colorTextBody;
+  font-family: $stack;
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid $colorBorder;
+}
+
+.avatar-block__img,
+.avatar-block__user {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.avatar-block__img {
+  border: 1px solid $colorBorder;
+  border-radius: 99px;
+  height: 36px;
+  width: 36px;
+}
+
+.avatar-block__user {
+  margin-left: $unit / 4;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 0 ($unit * 0.75);
+
+  &.full {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  @include at-query($medium) {
+    padding: 0 $unit;
+  }
+}
+
+.inline {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+    margin-left: ($unit / 2);
+  }
+
+  li:first-child {
+    margin-left: 0;
+  }
+}
+
+.page-body {
+  background-color: $colorBGPage;
+  padding: ($unit / 2) 0;
+
+  @include at-query($medium) {
+    padding: ($unit * 0.75) 0;
+  }
+
+  @include at-query($medium) {
+    padding: $unit 0;
+  }
+}
+
+/*============================================================================
+  #Buttons
+==============================================================================*/
+
+.btn {
+  @extend .h4;
+
+  background-color: $colorButton;
+  border-radius: 999px;
+  color: #fff;
+  display: block;
+  text-align: center;
+  padding: 9px ($unit / 2) 11px;
+
+  &:hover,
+  &:active {
+    color: #fff;
+    background-color: darken($colorButton,5%);
+  }
+
+  .icon {
+    font-size: em(14px);
+    position: relative;
+    top: 1px;
+  }
+}
+
+.btn--small {
+  font-size: em(14px);
+  font-weight: bold;
+  padding: 6px;
+}
+
+.upvote {
+  @extend .btn;
+  @extend .btn--small;
+
+  background-color: transparent;
+  border: 2px solid $colorBorder;
+  color: $colorTextBody;
+
+  &:hover {
+    background-color: transparent;
+    border-color: $colorBrandBlue;
+    color: $colorTextBody;
+    cursor: pointer;
+
+    .icon {
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  .icon {
+    color: $colorBrandBlue;
+
+    @include transition;
+  }
+}
+
+.upvote--voted,
+.upvote--voted:hover {
+  background-color: $colorBrandBlue;
+  border-color: $colorBrandBlue;
+  color: #fff;
+
+  .icon {
+    color: #fff;
+  }
+}
+
+.upvote--popular {
+  @extend .upvote;
+
+  .icon {
+    color: $colorBrandOrange;
+  }
+}
+
+.upvote--popvoted,
+.upvote--popvoted:hover {
+  background-color: $colorBrandOrange;
+  border-color: $colorBrandOrange;
+  color: #fff;
+
+  .icon {
+    color: #fff;
+  }
+}
+
+/*============================================================================
+  #Header
+==============================================================================*/
+
+.logo {
+  margin: 0 auto ($unit / 2);
+  text-align: center;
+  width: 100%;
+
+  @include at-query($medium) {
+    display: inline-block;
+    margin: 0;
+    width: auto;
+  }
+}
+
+.main-nav {
+  padding: $unit 0 ($unit / 2);
+
+  @include clearfix;
+
+  @include at-query($medium) {
+    padding: ($unit * 1.5) 0 $unit;
+  }
+
+  .avatar-block {
+    float: right;
+    position: relative;
+    top: -$unit / 10;
+
+    @include at-query($medium) {
+      top: -$unit / 5;
+    }
+  }
+
+  .menu {
+    display: inline;
+
+    @include at-query($medium) {
+      margin-left: $unit;
+      position: relative;
+      top: -$unit / 4;
+    }
+  }
+}
+
+.secondary-menu {
+  border-bottom: 1px solid $colorBorder;
+  padding-bottom: $unit / 4;
+
+  @include at-query($medium) {
+    padding-bottom: 0;
+  }
+
+  li {
+    padding: ($unit / 2) 0;
+
+    &.active {
+      border-bottom: 3px solid $colorBrandGreen;
+      font-weight: bold;
+    }
+
+    @include at-query($large) {
+      padding: ($unit * 0.75) 0;
+    }
+  }
+
+  .addprotip {
+    position: relative;
+    margin-top: 8px;
+
+    @include at-query($large) {
+      float: right;
+      display: inline-block;
+      margin-top: $unit / 2;
+    }
+  }
+}
+
+.secondary-menu--mobile {
+  background-color: #fff;
+  margin-bottom: $unit / 2;
+
+  select {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+        -ms-appearance: none;
+         -o-appearance: none;
+            appearance: none;
+    background: transparent url("arrow-down.svg") no-repeat right center;
+    background-position: right ($unit / 2) center;
+    background-size: $unit / 2;
+    border-bottom: 1px solid $colorBorder;
+    border-radius: 0;
+    border: 0;
+    cursor: pointer;
+    padding: ($unit / 3) ($unit / 2);
+    width: 100%;
+  }
+
+  @include at-query ($medium) {
+    display: none;
+  }
+}
+
+.site-header {
+  @extend .h3;
+
+  border-bottom: 1px solid $colorBorder;
+
+  .active {
+    color: $colorLinkActive;
+  }
+}
+
+/*============================================================================
+  #Footer
+==============================================================================*/
+
+.site-footer {
+  background-color: #fff;
+  padding: $unit 0;
+}
+
+.copy {
+  color: lighten($colorTextBody,20%);
+  font-size: em(12px);
+}
+
+.footer-nav {
+  @extend .h4;
+
+  line-height: em(24px);
+  margin-bottom: $unit / 2;
+}
+
+.footer-nav--quiet {
+  @extend .h5;
+
+  margin-bottom: $unit / 3;
+
+  a {
+    color: lighten($colorTextBody,20%);
+
+    &:hover {
+      color: $colorTextBody;
+    }
+  }
+}
+
+.mixpanel {
+  display: block;
+  margin-top: $unit / 2;
+}
+
+/*============================================================================
+  #Pagination
+==============================================================================*/
+
+.pagination {
+  margin-top: $unit / 2;
+
+  @include at-query($medium) {
+    margin-top: $unit;
+  }
+
+  .btn {
+    @extend .h6;
+
+    background-color: #fff;
+    color: $colorTextBody;
+    font-weight: bold;
+    padding: 9px 6px;
+
+    &:hover {
+      background-color: $colorBrandBlue;
+      color: #fff;
+    }
+  }
+
+  .next {
+    padding-left: $unit / 3;
+  }
+
+  .prev {
+    padding-right: $unit / 3;
+  }
+}
+
+/*============================================================================
+  #Protips
+==============================================================================*/
+
+.protip,
+.protip__job {
+  padding: $unit / 2;
+
+  @include at-query($medium) {
+    padding: ($unit * 0.75);
+  }
+
+  @include at-query($large) {
+    padding: $unit / 2;
+  }
+
+  .avatar-block__img {
+    max-height: 32px;
+    max-width: 32px;
+  }
+
+  .avatar-block__user {
+    margin-left: $unit / 10;
+  }
+
+  hr {
+    border-color: transparent;
+    margin: ($unit / 4) 0;
+  }
+}
+
+.protip {
+  background-color: $colorBGProtip;
+  border-bottom: 1px solid $colorBorder;
+}
+
+.protip__comments {
+  color: lighten($colorLink, 20%);
+  font-size: em(12px);
+  font-weight: bold;
+  margin-left: $unit / 5;
+
+  @include transition;
+
+  .icon-comment {
+    position: relative;
+    top: 3px;
+  }
+}
+
+.protip__content {
+  @extend .h3;
+
+  margin: 0;
+
+  @include at-query($large) {
+    position: relative;
+    top: 2px;
+  }
+
+  a {
+    &:hover,
+    &:hover .protip__comments {
+      color: $colorLinkHover;
+    }
+  }
+}
+
+.protip__job {
+  border: 2px solid $colorBorder;
+  margin: ($unit / 2) 0;
+
+  @include at-query($medium) {
+    margin: $unit 0;
+  }
+
+  @include at-query($large) {
+    margin: $unit;
+  }
+}
+
+.job__desc {
+  margin-bottom: 0;
+}
+
+.job__label {
+  @extend .btn;
+  @extend .btn--small;
+
+  &:hover {
+    background-color: $colorBrandBlue;
+  }
+}
+
+.job__loc {
+  @extend .h6;
+
+  color: lighten($colorTextBody,30%);
+  display: block;
+  margin-top: ($unit / 5);
+  text-transform: uppercase;
+}
+
+.job__title {
+  @extend .h3;
+
+  margin-bottom: ($unit / 5);
+}

@@ -1,0 +1,31 @@
+@mixin clearfix {
+  &:before,&:after {
+      content: "";
+      display: table;
+  }
+  &:after {
+      clear: both;
+  }
+}
+
+@function em($target, $context: $baseFontSize) {
+  @if $target == 0 {
+    @return 0;
+  }
+  @return $target / $context + 0em;
+}
+
+@mixin transition {
+  -webkit-transition: all 0.35s ease;
+     -moz-transition: all 0.35s ease;
+       -o-transition: all 0.35s ease;
+          transition: all 0.35s ease;
+}
+
+@mixin vertical {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}

@@ -1,0 +1,487 @@
+/*------------------------------------*\
+    $CSSWIZARDRY-GRIDS
+\*------------------------------------*/
+/**
+ * CONTENTS
+ * INTRODUCTION.........How the grid system works.
+ * VARIABLES............Your settings.
+ * MIXINS...............Library mixins.
+ * GRID SETUP...........Build the grid structure.
+ * WIDTHS...............Build our responsive widths around our breakpoints.
+ * PUSH.................Push classes.
+ * PULL.................Pull classes.
+ */
+
+
+
+
+
+/*------------------------------------*\
+    $VARIABLES
+\*------------------------------------*/
+$responsive:            true !default;
+$mobile-first:          true !default;
+$gutter:                24px !default;
+$use-silent-classes:    false !default;
+$push:                  true !default;
+$pull:                  false !default;
+
+$small: 485px;
+$medium: 768px;
+$large: 769px;
+
+$postSmall: $small + 1px;
+
+$breakpoints: (
+  'small' '(max-width: #{$small})',
+  'medium' '(min-width: #{$postSmall}) and (max-width: #{$medium})',
+  'large' '(min-width: #{$large})'
+);
+
+$breakpoint-has-widths: ('small', 'medium', 'large');
+$breakpoint-has-push:  ('small', 'medium', 'large');
+$breakpoint-has-pull:  ('small', 'medium', 'large');
+
+$class-type: if($use-silent-classes, unquote("%"), unquote("."));
+
+@mixin grid-media-query($media-query) {
+    $breakpoint-found: false;
+
+    @each $breakpoint in $breakpoints {
+        $name: nth($breakpoint, 1);
+        $declaration: nth($breakpoint, 2);
+
+        @if $media-query == $name and $declaration {
+            $breakpoint-found: true;
+
+            @media only screen and #{$declaration} {
+                @content;
+            }
+        }
+    }
+
+    @if not $breakpoint-found {
+        @warn "Breakpoint ‘#{$media-query}’ does not exist";
+    }
+}
+
+@mixin silent-relative {
+    @if $use-silent-classes {
+        position:relative;
+    }
+}
+
+/*------------------------------------*\
+    $GRID SETUP
+\*------------------------------------*/
+
+#{$class-type}grid,
+#{$class-type}grid-uniform {
+    list-style:none;
+    margin:0;
+    padding:0;
+    margin-left:-$gutter;
+
+    @include clearfix;
+}
+
+#{$class-type}grid__item {
+    float: left;
+    min-height: 1px;
+    padding-left:$gutter;
+    vertical-align:top;
+    @if $mobile-first {
+        width:100%;
+    }
+}
+
+/**
+ * Create grids with narrower gutters. Extends `.grid`.
+ */
+#{$class-type}grid--narrow {
+    margin-left:-($gutter / 2);
+
+    > #{$class-type}grid__item {
+        padding-left:$gutter / 2;
+    }
+}
+
+
+/**
+ * Create grids with wider gutters. Extends `.grid`.
+ */
+#{$class-type}grid--wide {
+    margin-left:-($gutter * 2);
+
+    > #{$class-type}grid__item {
+        padding-left:$gutter * 2;
+    }
+}
+
+
+
+
+
+/*------------------------------------*\
+    $WIDTHS
+\*------------------------------------*/
+/**
+ * Create our width classes, prefixed by the specified namespace.
+ */
+@mixin device-type($namespace:"") {
+    $prefix: $class-type + $namespace;
+
+    /**
+     * Whole
+     */
+    #{$prefix}one-whole         { width:100%; }
+
+
+    /**
+     * Halves
+     */
+    #{$prefix}one-half          { width:50%; }
+
+
+    /**
+     * Thirds
+     */
+    #{$prefix}one-third         { width:33.333%; }
+    #{$prefix}two-thirds        { width:66.666%; }
+
+
+    /**
+     * Quarters
+     */
+    #{$prefix}one-quarter       { width:25%; }
+    #{$prefix}two-quarters      { @extend #{$prefix}one-half; }
+    #{$prefix}three-quarters    { width:75%; }
+
+
+    /**
+     * Fifths
+     */
+    #{$prefix}one-fifth         { width:20%; }
+    #{$prefix}two-fifths        { width:40%; }
+    #{$prefix}three-fifths      { width:60%; }
+    #{$prefix}four-fifths       { width:80%; }
+
+
+    /**
+     * Sixths
+     */
+    #{$prefix}one-sixth         { width:16.666%; }
+    #{$prefix}two-sixths        { @extend #{$prefix}one-third; }
+    #{$prefix}three-sixths      { @extend #{$prefix}one-half; }
+    #{$prefix}four-sixths       { @extend #{$prefix}two-thirds; }
+    #{$prefix}five-sixths       { width:83.333%; }
+
+
+    /**
+     * Eighths
+     */
+    #{$prefix}one-eighth        { width:12.5%; }
+    #{$prefix}two-eighths       { @extend #{$prefix}one-quarter; }
+    #{$prefix}three-eighths     { width:37.5%; }
+    #{$prefix}four-eighths      { @extend #{$prefix}one-half; }
+    #{$prefix}five-eighths      { width:62.5%; }
+    #{$prefix}six-eighths       { @extend #{$prefix}three-quarters; }
+    #{$prefix}seven-eighths     { width:87.5%; }
+
+
+    /**
+     * Tenths
+     */
+    #{$prefix}one-tenth         { width:10%; }
+    #{$prefix}two-tenths        { @extend #{$prefix}one-fifth; }
+    #{$prefix}three-tenths      { width:30%; }
+    #{$prefix}four-tenths       { @extend #{$prefix}two-fifths; }
+    #{$prefix}five-tenths       { @extend #{$prefix}one-half; }
+    #{$prefix}six-tenths        { @extend #{$prefix}three-fifths; }
+    #{$prefix}seven-tenths      { width:70%; }
+    #{$prefix}eight-tenths      { @extend #{$prefix}four-fifths; }
+    #{$prefix}nine-tenths       { width:90%; }
+
+
+    /**
+     * Twelfths
+     */
+    #{$prefix}one-twelfth       { width:8.333%; }
+    #{$prefix}two-twelfths      { @extend #{$prefix}one-sixth; }
+    #{$prefix}three-twelfths    { @extend #{$prefix}one-quarter; }
+    #{$prefix}four-twelfths     { @extend #{$prefix}one-third; }
+    #{$prefix}five-twelfths     { width:41.666% }
+    #{$prefix}six-twelfths      { @extend #{$prefix}one-half; }
+    #{$prefix}seven-twelfths    { width:58.333%; }
+    #{$prefix}eight-twelfths    { @extend #{$prefix}two-thirds; }
+    #{$prefix}nine-twelfths     { @extend #{$prefix}three-quarters; }
+    #{$prefix}ten-twelfths      { @extend #{$prefix}five-sixths; }
+    #{$prefix}eleven-twelfths   { width:91.666%; }
+}
+
+@mixin device-helper($namespace:"") {
+  $prefix: $class-type + $namespace;
+
+  #{$prefix}show        { display: block!important; }
+  #{$prefix}hide        { display: none!important; }
+
+  #{$prefix}text-left   { text-align: left!important; }
+  #{$prefix}text-right  { text-align: right!important; }
+  #{$prefix}text-center { text-align: center!important; }
+
+  #{$prefix}left        { float: left!important; }
+  #{$prefix}right       { float: right!important; }
+}
+
+/**
+ * Our regular, non-responsive width classes.
+ */
+@include device-type;
+@include device-helper;
+
+
+/**
+ * Our responsive classes, if we have enabled them.
+ */
+@if $responsive {
+
+    @each $name in $breakpoint-has-widths {
+        @include grid-media-query($name) {
+           @include device-type('#{$name}--');
+           @include device-helper('#{$name}--');
+        }
+    }
+
+}
+
+
+
+
+
+/*------------------------------------*\
+    $PUSH
+\*------------------------------------*/
+/**
+ * Push classes, to move grid items over to the right by certain amounts.
+ */
+@mixin push-setup($namespace: "") {
+    $prefix: $class-type + "push--" + $namespace;
+
+    /**
+     * Whole
+     */
+    #{$prefix}one-whole           { left:100%; @include silent-relative; }
+
+
+    /**
+     * Halves
+     */
+    #{$prefix}one-half            { left:50%; @include silent-relative; }
+
+
+    /**
+     * Thirds
+     */
+    #{$prefix}one-third           { left:33.333%; @include silent-relative; }
+    #{$prefix}two-thirds          { left:66.666%; @include silent-relative; }
+
+
+    /**
+     * Quarters
+     */
+    #{$prefix}one-quarter         { left:25%; @include silent-relative; }
+    #{$prefix}two-quarters        { @extend #{$prefix}one-half; }
+    #{$prefix}three-quarters      { left:75%; @include silent-relative; }
+
+
+    /**
+     * Fifths
+     */
+    #{$prefix}one-fifth           { left:20%; @include silent-relative; }
+    #{$prefix}two-fifths          { left:40%; @include silent-relative; }
+    #{$prefix}three-fifths        { left:60%; @include silent-relative; }
+    #{$prefix}four-fifths         { left:80%; @include silent-relative; }
+
+
+    /**
+     * Sixths
+     */
+    #{$prefix}one-sixth           { left:16.666%; @include silent-relative; }
+    #{$prefix}two-sixths          { @extend #{$prefix}one-third; }
+    #{$prefix}three-sixths        { @extend #{$prefix}one-half; }
+    #{$prefix}four-sixths         { @extend #{$prefix}two-thirds; }
+    #{$prefix}five-sixths         { left:83.333%; @include silent-relative; }
+
+
+    /**
+     * Eighths
+     */
+    #{$prefix}one-eighth          { left:12.5%; @include silent-relative; }
+    #{$prefix}two-eighths         { @extend #{$prefix}one-quarter; }
+    #{$prefix}three-eighths       { left:37.5%; @include silent-relative; }
+    #{$prefix}four-eighths        { @extend #{$prefix}one-half; }
+    #{$prefix}five-eighths        { left:62.5%; @include silent-relative; }
+    #{$prefix}six-eighths         { @extend #{$prefix}three-quarters; }
+    #{$prefix}seven-eighths       { left:87.5%; @include silent-relative; }
+
+
+    /**
+     * Tenths
+     */
+    #{$prefix}one-tenth           { left:10%; @include silent-relative; }
+    #{$prefix}two-tenths          { @extend #{$prefix}one-fifth; }
+    #{$prefix}three-tenths        { left:30%; @include silent-relative; }
+    #{$prefix}four-tenths         { @extend #{$prefix}two-fifths; }
+    #{$prefix}five-tenths         { @extend #{$prefix}one-half; }
+    #{$prefix}six-tenths          { @extend #{$prefix}three-fifths; }
+    #{$prefix}seven-tenths        { left:70%; @include silent-relative; }
+    #{$prefix}eight-tenths        { @extend #{$prefix}four-fifths; }
+    #{$prefix}nine-tenths         { left:90%; @include silent-relative; }
+
+
+    /**
+     * Twelfths
+     */
+    #{$prefix}one-twelfth         { left:8.333%; @include silent-relative; }
+    #{$prefix}two-twelfths        { @extend #{$prefix}one-sixth; }
+    #{$prefix}three-twelfths      { @extend #{$prefix}one-quarter; }
+    #{$prefix}four-twelfths       { @extend #{$prefix}one-third; }
+    #{$prefix}five-twelfths       { left:41.666%; @include silent-relative; }
+    #{$prefix}six-twelfths        { @extend #{$prefix}one-half; }
+    #{$prefix}seven-twelfths      { left:58.333%; @include silent-relative; }
+    #{$prefix}eight-twelfths      { @extend #{$prefix}two-thirds; }
+    #{$prefix}nine-twelfths       { @extend #{$prefix}three-quarters; }
+    #{$prefix}ten-twelfths        { @extend #{$prefix}five-sixths; }
+    #{$prefix}eleven-twelfths     { left:91.666%; @include silent-relative; }
+}
+
+@if $push {
+    [class*="push--"] { position:relative; }
+
+    @include push-setup;
+
+    @if $responsive {
+        @each $name in $breakpoint-has-push {
+            @include grid-media-query($name) {
+                @include push-setup('#{$name}--');
+            }
+        }
+    }
+
+}
+
+
+
+
+
+/*------------------------------------*\
+    $PULL
+\*------------------------------------*/
+/**
+ * Pull classes, to move grid items back to the left by certain amounts.
+ */
+@mixin pull-setup($namespace: "") {
+    $prefix: $class-type + "pull--" + $namespace;
+
+    /**
+     * Whole
+     */
+    #{$prefix}one-whole           { right:100%; @include silent-relative; }
+
+
+    /**
+     * Halves
+     */
+    #{$prefix}one-half            { right:50%; @include silent-relative; }
+
+
+    /**
+     * Thirds
+     */
+    #{$prefix}one-third           { right:33.333%; @include silent-relative; }
+    #{$prefix}two-thirds          { right:66.666%; @include silent-relative; }
+
+
+    /**
+     * Quarters
+     */
+    #{$prefix}one-quarter         { right:25%; @include silent-relative; }
+    #{$prefix}two-quarters        { @extend #{$prefix}one-half; }
+    #{$prefix}three-quarters      { right:75%; @include silent-relative; }
+
+
+    /**
+     * Fifths
+     */
+    #{$prefix}one-fifth           { right:20%; @include silent-relative; }
+    #{$prefix}two-fifths          { right:40%; @include silent-relative; }
+    #{$prefix}three-fifths        { right:60%; @include silent-relative; }
+    #{$prefix}four-fifths         { right:80%; @include silent-relative; }
+
+
+    /**
+     * Sixths
+     */
+    #{$prefix}one-sixth           { right:16.666%; @include silent-relative; }
+    #{$prefix}two-sixths          { @extend #{$prefix}one-third; }
+    #{$prefix}three-sixths        { @extend #{$prefix}one-half; }
+    #{$prefix}four-sixths         { @extend #{$prefix}two-thirds; }
+    #{$prefix}five-sixths         { right:83.333%; @include silent-relative; }
+
+
+    /**
+     * Eighths
+     */
+    #{$prefix}one-eighth          { right:12.5%; @include silent-relative; }
+    #{$prefix}two-eighths         { @extend #{$prefix}one-quarter; }
+    #{$prefix}three-eighths       { right:37.5%; @include silent-relative; }
+    #{$prefix}four-eighths        { @extend #{$prefix}one-half; }
+    #{$prefix}five-eighths        { right:62.5%; @include silent-relative; }
+    #{$prefix}six-eighths         { @extend #{$prefix}three-quarters; }
+    #{$prefix}seven-eighths       { right:87.5%; @include silent-relative; }
+
+
+    /**
+     * Tenths
+     */
+    #{$prefix}one-tenth           { right:10%; @include silent-relative; }
+    #{$prefix}two-tenths          { @extend #{$prefix}one-fifth; }
+    #{$prefix}three-tenths        { right:30%; @include silent-relative; }
+    #{$prefix}four-tenths         { @extend #{$prefix}two-fifths; }
+    #{$prefix}five-tenths         { @extend #{$prefix}one-half; }
+    #{$prefix}six-tenths          { @extend #{$prefix}three-fifths; }
+    #{$prefix}seven-tenths        { right:70%; @include silent-relative; }
+    #{$prefix}eight-tenths        { @extend #{$prefix}four-fifths; }
+    #{$prefix}nine-tenths         { right:90%; @include silent-relative; }
+
+
+    /**
+     * Twelfths
+     */
+    #{$prefix}one-twelfth         { right:8.333%; @include silent-relative; }
+    #{$prefix}two-twelfths        { @extend #{$prefix}one-sixth; }
+    #{$prefix}three-twelfths      { @extend #{$prefix}one-quarter; }
+    #{$prefix}four-twelfths       { @extend #{$prefix}one-third; }
+    #{$prefix}five-twelfths       { right:41.666%; @include silent-relative; }
+    #{$prefix}six-twelfths        { @extend #{$prefix}one-half; }
+    #{$prefix}seven-twelfths      { right:58.333%; @include silent-relative; }
+    #{$prefix}eight-twelfths      { @extend #{$prefix}two-thirds; }
+    #{$prefix}nine-twelfths       { @extend #{$prefix}three-quarters; }
+    #{$prefix}ten-twelfths        { @extend #{$prefix}five-sixths; }
+    #{$prefix}eleven-twelfths     { right:91.666%; @include silent-relative; }
+}
+
+@if $pull {
+    [class*="pull--"] { position:relative; }
+
+    @include pull-setup;
+
+    @if $responsive {
+        @each $name in $breakpoint-has-pull {
+            @include grid-media-query($name) {
+                @include pull-setup('#{$name}--');
+            }
+        }
+    }
+
+}
