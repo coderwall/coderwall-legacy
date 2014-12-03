@@ -525,7 +525,7 @@ class ProtipsController < ApplicationController
       @protips.facets['suggested-networks']['terms'].map { |h| h['term'] }
     else
       #gets top 10 tags for the protips and picks up associated networks
-      Network.tagged_with(@protips.map(&:tags).flatten.reduce(Hash.new(0)) { |h, t| h[t] += 1; h }.sort_by { |k, v| -v }.first(10).flatten.values_at(*(0..20).step(2))).select(:slug).limit(4).map(&:slug)
+      Network.tagged_with(@protips.flat_map(&:tags).reduce(Hash.new(0)) { |h, t| h[t] += 1; h }.sort_by { |k, v| -v }.first(10).flatten.values_at(*(0..20).step(2))).limit(4).pluck(:slug)
     end
   end
 
@@ -545,7 +545,7 @@ class ProtipsController < ApplicationController
       topics = protips.facets['top-tags']['terms'].map { |h| h['term'] }
     end
 
-    topics = protips.map(&:tags).flatten.uniq.first(8) if topics.blank? && protips.present?
+    topics = protips.flat_map(&:tags).uniq.first(8) if topics.blank? && protips.present?
     topics
   end
 

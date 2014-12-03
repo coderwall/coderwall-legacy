@@ -88,7 +88,7 @@ class OpportunitiesController < ApplicationController
 
     chosen_location = 'Worldwide' if chosen_location.nil?
     @locations = Rails.cache.fetch("job_locations_#{params[:location]}_#{params[:skill]}", expires_in: 1.hour) do
-      Opportunity.by_tag(tag).map(&:locations).flatten.reject { |loc| loc == "Worldwide" }.push("Worldwide").uniq.compact
+      Opportunity.by_tag(tag).flat_map(&:locations).reject { |loc| loc == "Worldwide" }.push("Worldwide").uniq.compact
     end
     @locations.delete(chosen_location) unless @locations.frozen?
     params[:location] = chosen_location
@@ -147,11 +147,11 @@ class OpportunitiesController < ApplicationController
   end
 
   def all_job_locations
-    Rails.cache.fetch('job_locations', expires_in: 23.hours) { Opportunity.all.map(&:locations).flatten.push("Worldwide").uniq.compact }
+    Rails.cache.fetch('job_locations', expires_in: 23.hours) { Opportunity.all.flat_map(&:locations).push("Worldwide").uniq.compact }
   end
 
   def all_job_skills
-    Rails.cache.fetch('job_skills', expires_in: 23.hours) { Opportunity.all.map(&:tags).flatten.uniq.compact }
+    Rails.cache.fetch('job_skills', expires_in: 23.hours) { Opportunity.all.flat_map(&:tags).uniq.compact }
   end
 
   def closest_to_user(user)

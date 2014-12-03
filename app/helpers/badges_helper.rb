@@ -8,7 +8,7 @@ module BadgesHelper
   end
 
   def dom_tag(tag)
-    sanitize_dom_id(tag).gsub(' ', '-').gsub('+', 'plus').gsub('#', 'sharp')
+    sanitize_dom_id(tag).tr(' ', '-').gsub('+', 'plus').gsub('#', 'sharp')
   end
 
   def dom_for_badge(badge)

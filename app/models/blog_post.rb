@@ -45,7 +45,7 @@ class BlogPost
     end
 
     def id_of(pathname)
-      pathname.basename.to_s.gsub(pathname.extname, "")
+      pathname.basename.to_s.sub(pathname.extname, "")
     end
   end
 

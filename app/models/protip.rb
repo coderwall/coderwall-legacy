@@ -121,7 +121,7 @@ class Protip < ActiveRecord::Base
 
       unless trending_protips.respond_to?(:errored?) and trending_protips.errored?
         static_trending = ENV['FEATURED_TOPICS'].split(",").map(&:strip).map(&:downcase) unless ENV['FEATURED_TOPICS'].blank?
-        dynamic_trending = trending_protips.map { |p| p.tags }.flatten.reduce(Hash.new(0)) { |h, tag| h.tap { |h| h[tag] += 1 } }.sort { |a1, a2| a2[1] <=> a1[1] }.map { |entry| entry[0] }.reject { |tag| User.where(username: tag).any? }
+        dynamic_trending = trending_protips.flat_map { |p| p.tags }.reduce(Hash.new(0)) { |h, tag| h.tap { |h| h[tag] += 1 } }.sort { |a1, a2| a2[1] <=> a1[1] }.map { |entry| entry[0] }.reject { |tag| User.where(username: tag).any? }
         ((static_trending || []) + dynamic_trending).uniq
       else
         Tag.last(20).map(&:name).reject { |name| User.exists?(username: name) }
@@ -234,7 +234,7 @@ class Protip < ActiveRecord::Base
       Protip.search(query, [], page: page, per_page: per_page)
     rescue Errno::ECONNREFUSED
       team = Team.where(slug: team_id).first
-      team.members.collect(&:protips).flatten
+      team.members.flat_map(&:protips)
     end
 
     def search_trending_by_user(username, query_string, tags, page, per_page)
@@ -259,7 +259,7 @@ class Protip < ActiveRecord::Base
     end
 
     def most_interesting_for(user, since=Time.at(0), page = 1, per_page = 10)
-      search_top_trending_since("only_link:false", since, user.networks.map(&:ordered_tags).flatten.concat(user.skills.map(&:name)), page, per_page)
+      search_top_trending_since("only_link:false", since, user.networks.flat_map(&:ordered_tags).concat(user.skills.map(&:name)), page, per_page)
     end
 
     def search_top_trending_since(query, since, tags, page = 1, per_page = 10)

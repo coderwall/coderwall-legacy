@@ -5,7 +5,7 @@ class Lanyrd < Struct.new(:username)
 
   def facts
     events.collect do |event|
-      id = event[:url].gsub(HOST, '') + ":#{username}"
+      id = event[:url].sub(HOST, '') + ":#{username}"
       Fact.append!(id, "lanyrd:#{username}", event[:name], event[:date], event[:url], event[:tags])
     end
   end

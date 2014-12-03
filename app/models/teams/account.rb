@@ -118,7 +118,7 @@ class Teams::Account < ActiveRecord::Base
     team.monthly_subscription = false
     team.valid_jobs           = false
     team.save
-    team.jobs.map { |job| job.deactivate! }
+    team.jobs.map(&:deactivate!)
   end
 
   def add_analytics

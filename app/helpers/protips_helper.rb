@@ -285,7 +285,7 @@ module ProtipsHelper
   end
 
   def current_user_upvotes
-    @upvoted_protip_ids ||= current_user.upvoted_protips.select(:public_id).map(&:public_id)
+    @upvoted_protip_ids ||= current_user.upvoted_protips.pluck(:public_id)
   end
 
   def user_upvoted?(protip)

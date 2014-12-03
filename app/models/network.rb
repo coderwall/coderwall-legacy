@@ -40,12 +40,12 @@ class Network < ActiveRecord::Base
       if !!(name =~ /\p{Latin}/)
         name.to_s.downcase.gsub(/[^a-z0-9]+/i, '-').chomp('-')
       else
-        name.to_s.gsub(/\s/, "-")
+        name.to_s.tr(' ', '-')
       end
     end
 
     def unslugify(slug)
-      slug.gsub(/\-/, ' ')
+      slug.tr('-', ' ')
     end
 
     def all_with_tag(tag_name)
@@ -201,12 +201,12 @@ class Network < ActiveRecord::Base
   end
 
   def members(limit = -1, offset = 0)
-    members_scope = User.where(id: Follow.for_followable(self).select(:follower_id)).offset(offset)
+    members_scope = User.where(id: Follow.for_followable(self).pluck(:follower_id)).offset(offset)
     limit > 0 ? members_scope.limit(limit) : members_scope
   end
 
   def new_members(limit = nil, offset = 0)
-    User.where(id: Follow.for_followable(self).select(:follower_id).where('follows.created_at > ?', 1.week.ago)).limit(limit).offset(offset)
+    User.where(id: Follow.for_followable(self).where('follows.created_at > ?', 1.week.ago).pluck(:follower_id)).limit(limit).offset(offset)
   end
 
   def ranked_members(limit = 15)

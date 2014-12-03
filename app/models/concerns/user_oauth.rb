@@ -94,7 +94,7 @@ module UserOauth
     end
 
     def all_tokens
-      with_tokens.select("github_token").collect(&:github_token)
+      with_tokens.pluck(:github_token)
     end
 
   end

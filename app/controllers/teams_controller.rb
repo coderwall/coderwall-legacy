@@ -290,7 +290,7 @@ class TeamsController < ApplicationController
   end
 
   def replace_section(section_name)
-    section_name = section_name.gsub('-', '_')
+    section_name = section_name.tr('-', '_')
     "$('##{section_name}').replaceWith('#{escape_javascript(render(:partial => section_name))}');"
   end
 
@@ -313,7 +313,7 @@ class TeamsController < ApplicationController
 
   def job_public_ids
     Opportunity
-    Rails.cache.fetch('all-jobs-public-ids', :expires_in => 1.hour) { Opportunity.select(:public_id).group('team_id, created_at, public_id').map(&:public_id) }
+    Rails.cache.fetch('all-jobs-public-ids', :expires_in => 1.hour) { Opportunity.group('team_id, created_at, public_id').pluck(:public_id) }
   end
 
   def next_job(job)

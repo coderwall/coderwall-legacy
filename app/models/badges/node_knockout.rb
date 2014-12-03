@@ -115,7 +115,7 @@ class NodeKnockout
     begin
       res      = Servant.get("http://nodeknockout.com#{path}")
       doc      = Nokogiri::HTML(res.to_s)
-      username = doc.css("a.github").first[:href].gsub(/https?:\/\/github.com\//, '')
+      username = doc.css("a.github").first[:href].sub(/https?:\/\/github.com\//, '')
       role     = doc.css(".role").first.text
       Rails.logger.info "Found node knockout #{role}: #{username}" if ENV['DEBUG']
       return [role, username]
@@ -129,7 +129,7 @@ class NodeKnockout
     begin
       res      = Servant.get("http://nodeknockout.com#{path}")
       doc      = Nokogiri::HTML(res.to_s)
-      username = doc.css("a.twitter").first[:href].gsub("http://twitter.com/", '').strip
+      username = doc.css("a.twitter").first[:href].sub("http://twitter.com/", '').strip
       role     = doc.css(".role").first.text
       Rails.logger.info "Found node knockout #{role}: #{username}"
       return [role, username]
