@@ -221,3 +221,7 @@ of this.
 If you have any questions about our pull request process,
 please contact the coderwall team.  One of us will be happy
 to help.
+
+## Fix those errors
+
+Found a factual mistake in this document? Let me know and I’ll correct it.
