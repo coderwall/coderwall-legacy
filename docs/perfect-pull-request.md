@@ -215,8 +215,10 @@ done
 ```
 
 We will need to open a new pull request for this branch. as
-mentioned above, rebase pick/squash will usually take care
-of this.
+mentioned above, an extra commit to tidy up followed by rebase 
+pick/squash may be able to take care of this within the existing
+branch. The only time you'd really want to do a cherry pick, is 
+when it's simpler to do so.
 
 If you have any questions about our pull request process,
 please contact the coderwall team.  One of us will be happy
