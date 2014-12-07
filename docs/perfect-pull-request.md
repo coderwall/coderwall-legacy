@@ -46,7 +46,9 @@ To create a local branch, we give it a descriptive name and
 append the bounty number we're working on.  Use the command
 below to create a branch called **my-branch-name-123**
 
-    git checkout -b my-branch-name-123
+```
+git checkout -b my-branch-name-123
+```
 
 ## Test coverage<a id="sec-1-2" name="sec-1-2"></a>
 
@@ -68,7 +70,7 @@ breakages in the future too.)
 
 ### Existing specs as example<a id="sec-1-2-1" name="sec-1-2-1"></a>
 
-Look inside the **./spec** folder to see the current test
+Look inside the `spec` folder to see the current test
 coverage, you will need to add your specs to this suite.
 The existing specs in the project will serve as good
 examples.
@@ -119,19 +121,19 @@ We can use rebase to squash our commits together, follow the
 steps to take below.
 
 Note, it will be easier to do this if your editor of choice
-is configured for use with git, see <https://help.github.com/articles/associating-text-editors-with-git/>.
+is configured for use with git, see [associating text editors with git](https://help.github.com/articles/associating-text-editors-with-git)
 
 1.  begin a git rebase on the branch commit history.  **git
     rebase -i HEAD~n** where **n** is the number of commits back
     you need to squash.  For example, let's say you have 6 commits in
-    your branch, do **git rebase -i HEAD~6**.
+    your branch, do `git rebase -i HEAD~6`
 
 2.  The editor configured for use with git will appear,
     listing the commits selected, and the word **pick** on the
     left of each commit.  The commit at the top will be the
     oldest, running down to the latest.  Check that the
     commits shown are the ones you want to squash.  If not,
-    quit now and start again, changing **HEAD~n** to correct it.
+    quit now and start again, changing `HEAD~n` to the correct pointer.
 
 3.  Leave the **pick** on the first row alone.
 
@@ -149,7 +151,7 @@ is configured for use with git, see <https://help.github.com/articles/associatin
 7.  Save the new commit message, check it looks ok in the **git log**
 
 8.  If you're squashing after initiating the pull request, you will
-    need to **git push &#x2013;force** when pushing the commit back to github.
+    need to `git push --force` when pushing the commit back to github.
 
 ## Updating your Pull Request after changes are made<a id="sec-1-7" name="sec-1-7"></a>
 
@@ -157,15 +159,15 @@ You can make changes after your pull request is submitted,
 effectively it is still private branch. If it's necessary to
 add new code, to add a new test, or fix something.
 
-Add all the changes interactively using **git add -p** and
-then **git commit &#x2013;amend** to patch the previous commit with
+Add all the changes interactively using `git add -p` and
+then `git commit --amend` to patch the previous commit with
 your amend.
 
 Please note, you can also add your changes as new commits,
 and then squash them before pushing the changes up to github
 
 When you push your amended (or newly squashed) commits, you
-must use the **&#x2013;force** switch. ie. **git push &#x2013;force**
+must use the `--force` switch. ie. `git push --force`
 
 ## Simple vs Complex<a id="sec-1-8" name="sec-1-8"></a>
 
@@ -200,14 +202,17 @@ want to keep.
 Next, create a new local branch, and cherry pick each
 commit into the new branch.
 
-e.g.  if we noted that commits, 823a69b, a98e12c and a9171ad are
+e.g.  if we noted that commits, `823a69b`, `a98e12c` and `a9171ad` are
 good, and the rest are trash, we'd do.
 
-**git checkout -b new-branch-for-bounty-123**
+```
+git checkout -b new-branch-for-bounty-123
+# We're now in the new branch...
 
-**for sha in 823a69b a98e12c a9171ad; do**
-    **git cherry-pick $sha**
-**done**
+for sha in 823a69b a98e12c a9171ad; do
+    git cherry-pick $sha
+done
+```
 
 We will need to open a new pull request for this branch. as
 mentioned above, rebase pick/squash will usually take care
