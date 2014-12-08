@@ -18,11 +18,11 @@
   margin-bottom: 60px;
 
   .inside {
-    height: 210px;
-    padding: 60px 15px;
+    height: 550px;
+    padding: 60px 0px;
     width: 870px;
     margin: 0 auto;
-    background: image-url("relic-tee.png") no-repeat right 102px;
+    background: image-url("relic-tee.png") no-repeat right 160px;
   }
 
   h1 {
@@ -60,6 +60,7 @@
     text-transform: uppercase;
     color: #fff;
     text-align: center;
+    float: right;
 
     &:hover {
       background: $green;
