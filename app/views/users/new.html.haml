@@ -36,10 +36,11 @@
         /   =form.label      :receive_newsletter, 'Receive infrequent but relevant updates'.html_safe
         %p.neverpost
           We respect the sanctity of your email and share your dislike for spam and unnecessarily frequent newsletters.
-          =follow_coderwall_on_twitter
+          = follow_coderwall_on_twitter
           to stay up to date with updates from coderwall.
         .save
-          =submit_tag 'Finish', :class => 'button'
+          = submit_tag 'Finish', class: 'button',
+            data: { disable_with: "Submitted" }
       .clear
       .special-setting.already-signedup
         %h4
