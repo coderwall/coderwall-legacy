@@ -18,24 +18,33 @@ class Team < ActiveRecord::Base
 
   mount_uploader :avatar, TeamUploader
 
-  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
-
-  before_validation :create_slug!
-
-  validates :slug, uniqueness: true, presence: true
-
-  def top_three_team_members
-    members.first(3)
-  end
-
   has_many :followers, through: :follows, source: :team
-
   has_many :follows,   class_name: 'FollowedTeam',    foreign_key: 'team_id', dependent: :destroy
   has_many :jobs,      class_name: 'Opportunity',     foreign_key: 'team_id', dependent: :destroy
   has_many :links,     class_name: 'Teams::Link',     foreign_key: 'team_id', dependent: :delete_all
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
   has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id', dependent: :delete_all
   has_one :account,    class_name: 'Teams::Account',  foreign_key: 'team_id', dependent: :delete
+
+  accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank
+
+  before_validation :create_slug!
+  before_validation :fix_website_url!
+  before_save :update_team_size!
+  before_save :clear_cache_if_premium_team
+  after_create :generate_event
+  after_save :reindex_search
+  after_destroy :reindex_search
+  after_destroy :remove_dependencies
+
+  validates :slug, uniqueness: true, presence: true
+  validates :name, presence: true
+
+  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
+
+  def top_three_team_members
+    members.first(3)
+  end
 
   def featured_links
     links
@@ -49,43 +58,9 @@ class Team < ActiveRecord::Base
     []
   end
 
-  has_many :jobs, class_name: 'Opportunity', foreign_key: 'team_id', dependent: :destroy
-
-  private def create_slug!
-    self.slug = name.parameterize
-  end
-
   def all_jobs
     jobs.order('created_at DESC')
   end
-
-  has_many :follows, class_name: 'FollowedTeam', foreign_key: 'team_id', dependent: :destroy
-  has_many :followers, through: :follows, source: :team
-
-  accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank
-
-  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
-
-  mount_uploader :avatar, TeamUploader
-
-  before_validation :create_slug!
-
-  validates :slug, uniqueness: true, presence: true
-  validates :name, presence: true
-
-  private def create_slug!
-    self.slug = name.parameterize
-  end
-
-  before_save :update_team_size!
-  before_save :clear_cache_if_premium_team
-  before_validation :fix_website_url!
-  after_create :generate_event
-  after_save :reindex_search
-  after_destroy :reindex_search
-  after_destroy :remove_dependencies
-
-  scope :featured, ->{ where(premium: true, valid_jobs: true, hide_from_featured: false) }
 
   def self.search(query_string, country, page, per_page, search_type = :query_and_fetch)
     country = query_string.gsub!(/country:(.+)/, '') && $1 if country.nil?
@@ -216,7 +191,6 @@ class Team < ActiveRecord::Base
   def has_member?(user)
     members.include?(user)
   end
-
 
   def branding_hex_color
     branding || DEFAULT_HEX_BRAND
