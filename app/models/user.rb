@@ -225,6 +225,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def team
+    if team_id
+      Team.find(team_id)
+    else
+      membership.try(:team)
+    end
+  end
+
   def team_ids
     [team_id]
   end
@@ -248,7 +256,7 @@ class User < ActiveRecord::Base
   end
 
   def on_team?
-    not team_document_id.nil?
+    team_id.present? || membership.present?
   end
 
   def team_member_of?(user)
