@@ -57,7 +57,7 @@ class TeamsController < ApplicationController
         @job = show_params[:job_id].nil? ? @team.jobs.sample : Opportunity.with_public_id(show_params[:job_id])
 
         @other_jobs = @team.jobs.reject { |job| job.id == @job.id } unless @job.nil?
-        @job_page = show_params[:job_id].present?
+        @job_page = !@job.nil?
         return render(:premium) if show_premium_page?
       end
 

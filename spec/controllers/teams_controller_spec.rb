@@ -36,6 +36,16 @@ RSpec.describe TeamsController, type: :controller, skip: true do
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
+    it 'sets job_page to true if job is found' do
+      opporunity = Fabricate(:opportunity)
+      get :show, slug: opportunity.team.slug, job_id: opportunity.public_id
+      expect(assigns(:job_page)).to eq(true)
+    end
+    it 'sets job_page to false if job is not found' do
+      team = Fabricate(:team)
+      get :show, slug: team.slug, job_id: 'not-a-real-job-slug'
+      expect(assigns(:job_page)).to eq(false)
+    end
   end
 
   describe '#create' do
