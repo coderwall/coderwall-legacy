@@ -8,10 +8,13 @@ class ProcessLikeJob
     case process_type
       when 'associate_to_user'
         begin
-          like.user_id = User.find_by_tracking_code(like.tracking_code)
-          like.save!
-        rescue ActiveRecord::RecordNotUnique => ex
-          ap ex
+          if user = User.find_by_tracking_code(like.tracking_code)
+            like.user = user
+            like.save!
+          else
+            like.destroy
+          end
+        rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => ex
           like.destroy
         end
     end
