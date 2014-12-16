@@ -184,9 +184,9 @@ Coderwall::Application.routes.draw do
   get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
-  get '/blog' => 'blog_posts#index', as: :blog
-  get '/blog/:id' => 'blog_posts#show', as: :blog_post
-  get '/articles.atom' => 'blog_posts#index', as: :atom, :format => :atom
+  #get '/blog' => 'blog_posts#index', as: :blog
+  #get '/blog/:id' => 'blog_posts#show', as: :blog_post
+  get '/articles.atom' => 'blog_posts#index', as: :atom, :format => :atom # Leaving this here doesn't hurt anything
 
   get '/signin' => 'sessions#signin', as: :signin
   get '/signout' => 'sessions#destroy', as: :signout
