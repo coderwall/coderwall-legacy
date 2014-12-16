@@ -184,10 +184,6 @@ Coderwall::Application.routes.draw do
   get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
-  get '/blog' => 'blog_posts#index', as: :blog
-  get '/blog/:id' => 'blog_posts#show', as: :blog_post
-  get '/articles.atom' => 'blog_posts#index', as: :atom, :format => :atom
-
   get '/signin' => 'sessions#signin', as: :signin
   get '/signout' => 'sessions#destroy', as: :signout
   get '/goodbye' => 'sessions#destroy', as: :sign_out
@@ -470,9 +466,6 @@ end
 #                     refresh GET                   /refresh/:username(.:format)                           users#refresh
 #       random_accomplishment GET                   /nextaccomplishment(.:format)                          highlights#random
 #                   add_skill GET                   /add-skill(.:format)                                   skills#create
-#                        blog GET                   /blog(.:format)                                        blog_posts#index
-#                   blog_post GET                   /blog/:id(.:format)                                    blog_posts#show
-#                        atom GET                   /articles.atom(.:format)                               blog_posts#index {:format=>:atom}
 #                      signin GET                   /signin(.:format)                                      sessions#signin
 #                     signout GET                   /signout(.:format)                                     sessions#destroy
 #                    sign_out GET                   /goodbye(.:format)                                     sessions#destroy

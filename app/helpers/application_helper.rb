@@ -69,14 +69,6 @@ module ApplicationHelper
     end
   end
 
-  def blog_posts_nav_class
-    if params[:controller] == "blogs"
-      'active'
-    else
-      nil
-    end
-  end
-
   def settings_nav_class
     if params[:controller] == "users" && params[:action] == "edit"
       'active'
