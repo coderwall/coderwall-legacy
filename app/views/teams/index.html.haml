@@ -15,7 +15,6 @@
     %input{:type => "submit", :class => "submit", :value => " "}
   %ul
     %li=link_to("Hiring", teams_path, :class => featured_teams_css_class)
-    %li=link_to('Leaderboard', leaderboard_path, :class => leaderboard_css_class)
 
 #search-results
   =link_to(message_to_create_ehanced_team, employers_path, :class => 'feature-signup track', 'data-action' => 'upgrade team', 'data-from' => 'teams page') unless message_to_create_ehanced_team.nil?

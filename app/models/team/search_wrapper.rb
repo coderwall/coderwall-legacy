@@ -13,10 +13,6 @@ class Team::SearchWrapper
     item[:updated_at]
   end
 
-  def rank
-    item[:rank]
-  end
-
   def to_key
     item.try(:to_key) || BSON::ObjectId(item[:id])
   end

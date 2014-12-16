@@ -21,18 +21,6 @@
       Your team score is determined by each team member’s achievements, peer endorsements, speaking history, and then adjusted to the team’s central tendency.
 
     %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
-      %b 2) Higher score = higher ranking on team leaderboard <br>
-      The leaderboard is a fun way to showcase some of Coderwall’s most innovative and interesting teams. We know
-      = @user.team.name
-      is doing awesome things. With a higher team score, everyone else can know that, too.
-
-    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
-      %b 3) Every team member counts <br>
-      Github is currently in 1st place on the Team Leaderboard with 61 members while Groupon is ranked 22nd with 60 members. Who is the one teammate that will push
-      = @user.team.name
-      up the leaderboard?
-
-    %p{:style => "font-size: 14px;line-height: 22px;font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
 
       To add team members, share this private link with them:
       =link_to(invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token)), invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token)), {:style => "color: #3d8dcc;"})

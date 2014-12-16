@@ -1,10 +1,8 @@
--cache ['v7', team.rank, team.score, team.slug, team.avatar_url, team.hiring?] do
+-cache ['v7', team.score, team.slug, team.avatar_url, team.hiring?] do
   %li.cf{:id => dom_id(team)}
     -if team.hiring?
       %a.hiring-ribbon{:href => friendly_team_path(team)}
         %span Join Us
-    .rank
-      %h3=team.rank.ordinalize
     .team
       %a{:href => friendly_team_path(team) }
         =image_tag(team.avatar_url, :width => 40, :height => 40)

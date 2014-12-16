@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   skip_before_action :require_registration, :only => [:accept, :record_exit]
-  before_action :access_required, :except => [:index, :leaderboard, :show, :new, :upgrade, :inquiry, :search, :create, :record_exit]
+  before_action :access_required, :except => [:index, :show, :new, :upgrade, :inquiry, :search, :create, :record_exit]
   before_action :ensure_analytics_access, :only => [:visitors]
   respond_to :js, :only => [:search, :create, :approve_join, :deny_join]
   respond_to :json, :only => [:search]
@@ -13,27 +13,6 @@ class TeamsController < ApplicationController
     end.reverse!
     #end
     @teams = []
-  end
-
-  def leaderboard
-    leaderboard_params = params.permit(:refresh, :page, :rank, :country)
-
-    @options = { :expires_in => 1.hour }
-    @options[:force] = true if !leaderboard_params[:refresh].blank?
-    if signed_in?
-      leaderboard_params[:page] = 1 if leaderboard_params[:page].to_i == 0
-      leaderboard_params[:page] = page_based_on_rank(leaderboard_params[:rank].to_i) unless params[:rank].nil?
-      @teams = Team.top(leaderboard_params[:page].to_i, 25)
-      return redirect_to(leaderboard_url) if @teams.empty?
-    else
-      @teams = Team.top(1, 10, leaderboard_params[:country])
-    end
-    respond_to do |format|
-      format.html
-      format.json do
-        render :json => @teams.map(&:public_hash).to_json
-      end
-    end
   end
 
   def followed

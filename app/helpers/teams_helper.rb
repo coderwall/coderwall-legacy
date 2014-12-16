@@ -29,14 +29,6 @@ module TeamsHelper
     end
   end
 
-  def on_leaderboard?
-    params[:action] == 'index'
-  end
-
-  def top_teams_css_class
-    on_leaderboard? ? 'active' : ''
-  end
-
   def followed_teams_css_class
     current_page?(action: :followed) ? 'active' : ''
   end
@@ -100,14 +92,6 @@ module TeamsHelper
 
   def friendly_team_path(team)
     teamname_path(slug: team.slug)
-  end
-
-  def teams_leaderboard_title(teams)
-    "Top tech teams in the world | " + teams.first(3).map(&:name).join(", ") + " and many more!"
-  end
-
-  def leaderboard_css_class
-    return 'active' if params[:controller] == 'teams' && params[:action] == 'leaderboard'
   end
 
   def featured_teams_css_class

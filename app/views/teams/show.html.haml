@@ -90,27 +90,6 @@
           %span=@team.followers.count
           Followers
 
-        %ul#leaderboard
-          -if show_team_score?
-            -unless @team.next_highest_competitors.empty?
-              -@team.next_highest_competitors.each do |competitor|
-                %li.higher
-                  %a.track{:href=>teamname_url(:slug => competitor.slug), 'data-category'=>'team clicked', 'data-action'=>'competitor'}
-                    =image_tag(competitor.avatar_url)
-                    =competitor.name
-                  %span=competitor.rank.ordinalize
-            %li.thisteam
-              %a.track{:href => team_path(@team), 'data-category' => 'team clicked', 'data-action' => 'competitor'}
-                =image_tag(@team.avatar_url)
-            -unless @team.next_lowest_competitors.empty?
-              -@team.next_lowest_competitors.each do |competitor|
-                %li.lower
-                  %a.track{:href=>teamname_url(:slug => competitor.slug), 'data-category'=>'team clicked','data-action'=>'competitor'}
-                    =image_tag(competitor.avatar_url)
-                    =competitor.name
-                  %span=competitor.rank.ordinalize
-          -elsif viewing_my_team?
-            %li.pending-team-score Teams with 3 or more members will receive a coderwall score. The score is calculated once a week.
 
 -cache ['v2', @team, @team_protips.total, 'team-protips', viewing_my_team?] do
   -if display_protips?

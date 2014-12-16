@@ -3,13 +3,11 @@ require 'search'
 
 class Team < ActiveRecord::Base
   DEFAULT_HEX_BRAND        = '#343131'
-  LEADERBOARD_KEY          = 'teams:leaderboard'
   FEATURED_TEAMS_CACHE_KEY = 'featured_teams_results'
   MAX_TEAM_SCORE           = 400
 
   self.table_name = 'teams'
 
-  include LeaderboardRedisRank
   include TeamAnalytics
   include TeamMigration
 
@@ -260,15 +258,10 @@ class Team < ActiveRecord::Base
       name:   name,
       about:  about,
       id:     id.to_s,
-      rank:   rank,
       size:   size,
       slug:   slug,
       avatar: avatar_url,
     }
-  end
-
-  def ranked?
-    total_member_count >= 3 && rank != 0
   end
 
   def display_name
@@ -689,10 +682,6 @@ class Team < ActiveRecord::Base
       klass.where(team_id: self.id.to_s).delete_all
     end
     User.where(team_id: self.id.to_s).update_all('team_id = NULL')
-  end
-
-  def rerank!
-    ProcessTeamJob.perform_async('recalculate', id)
   end
 
   def can_post_job?

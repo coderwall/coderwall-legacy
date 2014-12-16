@@ -51,11 +51,6 @@
 
 - if admin_of_team?
   .admin-bar.cf
-    .rank
-      %a{:href => leaderboard_path(:rank => @team.rank)+"#team_#{@team.id.to_s}"}
-        Rank
-        %span
-          = @team.ranked? ? @team.rank : "N/A"
     .alert
       -unless @team.has_specified_enough_info?
         %p Your team profile is incomplete. You need to fill out at least 6 sections before you can post a job

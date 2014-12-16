@@ -15,16 +15,8 @@
     %p{style: paragraph}
       We’re thrilled to welcome you to the Coderwall community. Let’s get started!
     %p{style: paragraph}
-      Here are three ways to enhance your Coderwall experience:
+      Here are some ways to enhance your Coderwall experience:
       %ol
-        - if @user.on_team?
-          - invite_to_team_url = invitation_url(@user.team.id, r: CGI.escape(@user.referral_token))
-          %li{style: list_item}
-            == Invite others to team #{@user.team.name}. Share this private link with your coworkers so they can join your team: #{link_to(invite_to_team_url, invite_to_team_url)}
-        - else
-          %li{style: list_item}
-            = "#{link_to("Reserve your company's team page", new_team_url, style: anchor)}. Invite at least 3 coworkers to have your team show up on the #{link_to('leaderboard', leaderboard_url, style: "color: #3d8dcc; text-decoration: none; font-size: 14px;")}.".html_safe
-
         %li{style: list_item}
           Check out the
           = link_to('trending', 'https://coderwall.com/trending', style: anchor)
