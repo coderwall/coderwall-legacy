@@ -36,10 +36,6 @@ class SitemapRefreshWorker
       User.find_each(batch_size: 30) do |user|
         add(badge_path(user.username), lastmod: user.updated_at, priority: 0.9)
       end
-
-      BlogPost.all_public.each do |blog_post|
-        add(blog_post_path(blog_post.id), lastmod: blog_post.posted, priority: 0.5)
-      end
     end
 
     SitemapGenerator::Sitemap.ping_search_engines
