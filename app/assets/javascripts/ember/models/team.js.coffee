@@ -1,7 +1,7 @@
 Coderwall.Team = Ember.Resource.extend(
   resourceUrl: "/teams"
   resourceName: "team"
-  resourceProperties: [ "id", "name", "rank", "score", "size", "avatar", "country", "team_url", "follow_path",
+  resourceProperties: [ "id", "name", "score", "size", "avatar", "country", "team_url", "follow_path",
                         "followed" ]
 
   rounded_score: Ember.computed(->

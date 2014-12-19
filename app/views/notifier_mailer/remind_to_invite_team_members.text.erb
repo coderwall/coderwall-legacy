@@ -1,15 +1,6 @@
 Hey Friend,
 
-The <%= @user.team.name %> team page looks great. Have you invited your whole team to join yet? There are a lot of advantages to having all your team members on the <%= @user.team.name %> page.
-
-1) More team members can lead to a higher score
-Your team score is determined by each team member’s achievements, peer endorsements, speaking history, and then adjusted to the team’s central tendency.
-
-2) Higher score = higher ranking on team leaderboard
-The leaderboard is a fun way to showcase some of Coderwall’s most innovative and interesting teams. We know <%= @user.team.name %> is doing awesome things. With a higher team score, everyone else can know that, too.
-
-3) Every team member counts
-Github is currently in 1st place on the Team Leaderboard with 61 members while Groupon is ranked 22nd with 60 members. Who is the one teammate that will push <%= @user.team.name %> up the leaderboard?
+The <%= @user.team.name %> team page looks great. Have you invited your whole team to join yet?
 
 To add team members, just share this private link: <%= invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token)) %>
 

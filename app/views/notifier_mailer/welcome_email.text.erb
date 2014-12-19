@@ -5,8 +5,6 @@ Here is how you can get started:
 
 <% if @user.on_team? %>
 * Invite others to team <%= @user.team.name %>. Share this private link with your coworkers so they can join your team: <%= invitation_url(@user.team.id, :r => CGI.escape(@user.referral_token)) %>
-<% else %>
-* Reserve your company's team page. Invite at least 3 coworkers to have your team show up on the leaderboard: <%= leaderboard_url %>
 <% end %>
 * Check out the trending pro tips and share your own. <%= link_to('trending', 'https://coderwall.com/trending') %>
 * Display your achievements on your personal website or blog using our javascript badge: <%= api_url %>

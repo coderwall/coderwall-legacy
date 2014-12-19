@@ -13,10 +13,9 @@
     -else
       =link_to("Get your team's index score", root_path, options)
 
-%h2.headline Team Leaderboard
+%h2.headline Team
 .barnav
   %ul
-    %li=link_to('Coderwall Index',leaderboard_path, :class => top_teams_css_class )
     -if signed_in?
       %li=link_to('Following', followed_teams_path, :class => followed_teams_css_class)
 .clear

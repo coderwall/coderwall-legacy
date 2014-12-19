@@ -398,23 +398,6 @@ body#home-template {
         }
       }
 
-      .view-team-leader-board {
-        display: block;
-        width: 742px;
-        height: 93px;
-        background: image-url("home/view-team-leader-board.png") no-repeat;
-        @include transition-all;
-        margin: 0 auto 20px auto;
-
-        span {
-          display: none;
-        }
-
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-
       .big-sign-up {
         display: block;
         background: #393939;

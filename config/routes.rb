@@ -153,7 +153,6 @@ Coderwall::Application.routes.draw do
     end
   end
 
-  get '/leaderboard' => 'teams#leaderboard', as: :leaderboard
   get '/employers' => 'teams#upgrade', as: :employers
 
   %w(github twitter forrst dribbble linkedin codeplex bitbucket stackoverflow).each do |provider|
@@ -395,7 +394,6 @@ end
 #                        team GET                   /teams/:id(.:format)                                   teams#show
 #                             PUT                   /teams/:id(.:format)                                   teams#update
 #                             DELETE                /teams/:id(.:format)                                   teams#destroy
-#                 leaderboard GET                   /leaderboard(.:format)                                 teams#leaderboard
 #                   employers GET                   /employers(.:format)                                   teams#upgrade
 #               unlink_github POST                  /github/unlink(.:format)                               users#unlink_provider {:provider=>"github"}
 #                             GET                   /github/:username(.:format)                            users#show {:provider=>"github"}
