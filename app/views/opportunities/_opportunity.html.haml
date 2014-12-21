@@ -1,7 +1,10 @@
 %li.cf
   %a.job.track{ href: job_path(slug: opportunity.team.slug, job_id: opportunity.public_id), 'data-action' => 'view job', 'data-from' => 'jobs page', 'data-properties' => { team: opportunity.team.name, public_id: opportunity.public_id }.to_json }
     %h2= opportunity.title
-    %h3= opportunity.opportunity_type.capitalize
+    %h3
+      = opportunity.opportunity_type
+      - if opportunity.remote?
+        and remote
     %p= opportunity.description
   .team.cf
     .details
