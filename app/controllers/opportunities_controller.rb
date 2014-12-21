@@ -166,7 +166,15 @@ class OpportunitiesController < ApplicationController
 
   def get_jobs_for(chosen_location, tag, page)
     scope = Opportunity
-    scope = scope.by_city(chosen_location) unless chosen_location.nil?
+
+    if chosen_location.present?
+      if chosen_location == "Remote"
+        scope = scope.where(remote: true)
+      else
+        scope = scope.by_city(chosen_location)
+      end
+    end
+
     scope = scope.by_tag(tag) unless tag.nil?
     # TODO: Verify that there are no unmigrated teams
     scope = scope.where('team_id is not null')

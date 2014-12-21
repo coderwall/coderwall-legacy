@@ -12,5 +12,14 @@ RSpec.describe OpportunitiesController, type: :controller do
       get :index
       expect(response).to render_template(['opportunities/index', 'layouts/jobs'])
     end
+
+    context "when it's filtered by remote opportunities" do
+      before { @opportunity = Fabricate(:opportunity, remote: true, location: "Anywhere") }
+
+      it "should assign the remote opportunities to @jobs" do
+        get :index, location: 'remote'
+        expect(assigns(:jobs)).to be_include(@opportunity)
+      end
+    end
   end
 end

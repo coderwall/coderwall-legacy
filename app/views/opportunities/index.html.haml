@@ -14,7 +14,6 @@
       %a.filter{ href: '/' }
         %h3= params[:skill].try(:titleize)
         %h1
-          Jobs
           %span= job_location_string(params[:location].titleize)
       %ul.location-drop-down.hide
         %li

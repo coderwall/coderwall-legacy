@@ -6,6 +6,8 @@ Fabricator(:opportunity) do
   location 'San Francisco, CA'
   cached_tags 'java, python'
   team_id { Fabricate(:team, paid_job_posts: 1).id }
+  remote false
+  expires_at { Time.now + 1.year }
 end
 
 Fabricator(:job, from: :opportunity, class_name: :opportunity) do
