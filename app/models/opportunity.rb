@@ -115,14 +115,14 @@ class Opportunity < ActiveRecord::Base
     if force
       super
     else
-      deleted = true
-      deleted_at = Time.now.utc
+      self.deleted = true
+      self.deleted_at = Time.now.utc
       save
     end
   end
 
   def set_expiration
-    expires_at = team.has_monthly_subscription? ? 1.year.from_now : 1.month.from_now
+    self.expires_at = team.has_monthly_subscription? ? 1.year.from_now : 1.month.from_now
   end
 
   def title
@@ -130,7 +130,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   def title=(new_title)
-    name = new_title
+    self.name = new_title
   end
 
   def accepts_applications?
@@ -265,7 +265,7 @@ class Opportunity < ActiveRecord::Base
     geocoded_all = true
     location.split('|').each do |location_string|
       # skip if location is anywhere or already exists
-      if anywhere?(location_string) || team.locations.where(address: /.*#{location_string}.*/).count > 0
+      if anywhere?(location_string) || team.locations.where('address ILIKE ?',"%location_string%").count > 0
           geocoded_all = false
         next
       end
