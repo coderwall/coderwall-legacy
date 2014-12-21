@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141111082038) do
+ActiveRecord::Schema.define(:version => 20141221211825) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -211,6 +211,7 @@ ActiveRecord::Schema.define(:version => 20141111082038) do
     t.boolean  "apply",            :default => false
     t.string   "public_id"
     t.integer  "team_id"
+    t.boolean  "remote"
   end
 
   create_table "pictures", :force => true do |t|

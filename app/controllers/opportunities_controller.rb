@@ -29,7 +29,7 @@ class OpportunitiesController < ApplicationController
   end
 
   def create
-    opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
+    opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply, :remote)
     @job = Opportunity.new(opportunity_create_params)
     respond_to do |format|
       if @job.save

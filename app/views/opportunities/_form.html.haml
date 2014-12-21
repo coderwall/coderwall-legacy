@@ -31,6 +31,11 @@
       =j.text_field :location
 
   %fieldset
+    =j.label :remote do
+      =j.check_box :remote
+      Allow remote
+
+  %fieldset
     =j.label :link, 'Link to full job posting on your career site (ex: http://example.com/career)'
     =j.text_field :link
   %fieldset
