@@ -1,7 +1,7 @@
 module ApplicationHelper
   include TweetButton
   include SchemaOrgHelper
-  
+
   def link_twitter_path
     '/auth/twitter'
   end
@@ -161,7 +161,7 @@ module ApplicationHelper
     # https://twitter.com/#!/kennethkalmer/status/86392260555587584
     endorsements << [User.find_by_username('kennethkalmer'), "@coderwall really dishes out some neat achievements, hope this helps motivate even more folks to contribute to FOSS"]
 
-    # endorsements << [User.with_username('jeffhogan'), 'I really dig @coderwall...I see great potential in utilizing @coderwall for portfolio/linkedin/professional ref. for developers!']
+    # endorsements << [User.find_by_username('jeffhogan'), 'I really dig @coderwall...I see great potential in utilizing @coderwall for portfolio/linkedin/professional ref. for developers!']
 
     endorsements
   end

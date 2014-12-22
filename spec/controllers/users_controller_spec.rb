@@ -80,14 +80,14 @@ RSpec.describe UsersController, type: :controller, skip: true do
       session[:referred_by] = 'asdfasdf'
       session['oauth.data'] = github_response
       post :create, user: { location: 'SF', username: 'testingReferredBy' }
-      user = User.with_username('testingReferredBy')
+      user = User.find_by_username('testingReferredBy')
       expect(user.referred_by).to eq('asdfasdf')
     end
 
     it 'should not add referred by if not present' do
       session['oauth.data'] = github_response
       post :create, user: { location: 'SF', username: 'testingReferredBy' }
-      user = User.with_username('testingReferredBy')
+      user = User.find_by_username('testingReferredBy')
       expect(user.referred_by).to be_nil
     end
   end
@@ -96,7 +96,7 @@ RSpec.describe UsersController, type: :controller, skip: true do
     session[:utm_campaign] = 'asdfasdf'
     session['oauth.data'] = github_response
     post :create, user: { location: 'SF', username: 'testingUTM_campaign' }
-    user = User.with_username('testingUTM_campaign')
+    user = User.find_by_username('testingUTM_campaign')
     expect(user.utm_campaign).to eq('asdfasdf')
   end
 
