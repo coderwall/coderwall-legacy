@@ -126,23 +126,13 @@ class User < ActiveRecord::Base
   #TODO Kill
   scope :username_in, ->(usernames) { where(["UPPER(username) in (?)", usernames.collect(&:upcase)]) }
 
-  #TODO Kill
-  def self.with_username(username, provider = :username)
+  def self.find_by_provider_username(username, provider)
     return nil if username.nil?
-    sql_injection_safe_where_clause = case provider.to_s
-                                      when 'username', ''
-                                        'username'
-                                      when 'linkedin'
-                                        'linkedin'
-                                      when 'twitter'
-                                        'twitter'
-                                      when 'github'
-                                        'github'
-                                      else
-                                        #A user could malicously pass in a provider, thats why we do the string matching above
-                                        raise "Unkown provider type specified, unable to find user by username"
-                                      end
-    where(["UPPER(#{sql_injection_safe_where_clause}) = UPPER(?)", username]).first
+    return self.find_by_username(username) if provider == ''
+    unless %w{twitter linkedin github}.include?(provider)
+      raise "Unkown provider type specified, unable to find user by username"
+    end
+    where(["UPPER(#{provider}) = UPPER(?)", username]).first
   end
 
   # Todo State machine

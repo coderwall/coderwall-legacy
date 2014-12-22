@@ -23,7 +23,7 @@ class AchievementsController < ApplicationController
       render_404
     else
       if @api_access.can_award?(award_params[:badge])
-        user  = User.with_username(award_params[provider], provider)
+        user  = User.find_by_provider_username(award_params[provider], provider)
         badge = badge_class_factory(award_params[:badge].to_s).new(user, Date.strptime(award_params[:date], '%m/%d/%Y'))
         badge.generate_fact!(award_params[:badge], award_params[provider], provider)
         unless user.nil?
