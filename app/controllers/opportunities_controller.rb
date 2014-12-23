@@ -110,7 +110,7 @@ class OpportunitiesController < ApplicationController
   private
 
   def validate_permissions
-    redirect_to :back unless team_admin?
+    redirect_to(:back, flash:{error: 'This feature is available only for the team admin'}) unless team_admin?
   end
 
   def team_admin?

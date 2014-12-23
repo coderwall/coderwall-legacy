@@ -1,230 +1,7 @@
-Coderwall::Application.routes.draw do
-
-  # We get 10K's of requests for this route. We should configure nginx to drop these.
-  get '/.json',       to: proc { [444, {}, ['']] }
-  get '/teams/.json', to: proc { [444, {}, ['']] }
-
-  if Rails.env.development?
-    mount MailPreview => 'mail_view'
-  end
-
-  namespace :api, path: '/', constraints: { subdomain: 'api' } do
-  end
-
-  # TODO: REMOVE
-  match 'protips/update', via: %w(get put)
-  match 'protip/update' , via: %w(get put)
-
-  get 'welcome' => 'home#index', as: :welcome
-
-  root to: 'protips#index'
-
-  get '/p/dpvbbg', controller: :protips, action: :show, id: 'devsal'
-  get '/gh' , controller: :protips, action: :show, utm_campaign: 'github_orgs_badges' , utm_source: 'github'
-
-  get '/jobs(/:location(/:skill))' => 'opportunities#index', as: :jobs
-  get '/jobs-map' => 'opportunities#map', as: :jobs_map
-
-  resources :protips, path: '/p' do
-    collection do
-      get 'u/:username' => 'protips#user', as: :user
-      get ':id/:slug' => 'protips#show', as: :slug, :constraints => { slug: /(?!.*?edit).*/ }
-      get 'random'
-      get 'search' => 'protips#search', as: :search
-      post 'search' => 'protips#search'
-      get 'me' => 'protips#me', as: :my
-      get 'admin' => 'protips#admin', as: :reviewable
-      get 'team/:team_slug' => 'protips#team', as: :team
-      get 'd/:date(/:start)' => 'protips#date', as: :date
-      get 't/trending' => 'protips#trending', as: :trending_topics
-      get 't/by_tags' => 'protips#by_tags', as: :by_tags
-      get 't/(/*tags)' => 'networks#tag', as: :tagged
-      put 't/(/*tags)/subscribe' => 'protips#subscribe', as: :subscribe
-      put 't/(/*tags)/unsubscribe' => 'protips#unsubscribe', as: :unsubscribe
-      get 'fresh'
-      get 'trending'
-      get 'popular'
-      get 'liked'
-      post 'preview'
-    end
-
-    member do
-      post 'upvote'
-      post 'report_inappropriate'
-      post 'tag'
-      post 'flag'
-      post 'feature'
-      topic_regex = /[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/
-      post 'delete_tag/:topic' => 'protips#delete_tag', as: :delete_tag, :topic => topic_regex
-    end
-    resources :comments, constraints: { id: /\d+/ } do
-      member { post 'like' }
-    end
-  end
-
-  resources :networks, path: '/n', constraints: { slug: /[\dA-Z\-]/i } do
-    collection do
-      get 'featured' => 'networks#featured', as: :featured
-      get '/u/:username' => 'networks#user', as: :user
-    end
-
-    member do
-      get '/t/(/*tags)' => 'networks#tag', as: :tagged
-      get '/members' => 'networks#members', as: :members
-      get '/mayor' => 'networks#mayor', as: :mayor
-      get '/expert' => 'networks#expert', as: :expert
-      post '/join' => 'networks#join', as: :join
-      post '/leave' => 'networks#leave', as: :leave
-      post '/update-tags' => 'networks#update_tags', as: :update_tags
-      get '/current-mayor' => 'networks#current_mayor', as: :current_mayor
-    end
-  end
-
-  get 'trending' => 'protips#index', as: :protips
-
-  get 'faq' => 'pages#show', :page => :faq, as: :faq
-  get 'tos' => 'pages#show', :page => :tos, as: :tos
-  get 'privacy_policy' => 'pages#show', :page => :privacy_policy, as: :privacy_policy
-  get 'contact_us' => 'pages#show', :page => :contact_us, as: :contact_us
-  get 'api' => 'pages#show', :page => :api, as: :api
-  get 'achievements' => 'pages#show', :page => :achievements, as: :achievements if Rails.env.development?
-  get '/pages/:page' => 'pages#show'
-
-  get 'award' => 'achievements#award', as: :award_badge
-
-  match '/auth/:provider/callback' => 'sessions#create', as: :authenticate, via: [:get, :post]
-  get '/auth/failure' => 'sessions#failure', as: :authentication_failure
-  get '/settings' => 'users#edit', as: :settings
-  get '/redeem/:code' => 'redemptions#show'
-  get '/unsubscribe' => 'emails#unsubscribe'
-  get '/delivered' => 'emails#delivered'
-  get '/delete_account' => 'users#delete_account', as: :delete_account
-  post '/delete_account_confirmed' => 'users#delete_account_confirmed', as: :delete_account_confirmed
-
-  resources :authentications, :usernames
-  resources :invitations
-  get '/i/:id/:r' => 'invitations#show', as: :invitation
-
-  resources :sessions do
-    collection { get('force') }
-  end
-
-  get 'webhooks/stripe' => 'accounts#webhook'
-  get '/alerts' => 'alerts#create', :via => :post
-  get '/alerts' => 'alerts#index', :via => :get
-
-  # get '/payment' => 'accounts#new', as: :payment
-
-  post '/users/:username/follow' => 'follows#create', as: :follow_user, :type => :user
-
-  get '/team/:slug' => 'teams#show', as: :teamname
-  get '/team/:slug/edit' => 'teams#edit', as: :teamname_edit
-  get '/team/:slug/(:job_id)' => 'teams#show', as: :job
-
-  resources :teams do
-    member do
-      get 'accept'
-      post 'record-exit' => 'teams#record_exit', as: :record_exit
-      get 'visitors'
-      # TODO following and unfollowing should use different HTTP verbs (:post, :delete)
-      # Fix views and specs when changing this.
-      post 'follow'
-      post 'join'
-      post 'join/:user_id/approve' => 'teams#approve_join', as: :approve_join
-      post 'join/:user_id/deny' => 'teams#deny_join', as: :deny_join
-    end
-    collection do
-      post 'inquiry'
-      get 'followed'
-      get 'search'
-    end
-    resources :members
-    resources :locations, as: :locations
-    resources :opportunities do
-      member do
-        post 'apply'
-        get 'activate'
-        get 'deactivate'
-        post 'visit'
-      end
-    end
-    resource :account do
-      collection { post 'send_invoice' => 'accounts#send_invoice' }
-    end
-  end
-
-  get '/employers' => 'teams#upgrade', as: :employers
-
-  %w(github twitter forrst dribbble linkedin codeplex bitbucket stackoverflow).each do |provider|
-    post "/#{provider}/unlink" => 'users#unlink_provider', :provider => provider, as: "unlink_#{provider}".to_sym
-    get "/#{provider}/:username" => 'users#show', :provider => provider
-  end
-
-  resources :resume_uploads, only: [:create]
-
-  resources :users do
-    collection do
-      post 'invite'
-      get 'autocomplete'
-      get 'status'
-    end
-    member { post 'specialties' }
-    resources :skills
-    resources :highlights
-    resources :endorsements
-    resources :pictures
-    resources :follows
-    resources :bans,    only: [:create]
-    resources :unbans,  only: [:create]
-  end
-
-  get '/clear/:id/:provider' => 'users#clear_provider', as: :clear_provider
-  get '/refresh/:username' => 'users#refresh', as: :refresh
-  get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
-  get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
-
-  get '/signin' => 'sessions#signin', as: :signin
-  get '/signout' => 'sessions#destroy', as: :signout
-  get '/goodbye' => 'sessions#destroy', as: :sign_out
-
-  get '/roll-the-dice' => 'users#randomize', as: :random_wall
-
-  get '/providers/:provider/:username' => 'provider_user_lookups#show'
-
-  match '/404' => 'errors#not_found', via: [:get, :post, :patch, :delete]
-  match '/422' => 'errors#unacceptable', via: [:get, :post, :patch, :delete]
-  match '/500' => 'errors#internal_error', via: [:get, :post, :patch, :delete]
-
-  constraints ->(params, _) { params[:username] != 'admin' } do
-    get '/:username' => 'users#show', as: :badge
-    get '/:username/achievements/:id' => 'achievements#show', as: :user_achievement
-    get '/:username/endorsements.json' => 'endorsements#show'
-    get '/:username/followers' => 'follows#index', as: :followers, :type => :followers
-    get '/:username/following' => 'follows#index', as: :following, :type => :following
-  end
-
-  namespace :callbacks do
-    post '/hawt/feature' => 'hawt#feature'
-    post '/hawt/unfeature' => 'hawt#unfeature'
-  end
-
-  require_admin = ->(_, req) { User.where(id: req.session[:current_user], admin: true).exists? }
-  scope :admin, as: :admin, path: '/admin', constraints: require_admin do
-    get '/' => 'admin#index', as: :root
-    get '/teams' => 'admin#teams', as: :teams
-    get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
-    get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
-    mount Sidekiq::Web => '/sidekiq'
-  end
-  # TODO: namespace inside admin
-  get '/comments' => 'comments#index', as: :latest_comments
-
-end
-
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x007fc7264beea8@/Users/mike/assemblymade/coderwall/config/routes.rb:274>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007fc7264bccc0@/Users/mike/assemblymade/coderwall/config/routes.rb:275>
+#                             GET                   /.json(.:format)                                       #<Proc:0x0000000868e180@/home/vagrant/web/config/routes.rb:4>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x000000086a7298@/home/vagrant/web/config/routes.rb:5>
 #                                                   /mail_view                                             MailPreview
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update
@@ -234,6 +11,7 @@ end
 #                          gh GET                   /gh(.:format)                                          protips#show {:utm_campaign=>"github_orgs_badges", :utm_source=>"github"}
 #                        jobs GET                   /jobs(/:location(/:skill))(.:format)                   opportunities#index
 #                    jobs_map GET                   /jobs-map(.:format)                                    opportunities#map
+#                user_protips GET                   /p/u/:username(.:format)                               protips#user
 #                slug_protips GET                   /p/:id/:slug(.:format)                                 protips#show {:slug=>/(?!.*?edit).*/}
 #              random_protips GET                   /p/random(.:format)                                    protips#random
 #              search_protips GET                   /p/search(.:format)                                    protips#search
@@ -244,7 +22,6 @@ end
 #                date_protips GET                   /p/d/:date(/:start)(.:format)                          protips#date
 #     trending_topics_protips GET                   /p/t/trending(.:format)                                protips#trending
 #             by_tags_protips GET                   /p/t/by_tags(.:format)                                 protips#by_tags
-#                user_protips GET                   /p/u/:username(.:format)                               protips#user
 #              tagged_protips GET                   /p/t(/*tags)(.:format)                                 networks#tag
 #           subscribe_protips PUT                   /p/t(/*tags)/subscribe(.:format)                       protips#subscribe
 #         unsubscribe_protips PUT                   /p/t(/*tags)/unsubscribe(.:format)                     protips#unsubscribe
@@ -486,3 +263,226 @@ end
 #           admin_sidekiq_web                       /admin/sidekiq                                         Sidekiq::Web
 #             latest_comments GET                   /comments(.:format)                                    comments#index
 #
+
+Coderwall::Application.routes.draw do
+
+  # We get 10K's of requests for this route. We should configure nginx to drop these.
+  get '/.json',       to: proc { [444, {}, ['']] }
+  get '/teams/.json', to: proc { [444, {}, ['']] }
+
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
+  end
+
+  namespace :api, path: '/', constraints: { subdomain: 'api' } do
+  end
+
+  # TODO: REMOVE
+  match 'protips/update', via: %w(get put)
+  match 'protip/update' , via: %w(get put)
+
+  get 'welcome' => 'home#index', as: :welcome
+
+  root to: 'protips#index'
+
+  get '/p/dpvbbg', controller: :protips, action: :show, id: 'devsal'
+  get '/gh' , controller: :protips, action: :show, utm_campaign: 'github_orgs_badges' , utm_source: 'github'
+
+  get '/jobs(/:location(/:skill))' => 'opportunities#index', as: :jobs
+  get '/jobs-map' => 'opportunities#map', as: :jobs_map
+
+  resources :protips, path: '/p' do
+    collection do
+      get 'u/:username' => 'protips#user', as: :user
+      get ':id/:slug' => 'protips#show', as: :slug, :constraints => { slug: /(?!.*?edit).*/ }
+      get 'random'
+      get 'search' => 'protips#search', as: :search
+      post 'search' => 'protips#search'
+      get 'me' => 'protips#me', as: :my
+      get 'admin' => 'protips#admin', as: :reviewable
+      get 'team/:team_slug' => 'protips#team', as: :team
+      get 'd/:date(/:start)' => 'protips#date', as: :date
+      get 't/trending' => 'protips#trending', as: :trending_topics
+      get 't/by_tags' => 'protips#by_tags', as: :by_tags
+      get 't/(/*tags)' => 'networks#tag', as: :tagged
+      put 't/(/*tags)/subscribe' => 'protips#subscribe', as: :subscribe
+      put 't/(/*tags)/unsubscribe' => 'protips#unsubscribe', as: :unsubscribe
+      get 'fresh'
+      get 'trending'
+      get 'popular'
+      get 'liked'
+      post 'preview'
+    end
+
+    member do
+      post 'upvote'
+      post 'report_inappropriate'
+      post 'tag'
+      post 'flag'
+      post 'feature'
+      topic_regex = /[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/
+      post 'delete_tag/:topic' => 'protips#delete_tag', as: :delete_tag, :topic => topic_regex
+    end
+    resources :comments, constraints: { id: /\d+/ } do
+      member { post 'like' }
+    end
+  end
+
+  resources :networks, path: '/n', constraints: { slug: /[\dA-Z\-]/i } do
+    collection do
+      get 'featured' => 'networks#featured', as: :featured
+      get '/u/:username' => 'networks#user', as: :user
+    end
+
+    member do
+      get '/t/(/*tags)' => 'networks#tag', as: :tagged
+      get '/members' => 'networks#members', as: :members
+      get '/mayor' => 'networks#mayor', as: :mayor
+      get '/expert' => 'networks#expert', as: :expert
+      post '/join' => 'networks#join', as: :join
+      post '/leave' => 'networks#leave', as: :leave
+      post '/update-tags' => 'networks#update_tags', as: :update_tags
+      get '/current-mayor' => 'networks#current_mayor', as: :current_mayor
+    end
+  end
+
+  get 'trending' => 'protips#index', as: :protips
+
+  get 'faq' => 'pages#show', :page => :faq, as: :faq
+  get 'tos' => 'pages#show', :page => :tos, as: :tos
+  get 'privacy_policy' => 'pages#show', :page => :privacy_policy, as: :privacy_policy
+  get 'contact_us' => 'pages#show', :page => :contact_us, as: :contact_us
+  get 'api' => 'pages#show', :page => :api, as: :api
+  get 'achievements' => 'pages#show', :page => :achievements, as: :achievements if Rails.env.development?
+  get '/pages/:page' => 'pages#show'
+
+  get 'award' => 'achievements#award', as: :award_badge
+
+  match '/auth/:provider/callback' => 'sessions#create', as: :authenticate, via: [:get, :post]
+  get '/auth/failure' => 'sessions#failure', as: :authentication_failure
+  get '/settings' => 'users#edit', as: :settings
+  get '/redeem/:code' => 'redemptions#show'
+  get '/unsubscribe' => 'emails#unsubscribe'
+  get '/delivered' => 'emails#delivered'
+  get '/delete_account' => 'users#delete_account', as: :delete_account
+  post '/delete_account_confirmed' => 'users#delete_account_confirmed', as: :delete_account_confirmed
+
+  resources :authentications, :usernames
+  resources :invitations
+  get '/i/:id/:r' => 'invitations#show', as: :invitation
+
+  resources :sessions do
+    collection { get('force') }
+  end
+
+  get 'webhooks/stripe' => 'accounts#webhook'
+  get '/alerts' => 'alerts#create', :via => :post
+  get '/alerts' => 'alerts#index', :via => :get
+
+  # get '/payment' => 'accounts#new', as: :payment
+
+  post '/users/:username/follow' => 'follows#create', as: :follow_user, :type => :user
+
+  get '/team/:slug' => 'teams#show', as: :teamname
+  get '/team/:slug/edit' => 'teams#edit', as: :teamname_edit
+  get '/team/:slug/(:job_id)' => 'teams#show', as: :job
+
+  resources :teams do
+    member do
+      get 'accept'
+      post 'record-exit' => 'teams#record_exit', as: :record_exit
+      get 'visitors'
+      # TODO following and unfollowing should use different HTTP verbs (:post, :delete)
+      # Fix views and specs when changing this.
+      post 'follow'
+      post 'join'
+      post 'join/:user_id/approve' => 'teams#approve_join', as: :approve_join
+      post 'join/:user_id/deny' => 'teams#deny_join', as: :deny_join
+    end
+    collection do
+      post 'inquiry'
+      get 'followed'
+      get 'search'
+    end
+    resources :members
+    resources :locations, as: :locations
+    resources :opportunities do
+      member do
+        post 'apply'
+        get 'activate'
+        get 'deactivate'
+        post 'visit'
+      end
+    end
+    resource :account do
+      collection { post 'send_invoice' => 'accounts#send_invoice' }
+    end
+  end
+
+  get '/employers' => 'teams#upgrade', as: :employers
+
+  %w(github twitter forrst dribbble linkedin codeplex bitbucket stackoverflow).each do |provider|
+    post "/#{provider}/unlink" => 'users#unlink_provider', :provider => provider, as: "unlink_#{provider}".to_sym
+    get "/#{provider}/:username" => 'users#show', :provider => provider
+  end
+
+  resources :resume_uploads, only: [:create]
+
+  resources :users do
+    collection do
+      post 'invite'
+      get 'autocomplete'
+      get 'status'
+    end
+    member { post 'specialties' }
+    resources :skills
+    resources :highlights
+    resources :endorsements
+    resources :pictures
+    resources :follows
+    resources :bans,    only: [:create]
+    resources :unbans,  only: [:create]
+  end
+
+  get '/clear/:id/:provider' => 'users#clear_provider', as: :clear_provider
+  get '/refresh/:username' => 'users#refresh', as: :refresh
+  get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
+  get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
+
+  get '/signin' => 'sessions#signin', as: :signin
+  get '/signout' => 'sessions#destroy', as: :signout
+  get '/goodbye' => 'sessions#destroy', as: :sign_out
+
+  get '/roll-the-dice' => 'users#randomize', as: :random_wall
+
+  get '/providers/:provider/:username' => 'provider_user_lookups#show'
+
+  match '/404' => 'errors#not_found', via: [:get, :post, :patch, :delete]
+  match '/422' => 'errors#unacceptable', via: [:get, :post, :patch, :delete]
+  match '/500' => 'errors#internal_error', via: [:get, :post, :patch, :delete]
+
+  constraints ->(params, _) { params[:username] != 'admin' } do
+    get '/:username' => 'users#show', as: :badge
+    get '/:username/achievements/:id' => 'achievements#show', as: :user_achievement
+    get '/:username/endorsements.json' => 'endorsements#show'
+    get '/:username/followers' => 'follows#index', as: :followers, :type => :followers
+    get '/:username/following' => 'follows#index', as: :following, :type => :following
+  end
+
+  namespace :callbacks do
+    post '/hawt/feature' => 'hawt#feature'
+    post '/hawt/unfeature' => 'hawt#unfeature'
+  end
+
+  require_admin = ->(_, req) { User.where(id: req.session[:current_user], admin: true).exists? }
+  scope :admin, as: :admin, path: '/admin', constraints: require_admin do
+    get '/' => 'admin#index', as: :root
+    get '/teams' => 'admin#teams', as: :teams
+    get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
+    get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
+    mount Sidekiq::Web => '/sidekiq'
+  end
+  # TODO: namespace inside admin
+  get '/comments' => 'comments#index', as: :latest_comments
+
+end
