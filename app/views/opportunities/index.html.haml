@@ -14,9 +14,10 @@
       %a.filter{ href: '/' }
         %h3= params[:skill].try(:titleize)
         %h1
-          Jobs
           %span= job_location_string(params[:location].titleize)
       %ul.location-drop-down.hide
+        %li
+          %a{ href: jobs_path(location: 'remote', skill: params[:skill]), class: "remote", 'data-action' => "view remote jobs", 'data-from' => 'jobs page', 'data-properties' => { 'location' => "Remote" }.to_json } Remote
         - @locations.each do |location|
           %li
             %a{ href: jobs_path(location: location.parameterize, skill: params[:skill]), class: location.downcase, 'data-action' => "view jobs in #{location.downcase}", 'data-from' => 'jobs page', 'data-properties' => { 'location' => params[:location] }.to_json }

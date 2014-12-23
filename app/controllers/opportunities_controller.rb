@@ -29,7 +29,7 @@ class OpportunitiesController < ApplicationController
   end
 
   def create
-    opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
+    opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply, :remote)
     @job = Opportunity.new(opportunity_create_params)
     respond_to do |format|
       if @job.save
@@ -166,7 +166,15 @@ class OpportunitiesController < ApplicationController
 
   def get_jobs_for(chosen_location, tag, page)
     scope = Opportunity
-    scope = scope.by_city(chosen_location) unless chosen_location.nil?
+
+    if chosen_location.present?
+      if chosen_location == "Remote"
+        scope = scope.where(remote: true)
+      else
+        scope = scope.by_city(chosen_location)
+      end
+    end
+
     scope = scope.by_tag(tag) unless tag.nil?
     # TODO: Verify that there are no unmigrated teams
     scope = scope.where('team_id is not null')

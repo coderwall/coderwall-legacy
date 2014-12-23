@@ -9,7 +9,13 @@ module OpportunitiesHelper
   end
 
   def job_location_string(location)
-    location == "Worldwide" ? location : "in #{location}"
+    if location == "Worldwide"
+      "Jobs Worldwide"
+    elsif location == "Remote"
+      "Remote Jobs"
+    else
+      "Jobs in #{location}"
+    end
   end
 
   def google_maps_image_url(location)
