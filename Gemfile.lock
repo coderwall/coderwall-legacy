@@ -509,7 +509,7 @@ GEM
     pubnub (0.1.9)
       em-http-request (>= 1.0.2)
       json
-    puma (2.9.0)
+    puma (2.10.2)
       rack (>= 1.1, < 2.0)
     pusher-client (0.6.0)
       json
