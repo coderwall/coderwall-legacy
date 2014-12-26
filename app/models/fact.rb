@@ -59,7 +59,7 @@ class Fact < ActiveRecord::Base
 
   def user
     service, username = self.owner.split(":")
-    User.with_username(username, service)
+    User.find_by_provider_username(username, service)
   end
 end
 
