@@ -98,20 +98,12 @@ window.ProtipGridView = Backbone.View.extend(
     this.followingUsers = $('#x-following-users').data('users')
     this.followingTeams = $('#x-following-teams').data('teams')
 
-  markFollowings: ->
-    $(follow).addClass('followed') for follow in $('.x-protip-pane .follow') when follow.attributes['data-value'].value in eval('this.following' + $(follow).data('follow-type'))
-
   updateFollowList: (e)->
     list = eval('this.following' + $(e.target).data('follow-type'))
     entity = $(e.target).data('value')
     if $(e.target).hasClass('followed') then (list.filter (val) ->
       val is entity)
     else
-    list.push entity
-    this.markFollowed(e.target)
-
-  markFollowed: (el)->
-    unless $(el).data('follow-type') == 'Network'
-      $(el).toggleClass('followed')
+      list.push entity
 
 )
