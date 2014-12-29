@@ -181,7 +181,7 @@ group :test do
   gem 'selenium-webdriver' # headfull js driver for Capybara
   gem 'codeclimate-test-reporter', require: false
   gem 'database_cleaner'
-  gem 'fuubar', '2.0.0.rc1'
+  gem 'fuubar'
   gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'timecop'
