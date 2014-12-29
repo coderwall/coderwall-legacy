@@ -2,7 +2,6 @@
 #= require highlight/language
 #= require backbone/routers/ProtipRouter
 #= require backbone/views/ProtipGridView
-#= require backbone/views/ProtipView
 #= require protips
 $ ->
   Backbone.history.start({pushState: true})
