@@ -503,21 +503,6 @@
           }
         }
       }
-      .queue {
-        &:before {
-          content: "l";
-        }
-        &:after {
-          content: "Queue for Hackernews";
-        }
-        background-position: 0px -14px;
-        &.queued {
-          &:after {
-            content: "Queued for Hackernews";
-          }
-          color: #e68b42 !important;
-        }
-      }
       .reviewed {
         color: #fff;
         &:before {

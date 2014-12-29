@@ -6,7 +6,6 @@ window.ProtipView = Backbone.View.extend(
     "click .upvote,.small-upvote": "upvote"
     "click .flag": "flag"
     "click .user-flag": "user_flag"
-    "click .queue": "queue"
     "click .feature": "feature"
     "click .like": "like"
 
@@ -31,9 +30,6 @@ window.ProtipView = Backbone.View.extend(
 
   user_flag: (e)->
     $(e.target).addClass('user-flagged')
-
-  queue: ->
-    $(@).toggleClass('queued')
 
   feature: ->
     $(@).toggleClass('featured')

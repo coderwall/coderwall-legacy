@@ -219,8 +219,6 @@ window.registerToggles = ->
     $(@).toggleClass('flagged')
   $('.user-flag').on 'click', ->
     $(@).addClass('user-flagged')
-  $('.queue').on 'click', ->
-    $(@).toggleClass('queued')
   $('.feature').on 'click', ->
     $(@).toggleClass('featured')
   $('.like').on 'click', ->
