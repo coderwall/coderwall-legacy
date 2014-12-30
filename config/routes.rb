@@ -76,7 +76,7 @@
 #                         api GET                   /api(.:format)                                         pages#show {:page=>:api}
 #                achievements GET                   /achievements(.:format)                                pages#show {:page=>:achievements}
 #                             GET                   /pages/:page(.:format)                                 pages#show
-#                 award_badge GET                   /award(.:format)                                       achievements#award
+#                 award_badge POST                  /award(.:format)                                       achievements#award
 #                authenticate GET|POST              /auth/:provider/callback(.:format)                     sessions#create
 #      authentication_failure GET                   /auth/failure(.:format)                                sessions#failure
 #                    settings GET                   /settings(.:format)                                    users#edit
@@ -356,7 +356,7 @@ Coderwall::Application.routes.draw do
   get 'achievements' => 'pages#show', :page => :achievements, as: :achievements if Rails.env.development?
   get '/pages/:page' => 'pages#show'
 
-  get 'award' => 'achievements#award', as: :award_badge
+  post 'award' => 'achievements#award', as: :award_badge
 
   match '/auth/:provider/callback' => 'sessions#create', as: :authenticate, via: [:get, :post]
   get '/auth/failure' => 'sessions#failure', as: :authentication_failure
