@@ -28,13 +28,15 @@
     %canvas.blur{ src: image_path(users_background_image) }
     = yield
 
+    #x-following-users.hide{'data-users' => current_user.following_users.map(&:username)}
+    #x-following-networks.hide{'data-networks' => current_user.following_networks.map(&:slug)}
+    #x-following-teams.hide{'data-teams' => current_user.teams_being_followed.map(&:name)}
+
     - unless is_admin?
       :javascript
         window.console.log = function(){}
 
-    = javascript_include_tag 'jquery'
     = javascript_include_tag 'application'
-    = javascript_include_tag 'jquery_ujs'
     = render partial: 'shared/mixpanel_properties'
     = javascript_include_tag 'highlight/highlight.js'
     = javascript_include_tag 'highlight/language.js'

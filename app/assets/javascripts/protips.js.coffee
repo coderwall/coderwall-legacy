@@ -1,5 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 #= require  marked
 #= require  highlight/highlight
@@ -63,6 +61,7 @@ window.initializeProtip = ->
         handle_redirect(response)
 
     e.preventDefault()
+  markFollowings()
   registerToggles()
   enableSearchBox()
   registerMoreHistory()
@@ -210,6 +209,12 @@ uploadFinished = (i, file, response, time)->
   $('#protip_body').val $('#protip_body').val() + markdown
   $("#dropzone").removeClass 'upload-in-progress'
 
+getFollowings = (type)->
+  $('#x-following-' + type.toLowerCase()).data(type.toLowerCase())
+
+markFollowings = ->
+  $(follow).addClass('followed') for follow in $('.x-protip-pane .follow') when follow.attributes['data-value'].value in getFollowings($(follow).data('follow-type'))
+
 window.registerToggles = ->
   $('.upvote,.small-upvote').on 'click', ->
     if $(@).not('.upvoted').length == 1
@@ -219,16 +224,14 @@ window.registerToggles = ->
     $(@).toggleClass('flagged')
   $('.user-flag').on 'click', ->
     $(@).addClass('user-flagged')
-  $('.queue').on 'click', ->
-    $(@).toggleClass('queued')
   $('.feature').on 'click', ->
     $(@).toggleClass('featured')
   $('.like').on 'click', ->
     $(@).addClass('liked')
     $(@).removeClass('not-liked')
-  $('.follow-user').on 'click', ->
-    $(@).addClass('following-user')
-    $(@).removeClass('follow-user')
+  $('.follow').on 'click', (e)->
+    unless $(e.target).data('follow-type') == 'Network'
+      $(e.target).toggleClass('followed')
 
 enableSearchBox = ->
   $('.slidedown').on 'click', (e)->
