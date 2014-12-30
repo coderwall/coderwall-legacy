@@ -171,8 +171,7 @@ class ProtipsController < ApplicationController
                     end
 
 
-    @protip      = Protip.new(create_params)
-    @protip.user = current_user
+    @protip      = current_user.protips.build(create_params)
     respond_to do |format|
       if @protip.save
         record_event('created protip')
