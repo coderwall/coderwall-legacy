@@ -1,6 +1,6 @@
 require 'vcr_helper'
 
-RSpec.describe Protip, type: :model, skip: true do
+RSpec.describe Protip, type: :model do
 
   describe 'indexing linked content' do
     it 'indexes page'
@@ -74,6 +74,7 @@ RSpec.describe Protip, type: :model, skip: true do
     end
 
     it 'is reindexed if username or team change' do
+      pending "Not implemented yet"
       team = Fabricate(:team, name: 'first-team')
       user = Fabricate(:user, username: 'initial-username')
       team.add_member(user)
@@ -231,7 +232,7 @@ RSpec.describe Protip, type: :model, skip: true do
   end
 
   describe 'upvotes' do
-    let(:protip) { Fabricate(:protip, user: Fabricate(:user)) }
+    let(:protip) { Fabricate(:protip) }
     let(:user) { Fabricate(:user) { score_cache 5 } }
 
     it 'should upvote by right amount' do
@@ -251,14 +252,14 @@ RSpec.describe Protip, type: :model, skip: true do
     end
 
     it 'should weigh team member upvotes less' do
-      protip.author.team_id = '4f271930973bf00004000001'
+      protip.author.team = Fabricate(:team)
       protip.author.save
-      team_member = Fabricate(:user, team_id: protip.author.team_id)
+      team_member = Fabricate(:user, team: protip.author.team)
       team_member.score_cache = 5
       protip.upvote_by(team_member, team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
       expect(protip.upvotes_value).to eq(2)
-      non_team_member = Fabricate(:user, team_id: '4f271930973bf00004000002')
+      non_team_member = Fabricate(:user, team: Fabricate(:team))
       non_team_member.score_cache = 5
       protip.upvote_by(non_team_member, non_team_member.tracking_code, Protip::DEFAULT_IP_ADDRESS)
       protip.reload
