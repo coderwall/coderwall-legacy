@@ -100,35 +100,35 @@ RSpec.describe Protip, type: :model do
 
   describe 'tagging protip' do
     it 'should sanitize tags into normalized form' do
-      protip = Fabricate(:protip, topics: %w(Javascript CoffeeScript), user: Fabricate(:user))
+      protip = Fabricate(:protip, topic_list: %w(Javascript CoffeeScript), user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to match_array(%w(javascript coffeescript))
+      expect(protip.topic_list).to match_array(%w(javascript coffeescript))
       expect(protip.topics.count).to eq(2)
     end
 
     it 'should sanitize empty tag' do
-      protip = Fabricate(:protip, topics: 'Javascript, ', user: Fabricate(:user))
+      protip = Fabricate(:protip, topic_list: 'Javascript, ', user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to match_array(['javascript'])
+      expect(protip.topic_list).to match_array(['javascript'])
       expect(protip.topics.count).to eq(1)
     end
 
     it 'should remove duplicate tags' do
-      protip = Fabricate(:protip, topics: %w(github github Github GitHub), user: Fabricate(:user))
+      protip = Fabricate(:protip, topic_list: %w(github github Github GitHub), user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to eq(['github'])
+      expect(protip.topic_list).to eq(['github'])
       expect(protip.topics.count).to eq(1)
     end
 
     it 'should accept tags separated by spaces only' do
-      protip = Fabricate(:protip, topics: 'ruby python heroku', user: Fabricate(:user))
+      protip = Fabricate(:protip, topic_list: 'ruby python heroku', user: Fabricate(:user))
       protip.save!
-      expect(protip.topics).to eq(%w(ruby python heroku))
+      expect(protip.topic_list).to eq(%w(ruby python heroku))
       expect(protip.topics.count).to eq(3)
     end
 
     it '#topic_ids should return ids of topics only' do
-      protip = Fabricate(:protip, topics: 'ruby python', user: Fabricate(:user))
+      protip = Fabricate(:protip, topic_list: 'ruby python', user: Fabricate(:user))
       protip.save!
       ruby_id = Tag.find_by_name("ruby").id
       python_id = Tag.find_by_name("python").id
@@ -177,7 +177,7 @@ RSpec.describe Protip, type: :model do
       expect(wrapper.user.username).to eq(protip.user.username)
       expect(wrapper.user.profile_url).to eq(protip.user.avatar_url)
       expect(wrapper.upvotes).to eq(protip.upvotes)
-      expect(wrapper.topics).to eq(protip.topics)
+      expect(wrapper.topics).to eq(protip.topic_list)
       expect(wrapper.only_link?).to eq(protip.only_link?)
       expect(wrapper.link).to eq(protip.link)
       expect(wrapper.title).to eq(protip.title)
@@ -202,7 +202,7 @@ RSpec.describe Protip, type: :model do
       expect(wrapper.user.username).to eq(protip.user.username)
       expect(wrapper.user.profile_url).to eq(protip.user.avatar_url)
       expect(wrapper.upvotes).to eq(protip.upvotes)
-      expect(wrapper.topics).to match_array(protip.topics)
+      expect(wrapper.topics).to match_array(protip.topic_list)
       expect(wrapper.only_link?).to eq(protip.only_link?)
       expect(wrapper.link).to eq(protip.link)
       expect(wrapper.title).to eq(protip.title)

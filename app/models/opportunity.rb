@@ -6,7 +6,7 @@ class Opportunity < ActiveRecord::Base
   include SearchModule
   include OpportunityMapping
 
-  attr_taggable :tags
+  acts_as_taggable_on :tags
 
   OPPORTUNITY_TYPES = %w(full-time part-time contract internship)
 
@@ -16,7 +16,7 @@ class Opportunity < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
   validates :opportunity_type, inclusion: { in: OPPORTUNITY_TYPES }
   validates :description, length: { minimum: 100, maximum: 2000 }
-  validates :tags, with: :tags_within_length
+  validates :tag_list, with: :tags_within_length
   validates :location, presence: true, allow_blank: false
   validates :location_city, presence: true, allow_blank: false, unless: lambda { location && anywhere?(location) }
   validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
@@ -76,13 +76,13 @@ class Opportunity < ActiveRecord::Base
   end
 
   def tags_within_length
-    tags_string = tags.join(',')
+    tags_string = tag_list.join(',')
     errors.add(:skill_tags, 'are too long(Maximum is 250 characters)') if tags_string.length > 250
     errors.add(:base, 'You need to specify at least one skill tag') if tags_string.length == 0
   end
 
   def update_cached_tags
-    self.cached_tags = tags.join(',')
+    self.cached_tags = tag_list.join(',')
   end
 
   def seize_by(user)

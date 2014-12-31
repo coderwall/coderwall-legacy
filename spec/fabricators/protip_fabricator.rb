@@ -1,5 +1,5 @@
 Fabricator(:protip) do
-  topics %w(Javascript CoffeeScript)
+  topic_list %w(Javascript CoffeeScript)
   title { Faker::Company.catch_phrase }
   body { Faker::Lorem.sentences(8).join(' ') }
   user { Fabricate.build(:user) }
