@@ -138,6 +138,9 @@ gem 'bson_ext'
 #Tagging
 gem 'rocket_tag'
 gem 'squeel', '1.0.1'
+
+gem 'acts-as-taggable-on', '~> 3.4'
+
 gem 'strong_parameters'
 gem 'postgres_ext'
 # ElasticSearch client
