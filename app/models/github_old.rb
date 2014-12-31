@@ -147,9 +147,7 @@ class GithubOld
   end
 
   def repo_contributors(owner, name, since=Time.at(0))
-    (@client.contributors("#{owner}/#{name}", false, per_page: 100) || []).map do |user|
-      user.except *USER_ATTRIBUTES_TO_IGNORE
-    end
+    @client.contributors("#{owner}/#{name}", false, per_page: 100) || []
   rescue Octokit::NotFound => e
     Rails.logger.error("Failed to find contributors for #{owner}/#{name}")
     return []

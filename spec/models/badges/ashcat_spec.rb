@@ -1,3 +1,5 @@
+require 'vcr_helper'
+
 RSpec.describe Ashcat, type: :model, skip: ENV['TRAVIS'] do
   let(:profile) { Fabricate(:github_profile) }
   let(:contributor) { Fabricate(:user, github_id: profile.github_id, github: 'dhh') }
