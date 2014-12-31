@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe BadgeBase, type: :model, skip: true do
+RSpec.describe BadgeBase, type: :model do
   let(:repo) { Fabricate(:github_repo) }
   let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
   let(:user) { Fabricate(:user, github_id: profile.github_id) }

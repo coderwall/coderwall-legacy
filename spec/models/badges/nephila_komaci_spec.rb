@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe NephilaKomaci, type: :model, skip: true do
+RSpec.describe NephilaKomaci, type: :model do
   let(:languages) do {
     'PHP' => 2_519_686,
     'Python' => 76_867

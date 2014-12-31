@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Parrot, type: :model, skip: true do
+RSpec.describe Parrot, type: :model do
   it 'should award the badge to a user with a single talk' do
     user = Fabricate(:user)
     fact = Fabricate(:lanyrd_original_fact, context: user)
