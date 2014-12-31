@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Lemmings1000, type: :model, skip: true do
+RSpec.describe Lemmings1000, type: :model do
 
   before :all do
     Fact.delete_all

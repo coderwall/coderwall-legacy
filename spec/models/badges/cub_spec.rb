@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Cub, type: :model, skip: true do
+RSpec.describe Cub, type: :model do
   let(:languages) do {
     'JavaScript' => 111_435
   } end

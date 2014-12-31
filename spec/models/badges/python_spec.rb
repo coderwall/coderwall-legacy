@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Python, type: :model, skip: true do
+RSpec.describe Python, type: :model do
   let(:languages) do {
     'Python' => 2_519_686,
     'Java' => 76_867

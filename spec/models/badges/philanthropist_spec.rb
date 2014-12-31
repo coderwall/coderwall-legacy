@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Philanthropist, type: :model, skip: true do
+RSpec.describe Philanthropist, type: :model do
   it 'should have a name and description' do
     expect(Philanthropist.name).not_to be_blank
     expect(Philanthropist.description).not_to be_blank

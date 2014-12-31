@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Forked50, type: :model, skip: true do
+RSpec.describe Forked50, type: :model do
   before :all do
     Fact.delete_all
   end

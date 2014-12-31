@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Mongoose, type: :model, skip: true do
+RSpec.describe Mongoose, type: :model do
   let(:languages) do {
     'Ruby' => 2_519_686,
     'JavaScript' => 6107,
