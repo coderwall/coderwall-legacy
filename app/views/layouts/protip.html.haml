@@ -28,9 +28,10 @@
     %canvas.blur{ src: image_path(users_background_image) }
     = yield
 
-    #x-following-users.hide{'data-users' => current_user.following_users.map(&:username)}
-    #x-following-networks.hide{'data-networks' => current_user.following_networks.map(&:slug)}
-    #x-following-teams.hide{'data-teams' => current_user.teams_being_followed.map(&:name)}
+    - if current_user
+      #x-following-users.hide{'data-users' => current_user.following_users.map(&:username)}
+      #x-following-networks.hide{'data-networks' => current_user.following_networks.map(&:slug)}
+      #x-following-teams.hide{'data-teams' => current_user.teams_being_followed.map(&:name)}
 
     - unless is_admin?
       :javascript
