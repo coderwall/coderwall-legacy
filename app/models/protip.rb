@@ -607,7 +607,13 @@ class Protip < ActiveRecord::Base
   end
 
   def comments_score
-    self.comments.collect { |comment| comment.likes_value_cache + comment.author.score }.reduce(:+) || 0
+    self.comments.collect do |comment|
+      if comment.author.present?
+        comment.likes_value_cache + comment.author.score
+      else
+        comment.likes_value_cache
+      end
+    end.reduce(:+) || 0
   end
 
   QUALITY_WEIGHT = 20
