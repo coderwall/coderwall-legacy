@@ -403,7 +403,7 @@ class Protip < ActiveRecord::Base
   end
 
   def topic_ids
-    self.taggings.joins('inner join tags on taggings.tag_id = tags.id').select('tags.id').map(&:id)
+    topics_tags.pluck(:id)
   end
 
   def to_indexed_json
