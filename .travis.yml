@@ -1,9 +1,8 @@
 language: ruby
 rvm:
 - 2.1.5
-bundler_args: "--without development production autotest"
+bundler_args: "--without development production"
 services:
-- mongodb
 - redis-server
 before_install:
 - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb

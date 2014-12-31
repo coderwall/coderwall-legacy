@@ -7,7 +7,6 @@ gem 'rails', '~> 3.2'
 
 gem 'sass', '~> 3.2.9'
 gem 'coffee-rails', '~> 3.2.1'
-gem 'compass-rails'
 gem 'sass-rails', '~> 3.2.6'
 gem 'uglifier', '>= 1.0.3'
 # Assets
@@ -29,7 +28,6 @@ gem 'dotenv-rails', groups: [:development, :test]
 # Attachements
 gem 'carrierwave'
 gem 'carrierwave_backgrounder' #background processing of images
-gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
 # HTML
 gem 'haml'
@@ -133,11 +131,7 @@ gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
 # DROP BEFORE RAILS 4
-# Mongo
-gem 'mongoid'
-gem 'mongo'
-gem 'mongoid_taggable'
-gem 'bson_ext'
+gem 'compass-rails'
 gem 'strong_parameters'
 gem 'postgres_ext'
 # ElasticSearch client

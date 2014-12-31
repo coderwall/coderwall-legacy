@@ -27,8 +27,6 @@ export MAILGUN_SIGNATURE=NEEDS_TO_COPY_FROM_DOTENV
 export MAILGUN_TOKEN=NEEDS_TO_COPY_FROM_DOTENV
 export MIXPANEL_API_SECRET=NEEDS_TO_COPY_FROM_DOTENV
 export MIXPANEL_TOKEN=NEEDS_TO_COPY_FROM_DOTENV
-export MONGODB_DATABASE_NAME=NEEDS_TO_COPY_FROM_DOTENV
-export MONGO_DATABASE=NEEDS_TO_COPY_FROM_DOTENV
 export NEW_RELIC_PROMOTION=NEEDS_TO_COPY_FROM_DOTENV
 export NOTIFIER_ADMIN_EMAILS=NEEDS_TO_COPY_FROM_DOTENV
 export PARTY_FOUL_OAUTH_TOKEN=NEEDS_TO_COPY_FROM_DOTENV
@@ -225,12 +223,6 @@ groupadd puppet
 # Install Foreman
 /opt/ruby/bin/gem install foreman --no-ri --no-rdoc
 
-# MongoDB
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
-apt-get -y update
-apt-get -y install mongodb-10gen
-
 REDIS_VERSION="2.8.4"
 wget http://download.redis.io/releases/redis-$REDIS_VERSION.tar.gz
 tar xzf redis-$REDIS_VERSION.tar.gz
@@ -380,8 +372,6 @@ su - vagrant <<-'EOF'
   export MAILGUN_TOKEN=NEEDS_TO_COPY_FROM_DOTENV
   export MIXPANEL_API_SECRET=NEEDS_TO_COPY_FROM_DOTENV
   export MIXPANEL_TOKEN=NEEDS_TO_COPY_FROM_DOTENV
-  export MONGODB_DATABASE_NAME=NEEDS_TO_COPY_FROM_DOTENV
-  export MONGO_DATABASE=NEEDS_TO_COPY_FROM_DOTENV
   export NEW_RELIC_PROMOTION=NEEDS_TO_COPY_FROM_DOTENV
   export NOTIFIER_ADMIN_EMAILS=NEEDS_TO_COPY_FROM_DOTENV
   export PARTY_FOUL_OAUTH_TOKEN=NEEDS_TO_COPY_FROM_DOTENV
