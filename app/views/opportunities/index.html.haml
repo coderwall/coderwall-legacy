@@ -10,18 +10,11 @@
 %section.jobs-top{ style: "background: #343131 url('#{location_photo_path(params[:location])}') no-repeat top center; background-size: 100% 226px;" }
   #dimmer
   .inside
-    .filter-outside
-      %a.filter{ href: '/' }
+    .heading-outside
+      .heading
         %h3= params[:skill].try(:titleize)
         %h1
           %span= job_location_string(params[:location].titleize)
-      %ul.location-drop-down.hide
-        %li
-          %a{ href: jobs_path(location: 'remote', skill: params[:skill]), class: "remote", 'data-action' => "view remote jobs", 'data-from' => 'jobs page', 'data-properties' => { 'location' => "Remote" }.to_json } Remote
-        - @locations.each do |location|
-          %li
-            %a{ href: jobs_path(location: location.parameterize, skill: params[:skill]), class: location.downcase, 'data-action' => "view jobs in #{location.downcase}", 'data-from' => 'jobs page', 'data-properties' => { 'location' => params[:location] }.to_json }
-              = location
     .top-box
       .post-box.cf
         %p.post-text
@@ -32,8 +25,25 @@
         %p
           Jobs at companies attracting the best developers to help them solve unique challenges in an awesome environment.
 .inside-main-content.cf
+  %form{:action => '/jobs', :method => 'get', :id => 'filter-jobs'}
+    .filter-outside
+      .filter-option.keywords
+        = text_field_tag(:q, params[:q], :placeholder => 'Job role, language, skills', :class => 'query')
+        .query-icon
+      .filter-option
+        .custom-select
+          %select.location{:name => 'location'}
+            %option{:value => 'Worldwide', :selected => params[:location] == "Worldwide"}= "Worldwide"
+            - @locations.each do |location|
+              %option{:value => location.parameterize, :selected => params[:location] == location}= location
+      .filter-option
+        = label_tag(:remote, nil, :class => "checkbox") do
+          = check_box_tag(:remote, true, @remote_allowed)
+          = "Only Remote"
+      .filter-option.submit
+        = submit_tag(:search, :class => 'submit-btn')
   %ul.jobs
     - @jobs.each do |job|
       = render(job, locals: { job: job })
   - if @jobs_left > 20
-    = link_to 'more jobs', jobs_path(location: params[:location].parameterize, skill: params[:skill], page: @page+1), remote: true, class: "new-more", 'data-action' => 'view more jobs', 'data-from' => 'jobs page', 'data-properties' => {'location' => params[:location]}.to_json
+    = link_to 'more jobs', jobs_path(q: params[:q], location: params[:location].parameterize, skill: params[:skill], remote: @remote_allowed, page: @page+1), remote: true, class: "new-more", 'data-action' => 'view more jobs', 'data-from' => 'jobs page', 'data-properties' => {'location' => params[:location]}.to_json

@@ -134,20 +134,15 @@ body#jobs {
       padding: 0 20px;
       position: relative;
 
-      .filter-outside {
+      .heading-outside {
         float: left;
         margin-top: 65px;
 
-        .filter {
+        .heading {
           position: relative;
           display: inline-block;
-          background: image-url("jobs/filter-hint.png") no-repeat right center;
           padding-right: 30px;
           max-width: 440px;
-
-          &:hover {
-            opacity: 0.6;
-          }
 
           h1 {
             font-size: 3.7em;
@@ -159,59 +154,9 @@ body#jobs {
             }
           }
         }
-        //filter
-
-        .location-drop-down {
-
-          //display: none;
-
-          position: absolute;
-          z-index: 1000;
-          background: #fff;
-          width: 175px;
-          left: 223px;
-          top: 120px;
-          @include border-radius(4px);
-          border: solid 1px #e1e1e1;
-          box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.1);
-
-          li {
-            border-top: #e1e1e1 solid 1px;
-
-            &:first-child {
-              border: 0;
-            }
-
-            &:last-child {
-              a.worldwide {
-                color: black;
-              }
-            }
-
-            a {
-              font-family: "MuseoSans-500";
-              display: block;
-              font-size: 1.3em;
-              color: #8B8B8B;
-              height: 40px;
-              line-height: 40px;
-              padding: 0 20px;
-              @include ellipsis;
-
-              &:hover {
-                color: $dark-grey;
-                background: #f2f2f2;
-              }
-
-            }
-            //a
-          }
-          //li
-        }
-        //location drop down
-
+        //header
       }
-      //filter-outside
+      //header-outside
 
       .top-box {
         position: absolute;
@@ -274,8 +219,142 @@ body#jobs {
   }
   // top-jobs
 
-  .jobs {
+  .filter-outside {
     margin-top: -50px;
+    margin-bottom: 15px;
+    padding: 30px;
+    background: #fff;
+    @include border-radius(4px);
+    @include subtle-box-shadow;
+
+    // clearfix
+    &:before,&:after {
+      content: "";
+      display: table;
+    }
+    &:after {
+      clear: both;
+    }
+
+    .filter-option {
+      float: left;
+      font-size: 1.6em;
+      position: relative;
+
+      .query {
+        width: 250px;
+        padding: 7px 5px 5px 28px;
+        outline: none;
+        border: 0;
+        border: 1px solid #909090;
+        -o-border-radius: 6px;
+        border-radius: 6px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+        font-size: 1.0em;
+        color: #a0a0a0;
+        line-height: 35px - 10px;
+        @include transition-all;
+
+        &:focus,
+        &.active {
+          color: #000;
+        }
+
+        &:focus {
+          border-color: #606060;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 0 4px rgba(0, 0, 0, 0.25);
+        }
+      }
+
+      .query-icon {
+        position: absolute;
+        top: 2px;
+        left: 10px;
+
+        &:before {
+          @include icon-font;
+          content: "m";
+          font-size: 13px;
+          line-height: 35px;
+          color: #b0b0b0;
+        }
+      }
+
+      .custom-select {
+        width: 230px;
+        height: 37px;
+        margin-top: 0;
+        margin-left: 10px;
+        border: 1px solid #909090;
+        -o-border-radius: 6px;
+        border-radius: 6px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+
+        &:hover {
+          border-color: #909090;
+        }
+
+        &:focus {
+          border-color: #606060;
+        }
+
+        select {
+          padding: 9px 30px 6px 5px;
+          font-family: "MuseoSans-300", arial, sans-serif;
+        }
+      }
+      // custom-select
+
+      .checkbox {
+        margin-left: 20px;
+        line-height: 35px + 4px;
+        font-size: 1.0em;
+      }
+
+      &.submit {
+        float: right;
+      }
+
+      .submit-btn {
+        @include cleaner-text;
+        display: block;
+        width: 135px;
+        height: 37px;
+        padding-top: 2px;
+        float: left;
+        text-align: center;
+        font-size: 1.0em;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.6);
+        @include border-radius(4px);
+
+        box-shadow: inset 0px 1px 0px 0px rgba(225, 225, 225, 0.1), 0px 2px 1px 0px rgba(0, 0, 0, 0.1);
+
+        background: #3f98dc; /* Old browsers */
+        background: linear-gradient(to bottom, #3f98dc 0%, #3286c5 100%); /* W3C */
+
+        color: white;
+        outline: none;
+        border: none;
+
+        &:hover {
+          background: #3f98dc;
+        }
+
+        &:active {
+          background: darken(#3f98dc, 10%);
+        }
+      }
+      // submit-btn
+
+    }
+    // filter-option
+  }
+  // filter-outside
+
+  .jobs {
+    margin-top: 0px;
 
     li {
       margin-bottom: 15px;
