@@ -316,7 +316,7 @@ class ProtipsController < ApplicationController
   end
 
   def delete_tag
-    @protip.topic_list.remove(CGI.unescape(params.permit(:topic)))
+    @protip.topic_list.remove(params.permit(:topic))
     respond_to do |format|
       if @protip.save
         format.html { redirect_to protip_path(@protip) }

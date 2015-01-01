@@ -6,7 +6,7 @@ class Opportunity < ActiveRecord::Base
   include SearchModule
   include OpportunityMapping
 
-  acts_as_taggable_on :tags
+  acts_as_taggable
 
   OPPORTUNITY_TYPES = %w(full-time part-time contract internship)
 

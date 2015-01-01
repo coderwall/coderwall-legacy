@@ -17,7 +17,7 @@ class Network < ActiveRecord::Base
       profile_url:  { type: 'string', index: 'not_analyzed' },
     } } } }
 
-  acts_as_taggable_on :tags
+  acts_as_taggable
   acts_as_followable
   attr_accessor :resident_expert
   has_many :network_experts, autosave: true, dependent: :destroy

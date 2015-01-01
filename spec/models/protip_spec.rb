@@ -120,15 +120,15 @@ RSpec.describe Protip, type: :model do
       expect(protip.topics.count).to eq(1)
     end
 
-    it 'should accept tags separated by spaces only' do
-      protip = Fabricate(:protip, topic_list: 'ruby python heroku', user: Fabricate(:user))
+    it 'should accept tags separated by commas only' do
+      protip = Fabricate(:protip, topic_list: 'ruby, python, heroku', user: Fabricate(:user))
       protip.save!
       expect(protip.topic_list).to eq(%w(ruby python heroku))
       expect(protip.topics.count).to eq(3)
     end
 
     it '#topic_ids should return ids of topics only' do
-      protip = Fabricate(:protip, topic_list: 'ruby python', user: Fabricate(:user))
+      protip = Fabricate(:protip, topic_list: 'ruby, python', user: Fabricate(:user))
       protip.save!
       ruby_id = Tag.find_by_name("ruby").id
       python_id = Tag.find_by_name("python").id
