@@ -1,12 +1,12 @@
 class ReplaceRocketTagWithAato < ActiveRecord::Migration
   def up
-  	# This was created by rocket_tag but not used anywhere.
-  	drop_table :alias_tags
+    # This was created by rocket_tag but not used anywhere.
+    drop_table :alias_tags
 
-  	# This is something that AATO has that rocket_tag doesn't.
-  	add_column :tags, :taggings_count, :integer, default: 0
+    # This is something that AATO has that rocket_tag doesn't.
+    add_column :tags, :taggings_count, :integer, default: 0
 
-  	# Populate the taggings_count properly
+    # Populate the taggings_count properly
     ActsAsTaggableOn::Tag.reset_column_information
     ActsAsTaggableOn::Tag.find_each do |tag|
       ActsAsTaggableOn::Tag.reset_counters(tag.id, :taggings)
@@ -22,6 +22,6 @@ class ReplaceRocketTagWithAato < ActiveRecord::Migration
   end
 
   def down
-  	raise ActiveRecord::IrreversibleMigration
+    raise ActiveRecord::IrreversibleMigration
   end
 end

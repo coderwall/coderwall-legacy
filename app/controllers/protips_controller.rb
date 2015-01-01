@@ -187,7 +187,7 @@ class ProtipsController < ApplicationController
   def update
     # strong_parameters will intentionally fail if a key is present but has an empty hash. :(
     update_params = if params[:protip] && params[:protip].keys.present?
-                      params.require(:protip).permit(:title, :body, :user_id, topic_list: [])
+                      params.require(:protip).permit(:title, :body, :user_id, :topic_list)
                     else
                       {}
                     end
