@@ -18,7 +18,7 @@ class GithubBadge
 
     id = @client.organization_teams("coderwall-#{badge_name}")[1].id
 
-    @client.add_team_member(id, github_username)
+    @client.add_team_membership(id, github_username)
   rescue Octokit::NotFound => e
     Rails.logger.error("Failed to add badge #{badge_name} for #{github_username}") if ENV['DEBUG']
   rescue Errno::ECONNREFUSED => e
