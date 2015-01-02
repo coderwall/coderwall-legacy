@@ -17,8 +17,9 @@ class ReplaceRocketTagWithAato < ActiveRecord::Migration
     remove_index 'taggings', name: "index_taggings_on_tag_id"
     remove_index 'taggings', name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
     add_index 'taggings',
-      ['tag_id', 'taggable_id', 'taggable_type', 'context', 'tagger_id', 'tagger_type'],
-      unique: true, name: 'taggings_idx'
+      ['tag_id', 'taggable_id', 'taggable_type', 'context', 'tagger_id', 'tagger_type'], name: 'taggings_idx'
+      
+    #TODO, add unique constraint to taggings_idx
   end
 
   def down
