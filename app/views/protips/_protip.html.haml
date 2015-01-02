@@ -84,7 +84,7 @@
               = protip.total_views
             views
         %ul#tags.cf{itemprop: :keywords}
-          - protip.topics.each do |tag|
+          - protip.topic_list.each do |tag|
             %li
               %a{ href: "/p/t/#{ tag.parameterize }" }
                 = tag

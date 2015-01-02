@@ -17,7 +17,7 @@ class Network < ActiveRecord::Base
       profile_url:  { type: 'string', index: 'not_analyzed' },
     } } } }
 
-  attr_taggable :tags
+  acts_as_taggable
   acts_as_followable
   attr_accessor :resident_expert
   has_many :network_experts, autosave: true, dependent: :destroy
@@ -61,7 +61,7 @@ class Network < ActiveRecord::Base
     end
 
     def top_tags_not_in_any_networks
-      top_tags.where('tags.name NOT IN (?)', Network.all.map(&:tags).flatten)
+      top_tags.where('tags.name NOT IN (?)', Network.all.map(&:tag_list).flatten)
     end
 
     def top_tags
@@ -82,19 +82,15 @@ class Network < ActiveRecord::Base
   end
 
   def tag_with_name!
-    unless self.tags.include? self.name
-      self.tags = (self.tags + [self.name, self.slug])
+    unless self.tag_list.include? self.name
+      self.tag_list = (self.tag_list + [self.name, self.slug])
     end
   end
 
   def correct_tags
-    if self.tags_changed?
-      self.tags = self.tags.uniq.select { |tag| Tag.exists?(name: tag) }.reject { |tag| (tag != self.name) && Network.exists?(name: tag) }
+    if self.tag_list_changed?
+      self.tags_list = self.tag_list.uniq.select { |tag| Tag.exists?(name: tag) }.reject { |tag| (tag != self.name) && Network.exists?(name: tag) }
     end
-  end
-
-  def tags_changed?
-    self.tags_tags.map(&:name) != self.tags
   end
 
   def protips_tags_with_count
@@ -117,7 +113,7 @@ class Network < ActiveRecord::Base
 
     candidate = self.in_line_to_the_throne.first
     unless candidate.nil?
-      Rails.logger.debug "finding a mayor among: #{self.tags}" if ENV['DEBUG']
+      Rails.logger.debug "finding a mayor among: #{self.tag_list}" if ENV['DEBUG']
       person_with_most_upvoted_protips_on_topic = User.find(candidate.user_id)
       Rails.logger.debug "mayor for #{name} found: #{person_with_most_upvoted_protips_on_topic.username}" if ENV['DEBUG']
 
@@ -163,7 +159,7 @@ class Network < ActiveRecord::Base
   end
 
   def protips
-    @protips ||= Protip.tagged_with(self.tags, on: :topics)
+    @protips ||= Protip.tagged_with(self.tag_list, on: :topics)
   end
 
   def upvotes
@@ -171,33 +167,33 @@ class Network < ActiveRecord::Base
   end
 
   def most_upvoted_protips(limit = nil, offset = 0)
-    Protip.search_trending_by_topic_tags("sort:upvotes desc", self.tags, offset, limit)
+    Protip.search_trending_by_topic_tags("sort:upvotes desc", self.tag_list, offset, limit)
   end
 
   def new_protips(limit = nil, offset = 0)
-    Protip.search("sort:created_at desc", self.tags, page: offset, per_page: limit)
+    Protip.search("sort:created_at desc", self.tag_list, page: offset, per_page: limit)
   end
 
   def featured_protips(limit = nil, offset = 0)
     #self.protips.where(:featured => true)
-    Protip.search("featured:true", self.tags, page: offset, per_page: limit)
+    Protip.search("featured:true", self.tag_list, page: offset, per_page: limit)
 
   end
 
   def flagged_protips(limit = nil, offset = 0)
-    Protip.search("flagged:true", self.tags, page: offset, per_page: limit)
+    Protip.search("flagged:true", self.tag_list, page: offset, per_page: limit)
   end
 
   def highest_scored_protips(limit=nil, offset =0, field=:trending_score)
-    Protip.search("sort:#{field} desc", self.tags, page: offset, per_page: limit)
+    Protip.search("sort:#{field} desc", self.tag_list, page: offset, per_page: limit)
   end
 
   def mayor_protips(limit=nil, offset =0)
-    Protip.search_trending_by_user(self.mayor.username, nil, self.tags, offset, limit)
+    Protip.search_trending_by_user(self.mayor.username, nil, self.tag_list, offset, limit)
   end
 
   def expert_protips(limit=nil, offset =0)
-    Protip.search_trending_by_user(self.resident_expert.username, nil, self.tags, offset, limit)
+    Protip.search_trending_by_user(self.resident_expert.username, nil, self.tag_list, offset, limit)
   end
 
   def members(limit = -1, offset = 0)
@@ -226,7 +222,7 @@ class Network < ActiveRecord::Base
   end
 
   def assign_members
-    Skill.where(name: self.tags).select('DISTINCT(user_id)').map(&:user).each do |member|
+    Skill.where(name: self.tag_list).select('DISTINCT(user_id)').map(&:user).each do |member|
       member.join(self)
     end
   end

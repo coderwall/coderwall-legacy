@@ -18,8 +18,8 @@
     =j.text_area :description
 
   %fieldset
-    =j.label :tags, 'Primary skills the person will use. (comma separated)'
-    =j.text_field :tags, value: params[:tags] || @job.tags.join(",")
+    =j.label :tag_list, 'Primary skills the person will use. (comma separated)'
+    =j.text_field :tag_list, value: params[:tag_list] || @job.tag_list.join(",")
 
   %fieldset
     -if @team.locations.any?

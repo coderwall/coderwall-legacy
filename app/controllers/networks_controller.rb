@@ -41,7 +41,7 @@ class NetworksController < ApplicationController
 
   def show
     @protips = []
-    @topics  = @network.tags
+    @topics  = @network.tag_list
 
     if (params[:sort].blank? && params[:filter].blank?) || params[:sort] == 'upvotes'
       @protips      = @network.most_upvoted_protips(@per_page, @page)
@@ -141,7 +141,7 @@ class NetworksController < ApplicationController
 
   def add_tag
     tag = params[:tag]
-    @network.tags << tag
+    @network.tag_list.add(tag)
 
     respond_to do |format|
       if @network.save
@@ -155,8 +155,8 @@ class NetworksController < ApplicationController
   end
 
   def remove_tag
-    tag           = params[:tag]
-    @network.tags = @network.tags.delete(tag)
+    tag = params[:tag]
+    @network.tag_list.remove(tag)
 
     respond_to do |format|
       if @network.save
@@ -171,7 +171,7 @@ class NetworksController < ApplicationController
 
   def update_tags
     tags          = params[:tags][:tags]
-    @network.tags = tags.split(',').map(&:strip).select { |tag| Tag.exists?(name: tag) }
+    @network.tag_list = tags.split(',').map(&:strip).select { |tag| Tag.exists?(name: tag) }
 
     respond_to do |format|
       if @network.save

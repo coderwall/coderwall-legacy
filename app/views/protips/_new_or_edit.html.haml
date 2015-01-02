@@ -31,7 +31,7 @@
                   %li.full-list=link_to('How to write a great pro tip', 'https://coderwall.com/p/o42nvq', target: "_blank")
 
               .rule.edit-tags
-                = p.input :topics, placeholder: "Tags, comma separated", label: false, input_html: {class: "tags cf", value: @protip.topics.join(","), id: "protip_tags", :autocomplete=>'off'}
+                = p.input :topic_list, placeholder: "Tags, comma separated", label: false, input_html: {class: "tags cf", value: @protip.topic_list.join(","), id: "protip_tags", :autocomplete=>'off'}
 
             .x-tip-content.preview.back.side.cf#x-protip-preview
 

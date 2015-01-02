@@ -152,10 +152,10 @@ class ProtipsController < ApplicationController
   end
 
   def new
-    new_params = params.permit(:topics)
+    new_params = params.permit(:topic_list)
 
-    prefilled_topics = (new_params[:topics] || '').split('+').collect(&:strip)
-    @protip          = Protip.new(topics: prefilled_topics)
+    prefilled_topics = (new_params[:topic_list] || '').split('+').collect(&:strip)
+    @protip          = Protip.new(topic_list: prefilled_topics)
     respond_with @protip
   end
 
@@ -165,7 +165,7 @@ class ProtipsController < ApplicationController
 
   def create
     create_params = if params[:protip] && params[:protip].keys.present?
-                      params.require(:protip).permit(:title, :body, :user_id, topics: [])
+                      params.require(:protip).permit(:title, :body, :user_id, :topic_list)
                     else
                       {}
                     end
@@ -187,7 +187,7 @@ class ProtipsController < ApplicationController
   def update
     # strong_parameters will intentionally fail if a key is present but has an empty hash. :(
     update_params = if params[:protip] && params[:protip].keys.present?
-                      params.require(:protip).permit(:title, :body, :user_id, topics: [])
+                      params.require(:protip).permit(:title, :body, :user_id, :topic_list)
                     else
                       {}
                     end
@@ -233,8 +233,8 @@ class ProtipsController < ApplicationController
   end
 
   def tag
-    tag_params = params.permit(:topics)
-    @protip.topics << tag_params[:topics] unless tag_params[:topics].nil?
+    tag_params = params.permit(:topic_list)
+    @protip.topic_list.add(tag_params[:topic_list]) unless tag_params[:topic_list].nil?
   end
 
   def subscribe
@@ -316,7 +316,7 @@ class ProtipsController < ApplicationController
   end
 
   def delete_tag
-    @protip.topics.delete(CGI.unescape(params.permit(:topic)))
+    @protip.topic_list.remove(params.permit(:topic))
     respond_to do |format|
       if @protip.save
         format.html { redirect_to protip_path(@protip) }
@@ -349,7 +349,7 @@ class ProtipsController < ApplicationController
   def preview
     preview_params = params.require(:protip).permit(:title, :body)
 
-    preview_params.delete(:topics) if preview_params[:topics].blank?
+    preview_params.delete(:topic_list) if preview_params[:topic_list].blank?
     protip            = Protip.new(preview_params)
     protip.updated_at = protip.created_at = Time.now
     protip.user       = current_user

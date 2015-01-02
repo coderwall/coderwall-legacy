@@ -94,6 +94,9 @@ gem 'foreman'
 # Better logging
 gem 'awesome_print'
 
+# Tagging
+gem 'acts-as-taggable-on', '~> 3.4'
+
 gem 'faraday', '~> 0.8.1'
 gem 'metamagic'
 
@@ -135,9 +138,6 @@ gem 'mongoid'
 gem 'mongo'
 gem 'mongoid_taggable'
 gem 'bson_ext'
-#Tagging
-gem 'rocket_tag'
-gem 'squeel', '1.0.1'
 gem 'strong_parameters'
 gem 'postgres_ext'
 # ElasticSearch client

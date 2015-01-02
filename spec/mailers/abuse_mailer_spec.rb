@@ -9,7 +9,7 @@ RSpec.describe AbuseMailer, type: :mailer do
       Protip.create!(
         title: 'hello world',
         body: "somethings that's meaningful and nice",
-        topics: %w(java javascript),
+        topic_list: %w(java javascript),
         user_id: current_user.id
       )
     end

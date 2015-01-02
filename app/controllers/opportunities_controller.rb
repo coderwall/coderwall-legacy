@@ -1,7 +1,7 @@
 class OpportunitiesController < ApplicationController
   before_action :lookup_team, only: [:activate, :deactivate, :new, :create, :edit, :update, :visit]
   before_action :lookup_opportunity, only: [:edit, :update, :activate, :deactivate, :visit]
-  before_action :cleanup_params_to_prevent_rocket_tag_error
+  before_action :cleanup_params_to_prevent_tagging_error
   before_action :validate_permissions, only: [:new, :edit, :create, :update, :activate, :deactivate]
   before_action :verify_payment, only: [:new, :create]
   before_action :stringify_location, only: [:create, :update]
@@ -29,7 +29,7 @@ class OpportunitiesController < ApplicationController
   end
 
   def create
-    opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply, :remote)
+    opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tag_list, :location, :link, :salary, :apply, :remote)
     @job = Opportunity.new(opportunity_create_params)
     respond_to do |format|
       if @job.save
@@ -42,7 +42,7 @@ class OpportunitiesController < ApplicationController
   end
 
   def update
-    opportunity_update_params = params.require(:opportunity).permit(:id, :name, :team_id, :opportunity_type, :description, :tags, :location, :link, :salary, :apply)
+    opportunity_update_params = params.require(:opportunity).permit(:id, :name, :team_id, :opportunity_type, :description, :tag_list, :location, :link, :salary, :apply)
     respond_to do |format|
       if @job.update_attributes(opportunity_update_params)
         format.html { redirect_to teamname_path(@team.slug), notice: "#{@job.name} updated" }
@@ -131,10 +131,10 @@ class OpportunitiesController < ApplicationController
     end
   end
 
-  def cleanup_params_to_prevent_rocket_tag_error
-    if params[:opportunity] && params[:opportunity][:tags]
-      params[:opportunity][:tags] = "#{params[:opportunity][:tags]}".split(',').map(&:strip).reject(&:empty?).join(",")
-      params[:opportunity][:tags] = nil if params[:opportunity][:tags].strip.blank?
+  def cleanup_params_to_prevent_tagging_error
+    if params[:opportunity] && params[:opportunity][:tag_list]
+      params[:opportunity][:tag_list] = "#{params[:opportunity][:tag_list]}".split(',').map(&:strip).reject(&:empty?).join(",")
+      params[:opportunity][:tag_list] = nil if params[:opportunity][:tag_list].strip.blank?
     end
   end
 
@@ -151,7 +151,7 @@ class OpportunitiesController < ApplicationController
   end
 
   def all_job_skills
-    Rails.cache.fetch('job_skills', expires_in: 23.hours) { Opportunity.all.flat_map(&:tags).uniq.compact }
+    Rails.cache.fetch('job_skills', expires_in: 23.hours) { Opportunity.all.flat_map(&:tag_list).uniq.compact }
   end
 
   def closest_to_user(user)

@@ -39,7 +39,7 @@ class Protip < ActiveRecord::Base
     user_ip: proc { self.user.last_ip },
     user_agent: proc { self.user.last_ua }
 
-  attr_taggable :topics, :users
+  acts_as_taggable_on :topics, :users
   attr_accessor :upvotes
 
   DEFAULT_IP_ADDRESS = '0.0.0.0'
@@ -73,7 +73,7 @@ class Protip < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: MAX_TITLE_LENGTH }
   validates :body, presence: true
   validates :kind, presence: true, inclusion: { in: KINDS }
-  validates :topics, length: { minimum: 1 }
+  validates :topic_list, length: { minimum: 1 }
 
   after_validation :tag_user
   before_create :assign_random_id
@@ -345,7 +345,7 @@ class Protip < ActiveRecord::Base
 
 
   def networks
-    Network.tagged_with(self.topics)
+    Network.tagged_with(self.topic_list)
   end
 
   def orphan?
@@ -357,7 +357,7 @@ class Protip < ActiveRecord::Base
   end
 
   def generate_event(options={})
-    unless self.created_automagically? and self.topics.include?("github")
+    unless self.created_automagically? and self.topic_list.include?("github")
       event_type = self.event_type(options)
       GenerateEventJob.perform_in(10.minutes, event_type, event_audience(event_type), self.to_event_hash(options), 1.minute)
     end
@@ -389,7 +389,7 @@ class Protip < ActiveRecord::Base
   end
 
   def slideshare?
-    self.topics.count == 1 && self.topics.include?("slideshare")
+    self.topics.count == 1 && self.topic_list.include?("slideshare")
   end
 
   def event_type(options={})
@@ -403,7 +403,7 @@ class Protip < ActiveRecord::Base
   end
 
   def topic_ids
-    self.taggings.joins('inner join tags on taggings.tag_id = tags.id').select('tags.id').map(&:id)
+    topics.pluck(:id)
   end
 
   def to_indexed_json
@@ -459,7 +459,7 @@ class Protip < ActiveRecord::Base
       title:       Sanitize.clean(title),
       body:        body,
       html:        Sanitize.clean(to_html),
-      tags:        topics,
+      tags:        topic_list,
       upvotes:     upvotes,
       url:         path,
       upvote_path: upvote_path,
@@ -518,7 +518,7 @@ class Protip < ActiveRecord::Base
   end
 
   def tokenized_skills
-    @tokenized_skills ||= self.topics.collect { |tag| Skill.tokenize(tag) }
+    @tokenized_skills ||= self.topic_list.collect { |tag| Skill.tokenize(tag) }
   end
 
   def to_param
@@ -844,7 +844,7 @@ class Protip < ActiveRecord::Base
   alias_method :owner?, :owned_by?
 
   def tag_user
-    self.users = [self.user.try(:username)] if self.users.blank?
+    self.user_list = [self.user.try(:username)] if self.users.blank?
   end
 
   def reassign_to(user)
@@ -853,7 +853,7 @@ class Protip < ActiveRecord::Base
   end
 
   def tags
-    topics + users
+    topic_list + user_list
   end
 
   def link
@@ -861,24 +861,20 @@ class Protip < ActiveRecord::Base
   end
 
   def reformat_tags!
-    if self.topics.count == 1 && self.topics.first =~ /\s/
-      self.topics = self.topics.first.split(/\s/)
+    if self.topic_list.count == 1 && self.topic_list.first =~ /\s/
+      self.topic_list = self.topic_list.first.split(/\s/)
     end
   end
 
   def sanitize_tags!
-    new_topics = self.topics.reject { |tag| tag.blank? }.map do |topic|
+    new_topics = self.topic_list.reject { |tag| tag.blank? }.map do |topic|
       sanitized_topic = self.class.preprocess_tag(topic)
       invalid_topic = topic.match("^((?!#{VALID_TAG}).)*$") && $1
       errors[:topics] << "The tag '#{topic}' has invalid characters: #{invalid_topic unless invalid_topic.nil?}" if sanitized_topic.nil?
       sanitized_topic
     end
     new_topics = new_topics.compact.uniq
-    self.topics = new_topics if topics.blank? or topics_changed?
-  end
-
-  def topics_changed?
-    self.topics_tags.map(&:name) != self.topics
+    self.topic_list = new_topics if topic_list.blank? or topic_list_changed?
   end
 
   def viewed_by(viewer)
@@ -954,7 +950,7 @@ class Protip < ActiveRecord::Base
     if self.user.team && self.user.team.hiring?
       self.user.team.best_positions_for(self.user)
     else
-      Opportunity.based_on(self.topics)
+      Opportunity.based_on(self.topic_list)
     end
   end
 
@@ -973,7 +969,7 @@ class Protip < ActiveRecord::Base
 
   private
   def need_to_extract_data_from_links
-    self.topics.blank? || self.title.blank?
+    self.topic_list.blank? || self.title.blank?
   end
 
   def adjust_like_value(user, like_value)
