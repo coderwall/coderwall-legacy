@@ -1,4 +1,6 @@
-# TODO: broken
+# TODO: remove the ChangeLog API integration since we are not distributing more of these badges.
+# But we have to keep supporting the existing ones.
+
 !class Changelogd < BadgeBase
   describe "Changelog'd",
            skill:       'Open Source',
