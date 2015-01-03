@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141231203425) do
+ActiveRecord::Schema.define(:version => 20150103105333) do
 
   add_extension "citext"
   add_extension "hstore"
