@@ -241,9 +241,7 @@ class Team < ActiveRecord::Base
   end
 
   def public_hash
-    neighbors = Team.find((higher_competitors(5) + lower_competitors(5)).flatten.uniq)
     summary.merge(
-      neighbors:    neighbors.collect(&:summary),
       members: members.collect { |user| {
         name:               user.display_name,
         username:           user.username,
