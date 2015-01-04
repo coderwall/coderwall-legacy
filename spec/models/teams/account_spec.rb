@@ -14,7 +14,7 @@
 
 require 'vcr_helper'
 
-RSpec.describe Teams::Account, type: :model, skip: true do
+RSpec.describe Teams::Account, type: :model do
   let(:team) { Fabricate(:team, account: nil) }
   let(:account) { { stripe_card_token: new_token } }
 
@@ -48,7 +48,9 @@ RSpec.describe Teams::Account, type: :model, skip: true do
         expect(team.account).to be_nil
         team.build_account(account)
         team.account.admin_id = admin.id
+        team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
         team.account.save_with_payment
+        team.account.save
         team.reload
         expect(team.account.stripe_card_token).to eq(account[:stripe_card_token])
         expect(team.account.stripe_customer_token).not_to be_nil
@@ -64,7 +66,9 @@ RSpec.describe Teams::Account, type: :model, skip: true do
         team.build_account(account)
         some_random_user = Fabricate(:user)
         team.account.admin_id = some_random_user.id
+        team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
         team.account.save_with_payment
+        team.account.save!
         team.reload
         expect(team.account).not_to be_nil
 
@@ -114,15 +118,22 @@ RSpec.describe Teams::Account, type: :model, skip: true do
       before(:each) do
         # TODO: Refactor api calls to Sidekiq job
         VCR.use_cassette('Account') do
-
-          expect(team.account).to be_nil
           team.build_account(account)
-          team.account.admin_id = admin.id
-          team.account.save_with_payment
-          team.account.subscribe_to!(free_plan)
-          team.reload
-
         end
+
+        team.account.admin_id = admin.id
+        team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
+
+        VCR.use_cassette('Account') do
+          team.account.save_with_payment
+        end
+
+        VCR.use_cassette('Account') do
+          team.account.subscribe_to!(free_plan)
+        end
+
+        team.account.save
+        team.reload
       end
 
       it 'should add a free subscription' do
@@ -133,12 +144,13 @@ RSpec.describe Teams::Account, type: :model, skip: true do
       it 'should not allow any job posts' do
         # TODO: Refactor api calls to Sidekiq job
         VCR.use_cassette('Account') do
-
           expect(team.can_post_job?).to eq(false)
           expect(team.premium?).to eq(false)
           expect(team.valid_jobs?).to eq(false)
-          expect { Fabricate(:opportunity, team_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
+        end
 
+        VCR.use_cassette('Account') do
+          expect { Fabricate(:opportunity, team_id: team.id) }.to raise_error(ActiveRecord::RecordNotSaved)
         end
       end
 
@@ -149,16 +161,15 @@ RSpec.describe Teams::Account, type: :model, skip: true do
       it 'should allow upgrade to monthly subscription' do
         # TODO: Refactor api calls to Sidekiq job
         VCR.use_cassette('Account') do
-
           team.account.save_with_payment(monthly_plan)
-          team.reload
-          expect(team.can_post_job?).to eq(true)
-          expect(team.paid_job_posts).to eq(0)
-          expect(team.valid_jobs?).to eq(true)
-          expect(team.has_monthly_subscription?).to eq(true)
-          expect(team.premium?).to eq(true)
-
         end
+
+        team.reload
+        expect(team.can_post_job?).to eq(true)
+        expect(team.paid_job_posts).to eq(0)
+        expect(team.valid_jobs?).to eq(true)
+        expect(team.has_monthly_subscription?).to eq(true)
+        expect(team.premium?).to eq(true)
       end
 
       it 'should allow upgrade to one-time job post charge' do
@@ -181,14 +192,14 @@ RSpec.describe Teams::Account, type: :model, skip: true do
       before(:each) do
         # TODO: Refactor api calls to Sidekiq job
         VCR.use_cassette('Account') do
-
           expect(team.account).to be_nil
           team.build_account(account)
           team.account.admin_id = admin.id
+          team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
           team.account.save_with_payment
+          team.account.save
           team.account.subscribe_to!(monthly_plan)
           team.reload
-
         end
       end
 
@@ -202,15 +213,15 @@ RSpec.describe Teams::Account, type: :model, skip: true do
 
       it 'should allow unlimited job posts' do
         # TODO: Refactor api calls to Sidekiq job
-        VCR.use_cassette('Account') do
+        expect(team.can_post_job?).to eq(true)
 
-          expect(team.can_post_job?).to eq(true)
-          5.times do
+        5.times do
+          VCR.use_cassette('Account') do
             Fabricate(:opportunity, team_id: team.id)
           end
-          expect(team.can_post_job?).to eq(true)
-
         end
+
+        expect(team.can_post_job?).to eq(true)
       end
     end
 
@@ -218,15 +229,16 @@ RSpec.describe Teams::Account, type: :model, skip: true do
       before(:each) do
         # TODO: Refactor api calls to Sidekiq job
         VCR.use_cassette('Account') do
-
           expect(team.account).to be_nil
           team.build_account(account)
           team.account.admin_id = admin.id
+          team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
           team.account.save_with_payment(onetime_plan)
+          team.account.save
           team.reload
-
         end
       end
+
       it 'should add a one-time job post charge' do
         expect(team.account.plan_ids).to include(onetime_plan.id)
         expect(team.paid_job_posts).to eq(1)
@@ -252,22 +264,25 @@ RSpec.describe Teams::Account, type: :model, skip: true do
       it 'should allow upgrade to monthly subscription' do
         # TODO: Refactor api calls to Sidekiq job
         VCR.use_cassette('Account') do
-
           team.account.update_attributes(stripe_card_token: new_token)
           team.account.save_with_payment(monthly_plan)
           team.reload
-          expect(team.can_post_job?).to eq(true)
-          expect(team.valid_jobs?).to eq(true)
-          expect(team.paid_job_posts).to eq(1)
-          expect(team.has_monthly_subscription?).to eq(true)
-          5.times do
+        end
+
+        expect(team.can_post_job?).to eq(true)
+        expect(team.valid_jobs?).to eq(true)
+        expect(team.paid_job_posts).to eq(1)
+        expect(team.has_monthly_subscription?).to eq(true)
+
+        5.times do
+          VCR.use_cassette('Account') do
             Fabricate(:opportunity, team_id: team.id)
           end
-          expect(team.can_post_job?).to eq(true)
-          expect(team.paid_job_posts).to eq(1)
-          expect(team.premium?).to eq(true)
-
         end
+
+        expect(team.can_post_job?).to eq(true)
+        expect(team.paid_job_posts).to eq(1)
+        expect(team.premium?).to eq(true)
       end
 
       it 'should allow additional one time job post charges' do
