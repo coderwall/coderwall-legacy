@@ -5,7 +5,6 @@ RSpec.describe Team, type: :model do
   let(:invitee)      { Fabricate(:user) }
 
   it { is_expected.to have_one :account }
-
   it { is_expected.to have_many :locations }
   it { is_expected.to have_many :links }
   it { is_expected.to have_many :members }
@@ -26,6 +25,15 @@ RSpec.describe Team, type: :model do
       result = Team.with_similar_names('dr%')
       expect(result).to include(team_1, team_2)
     end
+  end
+
+  describe "#public_json" do
+
+    it "returns valid JSON" do
+      json = team.public_json
+      expect{JSON.parse(json)}.to_not raise_error
+    end
+
   end
 
   it 'adds the team id to the user when they are added to a team' do
@@ -90,11 +98,5 @@ RSpec.describe Team, type: :model do
     Plan.create(amount: 19_900, interval: nil, name: 'Single') if Plan.enhanced_team_page_one_time.nil?
     Plan.create(amount: 19_900, interval: Plan::MONTHLY, analytics: true, name: 'Analytics') if Plan.enhanced_team_page_analytics.nil?
   end
-
-  it { is_expected.to have_many :locations }
-  it { is_expected.to have_many :links }
-  it { is_expected.to have_many :members }
-  it { is_expected.to have_many :jobs }
-  it { is_expected.to have_many :followers }
 
 end
