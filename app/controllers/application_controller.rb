@@ -182,7 +182,10 @@ class ApplicationController < ActionController::Base
   end
 
   def render_404
-    render template: 'errors/not_found', status: :not_found
+    respond_to do |format|
+      format.any(:html, :json, :xml) { render 'errors/not_found', status: :not_found }
+      format.all { render text: "Not Found", :content_type => Mime::TEXT, status: :not_found }
+    end
   end
 
   def render_500
