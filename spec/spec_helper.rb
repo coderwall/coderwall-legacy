@@ -35,7 +35,6 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
 
-    Mongoid::Sessions.default.collections.reject { |c| c.name =~ /^system/ }.each(&:drop)
     ActionMailer::Base.deliveries.clear
   end
 

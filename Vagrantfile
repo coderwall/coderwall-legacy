@@ -40,7 +40,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: '192.168.237.95' # 192.168.cdr.wl
 
   set_port_mapping_for(config, 'elasticsearch', 9200,  custom_settings)
-  set_port_mapping_for(config, 'mongodb',       27017, custom_settings)
   set_port_mapping_for(config, 'postgres',      5432,  custom_settings)
   set_port_mapping_for(config, 'redis',         6379,  custom_settings)
   set_port_mapping_for(config, 'rails',         3000,  custom_settings, true)
