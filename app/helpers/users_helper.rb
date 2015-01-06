@@ -24,8 +24,13 @@ module UsersHelper
 
   def users_image_tag(user, options = {})
     options[:class] ||= 'avatar'
-    options[:alt] ||= user.username
-    image_tag(users_image_path(user), options)
+    #FIXME
+    if user
+      options[:alt] ||= user.username
+      image_tag(users_image_path(user), options)
+    else
+      image_tag('blank-mugshot.png', options)
+    end
   end
 
   #TODO Remove
@@ -118,7 +123,7 @@ module UsersHelper
   end
 
   def estimated_delivery_date
-    if  Date.today.end_of_week == Date.today
+    if Date.today.end_of_week == Date.today
       Date.today + 7.days
     else
       Date.today.end_of_week
