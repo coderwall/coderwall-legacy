@@ -39,7 +39,7 @@ class GithubOld
   }
 
   def profile(github_username = nil, since=Time.at(0))
-    (@client.user(github_username) || []).except *%w{followers url public_repos html_url following}
+    @client.user(github_username) || []
   rescue Errno::ECONNREFUSED => e
     retry
   rescue Octokit::NotFound
@@ -102,9 +102,7 @@ class GithubOld
   end
 
   def repos_for(github_username, since=Time.at(0))
-    (@client.repositories(github_username, per_page: 100) || []).map do |repo|
-      repo.except *%w{master_branch clone_url ssh_url url svn_url forks}
-    end
+    @client.repositories(github_username, per_page: 100) || []
   rescue Octokit::NotFound => e
     Rails.logger.error("Unable to find repos for #{github_username}")
     return []
@@ -147,9 +145,7 @@ class GithubOld
   end
 
   def repo_contributors(owner, name, since=Time.at(0))
-    (@client.contributors("#{owner}/#{name}", false, per_page: 100) || []).map do |user|
-      user.except *USER_ATTRIBUTES_TO_IGNORE
-    end
+    @client.contributors("#{owner}/#{name}", false, per_page: 100) || []
   rescue Octokit::NotFound => e
     Rails.logger.error("Failed to find contributors for #{owner}/#{name}")
     return []

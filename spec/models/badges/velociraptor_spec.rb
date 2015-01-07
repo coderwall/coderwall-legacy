@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Velociraptor, type: :model, skip: true do
+RSpec.describe Velociraptor, type: :model do
   let(:languages) do {
     'C' => 194_738,
     'C++' => 105_902,
