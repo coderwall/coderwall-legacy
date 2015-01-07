@@ -20,7 +20,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-
+    #FIXME
     show_params = params.permit(:job_id, :refresh, :callback, :id, :slug)
 
     respond_to do |format|
@@ -43,12 +43,11 @@ class TeamsController < ApplicationController
       format.json do
         options = { :expires_in => 5.minutes }
         options[:force] = true if !show_params[:refresh].blank?
-        Team
         response = Rails.cache.fetch(['v1', 'team', show_params[:id], :json], options) do
           begin
             @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
             @team.public_json
-          rescue Mongoid::Errors::DocumentNotFound
+          rescue ActiveRecord::RecordNotFound
             return head(:not_found)
           end
         end
@@ -56,7 +55,7 @@ class TeamsController < ApplicationController
         render :json => response
       end
     end
-  rescue BSON::InvalidObjectId
+  rescue
     redirect_to teamname_url(:slug => params[:id])
   end
 

@@ -6,7 +6,7 @@ class InvitationsController < ApplicationController
     store_location! unless signed_in?
     session[:referred_by] = params[:r]
     record_event("viewed", what: "invitation")
-  rescue Mongoid::Errors::DocumentNotFound
+  rescue ActiveRecord::RecordNotFound
     invitation_failed!
   end
 

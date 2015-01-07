@@ -14,7 +14,7 @@ class Team::SearchWrapper
   end
 
   def to_key
-    item.try(:to_key) || BSON::ObjectId(item[:id])
+    item.try(:to_key)
   end
 
   def name
