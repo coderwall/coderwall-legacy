@@ -306,6 +306,7 @@ class User < ActiveRecord::Base
       }
     end
     if full
+      hash[:about] = about
       hash[:title]              = title
       hash[:company]            = company
       hash[:specialities]       = speciality_tags
