@@ -362,7 +362,7 @@ class User < ActiveRecord::Base
   end
 
   def belongs_to_team?(team)
-    team.member_account.pluck(:id).includes?(id)
+    team.member_accounts.pluck(:id).include?(id)
   end
 
   def complete_registration!(opts={})
