@@ -22,11 +22,10 @@ class TeamsController < ApplicationController
   def show
     #FIXME
     show_params = params.permit(:job_id, :refresh, :callback, :id, :slug)
+    @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
 
     respond_to do |format|
       format.html do
-        @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
-
         return render_404 if @team.nil?
 
         @team_protips = @team.trending_protips(4)
@@ -45,7 +44,6 @@ class TeamsController < ApplicationController
         options[:force] = true if !show_params[:refresh].blank?
         response = Rails.cache.fetch(['v1', 'team', show_params[:id], :json], options) do
           begin
-            @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
             @team.public_json
           rescue ActiveRecord::RecordNotFound
             return head(:not_found)
@@ -95,9 +93,8 @@ class TeamsController < ApplicationController
   #end
 
   def edit
-    edit_params = params.permit(:slug, :id)
-
-    @team = team_from_params(slug: edit_params[:slug], id: edit_params[:id])
+    #TODO, change slug to citext
+    @team = Team.find_by_slug(params[:slug])
     return head(:forbidden) unless current_user.belongs_to_team?(@team) || current_user.admin?
     @edit_mode = true
     show

@@ -613,11 +613,7 @@ class Team < ActiveRecord::Base
   def admin?(user)
     return false if user.nil?
     return true if user.admin?
-    if admins.empty?
-      members.include?(user)
-    else
-      admins.include?(user.id)
-    end
+    admins.pluck(:user_id).include?(user.id)
   end
 
   def timeline_key

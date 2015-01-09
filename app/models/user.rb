@@ -375,12 +375,6 @@ class User < ActiveRecord::Base
     badges_count
   end
 
-  def has_beta_access?
-    admin? || beta_access
-  end
-
-
-
   def to_csv
     [
       display_name,

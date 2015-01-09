@@ -149,12 +149,3 @@
           %h3 Invite team members
         %h4 Email this link to your colleagues so they can join this team
         =mail_to('', invite_to_team_url, :body => invite_to_team_url, :subject => "You've been invited to team #{@team.name}", :class => 'join-link')
-  -elsif viewing_my_team_while_unauthenticated?
-    #add-to-team.hide
-      .add-members-header
-        %h3 Add team members
-      %h4 Sign in to get an invite link to send to your colleagues
-      =link_to("Sign In", signin_path, :class => 'join-link record-exit', 'data-target-type' => 'signin')
-
--#-if signed_in? && current_user.try(:team) == @team
--#  =mail_to('teams@coderwall.com', "Is #{current_user.team.name} awesome and hiring? Upgrade to the new enhanced team profile now.", :subject => "Create an enhanced team profile on Coderwall", :body => "Company Name: #{current_user.try(:team).try(:name)}", :class => 'feature-signup track', 'data-action' => 'upgrade-from-my-team-page')
