@@ -1,6 +1,3 @@
-class AvailableCoupon < ActiveRecord::Base
-end
-
 # == Schema Information
 #
 # Table name: available_coupons
@@ -10,3 +7,6 @@ end
 #  peepcode_coupon   :string(255)
 #  recipes_coupon    :string(255)
 #
+
+class AvailableCoupon < ActiveRecord::Base
+end

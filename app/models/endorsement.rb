@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: endorsements
+#
+#  id                :integer          not null, primary key
+#  endorsed_user_id  :integer
+#  endorsing_user_id :integer
+#  specialty         :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  skill_id          :integer
+#
+
 class Endorsement < ActiveRecord::Base
   belongs_to :endorsed, class_name: User.name, foreign_key: :endorsed_user_id, counter_cache: :endorsements_count, touch: true
   belongs_to :endorser, class_name: User.name, foreign_key: :endorsing_user_id
@@ -21,16 +34,3 @@ class Endorsement < ActiveRecord::Base
     :endorsement
   end
 end
-
-# == Schema Information
-#
-# Table name: endorsements
-#
-#  id                :integer          not null, primary key
-#  endorsed_user_id  :integer
-#  endorsing_user_id :integer
-#  specialty         :string(255)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  skill_id          :integer
-#

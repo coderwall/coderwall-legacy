@@ -1,7 +1,3 @@
-Fabricator(:skill) do
-  name { 'Ruby' }
-end
-
 # == Schema Information
 #
 # Table name: skills
@@ -20,3 +16,7 @@ end
 #  deleted            :boolean          default(FALSE), not null
 #  deleted_at         :datetime
 #
+
+Fabricator(:skill) do
+  name { 'Ruby' }
+end

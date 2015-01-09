@@ -1,6 +1,3 @@
-class SeizedOpportunity < ActiveRecord::Base
-end
-
 # == Schema Information
 #
 # Table name: seized_opportunities
@@ -14,3 +11,6 @@ end
 #  updated_at       :datetime
 #  team_id          :integer
 #
+
+class SeizedOpportunity < ActiveRecord::Base
+end

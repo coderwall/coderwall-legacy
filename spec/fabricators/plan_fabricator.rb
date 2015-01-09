@@ -1,8 +1,3 @@
-Fabricator(:plan) do
-  name { sequence(:name) { |i| "plan_no_#{i}" } }
-  amount { rand * 100 }
-end
-
 # == Schema Information
 #
 # Table name: plans
@@ -18,3 +13,8 @@ end
 #  analytics           :boolean          default(FALSE)
 #  interval_in_seconds :integer          default(2592000)
 #
+
+Fabricator(:plan) do
+  name { sequence(:name) { |i| "plan_no_#{i}" } }
+  amount { rand * 100 }
+end

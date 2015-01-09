@@ -1,19 +1,3 @@
-Fabricator(:opportunity) do
-  salary 100_000
-  name 'Senior Rails Web Developer'
-  description 'Architect and implement the Ruby and Javascript underpinnings of our various user-facing and internal web apps like api.heroku.com.'
-  tag_list ['rails', 'sinatra', 'JQuery']
-  location 'San Francisco, CA'
-  cached_tags 'java, python'
-  team_id { Fabricate(:team, paid_job_posts: 1).id }
-  remote false
-  expires_at { Time.now + 1.year }
-end
-
-Fabricator(:job, from: :opportunity, class_name: :opportunity) do
-
-end
-
 # == Schema Information
 #
 # Table name: opportunities
@@ -38,4 +22,21 @@ end
 #  apply            :boolean          default(FALSE)
 #  public_id        :string(255)
 #  team_id          :integer
+#  remote           :boolean
 #
+
+Fabricator(:opportunity) do
+  salary 100_000
+  name 'Senior Rails Web Developer'
+  description 'Architect and implement the Ruby and Javascript underpinnings of our various user-facing and internal web apps like api.heroku.com.'
+  tag_list ['rails', 'sinatra', 'JQuery']
+  location 'San Francisco, CA'
+  cached_tags 'java, python'
+  team_id { Fabricate(:team, paid_job_posts: 1).id }
+  remote false
+  expires_at { Time.now + 1.year }
+end
+
+Fabricator(:job, from: :opportunity, class_name: :opportunity) do
+
+end

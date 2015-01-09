@@ -1,14 +1,3 @@
-module Users
-  module Github
-    class Repository < ActiveRecord::Base
-      has_many :followers, :class_name => 'Users::Github::Repositories::Follower' , dependent: :delete_all
-      has_many :contributors, :class_name => 'Users::Github::Repositories::Contributor' , dependent: :delete_all
-      belongs_to :organization, :class_name => 'Users::Github::Organization'
-      belongs_to :owner, :class_name => 'Users::Github::Profile'
-    end
-  end
-end
-
 # == Schema Information
 #
 # Table name: users_github_repositories
@@ -31,3 +20,14 @@ end
 #  created_at                  :datetime         not null
 #  updated_at                  :datetime         not null
 #
+
+module Users
+  module Github
+    class Repository < ActiveRecord::Base
+      has_many :followers, :class_name => 'Users::Github::Repositories::Follower' , dependent: :delete_all
+      has_many :contributors, :class_name => 'Users::Github::Repositories::Contributor' , dependent: :delete_all
+      belongs_to :organization, :class_name => 'Users::Github::Organization'
+      belongs_to :owner, :class_name => 'Users::Github::Profile'
+    end
+  end
+end

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: badges
+#
+#  id               :integer          not null, primary key
+#  created_at       :datetime
+#  updated_at       :datetime
+#  user_id          :integer
+#  badge_class_name :string(255)
+#
+
 class Badge < ActiveRecord::Base
   belongs_to :user, counter_cache: :badges_count, touch: true
   validates_uniqueness_of :badge_class_name, scope: :user_id
@@ -96,14 +107,3 @@ class Badge < ActiveRecord::Base
     :unlocked_achievement
   end
 end
-
-# == Schema Information
-#
-# Table name: badges
-#
-#  id               :integer          not null, primary key
-#  created_at       :datetime
-#  updated_at       :datetime
-#  user_id          :integer
-#  badge_class_name :string(255)
-#

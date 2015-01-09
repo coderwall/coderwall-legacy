@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: protips
+#
+#  id                  :integer          not null, primary key
+#  public_id           :string(255)
+#  kind                :string(255)
+#  title               :string(255)
+#  body                :text
+#  user_id             :integer
+#  created_at          :datetime
+#  updated_at          :datetime
+#  score               :float
+#  created_by          :string(255)      default("self")
+#  featured            :boolean          default(FALSE)
+#  featured_at         :datetime
+#  upvotes_value_cache :integer          default(0), not null
+#  boost_factor        :float            default(1.0)
+#  inappropriate       :integer          default(0)
+#  likes_count         :integer          default(0)
+#  slug                :string(255)
+#
+
 require 'vcr_helper'
 
 RSpec.describe Protip, type: :model do

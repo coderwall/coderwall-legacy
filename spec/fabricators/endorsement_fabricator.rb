@@ -1,9 +1,3 @@
-Fabricator(:endorsement) do
-  endorsed(fabricator: :user)
-  endorser(fabricator: :user)
-  skill(fabricator: :skill)
-end
-
 # == Schema Information
 #
 # Table name: endorsements
@@ -16,3 +10,9 @@ end
 #  updated_at        :datetime
 #  skill_id          :integer
 #
+
+Fabricator(:endorsement) do
+  endorsed(fabricator: :user)
+  endorser(fabricator: :user)
+  skill(fabricator: :skill)
+end

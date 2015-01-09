@@ -1,7 +1,7 @@
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x0000000868e180@/home/vagrant/web/config/routes.rb:4>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x000000086a7298@/home/vagrant/web/config/routes.rb:5>
+#                             GET                   /.json(.:format)                                       #<Proc:0x00000009e29dd0@/home/vagrant/web/config/routes.rb:270>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x00000009e32750@/home/vagrant/web/config/routes.rb:271>
 #                                                   /mail_view                                             MailPreview
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update

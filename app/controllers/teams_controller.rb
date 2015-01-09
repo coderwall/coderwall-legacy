@@ -158,7 +158,7 @@ class TeamsController < ApplicationController
 
     current_user.seen(:product_description) if signed_in?
     @team = (current_user && current_user.team) || Team.new
-    store_location! if !signed_in?
+    store_location! unless signed_in?
 
     if upgrade_params[:discount] == ENV['DISCOUNT_TOKEN']
       session[:discount] = ENV['DISCOUNT_TOKEN']

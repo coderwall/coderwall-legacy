@@ -166,7 +166,7 @@ class ApplicationController < ActionController::Base
   end
 
   def access_required
-    redirect_to(root_url) if !signed_in?
+    redirect_to(root_url) unless signed_in?
   end
 
   def viewing_self?

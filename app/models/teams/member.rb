@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: teams_members
+#
+#  id          :integer          not null, primary key
+#  team_id     :integer          not null
+#  user_id     :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  state       :string(255)      default("pending")
+#  score_cache :float
+#  team_banner :string(255)
+#  team_avatar :string(255)
+#  role        :string(255)      default("member")
+#
+
 # TODO: Move team_banner to uhhh... the Team. Maybe that would make sense.
 
 class Teams::Member < ActiveRecord::Base
@@ -42,18 +58,3 @@ class Teams::Member < ActiveRecord::Base
     define_method(m) { user.try(m) }
   end
 end
-
-# == Schema Information
-#
-# Table name: teams_members
-#
-#  id          :integer          not null, primary key
-#  team_id     :integer          not null
-#  user_id     :integer          not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  state       :string(255)      default("pending")
-#  score_cache :float
-#  team_banner :string(255)
-#  team_avatar :string(255)
-#

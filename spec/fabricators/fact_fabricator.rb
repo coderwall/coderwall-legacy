@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: facts
+#
+#  id          :integer          not null, primary key
+#  identity    :string(255)
+#  owner       :string(255)
+#  name        :string(255)
+#  url         :string(255)
+#  tags        :text
+#  metadata    :text
+#  relevant_on :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 Fabricator(:fact, from: 'fact') do
   context { Fabricate(:user) }
 end
@@ -29,19 +45,3 @@ end
 Fabricator(:github_fork_fact, from: :github_original_fact) do
   tags { %w(repo github fork personal) }
 end
-
-# == Schema Information
-#
-# Table name: facts
-#
-#  id          :integer          not null, primary key
-#  identity    :string(255)
-#  owner       :string(255)
-#  name        :string(255)
-#  url         :string(255)
-#  tags        :text
-#  metadata    :text
-#  relevant_on :datetime
-#  created_at  :datetime
-#  updated_at  :datetime
-#

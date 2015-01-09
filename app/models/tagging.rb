@@ -1,7 +1,3 @@
-class Tagging < ActiveRecord::Base
-  belongs_to :tag
-end
-
 # == Schema Information
 #
 # Table name: taggings
@@ -15,3 +11,7 @@ end
 #  context       :string(255)
 #  created_at    :datetime
 #
+
+class Tagging < ActiveRecord::Base
+  belongs_to :tag
+end

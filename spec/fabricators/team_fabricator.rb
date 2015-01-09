@@ -1,8 +1,3 @@
-Fabricator(:team, from: 'Team') do
-  name { Faker::Company.name }
-  account { Fabricate.build(:account) }
-end
-
 # == Schema Information
 #
 # Table name: teams
@@ -76,3 +71,8 @@ end
 #  pending_join_requests    :string(255)      default([]), is an Array
 #  state                    :string(255)      default("active")
 #
+
+Fabricator(:team, from: 'Team') do
+  name { Faker::Company.name }
+  account { Fabricate.build(:account) }
+end

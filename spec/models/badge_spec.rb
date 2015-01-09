@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: badges
+#
+#  id               :integer          not null, primary key
+#  created_at       :datetime
+#  updated_at       :datetime
+#  user_id          :integer
+#  badge_class_name :string(255)
+#
+
 require 'spec_helper'
 
 RSpec.describe Badge, type: :model do

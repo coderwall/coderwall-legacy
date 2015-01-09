@@ -1,6 +1,3 @@
-class Invitation < ActiveRecord::Base
-end
-
 # == Schema Information
 #
 # Table name: invitations
@@ -15,3 +12,6 @@ end
 #  updated_at       :datetime
 #  team_id          :integer
 #
+
+class Invitation < ActiveRecord::Base
+end

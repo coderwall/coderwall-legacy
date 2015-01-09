@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: highlights
+#
+#  id          :integer          not null, primary key
+#  user_id     :integer
+#  description :text
+#  created_at  :datetime
+#  updated_at  :datetime
+#  featured    :boolean          default(FALSE)
+#
+
 class Highlight < ActiveRecord::Base
   belongs_to :user
 
@@ -20,15 +32,3 @@ class Highlight < ActiveRecord::Base
     @event = Event.create_highlight_event(self.user, self)
   end
 end
-
-# == Schema Information
-#
-# Table name: highlights
-#
-#  id          :integer          not null, primary key
-#  user_id     :integer
-#  description :text
-#  created_at  :datetime
-#  updated_at  :datetime
-#  featured    :boolean          default(FALSE)
-#

@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: teams_accounts
+#
+#  id                    :integer          not null, primary key
+#  team_id               :integer          not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  stripe_card_token     :string(255)      not null
+#  stripe_customer_token :string(255)      not null
+#  admin_id              :integer          not null
+#  trial_end             :datetime
+#
+
 require 'vcr_helper'
 
 RSpec.describe Teams::Account, type: :model, skip: true do

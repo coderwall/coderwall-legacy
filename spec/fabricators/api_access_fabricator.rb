@@ -1,8 +1,3 @@
-Fabricator(:api_access) do
-  api_key 'MyString'
-  awards 'MyText'
-end
-
 # == Schema Information
 #
 # Table name: api_accesses
@@ -13,3 +8,8 @@ end
 #  created_at :datetime
 #  updated_at :datetime
 #
+
+Fabricator(:api_access) do
+  api_key 'MyString'
+  awards 'MyText'
+end

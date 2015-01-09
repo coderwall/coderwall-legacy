@@ -1,12 +1,3 @@
-class Teams::Link < ActiveRecord::Base
-  belongs_to :team, class_name: 'Team',
-                    foreign_key: 'team_id',
-                    touch: true
-
-  validates :url, presence: true
-  validates_uniqueness_of :url, scope: :team_id
-end
-
 # == Schema Information
 #
 # Table name: teams_links
@@ -18,3 +9,12 @@ end
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
+class Teams::Link < ActiveRecord::Base
+  belongs_to :team, class_name: 'Team',
+                    foreign_key: 'team_id',
+                    touch: true
+
+  validates :url, presence: true
+  validates_uniqueness_of :url, scope: :team_id
+end

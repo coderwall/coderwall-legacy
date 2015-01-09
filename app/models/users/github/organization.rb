@@ -1,7 +1,3 @@
-class Users::Github::Organization < ActiveRecord::Base
- has_many :followers, class_name: 'Users::Github::Organizations::Follower', dependent: :delete_all
-end
-
 # == Schema Information
 #
 # Table name: users_github_organizations
@@ -18,3 +14,7 @@ end
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
+
+class Users::Github::Organization < ActiveRecord::Base
+ has_many :followers, class_name: 'Users::Github::Organizations::Follower', dependent: :delete_all
+end

@@ -1,9 +1,3 @@
-Fabricator(:comment) do
-  body { 'Lorem Ipsum is simply dummy text...' }
-  commentable { Fabricate.build(:protip) }
-  user { Fabricate.build(:user) }
-end
-
 # == Schema Information
 #
 # Table name: comments
@@ -20,3 +14,9 @@ end
 #  updated_at        :datetime
 #  likes_count       :integer          default(0)
 #
+
+Fabricator(:comment) do
+  body { 'Lorem Ipsum is simply dummy text...' }
+  commentable { Fabricate.build(:protip) }
+  user { Fabricate.build(:user) }
+end

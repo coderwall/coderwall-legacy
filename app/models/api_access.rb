@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: api_accesses
+#
+#  id         :integer          not null, primary key
+#  api_key    :string(255)
+#  awards     :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class ApiAccess < ActiveRecord::Base
   serialize :awards, Array
 
@@ -11,14 +22,3 @@ class ApiAccess < ActiveRecord::Base
     awards.include? badge_name
   end
 end
-
-# == Schema Information
-#
-# Table name: api_accesses
-#
-#  id         :integer          not null, primary key
-#  api_key    :string(255)
-#  awards     :text
-#  created_at :datetime
-#  updated_at :datetime
-#

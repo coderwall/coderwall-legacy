@@ -1,7 +1,3 @@
-Fabricator(:like) do
-  value 1
-end
-
 # == Schema Information
 #
 # Table name: likes
@@ -16,3 +12,7 @@ end
 #  updated_at    :datetime
 #  ip_address    :string(255)
 #
+
+Fabricator(:like) do
+  value 1
+end

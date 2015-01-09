@@ -1,14 +1,3 @@
-Fabricator(:protip) do
-  topic_list %w(Javascript CoffeeScript)
-  title { Faker::Company.catch_phrase }
-  body { Faker::Lorem.sentences(8).join(' ') }
-  user { Fabricate.build(:user) }
-end
-
-Fabricator(:link_protip, from: :protip) do
-  body 'http://www.google.com'
-end
-
 # == Schema Information
 #
 # Table name: protips
@@ -31,3 +20,14 @@ end
 #  likes_count         :integer          default(0)
 #  slug                :string(255)
 #
+
+Fabricator(:protip) do
+  topic_list %w(Javascript CoffeeScript)
+  title { Faker::Company.catch_phrase }
+  body { Faker::Lorem.sentences(8).join(' ') }
+  user { Fabricate.build(:user) }
+end
+
+Fabricator(:link_protip, from: :protip) do
+  body 'http://www.google.com'
+end

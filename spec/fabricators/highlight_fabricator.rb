@@ -1,7 +1,3 @@
-Fabricator(:highlight) do
-
-end
-
 # == Schema Information
 #
 # Table name: highlights
@@ -13,3 +9,7 @@ end
 #  updated_at  :datetime
 #  featured    :boolean          default(FALSE)
 #
+
+Fabricator(:highlight) do
+
+end

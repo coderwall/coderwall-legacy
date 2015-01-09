@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: users_github_profiles_followers
+#
+#  follower_id :integer          not null
+#  profile_id  :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 require 'rails_helper'
 
 RSpec.describe Users::Github::Profiles::Follower, type: :model do

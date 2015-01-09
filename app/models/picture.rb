@@ -1,10 +1,3 @@
-class Picture < ActiveRecord::Base
-  include Rails.application.routes.url_helpers
-  mount_uploader :file, PictureUploader
-
-  belongs_to :user
-end
-
 # == Schema Information
 #
 # Table name: pictures
@@ -15,3 +8,10 @@ end
 #  created_at :datetime
 #  updated_at :datetime
 #
+
+class Picture < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+  mount_uploader :file, PictureUploader
+
+  belongs_to :user
+end

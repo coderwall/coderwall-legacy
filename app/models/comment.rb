@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: comments
+#
+#  id                :integer          not null, primary key
+#  title             :string(50)       default("")
+#  comment           :text             default("")
+#  commentable_id    :integer
+#  commentable_type  :string(255)
+#  user_id           :integer
+#  likes_cache       :integer          default(0)
+#  likes_value_cache :integer          default(0)
+#  created_at        :datetime
+#  updated_at        :datetime
+#  likes_count       :integer          default(0)
+#
+
 class Comment < ActiveRecord::Base
   include ActsAsCommentable::Comment
   include Rakismet::Model
@@ -136,20 +153,3 @@ class Comment < ActiveRecord::Base
     AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
   end
 end
-
-# == Schema Information
-#
-# Table name: comments
-#
-#  id                :integer          not null, primary key
-#  title             :string(50)       default("")
-#  comment           :text             default("")
-#  commentable_id    :integer
-#  commentable_type  :string(255)
-#  user_id           :integer
-#  likes_cache       :integer          default(0)
-#  likes_value_cache :integer          default(0)
-#  created_at        :datetime
-#  updated_at        :datetime
-#  likes_count       :integer          default(0)
-#

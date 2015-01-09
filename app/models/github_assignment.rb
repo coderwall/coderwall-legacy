@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: github_assignments
+#
+#  id               :integer          not null, primary key
+#  github_username  :string(255)
+#  repo_url         :string(255)
+#  tag              :string(255)
+#  created_at       :datetime
+#  updated_at       :datetime
+#  badge_class_name :string(255)
+#
+
 class GithubAssignment < ActiveRecord::Base
 
   scope :badge_assignments, where(repo_url: nil)
@@ -16,16 +29,3 @@ class GithubAssignment < ActiveRecord::Base
   end
 
 end
-
-# == Schema Information
-#
-# Table name: github_assignments
-#
-#  id               :integer          not null, primary key
-#  github_username  :string(255)
-#  repo_url         :string(255)
-#  tag              :string(255)
-#  created_at       :datetime
-#  updated_at       :datetime
-#  badge_class_name :string(255)
-#

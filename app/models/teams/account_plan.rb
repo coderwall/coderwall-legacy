@@ -1,8 +1,3 @@
-class Teams::AccountPlan < ActiveRecord::Base
-  belongs_to :plan
-  belongs_to :account, :class_name => 'Teams::Account'
-end
-
 # == Schema Information
 #
 # Table name: teams_account_plans
@@ -10,3 +5,8 @@ end
 #  plan_id    :integer
 #  account_id :integer
 #
+
+class Teams::AccountPlan < ActiveRecord::Base
+  belongs_to :plan
+  belongs_to :account, :class_name => 'Teams::Account'
+end

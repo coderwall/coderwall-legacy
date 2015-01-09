@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: teams_accounts
+#
+#  id                    :integer          not null, primary key
+#  team_id               :integer          not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  stripe_card_token     :string(255)      not null
+#  stripe_customer_token :string(255)      not null
+#  admin_id              :integer          not null
+#  trial_end             :datetime
+#
+
 class Teams::Account < ActiveRecord::Base
   belongs_to :team, class_name: 'Team', foreign_key: 'team_id'
   has_many :account_plans, :class_name => 'Teams::AccountPlan'
@@ -149,17 +163,3 @@ class Teams::Account < ActiveRecord::Base
     Plan.find(self.plan_ids.first) unless self.plan_ids.blank?
   end
 end
-
-# == Schema Information
-#
-# Table name: teams_accounts
-#
-#  id                    :integer          not null, primary key
-#  team_id               :integer          not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  stripe_card_token     :string(255)      not null
-#  stripe_customer_token :string(255)      not null
-#  admin_id              :integer          not null
-#  trial_end             :datetime
-#

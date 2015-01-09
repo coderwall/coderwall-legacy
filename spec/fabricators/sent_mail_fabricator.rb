@@ -1,6 +1,3 @@
-Fabricator(:sent_mail) do
-end
-
 # == Schema Information
 #
 # Table name: sent_mails
@@ -11,3 +8,6 @@ end
 #  user_id       :integer
 #  sent_at       :datetime
 #
+
+Fabricator(:sent_mail) do
+end

@@ -1,7 +1,3 @@
-class SpamReport < ActiveRecord::Base
-  belongs_to :spammable, polymorphic: true
-end
-
 # == Schema Information
 #
 # Table name: spam_reports
@@ -12,3 +8,7 @@ end
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
+
+class SpamReport < ActiveRecord::Base
+  belongs_to :spammable, polymorphic: true
+end
