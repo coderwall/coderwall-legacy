@@ -23,10 +23,9 @@ require 'stripe'
 class Plan < ActiveRecord::Base
   has_many :subscriptions , class_name: 'Teams::AccountPlan'
 
+  before_create :generate_public_id
   after_create :register_on_stripe
   after_destroy :unregister_from_stripe
-
-  before_create :generate_public_id
 
   CURRENCIES = %w(usd)
   MONTHLY = 'month'
@@ -41,6 +40,7 @@ class Plan < ActiveRecord::Base
   scope :free, -> { where(amount: 0) }
   scope :with_analytics, -> { where(analytics: true) }
   scope :without_analytics, -> { where(analytics: false) }
+
   class << self
     def enhanced_team_page_analytics
       monthly.paid.with_analytics.first
@@ -59,8 +59,26 @@ class Plan < ActiveRecord::Base
     end
   end
 
-
   alias_attribute :stripe_plan_id, :public_id
+  alias_attribute :has_analytics?, :analytics
+
+  def price
+    amount / 100
+  end
+
+  def subscription?
+    !one_time?
+  end
+
+  def free?
+    amount.zero?
+  end
+
+  # TODO refactor
+  # We should avoid nil.
+  def one_time?
+    self.interval.nil?
+  end
 
   #copy to sidekiq worker
   def stripe_plan
@@ -68,7 +86,6 @@ class Plan < ActiveRecord::Base
   rescue Stripe::InvalidRequestError
     nil
   end
-
 
   #sidekiq it
   def register_on_stripe
@@ -95,29 +112,8 @@ class Plan < ActiveRecord::Base
     end
   end
 
-  def price
-    amount / 100
-  end
-
-
-  def subscription?
-    !one_time?
-  end
-
-  def free?
-    amount.zero?
-  end
-
-  # TODO refactor
-  # We should avoid nil.
-  def one_time?
-    self.interval.nil?
-  end
-
-  alias_attribute :has_analytics?, :analytics
-
   #TODO CHANGE with default in rails 4
   def generate_public_id
-    self.public_id = SecureRandom.urlsafe_base64(4).downcase
+    self.public_id ||= SecureRandom.urlsafe_base64(4).downcase
   end
 end

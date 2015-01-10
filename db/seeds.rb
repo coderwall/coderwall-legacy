@@ -13,8 +13,12 @@ module S
   end
 end
 
+puts '---- NETWORKS ----'
+
 S.create_network_for('Ruby')
 S.create_network_for('JavaScript')
+
+puts '---- PLANS ----'
 
 Plan.find_or_create_by_id(1) do |s|
   s.amount    = 0
@@ -116,19 +120,19 @@ puts '---- PROTIPS ----'
 S.create_protip_for(bryce) do |p|
   p.title  = 'Suspendisse potenti'
   p.body   = '<p>Suspendisse potenti. Nunc iaculis risus vel &#8216;Orci Ornare&#8217; dignissim sed vitae nulla. Nulla lobortis tempus commodo. Suspendisse <em>potenti</em>. Duis sagittis, est sit amet gravida tristique, purus lectus venenatis urna, id &#8216;molestie&#8217; magna risus ut nunc. Donec tempus tempus tellus, ac <abbr title="Hypertext Markup Language">HTML</abbr> lacinia turpis mattis ac. Fusce ac sodales magna. Fusce ac sodales <abbr title="Cascading Style Sheets">CSS</abbr> magna.</p>'
-  p.topics = %w{suspendisse potenti}
+  p.topic_list = %w{suspendisse potenti}
 end
 
 S.create_protip_for(bryce) do |p|
   p.title  = 'Vinyl Blue Bottle four loko wayfarers'
   p.body   = 'Austin try-hard artisan, bicycle rights salvia squid dreamcatcher hoodie before they sold out Carles scenester ennui. Organic mumblecore Tumblr, gentrify retro 90\'s fanny pack flexitarian raw denim roof party cornhole. Hella direct trade mixtape +1 cliche, slow-carb Neutra craft beer tousled fap DIY.'
-  p.topics = %w{etsy hipster}
+  p.topic_list = %w{etsy hipster}
 end
 
 S.create_protip_for(lisa) do |p|
   p.title  = 'Cras molestie risus a enim convallis vitae luctus libero lacinia'
   p.body   = '<p>Cras molestie risus a enim convallis vitae luctus libero lacinia. Maecenas sit <q cite="http://www.heydonworks.com">amet tellus nec mi gravida posuere</q> non pretium magna. Nulla vel magna sit amet dui <a href="#">lobortis</a> commodo vitae vel nulla. </p>'
-  p.topics = %w{cras molestie}
+  p.topic_list = %w{cras molestie}
 end
 
 puts '---- TEAMS ----'
