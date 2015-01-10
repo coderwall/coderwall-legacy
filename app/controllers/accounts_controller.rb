@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
   def create
     redirect_to teamname_path(slug: @team.slug) if @plan.free?
 
-    @account           = @team.build_account(params[:account])
+    @account           = @team.build_account(account_params)
     @account.admin_id  = current_user.id
     # TODO: (whatupdave) this doesn't look like it's being used any more. Remove if possible
     # @account.trial_end = Date.new(2013, 1, 1).to_time.to_i if session[:discount] == ENV['DISCOUNT_TOKEN']
@@ -38,7 +38,7 @@ class AccountsController < ApplicationController
   end
 
   def update
-    if @account.update_attributes(params[:account]) && @account.save_with_payment(@plan)
+    if @account.update_attributes(account_params) && @account.save_with_payment(@plan)
       redirect_to new_team_opportunity_path(@team), notice: "You are subscribed to #{@plan.name}." + plan_capability(@plan, @team)
     else
       flash[:error] = @account.errors.full_messages.join("\n")
@@ -105,6 +105,10 @@ class AccountsController < ApplicationController
 
   def paying_user_context
     # Honeybadger.context(user_email: current_user.try(:email)) if current_user
+  end
+
+  def account_params
+    params.require(:teams_account).permit(:stripe_card_token)
   end
 
 end

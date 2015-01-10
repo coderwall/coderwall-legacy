@@ -36,7 +36,7 @@ class Teams::Account < ActiveRecord::Base
   end
 
   def save_with_payment(plan=nil)
-    if valid?
+    if stripe_card_token
       create_customer unless plan.try(:one_time?)
       subscribe_to!(plan) unless plan.nil?
       save!
