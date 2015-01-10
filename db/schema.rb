@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150109101515) do
+ActiveRecord::Schema.define(:version => 20150110140000) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -365,7 +365,7 @@ ActiveRecord::Schema.define(:version => 20150109101515) do
     t.decimal  "score",                    :precision => 40, :scale => 30, :default => 0.0
     t.string   "twitter"
     t.string   "facebook"
-    t.string   "slug"
+    t.citext   "slug",                                                                           :null => false
     t.boolean  "premium",                                                  :default => false
     t.boolean  "analytics",                                                :default => false
     t.boolean  "valid_jobs",                                               :default => false
