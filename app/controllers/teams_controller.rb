@@ -93,7 +93,6 @@ class TeamsController < ApplicationController
   #end
 
   def edit
-    #TODO, change slug to citext
     @team = Team.find_by_slug(params[:slug])
     return head(:forbidden) unless current_user.belongs_to_team?(@team) || current_user.admin?
     @edit_mode = true

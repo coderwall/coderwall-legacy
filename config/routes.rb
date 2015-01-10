@@ -119,9 +119,9 @@
 #                      alerts GET                   /alerts(.:format)                                      alerts#create
 #                             GET                   /alerts(.:format)                                      alerts#index
 #                 follow_user POST                  /users/:username/follow(.:format)                      follows#create {:type=>:user}
-#                    teamname GET                   /team/:slug(.:format)                                  teams#show
 #               teamname_edit GET                   /team/:slug/edit(.:format)                             teams#edit
 #                         job GET                   /team/:slug(/:job_id)(.:format)                        teams#show
+#                    teamname GET                   /team/:slug(.:format)                                  teams#show
 #                 accept_team GET                   /teams/:id/accept(.:format)                            teams#accept
 #            record_exit_team POST                  /teams/:id/record-exit(.:format)                       teams#record_exit
 #               visitors_team GET                   /teams/:id/visitors(.:format)                          teams#visitors
@@ -383,9 +383,9 @@ Coderwall::Application.routes.draw do
 
   post '/users/:username/follow' => 'follows#create', as: :follow_user, :type => :user
 
-  get '/team/:slug' => 'teams#show', as: :teamname
   get '/team/:slug/edit' => 'teams#edit', as: :teamname_edit
   get '/team/:slug/(:job_id)' => 'teams#show', as: :job
+  get '/team/:slug' => 'teams#show', as: :teamname
 
   resources :teams do
     member do
