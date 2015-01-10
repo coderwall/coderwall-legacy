@@ -215,7 +215,7 @@ class NetworksController < ApplicationController
   end
 
   def redirect_to_search
-    tags = @network.try(:slug).try(:to_a) || (params[:tags] && params[:tags].split('/')) || []
+    tags = @network.try(:slug).try(:split) || (params[:tags] && params[:tags].split('/')) || []
     tags = tags.map { |tag| "##{tag}" }.join(' ')
     redirect_to protips_path(search: tags, show_all: params[:show_all])
   end
