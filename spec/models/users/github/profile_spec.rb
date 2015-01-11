@@ -22,7 +22,7 @@
 require 'rails_helper'
 require 'vcr_helper'
 
-RSpec.describe Users::Github::Profile, type: :model do
+RSpec.describe Users::Github::Profile, type: :model, skip: true do
   it { is_expected.to belong_to :user }
   it { is_expected.to have_many :followers }
   it { is_expected.to have_many :repositories }
