@@ -18,21 +18,11 @@ class Teams::Account < ActiveRecord::Base
   has_many :plans, through: :account_plans
   belongs_to :admin, class_name: 'User'
 
-  validates :team_id, presence: true, uniqueness: true
   validates_presence_of :stripe_card_token
   validates_presence_of :stripe_customer_token
+  validates :team_id, presence: true, uniqueness: true
 
   attr_protected :stripe_customer_token, :admin_id
-
-  validate :stripe_customer_token, presence: true
-  validate :stripe_card_token, presence: true
-  validate :admin_id, :payer_is_team_admin
-
-  def payer_is_team_admin
-    if admin_id.nil? #or !team.admin?(admin)
-      errors.add(:admin_id, "must be team admin to create an account")
-    end
-  end
 
   def subscribe_to!(plan, force=false)
     self.plan_ids = [plan.id]
@@ -46,10 +36,10 @@ class Teams::Account < ActiveRecord::Base
   end
 
   def save_with_payment(plan=nil)
-    if valid?
+    if stripe_card_token
       create_customer unless plan.try(:one_time?)
       subscribe_to!(plan) unless plan.nil?
-      team.save!
+      save!
       return true
     else
       return false
