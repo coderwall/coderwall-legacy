@@ -1,0 +1,30 @@
+{
+    "provider":"linkedin",
+    "uid":"DlC5AmUPnM",
+    "info":{
+        "first_name":"Matthew",
+        "last_name":"Deiters",
+        "name":"Matthew Deiters",
+        "headline":"-",
+        "image":"http://media.linkedin.com/mpr/mprx/0_gPLYkP6hYm6ap1Vcxq5TkrTSYulmpzUc0tA3krFxTW5YiluBAvztoKPlKGAlx-sRyKF8wBv2M2QD",
+        "industry":"Computer Software",
+        "urls":{
+            "public_profile":"http://www.linkedin.com/in/matthewdeiters"
+        }
+    },
+    "credentials":{
+        "token":"acafe540-606a-4f73-aef7-f6eba276603",
+        "secret":"df7427be-3d93-4563-baef-d1d38826686"
+    },
+    "extra":{
+        "raw_info":{
+            "firstName":"Matthew",
+            "headline":"-",
+            "id":"DlC5AmUPnM",
+            "industry":"Computer Software",
+            "lastName":"Deiters",
+            "pictureUrl":"http://media.linkedin.com/mpr/mprx/0_gPLYkP6hYm6ap1Vcxq5TkrTSYulmpzUc0tA3krFxTW5YiluBAvztoKPlKGAlx-sRyKF8wBv2M2QD",
+            "publicProfileUrl":"http://www.linkedin.com/in/matthewdeiters"
+        }
+    }
+}

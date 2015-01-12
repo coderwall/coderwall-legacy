@@ -1,0 +1,46 @@
+{
+    "provider": "github",
+    "uid": "1_310_330",
+    "info": {
+        "nickname": "throwaway1",
+        "email": "md@asdf.com",
+        "name": null,
+        "urls": {
+            "GitHub": "https://github.com/throwaway1",
+            "Blog": null
+        }
+    },
+    "credentials": {
+        "token": "59cdff603a4e70d47f0a28b5ccaa3935aaa790cf",
+        "expires": false
+    },
+    "extra": {
+        "raw_info": {
+            "owned_private_repos": 0,
+            "type": "User",
+            "avatar_url" : "https://secure.gravatar.com/avatar/b08ed2199f8a88360c9679a57c4f9305?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+            "created_at" : "2012-01-06T20:49:02Z",
+            "login" : "throwaway1",
+            "disk_usage" : 0,
+            "plan" : {
+                "space" : "307_200",
+                "private_repos" : 0,
+                "name" : "free",
+                "collaborators" : 0
+            },
+            "public_repos": 0,
+            "following": 0,
+            "public_gists": 0,
+            "followers": 0,
+            "gravatar_id": "b08ed2199f8a88360c9679a57c4f9305",
+            "total_private_repos": 0,
+            "collaborators": 0,
+            "html_url": "https://github.com/throwaway1",
+            "url": "https://api.github.com/users/throwaway1",
+            "id": "1_310_330",
+            "private_gists": 0
+        }
+    }
+}
+
+
