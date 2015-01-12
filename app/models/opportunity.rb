@@ -59,6 +59,7 @@ class Opportunity < ActiveRecord::Base
   scope :valid, where(deleted: false).where('expires_at > ?', Time.now).order('created_at DESC')
   scope :by_city, ->(city) { where('LOWER(location_city) LIKE ?', "%#{city.try(:downcase)}%") }
   scope :by_tag, ->(tag) { where('LOWER(cached_tags) LIKE ?', "%#{tag}%") unless tag.nil? }
+  scope :by_query, ->(query) { where("name ~* ? OR description ~* ? OR cached_tags ~* ?", query, query, query) }
   #remove default scope
   default_scope valid
 

@@ -13,12 +13,38 @@ RSpec.describe OpportunitiesController, type: :controller do
       expect(response).to render_template(['opportunities/index', 'layouts/jobs'])
     end
 
-    context "when it's filtered by remote opportunities" do
-      before { @opportunity = Fabricate(:opportunity, remote: true, location: "Anywhere") }
+    context "when it's filtered" do
+      context "by remote opportunities" do
+        before(:all) { @opportunity1 = Fabricate(:opportunity, remote: true, location: "Anywhere") }
 
-      it "should assign the remote opportunities to @jobs" do
-        get :index, location: 'remote'
-        expect(assigns(:jobs)).to be_include(@opportunity)
+        it "should assign the remote opportunities to @jobs" do
+          get :index, location: nil, remote: 'true'
+          expect(assigns(:jobs)).to be_include(@opportunity1)
+        end
+      end
+
+      context "by query" do
+        before(:all) { @opportunity2 = Fabricate(:opportunity, remote: true, location: "Anywhere", location_city: "San Francisco") }
+
+        it "should assign the remote opportunities to @jobs which have the keyword 'senior rails' [attr: name]" do
+          get :index, location: nil, q: 'senior rails'
+          expect(assigns(:jobs)).to be_include(@opportunity2)
+        end
+
+        it "should assign the remote opportunities to @jobs which have the keyword 'underpinnings' [attr: description]" do
+          get :index, location: nil, q: 'underpinnings'
+          expect(assigns(:jobs)).to be_include(@opportunity2)
+        end
+
+        it "should assign the remote opportunities to @jobs which have the keyword 'jquery' [attr: tag]" do
+          get :index, location: nil, q: 'jquery'
+          expect(assigns(:jobs)).to be_include(@opportunity2)
+        end
+
+        it "should NOT assign the remote opportunities to @jobs which have the keyword dev-ops" do
+          get :index, location: nil, q: 'dev-ops'
+          expect(assigns(:jobs)).to_not be_include(@opportunity2)
+        end
       end
     end
   end

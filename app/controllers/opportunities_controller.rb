@@ -76,21 +76,20 @@ class OpportunitiesController < ApplicationController
     chosen_location = (params[:location] || closest_to_user(current_user)).try(:titleize)
     chosen_location = nil if chosen_location == 'Worldwide'
 
+    @remote_allowed = params[:remote]     == 'true'
+
     @page = params[:page].try(:to_i) || 1
     tag = params[:skill].gsub(/\-/, ' ').downcase unless params[:skill].nil?
 
-
-    @jobs = get_jobs_for(chosen_location, tag, @page)
+    @jobs = get_jobs_for(chosen_location, tag, @page, params[:q], @remote_allowed)
     @jobs_left = @jobs.count
     @jobs = @jobs.limit(20)
 
-
-
     chosen_location = 'Worldwide' if chosen_location.nil?
     @locations = Rails.cache.fetch("job_locations_#{params[:location]}_#{params[:skill]}", expires_in: 1.hour) do
-      Opportunity.by_tag(tag).flat_map(&:locations).reject { |loc| loc == "Worldwide" }.push("Worldwide").uniq.compact
+      Opportunity.by_tag(tag).flat_map(&:locations).reject { |loc| loc == "Worldwide" }.uniq.sort.compact
     end
-    @locations.delete(chosen_location) unless @locations.frozen?
+    # @locations.delete(chosen_location) unless @locations.frozen?
     params[:location] = chosen_location
     @lat, @lng = geocode_location(chosen_location)
 
@@ -164,18 +163,17 @@ class OpportunitiesController < ApplicationController
     Rails.cache.fetch("geocoded_location_of_#{location}") { User.where('LOWER(city) = ?', location.downcase).map { |u| [u.lat, u.lng] }.first || [0.0, 0.0] }
   end
 
-  def get_jobs_for(chosen_location, tag, page)
+  def get_jobs_for(chosen_location, tag, page, query = nil, remote_allowed = false)
     scope = Opportunity
 
-    if chosen_location.present?
-      if chosen_location == "Remote"
-        scope = scope.where(remote: true)
-      else
-        scope = scope.by_city(chosen_location)
-      end
+    if remote_allowed
+      scope = scope.where(remote: true)
+    else
+      scope = scope.by_city(chosen_location) if chosen_location && chosen_location.length > 0
     end
 
     scope = scope.by_tag(tag) unless tag.nil?
+    scope = scope.by_query(query) if query
     # TODO: Verify that there are no unmigrated teams
     scope = scope.where('team_id is not null')
     scope.offset((page-1) * 20)
