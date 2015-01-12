@@ -22,7 +22,7 @@ class TeamsController < ApplicationController
   def show
     #FIXME
     show_params = params.permit(:job_id, :refresh, :callback, :id, :slug)
-    @team = team_from_params(slug: show_params[:slug], id: show_params[:id])
+    @team ||= team_from_params(slug: show_params[:slug], id: show_params[:id])
 
     respond_to do |format|
       format.html do
@@ -53,8 +53,6 @@ class TeamsController < ApplicationController
         render :json => response
       end
     end
-  rescue
-    redirect_to teamname_url(:slug => params[:id])
   end
 
   def new

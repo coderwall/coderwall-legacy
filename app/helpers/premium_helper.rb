@@ -183,7 +183,7 @@ module PremiumHelper
         location: 'Anywhere',
         link: 'http://coderwall.com',
         cached_tags: 'Skilled, Awesome',
-        tags: 'Java, TDD, Heroku',
+        tag_list: %w(Java TDD Heroku),
         location_city: 'San Francisco, CA',
         team_id: @team.id || Team.featured.first.id
     )
