@@ -24,6 +24,7 @@ class Teams::Member < ActiveRecord::Base
   belongs_to :user
 
   validates_uniqueness_of :user_id, scope: :team_id
+  validates :team_id, :user_id, :presence => true
 
   scope :active, -> { where(state: 'active') }
   scope :pending, -> { where(state: 'pending') }
