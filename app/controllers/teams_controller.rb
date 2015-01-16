@@ -176,7 +176,7 @@ class TeamsController < ApplicationController
 
     @team = Team.find(accept_params[:id])
     if accept_params[:r] && @team.has_user_with_referral_token?(accept_params[:r])
-      @team.add_member(current_user)
+      @team.add_member(current_user, 'active')
       current_user.update_attribute(:referred_by, accept_params[:r]) if current_user.referred_by.nil?
       flash[:notice] = "Welcome to team #{@team.name}"
       record_event("accepted team invite")
@@ -284,7 +284,6 @@ class TeamsController < ApplicationController
   end
 
   def job_public_ids
-    Opportunity
     Rails.cache.fetch('all-jobs-public-ids', :expires_in => 1.hour) { Opportunity.group('team_id, created_at, public_id').pluck(:public_id) }
   end
 
