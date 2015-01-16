@@ -471,22 +471,15 @@ class Team < ActiveRecord::Base
     @sorted_members = members.order('score_cache DESC')
   end
 
-  def add_member(user)
-    Rails.logger.warn("Called #{self.class.name}#add_member(#{user.inspect}")
-
-    member = members.select { |m| m.user_id == user.id }.first
-    return member if member
-
+  def add_member(user, state='pending')
     member = members.create(user_id: user.id)
-    save!
+    member.update_attribute(:state, state)
     member
   end
   alias_method :add_user, :add_member
 
   def remove_member(user)
-    return nil unless member = members.select { |m| m.user_id == user.id }
-    members.destroy(member)
-    save!
+    members.destroy_all(user_id: user.id)
   end
 
   attr_accessor :skip_validations
