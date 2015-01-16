@@ -193,7 +193,7 @@ class User < ActiveRecord::Base
   has_many :github_repositories, through: :github_profile , source: :repositories
 
   belongs_to :team, class_name: 'Team'
-  has_one :membership, class_name: 'Teams::Member'
+  has_one :membership, class_name: 'Teams::Member', dependent: :destroy
 
   def on_premium_team?
     if membership
