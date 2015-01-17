@@ -106,12 +106,8 @@ module TeamsHelper
     end
   end
 
-  def no_account_no_team?
-    !signed_in?
-  end
-
   def member_no_team?
-    signed_in? && current_user.team.nil?
+    current_user.membership.nil?
   end
 
   def add_job_path(team)
