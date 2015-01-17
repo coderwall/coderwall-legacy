@@ -3,7 +3,7 @@ class MembersController < ApplicationController
 
   def destroy
     self_removal = current_user.id == params[:id]
-    return head(:forbidden) unless signed_in? && (team.admin?(current_user) || self_removal)
+    return head(:forbidden) unless signed_in? && (@team.admin?(current_user) || self_removal)
     @team.members.find_by_user_id!(params[:id]).destroy
 
     if self_removal

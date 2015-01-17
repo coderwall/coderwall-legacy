@@ -141,14 +141,14 @@
               %li=link_to('', edit_user_path(@user) + '#social', :class=>'add-network track', 'data-action' => 'add social bookmark', 'data-from' => 'profile sidebar')
 
 
-      -if @user.team
+      -if @user.membership
         %li
           %h4 Team
-          %a.team-link.track{:href => friendly_team_path(@user.team), 'data-action' => 'view team', 'data-from' => 'profile sidebar'}
-            %span.team-avatar=image_tag(@user.team.avatar_url, :width => 22, :height => 22)
-            %div{:itemprop => :affiliation}=truncate("#{@user.team.name}", :length => 28)
+          %a.team-link.track{:href => friendly_team_path(@user.membership.team), 'data-action' => 'view team', 'data-from' => 'profile sidebar'}
+            %span.team-avatar=image_tag(@user.membership.team.avatar_url, :width => 22, :height => 22)
+            %div{:itemprop => :affiliation}=truncate("#{@user.membership.team.name}", :length => 28)
           -if viewing_self?
-            = link_to 'Leave team', team_member_path(@user.team, @user), :method => :delete, :confirm => "Are you sure you want to leave team #{@user.team.name}", :class => "leave-team track", 'data-action' => 'leave team', 'data-from' => 'profile page'
+            = link_to 'Leave team', team_member_path(@user.membership.team, @user), :method => :delete, :confirm => "Are you sure you want to leave team #{@user.membership.team.name}", :class => "leave-team track", 'data-action' => 'leave team', 'data-from' => 'profile page'
 
       -elsif viewing_self?
         %li.team-self
