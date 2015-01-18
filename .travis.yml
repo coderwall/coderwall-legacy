@@ -1,16 +1,11 @@
 language: ruby
 rvm:
 - 2.1.5
+cache: bundler
+sudo: false
 bundler_args: "--without development production"
 services:
 - redis-server
-before_install:
-- wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb
-- sudo dpkg --purge elasticsearch
-- sudo dpkg -i elasticsearch-0.90.13.deb
-- sudo service elasticsearch start
-- gem update --system
-- travis_retry gem install bundler --pre
 before_script:
 - cp -f config/database.travis.yml config/database.yml
 - cp -f .env.example .env
