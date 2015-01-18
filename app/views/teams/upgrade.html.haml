@@ -25,28 +25,22 @@
     %section.title#learnmore
       %h1 A simple &amp; engaging way to turn your organizations’ best qualities into an engineer magnet
 
-    -if no_account_no_team?
-      %section.feature.cf
-        .intro
-          %h2 Signin to create your team
-          .signup-buttons
-            =render 'sessions/signup'
-    -elsif member_no_team?
+    - if member_no_team?
       %section.feature.cf
         .intro
           =render 'form'
           .results
       %section.feature.payment.cf.hide
-    -elsif @team.can_post_job?
+    - elsif @team.can_post_job?
       %section.feature.cf
         .intro
           = form_tag new_team_opportunity_path(@team), :method => :get do
             #post-a-job
               .save
                 %input.button{:type => "submit", :value => "Post A Job"}
-    -else
+    - else
       %section.feature.payment.cf
-        =render :partial => "payment", :locals => {:account => @team.account || current_user.team.build_account, :plan => @team.account.try(:current_plan)}
+        = render partial: "payment", locals: { account: @team.account || @team.build_account, plan: @team.account.try(:current_plan) }
 
 
 
