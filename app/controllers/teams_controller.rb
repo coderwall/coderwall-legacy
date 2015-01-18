@@ -77,7 +77,7 @@ class TeamsController < ApplicationController
     @team = Team.new(name: team_name)
     if @team.save
       record_event('created team')
-      @team.add_user(current_user)
+      @team.add_user(current_user, 'active', 'admin')
 
       flash.now[:notice] = "Successfully created a team #{@team.name}"
     else

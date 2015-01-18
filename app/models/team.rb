@@ -471,9 +471,9 @@ class Team < ActiveRecord::Base
     @sorted_members = members.order('score_cache DESC')
   end
 
-  def add_member(user, state='pending')
+  def add_member(user, state='pending', role='member')
     member = members.create(user_id: user.id)
-    member.update_attribute(:state, state)
+    member.update_attributes(state: state, role: role)
     member
   end
   alias_method :add_user, :add_member
