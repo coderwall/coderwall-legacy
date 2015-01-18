@@ -1,18 +1,19 @@
 language: ruby
 rvm:
-- 2.1.5
+  - 2.1.5
 cache: bundler
 sudo: false
 bundler_args: "--without development production"
 services:
-- redis-server
+  - redis-server
+  - elasticsearch
 before_script:
-- cp -f config/database.travis.yml config/database.yml
-- cp -f .env.example .env
-- bundle exec rake db:create:all
-- bundle exec rake db:schema:load
-- bundle exec rake db:migrate
-- bundle exec rake db:test:prepare
+  - cp -f config/database.travis.yml config/database.yml
+  - cp -f .env.example .env
+  - bundle exec rake db:create:all
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:migrate
+  - bundle exec rake db:test:prepare
 env:
   global:
     secure: X7TELzrdZJg8lph9n392igWcUfzWpNUb0wrYvKRIOj1Uz+vT9xrAdv8txJgA/HWwby7gNR3IOcoa3CamxyGCstBnrzKu/xKxk9BYpp5BSfSTLeKrTZf7X45kWc2w70VpgrYUgCmfT1xQxuC7WIgUeqiF7zn7XWogpv8jy6JrFC0=
