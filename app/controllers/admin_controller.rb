@@ -1,6 +1,7 @@
 class AdminController < BaseAdminController
 
   def index
+    @networks = Network.where('protips_count_cache > 0').order('protips_count_cache desc')
   end
 
   def teams

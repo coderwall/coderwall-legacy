@@ -96,7 +96,7 @@ class Network < ActiveRecord::Base
 
   def tag_with_name!
     unless self.tag_list.include? self.name
-      self.tag_list = (self.tag_list + [self.name, self.slug])
+      self.tag_list.add(self.slug)
     end
   end
 
@@ -238,6 +238,10 @@ class Network < ActiveRecord::Base
     Skill.where(name: self.tag_list).select('DISTINCT(user_id)').map(&:user).each do |member|
       member.join(self)
     end
+  end
+
+  def recent_protips_count
+    self.protips.where('protips.created_at > ?', 1.week.ago).count
   end
 
 end
