@@ -184,10 +184,10 @@ group :test do
   gem 'stripe-ruby-mock', git: 'https://github.com/rebelidealist/stripe-ruby-mock', branch: 'live-tests'
 end
 
-gem 'bugsnag'
 group :production do
   gem 'newrelic_rpm'
   gem 'puma'
   gem 'rails_12factor'
   gem 'heroku-deflater'
+  gem 'bugsnag'
 end
