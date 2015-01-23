@@ -184,7 +184,7 @@ group :test do
   gem 'stripe-ruby-mock', git: 'https://github.com/rebelidealist/stripe-ruby-mock', branch: 'live-tests'
 end
 
-gem 'airbrake'
+gem 'bugsnag'
 group :production do
   gem 'newrelic_rpm'
   gem 'puma'

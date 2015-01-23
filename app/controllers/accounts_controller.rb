@@ -5,7 +5,6 @@ class AccountsController < ApplicationController
   before_action :ensure_account_admin, except: [:create]
   before_action :determine_plan, only: [:create, :update]
   before_action :ensure_eligibility, only: [:new]
-  before_action :paying_user_context, if: ->() { Rails.env.production? }
 
   def new
     @account ||= current_user.team.build_account
@@ -31,7 +30,6 @@ class AccountsController < ApplicationController
       redirect_to new_team_opportunity_path(@team), notice: "You are subscribed to #{@plan.name}." + plan_capability(@plan, @team)
     else
       Rails.logger.error "Error creating account #{@account.errors.inspect}"
-      # Honeybadger.notify(error_class: 'Payments', error_message: @account.errors.full_messages.join("\n"), parameters: params) if Rails.env.production?
       flash[:error] = @account.errors.full_messages.join("\n")
       redirect_to employers_path
     end
@@ -101,10 +99,6 @@ class AccountsController < ApplicationController
       message = "You can now post one job for 30 days"
     end
     message
-  end
-
-  def paying_user_context
-    # Honeybadger.context(user_email: current_user.try(:email)) if current_user
   end
 
   def account_params
