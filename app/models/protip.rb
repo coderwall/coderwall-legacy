@@ -97,6 +97,7 @@ class Protip < ActiveRecord::Base
   validates :body, presence: true
   validates :kind, presence: true, inclusion: { in: KINDS }
   validates :topic_list, length: { minimum: 1 }
+  validates :slug, presence: true
 
   after_validation :tag_user
   before_create :assign_random_id
