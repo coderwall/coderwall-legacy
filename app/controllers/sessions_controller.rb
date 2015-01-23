@@ -42,18 +42,15 @@ class SessionsController < ApplicationController
     end
   rescue Faraday::Error::ConnectionFailed => ex
     Rails.logger.error("Faraday::Error::ConnectionFailed => #{ex.message}, #{ex.inspect}")
-    # notify_honeybadger(ex) if Rails.env.production?
     record_event("error", message: "attempt to reuse a linked account")
     flash[:error] = "Error linking #{oauth[:info][:nickname]} because it is already associated with a different member."
     redirect_to(root_url)
   rescue ActiveRecord::RecordNotUnique => ex
-    # notify_honeybadger(ex) if Rails.env.production?
     record_event("error", message: "attempt to reuse a linked account")
     flash[:error] = "Error linking #{oauth[:info] && oauth[:info][:nickname]} because it is already associated with a different member."
     redirect_to(root_url)
   rescue Exception => ex
     Rails.logger.error("Failed to link account because #{ex.message} => '#{oauth}'")
-    # notify_honeybadger(ex) if Rails.env.production?
     record_event("error", message: "signup failure")
     flash[:notice] = "Looks like something went wrong. Please try again."
     redirect_to(root_url)

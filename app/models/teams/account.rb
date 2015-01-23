@@ -45,12 +45,10 @@ class Teams::Account < ActiveRecord::Base
       return false
     end
   rescue Stripe::CardError => e
-    # Honeybadger.notify(e) if Rails.env.production?
     Rails.logger.error "Stripe error while creating customer: #{e.message}" if ENV['DEBUG']
     errors.add :base, e.message
     return false
   rescue Stripe::InvalidRequestError => e
-    # Honeybadger.notify(e) if Rails.env.production?
     Rails.logger.error "Stripe error while creating customer: #{e.message}"  if ENV['DEBUG']
     errors.add :base, "There was a problem with your credit card."
     # throw e if Rails.env.development?
