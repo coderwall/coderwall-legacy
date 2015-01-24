@@ -24,7 +24,6 @@ module Coderwall
 
     config.filter_parameters += [:password]
 
-    config.ember.variant = Rails.env.downcase.to_sym
     config.assets.js_compressor = :uglifier
 
     config.after_initialize do
