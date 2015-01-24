@@ -4,6 +4,7 @@
 [![Code Climate](http://img.shields.io/codeclimate/github/assemblymade/coderwall.svg)](https://codeclimate.com/github/assemblymade/coderwall)
 [![Test Coverage](http://img.shields.io/codeclimate/coverage/github/assemblymade/coderwall.svg)](https://codeclimate.com/github/assemblymade/coderwall)
 [![Dependency Status](http://img.shields.io/gemnasium/assemblymade/coderwall.svg)](https://gemnasium.com/assemblymade/coderwall)
+<a href="https://assembly.com/coderwall/bounties?utm_campaign=assemblage&utm_source=coderwall&utm_medium=repo_badge"><img src="http://badger.asm.co/coderwall/badges/tasks.svg" height="20px" alt="Open Tasks" /></a>
 
 A community for developers to unlock & share new skills.
 
