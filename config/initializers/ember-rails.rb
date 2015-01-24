@@ -1,1 +1,0 @@
-Coderwall::Application.config.handlebars.templates_root = 'ember/templates'

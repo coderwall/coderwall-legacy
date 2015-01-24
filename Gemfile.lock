@@ -1,18 +1,4 @@
 GIT
-  remote: git://github.com/emberjs/ember-rails.git
-  revision: 5e5a398f3c67c3a3b84b7513b93b22bf81055cc9
-  specs:
-    ember-rails (0.15.0)
-      active_model_serializers
-      barber (>= 0.4.1)
-      ember-data-source (>= 1.0.0.beta.5)
-      ember-source (>= 1.1.0)
-      execjs (>= 1.2)
-      handlebars-source (> 1.0.0)
-      jquery-rails (>= 1.0.17)
-      railties (>= 3.1)
-
-GIT
   remote: git://github.com/nixme/jazz_hands.git
   revision: 5e4b48f145883ecb14b55bf04eacc28ac9662676
   branch: bring-your-own-debugger
@@ -65,8 +51,6 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
-    active_model_serializers (0.9.0)
-      activemodel (>= 3.2)
     activemodel (3.2.21)
       activesupport (= 3.2.21)
       builder (~> 3.0.0)
@@ -105,10 +89,6 @@ GEM
       jquery-rails
       railties
     backports (3.6.0)
-    barber (0.4.2)
-      ember-source
-      execjs
-      handlebars-source
     better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -222,10 +202,6 @@ GEM
       http_parser.rb (>= 0.6.0)
     em-socksify (0.3.0)
       eventmachine (>= 1.0.0.beta.4)
-    ember-data-source (1.0.0.beta.9)
-      ember-source
-    ember-source (1.7.0)
-      handlebars-source (~> 1.0)
     ephemeral (2.3.3)
       activesupport
     equalizer (0.0.9)
@@ -322,12 +298,6 @@ GEM
       rspec (>= 2.14, < 4.0)
     haml (4.0.5)
       tilt
-    hamlbars (2.1.1)
-      execjs (>= 1.2)
-      haml
-      sprockets (>= 2.0)
-      tilt
-    handlebars-source (1.3.0)
     hashie (2.1.2)
     hashr (0.0.22)
     heroku-deflater (0.5.3)
@@ -758,7 +728,6 @@ DEPENDENCIES
   dotenv-rails
   elasticsearch-model
   elasticsearch-rails
-  ember-rails!
   fabrication-rails
   faraday (~> 0.8.1)
   feedjira
@@ -774,8 +743,6 @@ DEPENDENCIES
   grackle
   guard-rspec
   haml
-  hamlbars
-  handlebars-source
   hashie
   heroku-deflater
   jazz_hands!

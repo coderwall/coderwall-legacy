@@ -1,2 +1,0 @@
-= hb 'each events' do
-  = hb 'view Coderwall.EventView', :eventBinding => 'this'

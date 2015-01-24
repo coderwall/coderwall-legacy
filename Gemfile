@@ -18,8 +18,6 @@ gem 'rails-assets-jquery-dropdown'
 
 # Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
 gem 'backbone-on-rails'
-gem 'handlebars-source'
-gem 'ember-rails', github: 'emberjs/ember-rails'
 
 # Load environment variables first
 gem 'dotenv-rails', groups: [:development, :test]
@@ -31,7 +29,6 @@ gem 'carrierwave_backgrounder' #background processing of images
 
 # HTML
 gem 'haml'
-gem 'hamlbars' #haml support for handlebars/ember.js
 gem 'slim-rails'
 
 # Postgres
