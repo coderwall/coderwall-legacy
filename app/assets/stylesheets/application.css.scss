@@ -360,7 +360,7 @@ h4 {
     #tweetbtn {
       float: right;
       width: 124px;
-      overflow: hidden;
+      margin-top: -7px;
     }
     #footer-nav {
       ul {
@@ -1801,6 +1801,7 @@ input[type=file].safari5-upload-hack {
                     #tweetbtn {
                       float: none;
                       display: block;
+                      margin-top: -7px;
                       margin-bottom: 15px;
                     }
                     #footer-nav {
@@ -2016,7 +2017,6 @@ input[type=file].safari5-upload-hack {
       #tweetbtn {
         float: none;
         width: 124px;
-        overflow: hidden;
         margin-bottom: 10px;
       }
       #footer-nav {
