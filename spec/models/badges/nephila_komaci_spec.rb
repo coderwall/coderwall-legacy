@@ -1,13 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe NephilaKomaci, type: :model do
-  let(:languages) do {
-    'PHP' => 2_519_686,
-    'Python' => 76_867
-  } end
-  let(:repo) { Fabricate(:github_repo, languages: languages) }
-  let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
-  let(:user) { Fabricate(:user, github_id: profile.github_id) }
+  let(:user) { Fabricate(:user, github: 'codebender') }
 
   before :all do
     Fact.delete_all
@@ -17,8 +11,9 @@ RSpec.describe NephilaKomaci, type: :model do
     expect(NephilaKomaci.description).not_to be_blank
   end
 
-  it 'should award php dev with badge' do
-    user.build_github_facts
+  it 'should award the badge if the user has a original PHP dominent repo' do
+    fact = Fabricate(:github_original_fact, context: user,
+      tags: %w(PHP repo original personal github))
 
     badge = NephilaKomaci.new(user)
     expect(badge.award?).to eq(true)

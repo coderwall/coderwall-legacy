@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Octopussy, type: :model do
-  let(:repo) { Fabricate(:github_repo) }
-  let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
-  let(:user) { Fabricate(:user, github_id: profile.github_id) }
+  let(:user) { Fabricate(:user, github: 'codebender') }
   let(:pjhyett) { Fabricate(:user, github: 'pjhyett') }
 
   it 'should have a name and description' do
@@ -15,9 +13,9 @@ RSpec.describe Octopussy, type: :model do
     create_team_github = Fabricate(:team, name: "Github")
     create_team_github.add_member(pjhyett)
 
-    random_dude = repo.followers.create! login: 'jmcneese'
-
-    user.build_github_facts
+    fact = Fabricate(:github_original_fact, context: user,
+      tags: %w(Ruby repo original personal github),
+      metadata: { watchers: 'rubysolos' })
 
     badge = Octopussy.new(user)
     expect(badge.award?).to eq(false)
@@ -27,14 +25,25 @@ RSpec.describe Octopussy, type: :model do
     create_team_github = Fabricate(:team, name: "Github")
     create_team_github.add_member(pjhyett)
 
-    github_founder = repo.followers.create! login: 'pjhyett'
-    repo.save!
-
-    user.build_github_facts
+    fact = Fabricate(:github_original_fact, context: user,
+      tags: %w(Ruby repo original personal github),
+      metadata: { watchers: 'pjhyett' })
 
     badge = Octopussy.new(user)
     expect(badge.award?).to eq(true)
     expect(badge.reasons[:links]).not_to be_empty
+  end
+
+  it 'does not award forked repos' do
+    create_team_github = Fabricate(:team, name: "Github")
+    create_team_github.add_member(pjhyett)
+
+    fact = Fabricate(:github_original_fact, context: user,
+      tags: %w(Ruby repo fork personal github),
+      metadata: { watchers: 'pjhyett' })
+
+    badge = Octopussy.new(user)
+    expect(badge.award?).to eq(false)
   end
 
   it 'should cache github team members' do

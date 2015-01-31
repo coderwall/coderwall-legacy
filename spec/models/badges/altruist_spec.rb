@@ -6,7 +6,7 @@ RSpec.describe Altruist, type: :model do
     expect(Altruist.description).to include('20')
   end
 
-  it 'should award user if they have 50 or more original repos with contents' do
+  it 'should award user if they have 20 or more original repos with contents' do
     user = Fabricate(:user, github: 'mdeiters')
 
     20.times do

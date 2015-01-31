@@ -10,11 +10,8 @@ class EarlyAdopter < BadgeBase
   FOUNDING_DATE = Date.parse('Oct 19, 2007')
 
   def reasons
-    found = user.facts.detect do |fact|
-      fact.tagged?('github', 'account-created')
-    end
-    if found && found.relevant_on <= FOUNDING_DATE + 6.months
-      "Created an account within GitHub's first 6 months on #{found.relevant_on.to_date.to_s(:long).to_s.capitalize}."
+    if user.github_profile && user.github_profile.github_created_at <= FOUNDING_DATE + 6.months
+      "Created an account within GitHub's first 6 months on #{user.github_profile.github_created_at.to_date.to_s(:long).to_s.capitalize}."
     else
       nil
     end

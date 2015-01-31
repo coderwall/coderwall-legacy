@@ -23,8 +23,10 @@ module Users
   module Github
     class Profile < ActiveRecord::Base
       belongs_to :user
-      has_many :followers, class_name: 'Users::Github::Profiles::Follower' , foreign_key: :follower_id  , dependent: :delete_all
-      has_many :repositories, :class_name => 'Users::Github::Repository' , foreign_key: :owner_id
+      has_many :followers, class_name: 'Users::Github::Profiles::Follower',
+        foreign_key: :follower_id  , dependent: :delete_all
+      has_many :repositories, class_name: 'Users::Github::Repository',
+        foreign_key: :owner_id
       validates :login  , presence: true, uniqueness: true
       before_validation :copy_login_from_user,  on: :create
       after_create :extract_data_from_github
