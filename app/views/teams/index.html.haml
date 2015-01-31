@@ -1,7 +1,3 @@
--content_for :javascript do
-  -#%script="logUsage('viewed', 'amazing teams');"
-  =javascript_include_tag 'ember/teams'
-
 -content_for :mixpanel do
   =record_view_event('teams page')
 

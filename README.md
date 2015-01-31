@@ -20,7 +20,6 @@ Coderwall is built from the following open source components:
 
 - [Backbone.js](https://github.com/jashkenas/backbone)
 - [ElasticSearch](http://www.elasticsearch.org/)
-- [Ember.js](https://github.com/emberjs/ember.js)
 - [jQuery](http://jquery.com/)
 - [PostgreSQL](http://www.postgresql.org/)
 - [Redis](http://redis.io/)

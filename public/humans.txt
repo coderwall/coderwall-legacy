@@ -129,7 +129,7 @@ Location: China
 /* SITE */
 Last update: 2014/31/12
 Standards: HTML5, CSS3
-Components: Ruby on Rails, jQuery, Sass, Backbone.js, Ember.js, PostgreSQL, ElasticSearch, Redis, etc.
+Components: Ruby on Rails, jQuery, Sass, Backbone.js, PostgreSQL, ElasticSearch, Redis, etc.
 Software: Vim, Tmux, Vagrant, Git, etc.
 Language: English
 IDE: Vim
