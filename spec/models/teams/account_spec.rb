@@ -101,10 +101,8 @@ RSpec.describe Teams::Account, type: :model do
         account[:stripe_customer_token] = 'invalid_customer_token'
         account[:admin_id] = some_random_user.id
         team.build_account(account)
-        team.account.save_with_payment
-        team.reload
-        expect(team.account).to be_nil
-
+        expect(team.account.stripe_customer_token).to be_nil
+        expect(team.account.admin_id).to be_nil
       end
     end
   end
