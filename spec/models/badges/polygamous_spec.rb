@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Polygamous, type: :model, skip: true do
+RSpec.describe Polygamous, type: :model do
 
   it 'should have a name and description' do
     expect(Polygamous.name).not_to be_blank

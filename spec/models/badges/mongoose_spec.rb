@@ -1,14 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Mongoose, type: :model, skip: true do
-  let(:languages) do {
-    'Ruby' => 2_519_686,
-    'JavaScript' => 6107,
-    'Python' => 76_867
-  } end
-  let(:repo) { Fabricate(:github_repo, languages: languages) }
-  let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
-  let(:user) { Fabricate(:user, github_id: profile.github_id) }
+RSpec.describe Mongoose, type: :model do
+  let(:user) { Fabricate(:user, github: 'codebender') }
 
   before :all do
     Fact.delete_all
@@ -19,16 +12,25 @@ RSpec.describe Mongoose, type: :model, skip: true do
   end
 
   it 'should award ruby dev with one ruby repo' do
-    user.build_github_facts
+    fact = Fabricate(:github_original_fact, context: user,
+      tags: %w(Ruby repo original personal github))
 
     badge = Mongoose.new(user)
     expect(badge.award?).to eq(true)
     expect(badge.reasons[:links]).not_to be_empty
   end
 
-  it 'should not for a python dev' do
-    languages.delete('Ruby')
-    user.build_github_facts
+  it 'should not for a dev with no repo with ruby as the dominent language' do
+    fact = Fabricate(:github_original_fact, context: user,
+      tags: %w(Python repo original personal github))
+
+    badge = Mongoose.new(user)
+    expect(badge.award?).to eq(false)
+  end
+
+  it 'doesnt award the badge if the repo is a fork' do
+    fact = Fabricate(:github_original_fact, context: user,
+      tags: %w(Ruby repo fork personal github))
 
     badge = Mongoose.new(user)
     expect(badge.award?).to eq(false)

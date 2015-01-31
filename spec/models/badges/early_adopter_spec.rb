@@ -1,16 +1,20 @@
 require 'spec_helper'
 
-RSpec.describe EarlyAdopter, type: :model, skip: true do
+RSpec.describe EarlyAdopter, type: :model do
+  let(:user) { Fabricate(:user, github: 'codebender') }
+
+  before(:each) do
+    allow(ExtractGithubProfile).to receive(:perform_async)
+  end
+
   it 'should have a name and description' do
     expect(EarlyAdopter.name).not_to be_blank
     expect(EarlyAdopter.description).not_to be_blank
   end
 
   it 'should award user if they joined github within 6 months of founding' do
-    profile = Fabricate(:github_profile, created_at: '2008/04/14 15:53:10 -0700')
-    user = Fabricate(:user, github_id: profile.github_id)
-
-    user.build_github_facts
+    profile = Fabricate(:github_profile, user: user,
+      github_created_at: '2008/04/14 15:53:10 -0700')
 
     badge = EarlyAdopter.new(user)
     expect(badge.award?).to eq(true)
@@ -18,11 +22,14 @@ RSpec.describe EarlyAdopter, type: :model, skip: true do
   end
 
   it 'should not award the user if the they joined after 6 mounts of github founding' do
-    profile = Fabricate(:github_profile, created_at: '2009/04/14 15:53:10 -0700')
-    user = Fabricate(:user, github_id: profile.github_id)
+    profile = Fabricate(:github_profile, user: user,
+      github_created_at: '2009/04/14 15:53:10 -0700')
 
-    user.build_github_facts
+    badge = EarlyAdopter.new(user)
+    expect(badge.award?).to eq(false)
+  end
 
+  it 'does not award the badge if the user doesnt have a github profile' do
     badge = EarlyAdopter.new(user)
     expect(badge.award?).to eq(false)
   end

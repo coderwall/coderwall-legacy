@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Bear, type: :model, skip: true do
+RSpec.describe Bear, type: :model do
   it 'should have a name and description' do
     expect(Bear.description).not_to be_blank
   end

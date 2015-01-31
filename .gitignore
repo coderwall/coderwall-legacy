@@ -54,7 +54,6 @@ erd.pdf
 vagrant.yml
 git_stats
 *.iml
-vcr_cassettes
 dump
 BACKUP
 Guardfile

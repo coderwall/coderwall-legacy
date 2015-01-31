@@ -1,12 +1,11 @@
 require 'spec_helper'
 
-RSpec.describe BadgeBase, type: :model, skip: true do
-  let(:repo) { Fabricate(:github_repo) }
-  let(:profile) { Fabricate(:github_profile, github_id: repo.owner.github_id) }
-  let(:user) { Fabricate(:user, github_id: profile.github_id) }
+RSpec.describe BadgeBase, type: :model do
+  let(:user) { Fabricate(:user, github: 'codebender') }
 
   it 'should check to see if it needs to award users' do
-    stub_request(:get, 'http://octocoder.heroku.com/rails/rails/mdeiters').to_return(body: '{}')
+    stub_request(:get, 'http://octocoder.heroku.com/rails/rails/mdeiters').
+      to_return(body: '{}')
     allow(Octopussy).to receive(:new) do |*_args|
       octopussy_mock = double('Octopussy')
       expect(octopussy_mock).to receive(:valid?).and_return(true)
@@ -34,13 +33,4 @@ RSpec.describe BadgeBase, type: :model, skip: true do
     expect(bar.image_name).to eq('bar.png')
   end
 
-  class NotaBadge < BadgeBase
-    def award?
-      true
-    end
-
-    def reasons
-      ["I don't need a reason"]
-    end
-  end
 end

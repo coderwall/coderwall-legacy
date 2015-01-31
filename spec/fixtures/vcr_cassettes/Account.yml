@@ -100,7 +100,7 @@ http_interactions:
           },
           "default_card": "card_14KQsB4AnjI1zHWBRaAUrENZ"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:49:49 GMT
 - request:
     method: get
@@ -202,7 +202,7 @@ http_interactions:
           },
           "default_card": "card_14KQsB4AnjI1zHWBRaAUrENZ"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:49:50 GMT
 - request:
     method: post
@@ -287,7 +287,7 @@ http_interactions:
           "discount": null,
           "metadata": {}
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:49:50 GMT
 - request:
     method: get
@@ -389,7 +389,7 @@ http_interactions:
           },
           "default_card": "card_14KQsF4AnjI1zHWBXdzm90Ms"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:49:52 GMT
 - request:
     method: get
@@ -491,7 +491,7 @@ http_interactions:
           },
           "default_card": "card_14KQsF4AnjI1zHWBXdzm90Ms"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:49:53 GMT
 - request:
     method: post
@@ -576,7 +576,7 @@ http_interactions:
           "discount": null,
           "metadata": {}
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:49:54 GMT
 - request:
     method: get
@@ -711,7 +711,7 @@ http_interactions:
           },
           "default_card": "card_14KQsI4AnjI1zHWBN6qwAjw6"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:49:59 GMT
 - request:
     method: get
@@ -846,7 +846,7 @@ http_interactions:
           },
           "default_card": "card_14KQsI4AnjI1zHWBN6qwAjw6"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:00 GMT
 - request:
     method: get
@@ -981,7 +981,7 @@ http_interactions:
           },
           "default_card": "card_14KQsI4AnjI1zHWBN6qwAjw6"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:00 GMT
 - request:
     method: post
@@ -1066,7 +1066,7 @@ http_interactions:
           "discount": null,
           "metadata": {}
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:01 GMT
 - request:
     method: get
@@ -1168,7 +1168,7 @@ http_interactions:
           },
           "default_card": "card_14KQsQ4AnjI1zHWB3UC3Qs6t"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:04 GMT
 - request:
     method: get
@@ -1270,7 +1270,7 @@ http_interactions:
           },
           "default_card": "card_14KQsQ4AnjI1zHWB3UC3Qs6t"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:04 GMT
 - request:
     method: post
@@ -1355,7 +1355,7 @@ http_interactions:
           "discount": null,
           "metadata": {}
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:05 GMT
 - request:
     method: get
@@ -1457,7 +1457,7 @@ http_interactions:
           },
           "default_card": "card_14KQsV4AnjI1zHWBBQsjLseP"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:09 GMT
 - request:
     method: get
@@ -1559,7 +1559,7 @@ http_interactions:
           },
           "default_card": "card_14KQsV4AnjI1zHWBBQsjLseP"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:09 GMT
 - request:
     method: post
@@ -1644,7 +1644,7 @@ http_interactions:
           "discount": null,
           "metadata": {}
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:10 GMT
 - request:
     method: get
@@ -1746,7 +1746,7 @@ http_interactions:
           },
           "default_card": "card_14KQsZ4AnjI1zHWBWaCSHSz1"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:13 GMT
 - request:
     method: get
@@ -1848,7 +1848,7 @@ http_interactions:
           },
           "default_card": "card_14KQsZ4AnjI1zHWBWaCSHSz1"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:14 GMT
 - request:
     method: post
@@ -1933,7 +1933,7 @@ http_interactions:
           "discount": null,
           "metadata": {}
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:14 GMT
 - request:
     method: post
@@ -2000,7 +2000,7 @@ http_interactions:
           "metadata": {},
           "statement_description": null
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:21 GMT
 - request:
     method: post
@@ -2104,7 +2104,7 @@ http_interactions:
           },
           "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:22 GMT
 - request:
     method: get
@@ -2206,7 +2206,7 @@ http_interactions:
           },
           "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:22 GMT
 - request:
     method: get
@@ -2308,7 +2308,7 @@ http_interactions:
           },
           "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:23 GMT
 - request:
     method: post
@@ -2393,7 +2393,7 @@ http_interactions:
           "discount": null,
           "metadata": {}
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:23 GMT
 - request:
     method: post
@@ -2473,7 +2473,7 @@ http_interactions:
             "customer": null
           }
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:26 GMT
 - request:
     method: post
@@ -2577,108 +2577,7 @@ http_interactions:
           "statement_description": null,
           "receipt_email": null
         }
-    http_version: 
-  recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
-- request:
-    method: get
-    uri: http://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&language=en&sensor=false
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Date:
-      - Sat, 26 Jul 2014 08:50:27 GMT
-      Expires:
-      - Sun, 27 Jul 2014 08:50:27 GMT
-      Cache-Control:
-      - public, max-age=86400
-      Access-Control-Allow-Origin:
-      - "*"
-      Server:
-      - mafe
-      X-Xss-Protection:
-      - 1; mode=block
-      X-Frame-Options:
-      - SAMEORIGIN
-      Alternate-Protocol:
-      - 80:quic
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: |
-        {
-           "results" : [
-              {
-                 "address_components" : [
-                    {
-                       "long_name" : "San Francisco",
-                       "short_name" : "SF",
-                       "types" : [ "locality", "political" ]
-                    },
-                    {
-                       "long_name" : "San Francisco County",
-                       "short_name" : "San Francisco County",
-                       "types" : [ "administrative_area_level_2", "political" ]
-                    },
-                    {
-                       "long_name" : "California",
-                       "short_name" : "CA",
-                       "types" : [ "administrative_area_level_1", "political" ]
-                    },
-                    {
-                       "long_name" : "United States",
-                       "short_name" : "US",
-                       "types" : [ "country", "political" ]
-                    }
-                 ],
-                 "formatted_address" : "San Francisco, CA, USA",
-                 "geometry" : {
-                    "bounds" : {
-                       "northeast" : {
-                          "lat" : 37.9297707,
-                          "lng" : -122.3279149
-                       },
-                       "southwest" : {
-                          "lat" : 37.6933354,
-                          "lng" : -123.1077733
-                       }
-                    },
-                    "location" : {
-                       "lat" : 37.7749295,
-                       "lng" : -122.4194155
-                    },
-                    "location_type" : "APPROXIMATE",
-                    "viewport" : {
-                       "northeast" : {
-                          "lat" : 37.812,
-                          "lng" : -122.3482
-                       },
-                       "southwest" : {
-                          "lat" : 37.70339999999999,
-                          "lng" : -122.527
-                       }
-                    }
-                 },
-                 "types" : [ "locality", "political" ]
-              }
-           ],
-           "status" : "OK"
-        }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
 - request:
     method: get
@@ -2813,6 +2712,512 @@ http_interactions:
           },
           "default_card": "card_14KQsi4AnjI1zHWBMlnioiSW"
         }
-    http_version: 
+    http_version:
   recorded_at: Sat, 26 Jul 2014 08:55:57 GMT
+- request:
+    method: get
+    uri: https://api.stripe.com/v1/customers/cus_4TNdkc92GIWGvM
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.14.0
+      Authorization:
+      - Bearer <STRIPE_SECRET_KEY>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.14.0","lang":"ruby","lang_version":"2.1.2 p95 (2014-05-08)","platform":"x86_64-linux","publisher":"stripe","uname":"Linux
+        chapter-alamo 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014
+        x86_64 x86_64 x86_64 GNU/Linux"}'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Sat, 26 Jul 2014 08:49:49 GMT
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '1293'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Cache-Control:
+      - no-cache, no-store
+      Access-Control-Max-Age:
+      - '300'
+      Stripe-Version:
+      - '2014-07-22'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "object": "customer",
+          "created": 1406364588,
+          "id": "cus_4TNdkc92GIWGvM",
+          "livemode": false,
+          "description": "someone@example.com for Coderwall",
+          "email": null,
+          "delinquent": false,
+          "metadata": {},
+          "subscriptions": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdkc92GIWGvM/subscriptions",
+            "data": []
+          },
+          "discount": null,
+          "account_balance": 0,
+          "currency": null,
+          "cards": {
+            "object": "list",
+            "total_count": 1,
+            "has_more": false,
+            "url": "/v1/customers/cus_4TNdkc92GIWGvM/cards",
+            "data": [
+              {
+                "id": "card_14KQsB4AnjI1zHWBRaAUrENZ",
+                "object": "card",
+                "last4": "4242",
+                "brand": "Visa",
+                "funding": "credit",
+                "exp_month": 12,
+                "exp_year": 2014,
+                "fingerprint": "GuemeI8uOeJZ5eck",
+                "country": "US",
+                "name": null,
+                "address_line1": null,
+                "address_line2": null,
+                "address_city": null,
+                "address_state": null,
+                "address_zip": null,
+                "address_country": null,
+                "cvc_check": "pass",
+                "address_line1_check": null,
+                "address_zip_check": null,
+                "customer": "cus_4TNdkc92GIWGvM"
+              }
+            ]
+          },
+          "default_card": "card_14KQsB4AnjI1zHWBRaAUrENZ"
+        }
+    http_version:
+  recorded_at: Sat, 26 Jul 2014 08:49:49 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 26 Jul 2014 08:50:27 GMT
+      Expires:
+      - Sun, 27 Jul 2014 08:50:27 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alternate-Protocol:
+      - 80:quic
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "San Francisco",
+                       "short_name" : "SF",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "San Francisco County",
+                       "short_name" : "San Francisco County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "California",
+                       "short_name" : "CA",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "San Francisco, CA, USA",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 37.9297707,
+                          "lng" : -122.3279149
+                       },
+                       "southwest" : {
+                          "lat" : 37.6933354,
+                          "lng" : -123.1077733
+                       }
+                    },
+                    "location" : {
+                       "lat" : 37.7749295,
+                       "lng" : -122.4194155
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 37.812,
+                          "lng" : -122.3482
+                       },
+                       "southwest" : {
+                          "lat" : 37.70339999999999,
+                          "lng" : -122.527
+                       }
+                    }
+                 },
+                 "types" : [ "locality", "political" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version:
+  recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 26 Jul 2014 08:50:27 GMT
+      Expires:
+      - Sun, 27 Jul 2014 08:50:27 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alternate-Protocol:
+      - 80:quic
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "San Francisco",
+                       "short_name" : "SF",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "San Francisco County",
+                       "short_name" : "San Francisco County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "California",
+                       "short_name" : "CA",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "San Francisco, CA, USA",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 37.9297707,
+                          "lng" : -122.3279149
+                       },
+                       "southwest" : {
+                          "lat" : 37.6933354,
+                          "lng" : -123.1077733
+                       }
+                    },
+                    "location" : {
+                       "lat" : 37.7749295,
+                       "lng" : -122.4194155
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 37.812,
+                          "lng" : -122.3482
+                       },
+                       "southwest" : {
+                          "lat" : 37.70339999999999,
+                          "lng" : -122.527
+                       }
+                    }
+                 },
+                 "types" : [ "locality", "political" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version:
+  recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 26 Jul 2014 08:50:27 GMT
+      Expires:
+      - Sun, 27 Jul 2014 08:50:27 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alternate-Protocol:
+      - 80:quic
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "San Francisco",
+                       "short_name" : "SF",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "San Francisco County",
+                       "short_name" : "San Francisco County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "California",
+                       "short_name" : "CA",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "San Francisco, CA, USA",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 37.9297707,
+                          "lng" : -122.3279149
+                       },
+                       "southwest" : {
+                          "lat" : 37.6933354,
+                          "lng" : -123.1077733
+                       }
+                    },
+                    "location" : {
+                       "lat" : 37.7749295,
+                       "lng" : -122.4194155
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 37.812,
+                          "lng" : -122.3482
+                       },
+                       "southwest" : {
+                          "lat" : 37.70339999999999,
+                          "lng" : -122.527
+                       }
+                    }
+                 },
+                 "types" : [ "locality", "political" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version:
+  recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
+- request:
+    method: get
+    uri: http://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&language=en&sensor=false
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sat, 26 Jul 2014 08:50:27 GMT
+      Expires:
+      - Sun, 27 Jul 2014 08:50:27 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - SAMEORIGIN
+      Alternate-Protocol:
+      - 80:quic
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "San Francisco",
+                       "short_name" : "SF",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "San Francisco County",
+                       "short_name" : "San Francisco County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "California",
+                       "short_name" : "CA",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "San Francisco, CA, USA",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 37.9297707,
+                          "lng" : -122.3279149
+                       },
+                       "southwest" : {
+                          "lat" : 37.6933354,
+                          "lng" : -123.1077733
+                       }
+                    },
+                    "location" : {
+                       "lat" : 37.7749295,
+                       "lng" : -122.4194155
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 37.812,
+                          "lng" : -122.3482
+                       },
+                       "southwest" : {
+                          "lat" : 37.70339999999999,
+                          "lng" : -122.527
+                       }
+                    }
+                 },
+                 "types" : [ "locality", "political" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version:
+  recorded_at: Sat, 26 Jul 2014 08:50:27 GMT
 recorded_with: VCR 2.9.2
