@@ -24,7 +24,7 @@
   %fieldset
     -if @team.locations.any?
       =j.label :location do
-        == Select one or more locations where the candidate must be located or #{link_to('add/manage team locations', edit_team_locations_path(@team))}
+        == Select one or more locations where the candidate must be located or #{link_to('add/manage team locations', teamname_edit_path(slug: @team.slug, anchor: "locations"))}
       =j.select(:location, @team.cities+["anywhere"], {selected: (@job.location.blank? ? [] : @job.location.split("|"))}, {multiple: true})
     -else
       =j.label :location, 'Specify the city/location where the candidate must be located'

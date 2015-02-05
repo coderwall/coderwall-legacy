@@ -1,6 +1,7 @@
 -if target.errors.any?
   .errors
-    %h4==#{pluralize(target.errors.count, "error")} prohibited this user from being saved:
+    %h4
+      = "#{pluralize(target.errors.count, "error")} prohibited this #{target.class.model_name.human.downcase} from being saved:"
     %ul
       -target.errors.full_messages.each do |message|
         %li=raw message

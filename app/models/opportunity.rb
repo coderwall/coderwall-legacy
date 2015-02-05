@@ -46,7 +46,7 @@ class Opportunity < ActiveRecord::Base
   validates :tag_list, with: :tags_within_length
   validates :location, presence: true, allow_blank: false
   validates :location_city, presence: true, allow_blank: false, unless: lambda { location && anywhere?(location) }
-  validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
+  validates :salary, presence: true, numericality: {only_integer: true, greater_than: 0, less_than_or_equal_to: 800000}, allow_blank: true
 
   before_validation :set_location_city
   before_save :update_cached_tags
@@ -69,22 +69,6 @@ class Opportunity < ActiveRecord::Base
 
   def self.human_attribute_name(attr,options={})
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
-  end
-
-  def self.parse_salary(salary_string)
-    salary_string.match(/(\d+)\s*([kK]?)/)
-    number, thousands = Regexp.last_match[1], Regexp.last_match[2]
-
-    if number.nil?
-      0
-    else
-      salary = number.to_i
-      if thousands.downcase == 'k' || salary < 1000
-        salary * 1000
-      else
-        salary
-      end
-    end
   end
 
   def self.based_on(tags)
@@ -293,8 +277,8 @@ class Opportunity < ActiveRecord::Base
     geocoded_all = true
     location.split('|').each do |location_string|
       # skip if location is anywhere or already exists
-      if anywhere?(location_string) || team.locations.where('address ILIKE ?',"%location_string%").count > 0
-          geocoded_all = false
+      if anywhere?(location_string) || team.locations.select{|v| v.address.include?(location_string)}.count > 0
+        geocoded_all = false
         next
       end
 

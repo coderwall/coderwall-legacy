@@ -1,18 +1,23 @@
 require 'spec_helper'
 
-RSpec.describe TeamsController, type: :controller, skip: true do
+RSpec.describe TeamsController, type: :controller do
   let(:current_user) { Fabricate(:user) }
   let(:team) { Fabricate(:team) }
 
   before { controller.send :sign_in, current_user }
 
   it 'allows user to follow team' do
-    post :follow, id: team.id
+    post :follow, id: team.id, format: :js
+
+    expect(response).to be_success
+    current_user.reload
     expect(current_user.following_team?(team)).to eq(true)
   end
 
   it 'allows user to stop follow team' do
     current_user.follow_team!(team)
+    current_user.reload
+    expect(current_user.following_team?(team)).to eq(true)
     post :follow, id: team.id
     current_user.reload
     expect(current_user.following_team?(team)).to eq(false)
@@ -27,6 +32,12 @@ RSpec.describe TeamsController, type: :controller, skip: true do
   end
 
   describe 'GET #show' do
+    before do
+      url = 'http://maps.googleapis.com/maps/api/geocode/json?address=San%20Francisco,%20CA&language=en&sensor=false'
+      @body ||= File.read(File.join(Rails.root, 'spec', 'fixtures', 'google_maps.json'))
+      stub_request(:get, url).to_return(body: @body)
+    end
+
     it 'responds successfully with an HTTP 200 status code' do
       team = Fabricate(:team) do
         name Faker::Company.name
@@ -36,11 +47,13 @@ RSpec.describe TeamsController, type: :controller, skip: true do
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
+
     it 'sets job_page to true if job is found' do
-      opporunity = Fabricate(:opportunity)
+      opportunity = Fabricate(:opportunity)
       get :show, slug: opportunity.team.slug, job_id: opportunity.public_id
       expect(assigns(:job_page)).to eq(true)
     end
+
     it 'sets job_page to false if job is not found' do
       team = Fabricate(:team)
       get :show, slug: team.slug, job_id: 'not-a-real-job-slug'
@@ -85,7 +98,7 @@ RSpec.describe TeamsController, type: :controller, skip: true do
       end
 
       it 'adds current user to the team' do
-        expect(team).to receive(:add_user).with(current_user)
+        expect(team).to receive(:add_user).with(current_user, 'active', 'admin')
         response
       end
 
