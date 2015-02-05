@@ -77,24 +77,6 @@ RSpec.describe Opportunity, type: :model, skip: true do
     end
   end
 
-  describe 'parse job salary' do
-    it 'should parse salaries correctly' do
-      # TODO: Refactor api calls to Sidekiq job
-			   VCR.use_cassette('Opportunity') do
-
-           salary = Opportunity.parse_salary('100000')
-           expect(salary).to eq(100_000)
-           salary = Opportunity.parse_salary('100')
-           expect(salary).to eq(100_000)
-           salary = Opportunity.parse_salary('100k')
-           expect(salary).to eq(100_000)
-           salary = Opportunity.parse_salary('100 K')
-           expect(salary).to eq(100_000)
-
-         end
-    end
-  end
-
   describe 'apply for job' do
     it 'should create a valid application' do
       # TODO: Refactor api calls to Sidekiq job

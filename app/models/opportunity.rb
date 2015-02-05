@@ -71,22 +71,6 @@ class Opportunity < ActiveRecord::Base
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
   end
 
-  def self.parse_salary(salary_string)
-    salary_string.match(/(\d+)\s*([kK]?)/)
-    number, thousands = Regexp.last_match[1], Regexp.last_match[2]
-
-    if number.nil?
-      0
-    else
-      salary = number.to_i
-      if thousands.downcase == 'k' || salary < 1000
-        salary * 1000
-      else
-        salary
-      end
-    end
-  end
-
   def self.based_on(tags)
     query_string = "tags:#{tags.join(' OR ')}"
     failover_scope = Opportunity.joins('inner join taggings on taggings.taggable_id = opportunities.id').joins('inner join tags on taggings.tag_id = tags.id').where("taggings.taggable_type = 'Opportunity' AND taggings.context = 'tags'").where('lower(tags.name) in (?)', tags.map(&:downcase)).group('opportunities.id').order('count(opportunities.id) desc')
