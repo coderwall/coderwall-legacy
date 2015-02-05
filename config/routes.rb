@@ -1,7 +1,7 @@
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x00000009e29dd0@/home/vagrant/web/config/routes.rb:270>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x00000009e32750@/home/vagrant/web/config/routes.rb:271>
+#                             GET                   /.json(.:format)                                       #<Proc:0x00000008e12370@/home/vagrant/web/config/routes.rb:270>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x00000008e324e0@/home/vagrant/web/config/routes.rb:271>
 #                                                   /mail_view                                             MailPreview
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update
@@ -139,13 +139,6 @@
 #                 team_member GET                   /teams/:team_id/members/:id(.:format)                  members#show
 #                             PUT                   /teams/:team_id/members/:id(.:format)                  members#update
 #                             DELETE                /teams/:team_id/members/:id(.:format)                  members#destroy
-#              team_locations GET                   /teams/:team_id/locations(.:format)                    locations#index
-#                             POST                  /teams/:team_id/locations(.:format)                    locations#create
-#           new_team_location GET                   /teams/:team_id/locations/new(.:format)                locations#new
-#          edit_team_location GET                   /teams/:team_id/locations/:id/edit(.:format)           locations#edit
-#               team_location GET                   /teams/:team_id/locations/:id(.:format)                locations#show
-#                             PUT                   /teams/:team_id/locations/:id(.:format)                locations#update
-#                             DELETE                /teams/:team_id/locations/:id(.:format)                locations#destroy
 #      apply_team_opportunity POST                  /teams/:team_id/opportunities/:id/apply(.:format)      opportunities#apply
 #   activate_team_opportunity GET                   /teams/:team_id/opportunities/:id/activate(.:format)   opportunities#activate
 # deactivate_team_opportunity GET                   /teams/:team_id/opportunities/:id/deactivate(.:format) opportunities#deactivate
@@ -405,7 +398,7 @@ Coderwall::Application.routes.draw do
       get 'search'
     end
     resources :members
-    resources :locations, as: :locations
+
     resources :opportunities do
       member do
         post 'apply'

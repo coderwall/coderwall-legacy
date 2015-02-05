@@ -13,9 +13,8 @@
           .add-map-location= link_to_add_fields('Add new location', f, :locations)
           -if @team.has_locations?
             .location-list
-              = f.fields_for :team_locations do |fields|
+              = f.fields_for :locations do |fields|
                 .item
-                  = fields.hidden_field :id
                   %fieldset
                     = fields.label :name, 'Location Name'
                     = fields.text_field :name
