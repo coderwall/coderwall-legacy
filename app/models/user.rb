@@ -336,17 +336,17 @@ class User < ActiveRecord::Base
   end
 
   def following_team?(team)
-    followed_teams.collect(&:team_id).include?(team.id.to_s)
+    followed_teams.collect(&:team_id).include?(team.id)
   end
 
   def follow_team!(team)
-    followed_teams.create!(team_id: team.id.to_s)
+    followed_teams.create!(team: team)
     generate_event(team: team)
   end
 
   def unfollow_team!(team)
-    followed_teams = self.followed_teams.where(team_id: team.id.to_s).all
-    followed_teams.each(&:destroy)
+    followed_teams = self.followed_teams.where(team_id: team.id)
+    followed_teams.destroy_all
   end
 
   def teams_being_followed

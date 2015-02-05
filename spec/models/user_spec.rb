@@ -381,7 +381,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'following' do
+  describe 'following users' do
     let(:user) { Fabricate(:user) }
     let(:other_user) { Fabricate(:user) }
 
@@ -409,6 +409,24 @@ RSpec.describe User, type: :model do
         user.follow(other_user)
         expect(user.following_by_type(User.name).size).to eq(1)
       end
+    end
+  end
+
+  describe 'following teams' do
+    let(:user) { Fabricate(:user) }
+    let(:team) { Fabricate(:team) }
+
+    it 'can follow a team' do
+      user.follow_team!(team)
+      user.reload
+      expect(user.following_team?(team)).to eq(true)
+    end
+
+    it 'can unfollow a team' do
+      user.follow_team!(team)
+      user.unfollow_team!(team)
+      user.reload
+      expect(user.following_team?(team)).to eq(false)
     end
   end
 

@@ -7,7 +7,6 @@ RSpec.describe TeamsController, type: :controller do
   before { controller.send :sign_in, current_user }
 
   it 'allows user to follow team' do
-    pending "Fix User#follow_team first"
     post :follow, id: team.id, format: :js
 
     expect(response).to be_success
@@ -16,7 +15,6 @@ RSpec.describe TeamsController, type: :controller do
   end
 
   it 'allows user to stop follow team' do
-    pending "Fix User#follow_team first"
     current_user.follow_team!(team)
     current_user.reload
     expect(current_user.following_team?(team)).to eq(true)
