@@ -46,7 +46,7 @@ class Opportunity < ActiveRecord::Base
   validates :tag_list, with: :tags_within_length
   validates :location, presence: true, allow_blank: false
   validates :location_city, presence: true, allow_blank: false, unless: lambda { location && anywhere?(location) }
-  validates :salary, presence: true, numericality: true, inclusion: 0..800_000, allow_blank: true
+  validates :salary, presence: true, numericality: {only_integer: true, greater_than: 0, less_than_or_equal_to: 800000}, allow_blank: true
 
   before_validation :set_location_city
   before_save :update_cached_tags
