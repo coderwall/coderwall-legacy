@@ -277,8 +277,8 @@ class Opportunity < ActiveRecord::Base
     geocoded_all = true
     location.split('|').each do |location_string|
       # skip if location is anywhere or already exists
-      if anywhere?(location_string) || team.locations.where('address ILIKE ?',"%location_string%").count > 0
-          geocoded_all = false
+      if anywhere?(location_string) || team.locations.select{|v| v.address.include?(location_string)}.count > 0
+        geocoded_all = false
         next
       end
 

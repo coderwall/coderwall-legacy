@@ -36,7 +36,3 @@ Fabricator(:opportunity) do
   remote false
   expires_at { Time.now + 1.year }
 end
-
-Fabricator(:job, from: :opportunity, class_name: :opportunity) do
-
-end
