@@ -14,8 +14,7 @@ class ExtractGithubProfile
     end
     profile = Users::Github::Profile.find(id)
     begin
-      #TODO use github_id instead of login
-      user = client.user(profile.login)
+      user = client.user(profile.github_id)
       #TODO Rails4
       profile.update_attributes(
           {
