@@ -1,18 +1,12 @@
 # TODO, Write all the specs
-class SubscriptionMailer < ActionMailer::Base
-  include ActionView::Helpers::TextHelper
+class SubscriptionMailer < ApplicationMailer
   add_template_helper(UsersHelper)
   add_template_helper(ProtipsHelper)
 
   layout 'email'
 
-  default_url_options[:host] = "coderwall.com"
-  default_url_options[:only_path] = false
-  default from: '"Coderwall" <support@coderwall.com>'
-
   MONTHLY_SUBSCRIPTION_PURCHASED_EVENT = 'monthly_subscription_purchased'
   ONETIME_SUBSCRIPTION_PURCHASED_EVENT = 'onetime_subscription_purchased'
-  ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
 
   def team_upgrade(username, plan_id)
     plan = Plan.find(plan_id)

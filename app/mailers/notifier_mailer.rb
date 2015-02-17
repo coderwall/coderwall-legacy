@@ -1,7 +1,5 @@
 # TODO, Extract components
-class NotifierMailer < ActionMailer::Base
-  include ActionView::Helpers::TextHelper
-  include ActiveSupport::Benchmarkable
+class NotifierMailer < ApplicationMailer
   add_template_helper(UsersHelper)
   add_template_helper(ProtipsHelper)
   add_template_helper(ApplicationHelper)
@@ -11,10 +9,6 @@ class NotifierMailer < ActionMailer::Base
 
   class NothingToSendException < Exception
   end
-
-  default_url_options[:host] = "coderwall.com"
-  default_url_options[:only_path] = false
-  default from: '"Coderwall" <support@coderwall.com>'
 
   SPAM_NOTICE = "You're receiving this email because you signed up for Coderwall. We hate spam and make an effort to keep notifications to a minimum. To change your notification preferences, you can update your email settings here: http://coderwall.com/settings#email or immediately unsubscribe by clicking this link %unsubscribe_url%"
 

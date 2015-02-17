@@ -1,0 +1,19 @@
+header
+  h1 Spam Report for Protip
+hr
+
+section
+  h3 = "#{@protip.title}"
+  = link_to(@protip.id, protip_url(@protip))
+
+  div ="by #{@protip.user.name}"
+
+  - if @reporting_user
+    div
+      | Reported by:
+      = link_to(@reporting_user.name, user_url(@reporting_user))
+  - else
+    div Reported by: Anonymous User
+
+footer
+  h5 ="Reported from IP:  #{@ip_address}"
