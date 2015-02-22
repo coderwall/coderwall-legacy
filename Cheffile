@@ -1,0 +1,12 @@
+site "http://community.opscode.com/api/v1"
+
+cookbook 'apt'
+cookbook "git"
+cookbook 'build-essential'
+cookbook 'postgresql'
+cookbook 'database', '~> 2.3.0'
+cookbook 'ruby_build'
+cookbook 'nodejs', github:"mdxp/nodejs-cookbook"
+cookbook 'rbenv', github:"fnichol/chef-rbenv"
+cookbook 'elasticsearch'
+cookbook "redis", github:"ctrabold/chef-redis"
