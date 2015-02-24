@@ -1,2 +1,1 @@
-REDIS = Redis.new(url: ENV['REDIS_URL'])
-
+REDIS = Redis.new(url: ENV[ENV['REDIS_PROVIDER'] || 'REDIS_URL'])
