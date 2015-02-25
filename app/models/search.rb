@@ -50,7 +50,7 @@ module SearchModule
         # Eval ? Really ?
         eval(facets.to_tire) unless facets.nil?
 
-        Rails.logger.debug ("[search](#{context.to_s}):" + JSON.pretty_generate(to_hash))
+        Rails.logger.debug { "[search](#{context.to_s}):" + JSON.pretty_generate(to_hash) }
       end
     rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED
       if @options[:failover].nil?
