@@ -3,10 +3,10 @@ ruby '2.1.5'
 source 'https://rubygems.org' do
   gem 'rails', '~> 3.2'
 
-  gem 'sass', '~> 3.2.9'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'sass-rails', '~> 3.2.6'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass'
+  gem 'coffee-rails'
+  gem 'sass-rails'
+  gem 'uglifier'
 # Assets
   gem 'autoprefixer-rails'
   gem 'jquery-rails', '= 2.0.3'
