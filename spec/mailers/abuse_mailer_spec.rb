@@ -21,7 +21,7 @@ RSpec.describe AbuseMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match("somethings that's meaningful and nice")
+      expect(mail.body.encoded).to match("<header><h1>Spam Report for Protip</h1></header><hr /><section><h3>hello world</h3><a href=\"http://coderwall.com/p/06tlva\">22</a><div>by Matthew Deiters</div><div>Reported by: Anonymous User</div></section><footer><h5>Reported from IP:  </h5></footer>")
     end
   end
 end
