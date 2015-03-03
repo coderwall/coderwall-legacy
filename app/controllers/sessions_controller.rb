@@ -22,7 +22,6 @@ class SessionsController < ApplicationController
 
   def create
     #FIXME
-    Rails.logger.debug "Authenticating: #{oauth}"
     raise "OmniAuth returned error #{params[:error]}" unless params[:error].blank?
     if signed_in?
       current_user.apply_oauth(oauth)

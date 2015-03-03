@@ -83,7 +83,6 @@ class GithubOld
     links = []
     times.times do |index|
       index = index + 1
-      Rails.logger.debug("Github Activity: Getting page #{index} for #{github_username}")
       res = Servant.get("https://github.com/#{github_username}.atom?page=#{index}")
       doc = Nokogiri::HTML(res.to_s)
       doc.xpath('//entry').each do |entry|

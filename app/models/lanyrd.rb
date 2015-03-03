@@ -34,7 +34,6 @@ class Lanyrd < Struct.new(:username)
       response = RestClient.get("#{API_URL}?twitter=#{username}&view=history")
       JSON.parse(response).with_indifferent_access
     rescue RestClient::ResourceNotFound
-      Rails.logger.error("Was unable to find lanyrd data for #{username}")  if ENV['DEBUG']
       {}
     end
   end

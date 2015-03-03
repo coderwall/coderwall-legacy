@@ -24,7 +24,6 @@ class Speakerdeck < Struct.new(:username)
       end
     end.compact
   rescue RestClient::ResourceNotFound
-    Rails.logger.error("Was unable to find speakerdeck data for #{username}")   if ENV['DEBUG']
     []
   end
 end

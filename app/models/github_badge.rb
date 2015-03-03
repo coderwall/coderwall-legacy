@@ -10,7 +10,6 @@ class GithubBadge
       client_secret: ENV['GITHUB_SECRET']
     )
   rescue Exception => e
-    Rails.logger.error("Failed to initialize octokit: #{e.message}") if ENV['DEBUG']
   end
 
   def add(badge, github_username)

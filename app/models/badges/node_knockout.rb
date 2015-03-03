@@ -117,11 +117,9 @@ class NodeKnockout
       doc      = Nokogiri::HTML(res.to_s)
       username = doc.css("a.github").first[:href].sub(/https?:\/\/github.com\//, '')
       role     = doc.css(".role").first.text
-      Rails.logger.info "Found node knockout #{role}: #{username}" if ENV['DEBUG']
-      return [role, username]
+      [role, username]
     rescue Exception => ex
-      Rails.logger.warn("Was unable to determine github for #{path}") if ENV['DEBUG']
-      return nil
+      nil
     end
   end
 

@@ -59,7 +59,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.for_omniauth(oauth)
-    Rails.logger.debug("Creating User: #{@user.inspect}")  if ENV['DEBUG']
 
     ucp = user_create_params.dup
 

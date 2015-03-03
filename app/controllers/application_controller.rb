@@ -150,7 +150,6 @@ class ApplicationController < ActionController::Base
 
   def destination_url
     if session[:return_to]
-      Rails.logger.debug("Returning user to: #{session[:return_to]}")
       session.delete(:return_to)
     elsif signed_in?
       if current_user.oldest_achievement_since_last_visit

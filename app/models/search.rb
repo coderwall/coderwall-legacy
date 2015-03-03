@@ -45,12 +45,9 @@ module SearchModule
           end
         end unless sort_criteria.nil?
 
-        ap facets if ENV['DEBUG']
-        ap facets.to_tire unless facets.nil?  if ENV['DEBUG']
         # Eval ? Really ?
         eval(facets.to_tire) unless facets.nil?
 
-        Rails.logger.debug ("[search](#{context.to_s}):" + JSON.pretty_generate(to_hash))
       end
     rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED
       if @options[:failover].nil?
