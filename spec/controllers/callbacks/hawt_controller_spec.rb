@@ -1,6 +1,7 @@
 # encoding: utf-8
 
-require 'services/protips/hawt_service'
+require File.expand_path('../../../app/services/protips/hawt_service')
+
 RSpec.describe Callbacks::HawtController, type: :controller do
   include AuthHelper
   before { http_authorize!(Rails.env, Rails.env) }
