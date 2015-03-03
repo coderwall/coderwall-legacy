@@ -26,7 +26,7 @@ class Comment < ActiveRecord::Base
   after_create :analyze_spam
   after_save :commented_callback
 
-  default_scope order: 'likes_cache DESC, created_at ASC'
+  default_scope {order('likes_cache DESC, created_at ASC')}
 
   belongs_to :user, autosave: true
 

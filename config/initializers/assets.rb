@@ -1,4 +1,4 @@
-Coderwall::Application.configure do
+Rails.application.configure do
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.precompile << 'admin.css'
   config.assets.precompile << 'application.css'

@@ -124,9 +124,9 @@ class Protip < ActiveRecord::Base
 
   scope :for_topic, ->(topic) { any_topics([topic]) }
 
-  scope :with_upvotes, joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id")
-  scope :trending, order('score DESC')
-  scope :flagged, where(flagged: true)
+  scope :with_upvotes, -> { joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id") }
+  scope :trending, -> { order(:score).reverse_order }
+  scope :flagged, -> { where(flagged: true) }
 
   class << self
 
@@ -257,6 +257,7 @@ class Protip < ActiveRecord::Base
       query              += " #{query_string}" unless query_string.nil?
       Protip.search(query, [], page: page, per_page: per_page)
     rescue Errno::ECONNREFUSED
+      #FIXME
       team = Team.where(slug: team_id).first
       team.members.flat_map(&:protips)
     end

@@ -90,13 +90,10 @@ source 'https://rubygems.org' do
   gem 'faraday', '~> 0.8.1'
   gem 'metamagic'
 
-  gem "mail_view", "~> 2.0.4"
-
 # ----------------
 
-
-  gem 'acts_as_commentable', '2.0.1'
-  gem 'acts_as_follower', '0.1.1'
+  gem 'acts_as_commentable'
+  gem 'acts_as_follower'
   gem 'color'
   gem 'createsend'
   gem 'fog'
@@ -115,6 +112,7 @@ source 'https://rubygems.org' do
   gem 'ruby-progressbar'
   gem 'sanitize'
   gem 'simple_form'
+  gem 'responders', '~> 2.0'
   gem 'sitemap_generator'
   gem 'tweet-button'
   gem 'local_time'
