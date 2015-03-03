@@ -22,8 +22,6 @@ class Teams::Account < ActiveRecord::Base
   validates_presence_of :stripe_customer_token
   validates :team_id, presence: true, uniqueness: true
 
-  attr_protected :stripe_customer_token, :admin_id
-
   def subscribe_to!(plan, force=false)
     self.plan_ids = [plan.id]
     if force || update_on_stripe(plan)

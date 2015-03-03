@@ -257,15 +257,11 @@
 #             latest_comments GET                   /comments(.:format)                                    comments#index
 #
 
-Coderwall::Application.routes.draw do
+Rails.application.routes.draw do
 
   # We get 10K's of requests for this route. We should configure nginx to drop these.
   get '/.json',       to: proc { [444, {}, ['']] }
   get '/teams/.json', to: proc { [444, {}, ['']] }
-
-  if Rails.env.development?
-    mount MailPreview => 'mail_view'
-  end
 
   namespace :api, path: '/', constraints: { subdomain: 'api' } do
   end
@@ -339,7 +335,7 @@ Coderwall::Application.routes.draw do
     end
   end
 
-  get 'trending' => 'protips#index', as: :protips
+  get 'trending' => 'protips#index'
 
   get 'faq' => 'pages#show', :page => :faq, as: :faq
   get 'tos' => 'pages#show', :page => :tos, as: :tos
@@ -361,8 +357,8 @@ Coderwall::Application.routes.draw do
   post '/delete_account_confirmed' => 'users#delete_account_confirmed', as: :delete_account_confirmed
 
   resources :authentications, :usernames
-  resources :invitations
   get '/i/:id/:r' => 'invitations#show', as: :invitation
+  resources :invitations, except: :show
 
   resources :sessions do
     collection { get('force') }

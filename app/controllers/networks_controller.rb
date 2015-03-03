@@ -7,7 +7,6 @@ class NetworksController < ApplicationController
   before_action :set_search_params, only: [:show, :mayor, :expert, :expert, :tag]
   before_action :redirect_to_search, only: [:show, :tag]
   respond_to :html, :json, :js
-  cache_sweeper :follow_sweeper, only: [:join, :leave]
 
   def new
     @network = Network.new

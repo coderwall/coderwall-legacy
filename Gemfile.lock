@@ -80,8 +80,8 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
-    acts_as_commentable (2.0.1)
-    acts_as_follower (0.1.1)
+    acts_as_commentable (4.0.2)
+    acts_as_follower (0.2.1)
     addressable (2.3.7)
     analyst (1.2.0)
       haml
@@ -444,8 +444,6 @@ GEM
     lumberjack (1.0.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    mail_view (2.0.4)
-      tilt
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     metamagic (3.1.6)
@@ -629,6 +627,8 @@ GEM
       redis-store (~> 1.1.0)
     redis-store (1.1.4)
       redis (>= 2.2)
+    responders (2.1.0)
+      railties (>= 4.2.0, < 5)
     rest-client (1.7.3)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
@@ -801,8 +801,8 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
-  acts_as_commentable (= 2.0.1)
-  acts_as_follower (= 0.1.1)
+  acts_as_commentable
+  acts_as_follower
   annotate
   autoprefixer-rails!
   awesome_print
@@ -850,7 +850,6 @@ DEPENDENCIES
   launchy
   linkedin
   local_time
-  mail_view (~> 2.0.4)
   metamagic
   mini_magick
   mixpanel
@@ -883,6 +882,7 @@ DEPENDENCIES
   rakismet
   redcarpet!
   redis-rails!
+  responders (~> 2.0)
   rest-client
   rspec-rails
   rubocop

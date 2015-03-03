@@ -39,7 +39,7 @@ class Skill < ActiveRecord::Base
   serialize :attended_events, Array
   serialize :speaking_events, Array
 
-  default_scope where(deleted: false)
+  default_scope { where(deleted: false) }
 
   def self.tokenize(value)
     v = value.to_s.gsub('&', 'and').downcase.gsub(/\s|\./, BLANK)
