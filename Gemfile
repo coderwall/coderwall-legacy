@@ -1,7 +1,7 @@
-ruby '2.1.5'
+ruby '2.2.0'
 
 source 'https://rubygems.org' do
-  gem 'rails', '~> 3.2'
+  gem 'rails', '~> 4.2'
 
   gem 'sass'
   gem 'coffee-rails'
@@ -58,7 +58,7 @@ source 'https://rubygems.org' do
   gem 'chronic'
 
 # Redis
-  gem 'redis-rails', '~> 3.2'
+  gem 'redis-rails'
 
 
   gem 'sidekiq'
@@ -100,7 +100,7 @@ source 'https://rubygems.org' do
   gem 'color'
   gem 'createsend'
   gem 'fog'
-  gem 'friendly_id', '4.0.10.1'
+  gem 'friendly_id'
   gem 'geocoder'
   gem 'hashie'
   gem 'linkedin'
@@ -124,8 +124,8 @@ source 'https://rubygems.org' do
 
 # DROP BEFORE RAILS 4
   gem 'compass-rails'
-  gem 'strong_parameters'
-  gem 'postgres_ext'
+  # gem 'strong_parameters'
+  # gem 'postgres_ext'
 # ElasticSearch client
   gem 'tire'
 # /DROP BEFORE RAILS 4
