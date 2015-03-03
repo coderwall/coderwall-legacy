@@ -13,8 +13,8 @@
 
 ActiveRecord::Schema.define(:version => 20150110140000) do
 
-  add_extension "citext"
-  add_extension "hstore"
+  enable_extension "citext"
+  enable_extension "hstore"
 
   create_table "api_accesses", :force => true do |t|
     t.string   "api_key"
