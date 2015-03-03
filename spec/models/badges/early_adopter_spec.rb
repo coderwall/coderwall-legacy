@@ -14,7 +14,7 @@ RSpec.describe EarlyAdopter, type: :model do
 
   it 'should award user if they joined github within 6 months of founding' do
     profile = Fabricate(:github_profile, user: user,
-      github_created_at: '2008/04/14 15:53:10 -0700')
+      github_created_at: '2008/04/14 15:53:10 -0700', github_id: 987305)
 
     badge = EarlyAdopter.new(user)
     expect(badge.award?).to eq(true)
@@ -23,7 +23,7 @@ RSpec.describe EarlyAdopter, type: :model do
 
   it 'should not award the user if the they joined after 6 mounts of github founding' do
     profile = Fabricate(:github_profile, user: user,
-      github_created_at: '2009/04/14 15:53:10 -0700')
+      github_created_at: '2009/04/14 15:53:10 -0700', github_id: 987305)
 
     badge = EarlyAdopter.new(user)
     expect(badge.award?).to eq(false)
