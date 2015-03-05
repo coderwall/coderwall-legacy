@@ -6,7 +6,7 @@
 
     -# TODO: We should remove this to cache , deleting should be from dashboard
     - if protip_owner?(protip, current_user)
-      = link_to(' ', protip_path(protip.public_id), method: :delete, class: 'delete-tip', title: 'remove protip', confirm: "Are you sure you permanently want to remove this pro tip?")
+      = link_to(' ', protip_path(protip.public_id), method: :delete, class: 'delete-tip', title: 'remove protip', data: { confirm: "Are you sure you permanently want to remove this pro tip?"})
 
   = link_to protip.title, protip_or_link_path(protip), 'data-action' => 'view protip', 'data-from' => 'mini protip', class: "title hyphenate track x-mode-#{mode || 'fullpage'}"
   %footer.cf

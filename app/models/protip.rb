@@ -530,7 +530,7 @@ class Protip < ActiveRecord::Base
   #link? qa? article?
   KINDS.each do |kind|
     define_method("#{kind}?") do
-      self.kind.to_sym == kind
+      self.kind == kind
     end
   end
 
