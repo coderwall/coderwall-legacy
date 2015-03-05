@@ -7,7 +7,7 @@ class UserActivateWorker
     return if user.active?
 
     RefreshUserJob.new.perform(user.id)
-    NotifierMailer.welcome_email(user.username).deliver
+    NotifierMailer.welcome_email(user.username).deliver_later
 
     user.activate!
   end

@@ -262,7 +262,7 @@ class ProtipsController < ApplicationController
     if cookies["report_inappropriate-#{protip_public_id}"].nil?
       opts = { user_id: current_user,
                ip: request.remote_ip}
-      ::AbuseMailer.report_inappropriate(protip_public_id,opts).deliver
+      ::AbuseMailer.report_inappropriate(protip_public_id,opts).deliver_later
 
       cookies["report_inappropriate-#{protip_public_id}"] = true
     end

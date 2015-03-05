@@ -69,7 +69,7 @@ class Protip < ActiveRecord::Base
 
   USER_SCOPE = ["!!mine", "!!bookmarks"]
   USER_SCOPE_REGEX = { author:   /!!m(ine)?/, bookmark: /!!b(ookmarks?)?/, }
-  KINDS = [:link, :qa, :article]
+  KINDS = %w(link qa article)
   FEATURED_PHOTO = /\A\s*!\[[\w\s\W]*\]\(([\w\s\W]*)\)/i
   FORMATTERS = { q: /###[Qq|Pp]/, a: /###[Aa|Ss]/ }
   VALID_TAG = /[\w#\-\.\_\$\!\?\* ]+/
@@ -844,7 +844,7 @@ class Protip < ActiveRecord::Base
     if self.body_changed?
       self.links.each do |link|
         link_identifier = ProtipLink.generate_identifier(link)
-        existing_link = self.protip_links.find_or_initialize_by_identifier(identifier: link_identifier, url: link.first(254))
+        existing_link = self.protip_links.find_or_initialize_by(identifier: link_identifier, url: link.first(254))
 
         if existing_link.new_record?
           upvote_ancestor(link_identifier, link) unless self.user.nil?
@@ -919,17 +919,18 @@ class Protip < ActiveRecord::Base
   end
 
   def viewed_by?(viewer)
-    if viewer.is_a?(User)
-      !Redis.current.zrank(user_views_key, viewer.id).nil?
-    else
-      !Redis.current.zrank(user_anon_views_key, viewer).nil?
-    end
+    false
+    # if viewer.is_a?(User)
+    #   !Redis.current.zrank(user_views_key, viewer.id).nil?
+    # else
+    #   !Redis.current.zrank(user_anon_views_key, viewer).nil?
+    # end
   end
 
   def viewed_by_admin?
-    self.class.valid_reviewers.each do |reviewer|
-      return true if self.viewed_by?(reviewer)
-    end
+    # self.class.valid_reviewers.each do |reviewer|
+    #   return true if self.viewed_by?(reviewer)
+    # end
 
     false
   end

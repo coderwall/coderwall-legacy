@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
       end
       record_event('upgraded team')
 
-      SubscriptionMailer.team_upgrade(current_user.username, @plan.id).deliver
+      SubscriptionMailer.team_upgrade(current_user.username, @plan.id).deliver_later
       redirect_to new_team_opportunity_path(@team), notice: "You are subscribed to #{@plan.name}." + plan_capability(@plan, @team)
     else
       Rails.logger.error "Error creating account #{@account.errors.inspect}"

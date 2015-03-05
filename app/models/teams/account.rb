@@ -124,11 +124,11 @@ class Teams::Account < ActiveRecord::Base
   end
 
   def send_invoice(invoice_id)
-    NotifierMailer.invoice(self.team.id, nil, invoice_id).deliver
+    NotifierMailer.invoice(self.team.id, nil, invoice_id).deliver_later
   end
 
   def send_invoice_for(time = Time.now)
-    NotifierMailer.invoice(self.team.id, time.to_i).deliver
+    NotifierMailer.invoice(self.team.id, time.to_i).deliver_later
   end
 
   def invoice_for(time)

@@ -18,7 +18,7 @@ class ProtipMailerPopularProtipsSendWorker
         protips = Protip.where('id in (?)', protip_ids.map(&:to_i) )
         fail "Only #{protips.count} protips but expected 10" unless protips.count == 10
 
-        ProtipMailer.popular_protips(user, protips, from, to).deliver
+        ProtipMailer.popular_protips(user, protips, from, to).deliver_now
       end
     rescue => ex
       Rails.logger.error("[ProtipMailer.popular_protips] Unable to send email due to '#{ex}' >>\n#{ex.backtrace.join("\n  ")}")
