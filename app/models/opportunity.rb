@@ -254,7 +254,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   def url
-    Rails.application.routes.url_helpers.job_path(slug: team.slug, job_id: public_id, host: Rails.application.config.host, only_path: false) + '#open-positions'
+    Rails.application.routes.url_helpers.job_url(slug: team.slug, job_id: public_id, host: Rails.application.config.host) + '#open-positions'
   end
 
   def assign_random_id

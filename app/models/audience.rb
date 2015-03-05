@@ -120,12 +120,13 @@ class Audience
     audiences.concat(expand_followers(user_or_team))
 
     if user_or_team.is_a?(Team)
-      team = Team.find(user_or_team)
+      team = user_or_team
       team.members.each do |team_member|
         audiences.concat(expand_followers(team_member))
       end unless team.nil?
     else
-      team = User.find(user_or_team).try(:team)
+      #Fixme
+      team = user_or_team.try(:team)
       audiences.concat(expand_followers(team)) unless team.nil?
     end
     audiences

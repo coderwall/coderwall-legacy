@@ -4,6 +4,6 @@ namespace :mailers do
     to = 0.days.ago
     user = User.find_by_username('mcansky')
     protips = ProtipMailer::Queries.popular_protips(from, to)
-    ProtipMailer.popular_protips(user, protips, from, to).deliver
+    ProtipMailer.popular_protips(user, protips, from, to).deliver_later
   end
 end
