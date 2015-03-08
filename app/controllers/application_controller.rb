@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  APP_DOMAIN = 'coderwall.com'
+  APP_DOMAIN = ENV['APP_DOMAIN']
 
   helper_method :signed_in?
   helper_method :current_user
