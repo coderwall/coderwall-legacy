@@ -1,6 +1,6 @@
 # https://devcenter.heroku.com/articles/forked-pg-connections#sidekiq
 redis_url = (ENV[ENV['REDIS_PROVIDER'] || 'REDIS_URL'])
-sidekiq_redis_url = redis_url + '/2' # Use third database
+sidekiq_redis_url = redis_url.to_s + '/2'  # Use third database
 
 Sidekiq.configure_server do |config|
   database_url = ENV['DATABASE_URL']
