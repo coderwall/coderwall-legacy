@@ -1,5 +1,3 @@
-
-
 /* TEAM */
 Founder: Matt Deiters
 Contact: mdeiters [at] assembly.com
@@ -11,59 +9,93 @@ Contact: dave [at] assembly.com
 GitHub: @whatupdave
 From: San Francisco, CA, United States
 
-Core Team: Mike Hall
-Contact: mike [at] just3ws.com
-GitHub: @just3ws
-From: Crystal Lake, IL, United States
+Core Team/Assembly: Chris Lloyd
+Email: chris [at] assembly.com
+GitHub: @chrislloyd
+Location: San Francisco, CA, United States
 
-Contributor: Abdelkader Boudih
+Core Team: Abdelkader Boudih
 Email: terminale [at] googlemail.com
 GitHub: @seuros
 Location: Morocco
+
+Core Team: Jonathan Archer
+Email: ja [at] jonathanarcher.co
+GitHub: @j0narch3r
+Location: San Francisco, CA, United States
+
+
+Contributor: Mike Hall
+Email: mike [at] just3ws.com
+GitHub: @just3ws
+Location: Crystal Lake, IL
+
+Contributor: Rohit Paul Kuruvilla
+Email: rohitpaulk [at] live.com
+GitHub: @rohitpaulk
+Location: Punjab, India
 
 Contributor: Zane Wolfgang Pickett
 Email: Zane.Wolfgang.Pickett [at] Gmail.com
 GitHub: @sirwolfgang
 Location: United States
 
+Contributor: Yaro
+Email: yaro [at] mail.ru
+GitHub: @YaroSpace
+Location: Tenerife
+
 Contributor: Britt Mileshosky
 GitHub: @Mileshosky
-
-Contributor: Dane Lyons
-GitHub: @DaneLyons
-Location: SF
-
-Contributor: Rex Morgan
-GitHub: @RexMorgan
-Location: Austin, Texas
 
 Contributor: Nícolas Iensen
 Email: nicolas.iensen [at] gmail.com
 GitHub: @nicolasiensen
 Location: Rio de Janeiro
 
+Contributor: Dane Lyons
+GitHub: @DaneLyons
+Location: SF
+
+Contributor: Matthew Bender
+GitHub: @codebender
+Location: Denver, CO
+
+Contributor: Rex Morgan
+GitHub: @RexMorgan
+Location: Austin, Texas
+
 Contributor: Wesley Lancel
 GitHub: @wesleylancel
 Location: Belgium / The Netherlands
 
+Contributor: Vinoth kumar A
+Email: mail [at] avinoth.com
+GitHub: @avinoth
+Location: India
+
 Contributor: Silas Sao
 Email: silassao [at] gmail.com
 GitHub: @sao
-Location: California
+Location: Portland, OR
 
-Contributor: 
+Contributor: Brandon Fish
 GitHub: @bjfish
 Location: Minneapolis, MN
+
+Contributor: Carl Woodward
+Email: carl [at] 88cartell.com
+GitHub: @carlwoodward
+Location: Sydney
 
 Contributor: Justin Raines
 Email: justraines [at] gmail.com
 GitHub: @dvito
 Location: Washington, DC
 
-Contributor: Carl Woodward
-Email: carl [at] 88cartell.com
-GitHub: @carlwoodward
-Location: Sydney
+Contributor: Ben
+Email: hello [at] benshyong.com
+GitHub: @bshyong
 
 Contributor: Anthony Kosednar
 Email: anthony.kosednar [at] gmail.com
@@ -71,63 +103,48 @@ GitHub: @akosednar
 Location: USA
 
 Contributor: Aaron Raimist
-Email: aaron [at] aaronraimist.com
+Email: aaronraimist [at] protonmail.ch
 GitHub: @aaronraimist
 Location: St. Louis
 
-Contributor: Drew Blas
-GitHub: @drewblas
+Contributor: Daniel Yang
+GitHub: @ddyy
+Location: Atlanta -> Chicago
+
+Contributor: Lixon Louis
+Email: lixonic [at] gmail.com
+GitHub: @lixonic
+Location: Cochin, Kerala
+
+Contributor: Anton Podviaznikov
+Email: podviaznikov [at] gmail.com
+GitHub: @podviaznikov
+Location: San Francisco
+
+Contributor: Mohamed Alouane
+Email: 3louane [at] gmail.com
+GitHub: @alouanemed
+Location: Morocco
 
 Contributor: Hector Yee
 Email: hector.yee [at] gmail.com
 GitHub: @hectorgon
 Location: San Francisco, CA
 
+Contributor: Jake Gavin
+Email: jake [at] pco.bz
+GitHub: @jakegavin
+Location: Seattle
+
 Contributor: Jon Khaykin
 GitHub: @jkhaykin
 
-Contributor: Gosha Arinich
-Email: me [at] goshakkk.name
-GitHub: @goshakkk
-Location: Minsk, Belarus
-
-Contributor: Charles Pletcher
-GitHub: @Pletcher
-Location: San Francisco Bay Area
-
-Contributor: Daniel Fone
-Email: daniel [at] fone.net.nz
-GitHub: @danielfone
-
-Contributor: 
-GitHub: @alxers
-
-Contributor: Greg Molnar
-GitHub: @gregmolnar
-Location: Basingstoke, UK
-
-Contributor: John Haugeland
-Email: stonecypher [at] gmail.com
-GitHub: @StoneCypher
-Location: San Francisco, CA
-
-Contributor: Matej Kramny
-Email: github [at] matej.me
-GitHub: @matejkramny
-Location: Didcot
-
-Contributor: Sachin Mohan
-Email: send.sachin [at] yahoo.com
-GitHub: @sachinm
-Location: Atlanta, GA
-
-Contributor: Sun Liang
-GitHub: @unstop
-Location: China
+Contributor: Drew Blas
+GitHub: @drewblas
 
 
 /* SITE */
-Last update: 2014/31/12
+Last update: 2015/03/10
 Standards: HTML5, CSS3
 Components: Ruby on Rails, jQuery, Sass, Backbone.js, PostgreSQL, ElasticSearch, Redis, etc.
 Software: Vim, Tmux, Vagrant, Git, etc.
