@@ -2,17 +2,20 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: vagrant
+crendentials: &crendentials
+  username: postgres
+  password: postgres
   host: localhost
   port: 5432
-  password:
 
 development:
   <<: *default
+  <<: *crendentials
   database: coderwall_development
 
 test:
   <<: *default
+  <<: *crendentials
   database: coderwall_test
 
 production:

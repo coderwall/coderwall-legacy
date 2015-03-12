@@ -1,0 +1,21 @@
+# PostgreSQL configuration file
+# This file was automatically generated and dropped off by chef!
+# Please refer to the PostgreSQL documentation for details on
+# configuration settings.
+
+<% node['postgresql']['config'].sort.each do |key, value| %>
+<% next if value.nil? -%>
+<% next if node['postgresql']['version'].to_f < 9.2 && /ssl_.*._file/.match(key) -%>
+<%= key %> = <%=
+  case value
+  when String
+    "'#{value}'"
+  when TrueClass
+    'on'
+  when FalseClass
+    'off'
+  else
+    value
+  end
+%>
+<% end %>
