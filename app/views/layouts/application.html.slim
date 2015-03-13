@@ -13,12 +13,7 @@ html.no-js lang=(I18n.locale)
     meta name='twitter:account_id'  content=ENV['TWITTER_ACCOUNT_ID']
     = metamagic
 
-    link href=image_url('touch-icon-iphone.png') rel="apple-touch-icon"
-    link href=image_url('favicon.png') rel="icon" type="image/x-icon"
-    link href=image_url('fav32x32.png') rel="icon" sizes="32x32" type="image/x-icon"
-    link href=image_url('fav64x64.png') rel="icon" sizes="64x64" type="image/x-icon"
-    link href=image_url('fav128x128.png') rel="icon" sizes="128x128" type="image/x-icon"
-    link href=image_url('favicon.png') rel=("shortcut icon") type="image/x-icon" /
+    = render 'fav_icons'
 
     = stylesheet_link_tag 'coderwall'
     = csrf_meta_tag
