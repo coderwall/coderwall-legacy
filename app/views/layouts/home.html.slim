@@ -1,0 +1,23 @@
+html.no-js lang=(I18n.locale)
+  head
+    title=page_title(yield(:page_title))
+    link rel='author' href= '/humans.txt'
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+    meta name='twitter:account_id' content=ENV['TWITTER_ACCOUNT_ID']
+    meta name='google' value='notranslate'
+
+    = render 'shared/analytics'
+    = render 'shared/mixpanel'
+    = render 'shared/schema.org'
+
+    = metamagic
+
+    = render 'fav_icons'
+
+    = stylesheet_link_tag 'coderwall'
+    = csrf_meta_tag
+
+    = yield :head
+  body
+    = yield
+  = render 'shared/footer'

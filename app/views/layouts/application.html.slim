@@ -2,13 +2,13 @@ html.no-js lang=(I18n.locale)
   head
     title=page_title(yield(:page_title))
     link rel='author' href= '/humans.txt'
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
     meta content=(page_description(yield(:page_description)))  name='description' property='og:description'
     meta content=page_keywords(yield(:page_keywords)) name='keywords'
-    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
     meta name="viewport" content="initial-scale=1.0,width=device-width"
-
-    = render partial: 'shared/analytics'
-    = render partial: 'shared/mixpanel'
+    - if Rails.env.production?
+      = render 'shared/analytics'
+      = render 'shared/mixpanel'
 
     meta name='twitter:account_id'  content=ENV['TWITTER_ACCOUNT_ID']
     = metamagic
@@ -21,7 +21,7 @@ html.no-js lang=(I18n.locale)
     = yield :head
 
   body id=yield(:body_id)
-    = render partial: 'nav_bar'
+    = render 'nav_bar'
     #main-content
       - if main_content_wrapper(yield(:content_wrapper))
         - if flash[:notice] || flash[:error]
@@ -34,5 +34,5 @@ html.no-js lang=(I18n.locale)
         .inside-main-content.cf= yield
       - else
         = yield
-    = render partial: 'shared/footer'
-    = render partial: 'shared/current_user_js'
+    = render 'shared/footer'
+    = render 'shared/current_user_js'
