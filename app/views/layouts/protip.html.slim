@@ -1,0 +1,39 @@
+html.no-js lang=(I18n.locale)
+  head
+    title=page_title(yield(:page_title))
+    link rel='author' href= '/humans.txt'
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+
+    = render 'shared/analytics'
+    = render 'shared/mixpanel'
+
+    meta name='twitter:account_id'  content=ENV['TWITTER_ACCOUNT_ID']
+    = metamagic
+
+    = render 'fav_icons'
+
+    = stylesheet_link_tag 'coderwall'
+    = csrf_meta_tag
+
+    = yield :head
+  body.protip-single
+    = render 'nav_bar'
+
+    canvas.blur src=image_path(users_background_image)
+    = yield
+
+    - if current_user
+      #x-following-users.hide data-users=current_user.following_users.pluck(:username)
+      #x-following-networks.hide data-networks=(current_user.following_networks.pluck(:slug))
+      #x-following-teams.hide data-teams=current_user.teams_being_followed.pluck(:name)
+
+    = javascript_include_tag 'application'
+    = render 'shared/mixpanel_properties'
+    = javascript_include_tag 'highlight/highlight.js'
+    = javascript_include_tag 'highlight/language.js'
+    = javascript_include_tag 'autosaver.js'
+    = javascript_include_tag 'protips'
+
+    = yield :javascript
+
+    = render 'shared/current_user_js'

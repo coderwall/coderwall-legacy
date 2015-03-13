@@ -1,0 +1,15 @@
+html.no-js lang=(I18n.locale)
+  head
+    title= page_title(yield(:page_title))
+    link rel='author' href= '/humans.txt'
+    meta content='text/html; charset=UTF-8' http-equiv='Content-Type'
+
+    = render 'shared/analytics'
+    = render 'shared/mixpanel'
+
+    = render 'fav_icons'
+
+    = stylesheet_link_tag 'coderwall'
+
+  body style='background: #bacbd8;'
+    = yield
