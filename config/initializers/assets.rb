@@ -1,5 +1,6 @@
 Rails.application.configure do
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  config.assets.precompile << 'coderwall.*'
   config.assets.precompile << 'admin.css'
   config.assets.precompile << 'application.css'
   config.assets.precompile << 'application.js'
