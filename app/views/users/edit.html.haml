@@ -32,7 +32,7 @@
         - if @user == current_user
           #basic_section.editsection
             .account-box
-              = render partial: 'users/link_accounts', locals: {form: form}
+              = render 'users/link_accounts', locals: {form: form}
               %p.neverpost We'll never post without your permission
 
             =render "shared/error_messages", target: @user

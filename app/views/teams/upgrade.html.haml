@@ -40,7 +40,7 @@
                 %input.button{:type => "submit", :value => "Post A Job"}
     - else
       %section.feature.payment.cf
-        = render partial: "payment", locals: { account: @team.account || @team.build_account, plan: @team.account.try(:current_plan) }
+        = render "payment", locals: { account: @team.account || @team.build_account, plan: @team.account.try(:current_plan) }
 
 
 
