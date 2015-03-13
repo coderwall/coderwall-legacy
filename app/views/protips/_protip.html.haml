@@ -66,7 +66,7 @@
                 = link_to '', report_inappropriate_protip_path(protip), method: :post, remote: true, class: (cookies["report_inappropriate-#{ protip.public_id }"] ? 'user-flagged' : '') + ' user-flag'
 
           -if defined?(:job) && !job.nil?
-            = render partial: "sidebar_featured_team", locals: { job: job, mode: mode, protip: protip }
+            = render "sidebar_featured_team", locals: { job: job, mode: mode, protip: protip }
 
     %article.tip-panel{ id: protip.public_id }
       = share_on_twitter(protip, 'share-this-tip direction')
