@@ -1,4 +1,4 @@
-= render(partial: 'head', locals: { topic: @topic })
+= render('head', { topic: @topic })
 
 .secondary-notice
   %p
@@ -22,4 +22,4 @@
       == to start sharing your #{@topic} pro tips or
       = link_to('learn more', faq_path, class: 'track', 'data-action' => 'view faq', 'data-from' => 'user protips page')
 
-#browse-results= render(partial: 'grid', locals: { protips: protip_search_results_to_render(@protips), collection: @protips, url: :tagged_protips_path, hide_more: false, mode: 'popup' })
+#browse-results= render('grid', { protips: protip_search_results_to_render(@protips), collection: @protips, url: :tagged_protips_path, hide_more: false, mode: 'popup' })
