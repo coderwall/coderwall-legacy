@@ -8,14 +8,12 @@
   = false
 
 =content_for :javascript do
-  = javascript_include_tag 'hyphenator/hyphenator'
-  =javascript_include_tag 'protips'
-  =javascript_include_tag 'networks'
+  = javascript_include_tag 'hyphenator/hyphenator', 'protips', 'networks'
   :javascript
     Hyphenator.run()
 
 .inside-main-content.cf
-  = render :partial => 'network_navigation', :locals => {:network => @network}
+  = render 'network_navigation', network: @network
   %aside.protips-sidebar
     %ul.protip-actions
       %li
@@ -175,4 +173,4 @@
             more members
   - else
     .protips-content
-      = render :partial => "protips/grid", :locals => {:protips => @protips.results, :collection => @protips, :url => :protips_path, :hide_more => false, :width => 3, :opportunity => @job, :mode => 'popup'}
+      = render 'protips/grid', protips: @protips.results, collection: @protips, url: :protips_path, hide_more: false, width: 3, opportunity: @job, mode: 'popup'
