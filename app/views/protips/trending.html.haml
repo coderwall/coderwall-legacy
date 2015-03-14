@@ -1,7 +1,7 @@
-= render 'head', locals: {topic: []}
+= render 'head', {topic: []}
 %section.trending-topics
   %header.cf
     %h2 Trending Topics
     %a.protip-more{href: trending_topics_protips_path} More topics
 
-  = render 'trending_topics', locals: {count: 12}
+  = render 'trending_topics', {count: 12}
