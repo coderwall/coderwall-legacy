@@ -21,6 +21,7 @@
 
 @import "commons/mixins";
 @import "commons/grids";
+@import "commons/hybrid";
 
 * {
   -webkit-box-sizing: border-box;
@@ -43,10 +44,13 @@ $colorBG: #fff;
 $colorBGPage: #F0F5F6;
 $colorBGProtip: #fff;
 $colorBGProtipJob: #F2F2F2;
+$colorBGLight: #87A3A9;
 
-$colorTextBody: #666;
+$colorTextBody: #4A4A4A;
+$colorTextLight: #87A3A9;
+$colorTextProtip: #808080;
 
-$colorLink: #999;
+$colorLink: #87A3A9;
 $colorLinkHover: $colorBrandGreen;
 $colorLinkActive: $colorLinkHover;
 
@@ -104,33 +108,53 @@ $large: 770px;
 .icon-arrow-left:before { content: "\e603"; }
 .icon-arrow-right:before { content: "\e604"; }
 
+h1,h2,h3,h4,h5,h6 {
+  font-weight: 400;
+}
+
 h1 {
-  font-size: em(36px);
+  font-size: em(30px);
   line-height: em(20px);
+
+  @include at-query($large) {
+    font-size: em(48px);
+  }
 }
 
 h2 {
   font-size: em(24px);
   line-height: em(20px);
+
+  @include at-query($large) {
+    font-size: em(32px);
+  }
 }
 
 h3 {
-  font-size: em(18px);
-  line-height: em(24px);
+  font-size: em(22px);
+  line-height: em(22px);
+
+  @include at-query($large) {
+    font-size: em(24px);
+  }
 }
 
 h4 {
+  font-size: em(18px);
+  line-height: em(24px);
+
+  @include at-query($large) {
+    font-size: em(20px);
+  }
+}
+
+h5 {
   font-size: em(16px);
   line-height: em(18px);
 }
 
-h5 {
-  font-size: em(14px);
-  line-height: em(18px);
-}
-
 h6 {
-  font-size: em(13px);
+  font-size: em(14px);
   line-height: em(18px);
 }
 
@@ -141,14 +165,20 @@ h6 {
 .h5 { @extend h5; }
 .h6 { @extend h6; }
 
-p {
+p,
+ul,
+ul li {
+  color: $colorTextProtip;
   font-size: em(16px);
   line-height: em(28px);
+}
+
+p {
   margin: 0 0 ($unit / 2);
 }
 
 a {
-  color: $colorTextBody;
+  color: $colorLink;
   text-decoration: none;
 
   @include transition;
@@ -156,6 +186,14 @@ a {
   &:hover,
   &:active {
     color: $colorLinkHover;
+  }
+}
+
+ul {
+  padding: 0 0 0 ($unit * 1.5);
+
+  @include at-query($large) {
+    padding: 0 0 0 $unit;
   }
 }
 
@@ -175,23 +213,31 @@ body {
 hr {
   border: 0;
   border-bottom: 1px solid $colorBorder;
+  margin: ($unit / 2) 0;
+
+  @include at-query($large) {
+    margin: $unit 0;
+  }
 }
 
-.avatar-block__img,
-.avatar-block__user {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.avatar-block__img {
+textarea {
+  border-radius: ($unit / 2);
   border: 1px solid $colorBorder;
-  border-radius: 99px;
-  height: 36px;
-  width: 36px;
+  font-size: em(14px);
+  height: 28px;
+  padding: ($unit / 10) ($unit / 2);
+  width: 100%;
+
+  @include at-query($large) {
+    font-size: em(16px);
+    height: 34px;
+    padding: ($unit / 5) ($unit / 2);
+  }
 }
 
-.avatar-block__user {
-  margin-left: $unit / 4;
+pre {
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -237,16 +283,19 @@ hr {
   }
 }
 
+.relative {
+  position: relative;
+}
+
 /*============================================================================
   #Buttons
 ==============================================================================*/
 
 .btn {
-  @extend .h4;
-
   background-color: $colorButton;
   border-radius: 999px;
   color: #fff;
+  font-size: em(14px);
   display: block;
   text-align: center;
   padding: 9px ($unit / 2) 11px;
@@ -258,16 +307,21 @@ hr {
   }
 
   .icon {
-    font-size: em(14px);
+    @extend .h6;
+
     position: relative;
     top: 1px;
   }
 }
 
 .btn--small {
-  font-size: em(14px);
   font-weight: bold;
-  padding: 6px;
+  font-size: em(14px);
+  padding: 4px;
+
+  @include at-query($large) {
+    padding: 8px;
+  }
 }
 
 .upvote {
@@ -277,6 +331,7 @@ hr {
   background-color: transparent;
   border: 2px solid $colorBorder;
   color: $colorTextBody;
+  width: auto;
 
   &:hover {
     background-color: transparent;
@@ -332,11 +387,11 @@ hr {
 ==============================================================================*/
 
 .logo {
-  margin: 0 auto ($unit / 2);
+  margin: 0 auto ($unit / 1.5);
   text-align: center;
   width: 100%;
 
-  @include at-query($medium) {
+  @include at-query($large) {
     display: inline-block;
     margin: 0;
     width: auto;
@@ -352,20 +407,10 @@ hr {
     padding: ($unit * 1.5) 0 $unit;
   }
 
-  .avatar-block {
-    float: right;
-    position: relative;
-    top: -$unit / 10;
-
-    @include at-query($medium) {
-      top: -$unit / 5;
-    }
-  }
-
   .menu {
     display: inline;
 
-    @include at-query($medium) {
+    @include at-query($large) {
       margin-left: $unit;
       position: relative;
       top: -$unit / 4;
@@ -375,33 +420,35 @@ hr {
 
 .secondary-menu {
   border-bottom: 1px solid $colorBorder;
-  padding-bottom: $unit / 4;
+  padding-bottom: $unit / 2;
 
   @include at-query($medium) {
     padding-bottom: 0;
   }
 
   li {
-    padding: ($unit / 2) 0;
+    padding: ($unit * 0.75) 0;
 
-    &.active {
+    &.active a {
       border-bottom: 3px solid $colorBrandGreen;
+      color: $colorTextBody;
       font-weight: bold;
-    }
-
-    @include at-query($large) {
-      padding: ($unit * 0.75) 0;
     }
   }
 
   .addprotip {
+    @extend .h5;
+
     position: relative;
-    margin-top: 8px;
+    margin-top: $unit / 2;
+
+    @include at-query($medium) {
+      margin-top: $unit / 2;
+    }
 
     @include at-query($large) {
       float: right;
       display: inline-block;
-      margin-top: $unit / 2;
     }
   }
 }
@@ -433,13 +480,27 @@ hr {
 }
 
 .site-header {
-  @extend .h3;
+  @extend .h4;
 
   border-bottom: 1px solid $colorBorder;
 
   .active {
     color: $colorLinkActive;
   }
+}
+
+.user-block {
+  float: right;
+}
+
+.user-block__img {
+  height: 36px;
+  width: 36px;
+  float: left;
+  margin-right: 10px;
+  position: relative;
+  border-radius: 99px;
+  top: -5px;
 }
 
 /*============================================================================
@@ -457,29 +518,14 @@ hr {
 }
 
 .footer-nav {
-  @extend .h4;
-
-  line-height: em(24px);
-  margin-bottom: $unit / 2;
-}
-
-.footer-nav--quiet {
   @extend .h5;
 
-  margin-bottom: $unit / 3;
-
-  a {
-    color: lighten($colorTextBody,20%);
-
-    &:hover {
-      color: $colorTextBody;
-    }
-  }
+  line-height: em(24px);
+  margin-bottom: $unit / 4;
 }
 
-.mixpanel {
-  display: block;
-  margin-top: $unit / 2;
+.mixpanel img {
+  height: 19px;
 }
 
 /*============================================================================
@@ -520,6 +566,94 @@ hr {
   #Protips
 ==============================================================================*/
 
+.author-block {
+  height: 32px;
+
+  @include at-query($large) {
+    height: 36px;
+  }
+}
+
+.author-block__company {
+  @extend .h6;
+
+  color: $colorTextLight;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+
+  @include at-query($large) {
+    width: 90%;
+  }
+}
+
+.author-block__img {
+  border-radius: 99px;
+  border: 1px solid $colorBorder;
+  float: right;
+  height: 32px;
+  width: 32px;
+
+  @include at-query($large) {
+    float: none;
+    height: 36px;
+    width: 36px;
+  }
+}
+
+.author-block__user {
+  right: 42px;
+  line-height: 20px;
+  text-align: right;
+
+  @include vertical;
+
+  @include at-query($large) {
+    left: 55px;
+    right: auto;
+    text-align: left;
+  }
+}
+
+.author-block__username {
+  color: $colorTextBody;
+}
+
+.job__desc {
+  margin-bottom: 0;
+}
+
+.job__label {
+  @extend .btn;
+  @extend .btn--small;
+
+  &:hover {
+    background-color: $colorBrandBlue;
+  }
+}
+
+.job__loc {
+  @extend .h6;
+
+  color: $colorTextLight;
+  display: block;
+  margin: ($unit / 5) 0;
+  text-transform: uppercase;
+}
+
+.job__title {
+  @extend .h4;
+
+  color: $colorTextBody;
+  display: block;
+  margin-bottom: ($unit / 5);
+
+  @include at-query($large) {
+    margin-top: ($unit / 5);
+  }
+}
+
 .protip,
 .protip__job {
   padding: $unit / 2;
@@ -530,15 +664,6 @@ hr {
 
   @include at-query($large) {
     padding: $unit / 2;
-  }
-
-  .avatar-block__img {
-    max-height: 32px;
-    max-width: 32px;
-  }
-
-  .avatar-block__user {
-    margin-left: $unit / 10;
   }
 
   hr {
@@ -553,30 +678,38 @@ hr {
 }
 
 .protip__comments {
-  color: lighten($colorLink, 20%);
-  font-size: em(12px);
+  @extend .h6;
+
+  color: $colorTextLight;
   font-weight: bold;
   margin-left: $unit / 5;
+  display: inline-block;
+  text-transform: uppercase;
 
   @include transition;
 
   .icon-comment {
     position: relative;
-    top: 3px;
+    top: 2px;
   }
 }
 
 .protip__content {
-  @extend .h3;
+  @extend .h5;
 
-  margin: 0;
+  margin: ($unit / 2) 0 0;
+  line-height: em(21px);
 
   @include at-query($large) {
-    position: relative;
-    top: 2px;
+    margin: 7px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   a {
+    color: $colorTextBody;
+
     &:hover,
     &:hover .protip__comments {
       color: $colorLinkHover;
@@ -597,30 +730,131 @@ hr {
   }
 }
 
-.job__desc {
-  margin-bottom: 0;
-}
+/*============================================================================
+  #Protip Single
+==============================================================================*/
 
-.job__label {
-  @extend .btn;
-  @extend .btn--small;
+.comment-avatar {
+  border: 1px solid $colorBorder;
+  border-radius: 99px;
+  height: 32px;
+  width: 32px;
 
-  &:hover {
-    background-color: $colorBrandBlue;
+  @include at-query($large) {
+    height: 36px;
+    width: 36px;
   }
 }
 
-.job__loc {
-  @extend .h6;
+.comment-body {
+  margin-left: 42px;
 
-  color: lighten($colorTextBody,30%);
-  display: block;
-  margin-top: ($unit / 5);
-  text-transform: uppercase;
+  @include at-query($large) {
+    margin-left: 46px;
+  }
 }
 
-.job__title {
-  @extend .h3;
+.comment-meta {
+  @extend .h6;
 
-  margin-bottom: ($unit / 5);
+  color: $colorLink;
+}
+
+.protip-avatar {
+  height: 32px;
+  width: 32px;
+  border-radius: 99px;
+  position: relative;
+  top: 12px;
+  margin: 0 ($unit / 10);
+}
+
+.protip-comment {
+  margin-bottom: $unit / 2;
+
+  .comment-avatar {
+    position: relative;
+    top: 12px;
+    margin-right: 6px;
+  }
+
+  h5 {
+    font-weight: 600;
+    margin: 0!important;
+    position: relative;
+    top: -12px;
+  }
+
+  form {
+    margin-left: 46px;
+  }
+
+  @include at-query($large) {
+    margin-bottom: $unit;
+  }
+
+  &.comment-box {
+    margin: 0;
+  }
+}
+
+.protip-header {
+  background-color: $colorBG;
+  border-bottom: 1px solid $colorBorder;
+  padding: ($unit / 2);
+}
+
+.protip-single {
+  background-color: $colorBG;
+  padding: ($unit / 2);
+  word-wrap: break-word;
+
+  @include at-query($medium) {
+    padding: $unit;
+  }
+
+  @include at-query($large) {
+    padding: ($unit * 2);
+  }
+
+  h1 {
+    margin: 0;
+    text-align: center;
+  }
+}
+
+.protip-meta {
+  text-align: center;
+
+  p {
+    color: $colorTextLight;
+    font-size: em(14px);
+    margin: 0 0 ($unit / 2);
+  }
+
+  a {
+    color: $colorTextBody;
+  }
+}
+
+.tag-block {
+  float: right;
+  margin-top: 1px;
+
+  li {
+    margin: 0 0 0 ($unit / 10);
+  }
+
+  @include at-query($large) {
+    margin-top: ($unit / 10);
+  }
+}
+
+.tag {
+  @extend .h6;
+
+  background-color: $colorBGLight;
+  border-radius: $unit;
+  color: #fff;
+  padding: ($unit / 10) ($unit / 2);
 }

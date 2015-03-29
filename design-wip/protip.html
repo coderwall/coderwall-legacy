@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ChronoLogger logging is 1.5x faster than ruby's stdlib Logger - Protip - Coderwall</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container">
+
+        <div class="main-nav">
+          <div class="logo">
+            <a href="index.html"><img src="img/logo.png"></a>
+          </div>
+          <ul class="inline menu">
+            <li><a href="index.html" class="active">Protips</a></li>
+            <li><a href="#">Job Board</a></li>
+          </ul>
+          <a href="#" class="user-block">
+            <img src="img/user-avatar.png" class="user-block__img"> <span class="user-block__user">tranhelen</span>
+          </a>
+        </div>
+
+      </div>
+    </header>
+
+    <nav class="secondary-menu">
+      <div class="container">
+
+        <div class="grid">
+          <div class="grid__item small--hide medium--two-thirds large--three-quarters">
+            <ul class="inline">
+              <li class="active"><a href="#">Latest</a></li>
+              <li><a href="#">Popular</a></li>
+            </ul>
+          </div>
+          <div class="grid__item medium--one-third large--one-quarter">
+            <a href="#" class="btn addprotip">
+              <span class="icon icon-plus"></span> New Protip
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+
+    <div class="page-body">
+      <div class="container">
+
+        <div class="grid">
+
+          <div class="grid__item push--large--one-twelfth large--ten-twelfths">
+            <header class="protip-header">
+              <div class="grid">
+                <div class="grid__item small--one-quarter medium--one-sixth large--one-eighth">
+                  <a class="upvote--popular">
+                    <span class="icon icon-arrow-up-upload"></span> 2
+                  </a>
+                </div>
+                <div class="grid__item small--three-quarters medium--five-sixths large--seven-eighths">
+                  <ul class="tag-block inline">
+                    <li><a href="" class="tag">#browser</a></li>
+                    <li><a href="" class="tag">#html5</a></li>
+                    <li><a href="" class="tag">#notepad</a></li>
+                  </ul>
+                </div>
+              </div>
+            </header>
+          </div>
+        </div>
+
+        <div class="grid">
+
+          <article class="grid__item push--large--one-twelfth large--ten-twelfths">
+            <div class="protip-single">
+              <header>
+                <h1>ChronoLogger logging is 1.5x faster than ruby's stdlib Logger</h1>
+                <div class="protip-meta">
+                  <p>Posted by <a href=""><img src="img/avatar9.png" class="protip-avatar"> Tim</a> from <a href=""><img src="img/avatar10.png" class="protip-avatar"> Shopify</a> on December 4, 2014</p>
+                </div>
+              </header>
+
+              <h2>Introduction</h2>
+              <p>Recently I created a ruby logger library named ChronoLogger (gem name is chrono_logger) that has lock free writing and time based file rotation. This post introduces ChronoLogger features and what I learned throughout created it.</p>
+              <p>Let's just start with, see the following result comparing logging speed by ChronoLogger from ruby's stdlib Logger (hereinafter: ::Logger). The condition is 100,000 writings by 2 threads at the same time. ChronoLogger's logging speed is 1.5x faster, more than ::Logger.</p>
+
+              <pre>
+                <code>
+                 user     system      total        real
+std_logger: 20.220000  14.530000  34.750000 ( 24.209075)
+chrono_logger: 11.950000   8.650000  20.600000 ( 13.843873)
+                </code>
+              </pre>
+
+              <p>The code is here to profiling it.</p>
+
+              <pre>
+                <code>
+require 'benchmark'
+require 'parallel'
+
+std_logger = ::Logger.new('_std_logger')
+chrono_logger = ChronoLogger.new('_chrono_logger.%Y%m%d')
+
+COUNT = 100_000
+Benchmark.bm(10) do |bm|
+  bm.report('std_logger:') do
+    Parallel.map(['1 logged', '2 logged'], in_threads: 2) do |letter|
+      COUNT.times { std_logger.info letter }
+    end
+  end
+  bm.report('chrono_logger:') do
+    Parallel.map(['1 logged', '2 logged'], in_threads: 2) do |letter|
+      COUNT.times { chrono_logger.info letter }
+    end
+  end
+end
+                </code>
+              </pre>
+
+              <p>Why fast? There is secret that Chronologger has the advantage in the above case. I'm writing details about it by introducing features.</p>
+
+              <h2>ChronoLogger's features</h2>
+
+              <p>ChronoLogger has 2 features comparing with ::Logger.</p>
+
+              <ul>
+                <li>Lock free when logging</li>
+                <li>Time based file rotation</li>
+              </ul>
+
+              <p>Let's see the details.</p>
+
+              <h2>Lock free log writing</h2>
+
+              <h3>What is lock?</h3>
+
+              <p>What is the lock in this article? It's a ::Logger's mutex for writing atomicity when multi-threading. Specifically, mutex block in ::Logger::LogDevice class's write method.</p>
+
+              <h3>Why Chronologger could be lock free logger?</h3>
+
+              <p>::Logger locked for atomicity, why it can be removed? In fact, log writing is atomicly by OS in some specific environments. See the linux documentation, write(2) provides atomic writing when data size is under PIPEBUF, but does not say atomic when data size more than PIPEBUF. However some file system takes lock when writing any size of data, so writing is atomic in these environments. Therefore ChronoLogger removed lock when writing and reduce it's cost.</p>
+
+              <p>Please note it's not always true about lock, for this reason it's safe to check multi process behaviour in your environment. In real, logs aren't mixed in my CentOS envirionments that has ext4 file system. On the other hand logs are mixed when writing to pipe when data size more than PIPE_BUF.</p>
+
+              <h3>Lock free world</h3>
+
+              <p>Limiting environment leads lock free logger. ChronoLogger's 1.5x faster writing is removing mutex when multi threading on top of the article. That solves ChronoLogger's advantage in multi threading. I also tried checking performance in multi processing its results only small percent faster.</p>
+
+              <h3>Break time :coffee:</h3>
+
+              <p>The idea about lock free is originally from MonoLogger project. My colleague @yteraoka told me MonoLogger a year or so ago. MonoLogger has no file rotation function so we could not use it in production. Anyway, it's benefit existing expert colleague, I'm thankful to my environments. :)</p>
+
+              <h3>Time based file rotation</h3>
+
+              <h4>Logging to file having time based filename</h4>
+
+              <p>You would notice ::Logger already has daily file rotation. That's right, but there is a difference the way to rotate file. Actually, ::Logger rotates file when first writing to log file in the next day. Specifically, there is not rotated file existed when first writing in the next day.</p>
+
+              <pre>
+                <code>
+# 2015/02/01
+logger = Logger.new('stdlib.log', 'daily')
+# => stdlib.log generated
+logger.info 'today'
+
+# 2015/02/02
+logger.info 'next day'
+# => stdlib.log.20150201 generated
+                </code>
+              </pre>
+
+              <p>This makes a tiny problem. For instance, you would compress the log file when starting the next day. You cannot compress rotated file if first writing is not started. ChronoLogger solves this problem the way to writing a file that has time based filename. This way is same as cronolog. The result is the following when using ChronoLogger.</p>
+
+              <pre>
+                <code>
+# 2015/02/01
+logger = ChronoLogger.new('chrono.log.%Y%m%d')
+# => chrono.log.20150201 generated
+logger.info 'today'
+
+# 2015/02/02
+logger.info 'next day'
+# => chrono.log.20150202 generated
+                </code>
+              </pre>
+
+              <p>ChronoLogger ensure existing rotated log file when starting the next day. Except there is no writing during a day... This is fitted about the last use case to compressing a log file. Additionally, this way only writes to file that has a new name so it's simple, this simplicity leads also simple code.</p>
+
+              <h3>Wrap up</h3>
+
+              <p>ChronoLogger's pros comparing with ::Logger's are</p>
+
+              <ul>
+                <li>Logging faster when multi threading by lock free</li>
+                <li>Ensure rotated file existence when starting the next day by time based file rotation</li>
+              </ul>
+
+              <p>ChronoLogger's cons is a risk that logs are mixed depending on environment. I'm beginning to use ChronoLogger and currently there is no problem in my Rails project. I'm looking forward to receive your feedback. HackerNews post is <a href="https://news.ycombinator.com/item?id=8991004">here</a>. Thanks for reading.</p>
+
+              <p>If you like ChronoLogger, checkout the <a href="https://github.com/ma2gedev/chrono_logger">github repository.</a></p>
+
+              <h3>References</h3>
+
+              <h4>ChronoLogger</h4>
+
+              <ul>
+                <li>github
+                  <ul>
+                  <li><a href="https://github.com/ma2gedev/chrono_logger">https://github.com/ma2gedev/chrono_logger</a></li>
+                  </ul>
+                </li>
+                <li>rubygems.org
+                  <ul>
+                  <li><a href="https://rubygems.org/gems/chrono_logger">https://rubygems.org/gems/chrono_logger</a></li>
+                  </ul>
+                </li>
+              </ul>
+
+              <h4>about <b>the lock</b></h4>
+
+              <ul>
+                <li>Pointing out mutex block in ruby's logger code
+                  <ul>
+                  <li><a href="https://github.com/ruby/ruby/blob/8be3f74e19492a313c930e031254116df3994078/lib/logger.rb#L595">https://github.com/ruby/ruby/blob/8be3f74e19492a313c930e031254116df3994078/lib/logger.rb#L595</a></li>
+                  </ul>
+                </li>
+                <li>Is lock-free logging safe?
+                  <ul>
+                  <li><a href="http://www.jstorimer.com/blogs/workingwithcode/7982047-is-lock-free-logging-safe">http://www.jstorimer.com/blogs/workingwithcode/7982047-is-lock-free-logging-safe</a></li>
+                  </ul>
+                </li>
+                <li>write(2) documentation
+                  <ul>
+                  <li><a href="http://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html">http://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html</a></li>
+                  </ul>
+                </li>
+              </ul>
+
+              <p>Enjoy!</p>
+
+              <hr>
+
+              <div class="protip-comments">
+                <h2>Comments</h2>
+
+                <!-- If there are no comments -->
+                <!-- <p>There are currently no comments.</p> -->
+
+                <div class="protip-comment">
+                  <h5><img src="img/avatar1.png" class="comment-avatar"> Doug</h5>
+                  <div class="comment-body">
+                    <p>I made a version that is a full blown Ruby editor with syntax highlighting from Ace. 
+                    <br><a href="">https://gist.github.com/4666256</a></p>
+                    <div class="comment-meta">
+                      <a href=""><span class="icon icon-heart"></span> Like</a> • <a href="">Flag</a> • <time>12 minutes ago</time>
+                    </div>
+                  </div>
+                </div>
+                <div class="protip-comment">
+                  <h5><img src="img/avatar2.png" class="comment-avatar"> Steve</h5>
+                  <div class="comment-body">
+                    <p>Forgive me for the shameless plug, but thought this might be useful for others. I put together a little project that uses the browsers localstorage so you can jot notes down and Forgive me for the shameless plus, but thought this might be useful for others. I put together a little p</p>
+                    <div class="comment-meta">
+                      <a href=""><span class="icon icon-heart"></span> Like</a> • <a href="">Flag</a> • <time>12 minutes ago</time>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="protip-comment comment-box">
+                  <h5><img src="img/user-avatar.png" class="comment-avatar"> tranhelen</h5>
+                  <form>
+                    <div class="grid">
+                      <div class="grid__item three-quarters">
+                        <textarea placeholder="Start writing here..."></textarea>
+                      </div>
+                      <div class="grid__item one-quarter">
+                        <a href="" class="btn btn--small">Send</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="grid">
+          <div class="grid__item large--two-quarters small--text-center medium--text-center">
+            <ul class="inline footer-nav">
+              <li><a href="">API & Hacks</a></li>
+              <li><a href="">Privacy</a></li>
+              <li><a href="">Terms of Service</a></li>
+            </ul>
+            <p class="copy">Copyright &copy; 2014 Assembly Made, Inc. All rights reserved.</p>
+          </div>
+          <div class="grid__item large--two-quarters small--text-center medium--text-center large--text-right">
+            <a href="https://twitter.com/coderwall" class="twitter-follow-button" data-show-count="false">Follow @coderwall</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            <a href="https://mixpanel.com/f/partner" class="mixpanel"><img src="http://cdn.mxpnl.com/site_media/images/partner/badge_light.png" alt="Mobile Analytics" /></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/highlight.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+
+      $('.upvote').on('click', function() {
+        $(this).toggleClass('upvote--voted');
+      });
+
+      $('.upvote--popular').on('click', function() {
+        $(this).toggleClass('upvote--popvoted');
+      });
+    </script>
+
+  </body>
+</html>
