@@ -16,7 +16,10 @@
         =yield :footer_menu
       
       %ul.assembly-badge
-        %li <a href='https://assembly.com/coderwall?utm_campaign=assemblage&utm_source=coderwall&utm_medium=flair_widget&utm_content=flag_with_text'><img src='https://treasure.assembly.com/assets/badges/flag_text-6cfc91728f9f0090d1688e4f0d41a639.svg' width=243px height=41px /></a>
+        %li 
+          %a{:href => "https://assembly.com/coderwall?utm_campaign=assemblage&utm_source=coderwall&utm_medium=flair_widget&utm_content=flag_with_text"}
+            %img{:height => "41px", :src => "https://treasure.assembly.com/assets/badges/flag_text-6cfc91728f9f0090d1688e4f0d41a639.svg", :width => "24px"} 
+            Assembly
       %ul.copyright
         %li Copyright &copy; 2015 Assembly Made, Inc. All rights reserved.
       %ul.credits
