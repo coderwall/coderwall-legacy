@@ -166,6 +166,8 @@ class OpportunitiesController < ApplicationController
   def get_jobs_for(chosen_location, tag, page, query = nil, remote_allowed = false)
     scope = Opportunity
 
+    escaped_query = query.nil? ? query : Regexp.escape(query)
+
     if remote_allowed
       scope = scope.where(remote: true)
     else
@@ -173,7 +175,7 @@ class OpportunitiesController < ApplicationController
     end
 
     scope = scope.by_tag(tag) unless tag.nil?
-    scope = scope.by_query(query) if query
+    scope = scope.by_query(escaped_query) if escaped_query
     # TODO: Verify that there are no unmigrated teams
     scope = scope.where('team_id is not null')
     scope.offset((page-1) * 20)

@@ -46,6 +46,17 @@ RSpec.describe OpportunitiesController, type: :controller do
           expect(assigns(:jobs)).to_not be_include(@opportunity2)
         end
       end
+
+      context "by query with keywords containing regexp special characters" do
+        it "should NOT fail when querying with keywords containing '+'" do
+          get :index, location: nil, q: 'C++'
+          expect(assigns(:jobs))
+        end
+        it "should NOT fail when querying with keywords containing '.^$*+?()[{\|'" do
+          get :index, location: nil, q: 'java .^$*+?()[{\|'
+          expect(assigns(:jobs))
+        end
+      end
     end
   end
 end
