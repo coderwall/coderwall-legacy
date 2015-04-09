@@ -520,7 +520,9 @@ body.protip-single {
         }
         .comment {
           margin-bottom: 20px;
-
+          img {
+            max-width: 100%;
+          }
           p {
             font-size: 1.5em;
             line-height: 1.6em;
