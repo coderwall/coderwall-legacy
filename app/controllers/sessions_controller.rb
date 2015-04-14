@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
       current_user.apply_oauth(oauth)
       current_user.save!
       flash[:notice] = "#{oauth[:provider].humanize} account linked"
-      redirect_to(destination_url)
+      redirect_to(edit_user_url(current_user))
     else
       @user = User.find_with_oauth(oauth)
       if @user && !@user.new_record?
