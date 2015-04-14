@@ -36,4 +36,28 @@ Coderwall::Application.configure do
   BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
   #Rails.logger = Logger.new(STDOUT)
   #Rails.logger.level = Logger::DEBUG
+
+  # Mock account credentials
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:linkedin] = OmniAuth::AuthHash.new({
+    :provider => 'linkedin',
+    :uid => 'linkedin12345',
+    :info => {:nickname => 'linkedinuser'},
+    :credentials => {
+      :token => 'linkedin1',
+      :secret => 'secret'}})
+  OmniAuth.config.mock_auth[:twitter] = OmniAuth::AuthHash.new({
+    :provider => 'twitter', 
+    :uid => 'twitter123545', 
+    :info => {:nickname => 'twitteruser'}, 
+    :credentials => {
+      :token => 'twitter1', 
+      :secret => 'secret'}})
+  OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
+    :provider => 'github', 
+    :uid => 'github123545', 
+    :info => {:nickname => 'githubuser'}, 
+    :credentials => {
+      :token => 'github1', 
+      :secret => 'secret'}})
 end
