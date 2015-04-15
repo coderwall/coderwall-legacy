@@ -106,12 +106,12 @@ RSpec.describe SessionsController, type: :controller, skip: true do
       expect(response).to redirect_to(new_user_url)
     end
 
-    it 'redirects back to profile page if user is already signed in' do
+    it 'redirects back to settings page if user is already signed in' do
       sign_in(user = Fabricate(:user, username: 'darth'))
       request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:github] = github_response
       get :create
       expect(flash[:notice]).to include('linked')
-      expect(response).to redirect_to(badge_url(username: 'darth'))
+      expect(response).to redirect_to(edit_user_url(controller.send :current_user))
     end
   end
 
@@ -201,6 +201,15 @@ RSpec.describe SessionsController, type: :controller, skip: true do
       request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:twitter] = twitter_response
       get :create
       expect(flash[:error]).to include('already associated with a different member')
+    end
+
+    it 'successful linking of an account should redirect to settings page' do
+      user = Fabricate(:user, twitter: 'mdeiters', twitter_id: '6271932')
+      sign_in(user)
+      request.env['omniauth.auth'] = OmniAuth.config.mock_auth[:twitter] = twitter_response
+      get :create
+      expect(flash[:notice]).to include('linked')
+      expect(response).to redirect_to(edit_user_url(controller.send :current_user))
     end
   end
 
