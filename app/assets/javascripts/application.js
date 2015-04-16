@@ -6,7 +6,6 @@
 //= require jquery.autocomplete
 //= require jquery.flexslider-min
 //= require underscore
-//= require backbone
 
 //= require jquery-dropdown
 

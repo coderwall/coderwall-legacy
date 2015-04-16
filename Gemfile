@@ -11,9 +11,6 @@ source 'https://rubygems.org' do
   gem 'autoprefixer-rails'
   gem 'jquery-rails', '= 2.0.3'
 
-# Two Client-side JS frameworks. Yep, first one to refactor out the other wins.
-  gem 'backbone-on-rails'
-
 # Load environment variables first
   gem 'dotenv-rails', groups: [:development, :test]
 
@@ -58,7 +55,7 @@ source 'https://rubygems.org' do
   gem 'chronic'
 
 # Redis
-  gem 'redis-rails', '~> 3.2'
+  gem 'redis-rails', '3.2.4'
 
 
   gem 'sidekiq'
