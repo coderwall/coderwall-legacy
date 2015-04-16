@@ -40,8 +40,8 @@ RSpec.describe TeamsController, type: :controller do
 
     it 'responds successfully with an HTTP 200 status code' do
       team = Fabricate(:team) do
-        name Faker::Company.name
-        slug Faker::Internet.user_name
+        name FFaker::Company.name
+        slug FFaker::Internet.user_name
       end
       get :show, slug: team.slug
       expect(response).to be_success
