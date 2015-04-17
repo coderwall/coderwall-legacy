@@ -365,8 +365,6 @@ Rails.application.routes.draw do
   end
 
   get 'webhooks/stripe' => 'accounts#webhook'
-  get '/alerts' => 'alerts#create', :via => :post
-  get '/alerts' => 'alerts#index', :via => :get
 
   # get '/payment' => 'accounts#new', as: :payment
 
@@ -471,7 +469,5 @@ Rails.application.routes.draw do
     get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
     mount Sidekiq::Web => '/sidekiq'
   end
-  # TODO: namespace inside admin
-  get '/comments' => 'comments#index', as: :latest_comments
 
 end
