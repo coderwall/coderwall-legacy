@@ -432,7 +432,6 @@ Rails.application.routes.draw do
   end
 
   get '/clear/:id/:provider' => 'users#clear_provider', as: :clear_provider
-  get '/refresh/:username' => 'users#refresh', as: :refresh
   get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
