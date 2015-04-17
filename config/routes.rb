@@ -1,12 +1,12 @@
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x00000008e12370@/home/vagrant/web/config/routes.rb:270>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x00000008e324e0@/home/vagrant/web/config/routes.rb:271>
-#                                                   /mail_view                                             MailPreview
+#                      Prefix Verb                  URI Pattern                                            Controller#Action
+#                             GET                   /.json(.:format)                                       #<Proc:0x007f88532a57f0@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:263>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f88532c2030@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:264>
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update
 #                     welcome GET                   /welcome(.:format)                                     home#index
-#                        root                       /                                                      protips#index
+#                        root GET                   /                                                      protips#index
 #                    p_dpvbbg GET                   /p/dpvbbg(.:format)                                    protips#show {:id=>"devsal"}
 #                          gh GET                   /gh(.:format)                                          protips#show {:utm_campaign=>"github_orgs_badges", :utm_source=>"github"}
 #                        jobs GET                   /jobs(/:location(/:skill))(.:format)                   opportunities#index
@@ -37,11 +37,12 @@
 #              feature_protip POST                  /p/:id/feature(.:format)                               protips#feature
 #           delete_tag_protip POST                  /p/:id/delete_tag/:topic(.:format)                     protips#delete_tag {:topic=>/[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/}
 #         like_protip_comment POST                  /p/:protip_id/comments/:id/like(.:format)              comments#like {:id=>/\d+/}
-#             protip_comments GET                   /p/:protip_id/comments(.:format)                       comments#index {:id=>/\d+/}
-#                             POST                  /p/:protip_id/comments(.:format)                       comments#create {:id=>/\d+/}
-#          new_protip_comment GET                   /p/:protip_id/comments/new(.:format)                   comments#new {:id=>/\d+/}
+#             protip_comments GET                   /p/:protip_id/comments(.:format)                       comments#index
+#                             POST                  /p/:protip_id/comments(.:format)                       comments#create
+#          new_protip_comment GET                   /p/:protip_id/comments/new(.:format)                   comments#new
 #         edit_protip_comment GET                   /p/:protip_id/comments/:id/edit(.:format)              comments#edit {:id=>/\d+/}
 #              protip_comment GET                   /p/:protip_id/comments/:id(.:format)                   comments#show {:id=>/\d+/}
+#                             PATCH                 /p/:protip_id/comments/:id(.:format)                   comments#update {:id=>/\d+/}
 #                             PUT                   /p/:protip_id/comments/:id(.:format)                   comments#update {:id=>/\d+/}
 #                             DELETE                /p/:protip_id/comments/:id(.:format)                   comments#destroy {:id=>/\d+/}
 #                     protips GET                   /p(.:format)                                           protips#index
@@ -49,26 +50,28 @@
 #                  new_protip GET                   /p/new(.:format)                                       protips#new
 #                 edit_protip GET                   /p/:id/edit(.:format)                                  protips#edit
 #                      protip GET                   /p/:id(.:format)                                       protips#show
+#                             PATCH                 /p/:id(.:format)                                       protips#update
 #                             PUT                   /p/:id(.:format)                                       protips#update
 #                             DELETE                /p/:id(.:format)                                       protips#destroy
-#           featured_networks GET                   /n/featured(.:format)                                  networks#featured {:slug=>/[\dA-Z\-]/i}
-#               user_networks GET                   /n/u/:username(.:format)                               networks#user {:slug=>/[\dA-Z\-]/i}
-#              tagged_network GET                   /n/:id/t(/*tags)(.:format)                             networks#tag {:slug=>/[\dA-Z\-]/i}
-#             members_network GET                   /n/:id/members(.:format)                               networks#members {:slug=>/[\dA-Z\-]/i}
-#               mayor_network GET                   /n/:id/mayor(.:format)                                 networks#mayor {:slug=>/[\dA-Z\-]/i}
-#              expert_network GET                   /n/:id/expert(.:format)                                networks#expert {:slug=>/[\dA-Z\-]/i}
-#                join_network POST                  /n/:id/join(.:format)                                  networks#join {:slug=>/[\dA-Z\-]/i}
-#               leave_network POST                  /n/:id/leave(.:format)                                 networks#leave {:slug=>/[\dA-Z\-]/i}
-#         update_tags_network POST                  /n/:id/update-tags(.:format)                           networks#update_tags {:slug=>/[\dA-Z\-]/i}
-#       current_mayor_network GET                   /n/:id/current-mayor(.:format)                         networks#current_mayor {:slug=>/[\dA-Z\-]/i}
-#                    networks GET                   /n(.:format)                                           networks#index {:slug=>/[\dA-Z\-]/i}
-#                             POST                  /n(.:format)                                           networks#create {:slug=>/[\dA-Z\-]/i}
-#                 new_network GET                   /n/new(.:format)                                       networks#new {:slug=>/[\dA-Z\-]/i}
-#                edit_network GET                   /n/:id/edit(.:format)                                  networks#edit {:slug=>/[\dA-Z\-]/i}
-#                     network GET                   /n/:id(.:format)                                       networks#show {:slug=>/[\dA-Z\-]/i}
-#                             PUT                   /n/:id(.:format)                                       networks#update {:slug=>/[\dA-Z\-]/i}
-#                             DELETE                /n/:id(.:format)                                       networks#destroy {:slug=>/[\dA-Z\-]/i}
-#                     protips GET                   /trending(.:format)                                    protips#index
+#           featured_networks GET                   /n/featured(.:format)                                  networks#featured
+#               user_networks GET                   /n/u/:username(.:format)                               networks#user
+#              tagged_network GET                   /n/:id/t(/*tags)(.:format)                             networks#tag
+#             members_network GET                   /n/:id/members(.:format)                               networks#members
+#               mayor_network GET                   /n/:id/mayor(.:format)                                 networks#mayor
+#              expert_network GET                   /n/:id/expert(.:format)                                networks#expert
+#                join_network POST                  /n/:id/join(.:format)                                  networks#join
+#               leave_network POST                  /n/:id/leave(.:format)                                 networks#leave
+#         update_tags_network POST                  /n/:id/update-tags(.:format)                           networks#update_tags
+#       current_mayor_network GET                   /n/:id/current-mayor(.:format)                         networks#current_mayor
+#                    networks GET                   /n(.:format)                                           networks#index
+#                             POST                  /n(.:format)                                           networks#create
+#                 new_network GET                   /n/new(.:format)                                       networks#new
+#                edit_network GET                   /n/:id/edit(.:format)                                  networks#edit
+#                     network GET                   /n/:id(.:format)                                       networks#show
+#                             PATCH                 /n/:id(.:format)                                       networks#update
+#                             PUT                   /n/:id(.:format)                                       networks#update
+#                             DELETE                /n/:id(.:format)                                       networks#destroy
+#                    trending GET                   /trending(.:format)                                    protips#index
 #                         faq GET                   /faq(.:format)                                         pages#show {:page=>:faq}
 #                         tos GET                   /tos(.:format)                                         pages#show {:page=>:tos}
 #              privacy_policy GET                   /privacy_policy(.:format)                              pages#show {:page=>:privacy_policy}
@@ -90,6 +93,7 @@
 #          new_authentication GET                   /authentications/new(.:format)                         authentications#new
 #         edit_authentication GET                   /authentications/:id/edit(.:format)                    authentications#edit
 #              authentication GET                   /authentications/:id(.:format)                         authentications#show
+#                             PATCH                 /authentications/:id(.:format)                         authentications#update
 #                             PUT                   /authentications/:id(.:format)                         authentications#update
 #                             DELETE                /authentications/:id(.:format)                         authentications#destroy
 #                   usernames GET                   /usernames(.:format)                                   usernames#index
@@ -97,27 +101,27 @@
 #                new_username GET                   /usernames/new(.:format)                               usernames#new
 #               edit_username GET                   /usernames/:id/edit(.:format)                          usernames#edit
 #                    username GET                   /usernames/:id(.:format)                               usernames#show
+#                             PATCH                 /usernames/:id(.:format)                               usernames#update
 #                             PUT                   /usernames/:id(.:format)                               usernames#update
 #                             DELETE                /usernames/:id(.:format)                               usernames#destroy
+#                  invitation GET                   /i/:id/:r(.:format)                                    invitations#show
 #                 invitations GET                   /invitations(.:format)                                 invitations#index
 #                             POST                  /invitations(.:format)                                 invitations#create
 #              new_invitation GET                   /invitations/new(.:format)                             invitations#new
 #             edit_invitation GET                   /invitations/:id/edit(.:format)                        invitations#edit
-#                  invitation GET                   /invitations/:id(.:format)                             invitations#show
+#                             PATCH                 /invitations/:id(.:format)                             invitations#update
 #                             PUT                   /invitations/:id(.:format)                             invitations#update
 #                             DELETE                /invitations/:id(.:format)                             invitations#destroy
-#                  invitation GET                   /i/:id/:r(.:format)                                    invitations#show
 #              force_sessions GET                   /sessions/force(.:format)                              sessions#force
 #                    sessions GET                   /sessions(.:format)                                    sessions#index
 #                             POST                  /sessions(.:format)                                    sessions#create
 #                 new_session GET                   /sessions/new(.:format)                                sessions#new
 #                edit_session GET                   /sessions/:id/edit(.:format)                           sessions#edit
 #                     session GET                   /sessions/:id(.:format)                                sessions#show
+#                             PATCH                 /sessions/:id(.:format)                                sessions#update
 #                             PUT                   /sessions/:id(.:format)                                sessions#update
 #                             DELETE                /sessions/:id(.:format)                                sessions#destroy
 #             webhooks_stripe GET                   /webhooks/stripe(.:format)                             accounts#webhook
-#                      alerts GET                   /alerts(.:format)                                      alerts#create
-#                             GET                   /alerts(.:format)                                      alerts#index
 #                 follow_user POST                  /users/:username/follow(.:format)                      follows#create {:type=>:user}
 #               teamname_edit GET                   /team/:slug/edit(.:format)                             teams#edit
 #                         job GET                   /team/:slug(/:job_id)(.:format)                        teams#show
@@ -137,6 +141,7 @@
 #             new_team_member GET                   /teams/:team_id/members/new(.:format)                  members#new
 #            edit_team_member GET                   /teams/:team_id/members/:id/edit(.:format)             members#edit
 #                 team_member GET                   /teams/:team_id/members/:id(.:format)                  members#show
+#                             PATCH                 /teams/:team_id/members/:id(.:format)                  members#update
 #                             PUT                   /teams/:team_id/members/:id(.:format)                  members#update
 #                             DELETE                /teams/:team_id/members/:id(.:format)                  members#destroy
 #      apply_team_opportunity POST                  /teams/:team_id/opportunities/:id/apply(.:format)      opportunities#apply
@@ -148,6 +153,7 @@
 #        new_team_opportunity GET                   /teams/:team_id/opportunities/new(.:format)            opportunities#new
 #       edit_team_opportunity GET                   /teams/:team_id/opportunities/:id/edit(.:format)       opportunities#edit
 #            team_opportunity GET                   /teams/:team_id/opportunities/:id(.:format)            opportunities#show
+#                             PATCH                 /teams/:team_id/opportunities/:id(.:format)            opportunities#update
 #                             PUT                   /teams/:team_id/opportunities/:id(.:format)            opportunities#update
 #                             DELETE                /teams/:team_id/opportunities/:id(.:format)            opportunities#destroy
 #   send_invoice_team_account POST                  /teams/:team_id/account/send_invoice(.:format)         accounts#send_invoice
@@ -155,6 +161,7 @@
 #            new_team_account GET                   /teams/:team_id/account/new(.:format)                  accounts#new
 #           edit_team_account GET                   /teams/:team_id/account/edit(.:format)                 accounts#edit
 #                             GET                   /teams/:team_id/account(.:format)                      accounts#show
+#                             PATCH                 /teams/:team_id/account(.:format)                      accounts#update
 #                             PUT                   /teams/:team_id/account(.:format)                      accounts#update
 #                             DELETE                /teams/:team_id/account(.:format)                      accounts#destroy
 #                       teams GET                   /teams(.:format)                                       teams#index
@@ -162,6 +169,7 @@
 #                    new_team GET                   /teams/new(.:format)                                   teams#new
 #                   edit_team GET                   /teams/:id/edit(.:format)                              teams#edit
 #                        team GET                   /teams/:id(.:format)                                   teams#show
+#                             PATCH                 /teams/:id(.:format)                                   teams#update
 #                             PUT                   /teams/:id(.:format)                                   teams#update
 #                             DELETE                /teams/:id(.:format)                                   teams#destroy
 #                   employers GET                   /employers(.:format)                                   teams#upgrade
@@ -191,6 +199,7 @@
 #              new_user_skill GET                   /users/:user_id/skills/new(.:format)                   skills#new
 #             edit_user_skill GET                   /users/:user_id/skills/:id/edit(.:format)              skills#edit
 #                  user_skill GET                   /users/:user_id/skills/:id(.:format)                   skills#show
+#                             PATCH                 /users/:user_id/skills/:id(.:format)                   skills#update
 #                             PUT                   /users/:user_id/skills/:id(.:format)                   skills#update
 #                             DELETE                /users/:user_id/skills/:id(.:format)                   skills#destroy
 #             user_highlights GET                   /users/:user_id/highlights(.:format)                   highlights#index
@@ -198,6 +207,7 @@
 #          new_user_highlight GET                   /users/:user_id/highlights/new(.:format)               highlights#new
 #         edit_user_highlight GET                   /users/:user_id/highlights/:id/edit(.:format)          highlights#edit
 #              user_highlight GET                   /users/:user_id/highlights/:id(.:format)               highlights#show
+#                             PATCH                 /users/:user_id/highlights/:id(.:format)               highlights#update
 #                             PUT                   /users/:user_id/highlights/:id(.:format)               highlights#update
 #                             DELETE                /users/:user_id/highlights/:id(.:format)               highlights#destroy
 #           user_endorsements GET                   /users/:user_id/endorsements(.:format)                 endorsements#index
@@ -205,6 +215,7 @@
 #        new_user_endorsement GET                   /users/:user_id/endorsements/new(.:format)             endorsements#new
 #       edit_user_endorsement GET                   /users/:user_id/endorsements/:id/edit(.:format)        endorsements#edit
 #            user_endorsement GET                   /users/:user_id/endorsements/:id(.:format)             endorsements#show
+#                             PATCH                 /users/:user_id/endorsements/:id(.:format)             endorsements#update
 #                             PUT                   /users/:user_id/endorsements/:id(.:format)             endorsements#update
 #                             DELETE                /users/:user_id/endorsements/:id(.:format)             endorsements#destroy
 #               user_pictures GET                   /users/:user_id/pictures(.:format)                     pictures#index
@@ -212,6 +223,7 @@
 #            new_user_picture GET                   /users/:user_id/pictures/new(.:format)                 pictures#new
 #           edit_user_picture GET                   /users/:user_id/pictures/:id/edit(.:format)            pictures#edit
 #                user_picture GET                   /users/:user_id/pictures/:id(.:format)                 pictures#show
+#                             PATCH                 /users/:user_id/pictures/:id(.:format)                 pictures#update
 #                             PUT                   /users/:user_id/pictures/:id(.:format)                 pictures#update
 #                             DELETE                /users/:user_id/pictures/:id(.:format)                 pictures#destroy
 #                user_follows GET                   /users/:user_id/follows(.:format)                      follows#index
@@ -219,6 +231,7 @@
 #             new_user_follow GET                   /users/:user_id/follows/new(.:format)                  follows#new
 #            edit_user_follow GET                   /users/:user_id/follows/:id/edit(.:format)             follows#edit
 #                 user_follow GET                   /users/:user_id/follows/:id(.:format)                  follows#show
+#                             PATCH                 /users/:user_id/follows/:id(.:format)                  follows#update
 #                             PUT                   /users/:user_id/follows/:id(.:format)                  follows#update
 #                             DELETE                /users/:user_id/follows/:id(.:format)                  follows#destroy
 #                   user_bans POST                  /users/:user_id/bans(.:format)                         bans#create
@@ -228,10 +241,10 @@
 #                    new_user GET                   /users/new(.:format)                                   users#new
 #                   edit_user GET                   /users/:id/edit(.:format)                              users#edit
 #                        user GET                   /users/:id(.:format)                                   users#show
+#                             PATCH                 /users/:id(.:format)                                   users#update
 #                             PUT                   /users/:id(.:format)                                   users#update
 #                             DELETE                /users/:id(.:format)                                   users#destroy
 #              clear_provider GET                   /clear/:id/:provider(.:format)                         users#clear_provider
-#                     refresh GET                   /refresh/:username(.:format)                           users#refresh
 #       random_accomplishment GET                   /nextaccomplishment(.:format)                          highlights#random
 #                   add_skill GET                   /add-skill(.:format)                                   skills#create
 #                      signin GET                   /signin(.:format)                                      sessions#signin
@@ -249,12 +262,6 @@
 #                   following GET                   /:username/following(.:format)                         follows#index {:type=>:following}
 #      callbacks_hawt_feature POST                  /callbacks/hawt/feature(.:format)                      callbacks/hawt#feature
 #    callbacks_hawt_unfeature POST                  /callbacks/hawt/unfeature(.:format)                    callbacks/hawt#unfeature
-#                  admin_root GET                   /admin(.:format)                                       admin#index
-#                 admin_teams GET                   /admin/teams(.:format)                                 admin#teams
-#        admin_sections_teams GET                   /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
-#         admin_section_teams GET                   /admin/teams/section/:section(.:format)                admin#section_teams
-#           admin_sidekiq_web                       /admin/sidekiq                                         Sidekiq::Web
-#             latest_comments GET                   /comments(.:format)                                    comments#index
 #
 
 Rails.application.routes.draw do
@@ -262,13 +269,6 @@ Rails.application.routes.draw do
   # We get 10K's of requests for this route. We should configure nginx to drop these.
   get '/.json',       to: proc { [444, {}, ['']] }
   get '/teams/.json', to: proc { [444, {}, ['']] }
-
-  namespace :api, path: '/', constraints: { subdomain: 'api' } do
-  end
-
-  # TODO: REMOVE
-  match 'protips/update', via: %w(get put)
-  match 'protip/update' , via: %w(get put)
 
   get 'welcome' => 'home#index', as: :welcome
 
