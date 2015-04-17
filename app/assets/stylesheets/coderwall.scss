@@ -1,6 +1,5 @@
 @import "base", "compass/css3", "fonts",
 "normailze", "tipTip", "new-new-home", "error";
-
 @import 'jquery-dropdown';
 @import 'backgrounds';
 
@@ -362,7 +361,7 @@ h4 {
       width: 124px;
       margin-top: -7px;
     }
-    #tweetbtn iframe{
+    #tweetbtn iframe {
       width: 124px !important;
     }
     #footer-nav {
@@ -1500,8 +1499,6 @@ body#blog {
   }
 }
 
-
-
 input[type=file].safari5-upload-hack {
   min-width: 100%;
   min-height: 100%;
@@ -1528,327 +1525,327 @@ input[type=file].safari5-upload-hack {
 @import "featured-teams", "jobs", "protip-phone", "product_description";
 #new-home-template {
   background: #d5d5d5 image-url("premium-team-description/dot-bg.jpg") repeat;
-              * {
-                box-sizing: border-box;
-              }
-              #footer {
-                background: #fff;
-                min-width: 100%;
-                max-width: 1140px !important;
-                .inside-footer {
-                  max-width: 100%;
-                  padding: 7%;
-                }
-              }
-              .wrapper {
-                max-width: 1140px;
-                margin: 0 auto;
-                background: #3f7eb0;
-              }
-              .site-header {
-                padding: 4% 7%;
-                background: image-url("new-home/div-bar.png") no-repeat top center;
-                .new-home-logo {
-                  float: left;
-                  width: 226px;
-                  height: 30px;
-                  background: image-url("new-home/new-home-logo.png") no-repeat;
-                  background-size: 226px;
-                  @include transition-all;
-                  &:hover {
-                    opacity: 0.5;
-                  }
-                  span {
-                    display: none;
-                  }
-                }
-                .login {
-                  float: right;
-                  color: #9dc1df;
-                  font-size: 1.6em;
-                  padding-top: 1%;
-                  a {
-                    color: #fff;
-                    &:hover {
-                      text-decoration: underline;
-                    }
-                  }
-                }
-              }
-              .intro {
-                background: #3f7eb0;
-                h1 {
-                  font-size: 5em;
-                  color: #fff;
-                  text-align: center;
-                  font-family: "MuseoSans-300";
-                  padding: 2% 7%;
-                }
-                h2 {
-                  color: #1c527d;
-                  text-align: center;
-                  font-family: 'nothing_you_could_doregular', sans-serif;
-                  margin-bottom: 2%;
-                  position: relative;
-                  background: image-url("new-home/pencil-lines.png") no-repeat center;
-                }
-                .sign-up-list {
-                  text-align: center;
-                  margin-bottom: 7%;
-                  li {
-                    display: inline-block;
-                    margin-left: 2%;
-                    &:first-child {
-                      margin-left: 0;
-                    }
-                  }
-                  a {
-                    display: block;
-                    background: #fbfbfb;
-                    @include border-radius(6px);
-                    color: #2c6593;
-                    font-size: 1.6em;
-                    height: 60px;
-                    line-height: 60px;
-                    width: 171px;
-                    text-align: center;
-                    box-shadow: 0px 3px 0px 0px rgba(53, 103, 163, 0.7);
-                    &:hover {
-                      background: #1c527d;
-                      color: #fff;
-                    }
-                    span {
-                      display: inline-block;
-                      height: 23px;
-                      width: 21px;
-                      background: image-url("new-home/sign-up-sprite-home.png") no-repeat 0px 0px;
-                      margin-right: 5px;
-                      margin-left: -20px;
-                      margin-bottom: -4px;
-                    }
-                    .twitter {
-                      background-position: 0px -23px;
-                    }
-                    .linkedin {
-                      background-position: 0px -48px;
-                    }
-                  }
-                }
-              }
-              .slider {
-                position: relative;
-              }
-              .flex-control-nav {
-                opacity: 0.5;
-                padding: 20px 0px;
-                bottom: 0;
-                top: -60px;
-              }
-              .slides {
-                ul {
-                }
-                li {
-                  height: 460px;
-                  background: rgba(0, 0, 0, 0.2);
-                }
-                .browser {
-                  width: 600px;
-                  bottom: -3px;
-                  position: absolute;
-                  img {
-                    width: 100%;
-                  }
-                }
-                .bubble {
-                  float: right;
-                  @include border-radius(50%);
-                  width: 300px;
-                  height: 300px;
-                  background: rgba(44, 50, 60, 0.9);
-                  margin: 5% 5% 0 0;
-                  position: relative;
-                  z-index: 100;
-                  h3 {
-                    font-family: "MuseoSans-300";
-                    font-size: 1.8em;
-                    line-height: 1.5em;
-                    color: #fff;
-                    text-align: center;
-                  }
-                }
-                .protips-slide, .teams-slide {
-                  .browser {
-                    right: 5%;
-                  }
-                  .bubble {
-                    margin: 5% 0 0 5%;
-                    float: left;
-                    &:before {
-                      display: none;
-                    }
-                  }
-                }
-                .profile-slide .bubble {
-                  padding: 100px 36px 0 36px;
-                }
-                .protips-slide .bubble {
-                  padding: 69px 36px 0 36px;
-                }
-                .teams-slide .bubble {
-                  padding: 75px 35px 0 37px;
-                }
-                .profile-slide {
-                  background: image-url("new-home/profile-bg.jpg") no-repeat;
-                  background-size: cover;
-                  .browser {
-                    left: 5%;
-                  }
-                }
-                .protips-slide {
-                  background: image-url("new-home/tip-bg.jpg") no-repeat left;
-                  background-size: cover;
-                }
-                .teams-slide {
-                  background: image-url("new-home/team-bg.jpg") no-repeat;
-                  background-size: cover;
-                }
-              }
-              @media screen and (max-width: 1024px) {
-                .intro {
-                  h1 {
-                    font-size: 5em;
-                  }
-                }
-              }
-              @media screen and (max-width: 768px) {
-                .site-header {
-                  .new-home-logo {
-                    float: none;
-                    display: block;
-                    margin: 0 auto 3% auto;
-                  }
-                  .login {
-                    float: none;
-                    text-align: center;
-                    padding-top: 0;
-                  }
-                }
-                .intro {
-                  h1 {
-                    font-size: 4em;
-                  }
-                  .sign-up-list {
-                    li {
-                      margin-bottom: 3%;
-                    }
-                  }
-                }
-                .flex-control-nav {
-                  display: none;
-                }
-                .flex-direction-nav {
-                  li:nth-child(1) {
-                    a {
-                      left: 1%;
-                    }
-                  }
-                  li:nth-child(2) {
-                    a {
-                      right: 1%;
-                    }
-                  }
-                }
-                .slides {
-                  li {
-                    height: 460px;
-                    background: rgba(0, 0, 0, 0.2);
-                    overflow: hidden;
-                    height: auto !important;
-                  }
-                  .profile-slide .bubble, .protips-slide .bubble, .teams-slide .bubble {
-                    padding: 0;
-                  }
-                  .bubble {
-                    float: none;
-                    @include border-radius(0);
-                    width: 100%;
-                    height: auto;
-                    padding: 5% 7% !important;
-                    margin: 0;
-                    margin-bottom: 4%;
-                    &:after, &:before {
-                      display: none !important;
-                    }
-                    h3 {
-                      font-size: 1.6em;
-                      line-height: 1.4em;
-                      /*text-align: left;*/
-                    }
-                  }
-                  .browser {
-                    width: 80%;
-                    position: static;
-                    /*display: inline-block;*/
-                    text-align: center;
-                    margin: 0 auto -3px auto;
-                    right: auto !important;
-                    left: auto !important;
-                    overflow: hidden;
-                  }
-                  .protips-slide, .teams-slide {
-                    .bubble {
-                      margin: 0;
-                      margin-bottom: 4%;
-                    }
-                  }
-                }
-                #footer {
-                  .inside-footer {
-                    #tweetbtn {
-                      float: none;
-                      display: block;
-                      margin-top: -7px;
-                      margin-bottom: 15px;
-                    }
-                    #footer-nav {
-                      padding-top: 30px;
-                      .footer-links {
-                        li {
-                          margin: 0 15px 5px 0;
-                          margin-left: 0;
-                        }
-                      }
-                    }
-                  }
-                }
-                /*footer-end*/
-              }
-              /*760 media query end*/
-              @media screen and (max-width: 400px) {
-                /*		.slides {
-                .browser {
-                width: 300px;
-                }
-                }*/
-.intro {
-  h1 {
-    font-size: 2.8em;
-    line-height: 1.3em;
-    padding: 5% 7%;
+  * {
+    box-sizing: border-box;
   }
-  .sign-up-list {
-    padding: 0 10%;
+  #footer {
+    background: #fff;
+    min-width: 100%;
+    max-width: 1140px !important;
+    .inside-footer {
+      max-width: 100%;
+      padding: 7%;
+    }
+  }
+  .wrapper {
+    max-width: 1140px;
+    margin: 0 auto;
+    background: #3f7eb0;
+  }
+  .site-header {
+    padding: 4% 7%;
+    background: image-url("new-home/div-bar.png") no-repeat top center;
+    .new-home-logo {
+      float: left;
+      width: 226px;
+      height: 30px;
+      background: image-url("new-home/new-home-logo.png") no-repeat;
+      background-size: 226px;
+      @include transition-all;
+      &:hover {
+        opacity: 0.5;
+      }
+      span {
+        display: none;
+      }
+    }
+    .login {
+      float: right;
+      color: #9dc1df;
+      font-size: 1.6em;
+      padding-top: 1%;
+      a {
+        color: #fff;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .intro {
+    background: #3f7eb0;
+    h1 {
+      font-size: 5em;
+      color: #fff;
+      text-align: center;
+      font-family: "MuseoSans-300";
+      padding: 2% 7%;
+    }
+    h2 {
+      color: #1c527d;
+      text-align: center;
+      font-family: 'nothing_you_could_doregular', sans-serif;
+      margin-bottom: 2%;
+      position: relative;
+      background: image-url("new-home/pencil-lines.png") no-repeat center;
+    }
+    .sign-up-list {
+      text-align: center;
+      margin-bottom: 7%;
+      li {
+        display: inline-block;
+        margin-left: 2%;
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+      a {
+        display: block;
+        background: #fbfbfb;
+        @include border-radius(6px);
+        color: #2c6593;
+        font-size: 1.6em;
+        height: 60px;
+        line-height: 60px;
+        width: 171px;
+        text-align: center;
+        box-shadow: 0px 3px 0px 0px rgba(53, 103, 163, 0.7);
+        &:hover {
+          background: #1c527d;
+          color: #fff;
+        }
+        span {
+          display: inline-block;
+          height: 23px;
+          width: 21px;
+          background: image-url("new-home/sign-up-sprite-home.png") no-repeat 0px 0px;
+          margin-right: 5px;
+          margin-left: -20px;
+          margin-bottom: -4px;
+        }
+        .twitter {
+          background-position: 0px -23px;
+        }
+        .linkedin {
+          background-position: 0px -48px;
+        }
+      }
+    }
+  }
+  .slider {
+    position: relative;
+  }
+  .flex-control-nav {
+    opacity: 0.5;
+    padding: 20px 0px;
+    bottom: 0;
+    top: -60px;
+  }
+  .slides {
+    ul {
+    }
     li {
-      display: block;
-      margin-left: 0;
+      height: 460px;
+      background: rgba(0, 0, 0, 0.2);
     }
-    a {
-      width: 100%;
-      height: 40px;
-      line-height: 40px;
+    .browser {
+      width: 600px;
+      bottom: -3px;
+      position: absolute;
+      img {
+        width: 100%;
+      }
+    }
+    .bubble {
+      float: right;
+      @include border-radius(50%);
+      width: 300px;
+      height: 300px;
+      background: rgba(44, 50, 60, 0.9);
+      margin: 5% 5% 0 0;
+      position: relative;
+      z-index: 100;
+      h3 {
+        font-family: "MuseoSans-300";
+        font-size: 1.8em;
+        line-height: 1.5em;
+        color: #fff;
+        text-align: center;
+      }
+    }
+    .protips-slide, .teams-slide {
+      .browser {
+        right: 5%;
+      }
+      .bubble {
+        margin: 5% 0 0 5%;
+        float: left;
+        &:before {
+          display: none;
+        }
+      }
+    }
+    .profile-slide .bubble {
+      padding: 100px 36px 0 36px;
+    }
+    .protips-slide .bubble {
+      padding: 69px 36px 0 36px;
+    }
+    .teams-slide .bubble {
+      padding: 75px 35px 0 37px;
+    }
+    .profile-slide {
+      background: image-url("new-home/profile-bg.jpg") no-repeat;
+      background-size: cover;
+      .browser {
+        left: 5%;
+      }
+    }
+    .protips-slide {
+      background: image-url("new-home/tip-bg.jpg") no-repeat left;
+      background-size: cover;
+    }
+    .teams-slide {
+      background: image-url("new-home/team-bg.jpg") no-repeat;
+      background-size: cover;
     }
   }
-}
+  @media screen and (max-width: 1024px) {
+    .intro {
+      h1 {
+        font-size: 5em;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .site-header {
+      .new-home-logo {
+        float: none;
+        display: block;
+        margin: 0 auto 3% auto;
+      }
+      .login {
+        float: none;
+        text-align: center;
+        padding-top: 0;
+      }
+    }
+    .intro {
+      h1 {
+        font-size: 4em;
+      }
+      .sign-up-list {
+        li {
+          margin-bottom: 3%;
+        }
+      }
+    }
+    .flex-control-nav {
+      display: none;
+    }
+    .flex-direction-nav {
+      li:nth-child(1) {
+        a {
+          left: 1%;
+        }
+      }
+      li:nth-child(2) {
+        a {
+          right: 1%;
+        }
+      }
+    }
+    .slides {
+      li {
+        height: 460px;
+        background: rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        height: auto !important;
+      }
+      .profile-slide .bubble, .protips-slide .bubble, .teams-slide .bubble {
+        padding: 0;
+      }
+      .bubble {
+        float: none;
+        @include border-radius(0);
+        width: 100%;
+        height: auto;
+        padding: 5% 7% !important;
+        margin: 0;
+        margin-bottom: 4%;
+        &:after, &:before {
+          display: none !important;
+        }
+        h3 {
+          font-size: 1.6em;
+          line-height: 1.4em;
+          /*text-align: left;*/
+        }
+      }
+      .browser {
+        width: 80%;
+        position: static;
+        /*display: inline-block;*/
+        text-align: center;
+        margin: 0 auto -3px auto;
+        right: auto !important;
+        left: auto !important;
+        overflow: hidden;
+      }
+      .protips-slide, .teams-slide {
+        .bubble {
+          margin: 0;
+          margin-bottom: 4%;
+        }
+      }
+    }
+    #footer {
+      .inside-footer {
+        #tweetbtn {
+          float: none;
+          display: block;
+          margin-top: -7px;
+          margin-bottom: 15px;
+        }
+        #footer-nav {
+          padding-top: 30px;
+          .footer-links {
+            li {
+              margin: 0 15px 5px 0;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+    /*footer-end*/
+  }
+  /*760 media query end*/
+  @media screen and (max-width: 400px) {
+    /*		.slides {
+    .browser {
+    width: 300px;
+    }
+    }*/
+    .intro {
+      h1 {
+        font-size: 2.8em;
+        line-height: 1.3em;
+        padding: 5% 7%;
+      }
+      .sign-up-list {
+        padding: 0 10%;
+        li {
+          display: block;
+          margin-left: 0;
+        }
+        a {
+          width: 100%;
+          height: 40px;
+          line-height: 40px;
+        }
+      }
+    }
 
   }
   /*phone media query end*/
@@ -2034,7 +2031,6 @@ input[type=file].safari5-upload-hack {
   }
 }
 
-
 .account-dropdown {
   .avatar {
     height: 32px;
@@ -2059,16 +2055,16 @@ input[type=file].safari5-upload-hack {
 /* Container used for styling the custom select, the buttom class below adds the bg gradient, corners, etc. */
 .custom-select {
   position: relative;
-  display:block;
-  margin-top:0.5em;
-  padding:0;
+  display: block;
+  margin-top: 0.5em;
+  padding: 0;
 }
 
 /* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper */
 .custom-select select {
-  width:100%;
-  margin:0;
-  background:none;
+  width: 100%;
+  margin: 0;
+  background: none;
   border: 1px solid transparent;
   outline: none;
   /* Prefixed box-sizing rules necessary for older browsers */
@@ -2079,7 +2075,7 @@ input[type=file].safari5-upload-hack {
   appearance: none;
   -webkit-appearance: none;
   /* Font size must the 16px or larger to prevent iOS page zoom on focus */
-  font-size:1em;
+  font-size: 1em;
 }
 
 /* Custom arrow sits on top of the select - could be an image, SVG, icon font, etc. or the arrow could just baked into the bg image on the select. Note this si a 2x image so it will look bad in browsers that don't support background-size. In production, you'd handle this resolution switch via media query but this is a demo. */
@@ -2091,32 +2087,31 @@ input[type=file].safari5-upload-hack {
   height: 8px;
   top: 50%;
   right: 1em;
-  margin-top:-4px;
-  background-image: url("select-arrow.png");
-  background-repeat: no-repeat;
+  margin-top: -4px;
+  background: url("select-arrow.png") no-repeat;
   background-size: 100%;
   z-index: 2;
   /* This hack make the select behind the arrow clickable in some browsers */
-  pointer-events:none;
+  pointer-events: none;
 }
 
 /* Hover style */
 .custom-select:hover {
-  border:1px solid #888;
+  border: 1px solid #888;
 }
 
 /* Focus style */
 .custom-select select:focus {
-  outline:none;
-  box-shadow: 0 0 1px 3px rgba(180,222,250, 1);
-  background-color:transparent;
+  outline: none;
+  box-shadow: 0 0 1px 3px rgba(180, 222, 250, 1);
+  background-color: transparent;
   color: #222;
-  border:1px solid #aaa;
+  border: 1px solid #aaa;
 }
 
 /* Set options to normal weight */
 .custom-select option {
-  font-weight:normal;
+  font-weight: normal;
 }
 
 /* ------------------------------------  */
@@ -2125,10 +2120,10 @@ input[type=file].safari5-upload-hack {
 
 /* OPERA - Pre-Blink nix the custom arrow, go with a native select button to keep it simple. Targeted via this hack http://browserhacks.com/#hack-a3f166304aafed524566bc6814e1d5c7 */
 x:-o-prefocus, .custom-select::after {
-  display:none;
+  display: none;
 }
 
- /* IE 10/11+ - This hides native dropdown button arrow so it will have the custom appearance, IE 9 and earlier get a native select - targeting media query hack via http://browserhacks.com/#hack-28f493d247a12ab654f6c3637f6978d5 - looking for better ways to achieve this targeting */
+/* IE 10/11+ - This hides native dropdown button arrow so it will have the custom appearance, IE 9 and earlier get a native select - targeting media query hack via http://browserhacks.com/#hack-28f493d247a12ab654f6c3637f6978d5 - looking for better ways to achieve this targeting */
 /* The second rule removes the odd blue bg color behind the text in the select button in IE 10/11 and sets the text color to match the focus style's - fix via http://stackoverflow.com/questions/17553300/change-ie-background-color-on-unopened-focused-select-box */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .custom-select select::-ms-expand {
@@ -2139,7 +2134,6 @@ x:-o-prefocus, .custom-select::after {
     color: #222;
   }
 }
-
 
 /* FIREFOX won't let us hide the native select arrow, so we have to make it wider than needed and clip it via overflow on the parent container. The percentage width is a fallback since FF 4+ supports calc() so we can just add a fixed amount of extra width to push the native arrow out of view. We're applying this hack across all FF versions because all the previous hacks were too fragile and complex. You might want to consider not using this hack and using the native select arrow in FF. Note this makes the menus wider than the select button because they display at the specified width and aren't clipped. Targeting hack via http://browserhacks.com/#hack-758bff81c5c32351b02e10480b5ed48e */
 /* Show only the native arrow */
