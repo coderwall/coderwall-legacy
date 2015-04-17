@@ -1,12 +1,12 @@
 //= require jquery
+//= require jquery-migrate
 //= require jquery_ujs
-//= require jquery.tipTip.min
+//= require jquery.tipTip
 //= require jquery.sortElements
 //= require jquery.fancybox.min
 //= require jquery.autocomplete
 //= require jquery.flexslider-min
 //= require underscore
-//= require backbone
 
 //= require jquery-dropdown
 

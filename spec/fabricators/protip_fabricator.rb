@@ -23,8 +23,8 @@
 
 Fabricator(:protip) do
   topic_list %w(Javascript CoffeeScript)
-  title { Faker::Company.catch_phrase }
-  body { Faker::Lorem.sentences(8).join(' ') }
+  title { FFaker::Company.catch_phrase }
+  body { FFaker::Lorem.sentences(8).join(' ') }
   user { Fabricate.build(:user) }
 end
 

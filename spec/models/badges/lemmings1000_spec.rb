@@ -23,7 +23,7 @@ RSpec.describe Lemmings1000, type: :model do
     user = Fabricate(:user)
     watchers = []
     1000.times do
-      watchers << Faker::Internet.user_name
+      watchers << FFaker::Internet.user_name
     end
     fact = Fabricate(:github_original_fact, context: user, metadata: { watchers: watchers })
 

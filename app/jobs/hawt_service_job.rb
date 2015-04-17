@@ -4,7 +4,7 @@ class HawtServiceJob
   sidekiq_options queue: :protip
 
   def perform(id, action)
-    return '{}' unless Rails.env.production?
+    return '{}' # unless Rails.env.production?
     @protip = Protip.find(id)
     url = URI.parse("#{ENV['PRIVATE_URL']}/api/v1/protips/#{action}.json").to_s
     protip_json = MultiJson.load(protip_hash.to_json)

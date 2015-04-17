@@ -20,18 +20,18 @@ end
 
 Fabricator(:lanyrd_original_fact, from: :fact) do
   owner { |fact| fact[:context].lanyrd_identity }
-  url { Faker::Internet.domain_name }
+  url { FFaker::Internet.domain_name }
   identity { |fact| "/#{rand(1000)}/speakerconf/:" + fact[:owner] }
-  name { Faker::Company.catch_phrase }
+  name { FFaker::Company.catch_phrase }
   relevant_on { rand(100).days.ago }
   tags { %w(lanyrd event spoke Software Ruby) }
 end
 
 Fabricator(:github_original_fact, from: :fact) do
   owner { |fact| fact[:context].github_identity }
-  url { Faker::Internet.domain_name }
+  url { FFaker::Internet.domain_name }
   identity { |fact| fact[:url] + ':' + fact[:owner] }
-  name { Faker::Company.catch_phrase }
+  name { FFaker::Company.catch_phrase }
   relevant_on { rand(100).days.ago }
   metadata do {
     language: 'Ruby',

@@ -73,6 +73,6 @@
 #
 
 Fabricator(:team, from: 'Team') do
-  name { Faker::Company.name }
+  name { FFaker::Company.name }
   account { Fabricate.build(:account) }
 end
