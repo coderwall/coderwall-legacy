@@ -1,4 +1,5 @@
 class FollowsController < ApplicationController
+  include ActionView::RecordIdentifier
   before_action :access_required
 
   helper_method :is_viewing_followers?
