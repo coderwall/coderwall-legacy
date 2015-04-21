@@ -49,8 +49,11 @@ function logUsage(action, context, properties, link_element) {
     }
     properties = $.extend(context == null ? {} : {'from': context}, properties);
 
-    mixpanel.track(actionName, properties, function (status) {
+    if (mixpanel != undefined) {
+        mixpanel.track(actionName, properties, function (status) {
 //          doActualClick(link_element);
-        console.log((status == 1 ? "tracked" : "failed") + ":" + actionName);
-    });
+            console.log((status == 1 ? "tracked" : "failed") + ":" + actionName);
+        });
+    }
+
 }

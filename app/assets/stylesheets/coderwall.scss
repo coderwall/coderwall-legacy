@@ -422,7 +422,7 @@ h4 {
   }
 }
 
-@import "profile", "connections", "protip", "networks", "admin";
+@import "profile", "connections", "protip", "networks";
 body#sign-in {
   #main-content {
     background: image-url("black-texture.jpg") repeat;
@@ -2088,6 +2088,7 @@ input[type=file].safari5-upload-hack {
   top: 50%;
   right: 1em;
   margin-top: -4px;
+  background: url("select-arrow.png") no-repeat;
   background: url("select-arrow.png") no-repeat;
   background-size: 100%;
   z-index: 2;
