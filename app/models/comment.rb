@@ -23,7 +23,7 @@ class Comment < ActiveRecord::Base
   has_many :likes, as: :likable, dependent: :destroy
   has_one :spam_report, as: :spammable
   after_create :generate_event
-  after_create :analyze_spam
+  after_save :analyze_spam
   after_save :commented_callback
 
   default_scope order: 'likes_cache DESC, created_at ASC'

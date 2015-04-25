@@ -108,7 +108,7 @@ class Protip < ActiveRecord::Base
   after_save :index_search
   after_destroy :index_search_after_destroy
   after_create :update_network
-  after_create :analyze_spam
+  after_save :analyze_spam
   # End of test failing lines
 
   attr_accessor :upvotes_value

@@ -1,0 +1,17 @@
+.join-panel.cf
+  - unless !defined?(message) || message.nil?
+    p.join
+      = message
+  ul.sign-btns
+    li
+      = link_to link_twitter_path, rel: 'nofollow', class: 'btn'
+        i.fa.fa-twitter
+        | Twitter
+    li
+      = link_to link_github_path, rel: 'nofollow', class: 'btn'
+        i.fa.fa-github
+        | Github
+    li
+      = link_to link_linkedin_path, rel: 'nofollow', class: 'btn'
+        i.fa.fa-linkedin
+        | Linkedin
