@@ -21,7 +21,7 @@
                     %li
                       = link_to('edit bio', edit_user_path(member), :target => :new)
                     %li
-                      = form_tag team_members_path(@team, member), :method => :delete, :remote => true do
+                      = form_tag team_member_path(@team, member), :method => :delete, :remote => true do
                         = submit_tag 'Remove', :class => 'leave button', :remote => true, :confirm => 'Are you sure?'
 
                   = users_image_tag(member)
