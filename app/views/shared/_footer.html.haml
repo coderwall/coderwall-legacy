@@ -1,37 +1,35 @@
 %footer#footer
   .inside-footer.cf
     #tweetbtn
-      :erb
-        <a href="https://twitter.com/coderwall" class="twitter-follow-button" data-show-count="false" data-width="300">Follow @coderwall</a>
-        <script src="https://platform.twitter.com/widgets.js" type="text/javascript"></script>
+      %iframe#twitter-widget-0.twitter-follow-button.twitter-follow-button{:allowtransparency => "true", "data-twttr-rendered" => "true", :frameborder => "0", :scrolling => "no", :src => "https://platform.twitter.com/widgets/follow_button.7c0d5c8fc0456a01b74fed2e38018608.en.html#_=1429265464280&amp;dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=coderwall&amp;show_count=false&amp;show_screen_name=true&amp;size=m", :style => "height: 20px;", :title => "Twitter Follow Button"}
+      %script{:src => "https://platform.twitter.com/widgets.js", :type => "text/javascript"}
     %nav#footer-nav
       %ul.footer-links.cf
-        %li= link_to('Contact',             contact_us_path)
-        %li= link_to('API & Hacks',         api_path)
-        %li= link_to('FAQ',                 faq_path)
-        %li= link_to('Privacy Policy',      privacy_policy_path)
-        %li= link_to('Terms of Service',    tos_path)
-        %li= link_to('Jobs',                '/jobs')
-        %li.employers= link_to('Employers', employers_path)
-        =yield :footer_menu
-      
-      %ul.assembly-badge
-        %li 
-          %a{:href => "https://assembly.com/coderwall?utm_campaign=assemblage&utm_source=coderwall&utm_medium=flair_widget&utm_content=flag_with_text"}
-            %img{:height => "41px", :src => "https://treasure.assembly.com/assets/badges/flag_text-6cfc91728f9f0090d1688e4f0d41a639.svg", :width => "24px"} 
-            Assembly
-      %ul.copyright
-        %li Copyright &copy; 2015 Assembly Made, Inc. All rights reserved.
-      %ul.credits
-        %li= yield :credits
-      %ul.mixpanel
         %li
-          :erb
-            <a href="https://mixpanel.com/f/partner"><img src="https://mixpanel.com/site_media/images/partner/badge_light.png" alt="Real Time Web Analytics" /></a>
-= javascript_include_tag 'application'
-= render partial: 'shared/mixpanel_properties'
-= yield :javascript
-:erb
-  <!--[if lt IE 9]>
-  <%= javascript_include_tag('html5shiv.js') %>
-  <![endif]-->
+          %a{:href => "/contact_us"} Contact
+        %li
+          %a{:href => "/api"} API &amp; Hacks
+        %li
+          %a{:href => "/faq"} FAQ
+        %li
+          %a{:href => "/privacy_policy"} Privacy Policy
+        %li
+          %a{:href => "/tos"} Terms of Service
+        %li
+          %a{:href => "/jobs"} Jobs
+        %li.employers
+          %a{:href => "/employers"} Employers
+        %li
+          %a{:href => "/p/t/by_tags"} Protips
+      %ul.assembly-badge{:style => "display:inline;float:left;"}
+        %li
+          %a{:href => "https://assembly.com/coderwall?utm_campaign=assemblage&amp;utm_source=coderwall&amp;utm_medium=flair_widget&amp;utm_content=flag_with_text"}
+            %img{:height => "41px", :src => "https://treasure.assembly.com/assets/badges/flag_text-6cfc91728f9f0090d1688e4f0d41a639.svg"}/
+      %ul.copyright{:style => "float:left; margin-left:15%;"}
+        %li Copyright © 2015 Assembly Made, Inc. All rights reserved.
+      %ul.credits
+        %li
+      %ul.mixpanel{:style => "float:right; margin-top:-10px"}
+        %li
+          %a{:href => "https://mixpanel.com/f/partner"}
+            %img{:alt => "Real Time Web Analytics", :src => "https://mixpanel.com/site_media/images/partner/badge_light.png"}/
