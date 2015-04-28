@@ -10,6 +10,7 @@ source 'https://rubygems.org' do
 # Assets
   gem 'autoprefixer-rails'
   gem 'jquery-rails', '= 2.0.3'
+  gem 'selectize-rails'
 
 # Load environment variables first
   gem 'dotenv-rails', groups: [:development, :test]
