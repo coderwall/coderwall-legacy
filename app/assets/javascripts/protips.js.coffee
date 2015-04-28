@@ -5,7 +5,8 @@
 #= require  blur
 #= require  jquery.filedrop
 #= require  jquery.textselection
-#= require local_time
+#= require  local_time
+#= require  selectize
 
 window.handle_redirect = (response)->
   window.location = response.to  if (response.status == "redirect")
@@ -30,6 +31,16 @@ $ ->
   $('.submit-on-enter').keydown (event)->
     if event.keyCode == 13
       search(null)
+
+  $('#protip_tags').selectize
+    delimiter: ','
+    persist: false
+    placeholder: "Tags, comma separated"
+    create: (input) ->
+      {
+        value: input,
+        text: input
+      }
 
   enablePreviewEditing()
 
