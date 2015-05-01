@@ -21,6 +21,7 @@
       %li=link_to("My Bitbucket repos do not show on my profile?", '#bitbucket')
       %li=link_to("What is the mayor of a network and how do I become one?", '#mayor')
       %li=link_to("What is the resident expert of a network?", '#resident-expert')
+      %li=link_to("What comes with a premium subscription?", '#premium-subscription')
       %li=link_to("How to apply for jobs through Coderwall?", '#apply')
       - if signed_in?
         %li=link_to("What are Coderwall badge orgs on Github?", '#badge-orgs')
@@ -102,6 +103,16 @@
       %a{:name => 'resident-expert'}
         What is the resident expert of a network?
     %p Resident experts are a generally recognized authority on the network topic and are designated by Coderwall.
+
+    %h3
+      %a{:name => 'premium-subscription'}
+        What comes with a premium subscription?
+    %p
+      Organizations looking to hire amazing engineers can post jobs and even view visitor analytics for each posting.
+
+    %p
+      :erb
+        Complete details for premium subscriptions are available on the <%= link_to 'Employers', employers_path %> page.
 
     %h3
       %a{:name => 'apply'}
