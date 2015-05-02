@@ -18,17 +18,22 @@ class CommentsController < ApplicationController
     create_comment_params = params.require(:comment).permit(:comment)
 
     redirect_to_signup_if_unauthenticated(request.referer + "?" + (create_comment_params.try(:to_query) || ""), "You must signin/signup to add a comment") do
-      @comment      = @protip.comments.build(create_comment_params)
+      @comment = @protip.comments.build(create_comment_params)
+
       @comment.user = current_user
-      respond_to do |format|
-        if @comment.save
-          record_event('created comment')
-          format.html { redirect_to protip_path(@comment.commentable.try(:public_id)) }
-          format.json { render json: @comment, status: :created, location: @comment }
-        else
-          format.html { redirect_to protip_path(@comment.commentable.try(:public_id)), error: "could not add your comment. try again" }
-          format.json { render json: @comment.errors, status: :unprocessable_entity }
-        end
+      @comment.user_name = current_user.name
+      @comment.user_email = current_user.email
+      @comment.user_agent = request.user_agent
+      @comment.user_ip = request.remote_ip
+      @comment.request_format = request.format
+
+      if @comment.save
+        record_event('created comment')
+        format.html { redirect_to protip_path(@comment.commentable.try(:public_id)) }
+        format.json { render json: @comment, status: :created, location: @comment }
+      else
+        format.html { redirect_to protip_path(@comment.commentable.try(:public_id)), error: "could not add your comment. try again" }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
