@@ -33,12 +33,12 @@ class Comment < ActiveRecord::Base
   alias_method :author, :user
   alias_attribute :body, :comment
 
-  rakismet_attrs  author: -> { self.user_name },
-    author_email: -> { self.user_email },
-    content: :comment,
-    blog: ENV['AKISMET_URL'],
-    user_ip: -> { self.remote_ip },
-    user_agent: -> { self.user_agent }
+  rakismet_attrs author: :user_name,
+                 author_email: :user_email,
+                 content: :comment,
+                 blog: ENV['AKISMET_URL'],
+                 user_ip: :remote_ip,
+                 user_agent: :user_agent
 
   validates :comment, length: { minimum: 2 }
 

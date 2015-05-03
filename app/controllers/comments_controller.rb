@@ -25,14 +25,14 @@ class CommentsController < ApplicationController
       @comment.user_email = current_user.email
       @comment.user_agent = request.user_agent
       @comment.user_ip = request.remote_ip
-      @comment.request_format = request.format
+      @comment.request_format = request.format.to_s
 
       if @comment.save
         record_event('created comment')
-        format.html { redirect_to protip_path(@comment.commentable.try(:public_id)) }
+        format.html { redirect_to protip_path(@comment.commentable) }
         format.json { render json: @comment, status: :created, location: @comment }
       else
-        format.html { redirect_to protip_path(@comment.commentable.try(:public_id)), error: "could not add your comment. try again" }
+        format.html { redirect_to protip_path(@comment.commentable), error: "could not add your comment. try again" }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
