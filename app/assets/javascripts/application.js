@@ -8,15 +8,15 @@
 //= require jquery.flexslider-min
 //= require underscore
 
-//= require jquery-dropdown
+//= require jquery.dropdown
 
 $(function () {
-  $('a.remove-parent').live('click', function (e) {
+  $('a.remove-parent').on('click', this.selector, function (e) {
     $(this).parents('.' + $(this).attr('data-parent')).slideUp();
     e.preventDefault();
   });
   registerButtons();
-})
+});
 
 $(function () {
   $('[placeholder]').focus(function () {
@@ -33,7 +33,7 @@ $(function () {
     }
   }).blur();
 
-  $('.save a').live('click', function (e) {
+  $('.save a').on('click', this.selector, function (e) {
     var form = $(this).parents('form');
     $.post(form.attr('action'), form.serialize()).success(function (response) {
 
@@ -41,7 +41,7 @@ $(function () {
     e.preventDefault();
   })
 
-  $('a.submitEndorsement').live('click', function (e) {
+  $('a.submitEndorsement').on('click', this.selector, function (e) {
     var form = $(this).parents('form');
     $.post(form.attr('action'), form.serialize()).success(function (response) {
       $.fancybox.close();
@@ -67,18 +67,18 @@ $(function () {
       }, 1500);
     });
     e.preventDefault();
-  })
+  });
 
   $('#nocount input, #withcount input').live('change', function () {
     $('.endorseButtons .markdown, .endorseButtons .html, .endorseButtons .textile').toggleClass('hide');
   });
 
-  $('a.seeMore').live('click', function (e) {
+  $('a.seeMore').on('click', this.selector, function (e) {
     $(this).siblings('.seeMore').slideDown();
     e.preventDefault();
   });
 
-  $('#achievementcode  a').live('click', function () {
+  $('#achievementcode').on('click', this.selector, function () {
     $(this).hide().parents('em').hide();
     $('.claimcode').fadeIn();
     e.preventDefault();
@@ -115,11 +115,11 @@ $(function () {
     }
   });
 
-  $("a.closefancybox").live("click", function (e) {
+  $("a.closefancybox").on('click', this.selector, function (e) {
     $.fancybox.close();
   });
 
-  $('.event_links a.more').live('click', function (e) {
+  $('.event_links a.more').on('click', this.selector, function (e) {
     $(this).siblings('.more.hide').slideToggle();
     e.preventDefault();
   });
@@ -192,7 +192,7 @@ function handle_redirect(response) {
 }
 
 function registerButtons() {
-  $("a.follow-team:not(.noauth)").live("click", function (e) {
+  $("a.follow-team:not(.noauth)").on('click', this.selector, function (e) {
     $(this).toggleClass("following");
     return e.preventDefault();
   });
