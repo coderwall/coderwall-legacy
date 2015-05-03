@@ -63,7 +63,7 @@ source 'https://rubygems.org' do
   gem 'sinatra'
 
 # Payment processing
-  gem 'stripe', github: 'stripe/stripe-ruby'
+  gem 'stripe'
 
 # RSS parsing
   gem 'feedjira'

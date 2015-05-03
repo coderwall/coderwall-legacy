@@ -161,22 +161,17 @@ class User < ActiveRecord::Base
   acts_as_followable
   acts_as_follower
 
-  before_validation { |u| u && u.username && u.username.downcase! }
-  before_validation :correct_ids
-  before_validation :correct_urls
-
   VALID_USERNAME_RIGHT_WAY = /^[a-z0-9]+$/
   VALID_USERNAME           = /^[^\.]+$/
   validates :username,
-    exclusion: { in: RESERVED, message: "is reserved" },
-    format:    { with: VALID_USERNAME, message: "must not contain a period" }
+            exclusion: {in: RESERVED, message: "is reserved"},
+            format: {with: VALID_USERNAME, message: "must not contain a period"},
+            presence: true,
+            uniqueness: true
 
-  validates_uniqueness_of :username #, :case_sensitive => false, :on => :create
-
-  validates_presence_of :username
   validates_presence_of :email
   validates_presence_of :location
-  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, if: :not_active?
+  validates :email, email: true, if: :not_active?
 
   has_many :badges, order: 'created_at DESC', dependent: :delete_all
   has_many :highlights, order: 'created_at DESC', dependent: :delete_all

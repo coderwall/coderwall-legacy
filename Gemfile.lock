@@ -16,14 +16,6 @@ GIT
       railties (>= 3.0, < 5.0)
 
 GIT
-  remote: git://github.com/stripe/stripe-ruby.git
-  revision: 782a596c8f01060d22b44151e9dbd60a8ef138d6
-  specs:
-    stripe (1.21.0)
-      json (~> 1.8.1)
-      rest-client (~> 1.4)
-
-GIT
   remote: https://github.com/rebelidealist/stripe-ruby-mock
   revision: f603978fd1a38b1c27ff67cfa7d6ac95b71abe5c
   branch: live-tests
@@ -82,7 +74,7 @@ GEM
     ast (2.0.0)
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
-    autoprefixer-rails (5.1.9)
+    autoprefixer-rails (5.1.11)
       execjs
       json
     awesome_print (1.6.1)
@@ -95,7 +87,7 @@ GEM
       debug_inspector (>= 0.0.1)
     blankslate (3.1.3)
     buftok (0.2.0)
-    bugsnag (2.8.4)
+    bugsnag (2.8.6)
       multi_json (~> 1.0)
     builder (3.0.4)
     byebug (2.7.0)
@@ -162,7 +154,7 @@ GEM
       unicode_utils (~> 1.4)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
-    crass (1.0.1)
+    crass (1.0.2)
     createsend (4.0.1)
       hashie (>= 1.2, < 3)
       httparty (~> 0.10)
@@ -209,9 +201,9 @@ GEM
     ethon (0.7.3)
       ffi (>= 1.3.0)
     eventmachine (1.0.7)
-    excon (0.45.1)
+    excon (0.45.3)
     execjs (2.5.2)
-    fabrication (2.13.1)
+    fabrication (2.13.2)
     fabrication-rails (0.0.1)
       fabrication
       railties (>= 3.0)
@@ -374,7 +366,7 @@ GEM
     hashr (0.0.22)
     heroku-deflater (0.5.3)
       rack (>= 1.4.5)
-    highline (1.7.1)
+    highline (1.7.2)
     hike (1.2.3)
     hirb (0.7.3)
     hitimes (1.2.2)
@@ -408,7 +400,7 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kramdown (1.6.0)
+    kramdown (1.7.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     linkedin (0.4.7)
@@ -457,7 +449,7 @@ GEM
     newrelic_rpm (3.11.2.286)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    nokogumbo (1.2.0)
+    nokogumbo (1.4.1)
       nokogiri
     notiffany (0.0.6)
       nenv (~> 0.1)
@@ -471,7 +463,7 @@ GEM
       rack (~> 1.2)
     octokit (3.8.0)
       sawyer (~> 0.6.0, >= 0.5.3)
-    oj (2.12.2)
+    oj (2.12.5)
     omniauth (1.1.4)
       hashie (>= 1.2, < 3)
       rack
@@ -482,16 +474,16 @@ GEM
       omniauth-oauth2 (~> 1.1)
     omniauth-linkedin (0.0.8)
       omniauth-oauth (~> 1.0)
-    omniauth-oauth (1.0.1)
+    omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
-    omniauth-oauth2 (1.1.0)
+    omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
     omniauth-twitter (0.0.18)
       multi_json (~> 1.3)
       omniauth-oauth (~> 1.0)
-    parser (2.2.2.0)
+    parser (2.2.2.2)
       ast (>= 1.1, < 3.0)
     pg (0.18.1)
     pg_array_parser (0.0.9)
@@ -560,10 +552,10 @@ GEM
       bundler (~> 1.0)
       railties (= 3.2.21)
     rails-assets-font-awesome (4.3.0)
-    rails-assets-jquery (2.1.3)
+    rails-assets-jquery (2.1.4)
     rails-assets-jquery-cookie (1.4.0)
       rails-assets-jquery (>= 1.2)
-    rails-assets-jquery-dropdown (1.0.6)
+    rails-assets-jquery-dropdown (2.0.0)
       rails-assets-jquery (>= 1.8.0)
     rails-erd (1.3.1)
       activerecord (>= 3.2)
@@ -598,7 +590,7 @@ GEM
       actionpack (~> 3.2.0)
       redis-rack (~> 1.4.4)
       redis-store (~> 1.1.4)
-    redis-activesupport (3.2.5)
+    redis-activesupport (3.2.4)
       activesupport (~> 3.2.0)
       redis-store (~> 1.1.0)
     redis-namespace (1.5.2)
@@ -638,9 +630,9 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
-    rubocop (0.30.0)
+    rubocop (0.30.1)
       astrolabe (~> 1.3)
-      parser (>= 2.2.0.1, < 3.0)
+      parser (>= 2.2.2.1, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
@@ -650,10 +642,10 @@ GEM
       sexp_processor (~> 4.1)
     rubyzip (1.1.7)
     safe_yaml (1.0.4)
-    sanitize (3.1.2)
-      crass (~> 1.0.1)
+    sanitize (4.0.0)
+      crass (~> 1.0.2)
       nokogiri (>= 1.4.4)
-      nokogumbo (= 1.2.0)
+      nokogumbo (= 1.4.1)
     sass (3.4.13)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -662,18 +654,18 @@ GEM
     sawyer (0.6.0)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
-    sax-machine (1.3.1)
+    sax-machine (1.3.2)
     selectize-rails (0.12.1)
     selenium-webdriver (2.45.0)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    sexp_processor (4.5.0)
+    sexp_processor (4.5.1)
     shellany (0.0.1)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
-    sidekiq (3.3.3)
+    sidekiq (3.3.4)
       celluloid (>= 0.16.0)
       connection_pool (>= 2.1.1)
       json
@@ -683,11 +675,11 @@ GEM
       actionpack (~> 3.0)
       activemodel (~> 3.0)
     simple_oauth (0.2.0)
-    simplecov (0.9.2)
+    simplecov (0.10.0)
       docile (~> 1.1.0)
-      multi_json (~> 1.0)
-      simplecov-html (~> 0.9.0)
-    simplecov-html (0.9.0)
+      json (~> 1.8)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -704,7 +696,7 @@ GEM
       railties (>= 3.1, < 5.0)
       slim (~> 3.0)
     slop (3.6.0)
-    spring (1.3.4)
+    spring (1.3.5)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (2.2.3)
@@ -712,6 +704,9 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    stripe (1.21.0)
+      json (~> 1.8.1)
+      rest-client (~> 1.4)
     strong_parameters (0.2.3)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
@@ -748,7 +743,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turnip (1.2.4)
+    turnip (1.3.0)
       gherkin (>= 2.5)
       rspec (>= 2.14.0, < 4.0)
     tweet-button (0.1.0)
@@ -765,19 +760,19 @@ GEM
       simple_oauth (~> 0.2.0)
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
-    tzinfo (0.3.43)
+    tzinfo (0.3.44)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
+    unf_ext (0.0.7.1)
     unicode_utils (1.4.0)
     vcr (2.9.3)
     webmock (1.15.2)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
-    websocket (1.2.1)
+    websocket (1.2.2)
     websocket-driver (0.5.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -789,14 +784,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts-as-taggable-on (~> 3.4)
-  acts_as_commentable (= 2.0.1)
-  acts_as_follower (= 0.1.1)
-  annotate
+  acts-as-taggable-on (~> 3.4)!
+  acts_as_commentable (= 2.0.1)!
+  acts_as_follower (= 0.1.1)!
+  annotate!
   autoprefixer-rails!
-  awesome_print
-  better_errors
-  binding_of_caller
+  awesome_print!
+  better_errors!
+  binding_of_caller!
   bugsnag
   capybara
   capybara-screenshot
@@ -806,48 +801,48 @@ DEPENDENCIES
   clockwork!
   codeclimate-test-reporter
   coffee-rails!
-  color
-  compass-rails
-  createsend
+  color!
+  compass-rails!
+  createsend!
   database_cleaner
   dotenv-rails!
-  elasticsearch-model
-  elasticsearch-rails
-  fabrication-rails
-  faraday (~> 0.8.1)
-  feedjira
-  ffaker
-  flog
-  fog
-  foreman
-  friendly_id (= 4.0.10.1)
-  fukuzatsu
+  elasticsearch-model!
+  elasticsearch-rails!
+  fabrication-rails!
+  faraday (~> 0.8.1)!
+  feedjira!
+  ffaker!
+  flog!
+  fog!
+  foreman!
+  friendly_id (= 4.0.10.1)!
+  fukuzatsu!
   fuubar
-  geocoder
+  geocoder!
   github-markdown!
   grackle!
-  guard-rspec
+  guard-rspec!
   haml!
-  hashie
+  hashie!
   heroku-deflater
   jazz_hands!
-  jbuilder
+  jbuilder!
   jquery-rails (= 2.0.3)!
   kaminari!
   kramdown!
   launchy
-  linkedin
-  local_time
-  mail_view (~> 2.0.4)
-  metamagic
-  mini_magick
-  mixpanel
-  multi_json
-  never_wastes
+  linkedin!
+  local_time!
+  mail_view (~> 2.0.4)!
+  metamagic!
+  mini_magick!
+  mixpanel!
+  multi_json!
+  never_wastes!
   newrelic_rpm
   nokogiri!
-  octokit
-  oj
+  octokit!
+  oj!
   omniauth (~> 1.1.0)!
   omniauth-facebook!
   omniauth-github!
@@ -855,50 +850,50 @@ DEPENDENCIES
   omniauth-twitter (~> 0.0.16)!
   pg!
   poltergeist
-  postgres_ext
+  postgres_ext!
   pry-byebug
-  pubnub (= 0.1.9)
+  pubnub (= 0.1.9)!
   puma
-  querystring
+  querystring!
   quiet_assets
   rack_session_access
   rails (~> 3.2)!
   rails-assets-font-awesome!
   rails-assets-jquery-cookie (= 1.4.0)!
   rails-assets-jquery-dropdown!
-  rails-erd
+  rails-erd!
   rails_12factor
-  rails_autolink
-  rakismet
+  rails_autolink!
+  rakismet!
   redcarpet!
   redis-rails (= 3.2.4)!
-  rest-client
+  rest-client!
   rspec-rails
-  rubocop
-  ruby-progressbar
-  sanitize
+  rubocop!
+  ruby-progressbar!
+  sanitize!
   sass!
   sass-rails!
   selectize-rails!
   selenium-webdriver
   shoulda-matchers
   sidekiq!
-  simple_form
+  simple_form!
   simplecov
   sinatra!
-  sitemap_generator
+  sitemap_generator!
   slim-rails!
-  spring
-  spring-commands-rspec
+  spring!
+  spring-commands-rspec!
   stripe!
   stripe-ruby-mock!
-  strong_parameters
+  strong_parameters!
   syntax
   timecop
-  tire
-  travis
+  tire!
+  travis!
   turnip
-  tweet-button
+  tweet-button!
   twitter!
   uglifier!
   vcr

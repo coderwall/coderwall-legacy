@@ -1,6 +1,9 @@
 module UserWtf
   extend ActiveSupport::Concern
   included do
+    before_validation :correct_ids
+    before_validation :correct_urls
+
     def correct_ids
       [:stackoverflow, :slideshare].each do |social_id|
         if self.try(social_id) =~ /^https?:.*\/([\w_\-]+)\/([\w\-]+|newsfeed)?/
