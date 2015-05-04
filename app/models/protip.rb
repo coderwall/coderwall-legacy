@@ -43,6 +43,7 @@ class Protip < ActiveRecord::Base
   acts_as_commentable
 
   include ProtipMapping
+  include AuthorDetails
   include SpamFilter
 
   paginates_per(PAGESIZE = 18)

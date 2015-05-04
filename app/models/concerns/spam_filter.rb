@@ -2,7 +2,6 @@ module SpamFilter
   extend ActiveSupport::Concern
 
   included do
-    after_save :analyze_spam
     has_one :spam_report, as: :spammable
     include Rakismet::Model
 
@@ -13,9 +12,9 @@ module SpamFilter
                    user_ip: :remote_ip,
                    user_agent: :user_agent
 
-    def analyze_spam
+     after_save do
       AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
-    end
+     end
 
   end
 end

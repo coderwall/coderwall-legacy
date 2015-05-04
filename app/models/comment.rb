@@ -17,6 +17,7 @@
 
 class Comment < ActiveRecord::Base
   include ActsAsCommentable::Comment
+  include AuthorDetails
   include SpamFilter
 
   belongs_to :commentable, polymorphic: true

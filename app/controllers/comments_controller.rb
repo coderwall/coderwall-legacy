@@ -21,10 +21,6 @@ class CommentsController < ApplicationController
       @comment = @protip.comments.build(create_comment_params)
 
       @comment.user = current_user
-      @comment.user_name = current_user.name
-      @comment.user_email = current_user.email
-      @comment.user_agent = request.user_agent
-      @comment.user_ip = request.remote_ip
       @comment.request_format = request.format.to_s
 
       if @comment.save
