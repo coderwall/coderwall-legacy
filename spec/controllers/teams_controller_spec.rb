@@ -59,6 +59,13 @@ RSpec.describe TeamsController, type: :controller do
       get :show, slug: team.slug, job_id: 'not-a-real-job-slug'
       expect(assigns(:job_page)).to eq(false)
     end
+
+    context 'when searching by an out of bounds or non-integer id' do
+      it 'should render 404' do
+        get :show, id: '54209333547a9e5'
+        expect(response).to have_http_status(404)
+      end
+    end
   end
 
   describe '#create' do

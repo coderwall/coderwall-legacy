@@ -256,8 +256,16 @@ class TeamsController < ApplicationController
     if opts[:slug].present?
       Team.where(slug: opts[:slug].downcase).first
     else
-      Team.find(opts[:id])
+      if valid_id?(opts[:id])
+        Team.find(opts[:id])
+      else
+        nil
+      end
     end
+  end
+
+  def valid_id?(id)
+    id.to_i.to_s == id && id.to_i < 2147483647
   end
 
   def replace_section(section_name)
