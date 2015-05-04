@@ -8,7 +8,7 @@
 //= require jquery.flexslider-min
 //= require underscore
 
-//= require jquery.dropdown
+//= require jquery-dropdown/jquery.dropdown
 
 $(function () {
   $('a.remove-parent').on('click', this.selector, function (e) {
