@@ -4,7 +4,7 @@ header#masthead
   .inside-masthead.cf
     .mobile-panel.cf
       = link_to root_path, class: 'logo'
-        span coderwall
+        span Coderwall
       a.menu-btn
 
     - if ENV['NEW_RELIC_PROMOTION']
@@ -18,11 +18,11 @@ header#masthead
         - if signed_in?
           li
             .account-dropdown
-              a href="#" data-dropdown="#dropdown-profile"
+              a href="#" data-jq-dropdown="#dropdown-profile"
                 = image_tag current_user.avatar.url, class: 'avatar'
                 span.username = current_user.username
-              #dropdown-profile.dropdown.dropdown-tip
-                .dropdown-panel
+              #dropdown-profile.jq-dropdown.jq-dropdown-tip
+                .jq-dropdown-panel
                   div = link_to(t('profile'), badge_path(username: current_user.username), class: mywall_nav_class)
                   div = link_to(t('settings'), settings_path, class: settings_nav_class)
                   div = link_to(t('sign_out'), sign_out_path)
