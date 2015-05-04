@@ -8,7 +8,7 @@ class AnalyzeSpamJob
     thing_to_analyze = spammable['klass'].classify.constantize.find(spammable['id'])
 
     if thing_to_analyze.spam?
-      thing_to_analyze.create_spam_report
+      thing_to_analyze.create_spam_report unless thing_to_analyze.spam_report.present?
     end
   end
 end
