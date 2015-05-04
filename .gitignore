@@ -14,7 +14,8 @@
 .rspec-local
 .yardoc
 /.bundle
-/config/application.yml
+config/application.yml
+config/database.yml
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*.log

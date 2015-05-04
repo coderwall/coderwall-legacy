@@ -40,11 +40,10 @@ class Protip < ActiveRecord::Base
   include Tire::Model::Search
   include Scoring::HotStream
   include SearchModule
-  include Rakismet::Model
-
   acts_as_commentable
 
   include ProtipMapping
+  include SpamFilter
 
   paginates_per(PAGESIZE = 18)
 
@@ -52,15 +51,9 @@ class Protip < ActiveRecord::Base
 
   has_many :likes, as: :likable, dependent: :destroy, after_add: :reset_likes_cache, after_remove: :reset_likes_cache
   has_many :protip_links, autosave: true, dependent: :destroy, after_add: :reset_links_cache, after_remove: :reset_links_cache
-  has_one :spam_report, as: :spammable
   belongs_to :user , autosave: true
 
-  rakismet_attrs  author: proc { self.user.name },
-    author_email: proc { self.user.email },
-    content: :body,
-    blog: ENV['AKISMET_URL'],
-    user_ip: proc { self.user.last_ip },
-    user_agent: proc { self.user.last_ua }
+
 
   acts_as_taggable_on :topics, :users
   attr_accessor :upvotes
@@ -108,7 +101,7 @@ class Protip < ActiveRecord::Base
   after_save :index_search
   after_destroy :index_search_after_destroy
   after_create :update_network
-  after_save :analyze_spam
+
   # End of test failing lines
 
   attr_accessor :upvotes_value
@@ -999,9 +992,4 @@ class Protip < ActiveRecord::Base
   def adjust_like_value(user, like_value)
     user.is_a?(User) && self.author.team_member_of?(user) ? [like_value/2, 1].max : like_value
   end
-
-  def analyze_spam
-    AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
-  end
-
 end

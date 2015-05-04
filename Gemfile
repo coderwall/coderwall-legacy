@@ -145,7 +145,6 @@ source 'https://rubygems.org' do
     gem 'annotate'
     gem 'fabrication-rails'
     gem 'ffaker'
-    gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
     gem 'launchy'
     gem 'pry-byebug'
     #gem 'pry-rescue'
@@ -171,7 +170,7 @@ source 'https://rubygems.org' do
     gem 'timecop'
     gem 'vcr'
     gem 'webmock', '<1.16'
-    gem 'stripe-ruby-mock', git: 'https://github.com/rebelidealist/stripe-ruby-mock', branch: 'live-tests'
+    gem 'stripe-ruby-mock'
   end
 
   group :production do

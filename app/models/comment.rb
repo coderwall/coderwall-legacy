@@ -17,13 +17,11 @@
 
 class Comment < ActiveRecord::Base
   include ActsAsCommentable::Comment
-  include Rakismet::Model
+  include SpamFilter
 
   belongs_to :commentable, polymorphic: true
   has_many :likes, as: :likable, dependent: :destroy
-  has_one :spam_report, as: :spammable
   after_create :generate_event
-  after_save :analyze_spam
   after_save :commented_callback
 
   default_scope order: 'likes_cache DESC, created_at ASC'
@@ -32,13 +30,6 @@ class Comment < ActiveRecord::Base
 
   alias_method :author, :user
   alias_attribute :body, :comment
-
-  rakismet_attrs author: :user_name,
-                 author_email: :user_email,
-                 content: :comment,
-                 blog: ENV['AKISMET_URL'],
-                 user_ip: :remote_ip,
-                 user_agent: :user_agent
 
   validates :comment, length: { minimum: 2 }
 
@@ -147,9 +138,5 @@ class Comment < ActiveRecord::Base
     else
       :new_comment
     end
-  end
-
-  def analyze_spam
-    AnalyzeSpamJob.perform_async({ id: id, klass: self.class.name })
   end
 end
