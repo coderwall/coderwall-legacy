@@ -10,13 +10,8 @@
 #
 
 class ApiAccess < ActiveRecord::Base
+  #TODO change column to postgresql array
   serialize :awards, Array
-
-  class << self
-    def for(api_key)
-      where(api_key: api_key).first
-    end
-  end
 
   def can_award?(badge_name)
     awards.include? badge_name
