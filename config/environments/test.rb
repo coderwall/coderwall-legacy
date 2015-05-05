@@ -1,5 +1,4 @@
-Coderwall::Application.configure do
-  config.threadsafe! unless $rails_rake_task
+Rails.application.configure do
   config.cache_classes = false
   config.whiny_nils = true
   config.consider_all_requests_local = true
@@ -10,7 +9,7 @@ Coderwall::Application.configure do
   config.action_controller.perform_caching = false
   Tire::Model::Search.index_prefix "#{Rails.application.class.parent_name.downcase}_#{Rails.env.to_s.downcase}"
   config.host = 'localhost:3000'
-
+  config.eager_load                             = false
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
   config.middleware.use RackSessionAccess::Middleware # allows to set session from within Capybara

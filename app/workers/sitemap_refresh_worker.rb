@@ -5,7 +5,7 @@ class SitemapRefreshWorker
 
   def perform
     # ArgumentError: Missing host to link to! Please provide the :host parameter, set default_path_options[:host], or set :only_path to true
-    SitemapGenerator::Sitemap.default_host  = 'https://coderwall.com'
+    SitemapGenerator::Sitemap.default_host  = "https://#{APP_DOMAIN}"
     SitemapGenerator::Sitemap.public_path    = 'tmp/'
     SitemapGenerator::Sitemap.sitemaps_host = "http://#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com/"
     SitemapGenerator::Sitemap.sitemaps_path  = 'sitemaps/'

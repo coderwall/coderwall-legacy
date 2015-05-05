@@ -10,7 +10,7 @@ RSpec.describe OpportunitiesController, type: :controller do
 
     it "should render the opportunities index template with jobs layout" do
       get :index
-      expect(response).to render_template(['opportunities/index', 'layouts/jobs'])
+      assert_template layout: 'layouts/jobs'
     end
 
     context "when it's filtered" do

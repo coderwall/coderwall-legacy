@@ -1,6 +1,6 @@
 class FollowsController < ApplicationController
+  include ActionView::RecordIdentifier
   before_action :access_required
-  cache_sweeper :follow_sweeper
 
   helper_method :is_viewing_followers?
 

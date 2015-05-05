@@ -5,24 +5,17 @@ require 'action_mailer/railtie'
 require 'sprockets/railtie'
 I18n.config.enforce_available_locales = false
 
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+Bundler.require(*Rails.groups)
 
 module Coderwall
   class Application < Rails::Application
 
-    config.autoload_paths += Dir[Rails.root.join('app'                                   )]
-    config.autoload_paths += Dir[Rails.root.join('app', 'models',      'concerns', '**/' )]
     config.autoload_paths += Dir[Rails.root.join('app', 'models',      'badges'          )]
-    config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/' )]
-    config.autoload_paths += Dir[Rails.root.join('app', 'services',    '**/'             )]
-    config.autoload_paths += Dir[Rails.root.join('app', 'jobs',        '**/'             )]
     config.autoload_paths += Dir[Rails.root.join('lib', '**/'                            )]
 
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false
     config.encoding = 'utf-8'
-
-    config.filter_parameters += [:password]
 
     config.assets.js_compressor = :uglifier
 
@@ -32,14 +25,8 @@ module Coderwall
       end
     end
 
-    config.generators do |g|
-      g.orm :active_record
-    end
-
-    config.rakismet.key = ENV['AKISMET_KEY']
-    config.rakismet.url = ENV['AKISMET_URL']
-
     config.exceptions_app = self.routes
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
 

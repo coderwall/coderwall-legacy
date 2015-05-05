@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  APP_DOMAIN = 'coderwall.com'
-
   helper_method :signed_in?
   helper_method :current_user
   helper_method :viewing_self?
@@ -130,9 +128,6 @@ class ApplicationController < ActionController::Base
 
   def record_visit
     if viewing_user
-      if viewing_user == current_user && (viewing_user.try(:last_request_at) || 1.week.ago) < 1.day.ago && viewing_user.active? && viewing_user.last_refresh_at < 2.days.ago
-        RefreshUserJob.perform_async(current_user.id)
-      end
       viewing_user.visited!
       Usage.page_view(viewing_user.id) unless viewing_user.admin?
     end

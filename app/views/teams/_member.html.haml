@@ -8,4 +8,4 @@
         -unless member.title.blank?
           %li=member.title
 
-    .hide.member_expanded=render partial: 'member_expanded', object: member, :locals => {:show_avatar => (@team.sorted_team_members.count == 1)}
+    .hide.member_expanded=render 'member_expanded', object: member, :locals => {:show_avatar => (@team.sorted_team_members.count == 1)}

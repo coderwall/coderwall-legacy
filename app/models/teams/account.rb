@@ -22,8 +22,6 @@ class Teams::Account < ActiveRecord::Base
   validates_presence_of :stripe_customer_token
   validates :team_id, presence: true, uniqueness: true
 
-  attr_protected :stripe_customer_token, :admin_id
-
   def subscribe_to!(plan, force=false)
     self.plan_ids = [plan.id]
     if force || update_on_stripe(plan)
@@ -126,11 +124,11 @@ class Teams::Account < ActiveRecord::Base
   end
 
   def send_invoice(invoice_id)
-    NotifierMailer.invoice(self.team.id, nil, invoice_id).deliver
+    NotifierMailer.invoice(self.team.id, nil, invoice_id).deliver_later
   end
 
   def send_invoice_for(time = Time.now)
-    NotifierMailer.invoice(self.team.id, time.to_i).deliver
+    NotifierMailer.invoice(self.team.id, time.to_i).deliver_later
   end
 
   def invoice_for(time)

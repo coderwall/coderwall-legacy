@@ -4,18 +4,14 @@ html.no-js  lang='en'
     link rel= 'author' href= '/humans.txt'
 
     - if Rails.env.production?
-      = render partial: 'shared/mixpanel'
-      = render partial: 'shared/analytics'
+      = render 'shared/mixpanel'
+      = render 'shared/analytics'
 
     meta name="viewport" content="initial-scale=1.0,width=device-width"
 
-    link rel='icon' href=(image_url('favicon.png')) type='image/x-icon'
-    link rel='icon' href=(image_url('fav32x32.png')) type='image/x-icon' sizes='32x32'
-    link rel='icon' href=(image_url('fav64x64.png')) type='image/x-icon' sizes='64x64'
-    link rel='icon' href=(image_url('fav128x128.png')) type='image/x-icon' sizes='128x128'
-    link rel='shortcut icon' href=(image_url('favicon.png')) type='image/x-icon'
+    = render 'fav_icons'
 
-    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'coderwall'
     = csrf_meta_tag
 
     = yield :head
@@ -29,4 +25,4 @@ html.no-js  lang='en'
             = link_to(jobs_path, {class: 'close-notification remove-parent', data: {parent: 'notification-bar'}})
               span Close
       = yield
-  = render partial: 'shared/footer'
+  = render 'shared/footer'

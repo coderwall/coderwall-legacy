@@ -4,7 +4,7 @@ module BadgesHelper
 
   def share_coderwall_on_twitter
     text = "Trying to cheat the system so I can check out my geek cred"
-    custom_tweet_button 'Expedite my access', {text: text, via: 'coderwall'}, {class: 'track expedite-access', 'data-action' => 'share achievement', 'data-action' => 'instantaccess'}
+    custom_tweet_button 'Expedite my access', {text: text, via: 'coderwall'}, {class: 'track expedite-access', 'data-action' => 'instantaccess'}
   end
 
   def dom_tag(tag)

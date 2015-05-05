@@ -124,8 +124,6 @@ class User < ActiveRecord::Base
   # TODO kill
   include UserWtf
 
-  attr_protected :admin, :id, :github_id, :twitter_id, :linkedin_id, :api_key
-
   mount_uploader :avatar, AvatarUploader
   mount_uploader :resume, ResumeUploader
 
@@ -161,8 +159,12 @@ class User < ActiveRecord::Base
   acts_as_followable
   acts_as_follower
 
-  VALID_USERNAME_RIGHT_WAY = /^[a-z0-9]+$/
-  VALID_USERNAME           = /^[^\.]+$/
+  before_validation { |u| u && u.username && u.username.downcase! }
+  before_validation :correct_ids
+  before_validation :correct_urls
+
+  VALID_USERNAME_RIGHT_WAY = /\A[a-z0-9]+\z/
+  VALID_USERNAME = /\A[^\.]+\z/
   validates :username,
             exclusion: {in: RESERVED, message: "is reserved"},
             format: {with: VALID_USERNAME, message: "must not contain a period"},
@@ -173,19 +175,19 @@ class User < ActiveRecord::Base
   validates_presence_of :location
   validates :email, email: true, if: :not_active?
 
-  has_many :badges, order: 'created_at DESC', dependent: :delete_all
-  has_many :highlights, order: 'created_at DESC', dependent: :delete_all
+  has_many :badges, -> { order(:created_at).reverse_order }, dependent: :delete_all
+  has_many :highlights, -> { order(:created_at).reverse_order }, dependent: :delete_all
   has_many :followed_teams, dependent: :delete_all
   has_many :user_events
-  has_many :skills, order: "weight DESC", dependent: :delete_all
+  has_many :skills, -> {order(:weight).reverse_order}, dependent: :delete_all
   has_many :endorsements, foreign_key: 'endorsed_user_id', dependent: :delete_all
   has_many :endorsings, foreign_key: 'endorsing_user_id', class_name: Endorsement.name, dependent: :delete_all
   has_many :protips, dependent: :delete_all
   has_many :likes
   has_many :comments, dependent: :delete_all
 
-  has_one :github_profile  , class_name: 'Users::Github::Profile', dependent: :destroy
-  has_many :github_repositories, through: :github_profile , source: :repositories
+  has_one :github_profile, class_name: 'Users::Github::Profile', dependent: :destroy
+  has_many :github_repositories, through: :github_profile, source: :repositories
 
   belongs_to :team, class_name: 'Team'
   has_one :membership, class_name: 'Teams::Member', dependent: :destroy
@@ -202,24 +204,28 @@ class User < ActiveRecord::Base
   # FIXME: Move to background job
   after_validation :geocode_location, if: :location_changed? unless Rails.env.test?
 
-  before_destroy ->{ protips.destroy_all }, prepend: true
+  before_destroy -> { protips.destroy_all }, prepend: true
 
   def near
     User.near([lat, lng])
   end
 
   scope :top, lambda { |num| order("badges_count DESC").limit(num || 10) }
-  scope :no_emails_since, lambda { |date| where("last_email_sent IS NULL OR last_email_sent < ?", date) }
-  scope :receives_activity, where(notify_on_award: true)
-  scope :receives_newsletter, where(receive_newsletter: true)
-  scope :receives_digest, where(receive_weekly_digest: true)
-  scope :with_tokens, where("github_token IS NOT NULL")
-  scope :on_team, where("team_id IS NOT NULL")
-  scope :not_on_team, where("team_id IS NULL")
+  scope :no_emails_since, ->(date) {  where('last_email_sent IS NULL OR last_email_sent < ?', date) }
+  scope :receives_activity, -> { where(notify_on_award: true) }
+  scope :receives_newsletter, -> { where(receive_newsletter: true) }
+  scope :receives_digest, -> { where(receive_weekly_digest: true) }
+  scope :with_tokens, -> { where('github_token IS NOT NULL') }
+
+  #FIXME
+  scope :on_team, -> { where('team_id IS NOT NULL') }
+  scope :not_on_team, -> { where('team_id IS NULL') }
+
+
   scope :autocomplete, lambda { |filter|
-    filter = "#{filter.upcase}%"
-    where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
-  }
+                       filter = "#{filter.upcase}%"
+                       where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
+                     }
   scope :admins, -> { where(admin: true) }
   scope :active, -> { where(state: ACTIVE) }
   scope :pending, -> { where(state: PENDING) }
@@ -372,13 +378,13 @@ class User < ActiveRecord::Base
 
   def to_csv
     [
-      display_name,
-      "\"#{location}\"",
-      "https://coderwall.com/#{username}",
-      "https://twitter.com/#{twitter}",
-      "https://github.com/#{github}",
-      linkedin_public_url,
-      skills.collect(&:name).join(' ')
+        display_name,
+        "\"#{location}\"",
+        "https://coderwall.com/#{username}",
+        "https://twitter.com/#{twitter}",
+        "https://github.com/#{github}",
+        linkedin_public_url,
+        skills.collect(&:name).join(' ')
     ].join(',')
   end
 
@@ -392,19 +398,19 @@ class User < ActiveRecord::Base
              badges:       badges_hash = [] }
     badges.each do |badge|
       badges_hash << {
-        name:        badge.display_name,
-        description: badge.description,
-        created:     badge.created_at,
-        badge:       block_given? ? yield(badge) : badge
+          name: badge.display_name,
+          description: badge.description,
+          created: badge.created_at,
+          badge: block_given? ? yield(badge) : badge
       }
     end
     if full
       hash[:about] = about
-      hash[:title]              = title
-      hash[:company]            = company
-      hash[:specialities]       = speciality_tags
-      hash[:thumbnail]          = avatar.url
-      hash[:accomplishments]    = highlights.collect(&:description)
+      hash[:title] = title
+      hash[:company] = company
+      hash[:specialities] = speciality_tags
+      hash[:thumbnail] = avatar.url
+      hash[:accomplishments] = highlights.collect(&:description)
       hash[:accounts][:twitter] = twitter
     end
     hash
@@ -424,8 +430,6 @@ class User < ActiveRecord::Base
     save!
     RefreshUserJob.perform_async(id, true)
   end
-
-
 
 
   def can_unlink_provider?(provider)
@@ -496,23 +500,23 @@ class User < ActiveRecord::Base
 
   def geocode_location
     do_lookup(false) do |o, rs|
-      geo             = rs.first
-      self.lat        = geo.latitude
-      self.lng        = geo.longitude
-      self.country    = geo.country
+      geo = rs.first
+      self.lat = geo.latitude
+      self.lng = geo.longitude
+      self.country = geo.country
       self.state_name = geo.state
-      self.city       = geo.city
+      self.city = geo.city
     end
   rescue Exception => ex
   end
 
   def activity_stats(since=Time.at(0), full=false)
-    { profile_views:  self.total_views(since),
-      protips_count:  self.protips.where('protips.created_at > ?', since).count,
-      protip_upvotes: self.protips.joins("inner join likes on likes.likable_id = protips.id").where("likes.likable_type = 'Protip'").where('likes.created_at > ?', since).count,
-      followers:      followers_since(since).count,
-      endorsements:   full ? endorsements_since(since).count : 0,
-      protips_views:  full ? self.protips.collect { |protip| protip.total_views(since) }.reduce(0, :+) : 0
+    {profile_views: self.total_views(since),
+     protips_count: self.protips.where('protips.created_at > ?', since).count,
+     protip_upvotes: self.protips.joins("inner join likes on likes.likable_id = protips.id").where("likes.likable_type = 'Protip'").where('likes.created_at > ?', since).count,
+     followers: followers_since(since).count,
+     endorsements: full ? endorsements_since(since).count : 0,
+     protips_views: full ? self.protips.collect { |protip| protip.total_views(since) }.reduce(0, :+) : 0
     }
   end
 
@@ -848,8 +852,6 @@ class User < ActiveRecord::Base
                              end
                            end
   end
-
-
 
   #This is a temporary method as we migrate to the new 1.0 profile
   def migrate_to_skills!

@@ -63,7 +63,7 @@ class Protip < ActiveRecord::Base
 
   USER_SCOPE = ["!!mine", "!!bookmarks"]
   USER_SCOPE_REGEX = { author:   /!!m(ine)?/, bookmark: /!!b(ookmarks?)?/, }
-  KINDS = [:link, :qa, :article]
+  KINDS = %w(link qa article)
   FEATURED_PHOTO = /\A\s*!\[[\w\s\W]*\]\(([\w\s\W]*)\)/i
   FORMATTERS = { q: /###[Qq|Pp]/, a: /###[Aa|Ss]/ }
   VALID_TAG = /[\w#\-\.\_\$\!\?\* ]+/
@@ -118,9 +118,9 @@ class Protip < ActiveRecord::Base
 
   scope :for_topic, ->(topic) { any_topics([topic]) }
 
-  scope :with_upvotes, joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id")
-  scope :trending, order('score DESC')
-  scope :flagged, where(flagged: true)
+  scope :with_upvotes, -> { joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id") }
+  scope :trending, -> { order(:score).reverse_order }
+  scope :flagged, -> { where(flagged: true) }
 
   class << self
 
@@ -251,6 +251,7 @@ class Protip < ActiveRecord::Base
       query              += " #{query_string}" unless query_string.nil?
       Protip.search(query, [], page: page, per_page: per_page)
     rescue Errno::ECONNREFUSED
+      #FIXME
       team = Team.where(slug: team_id).first
       team.members.flat_map(&:protips)
     end
@@ -523,7 +524,7 @@ class Protip < ActiveRecord::Base
   #link? qa? article?
   KINDS.each do |kind|
     define_method("#{kind}?") do
-      self.kind.to_sym == kind
+      self.kind == kind
     end
   end
 
@@ -837,7 +838,7 @@ class Protip < ActiveRecord::Base
     if self.body_changed?
       self.links.each do |link|
         link_identifier = ProtipLink.generate_identifier(link)
-        existing_link = self.protip_links.find_or_initialize_by_identifier(identifier: link_identifier, url: link.first(254))
+        existing_link = self.protip_links.find_or_initialize_by(identifier: link_identifier, url: link.first(254))
 
         if existing_link.new_record?
           upvote_ancestor(link_identifier, link) unless self.user.nil?
@@ -912,17 +913,18 @@ class Protip < ActiveRecord::Base
   end
 
   def viewed_by?(viewer)
-    if viewer.is_a?(User)
-      !Redis.current.zrank(user_views_key, viewer.id).nil?
-    else
-      !Redis.current.zrank(user_anon_views_key, viewer).nil?
-    end
+    false
+    # if viewer.is_a?(User)
+    #   !Redis.current.zrank(user_views_key, viewer.id).nil?
+    # else
+    #   !Redis.current.zrank(user_anon_views_key, viewer).nil?
+    # end
   end
 
   def viewed_by_admin?
-    self.class.valid_reviewers.each do |reviewer|
-      return true if self.viewed_by?(reviewer)
-    end
+    # self.class.valid_reviewers.each do |reviewer|
+    #   return true if self.viewed_by?(reviewer)
+    # end
 
     false
   end

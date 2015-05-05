@@ -5,7 +5,7 @@ class RedemptionsController < ApplicationController
         @redemption.award!(current_user)
         if current_user.pending?
           current_user.activate
-          NotifierMailer.welcome_email(current_user.username).deliver
+          NotifierMailer.welcome_email(current_user.username).deliver_later
           RefreshUserJob.perform_async(current_user.id)
         end
         redirect_to(destination_url)

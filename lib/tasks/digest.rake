@@ -19,7 +19,7 @@ namespace :weekly do
         users = users.where('last_request_at < ?', 1.month.ago)
       end
       users.find_each(:batch_size => 1000) do |user|
-        WeeklyDigestMailer.weekly_digest(user.username).deliver
+        WeeklyDigestMailer.weekly_digest(user.username).deliver_later
       end
     end
   end

@@ -13,7 +13,7 @@
       .left-panel
         %h1
           A community for developers to unlock and share new skills, join us
-        = render partial: "sessions/join_buttons"
+        = render "sessions/join_buttons"
 
       %ul.features-list
         %li.achievements
@@ -182,4 +182,4 @@
         %h1 No results
         %p You are not following anything yet. Follow people, teams or networks to see protips from them here. boom.
     - else
-      = render partial: 'protips/grid', locals: { protips: @protips.respond_to?(:results) ? @protips.results : @protips, collection: @protips, url: :protips_path, hide_more: blur_protips?, width: 4, mode: protip_display_mode, opportunity: @job }
+      = render 'protips/grid', protips: @protips.respond_to?(:results) ? @protips.results : @protips, collection: @protips, url: :protips_path, hide_more: blur_protips?, width: 4, mode: protip_display_mode, opportunity: @job

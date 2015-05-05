@@ -33,7 +33,7 @@ RSpec.describe UserActivateWorker do
       it 'should send welcome mail' do
         mail = double('mail')
         expect(NotifierMailer).to receive(:welcome_email).with(user.username).and_return(mail)
-        expect(mail).to receive(:deliver)
+        expect(mail).to receive(:deliver_later)
         worker.perform(user.id)
       end
 

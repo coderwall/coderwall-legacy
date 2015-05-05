@@ -25,7 +25,7 @@ class Comment < ActiveRecord::Base
   after_create :generate_event
   after_save :commented_callback
 
-  default_scope order: 'likes_cache DESC, created_at ASC'
+  default_scope {order('likes_cache DESC, created_at ASC')}
 
   belongs_to :user, autosave: true
 
@@ -100,13 +100,13 @@ class Comment < ActiveRecord::Base
     GenerateEventJob.perform_async(event_type, event_audience(event_type), data, 1.minute)
 
     if event_type == :new_comment
-      NotifierMailer.new_comment(self.commentable.try(:user).try(:username), self.author.username, self.id).deliver unless commenting_on_own?
+      NotifierMailer.new_comment(self.commentable.try(:user).try(:username), self.author.username, self.id).deliver_later unless commenting_on_own?
 
       if (mentioned_users = self.mentions).any?
         GenerateEventJob.perform_async(:comment_reply, Audience.users(mentioned_users.map(&:id)), data, 1.minute)
 
         mentioned_users.each do |mention|
-          NotifierMailer.comment_reply(mention.username, self.author.username, self.id).deliver
+          NotifierMailer.comment_reply(mention.username, self.author.username, self.id).deliver_later
         end
       end
     end

@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+  include ActionView::RecordIdentifier
   skip_before_action :require_registration, :only => [:accept, :record_exit]
   before_action :access_required, :except => [:index, :show, :new, :inquiry, :search, :create, :record_exit]
   before_action :ensure_analytics_access, :only => [:visitors]
@@ -164,7 +165,7 @@ class TeamsController < ApplicationController
 
     current_user.seen(:inquired) if signed_in?
     record_event('inquired about team page')
-    NotifierMailer.new_lead(current_user.try(:username), inquiry_params[:email], inquiry_params[:company]).deliver
+    NotifierMailer.new_lead(current_user.try(:username), inquiry_params[:email], inquiry_params[:company]).deliver_later
     render :layout => 'product_description'
   end
 

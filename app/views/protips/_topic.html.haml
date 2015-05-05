@@ -10,4 +10,4 @@
         - if protips.count > 4
           %li
             %a.protip-more{:href => topic_protips_path(topic)} More protips
-  = render :partial => "grid", :locals => {:protips => protips.results, :collection => protips, :hide_more => true, :mode => 'fullpage'}
+  = render 'grid', :protips => protips.results, :collection => protips, :hide_more => true, :mode => 'fullpage'

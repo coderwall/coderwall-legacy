@@ -1,6 +1,4 @@
-Coderwall::Application.configure do
-  config.threadsafe! unless $rails_rake_task
-
+Rails.application.configure do
   require 'sidekiq/testing/inline'
 
   config.action_controller.perform_caching      = false
@@ -12,17 +10,14 @@ Coderwall::Application.configure do
   config.cache_classes                          = false
   config.consider_all_requests_local            = true
   config.host                                   = 'localhost:3000'
-  config.serve_static_assets                    = true
+  config.serve_static_files                     = true
   config.whiny_nils                             = true
-
+  config.eager_load                             = true
   # Mailer settings
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method       = :file
   config.action_mailer.file_settings         = { location: "#{Rails.root}/tmp/mailers" }
   config.action_mailer.asset_host            = "http://#{config.host}"
-
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)

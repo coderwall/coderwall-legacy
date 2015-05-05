@@ -13,7 +13,7 @@
 
 class GithubAssignment < ActiveRecord::Base
 
-  scope :badge_assignments, where(repo_url: nil)
+  scope :badge_assignments, -> { where(repo_url: nil) }
 
   def self.for_repo(url)
     where(repo_url: url)

@@ -24,4 +24,4 @@
     .side-conversion-alert.hide
       %p Where developers come to connect, share, build and be inspired.
       %a.convert-signup.track{ href: '/', 'data-action' => 'view homepage', 'data-from' => 'convert button on protip' } Join Coderwall
-  = render partial: 'cacheable_protip', locals: { protip: @protip, mode: 'fullpage', include_comments: true, job: @job }
+  = render 'cacheable_protip', { protip: @protip, mode: 'fullpage', include_comments: true, job: @job }

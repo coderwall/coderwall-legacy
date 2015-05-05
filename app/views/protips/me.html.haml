@@ -3,7 +3,7 @@
 
 %section.new-main-content
   .inside
-    = render partial: "head", locals: {topic: Protip::USER_SCOPE}
+    = render "head", {topic: Protip::USER_SCOPE}
     - if signed_in?
       %section.my-protips.tips-section
         %header.cf
@@ -11,7 +11,7 @@
         - if current_user.protips.any?
           - authored_protips = current_user.authored_protips(12)
           #author.cf
-            = render partial: "grid", locals: {protips: authored_protips.try(:results), collection: authored_protips, url: :protips_path, hide_more: false, section: "author", mode: 'popup'}
+            = render "grid", {protips: authored_protips.try(:results), collection: authored_protips, url: :protips_path, hide_more: false, section: "author", mode: 'popup'}
         - else
           .secondary-notice
             %p
@@ -23,7 +23,7 @@
         - if current_user.bookmarked_protips.any?
           - bookmarks = current_user.bookmarked_protips(12)
           #bookmark.cf
-            = render partial: "grid", locals: {protips: bookmarks.try(:results), collection: bookmarks, url: :protips_path, hide_more: false, section: "bookmark", mode: 'popup'}
+            = render "grid", {protips: bookmarks.try(:results), collection: bookmarks, url: :protips_path, hide_more: false, section: "bookmark", mode: 'popup'}
         - else
           .secondary-notice
             %p

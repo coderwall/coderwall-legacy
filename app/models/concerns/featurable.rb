@@ -4,7 +4,7 @@ module Featurable
   included do
     after_save :feature!
 
-    scope :featured, where(featured: true).order('featured_at DESC')
+    scope :featured, -> { where(featured: true).order('featured_at DESC') }
   end
 
   def hawt_service

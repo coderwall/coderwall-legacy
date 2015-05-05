@@ -56,12 +56,12 @@ class Opportunity < ActiveRecord::Base
   after_create :pay_for_it!
 
   #this scope should be renamed.
-  scope :valid, where(deleted: false).where('expires_at > ?', Time.now).order('created_at DESC')
+  scope :valid, -> { where(deleted: false).where('expires_at > ?', Time.now).order('created_at DESC') }
   scope :by_city, ->(city) { where('LOWER(location_city) LIKE ?', "%#{city.try(:downcase)}%") }
   scope :by_tag, ->(tag) { where('LOWER(cached_tags) LIKE ?', "%#{tag}%") unless tag.nil? }
-  scope :by_query, ->(query) { where("name ~* ? OR description ~* ? OR cached_tags ~* ?", query, query, query) }
+  scope :by_query, ->(query) { where('name ~* ? OR description ~* ? OR cached_tags ~* ?', query, query, query) }
   #remove default scope
-  default_scope valid
+  default_scope { valid }
 
   HUMANIZED_ATTRIBUTES = { name: 'Title' }
 
@@ -254,7 +254,7 @@ class Opportunity < ActiveRecord::Base
   end
 
   def url
-    Rails.application.routes.url_helpers.job_path(slug: team.slug, job_id: public_id, host: Rails.application.config.host, only_path: false) + '#open-positions'
+    Rails.application.routes.url_helpers.job_url(slug: team.slug, job_id: public_id, host: Rails.application.config.host) + '#open-positions'
   end
 
   def assign_random_id
