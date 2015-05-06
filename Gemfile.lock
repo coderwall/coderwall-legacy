@@ -133,16 +133,14 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     crass (1.0.2)
-    createsend (4.0.1)
-      hashie (>= 1.2, < 3)
+    createsend (4.0.2)
+      hashie (~> 3.0)
       httparty (~> 0.10)
-      json
+      json (~> 1.0)
     curb (0.8.8)
     dante (0.2.0)
     database_cleaner (1.4.1)
     debug_inspector (0.0.2)
-    descendants_tracker (0.0.4)
-      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
     domain_name (0.5.24)
@@ -183,8 +181,8 @@ GEM
     fabrication-rails (0.0.1)
       fabrication
       railties (>= 3.0)
-    faraday (0.8.9)
-      multipart-post (~> 1.2.0)
+    faraday (0.9.1)
+      multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     feedjira (1.6.0)
@@ -336,22 +334,21 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     haml (4.0.6)
       tilt
-    hashie (2.1.2)
+    hashie (3.4.1)
     hashr (0.0.22)
     heroku-deflater (0.5.3)
       rack (>= 1.4.5)
     highline (1.7.2)
     hike (1.2.3)
     hitimes (1.2.2)
-    http (0.5.1)
-      http_parser.rb
+    http (0.6.4)
+      http_parser.rb (~> 0.6.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    httpauth (0.2.1)
     i18n (0.7.0)
     inflecto (0.0.2)
     ipaddress (0.8.0)
@@ -363,20 +360,20 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.4)
       rest-client (~> 1.0)
-    jquery-rails (2.0.3)
-      railties (>= 3.1.0, < 5.0)
-      thor (~> 0.14)
+    jquery-rails (4.0.3)
+      rails-dom-testing (~> 1.0)
+      railties (>= 4.2.0)
+      thor (>= 0.14, < 2.0)
     json (1.8.2)
-    jwt (0.1.13)
-      multi_json (>= 1.5)
+    jwt (1.4.1)
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kramdown (1.7.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    linkedin (0.4.7)
-      hashie (~> 2.0)
+    linkedin (1.0.0)
+      hashie (~> 3.0)
       multi_json (~> 1.0)
       oauth (~> 0.4)
     listen (2.10.0)
@@ -405,7 +402,8 @@ GEM
       rack
     multi_json (1.11.0)
     multi_xml (0.5.5)
-    multipart-post (1.2.0)
+    multipart-post (2.0.0)
+    naught (1.0.0)
     nenv (0.2.0)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
@@ -425,34 +423,34 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     oauth (0.4.7)
-    oauth2 (0.8.1)
-      faraday (~> 0.8)
-      httpauth (~> 0.1)
-      jwt (~> 0.1.4)
-      multi_json (~> 1.0)
+    oauth2 (1.0.0)
+      faraday (>= 0.8, < 0.10)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
       rack (~> 1.2)
     octokit (3.8.0)
       sawyer (~> 0.6.0, >= 0.5.3)
-    oj (2.12.5)
-    omniauth (1.1.4)
-      hashie (>= 1.2, < 3)
-      rack
-    omniauth-facebook (1.6.0)
-      omniauth-oauth2 (~> 1.1)
+    oj (2.12.6)
+    omniauth (1.2.2)
+      hashie (>= 1.2, < 4)
+      rack (~> 1.0)
+    omniauth-facebook (2.0.1)
+      omniauth-oauth2 (~> 1.2)
     omniauth-github (1.1.2)
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.1)
-    omniauth-linkedin (0.0.8)
+    omniauth-linkedin (0.2.0)
       omniauth-oauth (~> 1.0)
     omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
-    omniauth-oauth2 (1.1.1)
-      oauth2 (~> 0.8.0)
-      omniauth (~> 1.0)
-    omniauth-twitter (0.0.18)
-      multi_json (~> 1.3)
-      omniauth-oauth (~> 1.0)
+    omniauth-oauth2 (1.3.0)
+      oauth2 (~> 1.0)
+      omniauth (~> 1.2)
+    omniauth-twitter (1.2.0)
+      json (~> 1.3)
+      omniauth-oauth (~> 1.1)
     parser (2.2.2.2)
       ast (>= 1.1, < 3.0)
     pg (0.18.1)
@@ -480,7 +478,7 @@ GEM
     querystring (0.1.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.0)
+    rack (1.6.1)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -630,7 +628,7 @@ GEM
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
-    simple_oauth (0.2.0)
+    simple_oauth (0.3.1)
     simplecov (0.10.0)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -689,32 +687,32 @@ GEM
       multi_json (~> 1.3)
       rake
       rest-client (~> 1.6)
-    travis (1.6.9)
+    travis (1.6.11)
       addressable (~> 2.3)
       backports
-      faraday (~> 0.8.7)
+      faraday (~> 0.9)
       faraday_middleware (~> 0.9)
       gh (~> 0.13)
       highline (~> 1.6)
       launchy (~> 2.1)
       pry (~> 0.9)
       pusher-client (~> 0.4)
-      typhoeus (~> 0.6)
+      typhoeus (~> 0.6, >= 0.6.8)
     turnip (1.3.0)
       gherkin (>= 2.5)
       rspec (>= 2.14.0, < 4.0)
     tweet-button (0.1.0)
-    twitter (5.5.1)
+    twitter (5.14.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
-      descendants_tracker (~> 0.0.3)
       equalizer (~> 0.0.9)
-      faraday (>= 0.8, < 0.10)
-      http (~> 0.5.0)
+      faraday (~> 0.9.0)
+      http (~> 0.6.0)
       http_parser.rb (~> 0.6.0)
       json (~> 1.8)
       memoizable (~> 0.4.0)
-      simple_oauth (~> 0.2.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.3.0)
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
     tzinfo (1.2.2)
@@ -765,7 +763,7 @@ DEPENDENCIES
   elasticsearch-model!
   elasticsearch-rails!
   fabrication-rails!
-  faraday (~> 0.8.1)!
+  faraday!
   feedjira!
   ffaker!
   flog!
@@ -782,7 +780,7 @@ DEPENDENCIES
   hashie!
   heroku-deflater!
   jbuilder!
-  jquery-rails (= 2.0.3)!
+  jquery-rails!
   kaminari!
   kramdown!
   launchy!
@@ -797,11 +795,11 @@ DEPENDENCIES
   nokogiri!
   octokit!
   oj!
-  omniauth (~> 1.1.0)!
+  omniauth!
   omniauth-facebook!
   omniauth-github!
-  omniauth-linkedin (~> 0.0.6)!
-  omniauth-twitter (~> 0.0.16)!
+  omniauth-linkedin!
+  omniauth-twitter!
   pg!
   poltergeist!
   pry-byebug!
@@ -810,7 +808,7 @@ DEPENDENCIES
   querystring!
   quiet_assets!
   rack_session_access!
-  rails (~> 4.2)!
+  rails (~> 4.2.1)!
   rails-assets-font-awesome!
   rails-assets-jquery-cookie (= 1.4.0)!
   rails-assets-jquery-dropdown!

@@ -1,7 +1,7 @@
 ruby '2.2.2'
 
 source 'https://rubygems.org' do
-  gem 'rails', '~> 4.2'
+  gem 'rails', '~> 4.2.1'
 
   gem 'sass'
   gem 'coffee-rails'
@@ -9,7 +9,7 @@ source 'https://rubygems.org' do
   gem 'uglifier'
 # Assets
   gem 'autoprefixer-rails'
-  gem 'jquery-rails', '= 2.0.3'
+  gem 'jquery-rails'
   gem 'selectize-rails'
 
 # Load environment variables first
@@ -31,11 +31,11 @@ source 'https://rubygems.org' do
   gem 'clockwork'
 
 # Authentication
-  gem 'omniauth', '~> 1.1.0'
+  gem 'omniauth'
   gem 'omniauth-facebook'
   gem 'omniauth-github'
-  gem 'omniauth-linkedin', '~> 0.0.6'
-  gem 'omniauth-twitter', '~> 0.0.16'
+  gem 'omniauth-linkedin'
+  gem 'omniauth-twitter'
 
 # Markdown
   gem 'redcarpet' #markdown processing
@@ -85,7 +85,7 @@ source 'https://rubygems.org' do
 # Tagging
   gem 'acts-as-taggable-on', '~> 3.4'
 
-  gem 'faraday', '~> 0.8.1'
+  gem 'faraday'
   gem 'metamagic'
 
 # ----------------
