@@ -37,5 +37,5 @@
         Join some
         = link_to 'here', networks_path
         or from the list below
-      = render determine_networks_partial(@index_networks_params[:sort]), locals: {networks_list: current_user.try(:networks_based_on_skills) || Network.most_protips.first(7), user: (defined?(@user) ? @user : nil)}
-    = render determine_networks_partial(@index_networks_params[:sort]), locals: {networks_list: @networks, user: (defined?(@user) ? @user : nil)}
+      = render determine_networks_partial(@index_networks_params[:sort]), networks_list: current_user.try(:networks_based_on_skills) || Network.most_protips.first(7), user: (defined?(@user) ? @user : nil)
+    = render determine_networks_partial(@index_networks_params[:sort]), networks_list: @networks, user: (defined?(@user) ? @user : nil)
