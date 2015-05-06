@@ -105,7 +105,7 @@
   %section#about-members.single-member.about-members.cf
     - first_member =  @team.sorted_team_members.first
     - unless first_member.nil?
-      =render :partial => 'member_expanded', object: first_member, :locals => {:show_avatar => (@team.sorted_team_members.count == 1)}
+      =render :partial => 'member_expanded', member: first_member, show_avatar: (@team.sorted_team_members.count == 1)
 
   -cache ['v1', 'team-top-sections', @team, can_edit?] do
 
