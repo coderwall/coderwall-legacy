@@ -39,7 +39,7 @@
 
 - if ENV['NEW_RELIC_PROMOTION']
   - if @team.slug == 'new-relic'
-    = render(partial: 'new_relic')
+    = render('new_relic')
 
 -if can_see_analytics?
   %ul.legend
@@ -100,62 +100,62 @@
         =hiring_tagline_or_default(@team)
         =link_to('View jobs', '#jobs', :class => 'view-jobs')
 
-  =render :partial => 'team_details'
-  =render :partial => 'team_members'
+  =render 'team_details'
+  =render 'team_members'
   %section#about-members.single-member.about-members.cf
     - first_member =  @team.sorted_team_members.first
     - unless first_member.nil?
-      =render :partial => 'member_expanded', member: first_member, show_avatar: (@team.sorted_team_members.count == 1)
+      =render 'member_expanded', member: first_member, show_avatar: (@team.sorted_team_members.count == 1)
 
   -cache ['v1', 'team-top-sections', @team, can_edit?] do
 
     -if @team.has_big_headline? || can_edit?
-      =render :partial => 'big_headline'
+      =render  'big_headline'
 
     -if @team.has_big_quote? || can_edit?
-      =render :partial => 'big_quote'
+      =render  'big_quote'
 
     -unless @team.youtube_url.blank?
       %section#video
         %iframe{:width => '100%', :height => '600px', :src => @team.video_url, :frameborder => "0", :allowfullscreen=>true}
 
     -if @team.has_challenges? || can_edit?
-      =render :partial => 'challenges'
+      =render  'challenges'
 
     -if @team.has_favourite_benefits? || can_edit?
-      =render :partial => 'favourite_benefits'
+      =render  'favourite_benefits'
 
     -if @team.has_organization_style? || can_edit?
-      =render :partial => 'organization_style'
+      =render  'organization_style'
 
     -if @team.has_office_images? || can_edit?
-      =render :partial => 'office_images'
+      =render  'office_images'
 
   -if @team.has_stack? || can_edit?
-    =render :partial => 'stack'
+    =render  'stack'
 
 
   / -cache ['v1', 'team-bottom-sections', @team, can_edit?] do
   -if @team.has_why_work? || can_edit?
-    =render :partial => 'why_work'
+    =render  'why_work'
 
   -if @team.has_interview_steps? || can_edit?
-    =render :partial => 'interview_steps'
+    =render  'interview_steps'
 
   -if @team.has_team_blog? || can_edit?
-    =render :partial => 'team_blog'
+    =render  'team_blog'
 
   -if @team.has_locations? || can_edit?
-    =render :partial => 'locations'
+    =render  'locations'
 
   -if @team.has_featured_links? #|| can_edit?
-    =render :partial => 'featured_links'
+    =render  'featured_links'
 
   / -if @team.has_upcoming_events? || can_edit?
-  /   =render :partial => 'meet_us'
+  /   =render  'meet_us'
 
   -if @team.has_protips?
-    =render :partial => 'protips'
+    =render 'protips'
 
 
   %footer.page-footer
