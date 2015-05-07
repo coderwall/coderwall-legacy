@@ -135,7 +135,7 @@ class ProtipsController < ApplicationController
                   end
 
     return redirect_to protip_missing_destination, notice: "The pro tip you were looking for no longer exists" if @protip.nil?
-    return redirect_to protip_path(@protip.public_id<<'/'<<@protip.friendly_id, :p => params[:p], :q => params[:q]) if params[:slug]!=@protip.friendly_id
+    return redirect_to slug_protips_path(id: @protip.public_id, slug: @protip.friendly_id, :p => params[:p], :q => params[:q]) if params[:slug]!=@protip.friendly_id
 
     @comments    = @protip.comments
     @reply_to    = show_params[:reply_to]

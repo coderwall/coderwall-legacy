@@ -1,10 +1,8 @@
 # == Route Map
 #
 #                      Prefix Verb                  URI Pattern                                            Controller#Action
-#                             GET                   /.json(.:format)                                       #<Proc:0x007f88532a57f0@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:263>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f88532c2030@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:264>
-#              protips_update GET|PUT               /protips/update(.:format)                              protips#update
-#               protip_update GET|PUT               /protip/update(.:format)                               protip#update
+#                             GET                   /.json(.:format)                                       #<Proc:0x007f88aad85380@/vagrant/config/routes.rb:270>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f88aad6e720@/vagrant/config/routes.rb:271>
 #                     welcome GET                   /welcome(.:format)                                     home#index
 #                        root GET                   /                                                      protips#index
 #                    p_dpvbbg GET                   /p/dpvbbg(.:format)                                    protips#show {:id=>"devsal"}
