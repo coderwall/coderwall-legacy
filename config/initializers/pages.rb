@@ -7,9 +7,9 @@ STATIC_PAGES ||= Dir.glob('app/views/pages/*.html.{erb,haml}')
   .uniq
 
 # Look at the *.html.haml files in the app/views/pages directory
-STATIC_PAGE_LAYOUTS ||= Dir.glob('app/views/layouts/*.html.{erb,haml}')
+STATIC_PAGE_LAYOUTS ||= Dir.glob('app/views/layouts/*.html.{erb,slim}')
   .map { |f| File.basename(f, '.html.erb') }
-  .map { |f| File.basename(f, '.html.haml') }
+  .map { |f| File.basename(f, '.html.slim') }
   .reject{ |f| f =~ /^_/ }
   .sort
   .uniq

@@ -18,7 +18,7 @@ RSpec.describe TeamsController, type: :controller do
     current_user.follow_team!(team)
     current_user.reload
     expect(current_user.following_team?(team)).to eq(true)
-    post :follow, id: team.id
+    post :follow, id: team.id , format: :json
     current_user.reload
     expect(current_user.following_team?(team)).to eq(false)
   end
