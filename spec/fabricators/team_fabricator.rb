@@ -14,7 +14,7 @@
 #  score                    :decimal(40, 30)  default(0.0)
 #  twitter                  :string(255)
 #  facebook                 :string(255)
-#  slug                     :string(255)
+#  slug                     :citext           not null
 #  premium                  :boolean          default(FALSE)
 #  analytics                :boolean          default(FALSE)
 #  valid_jobs               :boolean          default(FALSE)
@@ -64,11 +64,11 @@
 #  github_organization_name :string(255)
 #  team_size                :integer
 #  mongo_id                 :string(255)
-#  office_photos            :string(255)      default([]), is an Array
+#  office_photos            :string           default([]), is an Array
 #  upcoming_events          :text             default([]), is an Array
 #  interview_steps          :text             default([]), is an Array
-#  invited_emails           :string(255)      default([]), is an Array
-#  pending_join_requests    :string(255)      default([]), is an Array
+#  invited_emails           :string           default([]), is an Array
+#  pending_join_requests    :string           default([]), is an Array
 #  state                    :string(255)      default("active")
 #
 

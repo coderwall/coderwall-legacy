@@ -20,8 +20,8 @@
 #  bitbucket                     :string(255)
 #  codeplex                      :string(255)
 #  login_count                   :integer          default(0)
-#  last_request_at               :datetime         default(2014-07-23 03:14:36 UTC)
-#  achievements_checked_at       :datetime         default(1911-08-12 21:49:21 UTC)
+#  last_request_at               :datetime         default(Wed, 23 Jul 2014 03:14:36 UTC +00:00)
+#  achievements_checked_at       :datetime         default(Sat, 12 Aug 1911 21:49:21 UTC +00:00)
 #  claim_code                    :text
 #  github_id                     :integer
 #  country                       :string(255)
@@ -31,7 +31,7 @@
 #  lng                           :float
 #  http_counter                  :integer
 #  github_token                  :string(255)
-#  twitter_checked_at            :datetime         default(1911-08-12 21:49:21 UTC)
+#  twitter_checked_at            :datetime         default(Sat, 12 Aug 1911 21:49:21 UTC +00:00)
 #  title                         :string(255)
 #  company                       :string(255)
 #  blog                          :string(255)
@@ -56,7 +56,7 @@
 #  team_document_id              :string(255)
 #  speakerdeck                   :string(255)
 #  slideshare                    :string(255)
-#  last_refresh_at               :datetime         default(1970-01-01 00:00:00 UTC)
+#  last_refresh_at               :datetime         default(Thu, 01 Jan 1970 00:00:00 UTC +00:00)
 #  referral_token                :string(255)
 #  referred_by                   :string(255)
 #  about                         :text

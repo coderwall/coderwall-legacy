@@ -18,7 +18,11 @@
 #  boost_factor        :float            default(1.0)
 #  inappropriate       :integer          default(0)
 #  likes_count         :integer          default(0)
-#  slug                :string(255)
+#  slug                :string(255)      not null
+#  user_name           :string(255)
+#  user_email          :string(255)
+#  user_agent          :string(255)
+#  user_ip             :inet
 #
 
 Fabricator(:protip) do

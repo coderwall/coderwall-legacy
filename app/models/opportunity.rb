@@ -16,7 +16,7 @@
 #  deleted_at       :datetime
 #  created_at       :datetime
 #  updated_at       :datetime
-#  expires_at       :datetime         default(1970-01-01 00:00:00 UTC)
+#  expires_at       :datetime         default(Thu, 01 Jan 1970 00:00:00 UTC +00:00)
 #  opportunity_type :string(255)      default("full-time")
 #  location_city    :string(255)
 #  apply            :boolean          default(FALSE)

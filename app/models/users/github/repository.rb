@@ -9,9 +9,9 @@
 #  homepage                    :string(255)
 #  fork                        :boolean          default(FALSE)
 #  forks_count                 :integer          default(0)
-#  forks_count_updated_at      :datetime         default(2014-07-23 03:14:37 UTC)
+#  forks_count_updated_at      :datetime         default(Wed, 23 Jul 2014 03:14:37 UTC +00:00)
 #  stargazers_count            :integer          default(0)
-#  stargazers_count_updated_at :datetime         default(2014-07-23 03:14:37 UTC)
+#  stargazers_count_updated_at :datetime         default(Wed, 23 Jul 2014 03:14:37 UTC +00:00)
 #  language                    :string(255)
 #  followers_count             :integer          default(0), not null
 #  github_id                   :integer          not null

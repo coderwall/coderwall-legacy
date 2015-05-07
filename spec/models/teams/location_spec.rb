@@ -12,7 +12,7 @@
 #  team_id            :integer          not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  points_of_interest :string(255)      default([]), is an Array
+#  points_of_interest :string           default([]), is an Array
 #
 
 require 'rails_helper'

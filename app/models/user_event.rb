@@ -6,7 +6,7 @@
 #  user_id    :integer
 #  name       :string(255)
 #  data       :text
-#  created_at :datetime         default(2012-03-12 21:01:10 UTC)
+#  created_at :datetime         default(Mon, 12 Mar 2012 21:01:10 UTC +00:00)
 #
 
 class UserEvent < ActiveRecord::Base
