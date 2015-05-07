@@ -87,7 +87,8 @@ RSpec.describe UsersController, type: :controller do
   it 'extracts location from oauth' do
     github_response['extra']['raw_info']['location'] = 'San Francisco'
     session['oauth.data'] = github_response
-    post :create, user: {}
+    #FIXME
+    post :create, user: {user:{}}
     expect(assigns[:user].location).to eq('San Francisco')
   end
 
@@ -110,7 +111,8 @@ RSpec.describe UsersController, type: :controller do
 
     it 'setups up new user and redirects to signup page' do
       session['oauth.data'] = linkedin_response
-      post :create, user: {}
+      #FIXME
+      post :create, user: {user: {}}
 
       expect(assigns[:user].username).to be_nil
       expect(assigns[:user].location).to be_nil
@@ -127,7 +129,8 @@ RSpec.describe UsersController, type: :controller do
 
     it 'setups up new user and redirects to signup page' do
       session['oauth.data'] = twitter_response
-      post :create, user: {}
+      #FIXME
+      post :create, user: {user:{}}
 
       expect(assigns[:user].username).to eq('mdeiters')
       expect(assigns[:user].twitter).to eq('mdeiters')
