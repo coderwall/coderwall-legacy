@@ -60,10 +60,9 @@ class NotifierMailer < ApplicationMailer
     track_campaign("new_badge_earned")
     @user = User.find_by_username(username)
     @user.touch(:last_email_sent)
-    @user.reload
     @badge = next_badge_to_send(@user)
 
-    unless @badge.nil?
+    if @badge.present?
       SentMail.create!(user: @user, sent_at: @user.last_email_sent, mailable: @badge)
       subject, @message = *new_badge_message_for_user(@user, @badge)
       mail to: @user.email, subject: "You've #{subject} on Coderwall!"

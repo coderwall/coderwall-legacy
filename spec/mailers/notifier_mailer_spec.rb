@@ -36,9 +36,9 @@ RSpec.describe NotifierMailer, type: :mailer do
       user.update_attributes last_request_at: 1.day.ago
       expect(user.achievements_unlocked_since_last_visit.count).to eq(1)
 
-      email = NotifierMailer.new_badge(user.reload.username)
+      email = NotifierMailer.new_badge(user.reload.username).deliver_now
       check_badge_message(email, badge)
-      expect(email.body.encoded).to include(user_achievement_url(username: user.username, id: badge.id, host: 'coderwall.com'))
+      expect(email.body.encoded).to include(user_achievement_url(username: user.username, id: badge.id, host: 'www.coderwall.com'))
     end
 
     it 'should send one achievement email at a time until user visits' do
@@ -48,15 +48,15 @@ RSpec.describe NotifierMailer, type: :mailer do
       user.update_attributes last_request_at: 1.day.ago
 
       expect(user.achievements_unlocked_since_last_visit.count).to eq(3)
-      email = NotifierMailer.new_badge(user.reload.username)
+      email = NotifierMailer.new_badge(user.reload.username).deliver_now
       check_badge_message(email, badge1)
       expect(user.achievements_unlocked_since_last_visit.count).to eq(3)
-      email = NotifierMailer.new_badge(user.reload.username)
+      email = NotifierMailer.new_badge(user.reload.username).deliver_now
       check_badge_message(email, badge2)
       user.last_request_at = Time.now + 3.second
       user.save
       expect(user.achievements_unlocked_since_last_visit.count).to eq(0)
-      expect { NotifierMailer.new_badge(user.reload.username) }.to raise_error(NotifierMailer::NothingToSendException)
+      expect { NotifierMailer.new_badge(user.reload.username).deliver_now }.to raise_error(NotifierMailer::NothingToSendException)
     end
 
     def check_badge_message(email, badge)
