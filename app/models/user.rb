@@ -351,7 +351,7 @@ class User < ActiveRecord::Base
   end
 
   def teams_being_followed
-    Team.find(followed_teams.collect(&:team_id)).sort { |x, y| y.score <=> x.score }
+    Team.where(id: followed_teams.pluck(:team_id)).order(:score)
   end
 
   def on_team?
