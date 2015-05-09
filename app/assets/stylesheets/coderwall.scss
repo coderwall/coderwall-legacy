@@ -2117,6 +2117,11 @@ input[type=file].safari5-upload-hack {
   font-weight: normal;
 }
 
+/* Bug fix for white on white text in user nav dropdown  */
+.jq-dropdown-panel {
+    background-color: #343131 !important;
+}
+
 /* ------------------------------------  */
 /* START OF UGLY BROWSER-SPECIFIC HACKS */
 /* ----------------------------------  */
