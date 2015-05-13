@@ -32,15 +32,12 @@ class Network < ActiveRecord::Base
 
   acts_as_taggable
   acts_as_followable
-  attr_accessor :resident_expert
-  has_many :network_experts, autosave: true, dependent: :destroy
 
   validates :slug, uniqueness: true
 
   before_validation :create_slug!
   after_validation :tag_with_name!
 
-  before_save :assign_mayor!
   before_save :correct_tags
   before_save :cache_counts!
   after_create :assign_members
@@ -118,37 +115,9 @@ class Network < ActiveRecord::Base
     self.protips_tags_with_count.map(&:name).uniq
   end
 
-  def mayor
-    @mayor ||= self.network_experts.where(designation: 'mayor').last.try(:user)
-  end
-
-  def assign_mayor!
-
-    candidate = self.in_line_to_the_throne.first
-    unless candidate.nil?
-      Rails.logger.debug "finding a mayor among: #{self.tag_list}" if ENV['DEBUG']
-      person_with_most_upvoted_protips_on_topic = User.find(candidate.user_id)
-      Rails.logger.debug "mayor for #{name} found: #{person_with_most_upvoted_protips_on_topic.username}" if ENV['DEBUG']
-
-      #if self.mayor && person_with_most_upvoted_protips_on_topic && person_with_most_upvoted_protips_on_topic.id != self.mayor.id
-      #  enqueue(GenerateEvent, :new_mayor, Hash[*[Audience.network(self.id), Audience.admin].map(&:to_a).flatten(2)], self.to_event_hash(:mayor => person_with_most_upvoted_protips_on_topic), 30.minutes)
-      #end
-
-      self.network_experts.build(user: person_with_most_upvoted_protips_on_topic, designation: :mayor)
-    end
-  end
-
   def to_event_hash(options={})
     { user:    { username: options[:mayor] && options[:mayor].try(:username) },
       network: { name: self.name, url: Rails.application.routes.url_helpers.network_path(self.slug) } }
-  end
-
-  def resident_expert
-    @resident ||= self.network_experts.where(designation: 'resident_expert').last.try(:user)
-  end
-
-  def resident_expert=(user)
-    self.network_experts.build(designation: 'resident_expert', user_id: user.id)
   end
 
   def to_indexed_json
@@ -216,22 +185,6 @@ class Network < ActiveRecord::Base
 
   def new_members(limit = nil, offset = 0)
     User.where(id: Follow.for_followable(self).where('follows.created_at > ?', 1.week.ago).pluck(:follower_id)).limit(limit).offset(offset)
-  end
-
-  def ranked_members(limit = 15)
-    self.in_line_to_the_throne.limit(limit).map(&:user)
-  end
-
-  def in_line_to_the_throne
-    self.protips.select('protips.user_id, SUM(protips.score) AS total_score').group('protips.user_id').order('SUM(protips.score) DESC').where('upvotes_value_cache > 0')
-  end
-
-  def resident_expert_from_env
-    ENV['RESIDENT_EXPERTS'].split(",").each do |expert_config|
-      network, resident_expert = expert_config.split(/:/).map(&:strip)
-      return User.find_by_username(resident_expert) if network == self.slug
-    end unless ENV['RESIDENT_EXPERTS'].nil?
-    nil
   end
 
   def assign_members

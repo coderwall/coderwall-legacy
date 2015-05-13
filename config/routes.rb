@@ -322,20 +322,10 @@ Coderwall::Application.routes.draw do
   end
 
   resources :networks, path: '/n', constraints: { slug: /[\dA-Z\-]/i } do
-    collection do
-      get 'featured' => 'networks#featured', as: :featured
-      get '/u/:username' => 'networks#user', as: :user
-    end
-
     member do
       get '/t/(/*tags)' => 'networks#tag', as: :tagged
-      get '/members' => 'networks#members', as: :members
-      get '/mayor' => 'networks#mayor', as: :mayor
-      get '/expert' => 'networks#expert', as: :expert
       post '/join' => 'networks#join', as: :join
       post '/leave' => 'networks#leave', as: :leave
-      post '/update-tags' => 'networks#update_tags', as: :update_tags
-      get '/current-mayor' => 'networks#current_mayor', as: :current_mayor
     end
   end
 
