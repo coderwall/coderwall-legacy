@@ -143,6 +143,7 @@ source 'https://rubygems.org' do
 
   group :development, :test do
     gem 'annotate'
+    gem 'fabrication', '2.11.3'
     gem 'fabrication-rails'
     gem 'ffaker'
     gem 'launchy'

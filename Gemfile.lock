@@ -173,7 +173,7 @@ GEM
     eventmachine (1.0.7)
     excon (0.45.3)
     execjs (2.5.2)
-    fabrication (2.13.2)
+    fabrication (2.11.3)
     fabrication-rails (0.0.1)
       fabrication
       railties (>= 3.0)
@@ -759,6 +759,7 @@ DEPENDENCIES
   dotenv-rails!
   elasticsearch-model!
   elasticsearch-rails!
+  fabrication (= 2.11.3)!
   fabrication-rails!
   faraday (~> 0.8.1)!
   feedjira!
