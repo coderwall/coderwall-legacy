@@ -2052,6 +2052,12 @@ input[type=file].safari5-upload-hack {
   }
 }
 
+/* Bug fix for white on white text in user nav dropdown  */
+.jq-dropdown-panel {
+    background-color: #343131 !important;
+}
+
+
 /* ------------------------------------  */
 /* Select Box Styling (cross-browser) */
 /* Source: https://github.com/filamentgroup/select-css/blob/master/src/select.css */
