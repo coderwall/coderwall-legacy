@@ -1,7 +1,7 @@
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x00000008e12370@/home/vagrant/web/config/routes.rb:270>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x00000008e324e0@/home/vagrant/web/config/routes.rb:271>
+#                             GET                   /.json(.:format)                                       #<Proc:0x007f7b690e4cf0@/vagrant/config/routes.rb:256>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f7b690ea178@/vagrant/config/routes.rb:257>
 #                                                   /mail_view                                             MailPreview
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update
@@ -51,23 +51,10 @@
 #                      protip GET                   /p/:id(.:format)                                       protips#show
 #                             PUT                   /p/:id(.:format)                                       protips#update
 #                             DELETE                /p/:id(.:format)                                       protips#destroy
-#           featured_networks GET                   /n/featured(.:format)                                  networks#featured {:slug=>/[\dA-Z\-]/i}
-#               user_networks GET                   /n/u/:username(.:format)                               networks#user {:slug=>/[\dA-Z\-]/i}
-#              tagged_network GET                   /n/:id/t(/*tags)(.:format)                             networks#tag {:slug=>/[\dA-Z\-]/i}
-#             members_network GET                   /n/:id/members(.:format)                               networks#members {:slug=>/[\dA-Z\-]/i}
-#               mayor_network GET                   /n/:id/mayor(.:format)                                 networks#mayor {:slug=>/[\dA-Z\-]/i}
-#              expert_network GET                   /n/:id/expert(.:format)                                networks#expert {:slug=>/[\dA-Z\-]/i}
 #                join_network POST                  /n/:id/join(.:format)                                  networks#join {:slug=>/[\dA-Z\-]/i}
 #               leave_network POST                  /n/:id/leave(.:format)                                 networks#leave {:slug=>/[\dA-Z\-]/i}
-#         update_tags_network POST                  /n/:id/update-tags(.:format)                           networks#update_tags {:slug=>/[\dA-Z\-]/i}
-#       current_mayor_network GET                   /n/:id/current-mayor(.:format)                         networks#current_mayor {:slug=>/[\dA-Z\-]/i}
 #                    networks GET                   /n(.:format)                                           networks#index {:slug=>/[\dA-Z\-]/i}
-#                             POST                  /n(.:format)                                           networks#create {:slug=>/[\dA-Z\-]/i}
-#                 new_network GET                   /n/new(.:format)                                       networks#new {:slug=>/[\dA-Z\-]/i}
-#                edit_network GET                   /n/:id/edit(.:format)                                  networks#edit {:slug=>/[\dA-Z\-]/i}
 #                     network GET                   /n/:id(.:format)                                       networks#show {:slug=>/[\dA-Z\-]/i}
-#                             PUT                   /n/:id(.:format)                                       networks#update {:slug=>/[\dA-Z\-]/i}
-#                             DELETE                /n/:id(.:format)                                       networks#destroy {:slug=>/[\dA-Z\-]/i}
 #                     protips GET                   /trending(.:format)                                    protips#index
 #                         faq GET                   /faq(.:format)                                         pages#show {:page=>:faq}
 #                         tos GET                   /tos(.:format)                                         pages#show {:page=>:tos}
@@ -297,9 +284,9 @@ Coderwall::Application.routes.draw do
       get 'd/:date(/:start)' => 'protips#date', as: :date
       get 't/trending' => 'protips#trending', as: :trending_topics
       get 't/by_tags' => 'protips#by_tags', as: :by_tags
-      get 't/(/*tags)' => 'networks#tag', as: :tagged
-      put 't/(/*tags)/subscribe' => 'protips#subscribe', as: :subscribe
-      put 't/(/*tags)/unsubscribe' => 'protips#unsubscribe', as: :unsubscribe
+      get 't/(*tags)' => 'networks#tag', as: :tagged
+      put 't/(*tags)/subscribe' => 'protips#subscribe', as: :subscribe
+      put 't/(*tags)/unsubscribe' => 'protips#unsubscribe', as: :unsubscribe
       get 'fresh'
       get 'trending'
       get 'popular'
@@ -321,9 +308,8 @@ Coderwall::Application.routes.draw do
     end
   end
 
-  resources :networks, path: '/n', constraints: { slug: /[\dA-Z\-]/i } do
+  resources :networks, path: '/n', constraints: { slug: /[\dA-Z\-]/i } , only: [ :index, :show]do
     member do
-      get '/t/(/*tags)' => 'networks#tag', as: :tagged
       post '/join' => 'networks#join', as: :join
       post '/leave' => 'networks#leave', as: :leave
     end

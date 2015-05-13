@@ -86,8 +86,7 @@
         %ul#tags.cf{itemprop: :keywords}
           - protip.topic_list.each do |tag|
             %li
-              %a{ href: "/p/t/#{ tag.parameterize }" }
-                = tag
+              = link_to tag, protips_path(search: tag.parameterize)
               - if is_admin?
                 = link_to 'delete', delete_tag_protip_path(protip.public_id, CGI.escape(tag)), method: :post, class: "delete"
 
