@@ -44,7 +44,7 @@ class TeamsController < ApplicationController
         options[:force] = true if !show_params[:refresh].blank?
         response = Rails.cache.fetch(['v1', 'team', show_params[:id], :json], options) do
           begin
-            @team.public_json
+            @team.to_public_json
           rescue ActiveRecord::RecordNotFound
             return head(:not_found)
           end
