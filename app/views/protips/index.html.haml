@@ -81,26 +81,6 @@
         .inside
           %h1 Following
 
-          .inside-panel
-            %h2 Networks
-            %ul.protips-grid.new-networks-list.cf
-              - following_networks = current_user.following_networks
-              #x-following-networks.hide{'data-networks' => following_networks.map(&:slug)}
-
-              - following_networks.limit(11).map(&:slug).each do |slug|
-                %li{style: "border-color:##{color_signature(slug)}"}
-                  = link_to '', leave_network_path(id: slug), class: "unfollow followed #{slug}", remote: true, method: :post, rel: 'nofollow'
-                  %a.new-network{href: network_path(id: slug)}
-                    = slug.humanize
-              - if following_networks.count > 11
-                %li.plus-more
-                  %a{href: user_networks_path(username:current_user.username)}
-
-                    %span.x-follow-count
-                      = following_networks.count - 11
-                    more
-
-
             %h2 Connections
             %ul.protips-grid.connections-list.cf
               - following_users = current_user.following_users
