@@ -12,9 +12,9 @@
 #
 
 class Endorsement < ActiveRecord::Base
-  belongs_to :endorsed, class_name: User.name, foreign_key: :endorsed_user_id, counter_cache: :endorsements_count, touch: true
-  belongs_to :endorser, class_name: User.name, foreign_key: :endorsing_user_id
-  belongs_to :skill, counter_cache: :endorsements_count, touch: :updated_at
+  belongs_to :endorsed, class_name: 'User', foreign_key: :endorsed_user_id, counter_cache: :endorsements_count, touch: true
+  belongs_to :endorser, class_name: 'User', foreign_key: :endorsing_user_id
+  belongs_to :skill, counter_cache: :endorsements_count, touch: true
 
   validates_presence_of :skill_id
   validates_presence_of :endorser

@@ -11,8 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150110140000) do
+ActiveRecord::Schema.define(:version => 20150504132134) do
 
+  add_extension "uuid-ossp"
   add_extension "citext"
   add_extension "hstore"
 
@@ -53,6 +54,11 @@ ActiveRecord::Schema.define(:version => 20150110140000) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "likes_count",                     :default => 0
+    t.string   "user_name"
+    t.string   "user_email"
+    t.string   "user_agent"
+    t.inet     "user_ip"
+    t.string   "request_format"
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
@@ -250,7 +256,11 @@ ActiveRecord::Schema.define(:version => 20150110140000) do
     t.float    "boost_factor",        :default => 1.0
     t.integer  "inappropriate",       :default => 0
     t.integer  "likes_count",         :default => 0
-    t.string   "slug"
+    t.string   "slug",                                    :null => false
+    t.string   "user_name"
+    t.string   "user_email"
+    t.string   "user_agent"
+    t.inet     "user_ip"
   end
 
   add_index "protips", ["public_id"], :name => "index_protips_on_public_id"
