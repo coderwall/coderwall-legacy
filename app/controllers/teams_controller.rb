@@ -23,10 +23,10 @@ class TeamsController < ApplicationController
     #FIXME
     show_params = params.permit(:job_id, :refresh, :callback, :id, :slug)
     @team ||= team_from_params(slug: show_params[:slug], id: show_params[:id])
+    return render_404 unless @team
 
     respond_to do |format|
       format.html do
-        return render_404 if @team.nil?
 
         @team_protips = @team.trending_protips(4)
         @query = "team:#{@team.slug}"
@@ -43,11 +43,7 @@ class TeamsController < ApplicationController
         options = { :expires_in => 5.minutes }
         options[:force] = true if !show_params[:refresh].blank?
         response = Rails.cache.fetch(['v1', 'team', show_params[:id], :json], options) do
-          begin
-            @team.to_public_json
-          rescue ActiveRecord::RecordNotFound
-            return head(:not_found)
-          end
+            @team.public_json
         end
         response = "#{show_params[:callback]}({\"data\":#{response}})" if show_params[:callback]
         render :json => response
