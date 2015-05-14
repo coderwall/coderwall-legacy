@@ -13,14 +13,15 @@ class CommentsController < ApplicationController
 
       @comment.user = current_user
       @comment.request_format = request.format.to_s
-
-      if @comment.save
-        record_event('created comment')
-        format.html { redirect_to protip_path(params[:protip_id]) }
-        format.json { render json: @comment, status: :created, location: @comment }
-      else
-        format.html { redirect_to protip_path(params[:protip_id]), error: "could not add your comment. try again" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @comment.save
+          record_event('created comment')
+          format.html { redirect_to protip_path(params[:protip_id]) }
+          format.json { render json: @comment, status: :created, location: @comment }
+        else
+          format.html { redirect_to protip_path(params[:protip_id]), error: "could not add your comment. try again" }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
