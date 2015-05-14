@@ -11,11 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150504132134) do
+ActiveRecord::Schema.define(:version => 20150514141341) do
 
   add_extension "uuid-ossp"
   add_extension "citext"
   add_extension "hstore"
+  add_extension "pg_stat_statements"
 
   create_table "api_accesses", :force => true do |t|
     t.string   "api_key"
@@ -44,33 +45,26 @@ ActiveRecord::Schema.define(:version => 20150504132134) do
   add_index "badges", ["user_id"], :name => "index_badges_on_user_id"
 
   create_table "comments", :force => true do |t|
-    t.string   "title",             :limit => 50, :default => ""
-    t.text     "comment",                         :default => ""
+    t.string   "title",             :limit => 50,  :default => ""
+    t.text     "comment",                          :default => ""
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "user_id"
-    t.integer  "likes_cache",                     :default => 0
-    t.integer  "likes_value_cache",               :default => 0
+    t.integer  "likes_cache",                      :default => 0
+    t.integer  "likes_value_cache",                :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "likes_count",                     :default => 0
-    t.string   "user_name"
-    t.string   "user_email"
-    t.string   "user_agent"
+    t.integer  "likes_count",                      :default => 0
+    t.string   "user_name",         :limit => nil
+    t.string   "user_email",        :limit => nil
+    t.string   "user_agent",        :limit => nil
     t.inet     "user_ip"
-    t.string   "request_format"
+    t.string   "request_format",    :limit => nil
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
-
-  create_table "countries", :force => true do |t|
-    t.string   "name"
-    t.string   "code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "endorsements", :force => true do |t|
     t.integer  "endorsed_user_id"
@@ -172,14 +166,6 @@ ActiveRecord::Schema.define(:version => 20150504132134) do
 
   add_index "likes", ["likable_id", "likable_type", "user_id"], :name => "index_likes_on_user_id", :unique => true
 
-  create_table "network_experts", :force => true do |t|
-    t.string   "designation"
-    t.integer  "network_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "networks", :force => true do |t|
     t.string   "name"
     t.string   "slug"
@@ -249,17 +235,17 @@ ActiveRecord::Schema.define(:version => 20150504132134) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "score"
-    t.string   "created_by",          :default => "self"
-    t.boolean  "featured",            :default => false
+    t.string   "created_by",                         :default => "self"
+    t.boolean  "featured",                           :default => false
     t.datetime "featured_at"
-    t.integer  "upvotes_value_cache", :default => 0,      :null => false
-    t.float    "boost_factor",        :default => 1.0
-    t.integer  "inappropriate",       :default => 0
-    t.integer  "likes_count",         :default => 0
-    t.string   "slug",                                    :null => false
-    t.string   "user_name"
-    t.string   "user_email"
-    t.string   "user_agent"
+    t.integer  "upvotes_value_cache",                :default => 0,      :null => false
+    t.float    "boost_factor",                       :default => 1.0
+    t.integer  "inappropriate",                      :default => 0
+    t.integer  "likes_count",                        :default => 0
+    t.string   "slug",                                                   :null => false
+    t.string   "user_name",           :limit => nil
+    t.string   "user_email",          :limit => nil
+    t.string   "user_agent",          :limit => nil
     t.inet     "user_ip"
   end
 
@@ -294,12 +280,11 @@ ActiveRecord::Schema.define(:version => 20150504132134) do
 
   create_table "seized_opportunities", :force => true do |t|
     t.integer  "opportunity_id"
-    t.string   "opportunity_type"
     t.integer  "user_id"
     t.string   "team_document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "team_id"
+    t.string   "state",            :limit => nil, :default => "new"
   end
 
   create_table "sent_mails", :force => true do |t|

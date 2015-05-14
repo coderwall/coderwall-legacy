@@ -5,8 +5,8 @@ class BansController < BaseAdminController
     user = User.find(ban_params[:user_id])
     return redirect_to(badge_url(username: user.username), notice: 'User is already banned.') if user.banned?
 
-    flash_notice = if Services::Banning::UserBanner.ban(user)
-                     Services::Banning::DeindexUserProtips.run(user)
+    flash_notice = if Banning::UserBanner.ban(user)
+                     Banning::DeindexUserProtips.run(user)
                      'User successfully banned.'
                    else
                      'User could not be banned.'

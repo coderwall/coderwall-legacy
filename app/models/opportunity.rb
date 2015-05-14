@@ -38,6 +38,7 @@ class Opportunity < ActiveRecord::Base
   OPPORTUNITY_TYPES = %w(full-time part-time contract internship)
 
   has_many :seized_opportunities, dependent: :delete_all
+  has_many :applicants, through: :seized_opportunities, source: :user
 
   # Order here dictates the order of validation error messages displayed in views.
   validates :name, presence: true, allow_blank: false
@@ -98,15 +99,11 @@ class Opportunity < ActiveRecord::Base
   end
 
   def seize_by(user)
-    seized_opportunities.create!(user_id: user.id, team_id: team_id)
+    seized_opportunities.create(user_id: user.id)
   end
 
   def seized_by?(user)
-    seized_opportunities.where(user_id: user.id).any?
-  end
-
-  def seizers
-    User.where(id: seized_opportunities.select(:user_id))
+    seized_opportunities.exists?(user_id: user.id)
   end
 
   def active?
@@ -157,10 +154,6 @@ class Opportunity < ActiveRecord::Base
 
   def has_application_from?(user)
     seized_by?(user)
-  end
-
-  def applicants
-    seizers
   end
 
   def viewed_by(viewer)

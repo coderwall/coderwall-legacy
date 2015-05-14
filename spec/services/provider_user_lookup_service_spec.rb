@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Services::ProviderUserLookupService do
+RSpec.describe ProviderUserLookupService do
   let(:twitter_username) { 'birdy' }
   let!(:user) do
     Fabricate.create(:user, twitter: twitter_username)
@@ -8,7 +8,7 @@ RSpec.describe Services::ProviderUserLookupService do
 
   describe '#lookup_user' do
     let(:provider) { 'twitter' }
-    let(:service) { Services::ProviderUserLookupService.new(provider, username) }
+    let(:service) { ProviderUserLookupService.new(provider, username) }
 
     describe 'unknown provider' do
       let(:provider) { 'unknown' }

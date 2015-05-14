@@ -8,7 +8,7 @@ module Featurable
   end
 
   def hawt_service
-    @hawt_service ||= Services::Protips::HawtService.new(self)
+    @hawt_service ||= HawtService.new(self)
   end
 
   def hawt?

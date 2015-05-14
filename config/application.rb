@@ -10,12 +10,8 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module Coderwall
   class Application < Rails::Application
 
-    config.autoload_paths += Dir[Rails.root.join('app'                                   )]
     config.autoload_paths += Dir[Rails.root.join('app', 'models',      'concerns', '**/' )]
-    config.autoload_paths += Dir[Rails.root.join('app', 'models',      'badges'          )]
     config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/' )]
-    config.autoload_paths += Dir[Rails.root.join('app', 'services',    '**/'             )]
-    config.autoload_paths += Dir[Rails.root.join('app', 'jobs',        '**/'             )]
     config.autoload_paths += Dir[Rails.root.join('lib', '**/'                            )]
 
     config.assets.enabled = true

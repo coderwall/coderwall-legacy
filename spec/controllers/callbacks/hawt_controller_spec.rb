@@ -1,6 +1,5 @@
 # encoding: utf-8
 
-require 'services/protips/hawt_service'
 RSpec.describe Callbacks::HawtController, type: :controller do
   include AuthHelper
   before { http_authorize!(Rails.env, Rails.env) }
@@ -17,7 +16,7 @@ RSpec.describe Callbacks::HawtController, type: :controller do
 
   describe 'GET \'feature\'', pending: 'fixing the test auth' do
     it 'returns http success' do
-      expect_any_instance_of(Services::Protips::HawtService).to receive(:feature!).with(protip.id, true)
+      expect_any_instance_of(Protips::HawtService).to receive(:feature!).with(protip.id, true)
       post 'feature',  protip_id: protip.id, hawt?: true, token: 'atoken'
       expect(response).to be_success
 

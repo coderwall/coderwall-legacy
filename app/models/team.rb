@@ -80,10 +80,7 @@ class Team < ActiveRecord::Base
   FEATURED_TEAMS_CACHE_KEY = 'featured_teams_results'
   MAX_TEAM_SCORE           = 400
 
-  self.table_name = 'teams'
-
   include TeamAnalytics
-  include TeamMigration
 
   include TeamSearch
   include SearchModule
