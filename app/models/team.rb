@@ -90,6 +90,8 @@ class Team < ActiveRecord::Base
 
   mount_uploader :avatar, TeamUploader
 
+  has_many :invitations, dependent: :delete_all
+  has_many :opportunities, dependent: :destroy
   has_many :followers, through: :follows, source: :team
   has_many :follows,   class_name: 'FollowedTeam',    foreign_key: 'team_id', dependent: :destroy
   has_many :jobs,      class_name: 'Opportunity',     foreign_key: 'team_id', dependent: :destroy
@@ -739,10 +741,9 @@ class Team < ActiveRecord::Base
     end
   end
 
+
   def remove_dependencies
-    [FollowedTeam, Invitation, Opportunity, SeizedOpportunity].each do |klass|
-      klass.where(team_id: self.id.to_s).delete_all
-    end
+      FollowedTeam.where(team_id: self.id.to_s).delete_all
     User.where(team_id: self.id.to_s).update_all('team_id = NULL')
   end
 

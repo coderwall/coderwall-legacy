@@ -37,7 +37,7 @@ class Opportunity < ActiveRecord::Base
 
   OPPORTUNITY_TYPES = %w(full-time part-time contract internship)
 
-  has_many :seized_opportunities
+  has_many :seized_opportunities, :delete_all
 
   # Order here dictates the order of validation error messages displayed in views.
   validates :name, presence: true, allow_blank: false
