@@ -199,7 +199,7 @@ class NotifierMailer < ApplicationMailer
     #track_campaign("new_applicant")
 
     @user = User.find(user_id)
-    @job = Opportunity.find(job_id).select(:id, :title)
+    @job = Opportunity.select([:id, :team_id, :name]).find(job_id)
     emails = @job.team.admin_accounts.pluck(:email)
 
     mail to: emails, bcc: admin_emails, subject: "New applicant for #{@job.title} from Coderwall"
