@@ -198,7 +198,7 @@ class NotifierMailer < ApplicationMailer
     headers['X-Mailgun-Variables'] = {email_type: NEW_APPLICANT_EVENT}.to_json
     #track_campaign("new_applicant")
 
-    @user = User.find_by_username(user_id)
+    @user = User.find(user_id)
     @job = Opportunity.find(job_id).select(:id, :title)
     emails = @job.team.admin_accounts.pluck(:email)
 
