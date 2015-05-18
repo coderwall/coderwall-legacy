@@ -84,6 +84,8 @@ RSpec.describe Team, type: :model do
   it { is_expected.to have_many :members }
   it { is_expected.to have_many :jobs }
   it { is_expected.to have_many :followers }
+  it { is_expected.to respond_to :admins }
+  it { is_expected.to respond_to :admin_accounts }
 
   describe '#with_similar_names' do
     let!(:team_1) { Fabricate(:team, name: 'dream_team') }

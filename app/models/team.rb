@@ -95,12 +95,12 @@ class Team < ActiveRecord::Base
   has_many :links,     class_name: 'Teams::Link',     foreign_key: 'team_id', dependent: :delete_all
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
   has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id', dependent: :delete_all
-  def self.admins
+  def admins
     members.where(role: 'admin')
   end
 
   has_many :member_accounts, through: :members, source: :user, class_name: 'User'
-  def self.admin_accounts
+  def admin_accounts
     member_accounts.where("teams_members.role = 'admin'")
   end
 
@@ -132,10 +132,6 @@ class Team < ActiveRecord::Base
 
   def sorted_team_members
     members.sorted
-  end
-
-  def admins
-    members.where(role: :admin)
   end
 
   def all_jobs
