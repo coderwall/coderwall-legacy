@@ -49,18 +49,11 @@
           %li
             = link_to "Liked", liked_protips_path(scope: params[:scope]), class: selected_search_context_class("liked"), id: "x-scope-liked"
 
-      %ul.toggle-nav
-        - if signed_in?
-          %li
-            %a.switch#x-scope-toggle{href: '/', class: display_scope_class}
-          %li
-            %a.action.followings#x-followings-toggle{href: '/'}
-
+      - if signed_in?
+        %ul.toggle-nav
           %li
             %a.action.share-tip{href: new_protip_path, class: "track", 'data-action' => 'create protip', 'data-from' => 'homepage', 'data-properties' => {'context' => @context}.to_json}
 
-        %li
-          %a.action.search#x-show-search{href: '/'}
 
   //search bar
   .filter-bar.search-bar#x-search{class: display_search_class}
@@ -71,7 +64,6 @@
       %ul.toggle-nav
         %li
           %a.action.search#x-hide-search{href: '/'}
-
 
 
   -if signed_in?
@@ -142,7 +134,6 @@
                     %span.x-follow-count
                       = following_teams.count - 11
                     more
-
 
 
   .inside.cf
