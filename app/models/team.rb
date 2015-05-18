@@ -95,7 +95,15 @@ class Team < ActiveRecord::Base
   has_many :links,     class_name: 'Teams::Link',     foreign_key: 'team_id', dependent: :delete_all
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
   has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id', dependent: :delete_all
+  def self.admins
+    members.where(role: 'admin')
+  end
+
   has_many :member_accounts, through: :members, source: :user, class_name: 'User'
+  def self.admin_accounts
+    member_accounts.where("teams_members.role = 'admin'")
+  end
+
   has_one :account,    class_name: 'Teams::Account',  foreign_key: 'team_id', dependent: :delete
 
   accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank

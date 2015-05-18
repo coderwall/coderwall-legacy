@@ -194,15 +194,15 @@ class NotifierMailer < ApplicationMailer
   end
 
 
-  def new_applicant(username, job_id)
+  def new_applicant(user_id, job_id)
     headers['X-Mailgun-Variables'] = {email_type: NEW_APPLICANT_EVENT}.to_json
     #track_campaign("new_applicant")
 
-    @user = User.find_by_username(username)
-    @job = Opportunity.find(job_id)
-    @admin = User.find(@job.team.account.admin_id)
+    @user = User.find_by_username(user_id)
+    @job = Opportunity.find(job_id).select(:id, :title)
+    emails = @job.team.admin_accounts.pluck(:email)
 
-    mail to: @admin.email, bcc: admin_emails, subject: "New applicant for #{@job.title} from Coderwall"
+    mail to: emails, bcc: admin_emails, subject: "New applicant for #{@job.title} from Coderwall"
   end
 
   def invoice(team_id, time, invoice_id=nil)
