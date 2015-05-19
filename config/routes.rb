@@ -405,7 +405,6 @@ Coderwall::Application.routes.draw do
   end
 
   get '/clear/:id/:provider' => 'users#clear_provider', as: :clear_provider
-  get '/refresh/:username' => 'users#refresh', as: :refresh
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
   get '/signin' => 'sessions#signin', as: :signin
