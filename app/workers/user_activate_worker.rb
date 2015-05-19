@@ -13,8 +13,13 @@ class UserActivateWorker
 
     rescue => e
       #User provided corrupted email, we can't email.
-      user.destroy
-      return if e.message == '550 5.1.3 Invalid address'
+      if e.message == '550 5.1.3 Invalid address'
+        user.destroy
+        return
+      else
+        raise e
+      end
+
     end
 
   end
