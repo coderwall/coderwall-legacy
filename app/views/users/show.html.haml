@@ -220,8 +220,6 @@
         %li.admin-action
           =link_to("Impersonate", "/sessions/force?username=#{@user.username}")
         %li.admin-action
-          =link_to("Refresh",     refresh_path(@user.username))
-        %li.admin-action
           - if @user.banned?
             =link_to("Unban this user", user_unbans_path(@user), method: :post)
           - else
