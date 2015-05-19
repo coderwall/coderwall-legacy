@@ -15,11 +15,11 @@
         -if featured_banner == default_featured_banner and featured_team.admin?(current_user)
           .overlay-message You need to set a banner image for your team in the edit jobs section
     .content
-      -if !featured_team.highlight_tags.blank?
+      -if featured_team.highlight_tags.present?
         %ul.tags.cf
           -featured_team.highlight_tags.split(',').each do |tag|
             %li=tag.strip
-      -if !featured_team.active_jobs.blank?
+      -if featured_team.active_jobs.present?
         .opportunities
           %h3 Open opportunities
           %ul.jobs.cf

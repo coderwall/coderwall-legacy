@@ -395,7 +395,6 @@ class User < ActiveRecord::Base
       hash[:company]            = company
       hash[:specialities]       = speciality_tags
       hash[:thumbnail]          = avatar.url
-      hash[:accomplishments]    = highlights.collect(&:description)
       hash[:accounts][:twitter] = twitter
     end
     hash
