@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150514164819) do
+ActiveRecord::Schema.define(:version => 20150519051740) do
 
   add_extension "uuid-ossp"
   add_extension "citext"
@@ -24,15 +24,6 @@ ActiveRecord::Schema.define(:version => 20150514164819) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "available_coupons", :force => true do |t|
-    t.string "codeschool_coupon"
-    t.string "peepcode_coupon"
-    t.string "recipes_coupon"
-  end
-
-  add_index "available_coupons", ["codeschool_coupon"], :name => "index_available_coupons_on_codeschool_coupon", :unique => true
-  add_index "available_coupons", ["peepcode_coupon"], :name => "index_available_coupons_on_peepcode_coupon", :unique => true
 
   create_table "badges", :force => true do |t|
     t.datetime "created_at"
@@ -130,17 +121,6 @@ ActiveRecord::Schema.define(:version => 20150514164819) do
   add_index "github_assignments", ["github_username", "badge_class_name"], :name => "index_assignments_on_username_and_badge_class_name", :unique => true
   add_index "github_assignments", ["github_username", "repo_url", "tag"], :name => "index_assignments_on_username_and_repo_url_and_badge_class_name", :unique => true
   add_index "github_assignments", ["repo_url"], :name => "index_assignments_on_repo_url"
-
-  create_table "highlights", :force => true do |t|
-    t.integer  "user_id"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "featured",    :default => false
-  end
-
-  add_index "highlights", ["featured"], :name => "index_highlights_on_featured"
-  add_index "highlights", ["user_id"], :name => "index_highlights_on_user_id"
 
   create_table "invitations", :force => true do |t|
     t.string   "email"
@@ -252,25 +232,6 @@ ActiveRecord::Schema.define(:version => 20150514164819) do
   add_index "protips", ["slug"], :name => "index_protips_on_slug"
   add_index "protips", ["user_id"], :name => "index_protips_on_user_id"
 
-  create_table "purchased_bundles", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "email"
-    t.string   "codeschool_coupon"
-    t.string   "peepcode_coupon"
-    t.string   "credit_card_id"
-    t.string   "stripe_purchase_id"
-    t.string   "stripe_customer_id"
-    t.text     "stripe_response"
-    t.integer  "total_amount"
-    t.integer  "coderwall_proceeds"
-    t.integer  "codeschool_proceeds"
-    t.integer  "charity_proceeds"
-    t.integer  "peepcode_proceeds"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "recipes_coupon"
-  end
-
   create_table "reserved_teams", :force => true do |t|
     t.integer "user_id"
     t.text    "name"
@@ -279,12 +240,9 @@ ActiveRecord::Schema.define(:version => 20150514164819) do
 
   create_table "seized_opportunities", :force => true do |t|
     t.integer  "opportunity_id"
-    t.string   "opportunity_type"
     t.integer  "user_id"
-    t.string   "team_document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "team_id"
   end
 
   create_table "sent_mails", :force => true do |t|
@@ -293,16 +251,6 @@ ActiveRecord::Schema.define(:version => 20150514164819) do
     t.integer  "user_id"
     t.datetime "sent_at"
   end
-
-  create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "skills", :force => true do |t|
     t.integer  "user_id"
@@ -465,17 +413,6 @@ ActiveRecord::Schema.define(:version => 20150514164819) do
     t.string   "team_avatar"
     t.string   "role",        :default => "member"
   end
-
-  create_table "tokens", :force => true do |t|
-    t.string   "token"
-    t.string   "secret"
-    t.string   "kind"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tokens", ["kind", "user_id"], :name => "index_tokens_on_kind_and_user_id", :unique => true
 
   create_table "user_events", :force => true do |t|
     t.integer  "user_id"
