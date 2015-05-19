@@ -241,8 +241,10 @@ ActiveRecord::Schema.define(:version => 20150519051740) do
   create_table "seized_opportunities", :force => true do |t|
     t.integer  "opportunity_id"
     t.integer  "user_id"
+    t.string   "team_document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state",            :default => "new"
   end
 
   create_table "sent_mails", :force => true do |t|
