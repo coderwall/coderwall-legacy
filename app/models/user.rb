@@ -174,7 +174,6 @@ class User < ActiveRecord::Base
   validates :email, email: true, if: :not_active?
 
   has_many :badges, order: 'created_at DESC', dependent: :delete_all
-  has_many :highlights, order: 'created_at DESC', dependent: :delete_all
   has_many :followed_teams, dependent: :delete_all
   has_many :user_events
   has_many :skills, order: "weight DESC", dependent: :delete_all
@@ -307,15 +306,7 @@ class User < ActiveRecord::Base
   end
 
   def brief
-    if about.blank?
-      if highlight = highlights.last
-        highlight.description
-      else
-        nil
-      end
-    else
       about
-    end
   end
 
   def team

@@ -1,7 +1,0 @@
--cache 'featured_highlights', :expires_in => 1.hour do
-  -Highlight.random_featured(10).each do |highlight|
-    .featuredAccomplishment{:class => hide_all_but_first}
-      ="\"#{highlight.description}\""
-      .author
-        =link_to(image_tag(highlight.user.avatar.url), badge_path(:username => highlight.user.username))
-        %span=link_to(highlight.user.display_name, badge_path(:username => highlight.user.username))

@@ -496,10 +496,6 @@ class Team < ActiveRecord::Base
     members.count
   end
 
-  def total_highlights_count
-    members.collect { |u| u.highlights.count }.sum
-  end
-
   def team_size_threshold
     if size >= 3
       3
@@ -516,9 +512,6 @@ class Team < ActiveRecord::Base
     return val unless val == 0
 
     val = size <=> y.size
-    return val unless val == 0
-
-    val = total_highlights_count <=> y.total_highlights_count
     return val unless val == 0
 
     id.to_s <=> y.id.to_s

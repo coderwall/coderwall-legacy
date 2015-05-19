@@ -1,7 +1,7 @@
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x007f7b690e4cf0@/vagrant/config/routes.rb:256>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f7b690ea178@/vagrant/config/routes.rb:257>
+#                             GET                   /.json(.:format)                                       #<Proc:0x007fcb9ed50810@/vagrant/config/routes.rb:243>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007fcb9ed54dc0@/vagrant/config/routes.rb:244>
 #                                                   /mail_view                                             MailPreview
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update
@@ -180,13 +180,6 @@
 #                  user_skill GET                   /users/:user_id/skills/:id(.:format)                   skills#show
 #                             PUT                   /users/:user_id/skills/:id(.:format)                   skills#update
 #                             DELETE                /users/:user_id/skills/:id(.:format)                   skills#destroy
-#             user_highlights GET                   /users/:user_id/highlights(.:format)                   highlights#index
-#                             POST                  /users/:user_id/highlights(.:format)                   highlights#create
-#          new_user_highlight GET                   /users/:user_id/highlights/new(.:format)               highlights#new
-#         edit_user_highlight GET                   /users/:user_id/highlights/:id/edit(.:format)          highlights#edit
-#              user_highlight GET                   /users/:user_id/highlights/:id(.:format)               highlights#show
-#                             PUT                   /users/:user_id/highlights/:id(.:format)               highlights#update
-#                             DELETE                /users/:user_id/highlights/:id(.:format)               highlights#destroy
 #           user_endorsements GET                   /users/:user_id/endorsements(.:format)                 endorsements#index
 #                             POST                  /users/:user_id/endorsements(.:format)                 endorsements#create
 #        new_user_endorsement GET                   /users/:user_id/endorsements/new(.:format)             endorsements#new
@@ -219,7 +212,6 @@
 #                             DELETE                /users/:id(.:format)                                   users#destroy
 #              clear_provider GET                   /clear/:id/:provider(.:format)                         users#clear_provider
 #                     refresh GET                   /refresh/:username(.:format)                           users#refresh
-#       random_accomplishment GET                   /nextaccomplishment(.:format)                          highlights#random
 #                   add_skill GET                   /add-skill(.:format)                                   skills#create
 #                      signin GET                   /signin(.:format)                                      sessions#signin
 #                     signout GET                   /signout(.:format)                                     sessions#destroy
@@ -405,7 +397,6 @@ Coderwall::Application.routes.draw do
     end
     member { post 'specialties' }
     resources :skills
-    resources :highlights
     resources :endorsements
     resources :pictures
     resources :follows
@@ -415,7 +406,6 @@ Coderwall::Application.routes.draw do
 
   get '/clear/:id/:provider' => 'users#clear_provider', as: :clear_provider
   get '/refresh/:username' => 'users#refresh', as: :refresh
-  get '/nextaccomplishment' => 'highlights#random', as: :random_accomplishment
   get '/add-skill' => 'skills#create', as: :add_skill, :via => :post
 
   get '/signin' => 'sessions#signin', as: :signin

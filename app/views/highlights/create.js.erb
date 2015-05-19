@@ -1,6 +1,0 @@
-<% if @badge %>
-$('.your-achievements ul').append('<li><%=image_tag(@badge.image_path, :title => @badge.description, :class => "tip") %></li>').fadeIn();
-$('#profile-main-col .time-line').prepend('<%=escape_javascript render(@badge_event) %>').fadeIn();
-<% end %>
-$('#profile-main-col .time-line').prepend('<%=escape_javascript render(@highlight.event) %>').fadeIn();
-$('.time-line-share textarea').val(null);
