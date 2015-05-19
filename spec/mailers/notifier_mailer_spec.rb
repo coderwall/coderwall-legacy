@@ -2,13 +2,13 @@ RSpec.describe NotifierMailer, type: :mailer do
   let(:user) { user = Fabricate(:user, email: 'some.user@example.com') }
 
   it 'should send welcome email to user' do
-    email = NotifierMailer.welcome_email(user.username).deliver
+    email = NotifierMailer.welcome_email(user.id).deliver
     expect(email.body.encoded).to include("http://coderwall.com/#{user.username}")
   end
 
   it 'should record when welcome email was sent' do
     expect(user.last_email_sent).to be_nil
-    email = NotifierMailer.welcome_email(user.username).deliver
+    email = NotifierMailer.welcome_email(user.id).deliver
     expect(user.reload.last_email_sent).not_to be_nil
   end
 

@@ -22,10 +22,10 @@ class NotifierMailer < ApplicationMailer
   INVOICE_EVENT = 'invoice'
   ACTIVITY_SUBJECT_PREFIX = '[Coderwall]'
 
-  def welcome_email(username)
+  def welcome_email(user_id)
     headers['X-Mailgun-Variables'] = {email_type: WELCOME_EVENT}.to_json
 
-    @user = User.find_by_username(username)
+    @user = User.find(user_id)
     @user.touch(:last_email_sent)
 
     if @user.created_at < 2.days.ago

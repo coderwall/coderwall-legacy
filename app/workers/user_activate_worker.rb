@@ -6,9 +6,14 @@ class UserActivateWorker
     user = User.find(user_id)
     return if user.active?
 
-    RefreshUserJob.new.perform(user.id)
-    NotifierMailer.welcome_email(user.username).deliver
+    begin
+      NotifierMailer.welcome_email(user.id).deliver
+      RefreshUserJob.new.perform(user.id)
+      user.activate!
 
-    user.activate!
+    rescue => e
+      return if e.message == '550 5.1.3 Invalid address'
+    end
+
   end
 end

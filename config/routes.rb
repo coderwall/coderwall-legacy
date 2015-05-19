@@ -67,7 +67,6 @@
 #                authenticate GET|POST              /auth/:provider/callback(.:format)                     sessions#create
 #      authentication_failure GET                   /auth/failure(.:format)                                sessions#failure
 #                    settings GET                   /settings(.:format)                                    users#edit
-#                             GET                   /redeem/:code(.:format)                                redemptions#show
 #                 unsubscribe GET                   /unsubscribe(.:format)                                 emails#unsubscribe
 #                   delivered GET                   /delivered(.:format)                                   emails#delivered
 #              delete_account GET                   /delete_account(.:format)                              users#delete_account
@@ -322,7 +321,6 @@ Coderwall::Application.routes.draw do
   match '/auth/:provider/callback' => 'sessions#create', as: :authenticate, via: [:get, :post]
   get '/auth/failure' => 'sessions#failure', as: :authentication_failure
   get '/settings' => 'users#edit', as: :settings
-  get '/redeem/:code' => 'redemptions#show'
   get '/unsubscribe' => 'emails#unsubscribe'
   get '/delivered' => 'emails#delivered'
   get '/delete_account' => 'users#delete_account', as: :delete_account
