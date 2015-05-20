@@ -269,30 +269,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'redemptions' do
-    it 'should have an empty list of redemptions when new' do
-      expect(Fabricate.build(:user).redemptions).to be_empty
-    end
-
-    it 'should have a single redemption with a redemptions list of one item' do
-      user = Fabricate.build(:user, redemptions: %w(railscampx nodeknockout))
-      user.save
-      expect(user.reload.redemptions).to eq(%w(railscampx nodeknockout))
-    end
-
-    it 'should allow you to add a redemption' do
-      user = Fabricate.build(:user, redemptions: %w(foo))
-      user.update_attributes redemptions: %w(bar)
-      expect(user.reload.redemptions).to eq(%w(bar))
-    end
-
-    it 'should allow you to remove redemptions' do
-      user = Fabricate.build(:user, redemptions: %w(foo))
-      user.update_attributes redemptions: []
-      expect(user.reload.redemptions).to be_empty
-    end
-  end
-
   describe 'score' do
     let(:user) { Fabricate(:user) }
     let(:endorser) { Fabricate(:user) }
