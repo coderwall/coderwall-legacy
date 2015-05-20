@@ -156,7 +156,6 @@ class User < ActiveRecord::Base
   REGISTRATION = 'registration'
   PENDING      = 'pending'
   ACTIVE       = 'active'
-  serialize :redemptions, Array
 
   acts_as_followable
   acts_as_follower

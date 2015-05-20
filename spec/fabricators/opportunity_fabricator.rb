@@ -8,7 +8,6 @@
 #  designation      :string(255)
 #  location         :string(255)
 #  cached_tags      :string(255)
-#  team_document_id :string(255)
 #  link             :string(255)
 #  salary           :integer
 #  options          :float

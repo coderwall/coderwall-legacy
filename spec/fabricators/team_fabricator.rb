@@ -14,7 +14,7 @@
 #  score                    :decimal(40, 30)  default(0.0)
 #  twitter                  :string(255)
 #  facebook                 :string(255)
-#  slug                     :string(255)
+#  slug                     :citext           not null
 #  premium                  :boolean          default(FALSE)
 #  analytics                :boolean          default(FALSE)
 #  valid_jobs               :boolean          default(FALSE)

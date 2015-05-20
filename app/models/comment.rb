@@ -13,6 +13,11 @@
 #  created_at        :datetime
 #  updated_at        :datetime
 #  likes_count       :integer          default(0)
+#  user_name         :string(255)
+#  user_email        :string(255)
+#  user_agent        :string(255)
+#  user_ip           :inet
+#  request_format    :string(255)
 #
 
 class Comment < ActiveRecord::Base

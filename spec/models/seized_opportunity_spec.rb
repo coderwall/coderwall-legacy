@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: seized_opportunities
+#
+#  id             :integer          not null, primary key
+#  opportunity_id :integer
+#  user_id        :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 require 'spec_helper'
 
 RSpec.describe SeizedOpportunity, type: :model do
