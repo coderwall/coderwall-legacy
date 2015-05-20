@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150519051740) do
+ActiveRecord::Schema.define(:version => 20150519184842) do
 
   add_extension "uuid-ossp"
   add_extension "citext"
@@ -108,19 +108,6 @@ ActiveRecord::Schema.define(:version => 20150519051740) do
   add_index "follows", ["followable_id", "followable_type", "follower_id"], :name => "follows_uniq_followable_id_type_follower", :unique => true
   add_index "follows", ["followable_id", "followable_type"], :name => "fk_followables"
   add_index "follows", ["follower_id", "follower_type"], :name => "fk_follows"
-
-  create_table "github_assignments", :force => true do |t|
-    t.string   "github_username"
-    t.string   "repo_url"
-    t.string   "tag"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "badge_class_name"
-  end
-
-  add_index "github_assignments", ["github_username", "badge_class_name"], :name => "index_assignments_on_username_and_badge_class_name", :unique => true
-  add_index "github_assignments", ["github_username", "repo_url", "tag"], :name => "index_assignments_on_username_and_repo_url_and_badge_class_name", :unique => true
-  add_index "github_assignments", ["repo_url"], :name => "index_assignments_on_repo_url"
 
   create_table "invitations", :force => true do |t|
     t.string   "email"
@@ -472,7 +459,6 @@ ActiveRecord::Schema.define(:version => 20150519051740) do
     t.string   "linkedin_secret"
     t.datetime "last_email_sent"
     t.string   "linkedin_public_url"
-    t.text     "redemptions"
     t.integer  "endorsements_count",            :default => 0
     t.string   "team_document_id"
     t.string   "speakerdeck"
@@ -489,7 +475,6 @@ ActiveRecord::Schema.define(:version => 20150519051740) do
     t.string   "tracking_code"
     t.string   "utm_campaign"
     t.float    "score_cache",                   :default => 0.0
-    t.string   "gender"
     t.boolean  "notify_on_follow",              :default => true
     t.string   "api_key"
     t.datetime "remind_to_create_team"
