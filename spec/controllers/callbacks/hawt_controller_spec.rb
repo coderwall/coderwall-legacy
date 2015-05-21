@@ -16,7 +16,7 @@ RSpec.describe Callbacks::HawtController, type: :controller do
 
   describe 'GET \'feature\'', pending: 'fixing the test auth' do
     it 'returns http success' do
-      expect_any_instance_of(Protips::HawtService).to receive(:feature!).with(protip.id, true)
+      expect_any_instance_of(HawtService).to receive(:feature!).with(protip.id, true)
       post 'feature',  protip_id: protip.id, hawt?: true, token: 'atoken'
       expect(response).to be_success
 
