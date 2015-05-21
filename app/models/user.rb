@@ -188,6 +188,8 @@ class User < ActiveRecord::Base
   belongs_to :team, class_name: 'Team'
   has_one :membership, class_name: 'Teams::Member', dependent: :destroy
 
+  has_one :picture, dependent: :destroy
+
   def on_premium_team?
     if membership
       membership.team.premium?
