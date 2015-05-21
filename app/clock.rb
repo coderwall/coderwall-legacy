@@ -40,10 +40,6 @@ every(1.day, 'protips:recalculate_scores', at: '04:00') do
   ProtipsRecalculateScoresJob.perform_async
 end
 
-every(1.day, 'clear_expired_sessions', at: '05:00') do
-  ClearExpiredSessionsJob.perform_async
-end
-
 every(1.day, 'sitemap:refresh', at: '06:00') do
   SitemapRefreshWorker.perform_async
 end
