@@ -15,7 +15,7 @@
     -if users_team = current_user.membership
       #currentteam
         %h2==You are currently on team #{users_team.team.name}
-        = render "invitations/team_members", team: users_team
+        = render "invitations/team_members", team: users_team.team
       .clear
     %h2 Team invitations
     = render "invitations/team_members", team: @team
