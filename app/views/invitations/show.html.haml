@@ -12,9 +12,9 @@
       %li=link_to('Sign Up', root_path, class: 'join')
       %li=link_to('Sign In', signin_path, id: 'signin', class: 'join')
   -else
-    -if users_team = current_user.team
+    -if users_team = current_user.membership
       #currentteam
-        %h2==You are currently on team #{users_team.name}
+        %h2==You are currently on team #{users_team.team.name}
         = render "invitations/team_members", team: users_team
       .clear
     %h2 Team invitations

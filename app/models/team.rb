@@ -610,7 +610,7 @@ class Team < ActiveRecord::Base
   end
 
   def has_user_with_referral_token?(token)
-    members.collect(&:referral_token).include?(token)
+    member_accounts.exists?(referral_token: token)
   end
 
   def impressions_key
