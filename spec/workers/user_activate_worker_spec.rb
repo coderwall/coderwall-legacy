@@ -16,7 +16,7 @@ RSpec.describe UserActivateWorker do
     context 'when invalid user' do
       let(:user_id) { 1 }
 
-      it { expect { worker.perform(user_id) }.to_not raise_error ActiveRecord::RecordNotFound }
+      it { expect { worker.perform(user_id) }.not_to raise_error }
     end
 
     context 'when pending user' do
