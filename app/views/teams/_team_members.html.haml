@@ -26,12 +26,6 @@
 
                   = users_image_tag(member)
 
-
-
-
-
-  / -cache ['v1', 'premium-team-members', @team, @team.size, :expires_in => 5.minutes] do
-  / Cache issue with this because members may update their profile and this wont be updated
   %a.arrow.right{:href => '#next'}
     %span
       left

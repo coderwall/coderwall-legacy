@@ -43,7 +43,7 @@ $ ->
     $(".location-details .selected .description").text(desc)
     $(".location-details .selected .poi").html(pois)
 
-  $("a.mapLocation").live "click", (e)->
+  $(document).on "click", "a.mapLocation", (e)->
     featureLocation($(@))
     e.preventDefault()
 
@@ -54,7 +54,7 @@ $ ->
     $(".about-members").html(memberElement.siblings(".member_expanded").children().clone())
     memberElement.addClass("active")
 
-  $("a.show-closeup").live "click", (e)->
+  $(document).on "click", "a.show-closeup", (e)->
     showCloseupOnMember($(@))
     e.preventDefault()
 
@@ -80,11 +80,12 @@ $ ->
     members_to_show.removeClass('hide')
     showCloseupOnMember(last_visible.children("a.show-closeup"))
 
-  $("a.arrow.right:not(.disable)").live "click", (e)->
+  $(document).on "click", "a.arrow.right:not(.disable)", (e)->
     e.preventDefault()
     moveRight()
 
-  $("a.arrow.left:not(.disable)").live "click", (e)->
+  $(document).on "click", "a.arrow.left:not(.disable)", (e)->
+
     e.preventDefault()
     moveLeft()
 
@@ -186,7 +187,7 @@ registerApplication = ->
     form      = $(this).closest('form')
     status    = $(".application p.status")
     status.text(uploading_begin_text)
-    
+
     formData  = new FormData(form.get(0))
 
     # Using a timeout due to weird behavior with change event
