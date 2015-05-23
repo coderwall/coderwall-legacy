@@ -13,22 +13,7 @@
 #
 
 class Network < ActiveRecord::Base
-  include Tire::Model::Search
-
-  settings analysis: { analyzer: { exact_term_search: { "type"      => "keyword",
-                                                        "tokenizer" => "keyword" } } }
-  mapping show: { properties: {
-    name:          { type: 'string', boost: 100, index: 'not_analyzed' },
-    protips_count: { type: 'integer', index: 'not_analyzed' },
-    upvotes:       { type: 'integer', index: 'not_analyzed' },
-    upvotes_score: { type: 'float', index: 'not_analyzed' },
-    tags:          { type: 'string', boost: 80, index: 'not_analyzed' },
-    members:       { properties: {
-      username:     { type: 'string', index: 'not_analyzed' },
-      user_id:      { type: 'integer', boost: 40, index: 'not_analyzed' },
-      profile_path: { type: 'string', index: 'not_analyzed' },
-      profile_url:  { type: 'string', index: 'not_analyzed' },
-    } } } }
+  has_closure_tree order: :slug
 
   acts_as_taggable
   acts_as_followable
@@ -115,31 +100,6 @@ class Network < ActiveRecord::Base
     self.protips_tags_with_count.map(&:name).uniq
   end
 
-  def to_event_hash(options={})
-    { user:    { username: options[:mayor] && options[:mayor].try(:username) },
-      network: { name: self.name, url: Rails.application.routes.url_helpers.network_path(self.slug) } }
-  end
-
-  def to_indexed_json
-    to_public_hash.to_json
-  end
-
-  def to_public_hash
-    {
-      name:          name,
-      protips_count: kind,
-      title:         title,
-      body:          body,
-      tags:          topics,
-      upvotes:       upvotes,
-      url:           path,
-      upvote_path:   upvote_path,
-      link:          link,
-      created_at:    created_at,
-      user:          user_hash
-    }
-  end
-
   def protips
     @protips ||= Protip.tagged_with(self.tag_list, on: :topics)
   end
@@ -168,14 +128,6 @@ class Network < ActiveRecord::Base
 
   def highest_scored_protips(limit=nil, offset =0, field=:trending_score)
     Protip.search("sort:#{field} desc", self.tag_list, page: offset, per_page: limit)
-  end
-
-  def mayor_protips(limit=nil, offset =0)
-    Protip.search_trending_by_user(self.mayor.username, nil, self.tag_list, offset, limit)
-  end
-
-  def expert_protips(limit=nil, offset =0)
-    Protip.search_trending_by_user(self.resident_expert.username, nil, self.tag_list, offset, limit)
   end
 
   def members(limit = -1, offset = 0)

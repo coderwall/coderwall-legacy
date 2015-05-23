@@ -21,10 +21,6 @@ class Follow < ActiveRecord::Base
   belongs_to :follower, polymorphic: true
   after_create :generate_event
 
-  def block!
-    self.update_attribute(:blocked, true)
-  end
-
   def generate_event
     if followable.kind_of?(User) or followable.kind_of?(Team)
       GenerateEventJob.perform_async(self.event_type, Audience.user(self.followable.try(:id)), self.to_event_hash, 1.minute)

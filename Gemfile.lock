@@ -93,6 +93,9 @@ GEM
     clockwork (1.2.0)
       activesupport
       tzinfo
+    closure_tree (5.2.0)
+      activerecord (>= 3.2.0)
+      with_advisory_lock (>= 3.0.0)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -728,6 +731,9 @@ GEM
     websocket-driver (0.5.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    with_advisory_lock (3.0.0)
+      activerecord (>= 3.2)
+      thread_safe
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -750,6 +756,7 @@ DEPENDENCIES
   carrierwave_backgrounder!
   chronic!
   clockwork!
+  closure_tree!
   codeclimate-test-reporter!
   coffee-rails!
   color!

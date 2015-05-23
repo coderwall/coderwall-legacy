@@ -117,6 +117,8 @@ source 'https://rubygems.org' do
   gem 'tweet-button'
   gem 'local_time'
 
+  gem 'closure_tree'
+
   gem 'elasticsearch-model'
   gem 'elasticsearch-rails'
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150519184842) do
+ActiveRecord::Schema.define(:version => 20150523090756) do
 
   add_extension "uuid-ossp"
   add_extension "citext"
@@ -133,6 +133,15 @@ ActiveRecord::Schema.define(:version => 20150519184842) do
 
   add_index "likes", ["likable_id", "likable_type", "user_id"], :name => "index_likes_on_user_id", :unique => true
 
+  create_table "network_hierarchies", :id => false, :force => true do |t|
+    t.integer "ancestor_id",   :null => false
+    t.integer "descendant_id", :null => false
+    t.integer "generations",   :null => false
+  end
+
+  add_index "network_hierarchies", ["ancestor_id", "descendant_id", "generations"], :name => "network_anc_desc_idx", :unique => true
+  add_index "network_hierarchies", ["descendant_id"], :name => "network_desc_idx"
+
   create_table "networks", :force => true do |t|
     t.string   "name"
     t.string   "slug"
@@ -140,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20150519184842) do
     t.datetime "updated_at"
     t.integer  "protips_count_cache", :default => 0
     t.boolean  "featured",            :default => false
+    t.integer  "parent_id"
   end
 
   create_table "opportunities", :force => true do |t|
@@ -228,10 +238,8 @@ ActiveRecord::Schema.define(:version => 20150519184842) do
   create_table "seized_opportunities", :force => true do |t|
     t.integer  "opportunity_id"
     t.integer  "user_id"
-    t.string   "team_document_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",            :default => "new"
   end
 
   create_table "sent_mails", :force => true do |t|
