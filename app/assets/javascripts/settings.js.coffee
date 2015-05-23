@@ -18,7 +18,7 @@ $ ->
     showProfileSection preSelectedNavigationElement
 
   Chute.setApp('502d8ffd3f59d8200c000097')
-  $("a.photo-chooser").live "click", (e)->
+  $("a.photo-chooser").click (e)->
     e.preventDefault()
     width = $(@).attr("data-fit-w")
     height = $(@).attr("data-fit-h")

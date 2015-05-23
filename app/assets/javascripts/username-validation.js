@@ -2,7 +2,7 @@ $(function () {
     var username = $("#user_username");
     var message = $("#username_validation");
 
-    username.live('blur', validateUsername);
+    username.blur(validateUsername);
 
     function validateUsername() {
         message.stop();

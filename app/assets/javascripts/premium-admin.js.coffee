@@ -1,7 +1,7 @@
 $ ->
   last_zindex = 0
 
-  $("a.close-editor").live "click", (e)->
+  $("a.close-editor").click (e)->
     sectionSel = $(@).attr("href")
     section = $(sectionSel)
     form = section.find(".form").addClass('hide')
@@ -9,7 +9,7 @@ $ ->
     e.preventDefault()
     turnUpTheLights()
 
-  $("a.launch-editor, a.activate-editor").live "click", (e)->
+  $("a.launch-editor, a.activate-editor").click (e)->
     sectionSel = $(@).attr("href")
     section = $(sectionSel)
     form = section.find(".form").removeClass('hide')
@@ -17,11 +17,11 @@ $ ->
     form.css('z-index', 9999)
     turndownTheLights()
 
-  $('form').live "ajax:beforeSend", (e)->
+  $('form').on "ajax:beforeSend", (e)->
     submit = $(@).children('input[name="commit"]')
     submit.val("Saving...")
 
-  $('form').live "ajax:error", (e, response, error)->
+  $('form').on "ajax:error", (e, response, error)->
     if response.status == 422
       errorList = $(@).children("ul.errors")
       errorList.html("")
@@ -31,11 +31,11 @@ $ ->
         errorList.prepend("<li>" + data.errors[i] + "</li>")
         i++
 
-  $('form').live "ajax:complete", (e)->
+  $('form').on "ajax:complete", (e)->
     submit = $(@).children('input[name="commit"]')
     submit.val("Save")
 
-  $('a.add-interview-step').live "click", (e)->
+  $('a.add-interview-step').click (e)->
     e.preventDefault()
     $("ol.edit-interview-steps").append("
               <li class='interview-step'>
@@ -46,17 +46,17 @@ $ ->
               </li>")
 
 
-  $('a.remove-interview-step').live "click", (e)->
+  $('a.remove-interview-step').click (e)->
     e.preventDefault()
     $(@).parents('li.interview-step').remove()
 
   Chute.setApp('502d8ffd3f59d8200c000097')
 
-  $("a.remove-photo").live "click", (e)->
+  $("a.remove-photo").click (e)->
     e.preventDefault()
     $(@).parent('li.preview-photos').remove()
 
-  $("a.photo-chooser").live "click", (e)->
+  $("a.photo-chooser").click (e)->
     e.preventDefault()
     width = $(@).attr("data-fit-w")
     height = $(@).attr("data-fit-h")
@@ -71,7 +71,7 @@ $ ->
         preview.children('img').remove()
         preview.prepend("<img src='" + url + "'/>")
 
-  $("a.photos-chooser").live "click", (e)->
+  $("a.photos-chooser").click (e)->
     e.preventDefault()
     width = $(@).attr("data-fit-w")
     Chute.MediaChooser.choose (urls, data)->

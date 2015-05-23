@@ -69,7 +69,7 @@ $(function () {
     e.preventDefault();
   });
 
-  $('#nocount input, #withcount input').live('change', function () {
+  $('#nocount input, #withcount input').change(function () {
     $('.endorseButtons .markdown, .endorseButtons .html, .endorseButtons .textile').toggleClass('hide');
   });
 

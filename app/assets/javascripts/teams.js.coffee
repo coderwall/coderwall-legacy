@@ -29,7 +29,7 @@ $ ->
   fixTeamNavigation()
   fixUserCloseup()
 
-  $("ul.team-members-list li img").live "mouseenter", ->
+  $("ul.team-members-list li img").mouseenter ->
     closeUpHtml = $(this).parents("li").find(".user-close-up").clone()
     $("#user-close-up").html(closeUpHtml)
 
