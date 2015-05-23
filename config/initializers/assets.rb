@@ -31,6 +31,6 @@ Coderwall::Application.configure do
   # config.assets.precompile << 'jquery-ketchup.all.min.js'
   config.assets.precompile << 'user.js'
   config.assets.precompile << 'autosaver.js'
-  config.assets.version = '1.1'
+  config.assets.version = '1.2'
 end
 
