@@ -431,7 +431,7 @@ class Protip < ActiveRecord::Base
             likes: comment.likes_cache
           }
         end,
-        networks:              networks.pluck(&:slug).join(','),
+        networks:              networks.pluck(:slug).join(','),
         best_stat:             Hash[*[:name, :value].zip(best_stat.to_a).flatten],
         team:                  user && user.team && {
           name:         user.team.name,
