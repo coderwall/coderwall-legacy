@@ -5,19 +5,14 @@ class UpdateNetworkJob
 
   sidekiq_options queue: :network
 
-  def perform(update_type, public_id, data)
-    protip = Protip.with_public_id(public_id)
-    unless protip.nil?
-      case update_type.to_sym
-        when :new_protip
-          protip.networks.each do |network|
-            network.protips_count_cache += 1
-            network.save(validate: false)
-          end
-        when :protip_upvote
-          protip.networks.each do |network|
-            network.save
-          end
+  def perform(protip_id)
+    protip = Protip.find(protip_id)
+    tags = protip.tags
+    protip.network_protips.destroy_all
+    tags.each do |tag|
+      networks = Network.where("? = any (network_tags)", tag).uniq
+      networks.each do |network|
+        protip.network_protips.find_or_create_by_network_id(network.id)
       end
     end
   end
