@@ -18,6 +18,9 @@ class Network < ActiveRecord::Base
   acts_as_taggable
   acts_as_followable
 
+  has_many :network_protips
+  has_many :protips, through: :network_protips
+
   validates :slug, uniqueness: true
 
   before_validation :create_slug!
@@ -98,10 +101,6 @@ class Network < ActiveRecord::Base
 
   def potential_tags
     self.protips_tags_with_count.map(&:name).uniq
-  end
-
-  def protips
-    @protips ||= Protip.tagged_with(self.tag_list, on: :topics)
   end
 
   def upvotes
