@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150523090756) do
+ActiveRecord::Schema.define(:version => 20150523214130) do
 
   add_extension "uuid-ossp"
   add_extension "citext"
@@ -142,6 +142,13 @@ ActiveRecord::Schema.define(:version => 20150523090756) do
   add_index "network_hierarchies", ["ancestor_id", "descendant_id", "generations"], :name => "network_anc_desc_idx", :unique => true
   add_index "network_hierarchies", ["descendant_id"], :name => "network_desc_idx"
 
+  create_table "network_protips", :force => true do |t|
+    t.integer  "network_id"
+    t.integer  "protip_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "networks", :force => true do |t|
     t.string   "name"
     t.string   "slug"
@@ -150,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20150523090756) do
     t.integer  "protips_count_cache", :default => 0
     t.boolean  "featured",            :default => false
     t.integer  "parent_id"
+    t.citext   "network_tags",                           :array => true
   end
 
   create_table "opportunities", :force => true do |t|
