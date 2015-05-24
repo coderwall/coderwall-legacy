@@ -38,6 +38,9 @@ class NetworksController < ApplicationController
     end
   end
 
+  def show
+  end
+
   private
 
   def lookup_network
