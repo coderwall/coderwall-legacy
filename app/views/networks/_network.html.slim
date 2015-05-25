@@ -1,11 +1,8 @@
-.network.cf{:style => right_border_css(network.slug, 14)}
+.network.cf style=(right_border_css(network.slug, 14))
   - if new_network?(network)
     .new
-      %span
-        new
-  %h2
-    %a{:href => network_path(network.slug)}
-      =network.name
-  %p = "Protips: #{network.protips_count_cache}"
+      span new
+  h2 = link_to network.name, network_path(network.slug)
+  p = "Protips: #{network.protips_count_cache}"
 
   =link_to '', join_or_leave_path(network), :remote => signed_in?, :method => :post, :rel => "nofollow", :class => join_or_leave_class(network)+" join-or-leave track", 'data-action' => (join_or_leave_tracking(network) + ' network'), 'data-from' => 'networks page', 'data-properties' => {'network name' => network.name}.to_json
