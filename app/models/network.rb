@@ -95,10 +95,6 @@ class Network < ActiveRecord::Base
     self.protips.joins("inner join taggings on taggings.taggable_id = protips.id").joins('inner join tags on taggings.tag_id = tags.id').where("taggings.taggable_type = 'Protip' AND taggings.context = 'topics'").select('tags.name, count(tags.name)').group('tags.name').order('count(tags.name) DESC')
   end
 
-  def ordered_tags
-    self.protips_tags_with_count.having('count(tags.name) > 5').map(&:name) & self.tags
-  end
-
   def potential_tags
     self.protips_tags_with_count.map(&:name).uniq
   end
