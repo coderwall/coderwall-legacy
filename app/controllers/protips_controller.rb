@@ -384,12 +384,7 @@ class ProtipsController < ApplicationController
   end
 
   def lookup_protip
-    @protip = if params[:id].present?
-                public_id = params[:id].to_s.strip.downcase
-                Protip.find_by_public_id(public_id)
-              else
-                nil
-              end
+    @protip = Protip.find_by_public_id!(params[:id])
   end
 
   def choose_protip_layout
