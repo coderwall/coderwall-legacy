@@ -32,7 +32,7 @@ class TeamsController < ApplicationController
         @query = "team:#{@team.slug}"
         viewing_user.track_team_view!(@team) if viewing_user
         @team.viewed_by(viewing_user || session_id) unless is_admin?
-        @job = show_params[:job_id].nil? ? @team.jobs.sample : Opportunity.with_public_id(show_params[:job_id])
+        @job = show_params[:job_id].nil? ? @team.jobs.sample : Opportunity.find_by_public_id(show_params[:job_id])
 
         @other_jobs = @team.jobs.reject { |job| job.id == @job.id } unless @job.nil?
         @job_page = !@job.nil?
@@ -108,7 +108,7 @@ class TeamsController < ApplicationController
     @job = if update_params[:job_id].nil?
              @team.jobs.sample
            else
-             Opportunity.with_public_id(update_params[:job_id])
+             Opportunity.find_by_public_id(update_params[:job_id])
            end
 
     if @team.save
@@ -293,13 +293,13 @@ class TeamsController < ApplicationController
   def next_job(job)
     jobs = job_public_ids
     public_id = job && jobs[(jobs.index(job.public_id) || -1)+1]
-    Opportunity.with_public_id(public_id) unless public_id.nil?
+    Opportunity.find_by_public_id(public_id) unless public_id.nil?
   end
 
   def previous_job(job)
     jobs = job_public_ids
     public_id = job && jobs[(jobs.index(job.public_id) || +1)-1]
-    Opportunity.with_public_id(public_id) unless public_id.nil?
+    Opportunity.find_by_public_id(public_id) unless public_id.nil?
   end
 
   def ensure_analytics_access

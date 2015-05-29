@@ -77,10 +77,6 @@ class Opportunity < ActiveRecord::Base
     Opportunity::Search.new(Opportunity, Opportunity::Search::Query.new(query_string), nil, nil, nil, failover: failover_scope).execute
   end
 
-  def self.with_public_id(public_id)
-    where(public_id: public_id).first
-  end
-
   def self.random
     uncached do
       order('RANDOM()')
