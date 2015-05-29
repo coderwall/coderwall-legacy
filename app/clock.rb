@@ -15,10 +15,6 @@ every(1.day, 'protip_mailer:popular_protips', if: ->(t){ t.day == 1 }) do
   end
 end
 
-every(1.day, 'teams:refresh', at: '22:00') do
-  TeamsRefreshJob.perform_async
-end
-
 every(1.day, 'award:refresh:stale', at: '00:00') do
   RefreshStaleUsersWorker.perform_async
 end

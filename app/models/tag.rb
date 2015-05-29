@@ -35,7 +35,7 @@ class Tag < ActiveRecord::Base
                                  "cplusplus", "monitoring", "angularjs", "oauth", "oop", "usability", "flexmojos",
                                  "sentry", "expressionengine", "ee"]
 
-  scope :from_topic, lambda { |topic| where(name: topic) }
+  scope :from_topic, ->(topic) { where(name: topic) }
 
   def subscribe(user)
     user.follow(self)
