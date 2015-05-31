@@ -320,7 +320,7 @@ class Team < ActiveRecord::Base
 
   def public_hash
     summary.merge(
-      members: members.collect { |user| {
+      members: member_accounts.collect { |user| {
         name:               user.display_name,
         username:           user.username,
         badges_count:       user.badges_count,
@@ -422,7 +422,7 @@ class Team < ActiveRecord::Base
     @specialties_with_counts ||= begin
                                    specialties = {}
 
-                                   members.each do |user|
+                                   member_accounts.each do |user|
                                      user.speciality_tags.each do |tag|
                                        tag              = tag.downcase
                                        specialties[tag] = 0 if specialties[tag].blank?
