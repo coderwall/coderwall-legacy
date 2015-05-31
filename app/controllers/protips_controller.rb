@@ -324,7 +324,7 @@ class ProtipsController < ApplicationController
     page     = by_tags_params[:page] || 1
     per_page = by_tags_params[:per_page] || 100
 
-    @tags = Tag.joins("inner join taggings on taggings.tag_id = tags.id").group('tags.id').order('count(tag_id) desc').page(page).per(per_page)
+    @tags = ActsAsTaggableOn::Tag.joins('inner join taggings on taggings.tag_id = tags.id').group('tags.id').order('count(tag_id) desc').page(page).per(per_page)
   end
 
   def preview

@@ -877,18 +877,18 @@ class User < ActiveRecord::Base
   end
 
   def subscribed_to_topic?(topic)
-    tag = Tag.from_topic(topic).first
+    tag = ActsAsTaggableOn::Tag.find_by_name(topic)
     tag && following?(tag)
   end
 
   def subscribe_to(topic)
-    tag = Tag.from_topic(topic).first
-    tag.subscribe(self) unless tag.nil?
+    tag = ActsAsTaggableOn::Tag.find_by_name(topic)
+    follow(tag) unless tag.nil?
   end
 
   def unsubscribe_from(topic)
-    tag = Tag.from_topic(topic).first
-    tag.unsubscribe(self) unless tag.nil?
+    tag = ActsAsTaggableOn::Tag.find_by_name(topic)
+    stop_following(tag) unless tag.nil?
   end
 
   def protip_subscriptions

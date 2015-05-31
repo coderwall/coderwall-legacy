@@ -155,10 +155,9 @@ RSpec.describe Protip, type: :model do
     end
 
     it '#topic_ids should return ids of topics only' do
-      protip = Fabricate(:protip, topic_list: 'ruby, python', user: Fabricate(:user))
-      protip.save!
-      ruby_id = Tag.find_by_name("ruby").id
-      python_id = Tag.find_by_name("python").id
+      protip = Fabricate(:protip, topic_list: 'ruby, python', user: Fabricate.build(:user))
+      ruby_id = ActsAsTaggableOn::Tag.find_by_name("ruby").id
+      python_id = ActsAsTaggableOn::Tag.find_by_name("python").id
       expect(protip.topic_ids).to match_array([ruby_id, python_id])
     end
   end

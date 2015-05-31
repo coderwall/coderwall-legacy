@@ -117,7 +117,7 @@ class Opportunity < ActiveRecord::Base
 
   def destroy(force = false)
     if force
-      super
+      super()
     else
       self.deleted = true
       self.deleted_at = Time.now.utc

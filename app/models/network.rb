@@ -87,7 +87,7 @@ class Network < ActiveRecord::Base
 
   def correct_tags
     if self.tag_list_changed?
-      self.tag_list = self.tag_list.uniq.select { |tag| Tag.exists?(name: tag) }.reject { |tag| (tag != self.name) && Network.exists?(name: tag) }
+      self.tag_list = self.tag_list.uniq.select { |tag| ActsAsTaggableOn::Tag.exists?(name: tag) }.reject { |tag| (tag != self.name) && Network.exists?(name: tag) }
     end
 
   end

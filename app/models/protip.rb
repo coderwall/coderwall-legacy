@@ -146,7 +146,7 @@ class Protip < ActiveRecord::Base
         dynamic_trending = trending_protips.flat_map { |p| p.tags }.reduce(Hash.new(0)) { |h, tag| h.tap { |h| h[tag] += 1 } }.sort { |a1, a2| a2[1] <=> a1[1] }.map { |entry| entry[0] }.reject { |tag| User.where(username: tag).any? }
         ((static_trending || []) + dynamic_trending).uniq
       else
-        Tag.last(20).map(&:name).reject { |name| User.exists?(username: name) }
+        ActsAsTaggableOn::Tag.last(20).map(&:name).reject { |name| User.exists?(username: name) }
       end
     end
 
