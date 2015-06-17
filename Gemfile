@@ -1,4 +1,4 @@
-ruby '2.1.6'
+ruby '2.2.2'
 
 source 'https://rubygems.org' do
   gem 'rails', '~> 3.2'
@@ -159,6 +159,7 @@ source 'https://rubygems.org' do
 
   group :test do
     # gem 'rspec-its'
+    gem 'test-unit'
     gem 'capybara'
     gem 'capybara-screenshot'
     gem 'turnip' # write rspec feature specs in cucumber style

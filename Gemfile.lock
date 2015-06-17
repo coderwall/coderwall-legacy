@@ -464,6 +464,7 @@ GEM
     postgres_ext (1.0.0)
       activerecord (~> 3.2.0)
       pg_array_parser (~> 0.0.9)
+    power_assert (0.2.2)
     powerpack (0.1.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -671,6 +672,8 @@ GEM
     syntax (1.2.0)
     temple (0.7.5)
     terminal-table (1.4.5)
+    test-unit (3.0.8)
+      power_assert
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
@@ -847,6 +850,7 @@ DEPENDENCIES
   stripe-ruby-mock!
   strong_parameters!
   syntax!
+  test-unit!
   timecop!
   tire!
   travis!
