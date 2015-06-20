@@ -126,6 +126,7 @@ source 'https://rubygems.org' do
   gem 'compass-rails'
   gem 'strong_parameters'
   gem 'postgres_ext'
+  gem 'robust_params_parser'
 # ElasticSearch client
   gem 'tire'
 # /DROP BEFORE RAILS 4

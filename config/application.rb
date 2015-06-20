@@ -36,6 +36,9 @@ module Coderwall
     config.rakismet.url = ENV['AKISMET_URL']
 
     config.exceptions_app = self.routes
+
+    # DROP BEFORE RAILS 4
+    config.middleware.swap ActionDispatch::ParamsParser, ::RobustParamsParser, {}
   end
 end
 
