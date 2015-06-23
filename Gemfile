@@ -126,6 +126,8 @@ source 'https://rubygems.org' do
   gem 'compass-rails'
   gem 'strong_parameters'
   gem 'postgres_ext'
+  gem 'test-unit'
+
 # ElasticSearch client
   gem 'tire'
 # /DROP BEFORE RAILS 4
@@ -158,8 +160,6 @@ source 'https://rubygems.org' do
   end
 
   group :test do
-    # gem 'rspec-its'
-    gem 'test-unit'
     gem 'capybara'
     gem 'capybara-screenshot'
     gem 'turnip' # write rspec feature specs in cucumber style
