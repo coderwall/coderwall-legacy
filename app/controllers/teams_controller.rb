@@ -119,7 +119,8 @@ class TeamsController < ApplicationController
     else
       respond_with do |format|
         format.html { render(:action => :edit) }
-        format.js { render(:json => { errors: @team.errors.full_messages }.to_json, :status => :unprocessable_entity) }
+        #FIXME
+        format.js { render(json: {errors: @team.errors.full_messages} , status: :unprocessable_entity) }
       end
     end
   end
@@ -138,8 +139,8 @@ class TeamsController < ApplicationController
       current_user.follow_team!(@team)
     end
     respond_to do |format|
-      format.json { render json: { dom_id: dom_id(@team), following: current_user.following_team?(@team) }.to_json }
-      format.js { render json: { dom_id: dom_id(@team), following: current_user.following_team?(@team) }.to_json }
+      format.json { render json: { dom_id: dom_id(@team), following: current_user.following_team?(@team) } }
+      format.js { render json: { dom_id: dom_id(@team), following: current_user.following_team?(@team) } }
     end
   end
 

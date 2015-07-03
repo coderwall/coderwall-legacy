@@ -95,7 +95,7 @@ class OpportunitiesController < ApplicationController
 
     respond_to do |format|
       format.html { render layout: 'jobs' }
-      format.json { render json: @jobs.map(&:to_public_hash).to_json }
+      format.json { render json: @jobs.map(&:to_public_hash) }
       format.js
     end
 

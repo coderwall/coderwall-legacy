@@ -18,7 +18,7 @@ class EndorsementsController < ApplicationController
     render json: {
                    unlocked: !@skill.locked?,
                    message:  "Awesome! #{@skill.endorse_message}"
-                 }.to_json
+                 }
   end
 
   def show #Used by api.coderwall.com

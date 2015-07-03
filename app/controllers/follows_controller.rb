@@ -27,8 +27,8 @@ class FollowsController < ApplicationController
         current_user.follow(@user)
       end
       respond_to do |format|
-        format.json { render json: { dom_id: dom_id(@user), following: current_user.following?(@user) }.to_json }
-        format.js { render json: { dom_id: dom_id(@user), following: current_user.following?(@user) }.to_json }
+        format.json { render json: { dom_id: dom_id(@user), following: current_user.following?(@user) } }
+        format.js { render json: { dom_id: dom_id(@user), following: current_user.following?(@user) } }
       end
     end
   end

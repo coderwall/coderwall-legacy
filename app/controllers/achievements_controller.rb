@@ -31,9 +31,9 @@ class AchievementsController < ApplicationController
           user.award_and_add_skill badge
           user.save!
         end
-        render nothing: true, status: 200
+        render nothing: true, status: :ok
       else
-        render json: {message: "don't have permission to do that. contact support@coderwall.com", status: 403}.to_json
+        render json: {message: "don't have permission to do that. contact support@coderwall.com"} , status: 403
       end
     end
   end
@@ -53,10 +53,10 @@ class AchievementsController < ApplicationController
   end
 
   rescue_from ActiveRecord::RecordNotFound do
-    render json: {message: 'no/invalid api_key provided. get your api_key from coderwall.com/settings'}.to_json
+    render json: {message: 'no/invalid api_key provided. get your api_key from coderwall.com/settings'}
   end
 
   rescue_from Exception do
-    render json: {message: 'something went wrong with your request or the end point may not be ready. contact support@coderwall.com'}.to_json
+    render json: {message: 'something went wrong with your request or the end point may not be ready. contact support@coderwall.com'}
   end
 end
