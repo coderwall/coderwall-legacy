@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150523214130) do
+ActiveRecord::Schema.define(:version => 20150703215747) do
 
   add_extension "uuid-ossp"
   add_extension "citext"
@@ -526,6 +526,7 @@ ActiveRecord::Schema.define(:version => 20150523214130) do
     t.string   "last_ip"
     t.string   "last_ua"
     t.integer  "team_id"
+    t.string   "role",                          :default => "user"
   end
 
   add_index "users", ["linkedin_id"], :name => "index_users_on_linkedin_id", :unique => true
