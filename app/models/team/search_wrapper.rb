@@ -38,7 +38,7 @@ class Team::SearchWrapper
   end
 
   def thumbnail_url
-    User::BLANK_PROFILE_URL
+    item[:avatar]
   end
 
   def members

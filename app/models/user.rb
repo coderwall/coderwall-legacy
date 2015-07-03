@@ -147,9 +147,6 @@ class User < ActiveRecord::Base
   }
 
 
-  #TODO maybe we don't need this
-  BLANK_PROFILE_URL = 'blank-mugshot.png'
-
   REGISTRATION = 'registration'
   PENDING      = 'pending'
   ACTIVE       = 'active'
