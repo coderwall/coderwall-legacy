@@ -19,8 +19,9 @@ class Protip::Search::Scope < SearchModule::Search::Scope
   end
 
   def network(tag)
+    tags =  Network.find_by_slug(tag.parameterize).try(:tags) || tag
     {
-        terms: { tags: Network.find_by_slug(Network.slugify(tag)).try(&:tags) || [tag, Network.unslugify(tag)].uniq }
+        terms: { tags: tags}
     }
   end
 end

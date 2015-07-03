@@ -45,7 +45,7 @@ class NetworksController < ApplicationController
 
   def lookup_network
     network_name = params[:id] || params[:tags]
-    @network     = Network.find_by_slug(Network.slugify(network_name)) unless network_name.nil?
+    @network     = Network.find_by_slug(network_name.parameterize) unless network_name.nil?
     redirect_to networks_path if @network.nil? && params[:action] != 'tag'
   end
 

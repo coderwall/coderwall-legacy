@@ -108,7 +108,7 @@ class Comment < ActiveRecord::Base
       NotifierMailer.new_comment(self.commentable.try(:user).try(:username), self.author.username, self.id).deliver unless commenting_on_own?
 
       if (mentioned_users = self.mentions).any?
-        GenerateEventJob.perform_async(:comment_reply, Audience.users(mentioned_users.map(&:id)), data, 1.minute)
+        GenerateEventJob.perform_async(:comment_reply, Audience.users(mentioned_users.pluck(:id)), data, 1.minute)
 
         mentioned_users.each do |mention|
           NotifierMailer.comment_reply(mention.username, self.author.username, self.id).deliver

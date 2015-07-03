@@ -37,7 +37,7 @@
           %h3 Networks
           %ul.side-bar-list.side-bar-networks
             - protip_networks(protip).each do |name|
-              - slug = Network.slugify(name)
+              - slug = name.parameterize
               %li{ style: "border-color:##{ color_signature(slug) }" }
                 %a.name{ href: network_path(id: slug) }= name
                 - followed = current_user.try(:member_of?, Network.find_by_slug(slug))

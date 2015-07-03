@@ -143,7 +143,7 @@
           %h2 Suggested networks to follow
           %ul.protips-grid.new-networks-list.cf
             - @suggested_networks.each do |name|
-              - slug = Network.slugify(name)
+              - slug = name.parameterize
               %li{style: "border-color:##{color_signature(slug)}"}
                 = link_to '', join_network_path(id: slug), class: "follow #{slug} #{signed_in? && current_user.following_networks.exists?(slug: slug) ? "followed" : ""}", remote: true, method: :post, rel: "nofollow"
                 %a.new-network{href: network_path(id: slug)}

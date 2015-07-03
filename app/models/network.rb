@@ -34,18 +34,6 @@ class Network < ActiveRecord::Base
   scope :featured, where(featured: true)
 
   class << self
-    def slugify(name)
-      if !!(name =~ /\p{Latin}/)
-        name.to_s.downcase.gsub(/[^a-z0-9]+/i, '-').chomp('-')
-      else
-        name.to_s.tr(' ', '-')
-      end
-    end
-
-    def unslugify(slug)
-      slug.tr('-', ' ')
-    end
-
     def all_with_tag(tag_name)
       Network.tagged_with(tag_name)
     end
@@ -55,11 +43,11 @@ class Network < ActiveRecord::Base
     end
 
     def top_tags_not_networks
-      top_tags.where('tags.name NOT IN (?)', Network.all.map(&:name))
+      top_tags.where('tags.name NOT IN (?)', Network.pluck(:slug))
     end
 
     def top_tags_not_in_any_networks
-      top_tags.where('tags.name NOT IN (?)', Network.all.map(&:tag_list).flatten)
+      top_tags.where('tags.name NOT IN (?)', Network.pluck(:tag_list).flatten)
     end
 
     def top_tags
@@ -76,7 +64,11 @@ class Network < ActiveRecord::Base
   end
 
   def create_slug!
-    self.slug = self.class.slugify(self.name)
+    self.slug = self.name
+  end
+
+  def slug=value
+    self[:slug] = value.to_s.parameterize
   end
 
   def tag_with_name!
