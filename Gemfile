@@ -110,7 +110,6 @@ source 'https://rubygems.org' do
   gem 'querystring'
   gem 'rails_autolink'
   gem 'rakismet'
-  gem 'ruby-progressbar'
   gem 'sanitize'
   gem 'simple_form'
   gem 'sitemap_generator'

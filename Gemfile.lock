@@ -831,7 +831,6 @@ DEPENDENCIES
   rest-client!
   rspec-rails!
   rubocop!
-  ruby-progressbar!
   sanitize!
   sass!
   sass-rails!
