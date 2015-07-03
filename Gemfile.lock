@@ -481,7 +481,6 @@ GEM
     pusher-client (0.6.0)
       json
       websocket (~> 1.0)
-    querystring (0.1.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.4.7)
@@ -815,7 +814,6 @@ DEPENDENCIES
   pry-byebug!
   pubnub (= 0.1.9)!
   puma!
-  querystring!
   quiet_assets!
   rack_session_access!
   rails (~> 3.2)!

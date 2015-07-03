@@ -107,7 +107,6 @@ source 'https://rubygems.org' do
   gem 'never_wastes'
   gem 'octokit'
   gem 'pubnub', '0.1.9'
-  gem 'querystring'
   gem 'rails_autolink'
   gem 'rakismet'
   gem 'sanitize'
