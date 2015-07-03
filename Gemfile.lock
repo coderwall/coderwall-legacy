@@ -129,10 +129,6 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     crass (1.0.2)
-    createsend (4.0.1)
-      hashie (>= 1.2, < 3)
-      httparty (~> 0.10)
-      json
     curb (0.8.8)
     dante (0.2.0)
     database_cleaner (1.4.1)
@@ -343,9 +339,6 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
-    httparty (0.13.3)
-      json (~> 1.8)
-      multi_xml (>= 0.5.2)
     httpauth (0.2.1)
     i18n (0.7.0)
     inflecto (0.0.2)
@@ -402,7 +395,6 @@ GEM
       json
       rack
     multi_json (1.11.1)
-    multi_xml (0.5.5)
     multipart-post (1.2.0)
     nenv (0.2.0)
     net-http-persistent (2.9.4)
@@ -761,7 +753,6 @@ DEPENDENCIES
   coffee-rails!
   color!
   compass-rails!
-  createsend!
   database_cleaner!
   dotenv-rails!
   elasticsearch-model!
