@@ -3,7 +3,7 @@ RSpec.describe AbuseMailer, type: :mailer do
 
     let(:mail) { AbuseMailer.report_inappropriate(protip.to_param) }
 
-    let!(:current_user) { Fabricate(:user, admin: true) }
+    let!(:current_user) { Fabricate(:admin) }
 
     let(:protip) do
       Protip.create!(
@@ -16,7 +16,7 @@ RSpec.describe AbuseMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to match('Spam Report for Protip: "hello world"')
-      expect(mail.to).to eq(['someone@example.com'])
+      expect(mail.to).to eq([current_user.email])
       expect(mail.from).to eq(['support@coderwall.com'])
     end
 

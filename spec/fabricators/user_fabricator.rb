@@ -117,12 +117,11 @@ Fabricator(:user, from: 'User') do
   state { User::ACTIVE }
 end
 
-Fabricator(:pending_user, from: 'User') do
-  github { 'bguthrie' }
-  username { FFaker::Internet.user_name.gsub(/\./, '_') }
-  name { 'Brian Guthrie' }
-  email { 'someone@example.com' }
-  location { 'Mountain View' }
-  github_token { FFaker::Internet.ip_v4_address }
+Fabricator(:pending_user, from: :user) do
   state { User::PENDING }
+end
+
+Fabricator(:admin, from: :user ) do
+  email { FFaker::Internet.email('admin') }
+  role 'admin'
 end
