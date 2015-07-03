@@ -99,7 +99,6 @@ source 'https://rubygems.org' do
   gem 'fog'
   gem 'friendly_id', '4.0.10.1'
   gem 'geocoder'
-  gem 'hashie'
   gem 'linkedin'
   gem 'mini_magick'
   gem 'mixpanel'

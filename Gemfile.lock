@@ -773,7 +773,6 @@ DEPENDENCIES
   grackle!
   guard-rspec!
   haml!
-  hashie!
   heroku-deflater!
   jbuilder!
   jquery-rails (= 2.0.3)!
