@@ -121,10 +121,7 @@ class User < ActiveRecord::Base
   include UserStatistics
   include UserTwitter
 
-  # TODO kill
-  include UserWtf
-
-  attr_protected :admin, :id, :github_id, :twitter_id, :linkedin_id, :api_key
+  attr_protected :admin, :role, :id, :github_id, :twitter_id, :linkedin_id, :api_key
 
   mount_uploader :avatar, AvatarUploader
   mount_uploader :resume, ResumeUploader
@@ -220,7 +217,7 @@ class User < ActiveRecord::Base
     filter = "#{filter.upcase}%"
     where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
   }
-  scope :admins, -> { where(admin: true) }
+  scope :admins, -> { where(role: 'admin') }
   scope :active, -> { where(state: ACTIVE) }
   scope :pending, -> { where(state: PENDING) }
   scope :abandoned, -> { where(state: 'registration').where('created_at < ?', 1.hour.ago) }
