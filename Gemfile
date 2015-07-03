@@ -122,6 +122,8 @@ source 'https://rubygems.org' do
   gem 'elasticsearch-model'
   gem 'elasticsearch-rails'
 
+  gem 'newrelic_rpm'
+
 # DROP BEFORE RAILS 4
   gem 'compass-rails'
   gem 'strong_parameters'
@@ -178,7 +180,6 @@ source 'https://rubygems.org' do
   end
 
   group :production do
-    gem 'newrelic_rpm'
     gem 'puma'
     gem 'rails_12factor'
     gem 'heroku-deflater'
