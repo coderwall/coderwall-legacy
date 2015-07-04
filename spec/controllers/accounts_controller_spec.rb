@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 RSpec.describe AccountsController, type: :controller, skip: true do
   let(:team) { Fabricate(:team, account: nil) }
   let(:plan) { Plan.create(amount: 20_000, interval: Plan::MONTHLY, name: 'Monthly') }

@@ -158,7 +158,6 @@ source 'https://rubygems.org' do
   group :test do
     gem 'capybara'
     gem 'capybara-screenshot'
-    gem 'turnip' # write rspec feature specs in cucumber style
     gem 'rack_session_access' # allows to set session from within Capybara
     gem 'poltergeist' # headless js driver for Capybara that uses phantomJs
     gem 'selenium-webdriver' # headfull js driver for Capybara

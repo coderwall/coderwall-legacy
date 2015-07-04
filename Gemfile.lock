@@ -303,8 +303,6 @@ GEM
       multi_json (~> 1.0)
       net-http-persistent (>= 2.7)
       net-http-pipeline
-    gherkin (2.12.2)
-      multi_json (~> 1.3)
     github-markdown (0.6.8)
     grackle (0.3.0)
       json
@@ -690,9 +688,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turnip (1.3.0)
-      gherkin (>= 2.5)
-      rspec (>= 2.14.0, < 4.0)
     tweet-button (0.1.0)
     twitter (5.5.1)
       addressable (~> 2.3)
@@ -836,7 +831,6 @@ DEPENDENCIES
   timecop!
   tire!
   travis!
-  turnip!
   tweet-button!
   twitter!
   uglifier!

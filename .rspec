@@ -1,5 +1,3 @@
---require rails_helper
---require turnip/rspec
 --format Fuubar
 --color
 --profile

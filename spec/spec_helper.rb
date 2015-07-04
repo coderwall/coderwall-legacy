@@ -5,7 +5,6 @@ require 'capybara/rspec'
 require 'database_cleaner'
 
 require 'webmock/rspec'
-# WebMock.disable_net_connect!(allow_localhost: true)
 
 require 'sidekiq/testing/inline'
 
