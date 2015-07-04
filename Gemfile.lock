@@ -106,7 +106,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
-    color (1.7.1)
     columnize (0.9.0)
     compass (1.0.3)
       chunky_png (~> 1.2)
@@ -751,7 +750,6 @@ DEPENDENCIES
   closure_tree!
   codeclimate-test-reporter!
   coffee-rails!
-  color!
   compass-rails!
   database_cleaner!
   dotenv-rails!
