@@ -165,7 +165,6 @@ source 'https://rubygems.org' do
     gem 'database_cleaner'
     gem 'fuubar'
     gem 'shoulda-matchers'
-    gem 'simplecov'
     gem 'timecop'
     gem 'vcr'
     gem 'webmock', '<1.16'

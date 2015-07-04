@@ -817,7 +817,6 @@ DEPENDENCIES
   shoulda-matchers!
   sidekiq!
   simple_form!
-  simplecov!
   sinatra!
   sitemap_generator!
   slim-rails!

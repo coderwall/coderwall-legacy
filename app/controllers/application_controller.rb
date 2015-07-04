@@ -199,7 +199,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin?
-    signed_in? && current_user.admin?
+    signed_in? && current_user.role == 'admin'
   end
 
   def iphone_user_agent?
