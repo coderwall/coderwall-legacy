@@ -138,7 +138,6 @@ source 'https://rubygems.org' do
     gem 'rubocop'
     gem 'spring'
     gem 'spring-commands-rspec'
-    gem 'travis'
   end
 
   group :development, :test do
