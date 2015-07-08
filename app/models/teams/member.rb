@@ -30,6 +30,8 @@ class Teams::Member < ActiveRecord::Base
   scope :pending, -> { where(state: 'pending') }
   scope :sorted, -> { active.joins(:user).order('users.score_cache DESC') }
   scope :top, ->(limit= 1) { sorted.limit(limit) }
+  scope :members, -> { where(role: 'member') }
+  scope :admins, -> { where(role: 'admin') }
 
   def score
     badges.all.sum(&:weight)

@@ -803,3 +803,6 @@ DEPENDENCIES
   uglifier!
   vcr!
   webmock (< 1.16)!
+
+BUNDLED WITH
+   1.10.5
