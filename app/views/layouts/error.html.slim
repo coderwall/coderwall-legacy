@@ -1,0 +1,14 @@
+html.no-js  lang=I18n.locale
+  head
+    title= page_title(yield(:page_title))
+    link rel= 'author' href= '/humans.txt'
+    meta name="viewport" content="initial-scale=1.0,width=device-width"
+    - if Rails.env.production?
+      = render partial: 'shared/mixpanel'
+      = render partial: 'shared/analytics'
+    = render 'fav_icons'
+    = stylesheet_link_tag 'application'
+
+  body style = 'background: #bacbd8;'
+    = yield
+
