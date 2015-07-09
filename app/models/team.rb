@@ -96,7 +96,7 @@ class Team < ActiveRecord::Base
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
   has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id', dependent: :delete_all
   def admins
-    members.where(role: 'admin')
+    members.admins
   end
 
   has_many :member_accounts, through: :members, source: :user, class_name: 'User'
@@ -110,12 +110,10 @@ class Team < ActiveRecord::Base
 
   before_validation :create_slug!
   before_validation :fix_website_url!
-  before_save :update_team_size!
   before_save :clear_cache_if_premium_team
   after_create :generate_event
   after_save :reindex_search
   after_destroy :reindex_search
-  after_destroy :remove_dependencies
 
   validates :slug, uniqueness: true, presence: true
   validates :name, presence: true
@@ -135,7 +133,7 @@ class Team < ActiveRecord::Base
   end
 
   def all_jobs
-    jobs.order('created_at DESC')
+    jobs.order(:created_at).reverse_order
   end
 
   def self.search(query_string, country, page, per_page, search_type = :query_and_fetch)
@@ -176,8 +174,7 @@ class Team < ActiveRecord::Base
   end
 
   def self.with_similar_names(name)
-    pattern = "%#{name}%"
-    Team.where('name ilike ?', pattern).limit(3).to_a
+    Team.where('name ilike ?', "%#{name}%").limit(3).to_a
   end
 
   def self.with_completed_section(section)
@@ -735,12 +732,6 @@ class Team < ActiveRecord::Base
     end
   end
 
-
-  def remove_dependencies
-      FollowedTeam.where(team_id: self.id.to_s).delete_all
-    User.where(team_id: self.id.to_s).update_all('team_id = NULL')
-  end
-
   def can_post_job?
     has_monthly_subscription? || paid_job_posts > 0
   end
@@ -851,16 +842,11 @@ class Team < ActiveRecord::Base
     user.is_a?(User) ? user.id : user
   end
 
-  #Replaced with team_size attribute
-  def update_team_size!
-    self.size = User.where(team_id: self.id.to_s).count
-  end
-
   def clear_cache_if_premium_team
     Rails.cache.delete(Team::FEATURED_TEAMS_CACHE_KEY) if premium?
   end
 
   def create_slug!
-    self.slug = self.class.slugify(name)
+    self.slug ||= self.class.slugify(name)
   end
 end
