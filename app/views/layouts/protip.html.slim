@@ -4,8 +4,8 @@ html.no-js lang=I18n.locale
     link rel= 'author' href= '/humans.txt'
     meta name="viewport" content="initial-scale=1.0,width=device-width"
     - if Rails.env.production?
-      = render partial: 'shared/mixpanel'
-      = render partial: 'shared/analytics'
+      = render 'mixpanel'
+      = render 'analytics'
     = render 'fav_icons'
     = stylesheet_link_tag 'application'
     = csrf_meta_tag
