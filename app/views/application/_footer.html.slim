@@ -3,29 +3,29 @@ footer#footer
     #tweetbtn
       a.twitter-follow-button data-show-count="false" data-width="300" href="https://twitter.com/coderwall"  Follow @coderwall
       script src="https://platform.twitter.com/widgets.js" type="text/javascript"
-  nav#footer-nav
-    ul.footer-links.cf
-      li= link_to('Contact', contact_us_path)
-      li= link_to('API & Hacks', api_path)
-      li= link_to('FAQ', faq_path)
-      li= link_to('Privacy Policy', privacy_policy_path)
-      li= link_to('Terms of Service', tos_path)
-      li= link_to('Jobs', '/jobs')
-      li.employers= link_to('Employers', employers_path)
-      =yield :footer_menu
+    nav#footer-nav
+      ul.footer-links.cf
+        li= link_to('Contact', contact_us_path)
+        li= link_to('API & Hacks', api_path)
+        li= link_to('FAQ', faq_path)
+        li= link_to('Privacy Policy', privacy_policy_path)
+        li= link_to('Terms of Service', tos_path)
+        li= link_to('Jobs', '/jobs')
+        li.employers= link_to('Employers', employers_path)
+        =yield :footer_menu
 
-    ul.assembly-badge
-      li style="text-align: center;"
-        = link_to 'https://assembly.com/coderwall?utm_campaign=assemblage&utm_source=coderwall&utm_medium=flair_widget&utm_content=flag_with_text'
-          img src="https://treasure.assembly.com/assets/badges/flag_text-6cfc91728f9f0090d1688e4f0d41a639.svg"
-    ul.copyright
-      li Copyright &copy; 2015 Assembly Made, Inc. All rights reserved.
-    ul.credits
-      li= yield :credits
-    ul.mixpanel
-      li
-        a href="https://mixpanel.com/f/partner"
-          img alt="Real Time Web Analytics" src="https://mixpanel.com/site_media/images/partner/badge_light.png"
+      ul.assembly-badge
+        li style="text-align: center;"
+          = link_to 'https://assembly.com/coderwall?utm_campaign=assemblage&utm_source=coderwall&utm_medium=flair_widget&utm_content=flag_with_text'
+            img src="https://treasure.assembly.com/assets/badges/flag_text-6cfc91728f9f0090d1688e4f0d41a639.svg"
+      ul.copyright
+        li Copyright &copy; 2015 Assembly Made, Inc. All rights reserved.
+      ul.credits
+        li= yield :credits
+      ul.mixpanel
+        li
+          a href="https://mixpanel.com/f/partner"
+            img alt="Real Time Web Analytics" src="https://mixpanel.com/site_media/images/partner/badge_light.png"
 
 
 = javascript_include_tag 'application'
