@@ -103,7 +103,6 @@ source 'https://rubygems.org' do
   gem 'mixpanel'
   gem 'never_wastes'
   gem 'octokit'
-  gem 'pubnub', '0.1.9'
   gem 'rakismet'
   gem 'sanitize'
   gem 'simple_form'

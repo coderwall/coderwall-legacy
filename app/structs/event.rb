@@ -1,7 +1,6 @@
 class Event < Struct.new(:data)
   include ActiveModel::Conversion
   extend ActiveModel::Naming
-  extend Publisher
 
   class << self
 
@@ -92,5 +91,9 @@ class Event < Struct.new(:data)
                 hiring:      team.hiring?
       } }
     end
+  end
+
+  def publish(channel, message)
+    false
   end
 end
