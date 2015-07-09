@@ -32,6 +32,6 @@ html.no-js  lang=I18n.locale
         .inside-main-content.cf= yield
       - else
         = yield
-    = render partial: 'shared/footer'
-    = render partial: 'shared/current_user_js'
+    = render 'footer'
+    = render 'current_user_js'
 
