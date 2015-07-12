@@ -429,16 +429,4 @@ Coderwall::Application.routes.draw do
     post '/hawt/feature' => 'hawt#feature'
     post '/hawt/unfeature' => 'hawt#unfeature'
   end
-
-  require_admin = ->(_, req) { User.where(id: req.session[:current_user], admin: true).exists? }
-  scope :admin, as: :admin, path: '/admin', constraints: require_admin do
-    get '/' => 'admin#index', as: :root
-    get '/teams' => 'admin#teams', as: :teams
-    get '/teams/sections/:num_sections' => 'admin#sections_teams', as: :sections_teams
-    get '/teams/section/:section' => 'admin#section_teams', as: :section_teams
-    mount Sidekiq::Web => '/sidekiq'
-  end
-  # TODO: namespace inside admin
-  get '/comments' => 'comments#index', as: :latest_comments
-
 end
