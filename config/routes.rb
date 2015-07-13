@@ -210,7 +210,6 @@
 #                             PUT                   /users/:id(.:format)                                   users#update
 #                             DELETE                /users/:id(.:format)                                   users#destroy
 #              clear_provider GET                   /clear/:id/:provider(.:format)                         users#clear_provider
-#                     refresh GET                   /refresh/:username(.:format)                           users#refresh
 #                   add_skill GET                   /add-skill(.:format)                                   skills#create
 #                      signin GET                   /signin(.:format)                                      sessions#signin
 #                     signout GET                   /signout(.:format)                                     sessions#destroy
@@ -227,12 +226,6 @@
 #                   following GET                   /:username/following(.:format)                         follows#index {:type=>:following}
 #      callbacks_hawt_feature POST                  /callbacks/hawt/feature(.:format)                      callbacks/hawt#feature
 #    callbacks_hawt_unfeature POST                  /callbacks/hawt/unfeature(.:format)                    callbacks/hawt#unfeature
-#                  admin_root GET                   /admin(.:format)                                       admin#index
-#                 admin_teams GET                   /admin/teams(.:format)                                 admin#teams
-#        admin_sections_teams GET                   /admin/teams/sections/:num_sections(.:format)          admin#sections_teams
-#         admin_section_teams GET                   /admin/teams/section/:section(.:format)                admin#section_teams
-#           admin_sidekiq_web                       /admin/sidekiq                                         Sidekiq::Web
-#             latest_comments GET                   /comments(.:format)                                    comments#index
 #
 
 Coderwall::Application.routes.draw do
