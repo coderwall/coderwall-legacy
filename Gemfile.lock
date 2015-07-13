@@ -39,7 +39,7 @@ GEM
       haml
       parser
       thor
-    annotate (2.6.8)
+    annotate (2.6.10)
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
     ansi (1.5.0)
@@ -368,7 +368,7 @@ GEM
       escape
       json
       rack
-    multi_json (1.11.1)
+    multi_json (1.11.2)
     multipart-post (1.2.0)
     nenv (0.2.0)
     net-scp (1.2.1)
