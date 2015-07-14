@@ -83,6 +83,7 @@ class Team < ActiveRecord::Base
   include TeamAnalytics
 
   include TeamSearch
+  include Blog
   include SearchModule
 
   mount_uploader :avatar, TeamUploader
@@ -401,10 +402,6 @@ class Team < ActiveRecord::Base
 
   def has_upcoming_events?
     false
-  end
-
-  def has_team_blog?
-    !blog_feed.blank?
   end
 
   def has_achievements?
@@ -758,17 +755,6 @@ class Team < ActiveRecord::Base
 
   def stack
     @stack_list ||= (self.stack_list || "").split(/,/)
-  end
-
-  def blog
-    unless self.blog_feed.blank?
-      feed = Feedjira::Feed.fetch_and_parse(self.blog_feed)
-      feed unless feed.is_a?(Fixnum)
-    end
-  end
-
-  def blog_posts
-    @blog_posts ||= blog.try(:entries) || []
   end
 
   def plan

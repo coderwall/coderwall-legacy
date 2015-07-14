@@ -1,0 +1,31 @@
+section#team-blog class=section_enabled_class(@team.has_team_blog?)
+  -unless @team.has_team_blog?
+    -inactive_box('#team-blog', "Team Blog") do
+      | Team Blog RSS Feed
+
+  -if can_edit?
+    -panel_form_for_section('#team-blog', "Team Blog RSS Feed.") do |f|
+      aside
+        -admin_hint do
+          | URL of your team blog rss/atom feed
+      .form-inputs
+        fieldset
+          =f.label      :blog_feed, 'RSS URL of your team blog'
+          =f.text_field :blog_feed
+
+  -cache ['teams', 'blogs', @team], :expires_in => 1.day do
+    -if @team.blog_posts.any?
+      header
+        h2 = "From the #{@team.name} blog"
+        .inside.cf
+          -@team.blog_posts.first(2).each_with_index do |entry, index|
+            article
+              .date style="background-color:#{@team.branding_hex_color}"
+                p =entry.published.try(:day) || (index+1).ordinalize
+                span
+                  =entry.published && entry.published.strftime("%b")
+              h3
+                =link_to entry.title,entry.url , class: '',style: "color:#{@team.branding_hex_color}", target: :new
+
+              p = blog_content(entry)
+                =link_to 'Read more',entry.url , class: 'read-more',style: "background-color:#{@team.branding_hex_color}", target: :new
