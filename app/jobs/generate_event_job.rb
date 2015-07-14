@@ -5,6 +5,7 @@ class GenerateEventJob
   sidekiq_options queue: :event_publisher
 
   def perform(event_type, audience, data, drip_rate=:immediately)
+    return
     data = HashWithIndifferentAccess.new(data)
     audience = HashWithIndifferentAccess.new(audience)
     if event_still_valid?(event_type, data)

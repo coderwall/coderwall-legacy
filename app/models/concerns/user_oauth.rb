@@ -1,42 +1,40 @@
 module UserOauth
   extend ActiveSupport::Concern
-  included do
-    def apply_oauth(oauth)
-      case oauth[:provider]
-        when 'github'
-          self.github           = oauth[:info][:nickname]
-          self.github_id        = oauth[:uid]
-          self.github_token     = oauth[:credentials][:token]
-          self.blog             = oauth[:info][:urls][:Blog] if oauth[:info][:urls] && self.blog.blank?
-          self.joined_github_on = extract_joined_on(oauth) if self.joined_github_on.blank?
-        when 'linkedin'
-          self.linkedin_id         = oauth[:uid]
-          self.linkedin_public_url = oauth[:info][:urls][:public_profile] if oauth[:info][:urls]
-          self.linkedin_token      = oauth[:credentials][:token]
-          self.linkedin_secret     = oauth[:credentials][:secret]
-        when 'twitter'
-          self.twitter           = oauth[:info][:nickname]
-          self.twitter_id        = oauth[:uid]
-          self.twitter_token     = oauth[:credentials][:token]
-          self.twitter_secret    = oauth[:credentials][:secret]
-          self.about             = extract_from_oauth_extras(:description, oauth) if self.about.blank?
-        when 'developer'
-          logger.debug "Using the Developer Strategy for OmniAuth"
-          logger.ap oauth, :debug
-        else
-          raise "Unexpected provider: #{oauth[:provider]}"
-      end
-    end
 
-    def extract_joined_on(oauth)
-      val = extract_from_oauth_extras(:created_at, oauth)
-      return Date.parse(val) if val
+  def apply_oauth(oauth)
+    case oauth[:provider]
+      when 'github'
+        self.github           = oauth[:info][:nickname]
+        self.github_id        = oauth[:uid]
+        self.github_token     = oauth[:credentials][:token]
+        self.blog             = oauth[:info][:urls][:Blog] if oauth[:info][:urls] && self.blog.blank?
+        self.joined_github_on = extract_joined_on(oauth) if self.joined_github_on.blank?
+      when 'linkedin'
+        self.linkedin_id         = oauth[:uid]
+        self.linkedin_public_url = oauth[:info][:urls][:public_profile] if oauth[:info][:urls]
+        self.linkedin_token      = oauth[:credentials][:token]
+        self.linkedin_secret     = oauth[:credentials][:secret]
+      when 'twitter'
+        self.twitter           = oauth[:info][:nickname]
+        self.twitter_id        = oauth[:uid]
+        self.twitter_token     = oauth[:credentials][:token]
+        self.twitter_secret    = oauth[:credentials][:secret]
+        self.about             = extract_from_oauth_extras(:description, oauth) if self.about.blank?
+      when 'developer'
+        logger.debug "Using the Developer Strategy for OmniAuth"
+        logger.ap oauth, :debug
+      else
+        raise "Unexpected provider: #{oauth[:provider]}"
     end
+  end
 
-    def extract_from_oauth_extras(field, oauth)
-      oauth[:extra][:raw_info][field] if oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][field]
-    end
+  def extract_joined_on(oauth)
+    val = extract_from_oauth_extras(:created_at, oauth)
+    return Date.parse(val) if val
+  end
 
+  def extract_from_oauth_extras(field, oauth)
+    oauth[:extra][:raw_info][field] if oauth[:extra] && oauth[:extra][:raw_info] && oauth[:extra][:raw_info][field]
   end
 
   module ClassMethods
@@ -91,10 +89,6 @@ module UserOauth
           oauth[:info][:image]
         end
       end
-    end
-
-    def all_tokens
-      with_tokens.pluck(:github_token)
     end
 
   end
