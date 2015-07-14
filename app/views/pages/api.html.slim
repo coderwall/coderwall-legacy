@@ -1,310 +1,304 @@
 -content_for :mixpanel do
   =record_view_event('API')
 
-%section{:id => "api"}
-  %h1.big-title API and Badge Hacks
+section id="api" 
+  h1.big-title API and Badge Hacks
 
 .panel.cf
-  %aside.questions
-    %ul.question-list
-      %li
-        %a{:href => "#profileapi"} Profile API
-      %li
-        %a{:href => "#blogbadge"} Blog Badge
-      %li
-        %a{:href => "#devhacks"} Mashups and hacks
+  aside.questions
+    ul.question-list
+      li =link_to 'Profile API', "#profileapi"
+      li =link_to 'Blog Badge', "#blogbadge"
+      li =link_to 'Mashups and hacks', "#devhacks"
 
-  %section.answers
-    %section{:id => "profileapi"}
-      %h2 Profile API
-      %p
-        Coderwall exposes a simple JSON representation of every profile. To access it, make an HTTP GET request to your profile URL (https://coderwall.com/username) but append <code>.json</code> to the end, like so:
+  section.answers
+    section id="profileapi" 
+      h2 Profile API
+      p
+        | Coderwall exposes a simple JSON representation of every profile. To access it, make an HTTP GET request to your profile URL (https://coderwall.com/username) but append <code>.json</code> to the end, like so:
 
-        %pre
-          $ curl https://coderwall.com/username.json
-      %p
-        :erb
-          If you'd like to use JSONP
-          (<%= link_to "what is JSONP?", "http://en.wikipedia.org/wiki/JSONP" %>)
-          instead, append a <code>callback</code> paramater to the end of your request:
+        pre
+          | $ curl https://coderwall.com/username.json
+      p
+        | If you'd like to use JSONP
+        | (<%= link_to "what is JSONP?", "http://en.wikipedia.org/wiki/JSONP" %>)
+        | instead, append a <code>callback</code> paramater to the end of your request:
 
-        %pre
-          $ curl https://coderwall.com/username.json?callback=someMethod
-      %p
-        Here's an example JSONP response:
-        :erb
-          <script src="https://gist.github.com/1100834.js?file=response.json"></script>
+        pre
+          | $ curl https://coderwall.com/username.json?callback=someMethod
+      p
+        | Here's an example JSONP response:
+        | <script src="https://gist.github.com/1100834.js?file=response.json"></script>
 
-    %section{:id => "blogbadge"}
-      %h2 Official blog badge
-      %p
-        If you'd like, you can add show off your achievements on your blog or personal site just by
-        including a little bit of code (jQuery-only at the moment). To integrate it, just include
-        the requisite JS and CSS on your blog or web page.
+    section id="blogbadge" 
+      h2 Official blog badge
+      p
+        | If you'd like, you can add show off your achievements on your blog or personal site just by
+        | including a little bit of code (jQuery-only at the moment). To integrate it, just include
+        | the requisite JS and CSS on your blog or web page.
 
-        :erb
-          <script src="https://gist.github.com/1585413.js?file=coderwall_badge_markup.html"></script>
+        |<script src="https://gist.github.com/1585413.js?file=coderwall_badge_markup.html"></script>
 
-      %p
-        The <code>data-coderwall-username</code> attribute is required in order for the script to figure
-        out whose badges to retrieve. <code>data-coderwall-orientation</code> is optional (default
-        is vertical) but it helps it make some styling choices depending on where you'd like to place
-        the widget.
+      p
+        | The <code>data-coderwall-username</code> attribute is required in order for the script to figure
+        | out whose badges to retrieve. <code>data-coderwall-orientation</code> is optional (default
+        | is vertical) but it helps it make some styling choices depending on where you'd like to place
+        | the widget.
 
-      %p
-        In this particular case, I've used a bit of CSS to get the badges placed in just the right spot:
+      p
+        | In this particular case, I've used a bit of CSS to get the badges placed in just the right spot:
 
-        :erb
-          <script src="https://gist.github.com/1585413.js?file=coderwall_badge_style.css"></script>
+        | <script src="https://gist.github.com/1585413.js?file=coderwall_badge_style.css"></script>
 
-    %section{:id => "devhacks"}
-      %a{:href => '#devhacks'}
-      %h2 Dev Hacks
-      %p
-        This is a showcase of the cool hacks and tools developers are building around Coderwall.
-        If you use coderwall in something you do, drop us a line at
+    section id="devhacks" 
+      =link_to '', "#devhacks"
+      h2 Dev Hacks
+      p
+        | This is a showcase of the cool hacks and tools developers are building around Coderwall.
+        | If you use coderwall in something you do, drop us a line at
         = mail_to('support@coderwall.com', 'support@coderwall.com')
-        or tell us about it
-        %a{:href => 'https://twitter.com/#!/coderwall'} on Twitter.
+        | or tell us about it
+        =link_to 'on Twitter.', 'https://twitter.com/#!/coderwall'
 
-      %ul
-        %li
-          %h4
+      ul
+        li
+          h4
             =link_to("Unofficial Coderwall iPhone app", "http://oinutter.github.com/Coderwall-iOS/", :target => :new)
-            by
+            | by
             =link_to('OiNutter', badge_path(:username => 'OiNutter'), :class => 'author')
-          %h5 iOS
+          h5 iOS
 
-      %ul
-        %li
-          %h4
+      ul
+        li
+          h4
             =link_to("Unofficial Coderwall Android app", "https://github.com/florianmski/Coderwall-Android", :target => :new)
-            by
+            | by
             =link_to('florianmski', badge_path(:username => 'florianmski'), :class => 'author')
-          %h5 Android
+          h5 Android
 
-        %li
-          %h4
+        li
+          h4
             =link_to('jQuery plugin to display team badges', 'http://amsul.github.com/coderwall.js')
-            by
+            | by
             =link_to('amsul', badge_path(:username => 'amsul'), :class => 'author')
-          %h5 jQuery coffeescript
+          h5 jQuery coffeescript
 
-        %li
-          %h4
+        li
+          h4
             =link_to('See what badges your missing', 'https://gist.github.com/2013594')
-            by
+            | by
             =link_to('marcinbunsch', badge_path(:username => 'marcinbunsch'), :class => 'author')
-          %h5 Javascript
-        %li
-          %h4
+          h5 Javascript
+
+        li
+          h4
             =link_to("Racket client for coderwall", "https://github.com/shawnps/coderwall-racket", :target => :new)
-            by
+            | by
             =link_to('shawnps', badge_path(:username => 'shawnps'), :class => 'author')
-          %h5 Racket
+          h5 Racket
 
-        %li
-          %h4
+        li
+          h4
             =link_to("Wordpress plugin to display coderwall badges on your blog.", "http://wordpress.org/extend/plugins/my-coderwall-badges", :target => :new)
-            by
+            | by
             =link_to('tpk', badge_path(:username => 'tpk'), :class => 'author')
-          %h5 Wordpress
+          h5 Wordpress
 
-        %li
-          %h4
+        li
+          h4
             =link_to("GO implementation of the Coderwall API.", "http://nickpresta.github.com/go-wall/", :target => :new)
-            by
+            | by
             =link_to('nickpresta', badge_path(:username => 'nickpresta'), :class => 'author')
-          %h5 Go
+          h5 Go
 
-        %li
-          %h4
+        li
+          h4
             =link_to('Redmine coderwall plugin', 'https://github.com/syntacticvexation/redmine_coderwall')
-            by
+            | by
             =link_to('syntacticvexation', badge_path(:username => 'syntacticvexation'), :class => 'author')
-          %h5 Ruby
+          h5 Ruby
 
-          %li
-            %h4
+          li
+            h4
               =link_to("C# Coderwall API client", "https://github.com/tomvdb/coderwall-csharp-wrapper")
-              by
+              | by
               =link_to('tomvdb', badge_path(:username => 'tomvdb'), :class => 'author')
-            %h5 API C#
-          %li
-            %h4
+            h5 API C#
+          li
+            h4
               =link_to('Achievement API used for Ashcat achievement', 'https://github.com/leereilly/octocoder')
-              by
+              | by
               =link_to('leereilly', badge_path(:username => 'leereilly'), :class => 'author')
-            %h5 Ruby REST
+            h5 Ruby REST
 
-          %li
-            %h4
+          li
+            h4
               =link_to('Coderwall Python client', 'https://github.com/cwc/coderwall-python')
-              by
+              | by
               =link_to('cwc', badge_path(:username => 'cwc'), :class => 'author')
-            %h5 Pythong
-          %li
-            %h4
+            h5 Pythong
+          li
+            h4
               =link_to("jQuery plugin to display your GitHub projects and Coderwall badges", "https://github.com/icebreaker/proudify", :target => :new)
-              by
+              | by
               =link_to('icebreaker', badge_path(:username => 'icebreaker'), :class => 'author')
-            %h5 Javascript jQuery
+            h5 Javascript jQuery
 
-          %li
-            %h4
+          li
+            h4
               =link_to('IRC coderwall bot', 'https://github.com/dev-co/ninja-bot/blob/bdb443cc6c46046a8bf4b0b03da468e78430f1b6/plugins/coderwall.rb', :target => :new)
-            %h5 IRC Ruby
+            h5 IRC Ruby
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Coderwall Badge Script for Blogs (or any other Web Page) - coffescript", "https://gist.github.com/1074399", :target => :new)
-              by
+              | by
               =link_to('kyoto', badge_path(:username => 'kyoto'), :class => 'author')
-            %h5 CoffeeScript
+            h5 CoffeeScript
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Coderwall Badge Script for Blogs (or any other Web Page) - jquery", "http://hermanjunge.com/post/6131651487/coderwall-badge-in-your-blog-d", :target => :new)
-              by
+              | by
               =link_to('hermanjunge', badge_path(:username => 'hermanjunge'), :class => 'author')
-            %h5 CoffeeScript
+            h5 CoffeeScript
 
-          %li
-            %h4
+          li
+            h4
               =link_to("HTML5 Coderwall Badge", "http://coderwall-widget.appspot.com/install/index.html", :target => :new)
-              by
+              | by
               =link_to('lp', badge_path(:username => 'lp'), :class => 'author')
-            %h5 HTML5 Javascript
+            h5 HTML5 Javascript
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Metabrag: jQuery plugin for showing off your GitHub and Coderwall stats", "https://github.com/mikaelbr/metabrag", :target => :new)
-              by
+              | by
               =link_to('mikaelbr', badge_path(:username => 'mikaelbr'), :class => 'author')
-            %h5 Javascript jQuery
+            h5 Javascript jQuery
 
-          %li
-            %h4
+          li
+            h4
               =link_to("jQuery plugin to get Coderwall badges", "https://github.com/adlermedrado/myCoderwall", :target => :new)
-              by
+              | by
               =link_to('adlermedrado', badge_path(:username => 'adlermedrado'), :class => 'author')
-            %h5 Javascript jQuery
+            h5 Javascript jQuery
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Ruby client for the coderwall API", "https://gist.github.com/1007591", :target => :new)
-              by
+              | by
               =link_to('v0n', badge_path(:username => 'v0n'), :class => 'author')
-            %h5 Ruby
+            h5 Ruby
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Another Ruby client for the coderwall API", "https://github.com/fidelisrafael/coderwall-ruby-api", :target => :new)
-              by
+              | by
               =link_to('fidelisrafael', badge_path(:username => 'fidelisrafael'), :class => 'author')
-            %h5 Ruby
+            h5 Ruby
 
-          %li
-            %h4
+          li
+            h4
               =link_to("A .NET client for for the coderwall API", "https://github.com/sergiotapia/CoderwallDotNet", :target => :new)
-              by
+              | by
               =link_to('sergiotapia', badge_path(:username => 'sergiotapia'), :class => 'author')
-            %h5 C#/.Net
+            h5 C#/.Net
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Java client for the coderwall API", "https://github.com/caseydunham/coderwall-java", :target => :new)
-              by
+              | by
               =link_to('caseydunham', badge_path(:username => 'caseydunham'), :class => 'author')
-            %h5 Java
+            h5 Java
 
-          %li
-            %h4
+          li
+            h4
               =link_to("PHP client for the coderwall API", "https://github.com/fredefl/coderwall-php", :target => :new)
-              by
+              | by
               =link_to('fredefl', badge_path(:username => 'fredefl'), :class => 'author')
-            %h5 PHP
+            h5 PHP
 
-          %li
-            %h4
+          li
+            h4
               =link_to("C client for the coderwall API", "http://maher4ever.github.com/libcoderwall", :target => :new)
-              by
+              | by
               =link_to('maher4ever', badge_path(:username => 'maher4ever'), :class => 'author')
-            %h5 C
+            h5 C
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Clojure client for the coderwall API", "https://github.com/vbauer/coderwall-clj", :target => :new)
-              by
+              | by
               =link_to('vbauer', badge_path(:username => 'vbauer'), :class => 'author')
-            %h5 Clojure
+            h5 Clojure
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Node and commandline client for the coderwall API", "https://github.com/StoneCypher/noderwall", :target => :new)
-              by
+              | by
               =link_to('johnhaugeland', badge_path(:username => 'johnhaugeland'), :class => 'author')
-            %h5 C
+            h5 C
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Command line client for coderwall", "https://github.com/lest/coderwall-cli", :target => :new)
-              by
+              | by
               =link_to('lest', badge_path(:username => 'lest'), :class => 'author')
-            %h5 CLI
+            h5 CLI
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Octopress plugin to show coderwall badges", "https://github.com/robertkowalski/octopress-coderwall", :target => :new)
-              by
+              | by
               =link_to('robertkowalski', badge_path(:username => 'robertkowalski'), :class => 'author')
-            %h5 plugin octopress
+            h5 plugin octopress
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Konami Code", "http://blog.bltavares.com/post/7910553226/coderwall-konami-code-bookmarklet", :target => :new)
-              by
+              | by
               =link_to('bltavares', badge_path(:username => 'bltavares'), :class => 'author')
-            %h5 Javascript
+            h5 Javascript
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Perl Interface for the coderwall API", "https://metacpan.org/module/WWW::Coderwall", :target => :new)
-              by
+              | by
               =link_to('robert', badge_path(:username => 'robert'), :class => 'author')
-            %h5 Perl
+            h5 Perl
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Badges Viewer for Android", "https://github.com/marti1125/CoderWall-Badges", :target => :new)
-              by
+              | by
               =link_to('marti1125', badge_path(:username => 'marti1125'), :class => 'author')
-            %h5 Phonegap
+            h5 Phonegap
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Display your Coderwall badges without using a library like jQuery", "https://gist.github.com/4109968", :target => :new)
-              by
+              | by
               =link_to('optikfluffel', badge_path(:username => 'optikfluffel'), :class => 'author')
-            %h5 CoffeeScript
+            h5 CoffeeScript
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Coderwall Badges Chrome Extension", "https://github.com/vinitcool76/coderwall-badges", :target => :new)
-              by
+              | by
               =link_to('vinitcool76', badge_path(:username => 'vinitcool76'), :class => 'author')
-            %h5 Javascript
+            h5 Javascript
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Coderwall Badges Chrome Extension (2)", "https://chrome.google.com/webstore/detail/coderwall-badges/dbdopkgkkmjlkepgekngaajkhajbkian", :target => :new)
-              by
+              | by
               =link_to('piperchester', badge_path(:username => 'piperchester'), :class => 'author')
-            %h5 Javascript
+            h5 Javascript
 
-          %li
-            %h4
+          li
+            h4
               =link_to("Hubot Coderwall", "https://github.com/bobwilliams/hubot-coderwall", :target => :new)
-              by
+              | by
               =link_to('bobwilliams', badge_path(:username => 'bobwilliams'), :class => 'author')
-            %h5 CoffeeScript
+            h5 CoffeeScript

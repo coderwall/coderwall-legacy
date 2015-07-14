@@ -1,5 +1,5 @@
 doctype html
-html.no-js  lang=I18n.locale
+html.no-js lang=I18n.locale
   head
     title= page_title(yield(:page_title))
     link rel= 'author' href= '/humans.txt'
@@ -11,10 +11,10 @@ html.no-js  lang=I18n.locale
     = stylesheet_link_tag 'application'
     = csrf_meta_tag
 
-    meta  content= page_description(yield(:page_description)) name= 'description'  property= 'og:description'
-    meta  content= page_keywords(yield(:page_keywords))  name= 'keywords'
+    meta content= page_description(yield(:page_description)) name= 'description'  property= 'og:description'
+    meta content= page_keywords(yield(:page_keywords))  name= 'keywords'
 
-    meta  name= 'twitter:account_id'  content= ENV['TWITTER_ACCOUNT_ID']
+    meta name= 'twitter:account_id'  content= ENV['TWITTER_ACCOUNT_ID']
     = metamagic
 
     = yield :head
@@ -27,7 +27,7 @@ html.no-js  lang=I18n.locale
           .notification-bar
             .notification-bar-inside class=(flash[:error].blank? ? 'notice' : 'error')
               p= flash[:notice] || flash[:error]
-              a.close-notification.remove-parent href= '/' data-parent = 'notification-bar'
+              =link_to '', '/', class: 'close-notification remove-parent', 'data-parent' => 'notification-bar'
                 span Close
         = yield :top_of_main_content
         .inside-main-content.cf= yield

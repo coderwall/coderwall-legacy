@@ -24,9 +24,9 @@ html.no-js lang=I18n.locale
     = yield
 
     - if current_user
-      #x-following-users.hide  data-users  = current_user.following_users.map(&:username)
-      #x-following-networks.hide data-networks = current_user.following_networks.map(&:slug)
-      #x-following-teams.hide data-teams = current_user.teams_being_followed.map(&:name)
+      #x-following-users.hide  data-users=current_user.following_users.map(&:username)
+      #x-following-networks.hide data-networks=current_user.following_networks.map(&:slug)
+      #x-following-teams.hide data-teams=current_user.teams_being_followed.map(&:name)
 
     - unless is_admin?
       javascript:
