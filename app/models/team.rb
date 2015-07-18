@@ -88,14 +88,14 @@ class Team < ActiveRecord::Base
 
   mount_uploader :avatar, TeamUploader
 
-  has_many :invitations, dependent: :delete_all
+  has_many :invitations
   has_many :opportunities, dependent: :destroy
   has_many :followers, through: :follows, source: :team
   has_many :follows,   class_name: 'FollowedTeam',    foreign_key: 'team_id', dependent: :destroy
   has_many :jobs,      class_name: 'Opportunity',     foreign_key: 'team_id', dependent: :destroy
-  has_many :links,     class_name: 'Teams::Link',     foreign_key: 'team_id', dependent: :delete_all
-  has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id', dependent: :delete_all
-  has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id', dependent: :delete_all
+  has_many :links,     class_name: 'Teams::Link',     foreign_key: 'team_id'
+  has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id'
+  has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id'
   def admins
     members.admins
   end
@@ -105,7 +105,7 @@ class Team < ActiveRecord::Base
     member_accounts.where("teams_members.role = 'admin'")
   end
 
-  has_one :account,    class_name: 'Teams::Account',  foreign_key: 'team_id', dependent: :delete
+  has_one :account,    class_name: 'Teams::Account',  foreign_key: 'team_id'
 
   accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank
 

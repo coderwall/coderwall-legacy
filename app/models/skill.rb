@@ -24,7 +24,7 @@ class Skill < ActiveRecord::Base
   BLANK = ''
 
   belongs_to :user
-  has_many :endorsements, dependent: :delete_all
+  has_many :endorsements
 
   validates_presence_of :tokenized
   validates_presence_of :user_id

@@ -51,7 +51,6 @@
 #  linkedin_secret               :string(255)
 #  last_email_sent               :datetime
 #  linkedin_public_url           :string(255)
-#  redemptions                   :text
 #  endorsements_count            :integer          default(0)
 #  team_document_id              :string(255)
 #  speakerdeck                   :string(255)
@@ -68,7 +67,6 @@
 #  tracking_code                 :string(255)
 #  utm_campaign                  :string(255)
 #  score_cache                   :float            default(0.0)
-#  gender                        :string(255)
 #  notify_on_follow              :boolean          default(TRUE)
 #  api_key                       :string(255)
 #  remind_to_create_team         :datetime
@@ -104,6 +102,7 @@
 #  last_ip                       :string(255)
 #  last_ua                       :string(255)
 #  team_id                       :integer
+#  role                          :string(255)      default("user")
 #
 
 Fabricator(:user, from: 'User') do

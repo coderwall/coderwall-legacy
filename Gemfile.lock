@@ -267,6 +267,8 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
+    foreigner (1.7.4)
+      activerecord (>= 3.0.0)
     foreman (0.78.0)
       thor (~> 0.19.1)
     formatador (0.2.5)
@@ -715,6 +717,7 @@ DEPENDENCIES
   ffaker!
   flog!
   fog!
+  foreigner!
   foreman!
   friendly_id (= 4.0.10.1)!
   fukuzatsu!

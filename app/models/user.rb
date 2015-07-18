@@ -51,7 +51,6 @@
 #  linkedin_secret               :string(255)
 #  last_email_sent               :datetime
 #  linkedin_public_url           :string(255)
-#  redemptions                   :text
 #  endorsements_count            :integer          default(0)
 #  team_document_id              :string(255)
 #  speakerdeck                   :string(255)
@@ -68,7 +67,6 @@
 #  tracking_code                 :string(255)
 #  utm_campaign                  :string(255)
 #  score_cache                   :float            default(0.0)
-#  gender                        :string(255)
 #  notify_on_follow              :boolean          default(TRUE)
 #  api_key                       :string(255)
 #  remind_to_create_team         :datetime
@@ -104,6 +102,7 @@
 #  last_ip                       :string(255)
 #  last_ua                       :string(255)
 #  team_id                       :integer
+#  role                          :string(255)      default("user")
 #
 
 require 'net_validators'
@@ -175,15 +174,15 @@ class User < ActiveRecord::Base
   validates_presence_of :location
   validates :email, email: true, if: :not_active?
 
-  has_many :badges, order: 'created_at DESC', dependent: :delete_all
-  has_many :followed_teams, dependent: :delete_all
+  has_many :badges, order: 'created_at DESC'
+  has_many :followed_teams
   has_many :user_events
-  has_many :skills, order: "weight DESC", dependent: :delete_all
-  has_many :endorsements, foreign_key: 'endorsed_user_id', dependent: :delete_all
-  has_many :endorsings, foreign_key: 'endorsing_user_id', class_name: Endorsement.name, dependent: :delete_all
-  has_many :protips, dependent: :delete_all
+  has_many :skills, order: "weight DESC"
+  has_many :endorsements, foreign_key: 'endorsed_user_id'
+  has_many :endorsings, foreign_key: 'endorsing_user_id', class_name: 'Endorsement'
+  has_many :protips
   has_many :likes
-  has_many :comments, dependent: :delete_all
+  has_many :comments
 
   has_one :github_profile  , class_name: 'Users::Github::Profile', dependent: :destroy
   has_many :github_repositories, through: :github_profile , source: :repositories

@@ -24,7 +24,7 @@ module Users
     class Profile < ActiveRecord::Base
       belongs_to :user
       has_many :followers, class_name: 'Users::Github::Profiles::Follower',
-        foreign_key: :follower_id  , dependent: :delete_all
+        foreign_key: :follower_id
       has_many :repositories, class_name: 'Users::Github::Repository',
         foreign_key: :owner_id
       validates :github_id  , presence: true, uniqueness: true

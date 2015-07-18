@@ -122,6 +122,7 @@ source 'https://rubygems.org' do
   gem 'strong_parameters'
   gem 'postgres_ext'
   gem 'test-unit'
+  gem 'foreigner'
 
 # ElasticSearch client
   gem 'tire'

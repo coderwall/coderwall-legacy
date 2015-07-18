@@ -12,6 +12,7 @@
 #  relevant_on :datetime
 #  created_at  :datetime
 #  updated_at  :datetime
+#  user_id     :integer
 #
 
 class Fact < ActiveRecord::Base
