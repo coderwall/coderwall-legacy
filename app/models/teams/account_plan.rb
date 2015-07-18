@@ -4,6 +4,9 @@
 #
 #  plan_id    :integer
 #  account_id :integer
+#  id         :integer          not null, primary key
+#  state      :string(255)      default("active")
+#  expire_at  :datetime
 #
 
 class Teams::AccountPlan < ActiveRecord::Base

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150718093835) do
+ActiveRecord::Schema.define(:version => 20150718141045) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -337,7 +337,6 @@ ActiveRecord::Schema.define(:version => 20150718093835) do
     t.text     "organization_way"
     t.text     "organization_way_name"
     t.text     "organization_way_photo"
-    t.string   "featured_links_title"
     t.text     "blog_feed"
     t.text     "our_challenge"
     t.text     "your_impact"
@@ -365,9 +364,11 @@ ActiveRecord::Schema.define(:version => 20150718093835) do
     t.string   "state",                                                    :default => "active"
   end
 
-  create_table "teams_account_plans", :id => false, :force => true do |t|
-    t.integer "plan_id"
-    t.integer "account_id"
+  create_table "teams_account_plans", :force => true do |t|
+    t.integer  "plan_id"
+    t.integer  "account_id"
+    t.string   "state",      :default => "active"
+    t.datetime "expire_at"
   end
 
   create_table "teams_accounts", :force => true do |t|
@@ -376,16 +377,6 @@ ActiveRecord::Schema.define(:version => 20150718093835) do
     t.datetime "updated_at",            :null => false
     t.string   "stripe_card_token",     :null => false
     t.string   "stripe_customer_token", :null => false
-    t.integer  "admin_id",              :null => false
-    t.datetime "trial_end"
-  end
-
-  create_table "teams_links", :force => true do |t|
-    t.string   "name"
-    t.text     "url"
-    t.integer  "team_id",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "teams_locations", :force => true do |t|
@@ -653,9 +644,6 @@ ActiveRecord::Schema.define(:version => 20150718093835) do
   add_foreign_key "teams_account_plans", "teams_accounts", name: "teams_account_plans_account_id_fk", column: "account_id"
 
   add_foreign_key "teams_accounts", "teams", name: "teams_accounts_team_id_fk", dependent: :delete
-  add_foreign_key "teams_accounts", "users", name: "teams_accounts_admin_id_fk", column: "admin_id"
-
-  add_foreign_key "teams_links", "teams", name: "teams_links_team_id_fk", dependent: :delete
 
   add_foreign_key "teams_locations", "teams", name: "teams_locations_team_id_fk", dependent: :delete
 

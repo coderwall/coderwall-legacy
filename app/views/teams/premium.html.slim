@@ -28,7 +28,7 @@
   ="Team #{@team.name} : coderwall.com"
 
 =content_for :head do
-  %link{:rel => 'canonical', :href => friendly_team_path(@team)}
+  link rel='canonical' href=friendly_team_path(@team) 
 
 =content_for :body_id do
   = admin_of_team? ? "prem-team" : "signed-out"
@@ -42,37 +42,34 @@
     = render(partial: 'new_relic')
 
 -if can_see_analytics?
-  %ul.legend
-    %li.team-visitors
+  ul.legend
+    li.team-visitors
       =link_to 'Visitors', visitors_team_path(@team)
     -if is_admin? && @team.account
-      %li.send-invoice
+      li.send-invoice
         =link_to 'Send Invoice', send_invoice_team_account_path(@team), :method => :post
 
 - if admin_of_team?
   .admin-bar.cf
     .alert
       -unless @team.has_specified_enough_info?
-        %p Your team profile is incomplete. You need to fill out at least 6 sections before you can post a job
+        p Your team profile is incomplete. You need to fill out at least 6 sections before you can post a job
     .actions
       =mail_to('', 'Invite team members', :body => invite_to_team_message(@team), :subject => "You've been invited to team #{@team.name}", :class => 'edit track', 'data-action' => 'invite team members', 'data-from' => 'team admin bar')
-      /give a class of 'done' when in edit mode - turns green
+      /!give a class of 'done' when in edit mode - turns green
       -if can_edit?
-        %a.edit{:href => teamname_path(@team.slug)}
-          Preview
+        =link_to 'Preview',teamname_path(@team.slug) , class: 'edit'
       -else
-        %a.edit{:href => teamname_edit_path(@team.slug)}
-          Edit
-      %a.add-job{:href => add_job_path(@team), :class => add_job_class}
-        Add job
+        =link_to 'Edit', teamname_edit_path(@team.slug), class: 'edit'
+      =link_to 'Add job',add_job_path(@team) , class: 'add-job ',class:add_job_class
 
   - requested_membership = @team.pending_join_requests.map{|user_id| User.find(user_id)}.compact
   - unless requested_membership.empty?
     .requested-members
-      %h3 Requested team members
-      %ul.requested-members-list.cf
+      h3 Requested team members
+      ul.requested-members-list.cf
         - requested_membership.each do |potential_team_member|
-          %li{:id => "join_#{potential_team_member.id}"}
+          li id="join_#{potential_team_member.id}" 
             =link_to(profile_path(potential_team_member.username), :class => "member") do
               = users_image_tag(potential_team_member, :title => potential_team_member.display_name)
               = potential_team_member.display_name
@@ -83,26 +80,26 @@
   =render partial: "/teams/jobs", locals: {job: @job}
 
 .page
-  #record-exit-path{'data-record-path' => record_exit_team_path(@team)}
-  #furthest-scrolled{'data-section' => nil, 'data-time-spent' => 0}
+  #record-exit-path 'data-record-path' => record_exit_team_path(@team) 
+  #furthest-scrolled 'data-section' => nil, 'data-time-spent' => 0 
 
-  %header.team-header.cf{:style => "background-color:#{@team.branding_hex_color}"}
+  header.team-header.cf style="background-color:#{@team.branding_hex_color}" 
     .team-logo=image_tag(@team.avatar_url, :width => '104', :height => '104', :class => 'team-page-avatar')
-    %h1=@team.name
+    h1=@team.name
     = follow_team_link(@team)
 
     = team_connections_links(@team)
 
   -if @team.has_open_positions?
     .join-us-banner
-      %p
-        %span
+      p
+        span
         =hiring_tagline_or_default(@team)
         =link_to('View jobs', '#jobs', :class => 'view-jobs')
 
-  =render :partial => 'team_details'
-  =render :partial => 'team_members'
-  %section#about-members.single-member.about-members.cf
+  =render 'team_details'
+  =render 'team_members'
+  section#about-members.single-member.about-members.cf
     - first_member =  @team.sorted_team_members.first
     - unless first_member.nil?
       =render :partial => 'member_expanded', object: first_member, :locals => {:show_avatar => (@team.sorted_team_members.count == 1)}
@@ -110,55 +107,47 @@
   -cache ['v1', 'team-top-sections', @team, can_edit?] do
 
     -if @team.has_big_headline? || can_edit?
-      =render :partial => 'big_headline'
+      =render 'big_headline'
 
     -if @team.has_big_quote? || can_edit?
-      =render :partial => 'big_quote'
+      =render 'big_quote'
 
     -unless @team.youtube_url.blank?
-      %section#video
-        %iframe{:width => '100%', :height => '600px', :src => @team.video_url, :frameborder => "0", :allowfullscreen=>true}
+      section#video
+        iframe width='100%' height='600px' src=@team.video_url frameborder="0" allowfullscreen=true 
 
     -if @team.has_challenges? || can_edit?
-      =render :partial => 'challenges'
+      =render 'challenges'
 
     -if @team.has_favourite_benefits? || can_edit?
-      =render :partial => 'favourite_benefits'
+      =render 'favourite_benefits'
 
     -if @team.has_organization_style? || can_edit?
-      =render :partial => 'organization_style'
+      =render 'organization_style'
 
     -if @team.has_office_images? || can_edit?
-      =render :partial => 'office_images'
+      =render 'office_images'
 
   -if @team.has_stack? || can_edit?
-    =render :partial => 'stack'
+    =render 'stack'
 
-
-  / -cache ['v1', 'team-bottom-sections', @team, can_edit?] do
   -if @team.has_why_work? || can_edit?
-    =render :partial => 'why_work'
+    =render 'why_work'
 
   -if @team.has_interview_steps? || can_edit?
-    =render :partial => 'interview_steps'
+    =render 'interview_steps'
 
   -if @team.has_team_blog? || can_edit?
-    =render :partial => 'team_blog'
+    =render 'team_blog'
 
   -if @team.has_locations? || can_edit?
-    =render :partial => 'locations'
-
-  -if @team.has_featured_links? #|| can_edit?
-    =render :partial => 'featured_links'
-
-  / -if @team.has_upcoming_events? || can_edit?
-  /   =render :partial => 'meet_us'
+    =render 'locations'
 
   -if @team.has_protips?
-    =render :partial => 'protips'
+    =render 'protips'
 
 
-  %footer.page-footer
-    %p.watermark=@team.name
+  footer.page-footer
+    p.watermark=@team.name
 
 #dimmer

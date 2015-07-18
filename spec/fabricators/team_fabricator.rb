@@ -44,7 +44,6 @@
 #  organization_way         :text
 #  organization_way_name    :text
 #  organization_way_photo   :text
-#  featured_links_title     :string(255)
 #  blog_feed                :text
 #  our_challenge            :text
 #  your_impact              :text

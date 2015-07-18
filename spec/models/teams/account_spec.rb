@@ -1,4 +1,5 @@
 # == Schema Information
+# == Schema Information
 #
 # Table name: teams_accounts
 #
@@ -8,8 +9,6 @@
 #  updated_at            :datetime         not null
 #  stripe_card_token     :string(255)      not null
 #  stripe_customer_token :string(255)      not null
-#  admin_id              :integer          not null
-#  trial_end             :datetime
 #
 
 require 'vcr_helper'
@@ -17,13 +16,6 @@ require 'vcr_helper'
 RSpec.describe Teams::Account, type: :model do
   let(:team) { Fabricate(:team, account: nil) }
   let(:account) { { stripe_card_token: new_token } }
-
-  let(:admin) do
-    user = Fabricate(:user, team_id: team.id.to_s)
-    team.admins << user.id
-    team.save
-    user
-  end
 
   before(:all) do
     url = 'http://maps.googleapis.com/maps/api/geocode/json?address=San+Francisco%2C+CA&language=en&sensor=false'
@@ -47,10 +39,8 @@ RSpec.describe Teams::Account, type: :model do
 
         expect(team.account).to be_nil
         team.build_account(account)
-        team.account.admin_id = admin.id
         team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
         team.account.save_with_payment
-        team.account.save
         team.reload
         expect(team.account.stripe_card_token).to eq(account[:stripe_card_token])
         expect(team.account.stripe_customer_token).not_to be_nil
@@ -64,11 +54,8 @@ RSpec.describe Teams::Account, type: :model do
       VCR.use_cassette('Account') do
 
         team.build_account(account)
-        some_random_user = Fabricate(:user)
-        team.account.admin_id = some_random_user.id
         team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
         team.account.save_with_payment
-        team.account.save!
         team.reload
         expect(team.account).not_to be_nil
 
@@ -85,7 +72,6 @@ RSpec.describe Teams::Account, type: :model do
 
         account[:stripe_card_token] = 'invalid'
         team.build_account(account)
-        team.account.admin_id = admin.id
         team.account.save_with_payment
         team.reload
         expect(team.account).to be_nil
@@ -99,10 +85,8 @@ RSpec.describe Teams::Account, type: :model do
 
         some_random_user = Fabricate(:user)
         account[:stripe_customer_token] = 'invalid_customer_token'
-        account[:admin_id] = some_random_user.id
         team.build_account(account)
         expect(team.account.stripe_customer_token).to be_nil
-        expect(team.account.admin_id).to be_nil
       end
     end
   end
@@ -119,7 +103,6 @@ RSpec.describe Teams::Account, type: :model do
           team.build_account(account)
         end
 
-        team.account.admin_id = admin.id
         team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
 
         VCR.use_cassette('Account') do
@@ -192,10 +175,8 @@ RSpec.describe Teams::Account, type: :model do
         VCR.use_cassette('Account') do
           expect(team.account).to be_nil
           team.build_account(account)
-          team.account.admin_id = admin.id
           team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
           team.account.save_with_payment
-          team.account.save
           team.account.subscribe_to!(monthly_plan)
           team.reload
         end
@@ -229,10 +210,8 @@ RSpec.describe Teams::Account, type: :model do
         VCR.use_cassette('Account') do
           expect(team.account).to be_nil
           team.build_account(account)
-          team.account.admin_id = admin.id
           team.account.stripe_customer_token = "cus_4TNdkc92GIWGvM"
           team.account.save_with_payment(onetime_plan)
-          team.account.save
           team.reload
         end
       end

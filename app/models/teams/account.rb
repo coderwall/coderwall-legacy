@@ -8,29 +8,26 @@
 #  updated_at            :datetime         not null
 #  stripe_card_token     :string(255)      not null
 #  stripe_customer_token :string(255)      not null
-#  admin_id              :integer          not null
-#  trial_end             :datetime
 #
 
 class Teams::Account < ActiveRecord::Base
   belongs_to :team, class_name: 'Team', foreign_key: 'team_id'
   has_many :account_plans, :class_name => 'Teams::AccountPlan'
   has_many :plans, through: :account_plans
-  belongs_to :admin, class_name: 'User'
 
   validates_presence_of :stripe_card_token
   validates_presence_of :stripe_customer_token
   validates :team_id, presence: true, uniqueness: true
 
-  attr_protected :stripe_customer_token, :admin_id
+  attr_protected :stripe_customer_token
 
   def subscribe_to!(plan, force=false)
     self.plan_ids = [plan.id]
     if force || update_on_stripe(plan)
       update_job_post_budget(plan)
-      self.team.premium     = true unless plan.free?
-      self.team.analytics   = plan.analytics
-      self.team.upgraded_at = Time.now
+      team.premium     = true unless plan.free?
+      team.analytics   = plan.analytics
+      team.upgraded_at = Time.now
     end
     team.save!
   end
@@ -57,8 +54,8 @@ class Teams::Account < ActiveRecord::Base
     Stripe::Customer.retrieve(self.stripe_customer_token)
   end
 
-  def admin
-    User.find(self.admin_id)
+  def admins
+    team.admins
   end
 
   def create_customer
@@ -67,10 +64,10 @@ class Teams::Account < ActiveRecord::Base
   end
 
   def find_or_create_customer
-    if self.stripe_customer_token
+    if stripe_customer_token.present?
       customer
     else
-      Stripe::Customer.create(description: "#{admin.email} for #{self.team.name}", card: stripe_card_token)
+      Stripe::Customer.create(description: "#{team.name} : #{team_id} ", card: stripe_card_token)
     end
   end
 
@@ -83,7 +80,7 @@ class Teams::Account < ActiveRecord::Base
   end
 
   def update_subscription_on_stripe!(plan)
-    customer && customer.update_subscription(plan: plan.stripe_plan_id, trial_end: self.trial_end)
+    customer && customer.update_subscription(plan: plan.stripe_plan_id)
   end
 
   def charge_on_stripe!(plan)
@@ -146,6 +143,6 @@ class Teams::Account < ActiveRecord::Base
   end
 
   def current_plan
-    Plan.find(self.plan_ids.first) unless self.plan_ids.blank?
+    plans.first
   end
 end

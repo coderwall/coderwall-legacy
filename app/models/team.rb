@@ -44,7 +44,6 @@
 #  organization_way         :text
 #  organization_way_name    :text
 #  organization_way_photo   :text
-#  featured_links_title     :string(255)
 #  blog_feed                :text
 #  our_challenge            :text
 #  your_impact              :text
@@ -93,7 +92,6 @@ class Team < ActiveRecord::Base
   has_many :followers, through: :follows, source: :team
   has_many :follows,   class_name: 'FollowedTeam',    foreign_key: 'team_id', dependent: :destroy
   has_many :jobs,      class_name: 'Opportunity',     foreign_key: 'team_id', dependent: :destroy
-  has_many :links,     class_name: 'Teams::Link',     foreign_key: 'team_id'
   has_many :locations, class_name: 'Teams::Location', foreign_key: 'team_id'
   has_many :members,   class_name: 'Teams::Member',   foreign_key: 'team_id'
   def admins
@@ -107,7 +105,7 @@ class Team < ActiveRecord::Base
 
   has_one :account,    class_name: 'Teams::Account',  foreign_key: 'team_id'
 
-  accepts_nested_attributes_for :locations, :links, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :locations, allow_destroy: true, reject_if: :all_blank
 
   before_validation :create_slug!
   before_validation :fix_website_url!
@@ -123,10 +121,6 @@ class Team < ActiveRecord::Base
 
   def top_three_team_members
     members.first(3)
-  end
-
-  def featured_links
-    links
   end
 
   def sorted_team_members
@@ -394,10 +388,6 @@ class Team < ActiveRecord::Base
 
   def has_locations?
     !locations.blank?
-  end
-
-  def has_featured_links?
-    !featured_links.blank?
   end
 
   def has_upcoming_events?

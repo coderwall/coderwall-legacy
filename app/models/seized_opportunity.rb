@@ -12,5 +12,6 @@
 class SeizedOpportunity < ActiveRecord::Base
   belongs_to :opportunity
   belongs_to :user
+  validates_presence_of :opportunity_id, :user_id
   validates_uniqueness_of :user_id, scope: :opportunity_id
 end

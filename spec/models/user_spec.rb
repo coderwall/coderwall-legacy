@@ -111,10 +111,6 @@ RSpec.describe User, type: :model do
   it { is_expected.to have_one :github_profile }
   it { is_expected.to have_many :github_repositories }
 
-  before :each do
-    User.destroy_all
-  end
-
   describe 'validation' do
     it 'should not allow a username in the reserved list' do
       User::RESERVED.each do |reserved|
@@ -166,11 +162,16 @@ RSpec.describe User, type: :model do
     end
 
     it 'should find users ignoring case' do
-      user = Fabricate(:user, username: 'MDEITERS', twitter: 'MDEITERS', github: 'MDEITERS', linkedin: 'MDEITERS')
-      expect(User.find_by_provider_username('mdeiters', '')).to eq(user)
-      expect(User.find_by_provider_username('mdeiters', "twitter")).to eq(user)
-      expect(User.find_by_provider_username('mdeiters', "github")).to eq(user)
-      expect(User.find_by_provider_username('mdeiters', "linkedin")).to eq(user)
+      user = Fabricate(:user) do
+        username FFaker::Internet.user_name.upcase
+        twitter FFaker::Internet.user_name.upcase
+        github FFaker::Internet.user_name.upcase
+        linkedin FFaker::Internet.user_name.upcase
+      end
+      expect(User.find_by_provider_username(user.username.downcase, '')).to eq(user)
+      expect(User.find_by_provider_username(user.twitter.downcase, 'twitter')).to eq(user)
+      expect(User.find_by_provider_username(user.github.downcase, 'github')).to eq(user)
+      expect(User.find_by_provider_username(user.linkedin.downcase, 'linkedin')).to eq(user)
     end
   end
 

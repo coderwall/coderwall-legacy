@@ -44,7 +44,6 @@
 #  organization_way         :text
 #  organization_way_name    :text
 #  organization_way_photo   :text
-#  featured_links_title     :string(255)
 #  blog_feed                :text
 #  our_challenge            :text
 #  your_impact              :text
@@ -80,7 +79,6 @@ RSpec.describe Team, type: :model do
 
   it { is_expected.to have_one :account }
   it { is_expected.to have_many :locations }
-  it { is_expected.to have_many :links }
   it { is_expected.to have_many :members }
   it { is_expected.to have_many :jobs }
   it { is_expected.to have_many :followers }
@@ -160,11 +158,6 @@ RSpec.describe Team, type: :model do
     team.name = 'something-else'
     team.save!
     expect(Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY)).to eq('test')
-  end
-
-  it 'should be able to add team link' do
-    team.links.create(name: 'Google', url: 'http://www.google.com')
-    expect(team.featured_links.size).to eq(1)
   end
 
   def seed_plans!(reset = false)
