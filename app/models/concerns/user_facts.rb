@@ -71,8 +71,8 @@ module UserFacts
   def build_github_facts(since=Time.at(0))
     Rails.logger.info("[FACTS] Building GitHub facts for #{username}")
     begin
-      if github_identity && github_failures == 0
-        GithubProfile.for_username(github, since).facts
+      if github_profile.present?
+        github_profile.update_facts!
         Rails.logger.info("[FACTS] Processed GitHub facts for #{username}")
       else
         Rails.logger.info("[FACTS] Skipped GitHub facts for #{username}")

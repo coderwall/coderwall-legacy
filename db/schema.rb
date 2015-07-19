@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150719111620) do
+ActiveRecord::Schema.define(:version => 20150719222345) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -622,8 +622,8 @@ ActiveRecord::Schema.define(:version => 20150719111620) do
   add_foreign_key "network_hierarchies", "networks", name: "network_hierarchies_ancestor_id_fk", column: "ancestor_id"
   add_foreign_key "network_hierarchies", "networks", name: "network_hierarchies_descendant_id_fk", column: "descendant_id"
 
-  add_foreign_key "network_protips", "networks", name: "network_protips_network_id_fk"
-  add_foreign_key "network_protips", "protips", name: "network_protips_protip_id_fk"
+  add_foreign_key "network_protips", "networks", name: "network_protips_network_id_fk", dependent: :delete
+  add_foreign_key "network_protips", "protips", name: "network_protips_protip_id_fk", dependent: :delete
 
   add_foreign_key "networks", "networks", name: "networks_parent_id_fk", column: "parent_id"
 

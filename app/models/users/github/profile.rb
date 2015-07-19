@@ -27,10 +27,14 @@ module Users
         foreign_key: :follower_id
       has_many :repositories, class_name: 'Users::Github::Repository',
         foreign_key: :owner_id
-      validates :github_id  , presence: true, uniqueness: true
+      validates :github_id, presence: true, uniqueness: true
       before_validation :copy_login_from_user,  on: :create
       after_create :extract_data_from_github
 
+
+      def update_facts!
+        #TODO
+      end
 
       private
 
