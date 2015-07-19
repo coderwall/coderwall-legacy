@@ -39,9 +39,13 @@ class Comment < ActiveRecord::Base
 
   validates :comment, length: { minimum: 2 }
 
-  def self.latest_comments_as_strings(count=5)
-    Comment.unscoped.order("created_at DESC").limit(count).collect do |comment|
-      "#{comment.comment} - http://coderwall.com/p/#{comment.commentable.try(:public_id)}"
+  state_machine initial: :active do
+    event :report_spam do
+      transition active: :reported
+    end
+
+    event :mark_as_spam do
+      transition any => :spam
     end
   end
 

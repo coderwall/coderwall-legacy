@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150718141045) do
+ActiveRecord::Schema.define(:version => 20150719111620) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -35,21 +35,23 @@ ActiveRecord::Schema.define(:version => 20150718141045) do
   add_index "badges", ["user_id"], :name => "index_badges_on_user_id"
 
   create_table "comments", :force => true do |t|
-    t.string   "title",             :limit => 50, :default => ""
-    t.text     "comment",                         :default => ""
+    t.string   "title",              :limit => 50, :default => ""
+    t.text     "comment",                          :default => ""
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "user_id"
-    t.integer  "likes_cache",                     :default => 0
-    t.integer  "likes_value_cache",               :default => 0
+    t.integer  "likes_cache",                      :default => 0
+    t.integer  "likes_value_cache",                :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "likes_count",                     :default => 0
+    t.integer  "likes_count",                      :default => 0
     t.string   "user_name"
     t.string   "user_email"
     t.string   "user_agent"
     t.inet     "user_ip"
     t.string   "request_format"
+    t.integer  "spam_reports_count",               :default => 0
+    t.string   "state",                            :default => "active"
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
@@ -222,15 +224,17 @@ ActiveRecord::Schema.define(:version => 20150718141045) do
     t.string   "created_by",          :default => "self"
     t.boolean  "featured",            :default => false
     t.datetime "featured_at"
-    t.integer  "upvotes_value_cache", :default => 0,      :null => false
+    t.integer  "upvotes_value_cache", :default => 0,        :null => false
     t.float    "boost_factor",        :default => 1.0
     t.integer  "inappropriate",       :default => 0
     t.integer  "likes_count",         :default => 0
-    t.string   "slug",                                    :null => false
+    t.string   "slug",                                      :null => false
     t.string   "user_name"
     t.string   "user_email"
     t.string   "user_agent"
     t.inet     "user_ip"
+    t.integer  "spam_reports_count",  :default => 0
+    t.string   "state",               :default => "active"
   end
 
   add_index "protips", ["public_id"], :name => "index_protips_on_public_id"

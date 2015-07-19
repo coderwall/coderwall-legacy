@@ -123,6 +123,7 @@ source 'https://rubygems.org' do
   gem 'postgres_ext'
   gem 'test-unit'
   gem 'foreigner'
+  gem 'state_machine'
 
 # ElasticSearch client
   gem 'tire'
@@ -138,6 +139,7 @@ source 'https://rubygems.org' do
     gem 'rubocop'
     gem 'spring'
     gem 'spring-commands-rspec'
+    gem 'pry-rails' #better console
   end
 
   group :development, :test do

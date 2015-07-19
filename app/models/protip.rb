@@ -123,8 +123,18 @@ class Protip < ActiveRecord::Base
   scope :for_topic, ->(topic) { any_topics([topic]) }
 
   scope :with_upvotes, joins("INNER JOIN (#{Like.select('likable_id, SUM(likes.value) as upvotes').where(likable_type: 'Protip').group([:likable_type, :likable_id]).to_sql}) AS upvote_scores ON upvote_scores.likable_id=protips.id")
-  scope :trending, order('score DESC')
-  scope :flagged, where(flagged: true)
+  scope :trending, -> {order(:score).reverse_order}
+  scope :flagged, -> { where(state: :reported) }
+
+  state_machine initial: :active do
+    event :report_spam do
+      transition active: :reported
+    end
+
+    event :mark_as_spam do
+      transition any => :spam
+    end
+  end
 
   class << self
 
