@@ -50,6 +50,7 @@ class Protip < ActiveRecord::Base
   include SpamFilter
 
   include ProtipNetworkable
+  include ProtipOwnership
 
   paginates_per(PAGESIZE = 18)
 
