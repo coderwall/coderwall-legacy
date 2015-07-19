@@ -41,11 +41,11 @@ class Comment < ActiveRecord::Base
 
   state_machine initial: :active do
     event :report_spam do
-      transition active: :reported
+      transition active: :reported_as_spam
     end
 
     event :mark_as_spam do
-      transition any => :spam
+      transition any => :marked_as_spam
     end
   end
 
