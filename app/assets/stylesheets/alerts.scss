@@ -1,0 +1,14 @@
+ul.alerts {
+  li {
+    display: table-row;
+
+    .type, .data, .when {
+      float: left;
+      padding-left: 10px;
+      min-width: 100px;
+      span {
+        padding-left: 10px;
+      }
+    }
+  }
+}

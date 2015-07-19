@@ -106,7 +106,7 @@ h4 {
     line-height: 50px;
     margin-left: 30px;
     &:first-child {
-      margin: 0px;
+      margin: 0;
     }
   }
   i {
@@ -423,7 +423,7 @@ h4 {
   }
 }
 
-@import "profile", "connections", "protip", "networks", "admin";
+@import "profile", "connections", "protip", "networks", "alerts";
 body#sign-in {
   #main-content {
     background: image-url("black-texture.jpg") repeat;
@@ -673,7 +673,7 @@ body#member-settings, body#team-settings, body#join-team, body#registration {
   #basic_section {
     img {
       border: 5px solid #fff;
-      box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.1);
       margin-bottom: 15px;
     }
   }
@@ -937,7 +937,7 @@ body#member-settings, body#team-settings, body#join-team, body#registration {
           display: block;
           margin-bottom: 15px;
           border: 5px solid #fff;
-          box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.1);
         }
       }
       .photo-chooser {
@@ -1249,8 +1249,8 @@ body#member-settings, body#team-settings, body#join-team, body#registration {
     padding: 20px 0;
     border: 0;
     font-size: 1.6em;
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0px 1px 0px 0px rgba(225, 225, 225, 0.5);
+    text-shadow: 0px -1px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 1px 0 0 rgba(225, 225, 225, 0.5);
     &:hover {
       opacity: 0.5;
     }
@@ -1612,7 +1612,7 @@ input[type=file].safari5-upload-hack {
                     line-height: 60px;
                     width: 171px;
                     text-align: center;
-                    box-shadow: 0px 3px 0px 0px rgba(53, 103, 163, 0.7);
+                    box-shadow: 0 3px 0 0 rgba(53, 103, 163, 0.7);
                     &:hover {
                       background: #1c527d;
                       color: #fff;
@@ -1621,7 +1621,7 @@ input[type=file].safari5-upload-hack {
                       display: inline-block;
                       height: 23px;
                       width: 21px;
-                      background: image-url("new-home/sign-up-sprite-home.png") no-repeat 0px 0px;
+                      background: image-url("new-home/sign-up-sprite-home.png") no-repeat 0 0;
                       margin-right: 5px;
                       margin-left: -20px;
                       margin-bottom: -4px;
@@ -1640,7 +1640,7 @@ input[type=file].safari5-upload-hack {
               }
               .flex-control-nav {
                 opacity: 0.5;
-                padding: 20px 0px;
+                padding: 20px 0;
                 bottom: 0;
                 top: -60px;
               }
@@ -1944,7 +1944,7 @@ input[type=file].safari5-upload-hack {
       margin: 0 5px 6px 0;
       padding: 4px 8px;
       color: #fff;
-      text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
       &:nth-child(2) {
         background: $mid-blue-grey;
       }
@@ -2156,7 +2156,6 @@ x:-o-prefocus, .custom-select::after {
   .custom-select select {
     width: 120%;
     width: -moz-calc(100% + 3em);
-    width: calc(100% + em);
   }
 
 }

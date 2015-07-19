@@ -1,6 +1,6 @@
 Coderwall::Application.configure do
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
-  config.assets.precompile << 'admin.css'
+  config.assets.precompile << 'alert.css'
   config.assets.precompile << 'application.css'
   config.assets.precompile << 'application.js'
   config.assets.precompile << 'product_description.css'
