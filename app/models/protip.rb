@@ -855,12 +855,6 @@ class Protip < ActiveRecord::Base
     end if need_to_extract_data_from_links
   end
 
-  def owned_by?(user)
-    self.user == user
-  end
-
-  alias_method :owner?, :owned_by?
-
   def tag_user
     self.user_list = [self.user.try(:username)] if self.users.blank?
   end

@@ -189,21 +189,10 @@ class ProtipsController < ApplicationController
   end
 
   def destroy
-    return head(:forbidden) unless @protip.try(:owned_by?, current_user) || current_user.admin?
+    return head(:forbidden) unless @protip.owned_by?(current_user)
     @protip.destroy
     respond_to do |format|
-      format.html {
-        if request.referer.blank?
-          redirect_to protips_url
-        else
-
-          if request.referer.include?(@protip.public_id)
-            redirect_to protips_url
-          else
-            redirect_to request.referer
-          end
-        end
-      }
+      format.html { redirect_to(protips_url)  }
       format.json { head :ok }
     end
   end

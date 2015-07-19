@@ -25,6 +25,12 @@ module UserProtip
     end
   end
 
+  def owned_by?(owner)
+    user == owner || owner.admin?
+  end
+
+  alias_method :owner?, :owned_by?
+
   private
     def refresh_protips
       protips.each do |protip|
