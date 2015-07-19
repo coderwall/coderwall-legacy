@@ -22,7 +22,6 @@
     .image-top
       =image_tag(banner_image)
     .content
-      -#-team_member = protip.user.belongs_to_team?(job.team) ? protip.user : job.team.top_team_member
       .avatar
         =image_tag(team.avatar_url)
       %h4= team.name

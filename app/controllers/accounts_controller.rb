@@ -21,8 +21,7 @@ class AccountsController < ApplicationController
 
     if @account.save_with_payment(@plan)
       unless @team.is_member?(current_user)
-        @team.add_member(current_user)
-        @team.save
+        @team.add_member(current_user,:active)
       end
       record_event('upgraded team')
 

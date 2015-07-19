@@ -25,4 +25,11 @@ module UserProtip
     end
   end
 
+  private
+    def refresh_protips
+      protips.each do |protip|
+        protip.index_search
+      end
+      return true
+    end
 end

@@ -163,7 +163,7 @@ RSpec.describe User, type: :model do
 
     it 'should find users ignoring case' do
       user = Fabricate(:user) do
-        username FFaker::Internet.user_name.upcase
+        username FFaker::Internet.user_name.upcase.gsub('.','')
         twitter FFaker::Internet.user_name.upcase
         github FFaker::Internet.user_name.upcase
         linkedin FFaker::Internet.user_name.upcase

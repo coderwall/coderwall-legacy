@@ -128,6 +128,9 @@ class User < ActiveRecord::Base
   include UserTwitter
   include UserViewer
   include UserVisit
+  include UserSearch
+  include UserStateMachine
+  include UserJob
 
   attr_protected :admin, :role, :id, :github_id, :twitter_id, :linkedin_id, :api_key
 
@@ -180,7 +183,7 @@ class User < ActiveRecord::Base
   has_many :skills, order: "weight DESC"
   has_many :endorsements, foreign_key: 'endorsed_user_id'
   has_many :endorsings, foreign_key: 'endorsing_user_id', class_name: 'Endorsement'
-  has_many :protips
+  has_many :protips, dependent: :destroy
   has_many :likes
   has_many :comments
 
@@ -188,7 +191,8 @@ class User < ActiveRecord::Base
   has_many :github_repositories, through: :github_profile , source: :repositories
 
   belongs_to :team, class_name: 'Team'
-  has_one :membership, class_name: 'Teams::Member', dependent: :destroy
+  has_one :membership, class_name: 'Teams::Member' #current_team
+  has_many :memberships, class_name: 'Teams::Member', dependent: :destroy
 
   has_one :picture, dependent: :destroy
 
@@ -196,21 +200,17 @@ class User < ActiveRecord::Base
   # FIXME: Move to background job
   after_validation :geocode_location, if: :location_changed? unless Rails.env.test?
 
-  before_destroy ->{ protips.destroy_all }, prepend: true
-
   def near
     User.near([lat, lng])
   end
 
-  scope :top, lambda { |num| order("badges_count DESC").limit(num || 10) }
-  scope :no_emails_since, lambda { |date| where("last_email_sent IS NULL OR last_email_sent < ?", date) }
-  scope :receives_activity, where(notify_on_award: true)
-  scope :receives_newsletter, where(receive_newsletter: true)
-  scope :receives_digest, where(receive_weekly_digest: true)
-  scope :with_tokens, where("github_token IS NOT NULL")
-  scope :on_team, where("team_id IS NOT NULL")
-  scope :not_on_team, where("team_id IS NULL")
-  scope :autocomplete, lambda { |filter|
+  scope :top, ->(limit = 10) { order("badges_count DESC").limit(limit) }
+  scope :no_emails_since, ->(date) { where("last_email_sent IS NULL OR last_email_sent < ?", date) }
+  scope :receives_activity,  -> { where(notify_on_award: true) }
+  scope :receives_newsletter, -> { where(receive_newsletter: true) }
+  scope :receives_digest, -> { where(receive_weekly_digest: true) }
+  scope :with_tokens, -> { where('github_token IS NOT NULL') }
+  scope :autocomplete, ->(filter) {
     filter = "#{filter.upcase}%"
     where("upper(username) LIKE ? OR upper(twitter) LIKE ? OR upper(github) LIKE ? OR upper(name) LIKE ?", filter, filter, filter, "%#{filter}").order("name ASC")
   }
@@ -218,7 +218,7 @@ class User < ActiveRecord::Base
   scope :active, -> { where(state: ACTIVE) }
   scope :pending, -> { where(state: PENDING) }
   scope :abandoned, -> { where(state: 'registration').where('created_at < ?', 1.hour.ago) }
-  scope :random, -> (limit = 1) { active.where("badges_count > 1").order("Random()").limit(limit) }
+  scope :random, -> (limit = 1) { active.where('badges_count > 1').order('RANDOM()').limit(limit) }
 
 
   def self.find_by_provider_username(username, provider)
@@ -228,36 +228,6 @@ class User < ActiveRecord::Base
       raise "Unkown provider type specified, unable to find user by username"
     end
     where(["UPPER(#{provider}) = UPPER(?)", username]).first
-  end
-
-  # Todo State machine
-  def banned?
-    banned_at.present?
-  end
-
-  def activate
-    UserActivateWorker.perform_async(id)
-  end
-
-  def activate!
-    # TODO: Switch to update, failing validations?
-    update_attributes!(state: ACTIVE, activated_on: DateTime.now)
-  end
-
-  def unregistered?
-    state == nil
-  end
-
-  def not_active?
-    !active?
-  end
-
-  def active?
-    state == ACTIVE
-  end
-
-  def pending?
-    state == PENDING
   end
 
   def display_name
@@ -276,32 +246,6 @@ class User < ActiveRecord::Base
       about
   end
 
-  def public_hash(full=false)
-    hash = { username:     username,
-             name:         display_name,
-             location:     location,
-             endorsements: endorsements.count,
-             team:         team_id,
-             accounts:     { github: github },
-             badges:       badges_hash = [] }
-    badges.each do |badge|
-      badges_hash << {
-        name:        badge.display_name,
-        description: badge.description,
-        created:     badge.created_at,
-        badge:       block_given? ? yield(badge) : badge
-      }
-    end
-    if full
-      hash[:about] = about
-      hash[:title]              = title
-      hash[:company]            = company
-      hash[:specialities]       = speciality_tags
-      hash[:thumbnail]          = avatar.url
-      hash[:accounts][:twitter] = twitter
-    end
-    hash
-  end
 
   def can_unlink_provider?(provider)
     self.respond_to?("clear_#{provider}!") && self.send("#{provider}_identity") && num_linked_accounts > 1
@@ -428,23 +372,6 @@ class User < ActiveRecord::Base
     skills.detect { |skill| skill.tokenized == tokenized_skill }
   end
 
-  def apply_to(job)
-    job.apply_for(self)
-  end
-
-  def already_applied_for?(job)
-    job.seized_by?(self)
-  end
-
-  def has_resume?
-    self.resume.present?
-  end
-
-  def complete_registration!(opts={})
-    update_attribute(:state, PENDING)
-    activate
-  end
-
   private
 
   before_save :destroy_badges
@@ -466,13 +393,6 @@ class User < ActiveRecord::Base
     if username_changed? or avatar_changed? or team_id_changed?
       refresh_protips
     end
-  end
-
-  def refresh_protips
-    self.protips.each do |protip|
-      protip.index_search
-    end
-    return true
   end
 
   after_save :manage_github_orgs
