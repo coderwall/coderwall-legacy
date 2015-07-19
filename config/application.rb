@@ -28,13 +28,6 @@ module Coderwall
       end
     end
 
-    config.generators do |g|
-      g.orm :active_record
-    end
-
-    config.rakismet.key = ENV['AKISMET_KEY']
-    config.rakismet.url = ENV['AKISMET_URL']
-
     config.exceptions_app = self.routes
   end
 end

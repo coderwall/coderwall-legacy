@@ -8,7 +8,7 @@ Coderwall::Application.configure do
   config.action_mailer.delivery_method = :test
   config.active_support.deprecation = :stderr
   config.action_controller.perform_caching = false
-  Tire::Model::Search.index_prefix "#{Rails.application.class.parent_name.downcase}_#{Rails.env.to_s.downcase}"
+  Tire::Model::Search.index_prefix 'coderwall_test'
   config.host = 'localhost:3000'
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
