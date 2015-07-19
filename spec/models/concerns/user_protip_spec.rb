@@ -8,14 +8,4 @@ RSpec.describe User, type: :model do
     expect(user).to respond_to :bookmarked_protips
     expect(user).to respond_to :authored_protips
   end
-
-  describe 'deleting a user' do
-    it 'deletes asosciated protips' do
-      user = Fabricate(:user)
-      Fabricate(:protip, user: user)
-
-      expect(user.reload.protips).to receive(:destroy_all).and_return(false)
-      user.destroy
-    end
-  end
 end
