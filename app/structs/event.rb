@@ -77,14 +77,14 @@ class Event < Struct.new(:data)
     def user_info(user)
       { user: {
         username:     user.username,
-        profile_url:  user.profile_url,
+        profile_url:  user.avatar_url,
         profile_path: Rails.application.routes.url_helpers.badge_path(user.username),
       } }
     end
 
     def team_info(team)
       { team: { name:        team.name,
-                avatar:      ActionController::Base.helpers.asset_path(team.try(:avatar_url)),
+                avatar:      ActionController::Base.helpers.asset_path(team.avatar_url),
                 url:         Rails.application.routes.url_helpers.teamname_path(team.slug),
                 follow_path: Rails.application.routes.url_helpers.follow_team_path(team),
                 skills:      team.specialties_with_counts.map { |skills| skills[0] }.first(2),

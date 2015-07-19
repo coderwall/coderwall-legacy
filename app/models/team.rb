@@ -285,7 +285,7 @@ class Team < ActiveRecord::Base
     top_three_members.map do |member|
       {
         username:    member.username,
-        profile_url: member.user.profile_url,
+        profile_url: member.user.avatar_url,
         avatar:      ApplicationController.helpers.users_image_path(member)
       }
     end
