@@ -6,8 +6,8 @@
 
     %p{:style => "font-size: 14px; margin: 0; font-family:'Helvetica Neue','Helvetica','Arial','sans-serif';"}
       #{@commentor.username} has commented on your pro tip:
-      =link_to @comment.commentable.try(:title), protip_url(@comment.commentable.public_id), {:style => "color: #3D8DCC;"}
+      =link_to @comment.protip.title, protip_url(@comment.protip.public_id), {:style => "color: #3D8DCC;"}
       ==
     %div{:style => "border-left: solid 5px #ECE9E2; padding-left: 10px; font-family:'Georgia','Times','Serif'; font-style: italic; font-size: 14px; line-height: 22px;"}
       =raw CFM::Markdown.render(escape_scripts(@comment.body))
-    =link_to 'View/Reply', protip_url(@comment.commentable.try(:public_id)) + "#comment_#{@comment.id}", {:style => "color: #3d8dcc; font-size: 14px;"}
+    =link_to 'View/Reply', protip_url(@comment.protip.public_id) + "#comment_#{@comment.id}", {:style => "color: #3d8dcc; font-size: 14px;"}
