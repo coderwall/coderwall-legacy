@@ -24,6 +24,8 @@
 #  user_email          :string(255)
 #  user_agent          :string(255)
 #  user_ip             :inet
+#  spam_reports_count  :integer          default(0)
+#  state               :string(255)      default("active")
 #
 
 require 'net_validators'
@@ -43,7 +45,6 @@ class Protip < ActiveRecord::Base
   include Tire::Model::Search
   include Scoring::HotStream
   include SearchModule
-  acts_as_commentable
 
   include ProtipMapping
   include AuthorDetails
@@ -59,7 +60,7 @@ class Protip < ActiveRecord::Base
   has_many :likes, as: :likable, dependent: :destroy, after_add: :reset_likes_cache, after_remove: :reset_likes_cache
   has_many :protip_links, autosave: true, dependent: :destroy, after_add: :reset_links_cache, after_remove: :reset_links_cache
   belongs_to :user , autosave: true
-
+  has_many :comments, :dependent => :destroy
 
 
   acts_as_taggable_on :topics, :users

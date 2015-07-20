@@ -23,6 +23,8 @@
 #  user_email          :string(255)
 #  user_agent          :string(255)
 #  user_ip             :inet
+#  spam_reports_count  :integer          default(0)
+#  state               :string(255)      default("active")
 #
 
 Fabricator(:protip) do

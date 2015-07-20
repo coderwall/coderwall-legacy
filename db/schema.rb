@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150719222345) do
+ActiveRecord::Schema.define(:version => 20150720001425) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -37,8 +37,7 @@ ActiveRecord::Schema.define(:version => 20150719222345) do
   create_table "comments", :force => true do |t|
     t.string   "title",              :limit => 50, :default => ""
     t.text     "comment",                          :default => ""
-    t.integer  "commentable_id"
-    t.string   "commentable_type"
+    t.integer  "protip_id"
     t.integer  "user_id"
     t.integer  "likes_cache",                      :default => 0
     t.integer  "likes_value_cache",                :default => 0
@@ -54,8 +53,7 @@ ActiveRecord::Schema.define(:version => 20150719222345) do
     t.string   "state",                            :default => "active"
   end
 
-  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
-  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["protip_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "endorsements", :force => true do |t|
@@ -603,6 +601,7 @@ ActiveRecord::Schema.define(:version => 20150719222345) do
 
   add_foreign_key "badges", "users", name: "badges_user_id_fk", dependent: :delete
 
+  add_foreign_key "comments", "protips", name: "comments_protip_id_fk"
   add_foreign_key "comments", "users", name: "comments_user_id_fk", dependent: :delete
 
   add_foreign_key "endorsements", "skills", name: "endorsements_skill_id_fk", dependent: :delete

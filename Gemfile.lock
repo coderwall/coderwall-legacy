@@ -32,7 +32,6 @@ GEM
       multi_json (~> 1.0)
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
-    acts_as_commentable (2.0.1)
     acts_as_follower (0.1.1)
     addressable (2.3.8)
     analyst (1.2.0)
@@ -691,7 +690,6 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)!
-  acts_as_commentable (= 2.0.1)!
   acts_as_follower (= 0.1.1)!
   annotate!
   autoprefixer-rails!

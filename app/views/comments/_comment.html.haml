@@ -8,14 +8,14 @@
       = image_tag(users_image_path(comment.user), class: 'avatar')
     %a.comment-user{href: profile_path(comment.user.username), 'data-reply-to' => comment.user.username, itemprop: 'author'}
       = comment.user.username
-    %a.like{href:like_protip_comment_path(comment.commentable.try(:public_id), comment.id), 'data-remote' => 'true', 'data-method' => :post, class: comment_liked_class(comment), rel: "nofollow"}
+    %a.like{href:like_protip_comment_path(comment.protip.public_id, comment.id), 'data-remote' => 'true', 'data-method' => :post, class: comment_liked_class(comment), rel: "nofollow"}
       = comment_likes(comment)
   .comment{itemprop: :commentText}
     = raw sanitize(formatted_comment(comment.body))
     -# TODO: Rework the comment editing bar outside of the same element as the commentText
     - if can_edit_comment?(comment)
       .edit-comment.hidden
-        = form_for [comment.commentable, comment] do |f|
+        = form_for [comment.protip, comment] do |f|
           = f.text_area :comment, label: false, rows: 5
           %input{type: 'submit', value: 'Save', class: 'button save'}
           %input{type: 'button', value: 'Cancel', class: 'button cancel'}
@@ -25,7 +25,7 @@
         %a.edit{href: '#', onclick: 'return false;'}
           Edit
       %li.hidden.show-for-user{'data-user' => comment.user.username}
-        %a.delete{href: protip_comment_path(comment.commentable.try(:public_id), comment.id), 'data-method' => :delete}
+        %a.delete{href: protip_comment_path(comment.protip.public_id, comment.id), 'data-method' => :delete}
           Delete
       %li.remove-for-user{'data-user' => comment.user.username}
         %a.reply{href: '#add-comment', rel: 'nofollow'}

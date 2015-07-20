@@ -85,12 +85,12 @@ class NotifierMailer < ApplicationMailer
     mail to: @user.email, subject: "#{congratulation}! You have a new fan on Coderwall"
   end
 
-  def new_comment(username, commentor_username, comment_id)
+  def new_comment(user_id, commentor_id, comment_id)
     headers['X-Mailgun-Variables'] = {email_type: NEW_COMMENT_EVENT}.to_json
     track_campaign("new_comment")
 
-    @commentor = User.find_by_username(commentor_username)
-    @user = User.find_by_username(username)
+    @commentor = User.find(commentor_id)
+    @user = User.find(user_id)
     @comment = Comment.find(comment_id)
     @user.touch(:last_email_sent)
 

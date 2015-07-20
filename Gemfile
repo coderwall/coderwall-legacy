@@ -93,7 +93,6 @@ source 'https://rubygems.org' do
 # ----------------
 
 
-  gem 'acts_as_commentable', '2.0.1'
   gem 'acts_as_follower', '0.1.1'
   gem 'fog'
   gem 'friendly_id', '4.0.10.1'

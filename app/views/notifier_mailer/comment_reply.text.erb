@@ -1,6 +1,6 @@
 Hey <%= @user.short_name %>,
 
-<%= @commentor.username %> replied to your comment on the pro tip: <%= @comment.commentable.try(:title) %>
+<%= @commentor.username %> replied to your comment on the pro tip: <%= @comment.protip.title %>
 
 <%= @comment.body %>
 

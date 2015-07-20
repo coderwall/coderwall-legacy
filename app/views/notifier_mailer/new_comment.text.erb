@@ -1,9 +1,9 @@
 Hey <%= @user.short_name %>,
 
-<%= @commentor.username %> has commented on your pro tip: <%= @comment.commentable.try(:title) %>
+<%= @commentor.username %> has commented on your pro tip: <%= @comment.protip.title %>
 
 <%= @comment.body %>
 
-View/Reply: <%= protip_url(@comment.commentable.try(:public_id)) + "#comment_#{@comment.id}" %>
+View/Reply: <%= protip_url(@comment.protip.public_id) + "#comment_#{@comment.id}" %>
 
 <%= NotifierMailer::SPAM_NOTICE %>
