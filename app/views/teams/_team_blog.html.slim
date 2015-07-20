@@ -1,7 +1,9 @@
 section#team-blog class=section_enabled_class(@team.has_team_blog?)
   -unless @team.has_team_blog?
-    -inactive_box('#team-blog', "Team Blog") do
-      | Team Blog RSS Feed
+    .inactive-box
+      h2 Team Blog Inactive
+      p Team Blog RSS Feed
+      = link_to 'Activate', '#team-blog', class: 'activate-editor'
 
   -if can_edit?
     -panel_form_for_section('#team-blog', "Team Blog RSS Feed.") do |f|
