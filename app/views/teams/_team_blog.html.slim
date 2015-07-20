@@ -6,14 +6,26 @@ section#team-blog class=section_enabled_class(@team.has_team_blog?)
       = link_to 'Activate', '#team-blog', class: 'activate-editor'
 
   -if can_edit?
-    -panel_form_for_section('#team-blog', "Team Blog RSS Feed.") do |f|
-      aside
-        -admin_hint do
-          | URL of your team blog rss/atom feed
-      .form-inputs
-        fieldset
-          =f.label      :blog_feed, 'RSS URL of your team blog'
-          =f.text_field :blog_feed
+    .edit
+      = link_to('edit', '#team-blog', class: 'launch-editor')
+    .form.hide.cf
+      = link_to(' ', '#team-blog', class: 'close-editor circle')
+      = form_for(@team, remote: true) do |f|
+        header
+          h2 Team Blog RSS Feed.
+        aside
+          .hint
+            h3 Pro tip
+            p URL of your team blog rss/atom feed
+          .form-inputs
+            fieldset
+              =f.label :blog_feed, 'RSS URL of your team blog'
+              =f.text_field :blog_feed
+
+        = hidden_field_tag(:section_id, '#team-blog')
+        footer
+          = f.submit('Save')
+          = link_to('Close', '#team-blog', class: 'close-editor')
 
   -cache ['teams', 'blogs', @team], :expires_in => 1.day do
     -if @team.blog_posts.any?
