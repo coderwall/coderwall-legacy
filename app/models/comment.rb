@@ -88,7 +88,7 @@ class Comment < ActiveRecord::Base
     username_mentions.include? username
   end
 
-  def to_commentable_public_hash
+  def to_protip_public_hash
     protip.to_public_hash.merge(
       {
         comments: protip.comments.count,
