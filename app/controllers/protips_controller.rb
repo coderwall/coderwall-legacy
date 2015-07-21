@@ -229,7 +229,7 @@ class ProtipsController < ApplicationController
 
   def report_inappropriate
     protip_public_id = params[:id]
-    protip = Protip.find_by_public_id!(public_id)
+    protip = Protip.find_by_public_id!(protip_public_id)
     if protip.report_spam && cookies["report_inappropriate-#{protip_public_id}"].nil?
       opts = { user_id: current_user, ip: request.remote_ip}
       ::AbuseMailer.report_inappropriate(protip_public_id,opts).deliver
