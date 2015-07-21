@@ -50,7 +50,7 @@
           ==Coderwall #{link_to 'learn more', faq_path(:anchor => 'apply'), :target => :new}
       %li
         =j.radio_button :apply, true
-        ==Applicants mailed to #{@team.account.admin.email}
+        -#==Applicants mailed to #{@team.account.admin.email}
     %ul
       %li
         =j.label "#{@team.name}'s website"
