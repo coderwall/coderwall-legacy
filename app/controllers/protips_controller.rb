@@ -241,11 +241,12 @@ class ProtipsController < ApplicationController
     end
   end
 
-  def flag
-    times_to_flag = is_admin? ? Protip::MIN_FLAG_THRESHOLD : 1
+   def flag
+    times_to_flag = is_moderator? ? Protip::MIN_FLAG_THRESHOLD : 1
     times_to_flag.times do
       @protip.flag
     end
+    @protip.mark_as_spam
     respond_to do |format|
       if @protip.save
         format.json { head :ok }
@@ -256,7 +257,7 @@ class ProtipsController < ApplicationController
   end
 
   def unflag
-    times_to_flag = is_admin? ? Protip::MIN_FLAG_THRESHOLD : 1
+    times_to_flag = is_moderator? ? Protip::MIN_FLAG_THRESHOLD : 1
     times_to_flag.times do
       @protip.unflag
     end

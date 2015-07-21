@@ -202,6 +202,10 @@ class ApplicationController < ActionController::Base
     signed_in? && current_user.role == 'admin'
   end
 
+  def is_moderator?
+    signed_in? && current_user.role.in?(%w(admin moderator))
+  end
+
   def iphone_user_agent?
     request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
   end
