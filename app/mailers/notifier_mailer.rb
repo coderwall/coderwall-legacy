@@ -209,11 +209,11 @@ class NotifierMailer < ApplicationMailer
     headers['X-Mailgun-Variables'] = {email_type: INVOICE_EVENT}.to_json
     #track_campaign("new_applicant")
     @team = Team.find(team_id)
-    @admin = @team.account.admin
+    team_admin_emails = @team.admin_accounts.pluck :email
     @invoice = invoice_id.nil? ? @team.account.invoice_for(Time.at(time)) : Stripe::Invoice.retrieve(invoice_id).to_hash.with_indifferent_access
     @customer = @team.account.customer
 
-    mail to: @admin.email, bcc: admin_emails, subject: "Invoice for Coderwall enhanced team profile subscription"
+    mail to: team_admin_emails, bcc: admin_emails, subject: "Invoice for Coderwall enhanced team profile subscription"
   end
 
 
@@ -268,6 +268,6 @@ class NotifierMailer < ApplicationMailer
   end
 
   def admin_emails
-    YAML.load(ENV['NOTIFIER_ADMIN_EMAILS'])
+    User.admins.pluck(:email)
   end
 end
