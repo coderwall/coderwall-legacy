@@ -170,9 +170,10 @@ class User < ActiveRecord::Base
   validates :username,
             exclusion: {in: RESERVED, message: "is reserved"},
             format: {with: VALID_USERNAME, message: "must not contain a period"},
-            presence: true,
-            uniqueness: true
+            uniqueness: true,
+            if: :username_changed?
 
+  validates_presence_of :username
   validates_presence_of :email
   validates_presence_of :location
   validates :email, email: true, if: :not_active?
