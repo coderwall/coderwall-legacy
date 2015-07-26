@@ -110,7 +110,8 @@
           %h2.comments-header
             %i.fa.fa-comments
             Comments
-          %ul.comment-list = render protip.comments.with_states(:active,:reported_as_spam)
+          %ul.comment-list
+            = render protip.comments.with_states(:active,:reported_as_spam)
         = render 'comments/add_comment'
 
     - if defined?(:job) && !job.nil?
