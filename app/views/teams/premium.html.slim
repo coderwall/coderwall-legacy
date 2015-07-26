@@ -80,8 +80,8 @@
   =render partial: "/teams/jobs", locals: {job: @job}
 
 .page
-  #record-exit-path 'data-record-path' => record_exit_team_path(@team) 
-  #furthest-scrolled 'data-section' => nil, 'data-time-spent' => 0 
+  #record-exit-path data-record-path= record_exit_team_path(@team)
+  #furthest-scrolled data-section=nil data-time-spent=0
 
   header.team-header.cf style="background-color:#{@team.branding_hex_color}" 
     .team-logo=image_tag(@team.avatar_url, :width => '104', :height => '104', :class => 'team-page-avatar')
