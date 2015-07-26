@@ -1,0 +1,8 @@
+section.comments class=('no-comments' if comments.empty? )
+  - if comments.any?
+    h2.comments-header
+      i.fa.fa-comments
+      | Comments
+    ul.comment-list
+      = render comments
+  = render 'comments/add_comment'

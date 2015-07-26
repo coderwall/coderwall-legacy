@@ -104,15 +104,7 @@
       %div.tip-content{itemprop: :articleBody}
         = raw sanitize(protip.to_html)
 
-    - if include_comments
-      %section.comments{ class:('no-comments' if protip.comments.empty? ) }
-        - if protip.comments.any?
-          %h2.comments-header
-            %i.fa.fa-comments
-            Comments
-          %ul.comment-list
-            = render protip.comments.with_states(:active,:reported_as_spam)
-        = render 'comments/add_comment'
+    = render('protip_comments', comments: protip.comments.showable) if include_comments
 
     - if defined?(:job) && !job.nil?
       .mobile-job

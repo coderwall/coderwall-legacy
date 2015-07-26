@@ -34,6 +34,8 @@ class Comment < ActiveRecord::Base
 
   belongs_to :user, autosave: true
 
+  scope :showable, ->{ with_states(:active,:reported_as_spam) }
+
   alias_method :author, :user
   alias_attribute :body, :comment
 
