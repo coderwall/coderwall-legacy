@@ -195,7 +195,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin!
-    return head(:forbidden) unless signed_in? && current_user.admin?
+    return head(:forbidden) unless is_admin?
   end
 
   def is_admin?
