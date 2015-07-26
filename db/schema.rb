@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150720001425) do
+ActiveRecord::Schema.define(:version => 20150726134416) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(:version => 20150720001425) do
 
   create_table "skills", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                                  :null => false
+    t.citext   "name",                                  :null => false
     t.integer  "endorsements_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
