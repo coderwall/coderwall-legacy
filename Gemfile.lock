@@ -24,6 +24,9 @@ GEM
       activesupport (= 3.2.22)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
+    activerecord-postgres-json (0.2.1)
+      activerecord (>= 3.2, < 4)
+      multi_json
     activeresource (3.2.22)
       activemodel (= 3.2.22)
       activesupport (= 3.2.22)
@@ -689,6 +692,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-postgres-json!
   acts-as-taggable-on (~> 3.4)!
   acts_as_follower (= 0.1.1)!
   annotate!

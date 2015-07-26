@@ -123,6 +123,7 @@ source 'https://rubygems.org' do
   gem 'test-unit'
   gem 'foreigner'
   gem 'state_machine'
+  gem 'activerecord-postgres-json'
 
 # ElasticSearch client
   gem 'tire'

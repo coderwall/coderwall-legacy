@@ -4,7 +4,7 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
-#  name               :string(255)      not null
+#  name               :citext           not null
 #  endorsements_count :integer          default(0)
 #  created_at         :datetime
 #  updated_at         :datetime
@@ -15,6 +15,7 @@
 #  attended_events    :text
 #  deleted            :boolean          default(FALSE), not null
 #  deleted_at         :datetime
+#  links              :json             default("{}")
 #
 
 Fabricator(:skill) do

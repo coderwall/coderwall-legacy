@@ -4,7 +4,7 @@
 #
 #  id                 :integer          not null, primary key
 #  user_id            :integer
-#  name               :string(255)      not null
+#  name               :citext           not null
 #  endorsements_count :integer          default(0)
 #  created_at         :datetime
 #  updated_at         :datetime
@@ -15,6 +15,7 @@
 #  attended_events    :text
 #  deleted            :boolean          default(FALSE), not null
 #  deleted_at         :datetime
+#  links              :json             default("{}")
 #
 
 class Skill < ActiveRecord::Base
@@ -23,7 +24,7 @@ class Skill < ActiveRecord::Base
   SPACE = ' '
   BLANK = ''
 
-  belongs_to :user
+  belongs_to :user, touch: true
   has_many :endorsements
 
   validates_presence_of :tokenized
@@ -38,8 +39,11 @@ class Skill < ActiveRecord::Base
   serialize :repos, Array
   serialize :attended_events, Array
   serialize :speaking_events, Array
+  serialize :links,  ActiveRecord::Coders::JSON
+
 
   default_scope where(deleted: false)
+  scope :deleted, ->{unscoped.where(deleted: true)}
 
   def self.tokenize(value)
     v = value.to_s.gsub('&', 'and').downcase.gsub(/\s|\./, BLANK)
@@ -48,19 +52,19 @@ class Skill < ActiveRecord::Base
   end
 
   def self.deleted?(user_id, skill_name)
-    Skill.with_deleted.where(user_id: user_id, name: skill_name, deleted: true).any?
+    deleted.where(user_id: user_id, name: skill_name).any?
   end
 
-  def merge_with(another_skill)
-    if another_skill.user_id == self.user_id
-      another_skill.endorsements.each do |endorsement|
-        self.endorsed_by(endorsement.endorser)
-      end
-      self.repos           += another_skill.repos
-      self.attended_events += another_skill.attended_events
-      self.speaking_events += another_skill.speaking_events
-    end
-  end
+  # def merge_with(another_skill)
+  #   if another_skill.user_id == self.user_id
+  #     another_skill.endorsements.each do |endorsement|
+  #       self.endorsed_by(endorsement.endorser)
+  #     end
+  #     self.repos           += another_skill.repos
+  #     self.attended_events += another_skill.attended_events
+  #     self.speaking_events += another_skill.speaking_events
+  #   end
+  # end
 
   def endorsed_by(endorser)
     # endorsed is only in here during migration of endorsement to skill
