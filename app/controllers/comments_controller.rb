@@ -1,15 +1,15 @@
 class CommentsController < ApplicationController
 
   before_action :access_required, only: [:update, :destroy]
-  before_action :lookup_comment, only: [:edit, :update, :destroy, :like]
+
+  before_action :lookup_comment, only: [:edit, :update, :destroy, :like, :mark_as_spam]
   before_action :verify_ownership, only: [:edit, :update, :destroy]
   before_action :lookup_protip, only: [:create]
+  before_action :require_moderator!, only: [:mark_as_spam]
 
   def create
-    create_comment_params = params.require(:comment).permit(:comment)
-
-    redirect_to_signup_if_unauthenticated(request.referer + "?" + (create_comment_params.try(:to_query) || ""), "You must signin/signup to add a comment") do
-      @comment = @protip.comments.build(create_comment_params)
+    redirect_to_signup_if_unauthenticated(request.referer + "?" + (comment_params.try(:to_query) || ""), "You must signin/signup to add a comment") do
+      @comment = @protip.comments.build(comment_params)
 
       @comment.user = current_user
       @comment.request_format = request.format.to_s
@@ -27,10 +27,8 @@ class CommentsController < ApplicationController
   end
 
   def update
-    update_comment_params = params.require(:comment).permit(:comment)
-
     respond_to do |format|
-      if @comment.update_attributes(update_comment_params)
+      if @comment.update_attributes(comment_params)
         format.html { redirect_to protip_path(params[:protip_id]) }
         format.json { head :ok }
       else
@@ -59,11 +57,19 @@ class CommentsController < ApplicationController
     end
   end
 
+  def mark_as_spam
+    @comment.mark_as_spam
+    respond_to do |format|
+      format.json { head :ok }
+      format.js { head :ok }
+    end
+  end
+
   private
 
   def lookup_comment
-    @comment = Comment.find(params[:id])
-    lookup_protip
+    @comment = Comment.includes(:protip).find(params[:id])
+    @protip = @comment.protip
   end
 
   def lookup_protip
@@ -72,5 +78,9 @@ class CommentsController < ApplicationController
 
   def verify_ownership
     redirect_to(root_url) unless (is_admin? or (@comment && @comment.authored_by?(current_user)))
+  end
+
+  def comment_params
+    params.require(:comment).permit(:comment)
   end
 end

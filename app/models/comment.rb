@@ -25,7 +25,7 @@ class Comment < ActiveRecord::Base
   include AuthorDetails
   include SpamFilter
 
-  belongs_to :protip
+  belongs_to :protip, touch: true
   has_many :likes, as: :likable, dependent: :destroy
   after_create :generate_event
   after_save :commented_callback
@@ -46,6 +46,10 @@ class Comment < ActiveRecord::Base
 
     event :mark_as_spam do
       transition any => :marked_as_spam
+    end
+
+    after_transition any => :marked_as_spam do |comment|
+      comment.spam!
     end
   end
 

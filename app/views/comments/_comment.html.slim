@@ -1,0 +1,30 @@
+li.cf.comment class=(top_comment?(comment, comment_counter) ? 'top-comment' : '') id="comment_#{comment.id}" itemscope=true itemtype=meta_comment_schema_url itemprop=:comment
+  meta itemprop=:commentTime content=comment.created_at
+  meta itemprop=:name content=comment.id
+  header.cf itemprop="creator"itemscope=true itemtype=meta_person_schema_url
+    meta itemprop=:name content=comment.user.display_name
+    meta itemprop=:alternateName content=comment.user.username
+    .comment-avatar
+      = image_tag(users_image_path(comment.user), class: 'avatar')
+
+    =link_to comment.user.username, profile_path(comment.user.username), class: 'comment-user', 'data-reply-to' => comment.user.username, 'itemprop' => 'author'
+    =link_to comment_likes(comment), like_protip_comment_path(comment.protip.public_id , comment.id), 'data-remote' => 'true', 'data-method' => :post, class: "like #{comment_liked_class(comment)}", rel: "nofollow"
+    =link_to('Spam!', mark_as_spam_protip_comment_path(comment.protip.public_id , comment.id), 'data-remote' => 'true', 'data-method' => :post, rel: 'nofollow') if is_moderator?
+
+  .comment itemprop=:commentText
+    = raw sanitize(formatted_comment(comment.body))
+    / TODO: Rework the comment editing bar outside of the same element as the commentText
+    - if can_edit_comment?(comment)
+      .edit-comment.hidden
+        = form_for [comment.protip, comment] do |f|
+          = f.text_area :comment, label: false, rows: 5
+          input type='submit' value='Save' class='button save'
+          input type='button' value='Cancel' class='button cancel'
+  - if signed_in?
+    ul.edit-del.cf
+      li.hidden.show-for-user data-user=comment.user.username
+        =link_to 'Edit', '#', class: 'edit', onclick: 'return false;'
+      li.hidden.show-for-user data-user=comment.user.username
+        =link_to 'Delete', protip_comment_path(comment.protip.public_id, comment.id), class: 'delete', 'data-method' => :delete
+      li.remove-for-user data-user=comment.user.username
+        =link_to 'Reply', '#add-comment', class: 'reply', rel: 'nofollow'

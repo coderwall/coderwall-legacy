@@ -1,7 +1,7 @@
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x007fcb9ed50810@/vagrant/config/routes.rb:243>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007fcb9ed54dc0@/vagrant/config/routes.rb:244>
+#                             GET                   /.json(.:format)                                       #<Proc:0x007f1cf36de838@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:234>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f1cf36dc4c0@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:235>
 #                                                   /mail_view                                             MailPreview
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update
@@ -37,6 +37,7 @@
 #              feature_protip POST                  /p/:id/feature(.:format)                               protips#feature
 #           delete_tag_protip POST                  /p/:id/delete_tag/:topic(.:format)                     protips#delete_tag {:topic=>/[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/}
 #         like_protip_comment POST                  /p/:protip_id/comments/:id/like(.:format)              comments#like {:id=>/\d+/}
+# mark_as_spam_protip_comment POST                  /p/:protip_id/comments/:id/mark_as_spam(.:format)      comments#mark_as_spam {:id=>/\d+/}
 #             protip_comments GET                   /p/:protip_id/comments(.:format)                       comments#index {:id=>/\d+/}
 #                             POST                  /p/:protip_id/comments(.:format)                       comments#create {:id=>/\d+/}
 #          new_protip_comment GET                   /p/:protip_id/comments/new(.:format)                   comments#new {:id=>/\d+/}
@@ -288,7 +289,10 @@ Coderwall::Application.routes.draw do
       post 'delete_tag/:topic' => 'protips#delete_tag', as: :delete_tag, :topic => topic_regex
     end
     resources :comments, constraints: { id: /\d+/ } do
-      member { post 'like' }
+      member do
+        post 'like'
+        post 'mark_as_spam'
+      end
     end
   end
 
