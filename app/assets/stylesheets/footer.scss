@@ -5,14 +5,11 @@
     margin: 0 auto;
     nav{
       &#footer-nav {
-        float: left;
-        width: 80%;
-        ul {
-        }
-
         .footer-links {
+          width: 78%;
           margin-bottom: 10px;
-          width: 70%;
+          display: inline-block;
+          vertical-align: top;
           li {
             float: left;
             margin-right: 20px;
@@ -43,39 +40,33 @@
         .assembly-badge {
           margin: -10px 0 10px -20px;
         }
-        .copyright {
-          margin-bottom: 15px;
-          li {
-            font-size: 1.2em;
-            color: $light-grey;
-          }
-        }
-        .credits {
-          margin-bottom: 15px;
-          li {
-            font-size: 1.2em;
-          }
-          a {
-            color: $light-grey;
+
+        .right_part {
+          width: 21%;
+          text-align: right;
+          display: inline-block;
+          #tweetbtn {
+            width: 124px;
+            margin-top: -7px;
+            iframe{
+              width: 124px !important;
+            }
           }
         }
 
       }
     }
-    .right_part {
-      float: right;
-      width: 20%;
-      text-align: right;
-      #tweetbtn {
-        float: right;
-        width: 124px;
-        margin-top: -7px;
-        iframe{
-          width: 124px !important;
-        }
-      }
-
-      .mixpanel {
+    .copyright {
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      color: $light-grey;
+    }
+    .credits {
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      a {
+        color: $light-grey;
       }
     }
   }
