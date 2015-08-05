@@ -42,8 +42,8 @@ class Skill < ActiveRecord::Base
   serialize :links,  ActiveRecord::Coders::JSON
 
 
-  default_scope where(deleted: false)
-  scope :deleted, ->{unscoped.where(deleted: true)}
+  default_scope {where(deleted: false)}
+  scope :deleted, -> { unscoped.where(deleted: true) }
 
   def self.tokenize(value)
     v = value.to_s.gsub('&', 'and').downcase.gsub(/\s|\./, BLANK)

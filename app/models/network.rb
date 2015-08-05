@@ -32,8 +32,8 @@ class Network < ActiveRecord::Base
   before_save :cache_counts!
   after_create :assign_members
 
-  scope :most_protips, order('protips_count_cache DESC')
-  scope :featured, where(featured: true)
+  scope :most_protips, ->{ order('protips_count_cache DESC') }
+  scope :featured, ->{ where(featured: true)}
 
   class << self
     def all_with_tag(tag_name)

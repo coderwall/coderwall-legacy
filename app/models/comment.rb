@@ -30,11 +30,11 @@ class Comment < ActiveRecord::Base
   after_create :generate_event
   after_save :commented_callback
 
-  default_scope order: 'likes_cache DESC, created_at ASC'
+  default_scope { order('likes_cache DESC').order(:created_at) }
 
   belongs_to :user, autosave: true
 
-  scope :showable, ->{ with_states(:active,:reported_as_spam) }
+  scope :showable, -> { with_states(:active, :reported_as_spam) }
 
   alias_method :author, :user
   alias_attribute :body, :comment
