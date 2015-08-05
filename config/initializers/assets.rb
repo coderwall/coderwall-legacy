@@ -1,8 +1,8 @@
 Coderwall::Application.configure do
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.precompile << 'alert.css'
-  config.assets.precompile << 'application.css'
-  config.assets.precompile << 'application.js'
+  config.assets.precompile << 'coderwall.css'
+  config.assets.precompile << 'coderwall.js'
   config.assets.precompile << 'product_description.css'
   config.assets.precompile << 'premium-teams.css'
   config.assets.precompile << 'protip.css'
@@ -31,6 +31,6 @@ Coderwall::Application.configure do
   # config.assets.precompile << 'jquery-ketchup.all.min.js'
   config.assets.precompile << 'user.js'
   config.assets.precompile << 'autosaver.js'
-  config.assets.version = '1.2'
+  config.assets.version = '1.5'
 end
 
