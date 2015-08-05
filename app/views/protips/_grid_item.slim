@@ -1,5 +1,5 @@
 - if protip == 'show-ad'
-  = render('opportunities/mini', opportunity: opportunity)
+  = render('opportunities/mini', opportunity: @job)
 -elsif protip.present?
   li class=(protip.kind == 'link' ? 'ext-link' : '')
     = render('protips/mini', protip: protip, mode: mode)
