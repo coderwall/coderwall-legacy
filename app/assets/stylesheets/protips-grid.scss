@@ -1,0 +1,361 @@
+.protips-grid {
+  &.connections-list {
+    > li {
+      height: 40px;
+      &.plus-more {
+        background: #3b3b3b;
+        a {
+          display: block;
+          text-align: center;
+          color: #afafaf;
+          font-size: 1.4em;
+          line-height: 40px;
+          &:hover {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  &.new-networks-list {
+    > li {
+      width: 18.5%;
+      padding: 1% 2% 1% 1.5%;
+      height: auto;
+      border-left: solid 1.2em #d2c5a5;
+      @include border-radius(4px);
+      .new-network {
+        font-size: 1.3em;
+        color: $dark-grey;
+        display: block;
+        text-transform: uppercase;
+        @include ellipsis;
+        &:hover {
+          color: $light-blue;
+        }
+      }
+      &.plus-more {
+        background: #3b3b3b;
+        width: 19.4%;
+        border: 0;
+        a {
+          display: block;
+          text-align: center;
+          color: #afafaf;
+          font-size: 1.4em;
+          &:hover {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  > li {
+    position: relative;
+    width: 20%;
+    padding: 1%;
+    margin: 1%;
+    height: 255px;
+    float: left;
+    background: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.48);
+    .unfollow {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      color: #999897;
+      display: block;
+      &:hover {
+        background: $red;
+        color: #fff;
+      }
+      &:before {
+        @include icon-font;
+        font-size: 8px;
+        content: "x";
+      }
+    }
+    .hiring-ribbon {
+      @include hiring-ribbon;
+    }
+    &.two-cols {
+      position: relative;
+      width: 44%;
+      .tip-image {
+        z-index: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 206px;
+        background: #000;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          opacity: 0.5;
+        }
+      }
+      header {
+        z-index: 100;
+        position: relative;
+        .avatar, .badge-img {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 53px;
+          height: 53px;
+          @include border-radius(53px);
+          overflow: hidden;
+          img {
+            width: 100%;
+          }
+        }
+        p {
+          color: #fff;
+          font-size: 1.6em;
+          float: left;
+          &:before {
+            @include icon-font;
+            color: #fff;
+            margin-right: 10px;
+          }
+          &.job {
+            &:before {
+              content: "b";
+              font-size: 18px;
+            }
+          }
+          &.mayor {
+            &:before {
+              content: "4";
+              font-size: 18px;
+            }
+          }
+          &.badge {
+            &:before {
+              content: "5";
+              font-size: 18px;
+            }
+          }
+        }
+        .feature-jobs {
+          color: #fff;
+          float: right;
+          font-size: 1.1em;
+          background: rgba(255, 255, 255, 0.3);
+          text-transform: uppercase;
+          padding: 0.6em 0.9em 0.4em 0.9em;
+          letter-spacing: 0.2em;
+          @include border-radius(4px);
+          &:hover {
+            background: rgba(255, 255, 255, 0.6);
+          }
+        }
+      }
+      .content {
+        position: relative;
+        z-index: 100;
+        height: 160px;
+        .job-title {
+          font-size: 2.4em;
+          display: block;
+          margin-bottom: 0.5em;
+          color: #fff;
+          @include ellipsis;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+        .job-exrp {
+          font-size: 1.3em;
+          line-height: 1.8em;
+          color: #fff;
+          height: 50px;
+          overflow: hidden;
+        }
+        h3 {
+          width: 60%;
+          font-size: 2.4em;
+          line-height: 1.4em;
+          color: #fff;
+          font-family: "MuseoSans-300";
+        }
+      }
+    }
+    &.job {
+      .author {
+        li {
+          margin-top: 1em;
+        }
+      }
+    }
+    header {
+      height: 50px;
+      .delete-tip {
+        position: absolute;
+        top: -15px;
+        right: 0;
+        background: #c7333a image-url("protips/delete-cross.png") no-repeat center;
+        border: solid 3px #fff;
+        width: 22px;
+        height: 22px;
+        @include border-radius(100px);
+        &:hover {
+          opacity: 0.8;
+        }
+        span {
+          display: none;
+        }
+      }
+      span {
+        font-size: 1.3em;
+        color: #b1b4b4;
+        margin-right: 0.4em;
+        &:before {
+          @include icon-font;
+          margin-right: 5px;
+        }
+        &.upvoted {
+          color: $light-blue;
+        }
+        &.upvotes {
+          &:before {
+            content: "u";
+            font-size: 19px;
+          }
+        }
+        &.comments {
+          &:before {
+            @include icon-font;
+            content: "7";
+            font-size: 19px;
+          }
+        }
+        &.views {
+          &:before {
+            content: "6";
+            font-size: 19px;
+          }
+        }
+        &.hawt {
+          color: #f35e39;
+          &:before {
+            content: "2";
+            font-size: 19px;
+          }
+        }
+      }
+    }
+    .title {
+      font-size: 1.8em;
+      color: #343131;
+      display: block;
+      height: 120px;
+      margin-bottom: 30px;
+      overflow: hidden;
+      padding: 10px;
+      background-color: #F0F0F0;
+      border: 1px solid #ddd;
+      text-align: center;
+      &:hover {
+        color: $light-blue;
+      }
+    }
+    footer {
+      .admin {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+
+        p {
+          font-size: 1.2em;
+          color: #545454;
+          display: block;
+          padding: 0 10px;
+          background-color: #F0F0F0;
+        }
+      }
+      .job {
+        z-index: 0;
+        background: #5bb156;
+        width: 31px;
+        height: 28px;
+        padding-top: 20px;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: 25px;
+        text-align: center;
+        &:before {
+          @include icon-font;
+          content: "b";
+          color: #fff;
+          font-size: 14px;
+        }
+        &:hover {
+          background: #4c9748;
+        }
+      }
+    }
+    .author {
+      float: left;
+      width: 60%;
+      li {
+        font-size: 1.4em;
+        margin-bottom: 0.4em;
+        @include ellipsis;
+        a:hover {
+          color: $light-blue;
+        }
+      }
+      .user {
+        color: $dark-grey;
+        a {
+          color: $dark-grey;
+        }
+      }
+      .team {
+        color: #a6a5a5;
+        a {
+          color: #a6a5a5;
+        }
+      }
+    }
+    .avatars {
+      float: right;
+      li {
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        a {
+          display: block;
+          width: 35px;
+          height: 35px;
+          @include border-radius(35px);
+          overflow: hidden;
+          img {
+            width: 35px;
+            height: 35px
+          }
+        }
+      }
+      .user {
+        z-index: 2;
+      }
+      .team {
+        z-index: 1;
+        margin-left: -15px;
+        background: #f7f7f7;
+        @include border-radius(35px);
+        &:hover {
+          z-index: 2;
+        }
+      }
+    }
+  }
+}

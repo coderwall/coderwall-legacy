@@ -18,12 +18,7 @@
     - break
   %ul.protips-grid.cf
     - group.each do |protip|
-      - if protip == 'show-ad'
-        = render(partial: 'opportunities/mini', locals: { opportunity: opportunity })
-      -elsif protip.present?
-        - if protip.is_a?(Protip) || protip = protip.load rescue nil # HACK: User deleted, protip no longer exists. Won't be found.
-          %li{ class: (protip.kind == 'link' ? 'ext-link' : '') }
-            = render(partial: 'protips/mini', locals: { protip: protip, mode: mode })
+      = render 'grid_item', protip: protip, opportunity: opportunity, mode: mode
 
 - unless collection.nil? || !collection.respond_to?(:next_page) || collection.next_page.nil? || hide_more
   - next_url = url_for(params.merge(tags: params[:tags], q: params[:q], source: params[:action], controller:params[:controller], page: collection.current_page + 1, section: (defined?(section) ? section : nil), width: width, mode: mode ))
