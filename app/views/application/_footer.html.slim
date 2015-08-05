@@ -1,8 +1,5 @@
 footer#footer
   .inside-footer.cf
-    #tweetbtn
-      a.twitter-follow-button data-show-count="false" data-width="300" href="https://twitter.com/coderwall"  Follow @coderwall
-      script src="https://platform.twitter.com/widgets.js" type="text/javascript"
     nav#footer-nav
       ul.footer-links.cf
         li= link_to('Contact', contact_us_path)
@@ -18,11 +15,15 @@ footer#footer
         li Copyright &copy; 2012-2015 Assembly Made, Inc. All rights reserved.
       ul.credits
         li= yield :credits
+
+    .right_part
+      #tweetbtn
+        a.twitter-follow-button data-show-count="false" data-width="300" href="https://twitter.com/coderwall"  Follow @coderwall
+      script src="https://platform.twitter.com/widgets.js" type="text/javascript"
       ul.mixpanel
         li
           a href="https://mixpanel.com/f/partner"
             img alt="Real Time Web Analytics" src="https://mixpanel.com/site_media/images/partner/badge_light.png"
-
 
 = javascript_include_tag 'application'
 = render 'shared/mixpanel_properties'

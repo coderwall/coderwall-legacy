@@ -1,0 +1,132 @@
+#footer {
+  .inside-footer {
+    max-width: 1180px;
+    padding: 40px 20px 10px 20px;
+    margin: 0 auto;
+    nav{
+      &#footer-nav {
+        float: left;
+        width: 80%;
+        ul {
+        }
+
+        .footer-links {
+          margin-bottom: 10px;
+          width: 70%;
+          li {
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            &:first-child {
+            }
+            a {
+              font-size: 1.4em;
+              color: $mid-grey;
+              &:hover {
+                color: $light-blue;
+              }
+            }
+          }
+          .employers {
+            a {
+              background: $mid-blue-grey;
+              color: #fff;
+              padding: 4px 6px;
+              @include border-radius(4px);
+              &:hover {
+                color: #fff;
+                background: $blue-grey;
+              }
+            }
+          }
+        }
+        .assembly-badge {
+          margin: -10px 0 10px -20px;
+        }
+        .copyright {
+          margin-bottom: 15px;
+          li {
+            font-size: 1.2em;
+            color: $light-grey;
+          }
+        }
+        .credits {
+          margin-bottom: 15px;
+          li {
+            font-size: 1.2em;
+          }
+          a {
+            color: $light-grey;
+          }
+        }
+
+      }
+    }
+    .right_part {
+      float: right;
+      width: 20%;
+      text-align: right;
+      #tweetbtn {
+        float: right;
+        width: 124px;
+        margin-top: -7px;
+        iframe{
+          width: 124px !important;
+        }
+      }
+
+      .mixpanel {
+      }
+    }
+  }
+}
+
+#new-home-template {
+  #footer {
+    background: #fff;
+    min-width: 100%;
+    max-width: 1140px !important;
+    .inside-footer {
+      max-width: 100%;
+      padding: 7%;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #footer {
+      .inside-footer {
+        #tweetbtn {
+          float: none;
+          display: block;
+          margin-top: -7px;
+          margin-bottom: 15px;
+        }
+        #footer-nav {
+          padding-top: 30px;
+          .footer-links {
+            li {
+              margin: 0 15px 5px 0;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #footer {
+    .inside-footer {
+      #tweetbtn {
+        float: none;
+        width: 124px;
+        margin-bottom: 10px;
+      }
+      #footer-nav {
+        .footer-links {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
