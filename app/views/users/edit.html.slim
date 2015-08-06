@@ -7,23 +7,23 @@
   = record_view_event('settings')
 
 = content_for :body_id do
-  member-settings
+  |member-settings
 
 #lflf
-  %h1.big-title
+  h1.big-title
     - if @user == current_user
-      Your Settings
+      |Your Settings
     - elsif admin_of_premium_team?
-      == #{@user.display_name}'s #{@user.team.name} Profile
+      ="#{@user.display_name}'s #{@user.team.name} Profile"
 
   - if @user == current_user
-    %ul.member-nav
-      %li=link_to('Profile', '#basic', class: 'filternav your-profile active')
+    ul.member-nav
+      li=link_to('Profile', '#basic', class: 'filternav your-profile active')
       - if @user.on_premium_team?
-        %li= link_to("Team Profile", '#team', class: 'filternav team-prefs')
-      %li= link_to('Social links', '#social', class: 'filternav social-bookmarks')
-      %li= link_to('Jobs', '#jobs', class: 'filternav personalize')
-      %li= link_to('Email', '#email', class: 'filternav email-prefs')
+        li= link_to("Team Profile", '#team', class: 'filternav team-prefs')
+      li= link_to('Social links', '#social', class: 'filternav social-bookmarks')
+      li= link_to('Jobs', '#jobs', class: 'filternav personalize')
+      li= link_to('Email', '#email', class: 'filternav email-prefs')
 
   .panel.cf
     .inside-panel-align-left
@@ -33,11 +33,11 @@
           #basic_section.editsection
             .account-box
               = render partial: 'users/link_accounts', locals: {form: form}
-              %p.neverpost We'll never post without your permission
+              p.neverpost We'll never post without your permission
 
             =render "shared/error_messages", target: @user
 
-            %p.special-p Avatar:
+            p.special-p Avatar:
             .special-setting
               = image_tag(@user.avatar_url, class: 'avatar')
               .div
@@ -65,14 +65,14 @@
               = form.label :username, "Username: <em>required</em>".html_safe
               = form.text_field :username, 'data-validation' => usernames_path, :maxlength => 15
               #username_validation
-              %p Changing your username will make your previous username available to someone else.
+              p Changing your username will make your previous username available to someone else.
             .setting
               = form.label :about, "Bio:"
               = form.text_area :about
-            -#.save=submit_tag 'Save', class: 'button'
+            /.save=submit_tag 'Save', class: 'button'
 
             .left
-              %p Personalize your profile by uploading your own background photo. Please note hipsterizing your photo can take up to one or two minutes.
+              p Personalize your profile by uploading your own background photo. Please note hipsterizing your photo can take up to one or two minutes.
               - if !@user.banner.blank?
                 = image_tag(@user.banner.url)
                 .div
@@ -87,8 +87,8 @@
                 = form.label @user.api_key
             .left
               .delete
-                %p
-                  Deleting your account is permanent and will make your username available to someone else. If you would still like to delete your account,
+                p
+                  |Deleting your account is permanent and will make your username available to someone else. If you would still like to delete your account,
                   = link_to "click here.", "/delete_account"
               .save=submit_tag 'Save', class: 'button'
 
@@ -170,54 +170,41 @@
               .save= submit_tag 'Save', class: 'button'
 
         -if @user.on_premium_team? || admin_of_premium_team?
-          #team_section.editsection{class: admin_of_premium_team? ? '' : 'hide'}
-            %p.team-title
-              Updating team
+          #team_section.editsection class="#{admin_of_premium_team? ? '' : 'hide'}"
+            p.team-title
+              |Updating team
               = link_to(@user.team.name, teamname_url(slug: @user.team.slug, full: :preview))
-              settings
+              |settings
             .left
               = render "shared/error_messages", target: @user
               .special-setting.explaination
-                %p.number.one
-                  1
-                %p.number.two
-                  2
-                %p.number.three
-                  3
-                %p.number.four
-                  4
-                %h3.name
-                  The users name
-                %p.bio
-                  The users bio Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                %label
-                  This graphic shows what area of your team profile you are upadting
+                p.number.one 1
+                p.number.two 2
+                p.number.three 3
+                p.number.four 4
+                h3.name The users name
+                p.bio The users bio Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                label This graphic shows what area of your team profile you are upadting
                 = image_tag("prem-profile-explaination.jpg")
 
               .special-setting.name-bio
-                %p
-                  This infomation is taken from your min profile name and bio, change them in the
-                  %a{href: '/'}
-                    profile section.
-                %p.number.one
-                  1
+                p="This infomation is taken from your min profile name and bio, change them in the #{link_to 'profile section','/'}."
+                p.number.one 1
               .special-setting
-                %p.number.two
-                  2
+                p.number.two 2
                 = form.label :team_responsibilities, "What you work on at #{@user.team.name} (1 or 2 short sentences)"
                 = form.text_area :team_responsibilities
 
               .special-setting
-                %p= "Optionally select unique avatar for the #{@user.team.name} team page. If you do not select an avatar it will default to the same avatar on your profile."
+                p= "Optionally select unique avatar for the #{@user.team.name} team page. If you do not select an avatar it will default to the same avatar on your profile."
                 = form.hidden_field :team_avatar
                 .preview
                   = image_tag(@user.team_avatar) unless @user.team_avatar.blank?
                   = link_to('Choose Photo','#', class: 'photo-chooser','data-input' => 'user_team_avatar', 'data-fit-w' => 80, 'data-fit-h' => 80)
 
               .special-setting.team-profile-img
-                %p.number.three
-                  3
-                %p= "Optionally select unique background image for the #{@user.team.name} team page. If you do not select a background photo, it will default to the same banner that is on your personal profile."
+                p.number.three 3
+                p= "Optionally select unique background image for the #{@user.team.name} team page. If you do not select a background photo, it will default to the same banner that is on your personal profile."
                 = form.hidden_field :team_banner
                 .preview
                   = image_tag(@user.team_banner) unless @user.team_banner.blank?
@@ -228,7 +215,7 @@
         .clear
 
       #jobs_section.editsection.hide
-        %p Upload your resume. It will be sent automatically to positions you apply for through Coderwall.
+        p Upload your resume. It will be sent automatically to positions you apply for through Coderwall.
         .left
           .setting
             .current-resume
