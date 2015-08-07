@@ -19,7 +19,7 @@
   - if @user == current_user
     ul.member-nav
       li=link_to('Profile', '#basic', class: 'filternav your-profile active')
-      - if @user.on_premium_team?
+      - if @user.membership.present?
         li= link_to("Team Profile", '#team', class: 'filternav team-prefs')
       li= link_to('Social links', '#social', class: 'filternav social-bookmarks')
       li= link_to('Jobs', '#jobs', class: 'filternav personalize')
