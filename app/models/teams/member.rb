@@ -41,6 +41,10 @@ class Teams::Member < ActiveRecord::Base
     name || username
   end
 
+  def admin?
+    role == 'admin'
+  end
+
   %i(
     banner
     city
