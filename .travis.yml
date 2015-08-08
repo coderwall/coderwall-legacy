@@ -4,6 +4,8 @@ rvm:
 cache: bundler
 sudo: false
 bundler_args: "--without development production"
+addons:
+  postgresql: "9.3"
 services:
   - redis-server
   - elasticsearch
