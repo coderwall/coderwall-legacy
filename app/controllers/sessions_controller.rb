@@ -16,8 +16,8 @@ class SessionsController < ApplicationController
     #REMOVEME
     head(:forbidden) unless current_user.admin?
     sign_out
-    sign_in(@user = User.find_by_username(params[:username]))
-    redirect_to(badge_url(username: params[:username]))
+    sign_in(User.find(params[:id]))
+    redirect_to(root_url)
   end
 
   def create

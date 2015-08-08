@@ -107,8 +107,6 @@ class ApplicationController < ActionController::Base
 
   def sign_out
     record_event("signed out")
-    @current_user          = nil
-    session[:current_user] = nil
     cookies.delete(:signedin)
     reset_session
   end

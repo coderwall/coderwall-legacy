@@ -170,7 +170,7 @@
               .save= submit_tag 'Save', class: 'button'
 
         -if @user.membership.present?
-          #team_section.editsection class="#{@user.membership.admin? ? '' : 'hide'}"
+          #team_section.editsection.hide
             p.team-title
               |Updating team
               = link_to(@user.team.name, teamname_url(slug: @user.team.slug, full: :preview))

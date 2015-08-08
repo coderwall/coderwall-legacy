@@ -199,42 +199,4 @@
                 %h4 HTML code
               =text_area_tag 'HTML', html_embed_code_with_count
 
-  -if is_admin?
-    .hint-box
-      %ul.hint
-        %li=mail_to(@user.email)
-        %li
-          ==Total Views: #{@user.total_views}
-        %li
-          ==Last Request: #{time_ago_in_words(@user.last_request_at || Time.at(0))} ago
-        %li
-          ==Login Count: #{@user.login_count}
-        %li
-          ==Achievements last reviewed #{time_ago_in_words(@user.achievements_checked_at)} ago
-        %li
-          ==Score: #{@user.score}
-        - if @user.banned?
-          %li
-            Banned:
-            = @user.banned_at.to_s(:long)
-        %li.admin-action
-          =link_to("Impersonate", "/sessions/force?username=#{@user.username}")
-        %li.admin-action
-          - if @user.banned?
-            =link_to("Unban this user", user_unbans_path(@user), method: :post)
-          - else
-            =link_to("Ban this user", user_bans_path(@user), method: :post)
-        -if @user.twitter
-          %li.admin-action
-            =link_to('Clear Twitter!', clear_provider_path(@user, :provider =>  'twitter'), :confirm => 'Are you sure?')
-        -if @user.github
-          %li.admin-action
-            =link_to('Clear GitHub!', clear_provider_path(@user, :provider =>  'github'), :confirm => 'Are you sure?')
-        -if @user.linkedin || @user.linkedin_id
-          %li.admin-action
-            =link_to('Clear LinkedIn!', clear_provider_path(@user, :provider =>  'linkedin'), :confirm => 'Are you sure?')
-
-        %li.admin-action
-          =link_to('Delete Facts', clear_provider_path(@user, :provider =>  'facts'),:confirm => 'Are you sure?', :method => :delete)
-        %li.admin-action
-          =link_to('Delete User', user_path(@user),:confirm => 'Are you sure?', :method => :delete)
+  = render('show_admin_panel', user: @user) if is_admin?
