@@ -8,9 +8,7 @@
       li= "Achievements last reviewed #{time_ago_in_words(user.achievements_checked_at)} ago"
       li= "Score: #{user.score}"
       - if user.banned?
-        li
-          Banned:
-          = user.banned_at.to_s(:long)
+        li= "Banned: #{user.banned_at.to_s(:long)}#"
       li.admin-action= link_to("Impersonate", "/sessions/force?id=#{user.id}")
       li.admin-action
         - if user.banned?
