@@ -22,4 +22,3 @@
           =link_to('Clear LinkedIn!', clear_provider_path(user, :provider => 'linkedin'), :confirm => 'Are you sure?')
       li.admin-action
         =link_to('Delete Facts', clear_provider_path(user, :provider => 'facts'), :confirm => 'Are you sure?', :method => :delete)
-      li.admin-action= link_to('Delete User', user_path(user), :confirm => 'Are you sure?', :method => :delete)

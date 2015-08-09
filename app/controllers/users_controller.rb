@@ -157,17 +157,6 @@ class UsersController < ApplicationController
     redirect_to badge_url(@user.username)
   end
 
-  def delete_account
-    return head(:forbidden) unless signed_in?
-  end
-
-  def delete_account_confirmed
-    user = User.find(current_user.id)
-    user.destroy
-    sign_out
-    redirect_to root_url
-  end
-
   def clear_provider
     return head(:forbidden) unless current_user.admin?
 
@@ -178,17 +167,6 @@ class UsersController < ApplicationController
     clear_provider_for_user(clear_provider_params[:provider], @user)
 
     redirect_to(badge_url(username: @user.username))
-  end
-
-  def destroy
-    return head(:forbidden) unless current_user.admin?
-
-    destroy_params = params.permit(:id)
-
-    @user = User.find(destroy_params[:id])
-    @user.destroy
-    record_event('deleted account')
-    redirect_to badge_url(@user.username)
   end
 
   def settings

@@ -320,8 +320,6 @@ Coderwall::Application.routes.draw do
   get '/settings' => 'users#edit', as: :settings
   get '/unsubscribe' => 'emails#unsubscribe'
   get '/delivered' => 'emails#delivered'
-  get '/delete_account' => 'users#delete_account', as: :delete_account
-  post '/delete_account_confirmed' => 'users#delete_account_confirmed', as: :delete_account_confirmed
 
   resources :authentications, :usernames
   resources :invitations
