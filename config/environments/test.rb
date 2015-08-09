@@ -1,5 +1,5 @@
 Coderwall::Application.configure do
-  config.threadsafe! unless $rails_rake_task
+  config.eager_load = true
   config.cache_classes = false
   config.whiny_nils = true
   config.consider_all_requests_local = true

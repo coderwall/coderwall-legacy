@@ -1,5 +1,5 @@
 Coderwall::Application.configure do
-  config.threadsafe! unless $rails_rake_task
+  config.eager_load = true
 
   require 'sidekiq/testing/inline'
 
@@ -27,15 +27,6 @@ Coderwall::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-
-  # Move cache dir's out of vagrant NFS directory
-  config.cache_store                           = [:file_store,"/tmp/codewall-cache/"]
-  config.assets.cache_store                    = [:file_store,"/tmp/codewall-cache/assets/"]
-  Rails.application.config.sass.cache_location = "/tmp/codewall-cache/sass/"
-
-  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
-  #Rails.logger = Logger.new(STDOUT)
-  #Rails.logger.level = Logger::DEBUG
 
   # Mock account credentials
   OmniAuth.config.test_mode = true
