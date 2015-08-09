@@ -86,10 +86,6 @@
                 = form.label :api_key, 'API Key:'
                 = form.label @user.api_key
             .left
-              .delete
-                p
-                  |Deleting your account is permanent and will make your username available to someone else. If you would still like to delete your account,
-                  = link_to "click here.", "/delete_account"
               .save=submit_tag 'Save', class: 'button'
 
 
