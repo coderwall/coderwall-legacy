@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150726135616) do
+ActiveRecord::Schema.define(:version => 20150809160133) do
 
   add_extension "citext"
   add_extension "hstore"
@@ -266,7 +266,7 @@ ActiveRecord::Schema.define(:version => 20150726135616) do
     t.text     "attended_events"
     t.boolean  "deleted",            :default => false, :null => false
     t.datetime "deleted_at"
-    t.json     "links",               :default => "{}"
+    t.json     "links",              :default => "{}"
   end
 
   add_index "skills", ["deleted", "user_id"], :name => "index_skills_on_deleted_and_user_id"
@@ -405,6 +405,7 @@ ActiveRecord::Schema.define(:version => 20150726135616) do
     t.string   "team_banner"
     t.string   "team_avatar"
     t.string   "role",        :default => "member"
+    t.string   "title"
   end
 
   create_table "user_events", :force => true do |t|

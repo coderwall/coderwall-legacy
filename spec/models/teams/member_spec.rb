@@ -12,6 +12,7 @@
 #  team_banner :string(255)
 #  team_avatar :string(255)
 #  role        :string(255)      default("member")
+#  title       :string(255)
 #
 
 require 'rails_helper'

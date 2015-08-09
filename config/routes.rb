@@ -70,8 +70,6 @@
 #                    settings GET                   /settings(.:format)                                    users#edit
 #                 unsubscribe GET                   /unsubscribe(.:format)                                 emails#unsubscribe
 #                   delivered GET                   /delivered(.:format)                                   emails#delivered
-#              delete_account GET                   /delete_account(.:format)                              users#delete_account
-#    delete_account_confirmed POST                  /delete_account_confirmed(.:format)                    users#delete_account_confirmed
 #             authentications GET                   /authentications(.:format)                             authentications#index
 #                             POST                  /authentications(.:format)                             authentications#create
 #          new_authentication GET                   /authentications/new(.:format)                         authentications#new
