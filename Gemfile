@@ -2,6 +2,7 @@ ruby '2.2.2'
 
 source 'https://rubygems.org' do
   gem 'rails', '~> 3.2'
+  gem 'rails_latest'
 
   gem 'sass'
   gem 'coffee-rails'
