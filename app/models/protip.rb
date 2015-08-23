@@ -136,6 +136,10 @@ class Protip < ActiveRecord::Base
     event :mark_as_spam do
       transition any => :marked_as_spam
     end
+
+    after_transition any => :marked_as_spam do |protip|
+      protip.spam!
+    end
   end
 
   class << self
