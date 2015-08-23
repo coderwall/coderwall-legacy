@@ -2,6 +2,8 @@ class UsersController < ApplicationController
   after_action :track_referrer, only: :show
   skip_before_action :require_registration, only: [:edit, :update]
 
+  layout 'coderwallv2', only: :edit
+
   def new
     return redirect_to(destination_url) if signed_in?
     return redirect_to(new_session_url) if oauth.blank?
@@ -114,11 +116,27 @@ class UsersController < ApplicationController
       flash.now[:notice] = "There were issues updating your profile."
     end
 
-    if admin_of_premium_team?
-      redirect_to(teamname_url(slug: @user.team.slug, full: :preview))
-    else
-      redirect_to(edit_user_url(@user))
+    respond_to do |format|
+      format.js
+      format.html do
+        if admin_of_premium_team?
+          redirect_to(teamname_url(slug: @user.team.slug, full: :preview))
+        else
+          redirect_to(edit_user_url(@user))
+        end
+      end
     end
+
+  end
+
+  def teams_update
+    membership=Teams::Member.find(params['membership_id'])
+    if membership.update_attributes(teams_member)
+      flash.now[:notice] = "The changes have been applied to your profile."
+    else
+      flash.now[:notice] = "There were issues updating your profile."
+    end
+    redirect_to(edit_user_url(membership.user))
   end
 
   def autocomplete
@@ -213,6 +231,10 @@ class UsersController < ApplicationController
 
   def oauth
     session["oauth.data"]
+  end
+
+  def teams_member
+    params.require(:teams_member).permit(:title,:team_avatar,:team_banner)
   end
 
   def user_edit_params

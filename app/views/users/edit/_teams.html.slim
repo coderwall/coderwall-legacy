@@ -1,0 +1,5 @@
+.card.no_shadow
+  .card-content
+    ul.collapsible.popout.collapsible-accordion data-collapsible="accordion"
+      -user.memberships.each do |membership|
+        =render 'users/edit/team', user: user , membership: membership

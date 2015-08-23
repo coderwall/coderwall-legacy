@@ -1,0 +1,27 @@
+.card.no_shadow
+  .card-content
+    = form_for @user, html: {id: 'edit_user_email_tab' } do |form|
+      .row
+        .col.s12
+          = render "shared/error_messages", target: @user
+      .row
+        .input-field.col.s12
+          = form.label :email, 'Email Address:'
+          = form.text_field :email
+      .row
+        .input-field.col.s12.m6
+          = form.check_box :notify_on_award
+          = form.label :notify_on_award, 'Receive a notification when you are awarded a new achievement'
+        .input-field.col.s12.m6
+          = form.check_box :notify_on_follow
+          = form.label :notify_on_follow, 'Receive a notification when someone follows you'
+      .row
+        .input-field.col.s12.m6
+          = form.check_box :receive_newsletter
+          = form.label :receive_newsletter, 'Receive infrequent but important announcements'
+        .input-field.col.s12.m6
+          = form.check_box :receive_weekly_digest
+          = form.label :receive_weekly_digest, 'Receive weekly brief'
+      .row
+        .input-field.col.s12
+          .save=submit_tag 'Save', class: 'btn right'

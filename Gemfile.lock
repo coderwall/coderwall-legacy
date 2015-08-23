@@ -362,6 +362,8 @@ GEM
       treetop (~> 1.4.8)
     mail_view (2.0.4)
       tilt
+    materialize-sass (0.97.0)
+      sass (~> 3.3)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     metamagic (3.1.7)
@@ -743,6 +745,7 @@ DEPENDENCIES
   linkedin!
   local_time!
   mail_view (~> 2.0.4)!
+  materialize-sass!
   metamagic!
   mini_magick!
   mixpanel!

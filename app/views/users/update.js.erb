@@ -1,0 +1,5 @@
+<% if(flash.now[:notice]) %>
+    alert(<%= flash.now[:notice] %>);
+<% end %>
+
+$('.edit_tabs').html(<%=j render 'users/edit', user: @user %>);

@@ -1,27 +1,39 @@
-%ul.linked-accounts
-  %li
-    .linkaccount Github
+ul.linked-accounts
+  li
+    .linkaccount
+      i.fa.fa-5x.fa-github-square
+      div
+        u Github
     -if @user.github.blank?
       =link_to('Link Account', link_github_path, :class => "button")
     -else
-      .linked=@user.github
+      b.linked=@user.github
+      br
       =link_to('Unlink account', unlink_github_path, :method => :post, :class => "unlink") if current_user.can_unlink_provider?(:github)
       .join-badge-orgs
         =form.check_box :join_badge_orgs
         =form.label :join_badge_orgs do
-          ==Join #{link_to 'Coderwall Badge Orgs', faq_path(:anchor => "badge-orgs"), :target => :new}
-  %li
-    .linkaccount Twitter
+          =="Join #{link_to 'Coderwall Badge Orgs', faq_path(:anchor => "badge-orgs"), :target => :new}"
+  li
+    .linkaccount
+      i.fa.fa-5x.fa-twitter-square
+      div
+        u Twitter
     -if @user.twitter.blank?
       =link_to('Link Account', link_twitter_path, :class => "button")
     -else
-      .linked=@user.twitter
+      b.linked=@user.twitter
+      br
       =link_to('Unlink account', unlink_twitter_path, :method => :post, :class => "unlink") if current_user.can_unlink_provider?(:twitter)
 
-  %li
-    .linkaccount LinkedIn
+  li
+    .linkaccount
+      i.fa.fa-5x.fa-linkedin-square
+      div
+        u LinkedIn
     -if @user.linkedin_id.blank?
       =link_to('Link Account', link_linkedin_path, :class => "button")
     -else
-      .linked= link_to "Profile", @user.linkedin_public_url
+      b.linked= link_to "Profile", @user.linkedin_public_url
+      br
       =link_to('Unlink account', unlink_linkedin_path, :method => :post, :class => "unlink") if current_user.can_unlink_provider?(:linkedin)

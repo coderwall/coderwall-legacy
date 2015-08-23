@@ -1,5 +1,5 @@
 #add-skill.skill-input.hide
   =form_for [@user, Skill.new] do |f|
-    %h3 Skill
+    h3 Skill
     =f.text_field :name, :placeholder => "skills separated by comma"
     =f.submit 'Save'

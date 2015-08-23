@@ -1,0 +1,26 @@
+footer.page-footer.grey.lighten-4
+  .container
+    .row
+      .col.l8.s12
+        ul.pagination
+          li.waves-effect= link_to('Contact', contact_us_path)
+          li.waves-effect= link_to('API & Hacks', api_path)
+          li.waves-effect= link_to('FAQ', faq_path)
+          li.waves-effect= link_to('Privacy Policy', privacy_policy_path)
+          li.waves-effect= link_to('Terms of Service', tos_path)
+          li.waves-effect= link_to('Jobs', '/jobs')
+          li.waves-effect.active= link_to('Employers', employers_path)
+          =yield :footer_menu
+      .col.l4.s12.right_part
+        span#tweetbtn
+          a.twitter-follow-button data-show-count="false" data-width="300" href="https://twitter.com/coderwall"  Follow @coderwall
+        script src="https://platform.twitter.com/widgets.js" type="text/javascript"
+        span.mixpanel
+          a href="https://mixpanel.com/f/partner"
+            img alt="Real Time Web Analytics" src="https://mixpanel.com/site_media/images/partner/badge_light.png"
+
+  .footer-copyright
+    .container
+      .credits
+        = yield :credits
+      .copyright Copyright &copy; 2012-2015 Assembly Made, Inc. All rights reserved.

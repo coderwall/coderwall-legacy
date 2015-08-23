@@ -1,0 +1,34 @@
+li.no_shadow.active
+  .collapsible-header.active
+    i=image_tag(membership.team.avatar_url)
+    ="#{membership.team.name} ( #{membership.state} )"
+  .collapsible-body style=("display: none;")
+    = form_for membership, url: teams_update_users_path(membership),method: :post, html: { multipart: true} do |form|
+      .row
+        .col.s12
+        = render "shared/error_messages", target: membership
+      .row
+        .input-field.col.s12
+          = form.label :title, 'Title:'
+          = form.text_field :title
+      .row
+        .input-field.col.s12.m6
+          .special-setting
+            = form.label :team_avatar, 'Avatar:'
+            p= "Optionally select unique avatar for the #{membership.team.name} team page. If you do not select an avatar it will default to the same avatar on your profile."
+            .preview
+              = image_tag(membership.team_avatar) unless membership.team_avatar.blank?
+            = form.file_field :team_avatar
+        .input-field.col.s12.m6
+          .special-setting.team-profile-img
+            = form.label :team_banner, 'Banner:'
+            p= "Optionally select unique background image for the #{membership.team.name} team page. If you do not select a background photo, it will default to the same banner that is on your personal profile."
+            .preview
+              = image_tag(membership.team_banner) unless membership.team_banner.blank?
+            = form.file_field :team_banner
+      .row
+        .input-field.col.s12.m6
+        .input-field.col.s12.m6
+          .save=submit_tag 'Save', class: 'btn right'
+
+.clearboth

@@ -12,7 +12,6 @@
 #  team_banner :string(255)
 #  team_avatar :string(255)
 #  role        :string(255)      default("member")
-#  title       :string(255)
 #
 
 # TODO: Move team_banner to uhhh... the Team. Maybe that would make sense.
@@ -26,6 +25,12 @@ class Teams::Member < ActiveRecord::Base
 
   validates_uniqueness_of :user_id, scope: :team_id
   validates :team_id, :user_id, :presence => true
+
+  mount_uploader :team_avatar, AvatarUploader
+
+  mount_uploader :team_banner, BannerUploader
+  # process_in_background :team_banner, ResizeTiltShiftBannerJob
+
 
   scope :active, -> { where(state: 'active') }
   scope :pending, -> { where(state: 'pending') }
@@ -62,7 +67,7 @@ class Teams::Member < ActiveRecord::Base
     delegate user_method, to: :user
   end
 
-  [:badges, :title, :endorsements].each do |m|
+  [:badges, :endorsements].each do |m|
     define_method(m) { user.try(m) }
   end
 end

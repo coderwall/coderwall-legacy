@@ -1,0 +1,18 @@
+.card.no_shadow
+  .card-content
+    .row
+      .col.s6.center-align
+        - if current_user.has_resume?
+          p= link_to 'Your current resume', current_user.resume_url, class: 'black darken-2 track waves-effect waves-light btn-large', 'data-action' => 'upload resume', 'data-from' => 'job application'
+          br
+          br
+        p.info-post Upload your resume. It will be sent automatically to positions you apply for through Coderwall.
+      .col.s6
+        = form_tag(resume_uploads_url, method: :post, multipart: true) do
+          = hidden_field_tag :user_id, current_user.id
+          .file-field.input-field
+            .btn
+              span File
+              = file_field_tag :resume
+            input.file-path.validate type="text" /
+          .save =submit_tag 'Save', class: 'btn'

@@ -16,7 +16,6 @@ source 'https://rubygems.org' do
 # Load environment variables first
   gem 'dotenv-rails', groups: [:development, :test]
 
-
 # Attachements
   gem 'carrierwave'
   gem 'carrierwave_backgrounder' #background processing of images
@@ -89,10 +88,8 @@ source 'https://rubygems.org' do
   gem 'faraday', '~> 0.8.1'
   gem 'metamagic'
 
-  gem "mail_view", "~> 2.0.4"
 
 # ----------------
-
 
   gem 'acts_as_follower', '0.1.1'
   gem 'fog'
@@ -109,6 +106,7 @@ source 'https://rubygems.org' do
   gem 'sitemap_generator'
   gem 'tweet-button'
   gem 'local_time'
+  gem 'materialize-sass'
 
   gem 'closure_tree'
 
@@ -125,6 +123,7 @@ source 'https://rubygems.org' do
   gem 'foreigner'
   gem 'state_machine'
   gem 'activerecord-postgres-json'
+  gem "mail_view", "~> 2.0.4"
 
 # ElasticSearch client
   gem 'tire'
@@ -182,7 +181,6 @@ source 'https://rubygems.org' do
 end
 
 source 'https://rails-assets.org' do
-
   gem 'rails-assets-font-awesome'
   gem 'rails-assets-jquery-cookie', '1.4.0'
   gem 'rails-assets-jquery-dropdown'

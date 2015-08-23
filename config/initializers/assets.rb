@@ -3,6 +3,8 @@ Coderwall::Application.configure do
   config.assets.precompile << 'alert.css'
   config.assets.precompile << 'coderwall.css'
   config.assets.precompile << 'coderwall.js'
+  config.assets.precompile << 'coderwallv2.css'
+  config.assets.precompile << 'coderwallv2.js'
   config.assets.precompile << 'product_description.css'
   config.assets.precompile << 'premium-teams.css'
   config.assets.precompile << 'protip.css'

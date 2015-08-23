@@ -1,0 +1,33 @@
+.row
+  .col.s12
+    ul.tabs.grey.lighten-4
+      li.tab
+        =link_to('Summary', '#summary-tab', class: 'filternav active')
+      li.tab
+        =link_to('Profile', '#basic-tab', class: 'filternav your-profile')
+      -if @user.membership.present?
+        li.tab
+          = link_to('Teams', '#team-tab', class: 'filternav team-prefs')
+      li.tab
+        = link_to('Social links', '#social-tab', class: 'filternav social-bookmarks')
+      li.tab
+        = link_to('Jobs', '#jobs-tab', class: 'filternav personalize')
+      li.tab
+        = link_to('Email', '#email-tab', class: 'filternav email-prefs')
+    .tab_content.grey.lighten-4
+      #summary-tab.col.s12
+        =render 'users/edit/summary', user: @user
+      #basic-tab.col.s12
+        =render 'users/edit/basic', user: @user
+      -if @user.membership.present?
+        #team-tab.col.s12.team_section
+          =render 'users/edit/teams', user: @user,team: current_user.membership.team
+      #social-tab.col.s12
+        =render 'users/edit/social', user: @user
+      #jobs-tab.col.s12
+        =render 'users/edit/jobs', user: @user
+      #email-tab.col.s12
+        =render 'users/edit/email', user: @user
+      .clearboth
+
+

@@ -231,4 +231,28 @@ module UsersHelper
     return nil if signed_in?
     'not-signed-in'
   end
+
+
+
+  # option={
+  # :type=>'paragraph|image|text',
+  # :content_class=>'',
+  # :attribute_class=>'',
+  # :label_class=>'',
+  # :image_class=>''
+  # }
+  def show_user_attribute(attribute,label,option={})
+    if attribute.present?
+      content_tag :div, class: option[:content_class] do
+        case option[:type]
+          when :paragraph
+            content_tag(:b,label, class: option[:label_class])+' : '+content_tag(:div, attribute, class: option[:attribute_class],style: 'margin-left: 10px;')
+          when :image
+            content_tag(:b,label, class: option[:label_class])+' : '+content_tag(:div, image_tag(attribute, class: option[:image_class]), class: option[:attribute_class])
+          else  #text
+            content_tag(:b,label, class: option[:label_class])+' : '+content_tag(:span, attribute, class: option[:attribute_class])
+        end
+      end
+    end
+  end
 end

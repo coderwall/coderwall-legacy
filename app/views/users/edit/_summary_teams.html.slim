@@ -1,0 +1,6 @@
+.card.no_shadow
+  .card-content
+    h5.light Teams
+    ul.collection
+      -user.memberships.each do |membership|
+        =render 'users/edit/summary_team_collapsible', membership: membership

@@ -1,7 +1,7 @@
 # == Route Map
 #
-#                             GET                   /.json(.:format)                                       #<Proc:0x007f1cf36de838@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:234>
-#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f1cf36dc4c0@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:235>
+#                             GET                   /.json(.:format)                                       #<Proc:0x007f8ea9ae9d60@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:236>
+#                             GET                   /teams/.json(.:format)                                 #<Proc:0x007f8ea9b17b20@/home/abdelkader/RubymineProjects/coderwall/config/routes.rb:237>
 #                                                   /mail_view                                             MailPreview
 #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
 #               protip_update GET|PUT               /protip/update(.:format)                               protip#update
@@ -167,6 +167,7 @@
 #        unlink_stackoverflow POST                  /stackoverflow/unlink(.:format)                        users#unlink_provider {:provider=>"stackoverflow"}
 #                             GET                   /stackoverflow/:username(.:format)                     users#show {:provider=>"stackoverflow"}
 #              resume_uploads POST                  /resume_uploads(.:format)                              resume_uploads#create
+#          teams_update_users POST                  /users/teams_update/:membership_id(.:format)           users#teams_update
 #                invite_users POST                  /users/invite(.:format)                                users#invite
 #          autocomplete_users GET                   /users/autocomplete(.:format)                          users#autocomplete
 #                status_users GET                   /users/status(.:format)                                users#status
@@ -382,11 +383,14 @@ Coderwall::Application.routes.draw do
 
   resources :users do
     collection do
+      post '/teams/:membership_id' => 'users#teams_update', as: :teams_update
       post 'invite'
       get 'autocomplete'
       get 'status'
     end
-    member { post 'specialties' }
+    member do
+      post 'specialties'
+    end
     resources :skills
     resources :endorsements
     resources :pictures

@@ -1,0 +1,11 @@
+li.collection-item.avatar
+  =image_tag(membership.team.avatar_url, class: "circle")
+  span.title
+    b Name
+    =": #{membership.team.name}"
+  p
+    b Title
+    =": #{membership.title}"
+    br
+    b State
+    =": #{membership.state}"

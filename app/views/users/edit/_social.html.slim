@@ -1,0 +1,50 @@
+.card.no_shadow
+  .card-content
+    = form_for @user, html: {id: 'edit_user_social_tab'} do |form|
+      .row
+        .col.s12
+          = render "shared/error_messages", target: @user
+      .row
+        .col.s12
+          p.neverpost.info-post We'll never post without your permission
+      .row
+        .col.s12.account-box.m8.offset-m2
+          = render partial: 'users/link_accounts', locals: {form: form}
+      .row
+        .input-field.col.s12.m6
+          = form.label :blog, 'Blog:'
+          = form.text_field :blog
+        .input-field.col.s12.m6
+          = form.label :stackoverflow, 'Stackoverflow id: (Ex : http://stackoverflow.com/users/YOUR_ID/name)'
+          = form.text_field :stackoverflow
+      .row
+        .input-field.col.s12.m6
+          = form.label :codeplex, 'CodePlex username:'
+          = form.text_field :codeplex
+        .input-field.col.s12.m6
+          = form.label :forrst, 'Forrst username:'
+          = form.text_field :forrst
+      .row
+        .input-field.col.s12.m6
+          = form.label :dribbble, 'Dribbble username:'
+          = form.text_field :dribbble
+        .input-field.col.s12.m6
+          = form.label :speakerdeck, 'Speakerdeck username:'
+          = form.text_field :speakerdeck
+      .row
+        .input-field.col.s12.m6
+          = form.label :bitbucket, 'Bitbucket username:'
+          = form.text_field :bitbucket
+        .input-field.col.s6
+          = form.label :sourceforge, 'SourceForge id: (Ex : http://sourceforge.net/users/YOUR_ID/)'
+          = form.text_field :sourceforge
+      .row
+        .input-field.col.s12.m6
+          = form.label :slideshare, 'Slideshare username: (Ex : http://www.slideshare.net/YOUR_USERNAME/newsfeed)'
+          = form.text_field :slideshare
+        .input-field.col.s12.m6
+          = form.label :favorite_websites, 'Favorite Websites: comma separated list of sites you enjoy visiting daily'
+          = form.text_field :favorite_websites
+      .row
+        .input-field.col.s12
+          .save =submit_tag 'Save', class: 'btn right'

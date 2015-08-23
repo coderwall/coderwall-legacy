@@ -1,0 +1,68 @@
+.card.no_shadow
+  .card-content
+    = form_for @user, html: { id: 'edit_user_basic_tab', multipart: true }do |form|
+      .row
+        .col.s12
+          =render "shared/error_messages", target: user
+      p.special-p Avatar:
+      .special-setting
+        .div
+          = image_tag(@user.avatar_url, class: 'avatar')
+        .div
+          = form.check_box :remove_avatar
+          = form.label :remove_avatar, "Remove Avatar", class: 'checkbox-label'
+        .div
+          = form.file_field :avatar
+          = form.hidden_field :avatar_cache
+      hr
+      .row
+        .input-field.col.s12.m6
+          = form.label :name, 'Name:'
+          = form.text_field :name
+        .input-field.col.s12.m6
+          = form.label :title, 'Title:'
+          = form.text_field :title
+      .row
+        .input-field.col.s12.m6
+          = form.label :company, 'Company:'
+          = form.text_field :company
+        .input-field.col.s12.m6
+          = form.label :location, 'Location: (required)'
+          = form.text_field :location
+      .row
+        .input-field.col.s12.m6
+          = form.label :username, 'Username: (required)'
+          = form.text_field :username, 'data-validation' => usernames_path, :maxlength => 15
+          #username_validation.info-post
+          p.info-post Changing your username will make your previous username available to someone else.
+        .input-field.col.s12.m6
+          = form.label :about, 'Bio:'
+          = form.text_area :about , class: 'materialize-textarea'
+      hr
+      .row
+        .input-field.col.s12
+          p Personalize your profile by uploading your own background photo. Please note hipsterizing your photo can take up to one or two minutes.
+          .row
+            .input-field.col.s12.m6
+              - if !@user.banner.blank?
+                = image_tag(@user.banner.url)
+                .input-field
+                  = form.check_box :remove_banner
+                  = form.label :remove_banner, 'Remove Banner', class: 'checkbox-label'
+
+            .input-field.col.s12.m6
+              = form.file_field :banner
+              = form.hidden_field :banner_cache
+      .row
+        .input-field.col.s12.m6
+          = form.label :api_key, "API Key : #{@user.api_key}"
+        .input-field.col.s6
+          .delete
+            p
+              |Deleting your account is permanent and will make your username available to someone else. If you would still like to delete your account,
+              = link_to " click here.", "/delete_account"
+      .row
+        .input-field.col.s12.m6
+        .input-field.col.s12.m6
+          .save =submit_tag 'Save', class: 'btn right'
+

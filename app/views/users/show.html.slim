@@ -1,114 +1,110 @@
-=content_for :body_id do
-  profile
-
-=content_for :javascript do
-  =javascript_include_tag 'users.js'
-
+-content_for :body_id, 'profile'
+-content_for :javascript, javascript_include_tag('users.js')
 -content_for :mixpanel do
   -if viewing_self?
     =record_view_event('own profile')
   -else
     =record_view_event('user profile')
-
 -content_for :credits do
   -if @user.banner.blank?
     =location_image_tag_credits_for(@user)
     =link_to(image_tag('cclicense.png'), 'http://creativecommons.org/licenses/by-sa/2.0/', :target => :new)
 
-%section.profile{:itemscope => true, :itemtype => meta_person_schema_url}
+section.profile itemscope="true" itemtype="#{meta_person_schema_url}"
   .special-image
     =location_image_tag_for(@user)
     .business-card
       =image_tag(users_image_path(@user), :class => 'profile-avatar', :width => 80, :height => 80, :itemprop => :image)
       .bc-right
-        %h1{:itemprop => :name}=@user.display_name
+        h1 itemprop="name" =@user.display_name
         -if signed_in?
-          %p.location{:itemscope => true, :itemtype => meta_address_schema_url, :itemprop => :address}=@user.location
-        %p.title{:itemprop => :title}=business_card_for(@user)
+          p.location itemscope="true" itemtype="#{meta_address_schema_url}" itemprop="address"
+            =@user.location
+        p.title itemprop="title"=business_card_for(@user)
       -if !@user.protips.empty? || viewing_self?
         .user-pro-tip.cf
-          %a.pro-tip-number.track{:href => user_protips_path(@user.username), 'data-action' => 'view user protips', 'data-from' => 'profile card'}
-            %span= @user.protips.count
+          =link_to user_protips_path(@user.username), class: 'pro-tip-number track', 'data-action' => 'view user protips', 'data-from' => 'profile card'
+            span= @user.protips.count
             = @user.protips.count > 1 ? 'Pro Tip'.pluralize : 'Pro Tip'
           .recent-pro-tip
             -if viewing_self?
-              %a.tip.share-a-protip.track{:href => new_protip_path, 'data-action' => 'create protip', 'data-from' => 'profile card', 'title' => @user.skills.empty? ? "Fill out your profile by adding some skills first, then share some Pro Tips!" : "Share your best coding tidbits!" }
-                Share a Pro Tip
+              =link_to 'Share a Pro Tip',new_protip_path, class: 'tip share-a-protip track', 'data-action' => 'create protip', 'data-from' => 'profile card', 'title' => @user.skills.empty? ? "Fill out your profile by adding some skills first, then share some Pro Tips!" : "Share your best coding tidbits!"
+
             -else
-              %h4 Most recent Protip
+              h4 Most recent Protip
               - recent_protips(1).each do |protip|
                 = link_to protip.title, protip_path(protip.public_id), :class => 'track', 'data-action' => 'view protip', 'data-from' => 'profile card'
 
   -if @user.skills.empty?
     -if viewing_self?
       .no-skills
-        %p
-          Adding a few skills you're good at will get you started earning some cred and unlocking achievements. Here are some suggestions:
-          %br
-          %br
-          %strong.no-skill Loving Visual Basic
-          %strong.no-skill IE6
-          %br
-        =link_to("Of course not, add a real skill", '#addskill', :class => 'add-skill track', 'data-action' => 'add skill', 'data-from' => 'profile (first skill)')
+        p
+          |Adding a few skills you're good at will get you started earning some cred and unlocking achievements. Here are some suggestions:
+          br
+          br
+          strong.no-skill =" Loving Visual Basic"
+          strong.no-skill =" IE6"
+          br
+        =link_to(" Of course not, add a real skill ", '#addskill', :class => 'add-skill track', 'data-action' => 'add skill', 'data-from' => 'profile (first skill)')
         =render 'add_skill'
   -else
     .profile-head
-      %h2 Skills & Achievements
+      h2 Skills & Achievements
       -if viewing_self?
         =link_to('Add Skill', '#addskill', :class => 'add-skill track', 'data-action' => 'add skill', 'data-from' => 'profile')
         =render 'add_skill'
-    %ul.skills
+    ul.skills
       -@user.skills.each do |skill|
         -cache ['v4', skill, skill.protips.size, skill.badges_count, skill.repos.count, signed_in?, viewing_self?] do
-          %li{:class => (skill.locked? ? 'locked' : 'unlocked')}
+          li class=(skill.locked? ? 'locked' : 'unlocked')
             .skill-left
-              %h3=skill.name.downcase
-              %ul
+              h3=skill.name.downcase
+              ul
                 -if skill.has_endorsements?
-                  %li==Received #{pluralize(skill.endorsements_count, 'endorsement')}
+                  li="Received #{pluralize(skill.endorsements_count, 'endorsement')}"
                 -if skill.has_repos?
-                  %li==Has open sourced #{pluralize(skill.repos.count, "#{skill.name.downcase} project")}
+                  li="Has open sourced #{pluralize(skill.repos.count, "#{skill.name.downcase} project")}"
                 -if skill.has_events?
-                  %li=skill_event_message(skill)
+                  li=skill_event_message(skill)
                 -if skill.has_protips?
-                  %li==Has shared #{pluralize(skill.protips.count, 'original protip')}
+                  li="Has shared #{pluralize(skill.protips.count, 'original protip')}"
             .skill-right
               -if skill.locked?
-                %p.help-text{'data-skill' => skill.id}=skill_help_text(skill)
+                p.help-text data-skill="#{skill.id}" =skill_help_text(skill)
               -else
-                %ul
+                ul
                   -skill.matching_badges_in(@user.badges).each do |badge|
-                    %li=image_tag(badge.image_path, :title => badge.description, :class => 'tip')
+                    li=image_tag(badge.image_path, :title => badge.description, :class => 'tip')
             .details.cf.hide
               -if skill.has_endorsements?
-                %h4 Endorsed by
-                %ul.endorsements
+                h4 Endorsed by
+                ul.endorsements
                   -skill.endorsements.each do |endorsement|
-                    %li
+                    li
                       =avatar_image_tag(endorsement.endorser, 'data-skill' => skill.id, :class => 'tip', :title => endorsement.endorser.display_name)
 
               -if skill.has_repos?
-                %h4 Repos
-                %ul.repos
+                h4 Repos
+                ul.repos
                   -skill.repos.each do |repo|
-                    %li
+                    li
                       =link_to(repo[:name], repo[:url],:class=>'track','data-action' =>'view repo', 'data-from' => 'profile skill', :target => '_blank')
               -if skill.has_protips?
-                %h4 Protips shared
-                %ul.protips
+                h4 Protips shared
+                ul.protips
                   -skill.protips.each do |protip|
-                    %li
+                    li
                       =link_to(protip.title,protip_path(protip),:class=>'track','data-action' =>'view protip', 'data-from' => 'profile skill')
               -if skill.has_events?
-                %h4 Events attended
-                %ul.events
+                h4 Events attended
+                ul.events
                   -skill.speaking_events.each do |event|
-                    %li
-                      Spoke at
+                    li
+                      |Spoke at
                       =link_to(event[:name], event[:url],:class=>'track','data-action' =>'view speaking event', 'data-from' => 'profile skill')
                   -skill.attended_events.each do |event|
-                    %li
-                      Attended
+                    li
+                      |Attended
                       =link_to(event[:name], event[:url],:class=>'track','data-action' =>'view attending event', 'data-from' => 'profile skill')
             -if !viewing_self?
               .endorse-wrap
@@ -120,83 +116,84 @@
                 =button_to('Remove', user_skill_path(@user, skill), :method=>:delete, :class=>'track destroy', 'data-skill' => skill.id, 'data-action' => 'delete skill', 'data-from' => 'profile skill')
 
 .sidebar
-  %aside.profile-sidebar
-    %ul.profile-details
+  aside.profile-sidebar
+    ul.profile-details
       -unless @user.about.blank?
-        %li
-          %h4 About
-          %p=@user.about
-      %li
-        %h4 Links
-        %ul.social-links
+        li
+          h4 About
+          p=@user.about
+      li
+        h4 Links
+        ul.social-links
           -social_bookmarks(@user).each do |bookmark|
             =bookmark.html_safe
       -if viewing_self? && !remaining_bookmarks(@user).empty?
-        %li.link-to-level-up
-          %h4 Link to level up
-          %ul.social-links
+        li.link-to-level-up
+          h4 Link to level up
+          ul.social-links
             -remaining_bookmarks(@user).each do |bookmark|
               =bookmark.html_safe
             -if viewing_self?
-              %li=link_to('', edit_user_path(@user) + '#social', :class=>'add-network track', 'data-action' => 'add social bookmark', 'data-from' => 'profile sidebar')
+              li=link_to('', edit_user_path(@user) + '#social', :class=>'add-network track', 'data-action' => 'add social bookmark', 'data-from' => 'profile sidebar')
 
 
       -if @user.membership
-        %li
-          %h4 Team
-          %a.team-link.track{:href => friendly_team_path(@user.membership.team), 'data-action' => 'view team', 'data-from' => 'profile sidebar'}
-            %span.team-avatar=image_tag(@user.membership.team.avatar_url, :width => 22, :height => 22)
-            %div{:itemprop => :affiliation}=truncate("#{@user.membership.team.name}", :length => 28)
+        li
+          h4 Team
+          =link_to friendly_team_path(@user.membership.team),class:'team-link track', 'data-action' => 'view team', 'data-from' => 'profile sidebar'
+            span.team-avatar=image_tag(@user.membership.team.avatar_url, :width => 22, :height => 22)
+            div itemprop="affiliation" =truncate("#{@user.membership.team.name}", :length => 28)
           -if viewing_self?
             = link_to 'Leave team', team_member_path(@user.membership.team, @user), :method => :delete, :confirm => "Are you sure you want to leave team #{@user.membership.team.name}", :class => "leave-team track", 'data-action' => 'leave team', 'data-from' => 'profile page'
 
       -elsif viewing_self?
-        %li.team-self
-          %a.profile-create-team.track{:href => new_team_path, 'data-action' => 'create team', 'data-from' => 'profile sidebar'}
-            %span.team-avatar Reserve Team's Name
+        li.team-self
+          =link_to new_team_path,class:'profile-create-team track', 'data-action' => 'create team', 'data-from' => 'profile sidebar'
+            span.team-avatar Reserve Team's Name
 
 
     .network
       -if viewing_self?
         -unless @user.user_followers.empty?
-          %h4.your-followers-header
-            ==You have #{@user.user_followers.size} followers
+          h4.your-followers-header
+            ="You have #{@user.user_followers.size} followers"
         =link_to('Your Connections', followers_path(:username => @user.username), :class => "your-network track #{@user.team.nil? ? 'no-team' : ''}", 'data-action' => 'view connections', 'data-from' => 'profile sidebar')
 
       -else
         -if signed_in? && current_user.following?(@user)
-          =link_to(defined_in_css = '', follow_user_path(@user.username), :method => :post, :remote => true, :class => 'add-to-network following track', 'data-action' => 'unfollow user', 'data-from' => 'profile sidebar')
+          =link_to('', follow_user_path(@user.username), :method => :post, :remote => true, :class => 'add-to-network following track', 'data-action' => 'unfollow user', 'data-from' => 'profile sidebar')
         -elsif signed_in?
-          =link_to(defined_in_css = '', follow_user_path(@user.username), :method => :post, :remote => true, :class => 'add-to-network track', 'data-action' => 'follow user', 'data-from' => 'profile sidebar')
+          =link_to('', follow_user_path(@user.username), :method => :post, :remote => true, :class => 'add-to-network track', 'data-action' => 'follow user', 'data-from' => 'profile sidebar')
         -else
-          =link_to(defined_in_css = '', signin_path(:flash => 'You must signin or signup before you can follow someone'), :class => 'add-to-network noauth track', 'data-action' => 'follow user', 'data-from' => 'profile sidebar')
+          =link_to('', signin_path(:flash => 'You must signin or signup before you can follow someone'), :class => 'add-to-network noauth track', 'data-action' => 'follow user', 'data-from' => 'profile sidebar')
         -if signed_in? && @user.following?(current_user)
           .followed-back
-            %p== #{@user.short_name} is following you
+            p="#{@user.short_name} is following you"
 
   -if viewing_self?
     =share_profile('Share profile on Twitter', @user, :class => 'share-profile-side track', 'data-action' => 'share profile', 'data-from' => 'profile sidebar')
 
   -if viewing_self?
     .rev-share-box
-      %h2 Share your profile
-      %ul.share
-        %li.embed-code
-          %p
-            Easily embed your personal endorse button on your open source projects or blog
+      h2 Share your profile
+      ul.share
+        li.embed-code
+          p
+            |Easily embed your personal endorse button on your open source projects or blog
           .count
             = html_embed_code_with_count
           .embed-code-button
-            %a.show-embed-codes.track{:href => '#', 'data-action' => 'view embed code', 'data-from' => 'profile sidebar'}
+            =link_to '','#', class:'show-embed-codes track', 'data-action' => 'view embed code', 'data-from' => 'profile sidebar'
           .embed-codes.hide
             .embed.embed-markdown
               .hint.markdown
-                %h4 Markdown code
-                %span (put in Github README.md)
+                h4 Markdown code
+                span
+                  |(put in Github README.md)
               =text_area_tag 'Markdown', markdown_embed_code_with_count
             .embed.embed-html
               .hint.html
-                %h4 HTML code
+                h4 HTML code
               =text_area_tag 'HTML', html_embed_code_with_count
 
   = render('show_admin_panel', user: @user) if is_admin?

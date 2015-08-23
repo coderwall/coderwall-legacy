@@ -1,0 +1,64 @@
+.row
+  .col.s12.m6
+    .card.profile_card.no_shadow
+      .card-image
+        =image_tag(user.banner.url)
+        span.card-title
+          ul.collection
+            li.collection-item.avatar
+              =image_tag(user.avatar.url,class: 'circle')
+              span.title =user.name
+            li.collection-item.dismissable
+              div
+                =user.username
+                =link_to badge_path(username: user.username), class: 'secondary-content', target:'_blanck'
+                  i.material-icons send
+            li.collection-item
+              div=show_user_attribute(user.location,'Location')
+      .card-action
+        =show_user_attribute(user.title,'Title')
+        =show_user_attribute(user.company,'Company')
+        =show_user_attribute(user.api_key,'API Key')
+        =show_user_attribute(user.about,'Bio',{type: :paragraph})
+
+  .col.s12.m6
+    .card.no_shadow
+      .card-content
+        .row
+          .col.s12
+            h5.light Email
+            =show_user_attribute(user.email,'Email Address')
+            ul.email_list
+              li
+                i class="material-icons" ="#{ user.notify_on_award ? 'done' : 'stop'}"
+                |Receive a notification when you are awarded a new achievement
+
+              li
+                i class="material-icons" ="#{ user.notify_on_follow ? 'done' : 'stop'}"
+                |Receive a notification when someone follows you
+
+              li
+                i class="material-icons" ="#{ user.receive_newsletter ? 'done' : 'stop'}"
+                |Receive infrequent but important announcements
+
+              li
+                i class="material-icons" ="#{ user.receive_weekly_digest ? 'done' : 'stop'}"
+                |Receive weekly brief
+
+          .col.s12
+            h5.light Social links
+            =show_user_attribute(user.github,'Github')
+            =show_user_attribute(user.twitter,'Twitter')
+            =show_user_attribute(user.linkedin_public_url,'LinkedIn')
+            =show_user_attribute(user.blog,'Blog')
+            =show_user_attribute(user.bitbucket,'Bitbucket username')
+            =show_user_attribute(user.codeplex,'CodePlex username')
+            =show_user_attribute(user.forrst,'Forrst username')
+            =show_user_attribute(user.dribbble,'Dribbble username')
+            =show_user_attribute(user.speakerdeck,'Speakerdeck username')
+            =show_user_attribute(user.favorite_websites,'Favorite Websites')
+
+.row
+  .col.s12
+    -if @user.membership.present?
+      =render 'users/edit/summary_teams', user: user

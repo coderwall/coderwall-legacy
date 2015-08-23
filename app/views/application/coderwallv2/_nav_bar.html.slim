@@ -1,0 +1,18 @@
+= render partial: 'shared/assembly_banner'
+
+header#masthead
+  nav.grey.darken-4 role="navigation"
+
+    .nav-wrapper.container
+
+      = link_to root_path, class: 'brand-logo logo'
+        span Coderwall
+
+      a.button-collapse data-activates="nav-mobile" href="#"
+        i.material-icons menu
+
+      ul.right.hide-on-med-and-down
+        =render 'application/coderwallv2/nav_bar_menu', dropdown: 'dropdown1'
+
+      ul#nav-mobile.side-nav
+        =render 'application/coderwallv2/nav_bar_menu', dropdown: 'dropdown2'
