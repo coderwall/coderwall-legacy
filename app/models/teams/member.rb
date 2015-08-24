@@ -18,9 +18,9 @@
 
 class Teams::Member < ActiveRecord::Base
   belongs_to :team, class_name: 'Team',
-    foreign_key: 'team_id',
-    counter_cache: :team_size,
-    touch: true
+             foreign_key: 'team_id',
+             counter_cache: :team_size,
+             touch: true
   belongs_to :user
 
   validates_uniqueness_of :user_id, scope: :team_id
@@ -63,11 +63,10 @@ class Teams::Member < ActiveRecord::Base
     state_name
     country
     referral_token
+    badges
+    endorsements
+    protips
   ).each do |user_method|
     delegate user_method, to: :user
-  end
-
-  [:badges, :endorsements].each do |m|
-    define_method(m) { user.try(m) }
   end
 end
