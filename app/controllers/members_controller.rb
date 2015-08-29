@@ -1,6 +1,7 @@
 class MembersController < ApplicationController
   before_action :set_team
 
+  # DELETE                /teams/:team_id/members/:id(.:format)
   def destroy
     self_removal = current_user.id == params[:id]
     return head(:forbidden) unless signed_in? && (@team.admin?(current_user) || self_removal)

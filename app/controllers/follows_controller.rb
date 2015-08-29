@@ -4,6 +4,9 @@ class FollowsController < ApplicationController
 
   helper_method :is_viewing_followers?
 
+  # GET                   /users/:user_id/follows(.:format)
+  # GET                   /:username/followers(.:format)
+  # GET                   /:username/following(.:format)
   def index
     @user = User.find_by_username(params[:username])
     return redirect_to(user_follows_url(username: current_user.username)) unless @user == current_user || current_user.admin?
@@ -16,6 +19,7 @@ class FollowsController < ApplicationController
     @network = @network.order('score_cache DESC').page(params[:page]).per(50)
   end
 
+  # POST                  /users/:username/follow(.:format)
   def create
     apply_cache_buster
 

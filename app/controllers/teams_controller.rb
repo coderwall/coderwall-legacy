@@ -5,6 +5,7 @@ class TeamsController < ApplicationController
   respond_to :js, :only => [:search, :create, :approve_join, :deny_join]
   respond_to :json, :only => [:search]
 
+  # GET                   /teams(.:format)
   def index
     current_user.seen(:teams) if signed_in?
     #@featured_teams = Rails.cache.fetch(Team::FEATURED_TEAMS_CACHE_KEY, expires_in: 4.hours) do
@@ -15,10 +16,13 @@ class TeamsController < ApplicationController
     @teams = []
   end
 
+  # GET                   /teams/followed(.:format)
   def followed
     @teams = current_user.teams_being_followed
   end
 
+  # GET                   /team/:slug(/:job_id)(.:format)
+  # GET                   /team/:slug(.:format)
   def show
     #FIXME
     show_params = params.permit(:job_id, :refresh, :callback, :id, :slug)
@@ -51,10 +55,12 @@ class TeamsController < ApplicationController
     end
   end
 
+  # GET                   /teams/new(.:format)
   def new
     return redirect_to employers_path
   end
 
+  # POST                  /teams(.:format)
   def create
     team_params = params.require(:team).permit(:name, :slug, :show_similar, :join_team)
     team_name = team_params.fetch(:name, '')
@@ -86,6 +92,7 @@ class TeamsController < ApplicationController
   #team.name.gsub(/ \-\./, '.*')
   #end
 
+  # GET                   /team/:slug/edit(.:format)
   def edit
     @team = Team.find_by_slug(params[:slug])
     return head(:forbidden) unless current_user.belongs_to_team?(@team) || current_user.admin?
@@ -93,6 +100,7 @@ class TeamsController < ApplicationController
     show
   end
 
+  #                             PUT                   /teams/:id(.:format)                                   teams#update
   def update
     update_params = params.permit(:id, :_id, :job_id, :slug)
     update_team_params = params.require(:team).permit!
@@ -125,6 +133,7 @@ class TeamsController < ApplicationController
     end
   end
 
+  # POST                  /teams/:id/follow(.:format)
   def follow
     # TODO move to concern
     @team = if params[:id].present? && (params[:id].to_i rescue nil)
@@ -144,6 +153,7 @@ class TeamsController < ApplicationController
     end
   end
 
+  # GET                   /employers(.:format)
   def upgrade
     upgrade_params = params.permit(:discount)
 
@@ -156,6 +166,7 @@ class TeamsController < ApplicationController
     render :layout => 'product_description'
   end
 
+  # POST                  /teams/inquiry(.:format)
   def inquiry
     inquiry_params = params.permit(:email, :company)
 
@@ -165,6 +176,7 @@ class TeamsController < ApplicationController
     render :layout => 'product_description'
   end
 
+  # GET                   /teams/:id/accept(.:format)
   def accept
     apply_cache_buster
 
@@ -189,6 +201,7 @@ class TeamsController < ApplicationController
     redirect_to teamname_url(:slug => current_user.reload.team.slug)
   end
 
+  # GET                   /teams/search(.:format)
   def search
     search_params = params.permit(:q, :country, :page)
 
@@ -196,6 +209,7 @@ class TeamsController < ApplicationController
     respond_with @teams
   end
 
+  # POST                  /teams/:id/record-exit(.:format)
   def record_exit
     record_exit_params = params.permit(:id, :exit_url, :exit_target_type, :furthest_scrolled, :time_spent)
 
@@ -206,6 +220,7 @@ class TeamsController < ApplicationController
     render :nothing => true
   end
 
+  # GET                   /teams/:id/visitors(.:format)
   def visitors
     since = is_admin? ? 0 : 2.weeks.ago.to_i
     full = is_admin? && params[:full] == 'true'
@@ -216,6 +231,7 @@ class TeamsController < ApplicationController
     render :analytics unless full
   end
 
+  # POST                  /teams/:id/join(.:format)
   def join
     join_params = params.permit(:id)
 
@@ -227,6 +243,7 @@ class TeamsController < ApplicationController
     end
   end
 
+  # POST                  /teams/:id/join/:user_id/approve(.:format)
   def approve_join
     approve_join_params = params.permit(:id, :user_id)
 
@@ -237,6 +254,7 @@ class TeamsController < ApplicationController
     render :join_response
   end
 
+  # POST                  /teams/:id/join/:user_id/deny(.:format)
   def deny_join
     deny_join_params = params.permit(:id, :user_id)
 

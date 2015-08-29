@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
   before_action :lookup_protip, only: [:create]
   before_action :require_moderator!, only: [:mark_as_spam]
 
+  # POST                  /p/:protip_id/comments(.:format)
   def create
     redirect_to_signup_if_unauthenticated(request.referer + "?" + (comment_params.try(:to_query) || ""), "You must signin/signup to add a comment") do
       @comment = @protip.comments.build(comment_params)
@@ -26,6 +27,7 @@ class CommentsController < ApplicationController
     end
   end
 
+  # PUT                   /p/:protip_id/comments/:id(.:format)
   def update
     respond_to do |format|
       if @comment.update_attributes(comment_params)
@@ -38,6 +40,7 @@ class CommentsController < ApplicationController
     end
   end
 
+  # DELETE                /p/:protip_id/comments/:id(.:format)
   def destroy
     return head(:forbidden) if @comment.nil?
     @comment.destroy
@@ -47,6 +50,7 @@ class CommentsController < ApplicationController
     end
   end
 
+  # POST                  /p/:protip_id/comments/:id/like(.:format)
   def like
     redirect_to_signup_if_unauthenticated(request.referer, "You must signin/signup to like a comment") do
       @comment.like_by(current_user)
@@ -57,6 +61,7 @@ class CommentsController < ApplicationController
     end
   end
 
+  # POST                  /p/:protip_id/comments/:id/mark_as_spam(.:format)
   def mark_as_spam
     @comment.mark_as_spam
     respond_to do |format|

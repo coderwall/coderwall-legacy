@@ -18,10 +18,13 @@ class ProtipsController < ApplicationController
 
   layout :choose_protip_layout
 
+  #                        root                       /
+  #GET                   /p(.:format)
   def index
     trending
   end
 
+  # GET                   /p/t/trending(.:format)
   def trending
     @context = "trending"
     track_discovery
@@ -30,6 +33,7 @@ class ProtipsController < ApplicationController
     render :index
   end
 
+  # GET                   /p/popular(.:format)
   def popular
     @context = "popular"
     track_discovery
@@ -38,6 +42,7 @@ class ProtipsController < ApplicationController
     render :index
   end
 
+  # GET                   /p/fresh(.:format)
   def fresh
     redirect_to_signup_if_unauthenticated(protips_path, "You must login/signup to view fresh protips from coders, teams and networks you follow") do
       @context = "fresh"
@@ -48,6 +53,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  # GET                   /p/liked(.:format)
   def liked
     redirect_to_signup_if_unauthenticated(protips_path, "You must login/signup to view protips you have liked/upvoted") do
       @context = "liked"
@@ -58,6 +64,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  # GET                   /p/u/:username(.:format)
   def user
     user_params = params.permit(:username, :page, :per_page)
 
@@ -71,6 +78,7 @@ class ProtipsController < ApplicationController
     render :topic
   end
 
+  # GET                   /p/team/:team_slug(.:format)
   def team
     team_params = params.permit(:team_slug, :page, :per_page)
 
@@ -83,6 +91,7 @@ class ProtipsController < ApplicationController
     render :topic
   end
 
+  # GET                   /p/d/:date(/:start)(.:format)
   def date
     date_params = params.permit(:date, :query, :page, :per_page)
 
@@ -98,6 +107,7 @@ class ProtipsController < ApplicationController
     render :topic
   end
 
+  # GET                   /p/me(.:format)
   def me
     me_params = params.permit(:section, :page, :per_page)
 
@@ -108,6 +118,9 @@ class ProtipsController < ApplicationController
     @topic_user = nil
   end
 
+  # GET                   /p/dpvbbg(.:format)
+  # GET                   /gh(.:format)
+  # GET                   /p/:id/:slug(.:format)
   def show
     show_params = if is_admin?
                     params.permit(:reply_to, :q, :t, :i, :p)
@@ -127,11 +140,13 @@ class ProtipsController < ApplicationController
     respond_with @protip
   end
 
+  # GET                   /p/random(.:format)
   def random
     @protip = Protip.random(1).first
     render :show
   end
 
+  # GET                   /p/new(.:format)
   def new
     new_params = params.permit(:topic_list)
 
@@ -140,10 +155,12 @@ class ProtipsController < ApplicationController
     respond_with @protip
   end
 
+  # GET                   /p/:id/edit(.:format)
   def edit
     respond_with @protip
   end
 
+  # POST                  /p(.:format)
   def create
     create_params = if params[:protip] && params[:protip].keys.present?
                       params.require(:protip).permit(:title, :body, :user_id, :topic_list)
@@ -165,6 +182,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  #              protips_update GET|PUT               /protips/update(.:format)                              protips#update
   def update
     # strong_parameters will intentionally fail if a key is present but has an empty hash. :(
     update_params = if params[:protip] && params[:protip].keys.present?
@@ -197,16 +215,19 @@ class ProtipsController < ApplicationController
     end
   end
 
+  # POST                  /p/:id/upvote(.:format)
   def upvote
     @protip.upvote_by(viewing_user, tracking_code, request.remote_ip)
     @protip
   end
 
+  # POST                  /p/:id/tag(.:format)
   def tag
     tag_params = params.permit(:topic_list)
     @protip.topic_list.add(tag_params[:topic_list]) unless tag_params[:topic_list].nil?
   end
 
+  # PUT                   /p/t(/*tags)/subscribe(.:format)
   def subscribe
     tags = params.permit(:tags)
     redirect_to_signup_if_unauthenticated(view_context.topic_protips_path(tags)) do
@@ -217,6 +238,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  # PUT                   /p/t(/*tags)/unsubscribe(.:format)
   def unsubscribe
     tags = params.permit(:tags)
     redirect_to_signup_if_unauthenticated(view_context.topic_protips_path(tags)) do
@@ -227,6 +249,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  # POST                  /p/:id/report_inappropriate(.:format)
   def report_inappropriate
     protip_public_id = params[:id]
     protip = Protip.find_by_public_id!(protip_public_id)
@@ -241,7 +264,8 @@ class ProtipsController < ApplicationController
     end
   end
 
-   def flag
+  # POST                  /p/:id/flag(.:format)
+  def flag
     times_to_flag = is_moderator? ? Protip::MIN_FLAG_THRESHOLD : 1
     times_to_flag.times do
       @protip.flag
@@ -270,6 +294,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  # POST                  /p/:id/feature(.:format)
   def feature
     #TODO change with @protip.toggle_featured_state!
     if @protip.featured?
@@ -287,6 +312,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  #POST                  /p/:id/delete_tag/:topic(.:format)                     protips#delete_tag {:topic=>/[A-Za-z0-9#\$\+\-_\.(%23)(%24)(%2B)]+/}
   def delete_tag
     @protip.topic_list.remove(params.permit(:topic))
     respond_to do |format|
@@ -300,6 +326,7 @@ class ProtipsController < ApplicationController
     end
   end
 
+  # GET                   /p/admin(.:format)
   def admin
     admin_params = params.permit(:page, :per_page)
 
@@ -309,6 +336,7 @@ class ProtipsController < ApplicationController
     render :topic
   end
 
+  # GET                   /p/t/by_tags(.:format)
   def by_tags
     by_tags_params = params.permit(:page, :per_page)
 
@@ -318,6 +346,7 @@ class ProtipsController < ApplicationController
     @tags = ActsAsTaggableOn::Tag.joins('inner join taggings on taggings.tag_id = tags.id').group('tags.id').order('count(tag_id) desc').page(page).per(per_page)
   end
 
+  # POST                  /p/preview(.:format)
   def preview
     preview_params = params.require(:protip).permit(:title, :body)
 
@@ -330,6 +359,7 @@ class ProtipsController < ApplicationController
     render partial: 'protip', locals: { protip: protip, mode: 'preview', include_comments: false, job: nil }
   end
 
+  # POST - GET                   /p/search(.:format)
   def search
     search_params = params.permit(:search)
 

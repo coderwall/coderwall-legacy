@@ -6,11 +6,13 @@ class AccountsController < ApplicationController
   before_action :determine_plan, only: [:create, :update]
   before_action :ensure_eligibility, only: [:new]
 
+  # GET                   /teams/:team_id/account/new(.:format)
   def new
     @account ||= current_user.team.build_account
     @plan    = params[:public_id]
   end
 
+  # POST                  /teams/:team_id/account(.:format)
   def create
     redirect_to teamname_path(slug: @team.slug) if @plan.free?
 
@@ -31,6 +33,7 @@ class AccountsController < ApplicationController
     end
   end
 
+  # PUT                   /teams/:team_id/account(.:format)
   def update
     if @account.update_attributes(account_params) && @account.save_with_payment(@plan)
       redirect_to new_team_opportunity_path(@team), notice: "You are subscribed to #{@plan.name}." + plan_capability(@plan, @team)
@@ -40,6 +43,7 @@ class AccountsController < ApplicationController
     end
   end
 
+  # GET                   /webhooks/stripe(.:format)
   def webhook
     data = JSON.parse request.body.read
     if data[:type] == "invoice.payment_succeeded"
@@ -55,6 +59,7 @@ class AccountsController < ApplicationController
     end
   end
 
+  # POST                  /teams/:team_id/account/send_invoice(.:format)
   def send_invoice
     team, period = Team.find(params[:team_id]), 1.month.ago
 

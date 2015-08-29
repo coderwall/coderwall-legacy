@@ -1,8 +1,11 @@
 class ErrorsController < ApplicationController
+
+  # GET|POST|PATCH|DELETE /404(.:format)
   def not_found
     render status: :not_found
   end
 
+  # GET|POST|PATCH|DELETE /422(.:format)
   def unacceptable
     respond_to do |format|
       format.html { render 'public/422', status: :unprocessable_entity }
@@ -11,6 +14,7 @@ class ErrorsController < ApplicationController
     end
   end
 
+  # GET|POST|PATCH|DELETE /500(.:format)
   def internal_error
     respond_to do |format|
       format.html { render 'public/500', status: :internal_server_error }
