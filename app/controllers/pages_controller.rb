@@ -1,6 +1,12 @@
 class PagesController < ApplicationController
 
-
+  # GET                   /faq(.:format)
+  # GET                   /tos(.:format)
+  # GET                   /privacy_policy(.:format)
+  # GET                   /contact_us(.:format)
+  # GET                   /api(.:format)
+  # GET                   /achievements(.:format)
+  # GET                   /pages/:page(.:format)
   def show
     show_pages_params = params.permit(:page, :layout)
 

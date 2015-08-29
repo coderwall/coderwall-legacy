@@ -1,4 +1,6 @@
 class ProviderUserLookupsController < ApplicationController
+
+  # GET                   /providers/:provider/:username(.:format)
   def show
     service = ProviderUserLookupService.new params[:provider], params[:username]
     if user = service.lookup_user

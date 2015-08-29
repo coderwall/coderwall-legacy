@@ -1,17 +1,20 @@
 class SessionsController < ApplicationController
   skip_before_action :require_registration
 
+  # GET                   /sessions/new(.:format)
   def new
     #FIXME
     redirect_to destination_url if signed_in?
   end
 
+  # GET                   /signin(.:format)
   def signin
     #FIXME
     return redirect_to destination_url if signed_in?
     store_location!(params[:return_to]) unless params[:return_to].nil?
   end
 
+  # GET                   /sessions/force(.:format)
   def force
     #REMOVEME
     head(:forbidden) unless current_user.admin?
@@ -20,6 +23,7 @@ class SessionsController < ApplicationController
     redirect_to(root_url)
   end
 
+  # GET|POST              /auth/:provider/callback(.:format)
   def create
     #FIXME
     raise "OmniAuth returned error #{params[:error]}" unless params[:error].blank?
@@ -55,11 +59,13 @@ class SessionsController < ApplicationController
     redirect_to(root_url)
   end
 
+  # DELETE                /sessions/:id(.:format)
   def destroy
     sign_out
     redirect_to(root_url)
   end
 
+  # GET                   /auth/failure(.:format)
   def failure
     flash[:error] = "Authenication error: #{params[:message].humanize}" unless params[:message].nil?
     render action: :new

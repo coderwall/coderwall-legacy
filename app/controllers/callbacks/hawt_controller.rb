@@ -7,6 +7,7 @@ class Callbacks::HawtController < ApplicationController
   protect_from_forgery with: :null_session
   respond_to :json
 
+  # POST                  /callbacks/hawt/feature(.:format)
   def feature
     logger.ap(params, :debug)
 
@@ -17,6 +18,7 @@ class Callbacks::HawtController < ApplicationController
     end
   end
 
+  # POST                  /callbacks/hawt/unfeature(.:format)
   def unfeature
     unfeature!(hawt_callback_params[:protip_id], hawt_callback_params[:hawt?])
 

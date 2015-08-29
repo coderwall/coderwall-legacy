@@ -6,6 +6,7 @@ class AchievementsController < ApplicationController
 
   respond_to :json, only: [:award]
 
+  # GET                   /:username/achievements/:id(.:format)
   def show
     show_achievements_params = params.permit(:id, :username)
 
@@ -14,6 +15,7 @@ class AchievementsController < ApplicationController
     redirect_to(destination_url) if @badge && @user.username.downcase != show_achievements_params[:username].downcase
   end
 
+  # POST                  /award(.:format)
   def award
 
     award_params = params.permit(:badge, :twitter, :linkedin, :github, :date)
