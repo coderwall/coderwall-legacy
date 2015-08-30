@@ -1,4 +1,6 @@
 class EmailsController < ApplicationController
+
+  # GET                   /unsubscribe(.:format)
   def unsubscribe
     Rails.logger.info("Mailgun Unsubscribe: #{params.inspect}")
     if mailgun?(ENV['MAILGUN_API_KEY'], params['token'], params['timestamp'], params['signature'])
@@ -17,6 +19,7 @@ class EmailsController < ApplicationController
     return head(200)
   end
 
+  # GET                   /delivered(.:format)
   def delivered
     Rails.logger.info("Mailgun Delivered: #{params.inspect}")
     if mailgun?(ENV['MAILGUN_API_KEY'], params['token'], params['timestamp'], params['signature'])

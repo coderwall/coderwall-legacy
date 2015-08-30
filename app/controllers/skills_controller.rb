@@ -1,5 +1,6 @@
 class SkillsController < ApplicationController
 
+  # POST                  /users/:user_id/skills(.:format)
   def create
     @user = (params[:user_id] && User.find(params[:user_id])) || current_user
     return head(:forbidden) unless current_user == @user
@@ -24,6 +25,7 @@ class SkillsController < ApplicationController
     redirect_to(badge_url(username: @user.username))
   end
 
+  # DELETE                /users/:user_id/skills/:id(.:format)
   def destroy
     redirect_to_signup_if_unauthenticated do
       @skill = current_user.skills.find(params[:id])

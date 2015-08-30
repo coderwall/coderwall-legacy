@@ -1,4 +1,6 @@
 class BansController < BaseAdminController
+
+  # POST                  /users/:user_id/bans(.:format)
   def create
     ban_params = params.permit(:user_id)
     user = User.find(ban_params[:user_id])

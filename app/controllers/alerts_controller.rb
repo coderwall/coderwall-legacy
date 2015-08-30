@@ -7,6 +7,7 @@ class AlertsController < ApplicationController
   GA_VISITORS_ALERT_INTERVAL = 30.minutes
   TRACTION_ALERT_INTERVAL    = 30.minutes
 
+  # GET                   /alerts(.:format)
   def create
     case @alert[:type].to_sym
       when :traction
@@ -18,6 +19,7 @@ class AlertsController < ApplicationController
     head(:ok)
   end
 
+  #GET                   /alerts(.:format)
   def index
     @alerts = []
     [:traction, :google_analytics].each do |type|

@@ -6,6 +6,7 @@ class OpportunitiesController < ApplicationController
   before_action :verify_payment, only: [:new, :create]
   before_action :stringify_location, only: [:create, :update]
 
+  # POST                  /teams/:team_id/opportunities/:id/apply(.:format)
   def apply
     redirect_to_signup_if_unauthenticated(request.referer, "You must login/signup to apply for an opportunity") do
       job = Opportunity.find(params[:id])
@@ -20,14 +21,17 @@ class OpportunitiesController < ApplicationController
     end
   end
 
+  # GET                   /teams/:team_id/opportunities/new(.:format)
   def new
     team_id = params[:team_id]
     @job = Opportunity.new(team_id: team_id)
   end
 
+  # GET                   /teams/:team_id/opportunities/:id/edit(.:format)
   def edit
   end
 
+  # POST                  /teams/:team_id/opportunities(.:format)
   def create
     opportunity_create_params = params.require(:opportunity).permit(:name, :team_id, :opportunity_type, :description, :tag_list, :location, :link, :salary, :apply, :remote)
     @job = Opportunity.new(opportunity_create_params)
@@ -41,6 +45,7 @@ class OpportunitiesController < ApplicationController
     end
   end
 
+  # PUT                   /teams/:team_id/opportunities/:id(.:format)
   def update
     opportunity_update_params = params.require(:opportunity).permit(:id, :name, :team_id, :opportunity_type, :description, :tag_list, :location, :link, :salary, :apply)
     respond_to do |format|
@@ -52,16 +57,19 @@ class OpportunitiesController < ApplicationController
     end
   end
 
+  # GET                   /teams/:team_id/opportunities/:id/activate(.:format)
   def activate
     @job.activate!
     header_ok
   end
 
+  # GET                   /teams/:team_id/opportunities/:id/deactivate(.:format)
   def deactivate
     @job.deactivate!
     header_ok
   end
 
+  # POST                  /teams/:team_id/opportunities/:id/visit(.:format)
   def visit
     unless is_admin?
       viewing_user.track_opportunity_view!(@job) if viewing_user
@@ -69,13 +77,13 @@ class OpportunitiesController < ApplicationController
     end
     header_ok
   end
-
+  
+  # GET                   /jobs(/:location(/:skill))(.:format)
   def index
     current_user.seen(:jobs) if signed_in?
     store_location! unless signed_in?
     chosen_location = (params[:location] || closest_to_user(current_user)).try(:titleize)
     chosen_location = nil if chosen_location == 'Worldwide'
-
     @remote_allowed = params[:remote]     == 'true'
 
     @page = params[:page].try(:to_i) || 1
@@ -94,13 +102,14 @@ class OpportunitiesController < ApplicationController
     @lat, @lng = geocode_location(chosen_location)
 
     respond_to do |format|
-      format.html { render layout: 'jobs' }
+      format.html { render layout: 'coderwallv2' }
       format.json { render json: @jobs.map(&:to_public_hash) }
       format.js
     end
 
   end
 
+  # GET                   /jobs-map(.:format)
   def map
     @job_locations = all_job_locations
     @job_skills = all_job_skills

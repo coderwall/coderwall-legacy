@@ -1,5 +1,7 @@
 class InvitationsController < ApplicationController
 
+  # GET                   /invitations/:id(.:format)
+  # GET                   /i/:id/:r(.:format)
   def show
     @team = Team.find(params[:id])
     invitation_failed! unless @team.has_user_with_referral_token?(params[:r])

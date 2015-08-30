@@ -7,6 +7,7 @@ class NetworksController < ApplicationController
   respond_to :html, :json, :js
   cache_sweeper :follow_sweeper, only: [:join, :leave]
 
+  # GET                   /n(.:format)
   def index
     @index_networks_params = params.permit(:sort, :action)
 
@@ -18,6 +19,7 @@ class NetworksController < ApplicationController
     end
   end
 
+  #POST                  /n/:id/join(.:format)
   def join
     redirect_to_signup_if_unauthenticated(request.referer, 'You must login/signup to join a network') do
       return leave if current_user.member_of?(@network)
@@ -28,6 +30,7 @@ class NetworksController < ApplicationController
     end
   end
 
+  # POST                  /n/:id/leave(.:format)
   def leave
     redirect_to_signup_if_unauthenticated(request.referer, 'You must login/signup to leave a network') do
       return join unless current_user.member_of?(@network)
