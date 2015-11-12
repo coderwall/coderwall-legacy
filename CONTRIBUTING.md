@@ -77,8 +77,8 @@ If you're running Windows, [here's a guide written by one of our members on how 
 
     [Fork the code](https://github.com/assemblymade/coderwall) if you haven't already done so.
 
-    mkdir -p ~/assemblymade
-    cd ~/assemblymade
+        mkdir -p ~/assemblymade
+        cd ~/assemblymade
 
     Depending on your choice of protocols: _(this will take a while to run so you may want to grab some coffee)_
     * git clone https://github.com/your_username/coderwall.git coderwall
