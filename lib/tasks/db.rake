@@ -1,31 +1,9 @@
-namespace :vagrant do
-  namespace :db do
-    desc 'Restart the Postgresql database'
-    task restart: %w(vagrant:db:stop vagrant:db:start vagrant:db:status)
-
-    desc 'Stop the Postgresql database'
-    task :stop do
-      ap `sudo su -c 'pg_ctl stop -D /var/pgsql/data 2>&1' postgres`
-    end
-
-    desc 'Start the Postgresql database'
-    task :start do
-      ap `sudo su -c 'pg_ctl start -l /var/pgsql/data/log/logfile -D /var/pgsql/data' postgres`
-    end
-
-    desc 'Print the Postgresql database status'
-    task :status do
-      ap `sudo su -c 'pg_ctl status -D /var/pgsql/data' postgres`
-    end
-  end
-end
-
 namespace :db do
   task smash: %w(redis:flush db:schema:load db:test:prepare db:seed)
 
   namespace :download do
     def db_dump_file
-      "tmp/coderwall-production.dump"
+      "coderwall-production.dump"
     end
 
     # https://www.mongolab.com/downloadbackup/543ea81670096301db49ddd2
