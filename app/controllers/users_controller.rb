@@ -94,6 +94,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def delete_account
+    return head(:forbidden) unless signed_in?
+  end
+
+  def delete_account_confirmed
+    user = User.find(current_user.id)
+    user.destroy
+    sign_out
+    redirect_to root_url
+  end
+
+  def destroy
+    destroy_params = params.permit(:id)
+    return head(:forbidden) unless current_user.admin? || current_user.id == destroy_params[:id]
+
+    @user = User.find(destroy_params[:id])
+    @user.destroy
+    redirect_to badge_url(@user.username)
+  end
+
   # GET                   /settings(.:format)
   def edit
     respond_to do |format|

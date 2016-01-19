@@ -15,6 +15,9 @@
           =link_to("Unban this user", user_unbans_path(user), method: :post)
         - else
           =link_to("Ban this user", user_bans_path(user), method: :post)
+
+      li.admin-action= link_to('Delete User', user_path(user), :confirm => 'Are you sure?', :method => :delete)
+      li.admin-action= link_to_if(user.twitter,'Clear Twitter!', clear_provider_path(user, :provider => 'twitter'), :confirm => 'Are you sure?')
       li.admin-action= link_to_if(user.twitter,'Clear Twitter!', clear_provider_path(user, :provider => 'twitter'), :confirm => 'Are you sure?')
       li.admin-action= link_to_if(user.github,'Clear GitHub!', clear_provider_path(user, :provider => 'github'), :confirm => 'Are you sure?')
       -if user.linkedin || user.linkedin_id

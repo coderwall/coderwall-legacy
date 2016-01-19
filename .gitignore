@@ -60,3 +60,4 @@ BACKUP
 Guardfile
 verification.log
 npm-debug.log
+dump.rdb
