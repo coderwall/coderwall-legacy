@@ -17,9 +17,10 @@ class SessionsController < ApplicationController
   # GET                   /sessions/force(.:format)
   def force
     #REMOVEME
-    head(:forbidden) unless current_user.admin?
+    head(:forbidden) unless Rails.env.development? || current_user.admin?
     sign_out
-    sign_in(User.find(params[:id]))
+    user = params[:id].present? ? User.find(params[:id]) : User.find_by_username(params[:username])
+    sign_in(user)
     redirect_to(root_url)
   end
 
