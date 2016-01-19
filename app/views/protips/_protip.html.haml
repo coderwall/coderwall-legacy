@@ -1,3 +1,6 @@
+-content_for :page_title do
+  =sanitize(protip.title)
+
 .inside.cf.x-protip-pane{itemscope: true, itemtype: meta_article_schema_url}
   %meta{itemprop: :dateCreated, content: protip.created_at}
   .tip-container.cf.x-protip-content.protip-single#x-protip{class: mode}
