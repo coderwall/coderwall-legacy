@@ -15,19 +15,19 @@
   else default_featured_job_banner
   end
 
-.featured-team{class: team_has_custom_image ? "custom-image" : "default-image"}
-  %h3 Featured team
-    
-  =link_to teamname_path(team.slug), class: 'team-box', 'data-action' => 'view team jobs', 'data-from' => 'job on protip', 'data-properties' => {"author's team" => protip.user.belongs_to_team?(team), 'adjective' => adjective, 'mode' => mode}.to_json do
-    .image-top
-      =image_tag(banner_image)
-    .content
-      .avatar
-        =image_tag(team.avatar_url)
-      %h4= team.name
-      %p
-        ==Calling all #{job.title.pluralize}. #{job.team.name} #{adjective} and is hiring!
-  %a.feature-jobs.track{href: employers_path, 'data-action' => 'upgrade team', 'data-from' => 'protip page'}
-    feature your jobs here
-
-  %pm:widget{"max-item-count" => "4", "show-thumbs" => "false", title: "Recommended", width: "244"}
+-# .featured-team{class: team_has_custom_image ? "custom-image" : "default-image"}
+-#   %h3 Featured team
+-#
+-#   =link_to teamname_path(team.slug), class: 'team-box', 'data-action' => 'view team jobs', 'data-from' => 'job on protip', 'data-properties' => {"author's team" => protip.user.belongs_to_team?(team), 'adjective' => adjective, 'mode' => mode}.to_json do
+-#     .image-top
+-#       =image_tag(banner_image)
+-#     .content
+-#       .avatar
+-#         =image_tag(team.avatar_url)
+-#       %h4= team.name
+-#       %p
+-#         ==Calling all #{job.title.pluralize}. #{job.team.name} #{adjective} and is hiring!
+-#   %a.feature-jobs.track{href: employers_path, 'data-action' => 'upgrade team', 'data-from' => 'protip page'}
+-#     feature your jobs here
+-#
+-#   %pm:widget{"max-item-count" => "4", "show-thumbs" => "false", title: "Recommended", width: "244"}
