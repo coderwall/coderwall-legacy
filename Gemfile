@@ -38,7 +38,7 @@ source 'https://rubygems.org' do
   gem 'omniauth-twitter', '~> 0.0.16'
 
 # Markdown
-  gem 'redcarpet' #markdown processing
+  gem 'redcarpet', ">=3.3.4"
   gem 'kramdown'
   gem 'github-markdown'
 
