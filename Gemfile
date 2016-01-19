@@ -173,7 +173,7 @@ source 'https://rubygems.org' do
   end
 
   group :production do
-    gem 'puma'
+    gem 'puma', '>=2.15.3'
     gem 'rails_12factor'
     gem 'heroku-deflater'
     gem 'bugsnag'
