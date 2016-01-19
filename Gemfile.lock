@@ -503,7 +503,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    redcarpet (3.3.2)
+    redcarpet (3.3.4)
     redis (3.2.1)
     redis-actionpack (3.2.4)
       actionpack (~> 3.2.0)
@@ -776,7 +776,7 @@ DEPENDENCIES
   rails_12factor!
   rails_latest!
   rakismet!
-  redcarpet!
+  redcarpet (>= 3.3.4)!
   redis-rails (= 3.2.4)!
   rest-client!
   rspec-rails!

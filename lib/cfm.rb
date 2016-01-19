@@ -5,15 +5,36 @@ module CFM
   class Markdown
     class << self
       def render(text)
-        renderer = Redcarpet::Render::HTML.new
-        extensions = {fenced_code_blocks: true, strikethrough: true, autolink: true}
+        return nil if text.nil?
+
+        extensions = {
+          fenced_code_blocks: true,
+          strikethrough: true,
+          autolink: true
+        }
+
+        renderer  = Redcarpet::Render::HTML.new(  link_attributes: {rel: "nofollow"})
         redcarpet = Redcarpet::Markdown.new(renderer, extensions)
-        redcarpet.render(render_cfm(text)) unless text.nil?
+        html      = redcarpet.render(render_cfm(text))
+        html      = add_nofollow(html)
+        html
       end
 
       USERNAME_BLACKLIST = %w(include)
 
       private
+
+      def add_nofollow( html)
+        #redcarpet isn't adding nofollow like it is suppose to.
+       html.scan(/(\<a href=["'].*?["']\>.*?\<\/a\>)/).flatten.each do |link|
+         if link.match(/\<a href=["'](http:\/\/|www){0,1}((coderwall.com)(\/.*?){0,1}|\/.*?)["']\>(.*?)\<\/a\>/)
+          else
+          link.match(/(\<a href=["'](.*?)["']\>(.*?)\<\/a\>)/)
+          html.gsub!(link, "<a href='#{$2}' rel='nofollow' >#{$3}</a>" )
+          end
+        end
+        html
+      end
 
       def render_cfm(text)
         text.lines.map do |x|
