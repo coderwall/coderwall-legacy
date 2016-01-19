@@ -25,7 +25,7 @@ namespace :db do
 
   namespace :download do
     def db_dump_file
-      "/home/vagrant/web/tmp/coderwall-production.dump"
+      "tmp/coderwall-production.dump"
     end
 
     # https://www.mongolab.com/downloadbackup/543ea81670096301db49ddd2
@@ -33,7 +33,7 @@ namespace :db do
     desc 'Create a production database backup'
     task :generate do
       Bundler.with_clean_env do
-        cmd = "heroku pgbackups:capture --expire --app coderwall-production"
+        cmd = "heroku pg:backups capture DATABASE_URL --app coderwall-production"
         sh(cmd)
       end
     end
@@ -42,7 +42,7 @@ namespace :db do
     task :latest do
       unless File.exists?(db_dump_file)
         Bundler.with_clean_env do
-          sh("curl `heroku pgbackups:url --app coderwall-production` -o #{db_dump_file}")
+          sh("curl `heroku pg:backups public-url --app coderwall-production` -o #{db_dump_file}")
         end
       end
     end

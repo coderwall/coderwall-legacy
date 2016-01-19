@@ -21,7 +21,7 @@ config/database.yml
 /log/*.log
 /tmp
 InstalledFiles
-Procfile.bashir
+Procfile.dev
 Procfile.test
 TODO
 _yardoc

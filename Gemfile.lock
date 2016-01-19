@@ -447,7 +447,7 @@ GEM
       pry (~> 0.10)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
-    puma (2.12.0)
+    puma (2.15.3)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.4.7)
@@ -765,7 +765,7 @@ DEPENDENCIES
   postgres_ext!
   pry-byebug!
   pry-rails!
-  puma!
+  puma (>= 2.15.3)!
   quiet_assets!
   rack_session_access!
   rails (~> 3.2)!
@@ -809,4 +809,4 @@ DEPENDENCIES
   webmock (< 1.16)!
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
