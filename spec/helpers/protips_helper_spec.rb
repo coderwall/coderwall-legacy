@@ -40,6 +40,16 @@ RSpec.describe ProtipsHelper, type: :helper do
         expect(helper.users_background_image).to be_nil
       end
     end
+
+    describe "comments" do
+      context "has comments" do
+        it "renders comment links correctly" do
+          expect(formatted_comment("http://www.google.com")).to eq "<p><a href=\"http://www.google.com\" rel=\"nofollow\">http://www.google.com</a></p>\n"
+        end
+      end
+    end
+
+
   end
 
 end
