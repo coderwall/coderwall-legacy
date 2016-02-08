@@ -26,6 +26,9 @@ module CFM
 
       def add_nofollow( html)
         #redcarpet isn't adding nofollow like it is suppose to.
+       if html.match(/rel=["']nofollow["']/)
+         return html
+       end
        html.scan(/(\<a href=["'].*?["']\>.*?\<\/a\>)/).flatten.each do |link|
          if link.match(/\<a href=["'](http:\/\/|www){0,1}((coderwall.com)(\/.*?){0,1}|\/.*?)["']\>(.*?)\<\/a\>/)
           else
