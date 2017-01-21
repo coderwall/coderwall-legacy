@@ -89,7 +89,9 @@ class OpportunitiesController < ApplicationController
     @page = params[:page].try(:to_i) || 1
     tag = params[:skill].gsub(/\-/, ' ').downcase unless params[:skill].nil?
 
-    @jobs = get_jobs_for(chosen_location, tag, @page, params[:q], @remote_allowed)
+    q = params[:q].gsub(/\+\+/, '\\\++') unless params[:q].nil?
+
+    @jobs = get_jobs_for(chosen_location, tag, @page, q, @remote_allowed)
     @jobs_left = @jobs.count
     @jobs = @jobs.limit(20)
 
