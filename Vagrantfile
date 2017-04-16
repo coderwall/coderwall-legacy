@@ -34,6 +34,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     s.path = $provision
   end
 
+
+
   config.ssh.keep_alive = true
   config.ssh.forward_agent = true
 
@@ -78,6 +80,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puts "Please install the 'vagrant-cachier' plugin"
   end
 end
+
 
 def set_port_mapping_for(config, service, guest_port, settings, force = false)
   if settings['network'] && settings['network']['port_mappings'] && settings['network']['port_mappings'][service]
