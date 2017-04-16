@@ -29,4 +29,6 @@ Plus *lots* of Ruby Gems, a complete list of which is at [/master/Gemfile](https
 
 We use [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) to isolate and simplify the local development process.
 
-See our [YouTube videos](https://www.youtube.com/playlist?list=PLhlPwpqjsgvXK4n8FJBbj7KkvuOw8h3FO)....
+our [YouTube videos](https://www.youtube.com/playlist?list=PLhlPwpqjsgvXK4n8FJBbj7KkvuOw8h3FO)
+
+see my name sathyabaman
